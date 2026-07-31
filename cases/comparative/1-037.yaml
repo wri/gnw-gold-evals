@@ -1,0 +1,14 @@
+id: 1-037
+uid: aac330b7010a1899
+status: done
+group: comparative
+query: Of the Canadian provinces+territories beginning with 'N' - which had the most deforestation
+  in 2004?
+expected:
+  aoi_ids: CAN.4_1;CAN.5_1;CAN.7_1;CAN.6_1;CAN.8_1
+  aoi_source: gadm
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  answer: Northwest Territories
+notes:
+  aoi_type: gadm 1

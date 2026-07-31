@@ -1,0 +1,15 @@
+id: 1-032
+uid: b9d8256f34823a1d
+status: done
+group: temporal
+query: True or false, tree cover loss has increased from 2020 to 2024 in the Upper Stung Sen
+  catchment KBA.
+expected:
+  aoi_source: kba
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  answer: 'FALSE'
+notes:
+  aoi_type: kba
+  value_1: 8,411 hectares
+  value_2: 5,051 hectares

@@ -1,0 +1,11 @@
+id: 1-107
+uid: 1dd08f0e6a2e94b5
+status: ready
+group: nudge
+query: Pick a dataset showing urban land cover
+expected:
+  text: Offers a choice between the Global land cover and SBTN Natural Lands datasets rather
+    than picking one unprompted
+  nudge_options: Global land cover;SBTN
+notes:
+  status_reason: Validator not working

@@ -1,0 +1,649 @@
+{
+  "caseset_version": "2f8b10272938527c",
+  "case_count": 107,
+  "source": "gold-live.csv",
+  "cases": [
+    {
+      "id": "1-001",
+      "uid": "1ea312d58b8aa517",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-002",
+      "uid": "0fa55d427af482af",
+      "group": "direct",
+      "status": "todo"
+    },
+    {
+      "id": "1-003",
+      "uid": "b31a0eb4a0117edf",
+      "group": "parent-child",
+      "status": "not doing"
+    },
+    {
+      "id": "1-004",
+      "uid": "8401c53f16aedc81",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-005",
+      "uid": "85c044795857542e",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-006",
+      "uid": "c172d09080ee4304",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-007",
+      "uid": "d8e53dddfeb1a93b",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-008",
+      "uid": "50d5fcb0e2778110",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-009",
+      "uid": "83d29ed8154762b7",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-010",
+      "uid": "9ec381c90eb2d749",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-011",
+      "uid": "164bad3a7a0c5fde",
+      "group": "parent-child",
+      "status": "not doing"
+    },
+    {
+      "id": "1-012",
+      "uid": "c145682393808f41",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-013",
+      "uid": "7bd70eb14e1a7a6c",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-014",
+      "uid": "a239a16eb4fe6770",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-015",
+      "uid": "ab5b5342c2a9614e",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-016",
+      "uid": "8fd8d32a2bb81078",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-017",
+      "uid": "414ce87721e86e4b",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-018",
+      "uid": "a3d6a6958e15c0bc",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-019",
+      "uid": "d08b06db283dbe90",
+      "group": "unspecified",
+      "status": "done"
+    },
+    {
+      "id": "1-020",
+      "uid": "c3bcf6094e81e0dd",
+      "group": "parent-child",
+      "status": "not doing"
+    },
+    {
+      "id": "1-021",
+      "uid": "02e323bc6740234c",
+      "group": "parent-child",
+      "status": "todo"
+    },
+    {
+      "id": "1-022",
+      "uid": "a9ec78672beea20c",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-023",
+      "uid": "fc71248e9e5056a3",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-024",
+      "uid": "753559dc9b7a0cf3",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-025",
+      "uid": "92bba1fafcf17fcb",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-026",
+      "uid": "750dbc1e4ea8600b",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-027",
+      "uid": "e787a16a34464a0b",
+      "group": "direct",
+      "status": "todo"
+    },
+    {
+      "id": "1-028",
+      "uid": "3b754e9cedce4ff6",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-029",
+      "uid": "bd1871010ac4d25a",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-030",
+      "uid": "ed5824ddd367f3e8",
+      "group": "comparative",
+      "status": "todo"
+    },
+    {
+      "id": "1-031",
+      "uid": "16ca276ef29c58e0",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-032",
+      "uid": "b9d8256f34823a1d",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-033",
+      "uid": "d325b52479e7c354",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-034",
+      "uid": "5eba1d4254520df1",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-035",
+      "uid": "a2619e0e8dbed11a",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-036",
+      "uid": "4cb121dc9f399526",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-037",
+      "uid": "aac330b7010a1899",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-038",
+      "uid": "788d4f56fd412f0a",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-039",
+      "uid": "1a6c23767203c5d3",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-040",
+      "uid": "7fe4846142a0f70d",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-041",
+      "uid": "838f0e0415324b04",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-042",
+      "uid": "a4bd954b9701ee85",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-043",
+      "uid": "6a498094c3f38246",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-044",
+      "uid": "18673e1eb4f6f766",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-045",
+      "uid": "8b2577afd3226ea4",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-046",
+      "uid": "6404bc0a1fb78e51",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-047",
+      "uid": "fc6449933231f298",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-048",
+      "uid": "9db793af38c5078c",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-049",
+      "uid": "01c8d7919a60550b",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-050",
+      "uid": "d8c929c75b3c99df",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-051",
+      "uid": "c2bc96f6954c5bb2",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-052",
+      "uid": "739e12d548259852",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-053",
+      "uid": "2d4090455a2a252c",
+      "group": "comparative",
+      "status": "todo"
+    },
+    {
+      "id": "1-054",
+      "uid": "c2d66732da3c0a4f",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-055",
+      "uid": "44d2db91315f8949",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-056",
+      "uid": "d8d7a2ad010a4364",
+      "group": "dataset-suggestion",
+      "status": "done"
+    },
+    {
+      "id": "1-057",
+      "uid": "30ff531cb42c8a02",
+      "group": "comparative",
+      "status": "done"
+    },
+    {
+      "id": "1-058",
+      "uid": "288e33b003b0ffc8",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-059",
+      "uid": "955381186d95914b",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-060",
+      "uid": "ccaf9988f4fd8648",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-061",
+      "uid": "1b667a069fc0604a",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-062",
+      "uid": "9101ff09d2899f33",
+      "group": "comparative",
+      "status": "not doing"
+    },
+    {
+      "id": "1-063",
+      "uid": "8da7d1a5c1eaadb0",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-064",
+      "uid": "54c2a7558498a694",
+      "group": "class-comparison",
+      "status": "done"
+    },
+    {
+      "id": "1-065",
+      "uid": "8229668942233037",
+      "group": "metadata",
+      "status": "done"
+    },
+    {
+      "id": "1-066",
+      "uid": "baaa1c81665e7cb7",
+      "group": "metadata",
+      "status": "done"
+    },
+    {
+      "id": "1-067",
+      "uid": "8c512724d73a8fb4",
+      "group": "metadata",
+      "status": "done"
+    },
+    {
+      "id": "1-068",
+      "uid": "0f3bbfa460906894",
+      "group": "metadata",
+      "status": "done"
+    },
+    {
+      "id": "1-069",
+      "uid": "534bee522f89d76b",
+      "group": "parent-child",
+      "status": "done"
+    },
+    {
+      "id": "1-070",
+      "uid": "1a9ad2b81fa88801",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-071",
+      "uid": "129941023fb6c929",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-072",
+      "uid": "a637b9ac4664d286",
+      "group": "metadata",
+      "status": "done"
+    },
+    {
+      "id": "1-073",
+      "uid": "b49a4e8d1d9e75a3",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-074",
+      "uid": "8160c0479a8ca55c",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-075",
+      "uid": "c724879c34db7b28",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-076",
+      "uid": "ebaaf0dc2e47d4a7",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-077",
+      "uid": "70316f9b8a98667b",
+      "group": "direct",
+      "status": "done"
+    },
+    {
+      "id": "1-078",
+      "uid": "1148e22cbf746032",
+      "group": "ranking",
+      "status": "done"
+    },
+    {
+      "id": "1-079",
+      "uid": "a337c25f9dffb0b5",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-080",
+      "uid": "9e3ec4c5af5803c7",
+      "group": "temporal",
+      "status": "done"
+    },
+    {
+      "id": "1-081",
+      "uid": "7678830548e2e62c",
+      "group": "parent-child",
+      "status": "not doing"
+    },
+    {
+      "id": "1-082",
+      "uid": "b2a62018a51ded5d",
+      "group": "dataset-suggestion",
+      "status": "done"
+    },
+    {
+      "id": "1-083",
+      "uid": "a570b7f3833d3074",
+      "group": "dataset-suggestion",
+      "status": "done"
+    },
+    {
+      "id": "1-084",
+      "uid": "6f231ad685abc988",
+      "group": "dataset-suggestion",
+      "status": "done"
+    },
+    {
+      "id": "1-085",
+      "uid": "5047e709cf87d02f",
+      "group": "dataset-suggestion",
+      "status": "not doing"
+    },
+    {
+      "id": "1-086",
+      "uid": "8c1ab05d9587d644",
+      "group": "dataset-suggestion",
+      "status": "done"
+    },
+    {
+      "id": "1-087",
+      "uid": "212cd56065c87ece",
+      "group": "context-layer",
+      "status": "done"
+    },
+    {
+      "id": "1-088",
+      "uid": "f34ccd23ce400fcb",
+      "group": "context-layer",
+      "status": "done"
+    },
+    {
+      "id": "1-089",
+      "uid": "0b5a956b22018b76",
+      "group": "refusal",
+      "status": "done"
+    },
+    {
+      "id": "1-090",
+      "uid": "8c717e6dbe24fe78",
+      "group": "multilingual",
+      "status": "done"
+    },
+    {
+      "id": "1-091",
+      "uid": "2d4ecaa5f9030d67",
+      "group": "multilingual",
+      "status": "done"
+    },
+    {
+      "id": "1-092",
+      "uid": "72d75a73ce93fe91",
+      "group": "multilingual",
+      "status": "done"
+    },
+    {
+      "id": "1-093",
+      "uid": "19ba12d7ba28fe87",
+      "group": "multilingual",
+      "status": "done"
+    },
+    {
+      "id": "1-094",
+      "uid": "f09c1fa04cba3721",
+      "group": "multilingual",
+      "status": "done"
+    },
+    {
+      "id": "1-095",
+      "uid": "fe097c35bd8518c1",
+      "group": "dataset-parameters",
+      "status": "done"
+    },
+    {
+      "id": "1-096",
+      "uid": "1478765e0688e778",
+      "group": "dashboard",
+      "status": "done"
+    },
+    {
+      "id": "1-097",
+      "uid": "94bf6616bb145a3b",
+      "group": "dashboard",
+      "status": "done"
+    },
+    {
+      "id": "1-098",
+      "uid": "3e12d2e5d7cd79b7",
+      "group": "dashboard",
+      "status": "done"
+    },
+    {
+      "id": "1-099",
+      "uid": "5886b0a757af4bb3",
+      "group": "dashboard",
+      "status": "done"
+    },
+    {
+      "id": "1-100",
+      "uid": "60b6030c1f1d27a0",
+      "group": "dashboard",
+      "status": "done"
+    },
+    {
+      "id": "1-101",
+      "uid": "ff2186e8a5fb94b9",
+      "group": "dashboard",
+      "status": "done"
+    },
+    {
+      "id": "1-102",
+      "uid": "e549e69bc1700085",
+      "group": "dashboard",
+      "status": "done"
+    },
+    {
+      "id": "1-103",
+      "uid": "1796dda113d3e09d",
+      "group": "dataset-suggestion",
+      "status": "done"
+    },
+    {
+      "id": "1-104",
+      "uid": "5021fbee3fa1e8c5",
+      "group": "imagery",
+      "status": "done"
+    },
+    {
+      "id": "1-105",
+      "uid": "8870ad3bf4778311",
+      "group": "nudge",
+      "status": "ready"
+    },
+    {
+      "id": "1-106",
+      "uid": "fe9b30abe40cf29a",
+      "group": "nudge",
+      "status": "not doing"
+    },
+    {
+      "id": "1-107",
+      "uid": "1dd08f0e6a2e94b5",
+      "group": "nudge",
+      "status": "ready"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+id: 1-027
+uid: e787a16a34464a0b
+status: todo
+group: direct
+query: In the Murgia Alta WDPA in Italy, how much natural short vegetation is there?
+expected:
+  aoi_source: wdpa
+  dataset_id: '3'
+  dataset_name: SBTN Natural Lands Map
+  answer: 679.17 ha
+notes:
+  status_reason: CHART aggregates results, hiding requested class
+  aoi_type: wdpa
+  class_1: natural short vegetation

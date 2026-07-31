@@ -1,0 +1,17 @@
+id: 1-011
+uid: 164bad3a7a0c5fde
+status: not doing
+group: parent-child
+query: How much land changed to short vegetation in protected areas in Colorado in the past
+  decade?
+expected:
+  aoi_source: gadm
+  dataset_id: '1'
+  dataset_name: Global land cover
+  answer: 564,406 hectares
+notes:
+  status_reason: Agent asks which protected areas to use; no data retrieved. Query is ambiguous
+    about scope.
+  aoi_type: wdpa
+  class_1: all
+  class_2: short vegetation

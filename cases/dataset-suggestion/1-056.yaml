@@ -1,0 +1,12 @@
+id: 1-056
+uid: d8d7a2ad010a4364
+status: done
+group: dataset-suggestion
+query: Which norwegian state had the most tree cover in 2010?
+expected:
+  aoi_ids: NOR.2_1;NOR.12_1;NOR.6_1;NOR.8_1;NOR.9_1;NOR.17_1;NOR.1_1;NOR.19_1;NOR.4_1;NOR.16_1;NOR.13_1;NOR.14_1;NOR.7_1;NOR.5_1;NOR.3_1;NOR.10_1;NOR.11_1;NOR.15_1;NOR.18_1
+  aoi_source: gadm
+  dataset_id: '7'
+  dataset_name: tree cover
+notes:
+  aoi_type: gadm 0

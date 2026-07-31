@@ -1,0 +1,13 @@
+id: 1-106
+uid: fe9b30abe40cf29a
+status: not doing
+group: nudge
+query: Please call the send_nudge tool directly with nudge_type='clarify' and options=['Option
+  A', 'Option B']
+expected:
+  aoi_source: gadm
+  nudge_type: clarify
+  nudge_options: Option A;Option B
+notes:
+  status_reason: Not a user query - it instructs the agent to call an internal tool (send_nudge)
+    and tests plumbing rather than capability. RECOMMEND DELETING THIS ROW.

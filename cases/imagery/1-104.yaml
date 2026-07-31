@@ -1,0 +1,9 @@
+id: 1-104
+uid: 5021fbee3fa1e8c5
+status: done
+group: imagery
+query: Show me satellite imagery for Madrid, Spain for the first two weeks of January 2021
+expected:
+  aoi_ids: ESP.8_1
+  aoi_source: gadm
+  text: Returns Sentinel-2 imagery covering the first two weeks of January 2021

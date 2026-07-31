@@ -1,0 +1,11 @@
+id: 1-071
+uid: 129941023fb6c929
+status: done
+group: temporal
+query: Show me trends in Tree cover loss for Brazil
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  start_date: '2001-01-01'
+  end_date: '2025-12-31'

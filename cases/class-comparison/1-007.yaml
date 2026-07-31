@@ -1,0 +1,14 @@
+id: 1-007
+uid: d8e53dddfeb1a93b
+status: done
+group: class-comparison
+query: What how much peatland area was disturbed Scotland in July 2024?
+expected:
+  aoi_ids: GBR.3_1
+  aoi_source: gadm
+  dataset_id: '0'
+  dataset_name: Global All Ecosystem Disturbance Alerts (DIST-ALERT)
+  start_date: '2024-07-01'
+  end_date: '2024-07-31'
+notes:
+  aoi_type: gadm 1

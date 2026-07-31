@@ -1,0 +1,17 @@
+id: 1-012
+uid: c145682393808f41
+status: done
+group: direct
+query: How many hectares of cultivated grasslands does Alto Rio Negro Indigenous Territory
+  have?
+expected:
+  aoi_source: landmark
+  dataset_id: '1'
+  dataset_name: Global land cover
+  start_date: '2024-01-01'
+  end_date: '2024-12-11'
+  answer: '19.16'
+  text: '19.155'
+notes:
+  aoi_type: Landmark
+  class_1: short vegetation

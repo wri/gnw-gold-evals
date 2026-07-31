@@ -1,0 +1,14 @@
+id: 1-009
+uid: 83d29ed8154762b7
+status: done
+group: class-comparison
+query: What percentage of disturbances in Sara, Bolivia were caught by multiple systems during
+  July 2025?
+expected:
+  aoi_ids: BOL.8.12_1
+  aoi_source: gadm
+  dataset_id: '11'
+  dataset_name: Integrated alerts
+  answer: 4.00%
+notes:
+  aoi_type: gadm 2

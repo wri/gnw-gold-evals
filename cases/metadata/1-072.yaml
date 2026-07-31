@@ -1,0 +1,12 @@
+id: 1-072
+uid: a637b9ac4664d286
+status: done
+group: metadata
+query: What is the most recent year tree cover loss data?
+expected:
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  text: Confirms 2025
+notes:
+  status_reason: Expected a clarification; agent answered directly. Re-read the thread - either
+    the agent improved or the expectation is stale.

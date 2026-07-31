@@ -1,0 +1,16 @@
+id: 1-010
+uid: 9ec381c90eb2d749
+status: done
+group: temporal
+query: How much wetland was there in the Arawe KBA in Papua New Guinea in 2024?
+expected:
+  aoi_source: kba
+  dataset_id: '1'
+  dataset_name: Global land cover
+  start_date: '2024-01-01'
+  end_date: '2024-12-11'
+  answer: 16,359 hectares
+notes:
+  aoi_type: kba
+  class_1: wetland
+  value_2: 16,359 hectares

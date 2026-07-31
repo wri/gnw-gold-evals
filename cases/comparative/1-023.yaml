@@ -1,0 +1,15 @@
+id: 1-023
+uid: fc71248e9e5056a3
+status: done
+group: comparative
+query: 'Which had more natural grassland coverage in 2000: North or South Dakota?'
+expected:
+  aoi_ids: USA.35_1;USA.42_1
+  aoi_source: gadm
+  dataset_id: '2'
+  dataset_name: Natural/Semi-Natural Grasslands
+  start_date: '2000-01-01'
+  end_date: '2000-12-31'
+  answer: South Dakota
+notes:
+  aoi_type: gadm 1

@@ -1,0 +1,10 @@
+id: 1-086
+uid: 8c1ab05d9587d644
+status: done
+group: dataset-suggestion
+query: How much of Indonesia's 2025 tree cover loss was caused by fire?
+expected:
+  aoi_ids: idn
+  aoi_source: gadm
+  dataset_id: '10'
+  dataset_name: Tree cover loss due to fires

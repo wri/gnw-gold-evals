@@ -1,0 +1,13 @@
+id: 1-085
+uid: 5047e709cf87d02f
+status: not doing
+group: dataset-suggestion
+query: What fire datasets do you have available to understand the impact of wilfires in Spain?
+expected:
+  aoi_ids: ESP
+  aoi_source: gadm
+  clarification: 'TRUE'
+  text: Provides good reason for each dataset suggestion that relate to the user query
+  suggested_datasets: 0;10
+notes:
+  aoi_type: gadm 0

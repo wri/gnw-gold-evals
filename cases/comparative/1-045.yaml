@@ -1,0 +1,16 @@
+id: 1-045
+uid: 8b2577afd3226ea4
+status: done
+group: comparative
+query: 'True or False: In Rep. of Congo, Bouenza generated more deforestation related carbon
+  emissions than Cuvette in 2021'
+expected:
+  aoi_ids: COG.1_1;COG.4_1
+  aoi_source: gadm
+  dataset_id: '4'
+  dataset_name: Forest GHG emissions
+  start_date: '2021-01-01'
+  end_date: '2021-12-31'
+  answer: 'FALSE'
+notes:
+  aoi_type: gadm 1

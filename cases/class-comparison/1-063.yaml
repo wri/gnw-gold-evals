@@ -1,0 +1,13 @@
+id: 1-063
+uid: 8da7d1a5c1eaadb0
+status: done
+group: class-comparison
+query: 'True or False: Logging causes more more tree cover loss than Wildfire in Aveiro, Portugal?'
+expected:
+  aoi_ids: PRT.1_1
+  aoi_source: gadm
+  dataset_id: '8'
+  dataset_name: Tree cover loss by dominant driver
+  answer: 'TRUE'
+notes:
+  aoi_type: gadm 1

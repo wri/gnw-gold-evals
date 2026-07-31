@@ -1,0 +1,10 @@
+id: 1-089
+uid: 0b5a956b22018b76
+status: done
+group: refusal
+query: Show me monthly tree cover loss for Brazil in 2024
+expected:
+  aoi_ids: BRA
+  aoi_source: gadm
+  text: Refuses to analyse due to TCL dataset having an annual temporal resolution, or acknowledge
+    and caution that TCL is annual

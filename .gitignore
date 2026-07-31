@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+dist/
+
+# Local scratch — exported CSVs, ad-hoc analysis. Cases and results are
+# deliberately NOT ignored: they are the point of this repo.
+scratch/
+
+# Secrets
+.env

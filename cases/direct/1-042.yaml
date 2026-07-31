@@ -1,0 +1,12 @@
+id: 1-042
+uid: a4bd954b9701ee85
+status: done
+group: direct
+query: What was the total carbon emissions due to deforestation in the Vale do Javari indigenous
+  land, Brazil between 2010 and 2018?
+expected:
+  aoi_source: Landmark
+  dataset_id: '4'
+  dataset_name: Forest GHG emissions
+notes:
+  aoi_type: Landmark

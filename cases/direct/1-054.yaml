@@ -1,0 +1,16 @@
+id: 1-054
+uid: c2d66732da3c0a4f
+status: done
+group: direct
+query: Determine whether the Canary islands a net source or sink for deforestation related
+  emissions.
+expected:
+  aoi_ids: ESP.14_1
+  aoi_source: gadm
+  dataset_id: '6'
+  dataset_name: Forest greenhouse gas net flux
+  answer: Sink
+  text: States that the Canary Islands are a net sink, with a net flux of approximately -286,993.68
+    Mg CO2e
+notes:
+  aoi_type: gadm 1
