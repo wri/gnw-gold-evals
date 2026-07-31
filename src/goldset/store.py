@@ -21,37 +21,82 @@ from pathlib import Path
 
 import yaml
 
-from goldset.canonical import case_uid, caseset_version, normalize_text
+from goldset.canonical import (
+    case_uid,
+    caseset_version,
+    conversation_uid,
+    normalize_text,
+)
 
 MANIFEST_NAME = "MANIFEST.json"
 
 _SLUG_RE = re.compile(r"[^a-z0-9-]+")
 
 
+_DELTA_KINDS = ("changed", "retain", "absent")
+
+
 @dataclass(frozen=True)
 class Case:
-    """A single GOLD case. Frozen: edits produce a new instance."""
+    """A single GOLD case. Frozen: edits produce a new instance.
+
+    Single-turn cases carry ``query`` + ``expected``. Multi-turn cases
+    (PR-07) carry ``turns`` instead: a list of ``{query, expected, deltas}``
+    dicts, where ``deltas`` (turn >= 2 only) asserts state transitions
+    between turns (``changed`` / ``retain`` / ``absent`` field lists).
+    """
 
     id: str
     status: str
     group: str
-    query: str
+    query: str = ""
     expected: dict[str, str] = field(default_factory=dict)
     notes: dict[str, str] = field(default_factory=dict)
+    turns: tuple = ()
+
+    @property
+    def is_multiturn(self) -> bool:
+        return bool(self.turns)
 
     @property
     def uid(self) -> str:
+        if self.is_multiturn:
+            return conversation_uid(self.turns)
         return case_uid(self.query, self.expected)
+
+    def _validate_turns(self) -> list[str]:
+        label = self.id or "?"
+        problems = []
+        if normalize_text(self.query) or self.expected:
+            problems.append(f"{label}: multi-turn cases must not set query/expected")
+        if len(self.turns) < 2:
+            problems.append(f"{label}: multi-turn cases need at least 2 turns")
+        for index, turn in enumerate(self.turns, start=1):
+            if not isinstance(turn, dict):
+                problems.append(f"{label}: turn {index} is not a mapping")
+                continue
+            if set(turn) - {"query", "expected", "deltas"}:
+                problems.append(f"{label}: turn {index} has unknown keys")
+            if not normalize_text(turn.get("query")):
+                problems.append(f"{label}: turn {index} has an empty query")
+            deltas = turn.get("deltas") or {}
+            if deltas and index == 1:
+                problems.append(f"{label}: turn 1 cannot assert deltas")
+            if set(deltas) - set(_DELTA_KINDS):
+                problems.append(f"{label}: turn {index} has unknown delta kinds")
+        return problems
 
     def validate(self) -> list[str]:
         """Return a list of problems; empty means the case is well-formed."""
         problems = []
         if not normalize_text(self.id):
             problems.append("missing id")
-        if not normalize_text(self.query):
-            problems.append(f"{self.id or '?'}: empty query")
         if not normalize_text(self.status):
             problems.append(f"{self.id or '?'}: missing status")
+        if self.is_multiturn:
+            problems += self._validate_turns()
+        elif not normalize_text(self.query):
+            problems.append(f"{self.id or '?'}: empty query")
         for mapping, label in ((self.expected, "expected"), (self.notes, "notes")):
             for key, value in mapping.items():
                 if not isinstance(value, str):
@@ -77,9 +122,14 @@ def case_to_dict(case: Case) -> dict:
         "uid": case.uid,
         "status": case.status,
         "group": case.group,
-        "query": case.query,
-        "expected": {k: v for k, v in case.expected.items() if normalize_text(v)},
     }
+    if case.is_multiturn:
+        data["turns"] = [dict(turn) for turn in case.turns]
+    else:
+        data["query"] = case.query
+        data["expected"] = {
+            k: v for k, v in case.expected.items() if normalize_text(v)
+        }
     notes = {k: v for k, v in case.notes.items() if normalize_text(v)}
     if notes:
         data["notes"] = notes
@@ -110,9 +160,22 @@ def read_case(path: Path) -> tuple[Case, str]:
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
         raise ValueError(f"{path}: not a mapping")
-    unknown = set(raw) - {"id", "uid", "status", "group", "query", "expected", "notes"}
+    unknown = set(raw) - {
+        "id", "uid", "status", "group", "query", "expected", "notes", "turns"
+    }
     if unknown:
         raise ValueError(f"{path}: unknown top-level keys {sorted(unknown)}")
+    turns = tuple(
+        {
+            "query": str(turn.get("query", "")),
+            "expected": {
+                str(k): str(v) for k, v in (turn.get("expected") or {}).items()
+            },
+            **({"deltas": turn["deltas"]} if turn.get("deltas") else {}),
+        }
+        for turn in (raw.get("turns") or [])
+        if isinstance(turn, dict)
+    )
     case = Case(
         id=str(raw.get("id", "")),
         status=str(raw.get("status", "")),
@@ -120,6 +183,7 @@ def read_case(path: Path) -> tuple[Case, str]:
         query=str(raw.get("query", "")),
         expected={str(k): str(v) for k, v in (raw.get("expected") or {}).items()},
         notes={str(k): str(v) for k, v in (raw.get("notes") or {}).items()},
+        turns=turns,
     )
     return case, str(raw.get("uid", ""))
 

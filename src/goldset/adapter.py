@@ -26,3 +26,17 @@ def case_to_expected(case: Case) -> ExpectedData:
         uid=case.uid,
         **payload,
     )
+
+
+def turn_to_expected(case: Case, turn: dict) -> ExpectedData:
+    """One turn of a multi-turn case, same prefixing rules."""
+    payload = {
+        f"expected_{key}": value for key, value in (turn.get("expected") or {}).items()
+    }
+    return ExpectedData(
+        test_id=case.id,
+        test_group=case.group or "unknown",
+        status=case.status,
+        uid=case.uid,
+        **payload,
+    )

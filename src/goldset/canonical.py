@@ -51,6 +51,28 @@ def case_uid(query: str, expected: Mapping[str, object]) -> str:
     return digest[:UID_LENGTH]
 
 
+def conversation_uid(turns: Iterable[Mapping[str, object]]) -> str:
+    """uid for a multi-turn case: hash over every turn's query + expected,
+    **in order** — turn order is test content, so reordering turns mints a
+    new version. Delta assertions and metadata do not participate, matching
+    the single-turn rule that annotations never mint versions."""
+    payload = json.dumps(
+        [
+            json.loads(
+                canonical_payload(
+                    str(turn.get("query", "")),
+                    turn.get("expected") or {},  # type: ignore[arg-type]
+                )
+            )
+            for turn in turns
+        ],
+        sort_keys=True,
+        ensure_ascii=False,
+        separators=(",", ":"),
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:UID_LENGTH]
+
+
 def caseset_version(uids: Iterable[str]) -> str:
     """Version of the whole set: hash of the sorted uids, order-insensitive."""
     joined = "\n".join(sorted(uids))

@@ -66,7 +66,24 @@ SHARED: dict[str, tuple[str, str]] = {
 INFO_ONLY: frozenset[str] = frozenset({"date_coverage"})
 
 
+_TURN_PREFIX = __import__("re").compile(r"^t\d+\.")
+
+# Multi-turn conversation-level checks (PR-07)
+DEDICATED["state_delta"] = RETRIEVAL
+
+
+def base_check_name(check: str) -> str:
+    """``t2.aoi_id_match`` -> ``aoi_id_match`` (multi-turn entries flatten
+    per-turn checks under a turn prefix)."""
+    return _TURN_PREFIX.sub("", check)
+
+
+def is_info_only(check: str) -> bool:
+    return base_check_name(check) in INFO_ONLY
+
+
 def buckets_for(check: str) -> tuple[str, ...]:
+    check = base_check_name(check)
     if check in DEDICATED:
         return (DEDICATED[check],)
     return SHARED.get(check, ())
@@ -79,7 +96,7 @@ def row_verdict(entry: dict[str, Any]) -> str:
     evaluated = {
         name: value
         for name, value in entry.get("checks", {}).items()
-        if name not in INFO_ONLY and value is not None
+        if not is_info_only(name) and value is not None
     }
     if not evaluated:
         return "uncovered"
@@ -90,7 +107,7 @@ def _tally(entries: list[dict], names: set[str], bucket: str) -> dict:
     passed = evaluated = 0
     for entry in entries:
         for name, value in entry.get("checks", {}).items():
-            if name in names and bucket in buckets_for(name) and value is not None:
+            if base_check_name(name) in names and bucket in buckets_for(name) and value is not None:
                 evaluated += 1
                 passed += value == 1.0
     return {"passed": passed, "evaluated": evaluated}

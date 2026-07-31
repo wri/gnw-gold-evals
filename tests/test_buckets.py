@@ -17,7 +17,9 @@ from goldset.registry import ALL_SCORE_FIELDS
 def test_every_registered_check_is_tagged_exactly_once():
     tagged = set(DEDICATED) | set(SHARED) | set(INFO_ONLY)
     registered = {field.removesuffix("_score") for field in ALL_SCORE_FIELDS}
-    assert registered == tagged
+    # state_delta is produced by the multiturn orchestration, not a
+    # registry evaluator — tagged but never registered.
+    assert registered | {"state_delta"} == tagged
     assert not set(DEDICATED) & set(SHARED)
     assert all(bucket in BUCKETS for bucket in DEDICATED.values())
 

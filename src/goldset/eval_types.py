@@ -197,7 +197,6 @@ class ExpectedData(BaseModel):
     test_id: str = ""
     test_group: str = "unknown"
     status: str = "ready"
-    thread_id: str | None = None
 
     @field_validator("expected_dashboard_widgets", mode="before")
     @classmethod

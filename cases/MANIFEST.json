@@ -1,6 +1,6 @@
 {
-  "caseset_version": "69741074ac803b38",
-  "case_count": 107,
+  "caseset_version": "185eb0b1bb6ea24a",
+  "case_count": 115,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -643,6 +643,54 @@
       "id": "1-107",
       "uid": "8efc9f397852c90b",
       "group": "nudge",
+      "status": "ready"
+    },
+    {
+      "id": "mt-001",
+      "uid": "f25772290e4699fd",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-002",
+      "uid": "38a4baf80d283015",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-003",
+      "uid": "cb1fee067c39f4ba",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-004",
+      "uid": "3b0e419f5583d1ea",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-005",
+      "uid": "086692eda35ba8b0",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-006",
+      "uid": "2b81a8ae1b9301e4",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-007",
+      "uid": "9f26bd9bbacaee59",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-008",
+      "uid": "fa33ca99a2484307",
+      "group": "multiturn",
       "status": "ready"
     }
   ]
