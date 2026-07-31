@@ -119,12 +119,20 @@ std ≤ 0.10 over 3 trials (the two flakiest sheet-era judges sat at ±0.29 and
 | 05 | `specs/PR-05-bucket-scoring.md` | Five-bucket registry, row verdicts, regression gate, reconciliation line | 02, 04 |
 | 06 | `specs/PR-06-new-validators.md` | The bucket-filling validators (A2, A3, E1, O2, O3, S1) + new expected fields | 05 |
 | 07 | `specs/PR-07-multiturn.md` | Multi-turn runner + 8 scripted 2-turn cases + state-delta checks | 05 |
+| 08 | `specs/PR-08-live-validation.md` | The staging campaign clearing every live-run acceptance box (parity, guard stds, seed flakiness, G4 pinning, judge probation review) | 02–07, staging token |
+| 09 | `specs/PR-09-hardening-and-ci.md` | CI workflow + defects found while building 02–07 (ingest drift re-keying, merge_trials error loss, multiturn reconciliation, dataset_id alternatives) | 07 |
 
 Ordering rationale: results tracking (02) and a faithful port (03) can
 proceed in parallel; fixes (04) deliberately land *after* the
 behaviour-preserving port so parity is verifiable; scoring (05) needs both
 the ledger and honest checks; new validators (06) and multiturn (07) extend
-a system that can already measure itself.
+a system that can already measure itself; 08 is runs rather than code and
+09 can land in parallel with it.
+
+The case set itself has its own plan: **`CASESET_PLAN.md`** — coverage
+rebalance, determinism scrub, expectation depth, dead-weight triage, and
+the authoring checklist. Harness design lives here; what's *in* `cases/`
+lives there.
 
 ## 6. Working agreements
 
