@@ -47,11 +47,14 @@ def evaluate_aoi_selection(
             },
         )
 
-    # STEP 2: Early exit if we can't evaluate (no expected values or no actual data)
+    # STEP 2: Early exit only when there is no expectation. An expectation
+    # with NO resolved AOI is a hard failure (PR-04 F1) - previously this
+    # returned None and silently raised the row's mean.
     if not expected_aoi_ids:
         return result
 
     if not actual_data:
+        result["aoi_id_match_score"] = 0.0
         return result
 
     # STEP 3: Normalize and compare AOI IDs

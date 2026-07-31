@@ -2,7 +2,7 @@
 
 from typing import Any
 
-from goldset.evaluators.llm_judges import llm_judge_clarification
+from goldset.evaluators.llm_judges import JudgeError, llm_judge_clarification
 
 
 def evaluate_clarification(
@@ -52,7 +52,15 @@ def evaluate_clarification(
         explanation = "No query provided"
     else:
         # Call LLM judge once to detect clarification
-        clarification = llm_judge_clarification(agent_state, query)
+        try:
+            clarification = llm_judge_clarification(agent_state, query)
+        except JudgeError as error:
+            return {
+                "actual_clarification_requested": None,
+                "clarification_requested_score": None,
+                "clarification_explanation": f"JUDGE ERROR: {error}",
+                "judge_errors": ["clarification_requested"],
+            }
         actual_clarification = clarification["is_clarification"]
         explanation = clarification["explanation"]
 

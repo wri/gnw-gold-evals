@@ -49,6 +49,9 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
     entry: dict = {"uid": uid, "id": result.test_id, "checks": checks}
     if reasons:
         entry["reasons"] = reasons
+    judge_errors = dumped.get("judge_errors") or []
+    if judge_errors:
+        entry["judge_errors"] = judge_errors
     if result.duration_seconds is not None:
         entry["latency_s"] = round(result.duration_seconds, 1)
     if result.trace_url:
@@ -122,10 +125,16 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
                 )
                 trials.append(result_to_entry(result, case.uid))
             entry = merge_trials(trials)
-            verdict = "ok" if all(
-                v != 0.0 for v in entry["checks"].values()
-            ) and not entry.get("error") else "FAIL"
-            print(f"  {case.id} [{verdict}]")
+            # G3: slow rows get an info flag — reported, never scored.
+            latency = entry.get("latency_s")
+            if latency is not None and latency > args.slow_threshold:
+                entry["info"] = {"slow": True, "threshold_s": args.slow_threshold}
+            clean = (
+                all(v != 0.0 for v in entry["checks"].values())
+                and not entry.get("error")
+                and not entry.get("judge_errors")
+            )
+            print(f"  {case.id} [{'ok' if clean else 'FAIL'}]")
             return entry
 
     return list(await asyncio.gather(*(run_one(case) for case in cases)))
@@ -149,6 +158,11 @@ def main() -> int:
     run.add_argument("--group", default=None, help="substring match on group")
     run.add_argument("--cases-dir", type=Path, default=Path("cases"))
     run.add_argument("--results-dir", type=Path, default=Path("results"))
+    run.add_argument("--slow-threshold", type=float, default=180.0,
+                     help="seconds; slower rows get an info flag (never scored)")
+    run.add_argument("--note", default=None,
+                     help="methodology note recorded on the run (e.g. after a "
+                          "check-semantics change, so diffs aren't read as agent movement)")
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
     run.add_argument("--verbose", action="store_true")
@@ -194,12 +208,18 @@ def main() -> int:
         "caseset_version": manifest["caseset_version"],
         "results": entries,
     }
+    if args.note:
+        run_record["methodology_note"] = args.note
     path = write_run(args.results_dir, run_record)
     failed = sum(
         1 for e in entries
         if any(v == 0.0 for v in e["checks"].values()) or e.get("error")
     )
-    print(f"wrote {path} — {len(entries)} cases, {failed} with failing checks")
+    judge_failures = sum(1 for e in entries if e.get("judge_errors"))
+    line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
+    if judge_failures:
+        line += f", {judge_failures} with JUDGE ERRORS (rerun before trusting)"
+    print(line)
     return 0
 
 

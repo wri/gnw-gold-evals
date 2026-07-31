@@ -47,19 +47,66 @@ def _decode_codeact_parts(raw_parts: list[dict[str, Any]]) -> str:
     return "\n\n".join(sections)
 
 
+_CHARTS_JSON_LIMIT = 80_000
+
+
 def _serialize_charts_json(charts: list[dict[str, Any]]) -> str:
-    """Serialize all chart JSONs without prose-only insight text."""
+    """Serialize all chart JSONs (insight stripped), always as valid JSON.
+
+    The previous implementation blind-sliced the string at 80k chars, which
+    could emit unparseable JSON — chart_numeric then read it as "no
+    candidates" and forced a numeric failure (PR-04 F5). Oversized output
+    now drops trailing charts, then halves data rows, and marks the result
+    with "_truncated": true — parseable at every step.
+    """
     if not charts:
         return ""
     chart_jsons = []
     for chart in charts:
         cleaned = {key: value for key, value in chart.items() if key != "insight"}
         if cleaned:
-            chart_jsons.append(cleaned)
+            chart_jsons.append(dict(cleaned))
     if not chart_jsons:
         return ""
-    serialized = json.dumps(chart_jsons, ensure_ascii=False, default=str)
-    return serialized[:80000]
+
+    def dump(items: list[dict[str, Any]]) -> str:
+        return json.dumps(items, ensure_ascii=False, default=str)
+
+    serialized = dump(chart_jsons)
+    if len(serialized) <= _CHARTS_JSON_LIMIT:
+        return serialized
+
+    kept = chart_jsons
+    while len(kept) > 1 and len(dump(kept)) > _CHARTS_JSON_LIMIT:
+        kept = kept[:-1]
+    while len(dump(kept)) > _CHARTS_JSON_LIMIT:
+        shrunk = False
+        for chart in kept:
+            data = chart.get("data")
+            if isinstance(data, list) and len(data) > 1:
+                chart["data"] = data[: len(data) // 2]
+                shrunk = True
+        if not shrunk:
+            # a single unsplittable monster; keep the metadata, drop the bulk
+            kept = [{k: v for k, v in kept[0].items() if k != "data"}]
+            break
+    kept[0]["_truncated"] = True
+    return dump(kept)
+
+
+def extract_final_answer_text(messages: list[Any]) -> str:
+    """Final assistant message as plain text (Claude string / Gemini list)."""
+    if not messages:
+        return ""
+    content = messages[-1].content
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list) and content:
+        last_item = content[-1]
+        if isinstance(last_item, dict) and "text" in last_item:
+            return last_item["text"]
+        return str(last_item)
+    return str(content) if content else ""
 
 
 def _score_and_reason(result: Any) -> tuple[float | None, str | None]:
@@ -106,68 +153,64 @@ def evaluate_final_answer(
     actual_charts_json = _serialize_charts_json(charts_data)
 
     # Extract agent message
-    messages = agent_state.get("messages", [])
-    actual_agent_answer = ""
-    if messages:
-        content = messages[-1].content
-
-        if isinstance(content, str):
-            # Claude format: direct string
-            actual_agent_answer = content
-        elif isinstance(content, list) and content:
-            # Gemini format: list of content items
-            last_item = content[-1]
-            if isinstance(last_item, dict) and "text" in last_item:
-                actual_agent_answer = last_item["text"]
-            else:
-                # Fallback for unexpected list items
-                actual_agent_answer = str(last_item)
-        else:
-            # Fallback for any other format
-            actual_agent_answer = str(content) if content else ""
+    actual_agent_answer = extract_final_answer_text(agent_state.get("messages", []))
 
     # Extract codeact parts (base64-encoded code/output from agent reasoning)
     raw_codeact_parts = agent_state.get("codeact_parts", [])
     codeact_summary = _decode_codeact_parts(raw_codeact_parts)
 
+    judge_errors: list[str] = []
+
     # Score chart JSON, not prose insight text.
     charts_answer_score = None
     charts_answer_score_reason = None
     if expected_answer and actual_charts_json:
-        charts_answer_score, charts_answer_score_reason = _score_and_reason(
-            llm_judge_chart(
-                query,
-                expected_answer,
-                actual_charts_json,
-                codeact_summary=codeact_summary,
-                include_reason=True,
-            ),
-        )
+        try:
+            charts_answer_score, charts_answer_score_reason = _score_and_reason(
+                llm_judge_chart(
+                    query,
+                    expected_answer,
+                    actual_charts_json,
+                    codeact_summary=codeact_summary,
+                    include_reason=True,
+                ),
+            )
+        except Exception as error:  # judge outage: error, never a verdict (F4)
+            charts_answer_score_reason = f"JUDGE ERROR: {error}"
+            judge_errors.append("charts_answer")
 
     # Score agent answer
     agent_answer_score = None
     agent_answer_score_reason = None
     if expected_answer and actual_agent_answer:
-        # Has message response, evaluate it
-        agent_answer_score, agent_answer_score_reason = _score_and_reason(
-            llm_judge(
-                expected_answer,
-                actual_agent_answer,
-                include_reason=True,
-            ),
-        )
-    # else: No agent message, return None (not applicable)
+        try:
+            agent_answer_score, agent_answer_score_reason = _score_and_reason(
+                llm_judge(
+                    expected_answer,
+                    actual_agent_answer,
+                    include_reason=True,
+                ),
+            )
+        except Exception as error:
+            agent_answer_score_reason = f"JUDGE ERROR: {error}"
+            judge_errors.append("agent_answer")
 
     expected_text_match_score = None
     expected_text_match_score_reason = None
     if expected_text and actual_agent_answer:
-        expected_text_match_score, expected_text_match_score_reason = _score_and_reason(
-            llm_judge_expected_text(
-                expected_text,
-                actual_agent_answer,
-                include_reason=True,
-            ),
-        )
+        try:
+            expected_text_match_score, expected_text_match_score_reason = (
+                _score_and_reason(
+                    llm_judge_expected_text(
+                        expected_text,
+                        actual_agent_answer,
+                        include_reason=True,
+                    ),
+                )
+            )
+        except Exception as error:
+            expected_text_match_score_reason = f"JUDGE ERROR: {error}"
+            judge_errors.append("expected_text_match")
 
     # Set actual values to None if empty strings for cleaner CSV output
     return {
@@ -181,4 +224,5 @@ def evaluate_final_answer(
         "actual_charts_json": actual_charts_json or None,
         "actual_agent_answer": actual_agent_answer or None,
         "actual_codeact_summary": codeact_summary or None,
+        "judge_errors": judge_errors,
     }

@@ -113,7 +113,10 @@ def _widget_is_valid(widget: dict[str, Any]) -> bool:
     if widget_type == "insight":
         return widget.get("insight") is not None
     if widget_type == "text":
-        return widget.get("text") is not None
+        # the API nests the markdown at config.text (PR-04 F3); the flat
+        # key is kept as a fallback for older payloads
+        config = widget.get("config") or {}
+        return config.get("text") is not None or widget.get("text") is not None
     if widget_type == "map":
         config = widget.get("config") or {}
         snapshot = config.get("dataset") or config.get("imagery") or {}
@@ -157,8 +160,13 @@ def evaluate_dashboard_widgets(
         match = Counter(actual_types) == Counter(expected_dashboard_widgets)
         result["dashboard_widgets_match_score"] = 1.0 if match else 0.0
 
+    # An existing dashboard with zero widgets is an empty artifact: fail
+    # validity rather than skipping it (PR-04 F3). Only dashboard=None means
+    # "nothing to check".
     if widgets:
         all_valid = all(_widget_is_valid(w) for w in widgets)
         result["dashboard_widgets_valid_score"] = 1.0 if all_valid else 0.0
+    else:
+        result["dashboard_widgets_valid_score"] = 0.0
 
     return result

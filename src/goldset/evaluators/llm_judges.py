@@ -102,12 +102,23 @@ ANSWER_JUDGE_PROMPT = (
 )
 
 
+class JudgeError(RuntimeError):
+    """An LLM judge call failed. Raised instead of guessing a verdict:
+    a judge outage must surface as an error, never as a score (PR-04 F4)."""
+
+    def __init__(self, check: str, cause: Exception):
+        super().__init__(f"{check}: {cause}")
+        self.check = check
+
+
 def llm_judge_clarification(agent_state: dict, query: str) -> dict:
     """Use LLM to judge if the agent is asking for clarification instead of selecting an AOI."""
 
     class ClarificationJudgment(BaseModel):
-        is_clarification: bool
+        # reasoning precedes the verdict: haiku commits to the first field
+        # it emits and argues with itself otherwise (PR-04 F6)
         explanation: str
+        is_clarification: bool
 
     # Get the final answer/response from the agent
     charts_data = agent_state.get("charts_data", [])
@@ -183,8 +194,10 @@ def llm_judge_clarification(agent_state: dict, query: str) -> dict:
     try:
         result = judge_chain.invoke({"query": query, "response": final_response})
         return result.model_dump()
-    except Exception:
-        return {"is_clarification": False, "explanation": "LLM call failed"}
+    except Exception as error:
+        # Previously swallowed to False — which scored 1.0 on
+        # expected_clarification=False rows during judge outages.
+        raise JudgeError("clarification_requested", error) from error
 
 
 def llm_judge(

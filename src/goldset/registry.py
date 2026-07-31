@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from goldset.eval_types import ExpectedData
+from goldset.evaluators.guards import evaluate_guards
 from goldset.evaluators import (
     evaluate_aoi_selection,
     evaluate_clarification,
@@ -157,6 +158,22 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         ),
         run=lambda state, expected, query, dashboard: evaluate_dashboard_widgets(
             dashboard, expected.expected_dashboard_widgets
+        ),
+    ),
+    EvaluatorSpec(
+        name="guards",
+        kind="deterministic",
+        score_fields=(
+            "chart_produced_score",
+            "answered_without_data_score",
+            "web_fallback_score",
+            "pull_source_match_score",
+        ),
+        run=lambda state, expected, query, dashboard: evaluate_guards(
+            state,
+            expects_data_pull=expected.expects_data_pull(),
+            expected_answer=expected.expected_answer,
+            expected_dataset_id=expected.expected_dataset_id,
         ),
     ),
 )

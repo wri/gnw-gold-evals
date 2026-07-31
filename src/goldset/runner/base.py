@@ -138,8 +138,12 @@ class BaseTestRunner(ABC):
         this replaces (later evaluators win key collisions).
         """
         evaluations: dict[str, Any] = {}
+        judge_errors: list[str] = []
         for spec in EVALUATORS:
-            evaluations.update(spec.run(agent_state, expected_data, query, dashboard))
+            result = spec.run(agent_state, expected_data, query, dashboard)
+            judge_errors.extend(result.pop("judge_errors", []) or [])
+            evaluations.update(result)
+        evaluations["judge_errors"] = judge_errors
         return evaluations
 
     def _calculate_overall_score(
