@@ -1,7 +1,7 @@
 id: 1-019
 uid: d08b06db283dbe90
 status: done
-group: unspecified
+group: direct
 query: 'Which year had the most natural grassland in the Blackfeet Indian reservation in Montana
   USA: 2015 or 2000?'
 expected:
