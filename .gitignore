@@ -12,3 +12,6 @@ scratch/
 
 # Secrets
 .env
+
+# Per-run raw artifacts (large, regenerable) — the committed ledger lives in results/runs/
+results/artifacts/

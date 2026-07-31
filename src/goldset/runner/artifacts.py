@@ -1,0 +1,111 @@
+"""Per-case raw-artifact capture: keep more than we score.
+
+The committed ledger stays small; these gzipped JSONs (gitignored, under
+``results/artifacts/<run_id>/<uid>.json.gz``) hold the signals future
+validators and triage need — decoded codeact, the tool-call sequence, the
+last statistics payload, chart specs, dashboard widget bodies — so a run
+can be re-analysed without being re-executed.
+"""
+
+from __future__ import annotations
+
+import base64
+import gzip
+import json
+from pathlib import Path
+from typing import Any
+
+TOOL_OUTPUT_LIMIT = 3_000
+CODEACT_PART_LIMIT = 8_000
+STATISTICS_ROW_LIMIT = 200
+
+
+def _decode_codeact(agent_state: dict[str, Any]) -> list[dict[str, str]]:
+    parts = []
+    for part in agent_state.get("codeact_parts") or []:
+        try:
+            content = base64.b64decode(part.get("content", "")).decode("utf-8")
+        except Exception:
+            content = str(part.get("content", ""))
+        parts.append(
+            {"type": part.get("type", "unknown"), "content": content[:CODEACT_PART_LIMIT]}
+        )
+    return parts
+
+
+def _tool_calls(agent_state: dict[str, Any]) -> list[dict[str, Any]]:
+    calls: list[dict[str, Any]] = []
+    messages = agent_state.get("messages") or []
+    for message in messages:
+        for call in getattr(message, "tool_calls", None) or []:
+            if isinstance(call, dict):
+                calls.append(
+                    {
+                        "name": call.get("name", "unknown"),
+                        "args": call.get("args", {}),
+                        "id": call.get("id", ""),
+                    }
+                )
+    for message in messages:
+        call_id = getattr(message, "tool_call_id", None)
+        if call_id is None or not hasattr(message, "content"):
+            continue
+        for call in reversed(calls):
+            if call["id"] == call_id and "output" not in call:
+                call["output"] = str(message.content)[:TOOL_OUTPUT_LIMIT]
+                break
+    return calls
+
+
+def _last_statistics(agent_state: dict[str, Any]) -> dict[str, Any] | None:
+    statistics = agent_state.get("statistics")
+    if isinstance(statistics, list):
+        statistics = statistics[-1] if statistics else None
+    if not isinstance(statistics, dict):
+        return None
+    slim = {k: v for k, v in statistics.items() if k != "data"}
+    data = statistics.get("data")
+    if isinstance(data, list):
+        slim["data"] = data[:STATISTICS_ROW_LIMIT]
+        slim["data_rows_total"] = len(data)
+    elif data is not None:
+        slim["data"] = data
+    return slim
+
+
+def build_artifact(
+    agent_state: dict[str, Any],
+    dashboard: dict[str, Any] | None,
+    thread_id: str,
+    trace_url: str | None,
+) -> dict[str, Any]:
+    """Everything worth keeping from one case's raw state, JSON-safe."""
+    return {
+        "thread_id": thread_id,
+        "trace_url": trace_url,
+        "codeact": _decode_codeact(agent_state),
+        "tool_calls": _tool_calls(agent_state),
+        "statistics_last": _last_statistics(agent_state),
+        "charts_data": agent_state.get("charts_data"),
+        "aoi_selection": agent_state.get("aoi_selection"),
+        "dataset": agent_state.get("dataset"),
+        "suggested_datasets": agent_state.get("suggested_datasets"),
+        "nudge": agent_state.get("nudge"),
+        "dashboard_widgets": (dashboard or {}).get("widgets"),
+    }
+
+
+class ArtifactWriter:
+    """Writes one gzipped JSON per case under a run's artifact directory."""
+
+    def __init__(self, artifacts_dir: Path, run_id: str):
+        self._dir = artifacts_dir / run_id
+        self._dir.mkdir(parents=True, exist_ok=True)
+
+    def __call__(self, uid: str, trial: int, artifact: dict[str, Any]) -> Path:
+        suffix = f"_t{trial}" if trial > 1 else ""
+        path = self._dir / f"{uid}{suffix}.json.gz"
+        payload = json.dumps(artifact, default=str, ensure_ascii=False)
+        with gzip.open(path, "wt", encoding="utf-8") as handle:
+            handle.write(payload)
+        return path

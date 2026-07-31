@@ -58,9 +58,9 @@ checks, `_widget_is_valid`'s `text` key, judge exception swallowing, the
       verdicts agree on every case, excepting only documented
       judge-sampling noise (list any disagreement with its two reason
       strings).
-- [ ] All ported validators carry their gnw-evals unit tests, passing.
-- [ ] No network in unit tests; runner tested against recorded fixtures.
-- [ ] `uv run gold run --help` documents every flag; no `.env` silently
+- [x] All ported validators carry their gnw-evals unit tests, passing.
+- [x] No network in unit tests; runner tested against recorded fixtures.
+- [x] `uv run gold run --help` documents every flag; no `.env` silently
       overriding CLI defaults (the gnw-evals landmine — flags win, always).
 
 ## Test plan
