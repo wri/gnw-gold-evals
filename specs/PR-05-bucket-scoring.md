@@ -59,11 +59,11 @@ release-gate summary; ledger schema addition (`buckets` block per run).
 
 ## Acceptance criteria
 
-- [ ] Fixture suite covering: all-pass row, one-fail row, zero-check row,
+- [x] Fixture suite covering: all-pass row, one-fail row, zero-check row,
       unmeasured bucket, dual-tagged check attribution, info-only exclusion.
-- [ ] Run report on real staging data shows all four layers; the
+- [x] Run report on real staging data shows all four layers; the
       reconciliation delta is zero or itemised.
-- [ ] `diff_runs.py --fail-on-regression` exits nonzero on a doctored
+- [x] `diff_runs.py --fail-on-regression` exits nonzero on a doctored
       regression fixture and zero on recovery-only changes.
 - [ ] `methodology_note` recorded in the first post-PR run.
 

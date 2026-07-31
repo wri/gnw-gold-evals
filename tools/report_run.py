@@ -1,0 +1,127 @@
+"""Render the four-layer GOLD report for a ledger run (PR-05).
+
+    uv run python tools/report_run.py results/runs/<run_id>.json
+
+Layers: row verdicts -> bucket table (scores beside coverage denominators)
+-> reconciliation (implied vs evaluated, misses itemised) -> diagnostics
+(judge errors, slow rows). Markdown to stdout.
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from goldset.buckets import (
+    BUCKETS,
+    INFO_ONLY,
+    reconcile,
+    row_verdict,
+    summarize_buckets,
+)
+from goldset.ledger import read_run
+from goldset.store import load_store
+
+
+def _bucket_line(name: str, block: dict) -> str:
+    dedicated, shared = block["dedicated"], block["shared"]
+    if dedicated["evaluated"] == 0 and shared["evaluated"] == 0:
+        score = "— UNMEASURED"
+    else:
+        parts = []
+        if dedicated["evaluated"]:
+            parts.append(f"dedicated {dedicated['passed']}/{dedicated['evaluated']}")
+        else:
+            parts.append("dedicated —")
+        if shared["evaluated"]:
+            parts.append(f"shared {shared['passed']}/{shared['evaluated']}")
+        score = ", ".join(parts)
+    return f"| {name} | {score} | {block['rows_covered']} |"
+
+
+def render(run: dict, expected_by_uid: dict[str, dict[str, str]]) -> str:
+    entries = run["results"]
+    buckets = run.get("buckets") or summarize_buckets(entries)
+    verdicts = buckets["verdicts"]
+
+    lines = [
+        f"# {run['run_id']}",
+        "",
+        f"{run['environment']} · build {run['build']} · ff {run['ff'] or '—'} · "
+        f"{run['num_trials']} trial(s) · caseset {run['caseset_version']}",
+        "",
+        f"**Rows clean: {verdicts['pass']}/{buckets['rows_total']}** "
+        f"(fail {verdicts['fail']}, error {verdicts['error']}, "
+        f"uncovered {verdicts['uncovered']})",
+    ]
+    uncovered = [e["id"] for e in entries if row_verdict(e) == "uncovered"]
+    if uncovered:
+        lines.append(f"Uncovered rows (measured nothing): {', '.join(uncovered)}")
+
+    lines += [
+        "",
+        "| bucket | checks passed/evaluated | rows covered |",
+        "|---|---|---|",
+    ]
+    lines += [_bucket_line(bucket, buckets[bucket]) for bucket in BUCKETS]
+    lines.append(f"\nRows total: {buckets['rows_total']}. Info-only checks "
+                 f"({', '.join(sorted(INFO_ONLY))}) are excluded from verdicts.")
+
+    reconciliation = reconcile(entries, expected_by_uid)
+    lines += [
+        "",
+        f"**Reconciliation:** {reconciliation['evaluated_of_implied']}"
+        f"/{reconciliation['implied']} implied checks evaluated"
+        + (f"; {reconciliation['rows_not_in_store']} rows not in current store"
+           if reconciliation["rows_not_in_store"] else ""),
+    ]
+    if len(reconciliation["missing"]) <= 20:
+        for miss in reconciliation["missing"]:
+            lines.append(f"- MISSING: {miss['id']} `{miss['check']}` never evaluated")
+    else:
+        by_check: dict[str, list[str]] = {}
+        for miss in reconciliation["missing"]:
+            by_check.setdefault(miss["check"], []).append(miss["id"])
+        for check, ids in sorted(by_check.items()):
+            sample = ", ".join(ids[:6]) + (f", +{len(ids) - 6} more" if len(ids) > 6 else "")
+            lines.append(f"- MISSING: `{check}` never evaluated on {len(ids)} rows ({sample})")
+
+    failing = [e for e in entries if row_verdict(e) == "fail"]
+    if failing:
+        lines += ["", "## Failing rows", ""]
+        for entry in failing:
+            failed = [n for n, v in entry["checks"].items()
+                      if v == 0.0 and n not in INFO_ONLY]
+            lines.append(f"- {entry['id']}: {', '.join(sorted(failed))}")
+    errored = [e for e in entries if row_verdict(e) == "error"]
+    if errored:
+        lines += ["", "## Errored rows (fix the harness/judge before reading these as agent failures)", ""]
+        for entry in errored:
+            cause = entry.get("error") or f"judge errors: {entry.get('judge_errors')}"
+            lines.append(f"- {entry['id']}: {cause}")
+    slow = [e for e in entries if (e.get("info") or {}).get("slow")]
+    if slow:
+        lines += ["", f"Slow rows (> threshold): "
+                  + ", ".join(f"{e['id']} ({e.get('latency_s')}s)" for e in slow)]
+    return "\n".join(lines)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("run", type=Path)
+    parser.add_argument("--cases-dir", type=Path, default=Path("cases"))
+    args = parser.parse_args()
+
+    run = read_run(args.run)
+    expected_by_uid = {
+        case.uid: case.expected for _p, case, _u in load_store(args.cases_dir)
+    }
+    print(render(run, expected_by_uid))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

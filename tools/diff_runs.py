@@ -25,6 +25,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from goldset.buckets import BUCKETS, INFO_ONLY, buckets_for
 from goldset.ledger import read_run
 
 TRANSITIONS = ("regressions", "recoveries", "coverage_gained", "coverage_lost")
@@ -59,12 +60,20 @@ def diff(run_a: dict, run_b: dict) -> dict:
         for check in sorted(set(entry_a["checks"]) | set(entry_b["checks"])):
             kind = classify(entry_a["checks"].get(check), entry_b["checks"].get(check))
             if kind:
-                item = {"uid": uid, "id": entry_b.get("id") or entry_a.get("id"), "check": check}
+                item = {"uid": uid, "id": entry_b.get("id") or entry_a.get("id"), "check": check,
+                        "buckets": list(buckets_for(check)), "info_only": check in INFO_ONLY}
                 if kind == "regressions":
                     reason = (entry_b.get("reasons") or {}).get(check)
                     if reason:
                         item["reason"] = reason
                 result[kind].append(item)
+    result["regressions_by_bucket"] = {
+        bucket: sum(
+            1 for item in result["regressions"]
+            if bucket in item["buckets"] and not item["info_only"]
+        )
+        for bucket in BUCKETS
+    }
     result["shared_cases"] = len(shared)
     result["only_in_a"] = len(set(index_a) - set(index_b))
     result["only_in_b"] = len(set(index_b) - set(index_a))
@@ -87,6 +96,12 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
         f"{len(report['coverage_gained'])} checks gained, "
         f"{len(report['coverage_lost'])} checks lost**",
     ]
+    by_bucket = report.get("regressions_by_bucket") or {}
+    if any(by_bucket.values()):
+        lines.append(
+            "Regressions by bucket: "
+            + ", ".join(f"{b} {n}" for b, n in by_bucket.items() if n)
+        )
     for kind, marker in (("regressions", "✗"), ("recoveries", "✓")):
         if report[kind]:
             lines += ["", f"## {kind}", ""]
@@ -127,7 +142,8 @@ def main() -> int:
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(report, indent=2) + "\n")
-    if args.fail_on_regression and report["regressions"]:
+    real_regressions = [r for r in report["regressions"] if not r["info_only"]]
+    if args.fail_on_regression and real_regressions:
         return 1
     return 0
 

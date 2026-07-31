@@ -19,6 +19,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from goldset.adapter import case_to_expected
+from goldset.buckets import summarize_buckets
 from goldset.eval_types import TestResult
 from goldset.ledger import majority, make_run_id, reason_name_from_column, write_run
 from goldset.store import Case, load_store, read_manifest
@@ -208,6 +209,7 @@ def main() -> int:
         "caseset_version": manifest["caseset_version"],
         "results": entries,
     }
+    run_record["buckets"] = summarize_buckets(entries)
     if args.note:
         run_record["methodology_note"] = args.note
     path = write_run(args.results_dir, run_record)
