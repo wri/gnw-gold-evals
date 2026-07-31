@@ -1,5 +1,5 @@
 id: 1-069
-uid: 534bee522f89d76b
+uid: 73c23701832b400f
 status: done
 group: parent-child
 query: Which country in the world had the most natural grassland in 2022?
@@ -11,5 +11,6 @@ expected:
   start_date: '2022-01-01'
   end_date: '2022-12-31'
   answer: Russia
+  scope: analyse
 notes:
   aoi_type: gadm 0

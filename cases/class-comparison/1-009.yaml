@@ -1,5 +1,5 @@
 id: 1-009
-uid: 83d29ed8154762b7
+uid: 06567da9ff5ebd32
 status: done
 group: class-comparison
 query: What percentage of disturbances in Sara, Bolivia were caught by multiple systems during
@@ -10,5 +10,6 @@ expected:
   dataset_id: '11'
   dataset_name: Integrated alerts
   answer: 4.00%
+  scope: analyse
 notes:
   aoi_type: gadm 2

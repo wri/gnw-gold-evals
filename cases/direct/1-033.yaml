@@ -1,5 +1,5 @@
 id: 1-033
-uid: d325b52479e7c354
+uid: a2520adba100dc46
 status: not doing
 group: direct
 query: How much tree cover loss was there in the Corona Forestal protected area in Tenerife
@@ -11,6 +11,7 @@ expected:
   start_date: '2023-01-01'
   end_date: '2023-12-31'
   answer: 1,436.02 hectares
+  scope: analyse
 notes:
   aoi_type: wdpa
   value_1: 1,436.02 hectares

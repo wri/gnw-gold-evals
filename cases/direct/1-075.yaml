@@ -1,5 +1,5 @@
 id: 1-075
-uid: c724879c34db7b28
+uid: 40e00c89329a649f
 status: not doing
 group: direct
 query: How much tree cover loss within intact forest landscapes in Sweden since 2020?
@@ -9,3 +9,4 @@ expected:
   dataset_name: Tree cover loss
   context_layer: intact_forest
   answer: 3.3 kha
+  scope: analyse

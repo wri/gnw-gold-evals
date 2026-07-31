@@ -190,6 +190,10 @@ class ExpectedData(BaseModel):
     expected_dashboard_widgets: list[str] | None = None
     expected_nudge_type: str = ""
     expected_nudge_options: list[str] = []
+    # PR-06 additions
+    expected_chart_type: str = ""
+    expected_scope: str = ""
+    expected_class_values: str = ""
     test_id: str = ""
     test_group: str = "unknown"
     status: str = "ready"

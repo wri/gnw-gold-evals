@@ -1,5 +1,5 @@
 id: 1-048
-uid: 9db793af38c5078c
+uid: e92f2c04f8e4637a
 status: done
 group: temporal
 query: 'True or false: in Alto Rio Guama, more tree cover was gained in the period between
@@ -11,6 +11,7 @@ expected:
   start_date: '2000-01-01'
   end_date: '2020-12-31'
   answer: 'TRUE'
+  scope: analyse
 notes:
   aoi_type: wdpa
   value_1: 7,266.24 hectares

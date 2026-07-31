@@ -14,7 +14,17 @@ from dataclasses import dataclass
 from typing import Any
 
 from goldset.eval_types import ExpectedData
+from goldset.evaluators.analysis_checks import (
+    evaluate_chart_integrity,
+    evaluate_class_values,
+)
+from goldset.evaluators.explanation_checks import evaluate_answer_traceability
 from goldset.evaluators.guards import evaluate_guards
+from goldset.evaluators.output_checks import (
+    evaluate_chart_type,
+    evaluate_chart_well_formed,
+)
+from goldset.evaluators.scope_checks import evaluate_scope
 from goldset.evaluators import (
     evaluate_aoi_selection,
     evaluate_clarification,
@@ -174,6 +184,40 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expects_data_pull=expected.expects_data_pull(),
             expected_answer=expected.expected_answer,
             expected_dataset_id=expected.expected_dataset_id,
+        ),
+    ),
+    EvaluatorSpec(
+        name="analysis_checks",
+        kind="deterministic",
+        score_fields=("class_value_match_score", "chart_integrity_score"),
+        run=lambda state, expected, query, dashboard: {
+            **evaluate_class_values(state, expected.expected_class_values),
+            **evaluate_chart_integrity(state),
+        },
+    ),
+    EvaluatorSpec(
+        name="traceability",
+        kind="deterministic",
+        score_fields=("answer_traceability_score",),
+        run=lambda state, expected, query, dashboard: (
+            evaluate_answer_traceability(state)
+        ),
+    ),
+    EvaluatorSpec(
+        name="output_checks",
+        kind="deterministic",
+        score_fields=("chart_well_formed_score", "chart_type_match_score"),
+        run=lambda state, expected, query, dashboard: {
+            **evaluate_chart_well_formed(state),
+            **evaluate_chart_type(state, expected.expected_chart_type),
+        },
+    ),
+    EvaluatorSpec(
+        name="scope",
+        kind="deterministic",
+        score_fields=("scope_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_scope(
+            state, expected.expected_scope
         ),
     ),
 )

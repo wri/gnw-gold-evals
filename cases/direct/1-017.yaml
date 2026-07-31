@@ -1,5 +1,5 @@
 id: 1-017
-uid: 414ce87721e86e4b
+uid: 36d745d7b2073d9b
 status: done
 group: direct
 query: How much natural grassland is there in the Bulgan Tal key biodiversity area in 2019?
@@ -8,5 +8,6 @@ expected:
   dataset_id: '2'
   dataset_name: Natural/Semi-Natural Grasslands
   answer: 18494.8 ha
+  scope: analyse
 notes:
   aoi_type: kba

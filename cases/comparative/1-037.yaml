@@ -1,5 +1,5 @@
 id: 1-037
-uid: aac330b7010a1899
+uid: a0f0a84c4c433913
 status: done
 group: comparative
 query: Of the Canadian provinces+territories beginning with 'N' - which had the most deforestation
@@ -10,5 +10,6 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   answer: Northwest Territories
+  scope: analyse
 notes:
   aoi_type: gadm 1

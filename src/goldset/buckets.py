@@ -46,6 +46,13 @@ DEDICATED: dict[str, str] = {
     "clarification_requested": SCOPE,
     "suggested_datasets_match": SCOPE,
     "nudge_match": SCOPE,
+    # PR-06 bucket-filling validators
+    "class_value_match": ANALYSIS,
+    "chart_integrity": ANALYSIS,
+    "answer_traceability": EXPLANATION,
+    "chart_well_formed": OUTPUT,
+    "chart_type_match": OUTPUT,
+    "scope_match": SCOPE,
 }
 
 # Checks whose failure straddles two buckets and cannot be attributed.
@@ -168,6 +175,12 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("dashboard_created")
     if expected.get("dashboard_widgets"):
         implied.add("dashboard_widgets_match")
+    if expected.get("class_values"):
+        implied.add("class_value_match")
+    if expected.get("chart_type"):
+        implied.add("chart_type_match")
+    if expected.get("scope"):
+        implied.add("scope_match")
     return implied
 
 

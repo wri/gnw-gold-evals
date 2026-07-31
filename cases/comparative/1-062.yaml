@@ -1,5 +1,5 @@
 id: 1-062
-uid: 9101ff09d2899f33
+uid: a5dcbdbb07b619b7
 status: not doing
 group: comparative
 query: Which US state lost more forest due to wildfires? Washington or Oregon?
@@ -9,6 +9,7 @@ expected:
   dataset_id: '8'
   dataset_name: Tree cover loss by dominant driver
   answer: Oregon
+  scope: analyse
 notes:
   status_reason: 'Original note still valid: expected_aoi_ids could be the two named states
     or all states filtered, both correct. Agent also picks dataset 10 over 8 and answers Washington

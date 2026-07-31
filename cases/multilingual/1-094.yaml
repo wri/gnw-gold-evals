@@ -1,5 +1,5 @@
 id: 1-094
-uid: f09c1fa04cba3721
+uid: a97b2961d2cc6a98
 status: done
 group: multilingual
 query: 2022年中国损失了多少森林面积?
@@ -12,3 +12,4 @@ expected:
   end_date: '2022-12-31'
   answer: 611,900 hectares
   text: Provides good response in the same language as the prompt
+  scope: analyse

@@ -1,5 +1,5 @@
 id: 1-023
-uid: fc71248e9e5056a3
+uid: 5513eaee4860bf18
 status: done
 group: comparative
 query: 'Which had more natural grassland coverage in 2000: North or South Dakota?'
@@ -11,5 +11,6 @@ expected:
   start_date: '2000-01-01'
   end_date: '2000-12-31'
   answer: South Dakota
+  scope: analyse
 notes:
   aoi_type: gadm 1

@@ -1,5 +1,5 @@
 id: 1-046
-uid: 6404bc0a1fb78e51
+uid: cf98ea5d8d7d7811
 status: done
 group: direct
 query: How many tonnes of CO2 was emitted in Ihorombe, Madagascar in 2019 due to tree cover
@@ -10,5 +10,6 @@ expected:
   dataset_id: '4'
   dataset_name: Forest GHG emissions
   answer: 658,571 tonnes
+  scope: analyse
 notes:
   aoi_type: gadm 2

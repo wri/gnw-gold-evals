@@ -1,5 +1,5 @@
 id: 1-019
-uid: d08b06db283dbe90
+uid: 50f04e58d163410f
 status: done
 group: direct
 query: 'Which year had the most natural grassland in the Blackfeet Indian reservation in Montana
@@ -11,5 +11,6 @@ expected:
   start_date: '2000-01-01'
   end_date: '2015-12-31'
   answer: '2015'
+  scope: analyse
 notes:
   aoi_type: Landmark

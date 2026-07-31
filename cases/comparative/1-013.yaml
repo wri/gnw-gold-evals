@@ -1,5 +1,5 @@
 id: 1-013
-uid: 7bd70eb14e1a7a6c
+uid: 7f751fa8bce053e5
 status: done
 group: comparative
 query: Which had more cropland area in 2024, Nigeria or Ghana?
@@ -11,6 +11,7 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-11'
   answer: Nigeria
+  scope: analyse
 notes:
   aoi_type: gadm 0
   class_1: cropland

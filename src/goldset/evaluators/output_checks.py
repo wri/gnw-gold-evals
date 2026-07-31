@@ -1,0 +1,81 @@
+"""Output-bucket validators (PR-06 O2, O3), both deterministic.
+
+O2 ``chart_well_formed`` is expectation-free structural sanity: a chart
+whose axis fields reference nothing, or whose data is empty, renders as
+garbage regardless of what the analysis computed. It deliberately overlaps
+A3 ``chart_integrity`` — a broken *spec* is an Output failure, a mis-joined
+*dataset* under a plausible spec is an Analysis failure; the two reasons
+read differently on purpose.
+
+O3 ``chart_type_match`` needs the new ``expected_chart_type`` field
+(semicolon alternatives, matched against the first chart) — ported from
+the eval-metrics branch design.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+
+def evaluate_chart_well_formed(agent_state: dict[str, Any]) -> dict[str, Any]:
+    charts = agent_state.get("charts_data") or []
+    result: dict[str, Any] = {
+        "chart_well_formed_score": None,
+        "chart_well_formed_reason": None,
+        "actual_max_pie_slices": None,
+    }
+    if not charts:
+        return result
+
+    problems = []
+    max_pie_slices = 0
+    for index, chart in enumerate(charts):
+        label = f"chart {index} ({chart.get('type', '?')})"
+        data = chart.get("data")
+        records = [row for row in data if isinstance(row, dict)] if isinstance(
+            data, list
+        ) else []
+        if not records:
+            problems.append(f"{label}: empty data")
+            continue
+        keys = {key for record in records for key in record}
+        for axis in ("xAxis", "yAxis"):
+            field = chart.get(axis)
+            if isinstance(field, str) and field and field not in keys:
+                problems.append(
+                    f"{label}: {axis} references field {field!r} absent from data"
+                )
+        if chart.get("type") == "pie":
+            max_pie_slices = max(max_pie_slices, len(records))
+
+    result["chart_well_formed_score"] = 0.0 if problems else 1.0
+    if problems:
+        result["chart_well_formed_reason"] = "; ".join(problems)
+    if max_pie_slices:
+        # info-only for now: surfaced for triage, thresholded later if noisy
+        result["actual_max_pie_slices"] = max_pie_slices
+    return result
+
+
+def evaluate_chart_type(
+    agent_state: dict[str, Any], expected_chart_type: str
+) -> dict[str, Any]:
+    result: dict[str, Any] = {
+        "chart_type_match_score": None,
+        "actual_chart_type": None,
+    }
+    if not expected_chart_type:
+        return result
+
+    charts = agent_state.get("charts_data") or []
+    actual = str(charts[0].get("type", "")) if charts else ""
+    result["actual_chart_type"] = actual or None
+    if not actual:
+        # a chart-type expectation implies a chart; none is a failure
+        result["chart_type_match_score"] = 0.0
+        return result
+    alternatives = {
+        alt.strip().lower() for alt in expected_chart_type.split(";") if alt.strip()
+    }
+    result["chart_type_match_score"] = 1.0 if actual.lower() in alternatives else 0.0
+    return result

@@ -38,14 +38,14 @@ multilingual number-parsing beyond the abstain rule; multiturn (PR-07).
 
 ## Acceptance criteria
 
-- [ ] Each validator: unit tests from real run-6 fixtures (1-060 for A3,
+- [x] Each validator: unit tests from real run-6 fixtures (1-060 for A3,
       1-027/1-006/1-009 for E1, 1-085 for S1) plus clean-row negatives.
-- [ ] E1 abstains (null, counted in reconciliation) on ambiguous-decimal
+- [x] E1 abstains (null, counted in reconciliation) on ambiguous-decimal
       multilingual rows rather than guessing.
 - [ ] 3-trial staging run: every new deterministic check at std ≤ 0.04;
       zero false positives on run-6's known-clean rows; Analysis bucket
       shows nonzero coverage in the bucket table.
-- [ ] Bucket coverage after this PR: every bucket ≥ 20 rows with ≥ 1
+- [x] Bucket coverage after this PR: every bucket ≥ 20 rows with ≥ 1
       dedicated check (Analysis exempt from the row target until
       `class_values` population completes; actual number stated in the PR).
 

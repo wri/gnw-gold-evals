@@ -1,5 +1,5 @@
 id: 1-051
-uid: c2bc96f6954c5bb2
+uid: 1067cc76e8fe2629
 status: done
 group: parent-child
 query: Which province of Galicia (ESP), gained the least tree cover between 2000-2020?
@@ -11,6 +11,7 @@ expected:
   start_date: '2000-01-01'
   end_date: '2020-12-31'
   answer: Pontevedra
+  scope: analyse
 notes:
   aoi_type: gadm 1
   value_1: 9,623.86 hectares

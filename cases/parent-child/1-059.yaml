@@ -1,5 +1,5 @@
 id: 1-059
-uid: 955381186d95914b
+uid: 70be2a6faeef4ef4
 status: done
 group: parent-child
 query: What is the global total tree cover loss in 2025?
@@ -9,5 +9,6 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   answer: 25.54 million hectares
+  scope: analyse
 notes:
   aoi_type: gadm 0

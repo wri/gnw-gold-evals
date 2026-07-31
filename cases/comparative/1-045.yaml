@@ -1,5 +1,5 @@
 id: 1-045
-uid: 8b2577afd3226ea4
+uid: 980753f8735d62b4
 status: done
 group: comparative
 query: 'True or False: In Rep. of Congo, Bouenza generated more deforestation related carbon
@@ -12,5 +12,6 @@ expected:
   start_date: '2021-01-01'
   end_date: '2021-12-31'
   answer: 'FALSE'
+  scope: analyse
 notes:
   aoi_type: gadm 1

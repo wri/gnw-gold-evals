@@ -1,5 +1,5 @@
 id: 1-064
-uid: 54c2a7558498a694
+uid: e3b8acd95fe9c6fb
 status: done
 group: class-comparison
 query: What is the largest driver of deforestation in Nannup, Western Australia.
@@ -9,6 +9,7 @@ expected:
   dataset_id: '8'
   dataset_name: Tree cover loss by dominant driver
   answer: wildfire
+  scope: analyse
 notes:
   aoi_type: gadm 2
   value_2: 32,711.6 hectares
