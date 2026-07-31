@@ -104,7 +104,7 @@ def parse_cases(text: str) -> tuple[list[Case], int]:
 
 
 def fetch(url: str) -> str:
-    with urllib.request.urlopen(url, timeout=60) as response:  # noqa: S310
+    with urllib.request.urlopen(url, timeout=60) as response:
         return response.read().decode("utf-8")
 
 

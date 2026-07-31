@@ -27,7 +27,6 @@ class BaseTestRunner(ABC):
             TestResult with evaluation scores and metadata
 
         """
-        pass
 
     def _create_empty_evaluation_result(
         self,

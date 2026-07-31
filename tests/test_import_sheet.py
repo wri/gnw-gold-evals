@@ -7,7 +7,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from import_sheet import find_header, parse_cases, run_import  # noqa: E402
+from import_sheet import find_header, parse_cases, run_import
 
 SHEET = """\
 GOLD set,,do not edit row,,,

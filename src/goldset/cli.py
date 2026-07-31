@@ -15,7 +15,7 @@ import asyncio
 import os
 import subprocess
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from goldset.adapter import case_to_expected, turn_to_expected
@@ -75,6 +75,18 @@ def merge_trials(entries: list[dict]) -> dict:
     merged["trials"] = [
         {"checks": e["checks"], "latency_s": e.get("latency_s")} for e in entries
     ]
+    # Errors from ANY trial must survive the merge (PR-09 H3) — the base
+    # copy above only carries the final trial's metadata.
+    judge_errors = sorted({je for e in entries for je in e.get("judge_errors", [])})
+    if judge_errors:
+        merged["judge_errors"] = judge_errors
+    else:
+        merged.pop("judge_errors", None)
+    errors = list(dict.fromkeys(e["error"] for e in entries if e.get("error")))
+    if errors:
+        merged["error"] = " | ".join(errors)[:500]
+    else:
+        merged.pop("error", None)
     return merged
 
 
@@ -210,6 +222,24 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     return list(await asyncio.gather(*(run_one(case) for case in cases)))
 
 
+def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
+    """Artifacts are regenerable and unbounded (PR-09 H6): keep the newest
+    N run directories (run_ids sort chronologically), delete the rest."""
+    import shutil
+
+    artifacts = results_dir / "artifacts"
+    if not artifacts.exists():
+        print("no artifacts directory; nothing to prune")
+        return 0
+    run_dirs = sorted(d for d in artifacts.iterdir() if d.is_dir())
+    doomed = run_dirs[:-keep_runs] if keep_runs > 0 else run_dirs
+    for directory in doomed:
+        shutil.rmtree(directory)
+        print(f"pruned {directory}")
+    print(f"kept {len(run_dirs) - len(doomed)} run(s), pruned {len(doomed)}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(prog="gold", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -236,7 +266,17 @@ def main() -> int:
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
     run.add_argument("--verbose", action="store_true")
+
+    prune = sub.add_parser(
+        "prune-artifacts",
+        help="delete raw artifact dirs beyond the newest N runs (ledger is untouched)",
+    )
+    prune.add_argument("--results-dir", type=Path, default=Path("results"))
+    prune.add_argument("--keep-runs", type=int, default=5)
     args = parser.parse_args()
+
+    if args.command == "prune-artifacts":
+        return prune_artifacts(args.results_dir, args.keep_runs)
 
     manifest = read_manifest(args.cases_dir)
     if manifest is None:
@@ -262,7 +302,7 @@ def main() -> int:
     environment = args.env if not args.api_base_url else (
         "prod" if "staging" not in args.api_base_url else "staging"
     )
-    started = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
 
     print(f"run {args.run_id}: {len(cases)} cases x {args.trials} trial(s) "

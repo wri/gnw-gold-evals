@@ -201,20 +201,40 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
     return implied
 
 
+def implied_checks_for_case(case: Any) -> set[str]:
+    """Implied checks for a store Case — multiturn-aware (PR-09 H4).
+    Multi-turn cases imply their per-turn checks under ``t<N>.`` prefixes,
+    plus ``t<N>.state_delta`` for every turn carrying delta assertions;
+    without this they contribute zero implied checks and a conversation
+    whose checks all vanished would pass reconciliation silently."""
+    if not getattr(case, "is_multiturn", False):
+        return implied_checks(case.expected)
+    implied: set[str] = set()
+    for number, turn in enumerate(case.turns, start=1):
+        for check in implied_checks(turn.get("expected") or {}):
+            implied.add(f"t{number}.{check}")
+        if turn.get("deltas"):
+            implied.add(f"t{number}.state_delta")
+    return implied
+
+
 def reconcile(
-    entries: list[dict[str, Any]], expected_by_uid: dict[str, dict[str, str]]
+    entries: list[dict[str, Any]], implied_by_uid: dict[str, Any]
 ) -> dict[str, Any]:
     """Implied-vs-evaluated ledger line. ``missing`` must be empty or every
-    item explained — silent non-measurement is the bug class this kills."""
+    item explained — silent non-measurement is the bug class this kills.
+    Values in ``implied_by_uid`` may be a raw expected-dict (legacy) or a
+    precomputed set of check names."""
     implied_total = evaluated_of_implied = 0
     missing: list[dict[str, str]] = []
     unmatched_rows = 0
     for entry in entries:
-        expected = expected_by_uid.get(entry.get("uid") or "")
+        expected = implied_by_uid.get(entry.get("uid") or "")
         if expected is None:
             unmatched_rows += 1
             continue
-        for check in sorted(implied_checks(expected)):
+        implied = expected if isinstance(expected, set) else implied_checks(expected)
+        for check in sorted(implied):
             implied_total += 1
             if entry.get("checks", {}).get(check) is not None:
                 evaluated_of_implied += 1

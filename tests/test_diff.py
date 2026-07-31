@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from diff_runs import classify, diff  # noqa: E402
+from diff_runs import classify, diff
 
 
 def run_fixture(results, caseset="cs1", run_id="20260731T000000Z_staging"):

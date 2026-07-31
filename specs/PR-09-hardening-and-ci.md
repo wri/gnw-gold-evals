@@ -71,10 +71,10 @@ that adopt it is intended.
 
 - [ ] CI green on the stack tip; check.py failure and a schema violation
       each demonstrably fail a PR.
-- [ ] H2/H3/H4: regression test per item reproducing the original defect.
-- [ ] H7: evaluator + adapter + docs updated; 1-003 unparked with
+- [x] H2/H3/H4: regression test per item reproducing the original defect.
+- [x] H7: evaluator + adapter + docs updated; 1-003 unparked with
       `dataset_id: "0;11"` and its status_reason trimmed.
-- [ ] report_run renders a failing multiturn row usefully (fixture test).
+- [x] report_run renders a failing multiturn row usefully (fixture test).
 
 ## Test plan
 

@@ -18,6 +18,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from goldset.buckets import (
     BUCKETS,
     INFO_ONLY,
+    implied_checks_for_case,
     reconcile,
     row_verdict,
     summarize_buckets,
@@ -96,6 +97,15 @@ def render(run: dict, expected_by_uid: dict[str, dict[str, str]]) -> str:
             failed = [n for n, v in entry["checks"].items()
                       if v == 0.0 and n not in INFO_ONLY]
             lines.append(f"- {entry['id']}: {', '.join(sorted(failed))}")
+            # multiturn detail (PR-09 H5): which turn sent what
+            for number, turn in enumerate(entry.get("turns_detail") or [], start=1):
+                turn_failed = [n for n in failed if n.startswith(f"t{number}.")]
+                if turn_failed:
+                    query_preview = str(turn.get("query", ""))[:60]
+                    lines.append(
+                        f'    - t{number} "{query_preview}" -> '
+                        + ", ".join(n.split(".", 1)[1] for n in turn_failed)
+                    )
     errored = [e for e in entries if row_verdict(e) == "error"]
     if errored:
         lines += ["", "## Errored rows (fix the harness/judge before reading these as agent failures)", ""]
@@ -104,7 +114,7 @@ def render(run: dict, expected_by_uid: dict[str, dict[str, str]]) -> str:
             lines.append(f"- {entry['id']}: {cause}")
     slow = [e for e in entries if (e.get("info") or {}).get("slow")]
     if slow:
-        lines += ["", f"Slow rows (> threshold): "
+        lines += ["", "Slow rows (> threshold): "
                   + ", ".join(f"{e['id']} ({e.get('latency_s')}s)" for e in slow)]
     return "\n".join(lines)
 
@@ -117,7 +127,8 @@ def main() -> int:
 
     run = read_run(args.run)
     expected_by_uid = {
-        case.uid: case.expected for _p, case, _u in load_store(args.cases_dir)
+        case.uid: implied_checks_for_case(case)
+        for _p, case, _u in load_store(args.cases_dir)
     }
     print(render(run, expected_by_uid))
     return 0
