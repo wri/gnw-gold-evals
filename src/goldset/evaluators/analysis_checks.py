@@ -22,6 +22,8 @@ def _data_records(agent_state: dict[str, Any]) -> list[dict[str, Any]]:
     """Every record dict from chart data arrays and the last statistics pull."""
     records: list[dict[str, Any]] = []
     for chart in agent_state.get("charts_data") or []:
+        if not isinstance(chart, dict):
+            continue
         data = chart.get("data")
         if isinstance(data, list):
             records += [row for row in data if isinstance(row, dict)]
@@ -129,6 +131,8 @@ def evaluate_chart_integrity(agent_state: dict[str, Any]) -> dict[str, Any]:
 
     problems = []
     for index, chart in enumerate(charts):
+        if not isinstance(chart, dict):
+            continue
         data = chart.get("data")
         if not isinstance(data, list):
             continue

@@ -141,11 +141,13 @@ function checksVerdict(checks, infoOnly) {
   return scored.some(([, v]) => v === 0) ? "fail" : "pass";
 }
 
-// "± N pts": population std of a rate across repeats, in percentage points.
+// "± N pts": sample std (n-1) of a rate across repeats, in percentage
+// points. Population std would understate instability at 2-3 repeats.
 function spreadPts(rates) {
   if (rates.length < 2) return null;
   const mean = rates.reduce((a, b) => a + b, 0) / rates.length;
-  const variance = rates.reduce((a, r) => a + (r - mean) ** 2, 0) / rates.length;
+  const variance =
+    rates.reduce((a, r) => a + (r - mean) ** 2, 0) / (rates.length - 1);
   return Math.sqrt(variance) * 100;
 }
 
@@ -349,8 +351,12 @@ function render(payload) {
       failedNames.filter(n => !infoOnly.includes(baseName(n))));
     const reasons = Object.entries(e.reasons || {})
       .map(([c, r]) => `<div class="reason"><b>${esc(c)}</b>: ${esc(r)}</div>`).join("");
-    const trace = e.trace_url
-      ? ` · <a href="${esc(e.trace_url)}">full conversation trace</a>` : "";
+    // Linkify only http(s) URLs; anything else (e.g. javascript:) would be
+    // a live link in a report meant to be shared standalone.
+    const trace = !e.trace_url ? ""
+      : /^https?:\/\//i.test(e.trace_url)
+        ? ` · <a href="${esc(e.trace_url)}">full conversation trace</a>`
+        : ` · trace: ${esc(e.trace_url)}`;
     return `<tr><td class="mono">${esc(e.id)}</td>
       <td>${promptLine}${chips}${unstable}${evm}${reasons
         ? `<details><summary>why it failed, in the grader's words${trace}</summary>${reasons}</details>`
