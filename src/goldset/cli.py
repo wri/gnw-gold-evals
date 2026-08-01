@@ -35,6 +35,51 @@ NON_CHECK_SCORES = {"overall_score"}
 REASON_TRIM = 500
 
 
+# Which actual_* diagnostics substantiate each check — recorded on the
+# entry for FAILED checks only, so reports can show expected vs measured
+# without re-running anything.
+ACTUALS_FOR_CHECK = {
+    "aoi_id_match": ("actual_id",),
+    "dataset_id_match": ("actual_dataset_id",),
+    "dataset_parameter_match": ("actual_dataset_parameters",),
+    "context_layer_match": ("actual_context_layer",),
+    "date_extraction": ("actual_extracted_start_date", "actual_extracted_end_date"),
+    "date_coverage": ("actual_start_date", "actual_end_date"),
+    "data_pull_exists": ("data_pull_error",),
+    "agent_answer": ("actual_agent_answer",),
+    "charts_answer": ("actual_charts_answer",),
+    "expected_text_match": ("actual_agent_answer",),
+    "clarification_requested": ("actual_clarification_requested",),
+    "suggested_datasets_match": ("actual_suggested_datasets",),
+    "nudge_match": ("actual_nudge_type", "actual_nudge_options"),
+    "chart_type_match": ("actual_chart_type",),
+    "scope_match": ("actual_scope",),
+    "class_value_match": ("actual_class_values",),
+    "answer_traceability": ("actual_traceability_claim",),
+    "dashboard_created": ("actual_dashboard_created",),
+    "dashboard_aoi_match": ("actual_dashboard_aoi_id", "actual_dashboard_aoi_count"),
+    "dashboard_widgets_match": ("actual_dashboard_widget_types",),
+    "web_fallback": ("actual_web_links",),
+    "pull_source_match": ("actual_pull_source",),
+}
+ACTUAL_TRIM = 300
+
+
+def _failed_actuals(dumped: dict, checks: dict) -> dict:
+    actuals = {}
+    for check, value in checks.items():
+        if value != 0.0:
+            continue
+        parts = [
+            str(dumped[field])
+            for field in ACTUALS_FOR_CHECK.get(check, ())
+            if dumped.get(field) not in (None, "")
+        ]
+        if parts:
+            actuals[check] = " · ".join(parts)[:ACTUAL_TRIM]
+    return actuals
+
+
 def result_to_entry(result: TestResult, uid: str) -> dict:
     """Map one TestResult to one ledger entry (single trial)."""
     dumped = result.model_dump()
@@ -52,6 +97,9 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
     entry: dict = {"uid": uid, "id": result.test_id, "checks": checks}
     if reasons:
         entry["reasons"] = reasons
+    actuals = _failed_actuals(dumped, checks)
+    if actuals:
+        entry["actuals"] = actuals
     judge_errors = dumped.get("judge_errors") or []
     if judge_errors:
         entry["judge_errors"] = judge_errors

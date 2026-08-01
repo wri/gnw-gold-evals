@@ -133,10 +133,16 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
         previous_snapshot = snapshot
         turn_entries.append(turn_entry)
 
+    flat_actuals = {
+        f"t{number}.{check}": value
+        for number, turn_entry in enumerate(turn_entries, start=1)
+        for check, value in (turn_entry.get("actuals") or {}).items()
+    }
     entry: dict[str, Any] = {
         "uid": case.uid,
         "id": case.id,
         "checks": flatten_turn_checks(turn_entries),
+        **({"actuals": flat_actuals} if flat_actuals else {}),
         "turns_detail": [
             {
                 "query": turn["query"],

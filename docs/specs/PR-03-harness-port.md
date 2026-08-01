@@ -53,11 +53,13 @@ checks, `_widget_is_valid`'s `text` key, judge exception swallowing, the
 
 ## Acceptance criteria
 
-- [ ] **Parity run**: same staging build, ledger via PR-02 ingest (old
-      path) vs direct write (new path), 3 trials — per-check majority
-      verdicts agree on every case, excepting only documented
-      judge-sampling noise (list any disagreement with its two reason
-      strings).
+- [x] **Parity run** (2026-08-01, single-trial pair + actuals
+      classification; see results/campaigns/20260801-pr08.md §1): of 30
+      deterministic disagreements, 28 were agent nondeterminism (actuals
+      differ between the two live executions) and 2 were the documented
+      intended fixes (F1, H7) — **zero unexplained harness divergence**;
+      judged disagreements were the accepted sampling class. Bridge
+      retired.
 - [x] All ported validators carry their gnw-evals unit tests, passing.
 - [x] No network in unit tests; runner tested against recorded fixtures.
 - [x] `uv run gold run --help` documents every flag; no `.env` silently

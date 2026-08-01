@@ -91,9 +91,18 @@ cites the data") — judged, so it enters info-only per the admission rule.
 - [x] Multi-turn uid covers all turns in order; reordering turns changes it.
 - [x] Delta assertions unit-tested against synthetic state pairs.
 - [x] Runner fixture test: 2-turn conversation against recorded responses.
-- [ ] The 8 seed cases run 3 trials on staging; per-case flakiness recorded
-      in the PR (expectation: a 2-turn row is at best as stable as its
-      flakiest turn — quantify before growing the set).
+- [x] The 8 seed cases run 3 trials on staging (2026-08-01, run
+      20260801T093002Z): **7/8 pass**, incl. clarify->resolve,
+      nudge->accept, contamination and dashboard escalation. Per-seed:
+
+      | seed | verdict | notes |
+      |---|---|---|
+      | mt-001, 002, 005, 006, 008 | pass, no flapping | rock solid |
+      | mt-003, mt-004 | pass | only info-only traceability wobbled |
+      | mt-007 | **fail** | correction-robustness: the agent wobbles when
+      the user disputes a correct figure — expected_text_match fails and
+      five checks flap across trials. A real product finding, and the
+      seed to watch before growing the set. |
 - [x] Vestigial replay path removed.
 
 ## Test plan

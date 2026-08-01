@@ -65,7 +65,7 @@ release-gate summary; ledger schema addition (`buckets` block per run).
       reconciliation delta is zero or itemised.
 - [x] `diff_runs.py --fail-on-regression` exits nonzero on a doctored
       regression fixture and zero on recovery-only changes.
-- [ ] `methodology_note` recorded in the first post-PR run.
+- [x] `methodology_note` recorded in the first post-PR run (20260801T093002Z).
 
 ## Test plan
 
