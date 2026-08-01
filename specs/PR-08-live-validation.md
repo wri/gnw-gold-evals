@@ -14,6 +14,23 @@ campaign runs, the regression gate has no new-harness baseline to diff
 against, the guards' std claims are theoretical, and `pull_source_match`
 abstains on every row.
 
+## Status 2026-08-01
+
+**Blocked on the staging credential.** Probed: the local gnw-evals token
+still 401s on staging and auths on prod (the CLAUDE.md §2.1 finding holds);
+no `API_TOKEN_STAGING` exists locally. The campaign **tooling** is built
+and tested on this branch so the session is one command per step once a
+token lands:
+
+- `tools/parity.py A.json B.json` — step 1's comparison: majority verdicts
+  on the 16 legacy checks only, deterministic breaks fail the exit code
+  and block bridge retirement, judged disagreements listed with both
+  reason strings.
+- `tools/flakiness.py run.json --per-case` — steps 2/3/5's evidence: per-
+  check mean/std against the two gates (deterministic 0.04, judged 0.10),
+  per-case flap list (the PR-07 seed table falls straight out of it),
+  turn-prefixed checks folded to their base names.
+
 ## Prerequisites
 
 - Staging `API_TOKEN` (machine user; the local gnw-evals token is
