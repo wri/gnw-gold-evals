@@ -129,7 +129,9 @@ the ledger and honest checks; new validators (06) and multiturn (07) extend
 a system that can already measure itself; 08 is runs rather than code and
 09 can land in parallel with it.
 
-The case set itself has its own plan: **`docs/CASESET_PLAN.md`** — coverage
+The case set itself has its own plan: **`docs/CASESET_PLAN.md`** (strategy)
+and **`docs/caseset-implementation-plan.md`** (execution: v1/v2 stores,
+sheet round-trip, per-workstream steps) — coverage
 rebalance, determinism scrub, expectation depth, dead-weight triage, and
 the authoring checklist. Harness design lives here; what's *in* `cases/`
 lives there.
