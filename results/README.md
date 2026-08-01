@@ -37,6 +37,9 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
       "reasons": {                      // judged checks only, trimmed
         "agent_answer": "expected 1,319,600 ha, actual 1,299,278 ha ..."
       },
+      "actuals": {                      // failed checks only: the measured
+        "agent_answer": "1,299,278 ha"  // values, so reports can show
+      },                                // expected vs measured (PR-13 on)
       "latency_s": 49.9,
       "trace_url": "https://langfuse...."
     }

@@ -6,7 +6,8 @@
   "ff": "experimental",
   "harness": {
     "repo": "gnw-gold-evals",
-    "sha": "b2fc4df"
+    "sha": "d8f4681",
+    "note": "sha repointed post-rebase; original b2fc4df was an amended pre-rebase commit left unreachable by the rebase — d8f4681 is the equivalent reachable commit with identical harness sources (differs only by report-rendering files)"
   },
   "judge_model": "claude-haiku-4-5",
   "num_trials": 3,

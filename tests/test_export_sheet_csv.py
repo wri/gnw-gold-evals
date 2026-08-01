@@ -37,7 +37,11 @@ def _fixture_repo(tmp_path: Path) -> Path:
 
     edited = Case(id="1-001", status="done", group="direct",
                   query="Loss in Brazil in 2022?",
-                  expected={"dataset_id": "4", "answer": "3.1 Mha"})
+                  expected={"dataset_id": "4", "answer": "3.1 Mha"},
+                  notes={"status_reason": "judge flaked once",
+                         "aoi_type": "gadm-country",
+                         "date_scrub": "fixed 2022 window",
+                         "value_1": "3.1"})
     write_case(cases, edited)
     _git(repo, "add", "-A")
     _git(repo, "commit", "-qm", "fix: corrected expected figure")
@@ -82,6 +86,99 @@ def test_export_writes_both_csvs(tmp_path, monkeypatch, capsys):
     changelog = list(csv.DictReader((out / "changelog.csv").open()))
     assert len(changelog) == 2
     assert changelog[1]["new_uid"] == rows[0]["uid"]  # history ends at current
+
+
+def test_uid_history_survives_group_rename(tmp_path):
+    """A case regrouped (file renamed) must keep its pre-rename transitions.
+
+    Regression: uid_history used to `git show {sha}:{current-path}` for every
+    historical commit; the show failed silently for pre-rename commits, so
+    routine group reclassification erased the early changelog."""
+    repo = tmp_path / "repo"
+    cases = repo / "cases" / "v2"
+    cases.mkdir(parents=True)
+    subprocess.run(["git", "init", "-q", str(repo)], check=True)
+
+    born = Case(id="2-001", status="done", group="direct", query="Loss where?",
+                expected={"dataset_id": "4", "answer": "1.0 Mha"})
+    write_case(cases, born)
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-qm", "feat: add 2-001")
+
+    edited = Case(id="2-001", status="done", group="direct", query="Loss where?",
+                  expected={"dataset_id": "4", "answer": "1.2 Mha"})
+    write_case(cases, edited)
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-qm", "fix: pre-rename figure correction")
+
+    # reclassify: same content, new group -> new directory (a rename to git)
+    moved = Case(id="2-001", status="done", group="comparative",
+                 query="Loss where?",
+                 expected={"dataset_id": "4", "answer": "1.2 Mha"})
+    write_case(cases, moved)
+    (cases / "direct" / "2-001.yaml").unlink()
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-qm", "chore: regroup 2-001")
+
+    final = Case(id="2-001", status="done", group="comparative",
+                 query="Loss where?",
+                 expected={"dataset_id": "4", "answer": "1.5 Mha"})
+    write_case(cases, final)
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-qm", "fix: post-rename figure correction")
+
+    history = uid_history(repo, cases / "comparative" / "2-001.yaml")
+    # full lineage: birth + pre-rename edit + post-rename edit; the rename
+    # itself changes no uid (group is not hashed) so it adds no transition
+    assert [t["new_uid"] for t in history] == [born.uid, edited.uid, final.uid]
+    assert [t["old_uid"] for t in history] == ["", born.uid, edited.uid]
+    assert history[1]["subject"] == "fix: pre-rename figure correction"
+
+
+def test_export_emits_every_notes_column(tmp_path, monkeypatch):
+    """aoi_type/date_scrub (and friends) must survive export — the importer
+    replaces notes wholesale, so any key the CSV drops is wiped on the next
+    push -> sheet-edit -> re-import round trip."""
+    repo = _fixture_repo(tmp_path)
+    out = tmp_path / "push"
+    monkeypatch.setattr(sys, "argv", [
+        "export_sheet_csv.py",
+        "--cases-dir", str(repo / "cases" / "v2"),
+        "--out", str(out),
+    ])
+    assert main() == 0
+    rows = list(csv.DictReader((out / "cases.csv").open()))
+    assert rows[0]["status_reason"] == "judge flaked once"
+    assert rows[0]["aoi_type"] == "gadm-country"
+    assert rows[0]["date_scrub"] == "fixed 2022 window"
+    assert rows[0]["value_1"] == "3.1"
+
+
+def test_export_round_trips_through_importer(tmp_path, monkeypatch):
+    """export -> import_sheet.parse_cases must reproduce the notes exactly."""
+    from import_sheet import parse_cases
+
+    repo = _fixture_repo(tmp_path)
+    out = tmp_path / "push"
+    monkeypatch.setattr(sys, "argv", [
+        "export_sheet_csv.py",
+        "--cases-dir", str(repo / "cases" / "v2"),
+        "--out", str(out),
+    ])
+    assert main() == 0
+    cases, skipped, sheet_edited = parse_cases(
+        (out / "cases.csv").read_text(encoding="utf-8")
+    )
+    assert skipped == 0
+    assert sheet_edited == []  # exported uid matches the recomputed uid
+    [reimported] = cases
+    assert reimported.notes == {
+        "status_reason": "judge flaked once",
+        "aoi_type": "gadm-country",
+        "date_scrub": "fixed 2022 window",
+        "value_1": "3.1",
+    }
+    assert reimported.expected == {"dataset_id": "4", "answer": "3.1 Mha"}
 
 
 def test_uncommitted_store_degrades_gracefully(tmp_path):
