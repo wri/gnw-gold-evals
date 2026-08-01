@@ -14,7 +14,10 @@ cases/v1/   as-imported baseline (sheet lineage). Changes: re-imports only.
 cases/v2/   curated working set. All W1–W6 edits land here as PRs.
 ```
 
-- Both seeded identical (`d564c1b3b4786bc0`); tools default to `v2`,
+- The stores are deliberately *not* identical: v1 is the as-imported
+  baseline (`185eb0b1bb6ea24a`, pre-H7, pinned by `tests/test_v1_frozen.py`);
+  v2 carries the H7 unparking of 1-003 (`d564c1b3b4786bc0`). The delta
+  between them is the point. Tools default to `v2`,
   `--cases-dir cases/v1` pins the baseline; CI verifies both.
 - **Comparison protocol**: same build, same day —
   `gold run --cases-dir cases/v1 --trials 3` and the same for v2, then

@@ -27,6 +27,7 @@ from goldset.canonical import (
     conversation_uid,
     normalize_text,
 )
+from goldset.runner.multiturn import SNAPSHOT_FIELDS
 
 MANIFEST_NAME = "MANIFEST.json"
 
@@ -84,6 +85,22 @@ class Case:
                 problems.append(f"{label}: turn 1 cannot assert deltas")
             if set(deltas) - set(_DELTA_KINDS):
                 problems.append(f"{label}: turn {index} has unknown delta kinds")
+            for kind in _DELTA_KINDS:
+                fields = deltas.get(kind) or []
+                if not isinstance(fields, (list, tuple)):
+                    problems.append(
+                        f"{label}: turn {index} deltas.{kind} must be a list"
+                    )
+                    continue
+                unknown_fields = sorted(
+                    str(field) for field in fields if field not in SNAPSHOT_FIELDS
+                )
+                if unknown_fields:
+                    problems.append(
+                        f"{label}: turn {index} deltas.{kind} has unknown "
+                        f"fields {unknown_fields} (valid: "
+                        f"{sorted(SNAPSHOT_FIELDS)})"
+                    )
         return problems
 
     def validate(self) -> list[str]:

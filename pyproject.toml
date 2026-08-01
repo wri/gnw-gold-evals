@@ -16,7 +16,13 @@ dependencies = [
 gold = "goldset.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8.0", "jsonschema>=4.21", "anyio>=4.0", "trio>=0.25"]
+dev = [
+    "pytest>=8.0",
+    "jsonschema>=4.21",
+    "anyio>=4.0",
+    "trio>=0.25",
+    "ruff==0.16.1",
+]
 
 [build-system]
 requires = ["hatchling"]

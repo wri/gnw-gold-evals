@@ -65,6 +65,17 @@ def test_multiturn_validation():
     assert any("turn 1 cannot assert deltas" in p for p in turn1_deltas.validate())
 
 
+def test_typoed_delta_field_fails_authoring_validation():
+    """A typo'd snapshot field (aoi_id vs aoi_ids) must fail at authoring
+    time — a silently-abstaining delta check is a coverage hole."""
+    typo = Case(id="x", status="ready", group="g",
+                turns=(TURNS[0],
+                       {**TURNS[1], "deltas": {"changed": ["aoi_id"]}}))
+    assert any("unknown fields ['aoi_id']" in p for p in typo.validate())
+    # the correctly spelled field still validates
+    assert not Case(id="x", status="ready", group="g", turns=TURNS).validate()
+
+
 # --- deltas
 
 def test_delta_assertions():
@@ -86,6 +97,9 @@ def test_delta_assertions():
                            {"absent": ["context_layer"]})
     assert "contamination" in leak["state_delta_reason"]
 
+    # Defence-in-depth for direct callers only: the schema enum and
+    # Case.validate() reject unknown fields at authoring time, so a stored
+    # case can never reach this abstain path.
     unknown = evaluate_deltas(prev, cur, {"changed": ["not_a_field"]})
     assert unknown["state_delta_score"] is None
 
@@ -165,3 +179,132 @@ async def test_two_turn_conversation(stateful_transport):
     assert checks["t2.state_delta"] == 1.0   # aoi changed, dataset retained
     assert entry["uid"] == CASE.uid
     assert len(entry["turns_detail"]) == 2
+
+
+# --- abort on turn failure
+
+
+@pytest.fixture
+def first_turn_fails_transport(monkeypatch):
+    seen = {"chats": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/api/chat":
+            seen["chats"] += 1
+            return httpx.Response(500, text="backend exploded")
+        if request.url.path.startswith("/api/threads/"):
+            return httpx.Response(200, json={"state": json.dumps(_state("BRA", "4"))})
+        raise AssertionError(request.url)
+
+    real_client = httpx.AsyncClient
+
+    def fake_client(**kwargs):
+        kwargs.pop("timeout", None)
+        return real_client(transport=httpx.MockTransport(handler))
+
+    monkeypatch.setattr(httpx, "AsyncClient", fake_client)
+    return seen
+
+
+@pytest.mark.anyio
+async def test_errored_turn_aborts_conversation(first_turn_fails_transport):
+    """If turn N errors, turn N+1 must never fire: it would race a
+    possibly-still-processing backend and diff against an empty snapshot.
+    The un-run turns contribute no checks at all."""
+    runner = APITestRunner(api_base_url="https://api.example", api_token="tok")
+    entry = await run_conversation(runner, CASE, result_to_entry)
+
+    assert first_turn_fails_transport["chats"] == 1  # turn 2 never sent
+    assert entry["error"].startswith("t1:")
+    assert not any(name.startswith("t2.") for name in entry["checks"])
+    assert "t2.state_delta" not in entry["checks"]
+    assert len(entry["turns_detail"]) == 1
+
+
+@pytest.mark.anyio
+async def test_delta_exception_degrades_turn_not_run(stateful_transport, monkeypatch):
+    """An unexpected exception in delta code must degrade the turn to an
+    error state (mirroring run_test's own degradation), never propagate —
+    run_cases gathers without return_exceptions."""
+
+    def boom(previous, current, deltas):
+        raise RuntimeError("snapshot diff bug")
+
+    monkeypatch.setattr("goldset.runner.multiturn.evaluate_deltas", boom)
+    runner = APITestRunner(api_base_url="https://api.example", api_token="tok")
+    entry = await run_conversation(runner, CASE, result_to_entry)
+
+    # turn 1 has no deltas, so only turn 2 trips the guard — after both ran
+    assert stateful_transport["chats"] == 2
+    assert entry["error"] == "t2: delta evaluation failed: snapshot diff bug"
+    assert "t2.state_delta" not in entry["checks"]
+
+
+# --- snapshots see actuals even on turns without that expectation
+
+
+def test_snapshot_fields_extracted_without_expectations():
+    """suggested_datasets/nudge actuals must be extracted even when the turn
+    carries no such expectation (scores still abstain), or later delta
+    assertions on those fields would silently diff empty snapshots."""
+    from goldset.eval_types import TestResult
+    from goldset.evaluators.nudge_evaluator import evaluate_nudge
+    from goldset.evaluators.suggested_datasets_evaluator import (
+        evaluate_suggested_datasets,
+    )
+    from goldset.runner.multiturn import state_snapshot
+
+    state = {
+        "suggested_datasets": [{"dataset_id": "4"}, {"dataset_id": "11"}],
+        "nudge": {"type": "aoi_choice", "options": ["Puri, Odisha, India"]},
+    }
+    evaluations = {
+        **evaluate_suggested_datasets(state, None),
+        **evaluate_nudge(state, None, None),
+    }
+    assert evaluations["suggested_datasets_match_score"] is None
+    assert evaluations["nudge_match_score"] is None
+
+    result = TestResult(
+        thread_id="t", query="q", overall_score=0.0, execution_time="now",
+        **evaluations,
+    )
+    snapshot = state_snapshot(result)
+    assert snapshot["suggested_datasets"] == "4; 11"
+    assert snapshot["nudge_type"] == "aoi_choice"
+
+
+# --- the CLI ships this exact code path
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("anyio_backend", ["asyncio"])  # run_cases is asyncio-only
+async def test_cli_dispatches_conversations_to_run_conversation(
+    anyio_backend, monkeypatch, tmp_path
+):
+    """cli.run_cases must delegate multi-turn cases to the unit-tested
+    runner.multiturn.run_conversation, not an inline reimplementation."""
+    import argparse
+
+    from goldset.cli import run_cases
+
+    calls = []
+
+    async def fake_run_conversation(
+        runner, case, result_to_entry, artifact_sink_factory=None
+    ):
+        calls.append((case.id, result_to_entry.__name__))
+        assert artifact_sink_factory is not None
+        return {"uid": case.uid, "id": case.id, "checks": {"t1.aoi_id_match": 1.0}}
+
+    monkeypatch.setattr(
+        "goldset.runner.multiturn.run_conversation", fake_run_conversation
+    )
+    args = argparse.Namespace(
+        resolved_url="https://api.example", ff=None, verbose=False,
+        results_dir=tmp_path, run_id="r1", workers=1, trials=1,
+        slow_threshold=180.0,
+    )
+    entries = await run_cases(args, [CASE])
+    assert calls == [("mt-x", "result_to_entry")]
+    assert entries[0]["checks"] == {"t1.aoi_id_match": 1.0}
