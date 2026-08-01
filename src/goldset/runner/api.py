@@ -58,6 +58,7 @@ class APITestRunner(BaseTestRunner):
         query: str,
         expected_data: ExpectedData,
         artifact_sink: Callable[[dict[str, Any]], Any] | None = None,
+        thread_id: str | None = None,
     ) -> TestResult:
         """Run a single agent test using API endpoint.
 
@@ -69,7 +70,9 @@ class APITestRunner(BaseTestRunner):
             TestResult with evaluation scores and metadata
 
         """
-        thread_id = str(uuid4())
+        # A caller-supplied thread_id continues an existing conversation
+        # (multi-turn, PR-07); the default is a fresh single-turn thread.
+        thread_id = thread_id or str(uuid4())
         trace_url = None
         app_thread_url = self._build_app_thread_url(self.api_base_url, thread_id)
         start_time = time.time()
@@ -96,27 +99,26 @@ class APITestRunner(BaseTestRunner):
 
             # Use httpx async client for streaming
             async with httpx.AsyncClient(timeout=240.0) as client:
-                if not expected_data.thread_id:
-                    async with client.stream(
-                        "POST",
-                        f"{self.api_base_url}/api/chat",
-                        json=payload,
-                        headers=headers,
-                    ) as response:
-                        response.raise_for_status()
+                async with client.stream(
+                    "POST",
+                    f"{self.api_base_url}/api/chat",
+                    json=payload,
+                    headers=headers,
+                ) as response:
+                    response.raise_for_status()
 
-                        async for line in response.aiter_lines():
-                            if line.strip():
-                                stream_data = json.loads(line)
-                                responses.append(stream_data)
+                    async for line in response.aiter_lines():
+                        if line.strip():
+                            stream_data = json.loads(line)
+                            responses.append(stream_data)
 
-                                # Capture trace ID from stream
-                                if stream_data.get("node") == "trace_info":
-                                    update_data = json.loads(
-                                        stream_data.get("update", "{}"),
-                                    )
-                                    trace_id = update_data.get("trace_id")
-                                    trace_url = update_data.get("trace_url")
+                            # Capture trace ID from stream
+                            if stream_data.get("node") == "trace_info":
+                                update_data = json.loads(
+                                    stream_data.get("update", "{}"),
+                                )
+                                trace_id = update_data.get("trace_id")
+                                trace_url = update_data.get("trace_url")
 
                 # Get final agent state using the state endpoint
                 state_response = await client.get(

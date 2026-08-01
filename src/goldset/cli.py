@@ -118,6 +118,7 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     # Deferred import: langchain/httpx stay out of store-only invocations.
     from goldset.runner.api import APITestRunner
     from goldset.runner.artifacts import ArtifactWriter
+    from goldset.runner.multiturn import run_conversation
 
     runner = APITestRunner(
         api_base_url=args.resolved_url,
@@ -133,12 +134,24 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
         async with semaphore:
             trials = []
             for trial in range(1, args.trials + 1):
-                result = await runner.run_test(
-                    case.query,
-                    case_to_expected(case),
-                    artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
-                )
-                trials.append(result_to_entry(result, case.uid))
+                if case.is_multiturn:
+                    trials.append(
+                        await run_conversation(
+                            runner,
+                            case,
+                            result_to_entry,
+                            artifact_sink_factory=lambda n, c=case, t=trial: (
+                                lambda a: writer(f"{c.uid}_turn{n}", t, a)
+                            ),
+                        )
+                    )
+                else:
+                    result = await runner.run_test(
+                        case.query,
+                        case_to_expected(case),
+                        artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
+                    )
+                    trials.append(result_to_entry(result, case.uid))
             entry = merge_trials(trials)
             # G3: slow rows get an info flag — reported, never scored.
             info = latency_info(entry.get("latency_s"), args.slow_threshold)
@@ -193,7 +206,10 @@ def main() -> int:
         return 1
     if args.dry_run:
         for case in cases:
-            print(f"{case.id}  {case.uid}  [{case.status}] {case.query[:70]}")
+            preview = case.query or (
+                f"({len(case.turns)} turns) " + case.turns[0]["query"]
+            )
+            print(f"{case.id}  {case.uid}  [{case.status}] {preview[:70]}")
         print(f"{len(cases)} cases selected (dry run)")
         return 0
     # Secrets may live in .env (as in gnw-evals). Loaded here, before the

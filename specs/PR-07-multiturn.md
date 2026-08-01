@@ -88,13 +88,13 @@ cites the data") — judged, so it enters info-only per the admission rule.
 
 ## Acceptance criteria
 
-- [ ] Multi-turn uid covers all turns in order; reordering turns changes it.
-- [ ] Delta assertions unit-tested against synthetic state pairs.
-- [ ] Runner fixture test: 2-turn conversation against recorded responses.
+- [x] Multi-turn uid covers all turns in order; reordering turns changes it.
+- [x] Delta assertions unit-tested against synthetic state pairs.
+- [x] Runner fixture test: 2-turn conversation against recorded responses.
 - [ ] The 8 seed cases run 3 trials on staging; per-case flakiness recorded
       in the PR (expectation: a 2-turn row is at best as stable as its
       flakiest turn — quantify before growing the set).
-- [ ] Vestigial replay path removed.
+- [x] Vestigial replay path removed.
 
 ## Test plan
 

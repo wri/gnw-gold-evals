@@ -17,7 +17,9 @@ from goldset.registry import ALL_SCORE_FIELDS
 def test_every_registered_check_is_tagged_exactly_once():
     tagged = set(DEDICATED) | set(SHARED) | set(INFO_ONLY)
     registered = {field.removesuffix("_score") for field in ALL_SCORE_FIELDS}
-    assert registered == tagged
+    # state_delta is produced by the multiturn orchestration, not a
+    # registry evaluator — tagged but never registered.
+    assert registered | {"state_delta"} == tagged
     assert not set(DEDICATED) & set(SHARED)
     assert all(bucket in BUCKETS for bucket in DEDICATED.values())
 
@@ -52,6 +54,25 @@ def test_summarize_dual_tagged_checks_count_in_both_buckets():
     assert summary["analysis"]["rows_covered"] == 2
     assert summary["retrieval"]["rows_covered"] == 1
     assert summary["verdicts"] == {"pass": 1, "fail": 1, "error": 0, "uncovered": 0}
+
+
+def test_errored_entries_bank_no_bucket_tallies():
+    """A conversation that errored mid-way must not contribute its earlier
+    turns' pass/fail counts to bucket tallies or coverage — row_verdict
+    parity: an errored row is an error, not a measurement. Verdicts still
+    count the entry, so the error stays visible."""
+    entries = [
+        {"checks": {"t1.aoi_id_match": 1.0, "t1.charts_answer": 1.0},
+         "error": "t2: timeout"},
+        {"checks": {"aoi_id_match": 1.0}},
+    ]
+    summary = summarize_buckets(entries)
+    assert summary["retrieval"]["dedicated"] == {"passed": 1, "evaluated": 1}
+    assert summary["analysis"]["shared"] == {"passed": 0, "evaluated": 0}
+    assert summary["output"]["shared"] == {"passed": 0, "evaluated": 0}
+    assert summary["retrieval"]["rows_covered"] == 1
+    assert summary["analysis"]["rows_covered"] == 0
+    assert summary["verdicts"] == {"pass": 1, "fail": 0, "error": 1, "uncovered": 0}
 
 
 def test_implied_checks_from_expectations():

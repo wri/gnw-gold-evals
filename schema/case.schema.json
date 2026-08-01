@@ -2,20 +2,20 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/wri/gnw-gold-evals/schema/case.schema.json",
   "title": "GOLD case",
-  "description": "One capability smoke-test case. The uid is a truncated SHA-256 over the canonical serialisation of query + non-empty expected values (see src/goldset/canonical.py); tools/check.py enforces that it is truthful.",
+  "description": "One capability smoke-test case: single-turn (query + expected) or multi-turn (turns). The uid is a truncated SHA-256 over the canonical serialisation of the queries + non-empty expected values — order-sensitive across turns (see src/goldset/canonical.py); tools/check.py enforces that it is truthful.",
   "type": "object",
-  "required": ["id", "uid", "status", "group", "query", "expected"],
+  "required": ["id", "uid", "status", "group"],
   "additionalProperties": false,
   "properties": {
     "id": {
       "type": "string",
       "minLength": 1,
-      "description": "Stable lineage id (the sheet's test_id, e.g. '1-030'). Survives edits; identifies the test's intent across versions."
+      "description": "Stable lineage id (e.g. '1-030', 'mt-001'). Survives edits; identifies the test's intent across versions."
     },
     "uid": {
       "type": "string",
       "pattern": "^[0-9a-f]{16}$",
-      "description": "Content hash of query + expectations. Changes on every semantic edit; results are keyed on it."
+      "description": "Content hash of query/queries + expectations. Changes on every semantic edit; results are keyed on it."
     },
     "status": {
       "type": "string",
@@ -28,18 +28,67 @@
     },
     "query": {
       "type": "string",
-      "minLength": 1,
-      "description": "The user prompt sent verbatim to the agent."
+      "description": "Single-turn only: the user prompt sent verbatim to the agent."
     },
     "expected": {
-      "type": "object",
-      "description": "Expectations, keyed without the 'expected_' prefix. Every key participates in the uid. Values are strings exactly as the harness consumes them.",
-      "additionalProperties": { "type": "string", "minLength": 1 }
+      "$ref": "#/$defs/expectations",
+      "description": "Single-turn only: expectations, keyed without the 'expected_' prefix."
+    },
+    "turns": {
+      "type": "array",
+      "minItems": 2,
+      "description": "Multi-turn only: scripted turns sharing one thread. Turn text must never depend on the agent's previous free text (determinism rule).",
+      "items": {
+        "type": "object",
+        "required": ["query"],
+        "additionalProperties": false,
+        "properties": {
+          "query": { "type": "string", "minLength": 1 },
+          "expected": { "$ref": "#/$defs/expectations" },
+          "deltas": {
+            "type": "object",
+            "description": "State-transition assertions vs the previous turn (turn >= 2 only). Fields are snapshot names: aoi_ids, dataset_id, context_layer, start_date, end_date, suggested_datasets, nudge_type, dashboard_id.",
+            "additionalProperties": false,
+            "properties": {
+              "changed": { "$ref": "#/$defs/fieldList" },
+              "retain": { "$ref": "#/$defs/fieldList" },
+              "absent": { "$ref": "#/$defs/fieldList" }
+            }
+          }
+        }
+      }
     },
     "notes": {
       "type": "object",
-      "description": "Non-scored annotations (status_reason, aoi_type, class/value scratchpads). Never hashed: triage commentary must not mint a new version.",
+      "description": "Non-scored annotations. Never hashed: triage commentary must not mint a new version.",
       "additionalProperties": { "type": "string", "minLength": 1 }
+    }
+  },
+  "oneOf": [
+    { "required": ["query", "expected"], "not": { "required": ["turns"] } },
+    { "required": ["turns"], "not": { "required": ["query"] } }
+  ],
+  "$defs": {
+    "expectations": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "fieldList": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "aoi_ids",
+          "dataset_id",
+          "context_layer",
+          "start_date",
+          "end_date",
+          "suggested_datasets",
+          "nudge_type",
+          "dashboard_id"
+        ]
+      },
+      "$comment": "Must equal SNAPSHOT_FIELDS in src/goldset/runner/multiturn.py; tests/test_schema.py enforces the sync. A typo'd field must fail at authoring time, not silently abstain at runtime."
     }
   }
 }

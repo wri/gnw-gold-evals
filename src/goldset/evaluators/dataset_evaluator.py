@@ -63,15 +63,21 @@ def evaluate_dataset_selection(
         actual_context_layer
 
     """
+    # Actual values are extracted unconditionally (like the AOI evaluator):
+    # multi-turn delta snapshots and triage need them even on turns with no
+    # dataset expectation (PR-07). Scores stay gated on the expectation.
     if not expected_dataset_id:
+        dataset = agent_state.get("dataset") or {}
         return {
             "dataset_id_match_score": None,
             "dataset_parameter_match_score": None,
             "context_layer_match_score": None,
-            "actual_dataset_id": None,
-            "actual_dataset_name": None,
-            "actual_dataset_parameters": None,
-            "actual_context_layer": None,
+            "actual_dataset_id": normalize_value(dataset.get("dataset_id")) or None,
+            "actual_dataset_name": dataset.get("dataset_name"),
+            "actual_dataset_parameters": (
+                _normalize_dataset_parameters(dataset.get("parameters")) or None
+            ),
+            "actual_context_layer": dataset.get("context_layer"),
         }
 
     dataset = agent_state.get("dataset")
