@@ -31,10 +31,35 @@ uv run python tools/import_sheet.py --csv <export.csv>   # or --url; idempotent;
 uv run python tools/export_csv.py --out scratch/gold.csv --status-exclude "not doing"
 ```
 
-Runs currently execute via the **gnw-evals bridge**: export a CSV (above),
-then in `../gnw-evals` run `uv run gnw_evals --test-file <abs path> ...`.
-The exported `uid` column rides along ignored and keys results back here.
-The harness moves in-repo at PR-03.
+Runs execute in-repo (the gnw-evals bridge was retired after the
+2026-08-01 parity run; `export_csv.py` remains for triage):
+
+```bash
+export API_TOKEN="$STAGING_API_TOKEN"   # .env holds it; the CLI reads API_TOKEN
+uv run gold run --env staging --trials 3 --build "<label>"
+```
+
+Official runs are **3 trials, always** — the agent flaps on ~45% of rows
+between identical trials, so single-trial verdicts are smoke only.
+
+## After every run (do all four, in order)
+
+1. **Render the report**: `uv run python tools/render_html.py
+   results/runs/<run_id>.json` → `results/reports/<run_id>.html`
+   (the template also accepts a run JSON by drag-and-drop).
+2. **Flakiness + diff**: `uv run python tools/flakiness.py
+   results/runs/<run_id>.json --per-case`, and `tools/diff_runs.py
+   <previous> <current>` against the last comparable run.
+3. **Write `results/recommendations/<run_id>.md`** — the run is not done
+   until someone can act on it. Cover: what to file upstream (agent
+   behaviour, with the flapping/failing row lists as evidence), what the
+   run says about the case set (stale expectations, coverage holes,
+   probation re-admissions), what it says about the harness, and a
+   next-run watchlist. `results/recommendations/20260801T093002Z.md` is
+   the model.
+4. **Commit** the ledger JSON, the report, and the recommendation doc
+   together; use `--note` on the run whenever check semantics changed
+   since the previous one.
 
 ## The identity system (load-bearing — do not break)
 

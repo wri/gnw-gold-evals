@@ -127,3 +127,20 @@ def test_artifact_writer_round_trip(tmp_path):
         assert json.load(handle)["tool_calls"] == []
     assert path.name == "abc123.json.gz"
     assert writer("abc123", 2, {}).name == "abc123_t2.json.gz"
+
+
+def test_failed_checks_carry_their_actuals():
+    """Expected-vs-measured in reports needs the measured side recorded —
+    on failures only, trimmed, absent when nothing failed."""
+    from goldset.eval_types import TestResult
+
+    result = TestResult(
+        thread_id="t", query="q", overall_score=0.0, execution_time="now",
+        test_id="1-002", aoi_id_match_score=0.0, actual_id="XYZ.9_1",
+        agent_answer_score=0.0, actual_agent_answer="A" * 900,
+        dataset_id_match_score=1.0, actual_dataset_id="4",
+    )
+    entry = result_to_entry(result, "u")
+    assert entry["actuals"]["aoi_id_match"] == "XYZ.9_1"
+    assert len(entry["actuals"]["agent_answer"]) == 300  # trimmed
+    assert "dataset_id_match" not in entry["actuals"]  # passed: not recorded
