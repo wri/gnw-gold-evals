@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from report_run import render  # noqa: E402
+from report_run import render
 
 RUN = {
     "run_id": "20260801T000000Z_staging",

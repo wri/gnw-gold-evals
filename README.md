@@ -11,7 +11,7 @@ headline number is a **regression count**, not a mean score.
 
 This repo holds the **cases** (one YAML per case, content-addressed), the
 **results ledger** (committed per-run JSONs, keyed to exact case versions),
-and — incrementally, see `specs/` — the harness that runs them.
+and — incrementally, see `docs/specs/` — the harness that runs them.
 
 ## Why a repo and not the sheet
 
@@ -34,7 +34,7 @@ scored against. Here:
 uv sync
 uv run python -m pytest                 # 131 tests
 
-# re-import from the sheet (one-way: sheet -> repo; see PLAN.md §2.4)
+# re-import from the sheet (one-way: sheet -> repo; see docs/PLAN.md §2.4)
 uv run python tools/import_sheet.py \
   --url "https://docs.google.com/spreadsheets/d/1_G1aq2fSCPqhT6w55_Od6VU7sov76t1lHQTBeZZxbdM/export?format=csv&gid=0"
 
@@ -58,8 +58,8 @@ results/                committed run ledger (contract in results/README.md)
 schema/case.schema.json the case contract; every file is validated in tests
 src/goldset/            canonical hashing + store library
 tools/                  import_sheet / export_csv / check
-specs/                  PR specs — the build sequence, one md per PR
-PLAN.md                 the repo plan: design decisions, scoring, roadmap
+
+docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
 ```
 
 ## Status
@@ -67,4 +67,4 @@ PLAN.md                 the repo plan: design decisions, scoring, roadmap
 Initial slice (PR-01): case store imported from the sheet snapshot of
 2026-07-31 — 107 cases, `caseset_version 2f8b10272938527c`. The harness
 still lives in [gnw-evals](https://github.com/wri/gnw-evals); the export
-bridge above runs today's set unchanged. See `PLAN.md` for what lands next.
+bridge above runs today's set unchanged. See `docs/PLAN.md` for what lands next.

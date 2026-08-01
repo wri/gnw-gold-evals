@@ -101,10 +101,16 @@ def evaluate_dataset_selection(
     )
     actual_context_layer = dataset.get("context_layer", "")
 
-    # Normalize values for comparison
-    expected_id_str = normalize_value(expected_dataset_id)
+    # Normalize values for comparison. The expected id accepts ;-separated
+    # alternatives (PR-09 H7): some rows are defensible-either-way (1-003:
+    # DIST-ALERT 0 vs integrated alerts 11) — match any alternative.
+    expected_id_alternatives = {
+        normalize_value(alt)
+        for alt in str(expected_dataset_id).split(";")
+        if normalize_value(alt)
+    }
     actual_id_str = normalize_value(actual_dataset_id)
-    dataset_match = expected_id_str == actual_id_str
+    dataset_match = actual_id_str in expected_id_alternatives
 
     expected_parameters_str = _normalize_dataset_parameters(expected_dataset_parameters)
     actual_parameters_str = _normalize_dataset_parameters(actual_dataset_parameters)

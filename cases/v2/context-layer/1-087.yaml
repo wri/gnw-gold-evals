@@ -1,0 +1,11 @@
+id: 1-087
+uid: 212cd56065c87ece
+status: done
+group: context-layer
+query: How much tree cover loss in intact forests in Russia in 2025?
+expected:
+  aoi_ids: RUS
+  aoi_source: gadm
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  context_layer: intact_forest

@@ -14,17 +14,6 @@ from dataclasses import dataclass
 from typing import Any
 
 from goldset.eval_types import ExpectedData
-from goldset.evaluators.analysis_checks import (
-    evaluate_chart_integrity,
-    evaluate_class_values,
-)
-from goldset.evaluators.explanation_checks import evaluate_answer_traceability
-from goldset.evaluators.guards import evaluate_guards
-from goldset.evaluators.output_checks import (
-    evaluate_chart_type,
-    evaluate_chart_well_formed,
-)
-from goldset.evaluators.scope_checks import evaluate_scope
 from goldset.evaluators import (
     evaluate_aoi_selection,
     evaluate_clarification,
@@ -39,6 +28,17 @@ from goldset.evaluators import (
     evaluate_nudge,
     evaluate_suggested_datasets,
 )
+from goldset.evaluators.analysis_checks import (
+    evaluate_chart_integrity,
+    evaluate_class_values,
+)
+from goldset.evaluators.explanation_checks import evaluate_answer_traceability
+from goldset.evaluators.guards import evaluate_guards
+from goldset.evaluators.output_checks import (
+    evaluate_chart_type,
+    evaluate_chart_well_formed,
+)
+from goldset.evaluators.scope_checks import evaluate_scope
 
 EvaluatorFn = Callable[
     [dict[str, Any], ExpectedData, str, dict[str, Any] | None],

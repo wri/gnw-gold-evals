@@ -1,0 +1,14 @@
+id: 1-020
+uid: c3bcf6094e81e0dd
+status: not doing
+group: parent-child
+query: Which country in the UK has the least natural grassland in 2022?
+expected:
+  aoi_ids: GBR
+  aoi_source: gadm
+  dataset_id: '2'
+  dataset_name: Natural/Semi-Natural Grasslands
+notes:
+  status_reason: Sheet expects GBR; agent selects the 4 UK constituent countries. expected_aoi_ids
+    uses set-equality and cannot express 'GBR or its children'. AOI fix needed
+  aoi_type: gadm 0

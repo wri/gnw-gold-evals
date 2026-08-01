@@ -199,3 +199,16 @@ def test_s1_invalid_expected_abstains():
     result = evaluate_scope(state(), "escalate")
     assert result["scope_match_score"] is None
     assert "invalid" in result["actual_scope"]
+
+
+def test_e1_bare_numbers_are_not_claims():
+    """Counts and ranks in bold are not measures (first live run, 2026-08-01:
+    '**2** datasets', 'top **5**' dominated the false positives)."""
+    assert first_bold_claim("I found **2** datasets for you") is None
+    assert first_bold_claim("the top **5** regions are listed") is None
+    assert first_bold_claim("roughly **4,615** in total") is None
+    # units, scale words and percents still qualify
+    assert first_bold_claim("**679.16 hectares** of vegetation") is not None
+    assert first_bold_claim("**25.5 Mha** were lost") is not None
+    assert first_bold_claim("**8.57%** of the land") is not None
+    assert first_bold_claim("**1.2 million hectares**") is not None

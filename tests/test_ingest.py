@@ -5,9 +5,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from goldset.store import Case, build_manifest, write_case, write_manifest
+from ingest_run import build_entry, started_from_filename
 
-from ingest_run import build_entry, started_from_filename  # noqa: E402
+from goldset.store import Case, build_manifest, write_case, write_manifest
 
 CASE = Case(
     id="1-002",

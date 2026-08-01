@@ -6,8 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 
-import goldset.evaluators.answer_evaluator as answer_evaluator
-import goldset.evaluators.clarification_evaluator as clarification_evaluator
+from goldset.evaluators import answer_evaluator, clarification_evaluator
 from goldset.evaluators.answer_evaluator import (
     _serialize_charts_json,
     evaluate_final_answer,

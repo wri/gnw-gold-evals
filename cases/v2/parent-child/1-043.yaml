@@ -1,0 +1,17 @@
+id: 1-043
+uid: a87f73a5cc1bb4bc
+status: done
+group: parent-child
+query: Which state of NZ has the highest total deforestation-related carbon emissions in NZ
+  from 2005-2020?
+expected:
+  aoi_ids: NZL.13_1;NZL.14_1;NZL.12_1;NZL.4_1;NZL.3_1;NZL.9_1;NZL.19_1;NZL.18_1;NZL.8_1;NZL.16_1;NZL.15_1;NZL.6_1;NZL.7_1;NZL.5_1;NZL.2_1;NZL.17_1;NZL.10_1;NZL.11_1;NZL.1_1
+  aoi_source: gadm
+  dataset_id: '4'
+  dataset_name: Forest GHG emissions
+  start_date: '2005-01-01'
+  end_date: '2020-12-31'
+  answer: Waikato
+  scope: analyse
+notes:
+  aoi_type: gadm 0

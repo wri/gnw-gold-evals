@@ -55,6 +55,34 @@ def started_from_filename(path: Path) -> str | None:
     )
 
 
+# Scalar expected_* columns with stable rendering in the detailed CSV —
+# the drift-detection surface for the weak (test_id) join. List-rendered
+# columns (aoi_ids, suggested_datasets, ...) are format-unstable and
+# excluded; reconciliation covers their absence separately.
+DRIFT_COLUMNS = (
+    "dataset_id",
+    "context_layer",
+    "start_date",
+    "end_date",
+    "answer",
+    "text",
+)
+
+
+def expectation_drift(row: dict, case) -> list[str]:
+    """Columns present in the CSV whose value differs from the case's
+    current expectation. A case *gaining* new expectations since the run is
+    not drift — the run simply didn't test them."""
+    drifted = []
+    for column in DRIFT_COLUMNS:
+        csv_value = normalize_text(row.get(f"expected_{column}"))
+        if not csv_value:
+            continue
+        if csv_value != normalize_text(case.expected.get(column)):
+            drifted.append(column)
+    return drifted
+
+
 def build_entry(row: dict, by_id: dict, by_uid: set, num_trials: int = 1) -> dict:
     """One ledger entry from one detailed-CSV row, joined to the store."""
     checks = {}
@@ -87,8 +115,16 @@ def build_entry(row: dict, by_id: dict, by_uid: set, num_trials: int = 1) -> dic
         if case is not None and normalize_text(row.get("query")) == normalize_text(
             case.query
         ):
-            entry["uid"] = case.uid
-            entry["joined_by"] = "test_id"
+            drift = expectation_drift(row, case)
+            if drift:
+                # The run scored different expectations than the case now
+                # holds — re-keying it would attribute old results to new
+                # content, the exact misattribution uids exist to prevent.
+                entry["stale_case"] = True
+                entry["drift"] = drift
+            else:
+                entry["uid"] = case.uid
+                entry["joined_by"] = "test_id"
         else:
             entry["stale_case"] = True
 
@@ -108,7 +144,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--detailed", type=Path, required=True)
     # defaults are repo-root-relative so the tool works from any cwd
-    parser.add_argument("--cases-dir", type=Path, default=REPO_ROOT / "cases")
+    parser.add_argument("--cases-dir", type=Path, default=REPO_ROOT / "cases/v2")
     parser.add_argument("--results-dir", type=Path, default=REPO_ROOT / "results")
     parser.add_argument("--environment", required=True, choices=["staging", "prod"])
     parser.add_argument("--build", required=True, help="agent build, e.g. 'GNW 2026.7.29.1'")

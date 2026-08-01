@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      build_label:
+        description: "Agent build label recorded on the run (e.g. GNW 2026.7.29.1)"
+        required: false
+        default: "unknown"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
+      - name: Install
+        run: uv sync --dev
+      - name: Lint (ruleset pinned in pyproject, ruff pinned in dev deps)
+        run: uv run ruff check src tools tests
+      - name: Tests (includes per-case schema conformance)
+        run: uv run pytest -q
+      - name: Case-store integrity (uids + manifest truthful, both versions)
+        run: |
+          uv run python tools/check.py --cases-dir cases/v1
+          uv run python tools/check.py --cases-dir cases/v2
+
+  # The release gate as a button: a live staging run + regression diff
+  # against the most recent committed run. Needs API_TOKEN_STAGING and
+  # ANTHROPIC_API_KEY repo secrets; never runs on push/PR.
+  staging-run:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5.4.2
+      - run: uv sync
+      - name: Run GOLD (3 trials)
+        env:
+          API_TOKEN: ${{ secrets.API_TOKEN_STAGING }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          uv run gold run --env staging --trials 3 --workers 5 \
+            --build "${{ inputs.build_label }}"
+      - name: Regression gate vs previous committed run
+        run: |
+          PREV=$(ls results/runs/*.json | sort | tail -2 | head -1)
+          NEW=$(ls results/runs/*.json | sort | tail -1)
+          uv run python tools/diff_runs.py "$PREV" "$NEW" --fail-on-regression
+      - name: Upload run + report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: gold-run
+          path: results/runs/

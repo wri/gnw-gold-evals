@@ -1,0 +1,13 @@
+id: 1-101
+uid: ff2186e8a5fb94b9
+status: done
+group: dashboard
+query: Create a dashboard for Parana Brazil with two insights on deforestation, and explainer
+  text block, and a TCL dataset map
+expected:
+  aoi_ids: BRA.16_1
+  aoi_source: gadm
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  dashboard_created: 'TRUE'
+  dashboard_widgets: insight;insight;map;text

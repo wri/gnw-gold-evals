@@ -80,9 +80,12 @@ def build_artifact(
     trace_url: str | None,
 ) -> dict[str, Any]:
     """Everything worth keeping from one case's raw state, JSON-safe."""
+    from goldset.evaluators.answer_evaluator import extract_final_answer_text
+
     return {
         "thread_id": thread_id,
         "trace_url": trace_url,
+        "final_answer": extract_final_answer_text(agent_state.get("messages", [])),
         "codeact": _decode_codeact(agent_state),
         "tool_calls": _tool_calls(agent_state),
         "statistics_last": _last_statistics(agent_state),

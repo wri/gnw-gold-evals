@@ -1,0 +1,18 @@
+id: 1-031
+uid: 06988e33f4f6f8ea
+status: done
+group: class-comparison
+query: Whats the second largest natural land class by area in Cogo, Eq. Guinea?
+expected:
+  aoi_ids: GNQ.6.3_1
+  aoi_source: gadm
+  dataset_id: '3'
+  dataset_name: SBTN Natural Lands Map
+  answer: mangroves
+  text: States mangroves and includes 15,444 hectares
+  scope: analyse
+  class_values: mangroves=15,444 hectares
+notes:
+  aoi_type: gadm 2
+  class_1: mangroves
+  value_1: 15,444 hectares

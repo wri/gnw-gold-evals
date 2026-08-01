@@ -5,8 +5,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from flakiness import collect  # noqa: E402
-from parity import LEGACY_CHECKS, compare, exit_code, render  # noqa: E402
+from flakiness import collect
+from parity import LEGACY_CHECKS, compare, exit_code, render
 
 
 def run_fixture(results, run_id="20260801T000000Z_staging", trials=1):

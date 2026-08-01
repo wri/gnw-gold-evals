@@ -1,0 +1,11 @@
+id: 1-070
+uid: 1a9ad2b81fa88801
+status: done
+group: direct
+query: How much tree cover loss was there in Colombia in 2025?
+expected:
+  aoi_ids: COL
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  start_date: '2025-01-01'
+  end_date: '2025-12-31'

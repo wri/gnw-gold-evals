@@ -27,7 +27,7 @@ from goldset.store import (
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases"))
+    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--fix", action="store_true")
     args = parser.parse_args()
 

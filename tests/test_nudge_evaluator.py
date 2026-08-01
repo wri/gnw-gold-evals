@@ -8,8 +8,8 @@ Usage
 $ uv run pytest tests/test_nudge_evaluator.py -v
 """
 
-from goldset.evaluators.nudge_evaluator import evaluate_nudge
 from goldset.eval_types import ExpectedData
+from goldset.evaluators.nudge_evaluator import evaluate_nudge
 
 
 def test_nudge_evaluator_no_expectation():
