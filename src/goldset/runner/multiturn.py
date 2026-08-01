@@ -87,6 +87,12 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
     ``runner`` is an APITestRunner; ``result_to_entry`` is the CLI's
     TestResult->entry mapper (injected to avoid a circular import);
     ``artifact_sink_factory(turn_number)`` returns a per-turn sink or None.
+
+    A turn that errors (``result.error`` is set by ``run_test``'s own
+    degradation — transport failure, timeout) aborts the conversation:
+    firing turn N+1 would race a possibly-still-processing backend and
+    compare deltas against an all-empty snapshot. The un-run turns
+    contribute no checks at all; the entry records the turn-tagged error.
     """
     from uuid import uuid4
 
@@ -104,15 +110,26 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
             thread_id=thread_id,
         )
         turn_entry = result_to_entry(result, case.uid)
-        snapshot = state_snapshot(result)
-        deltas = turn.get("deltas") or {}
-        if deltas and previous_snapshot is not None:
-            delta_result = evaluate_deltas(previous_snapshot, snapshot, deltas)
-            turn_entry["checks"]["state_delta"] = delta_result["state_delta_score"]
-            if delta_result["state_delta_reason"]:
-                turn_entry.setdefault("reasons", {})["state_delta"] = delta_result[
-                    "state_delta_reason"
-                ]
+        if turn_entry.get("error"):
+            turn_entries.append(turn_entry)
+            break
+        # Delta computation must never take down the whole run (run_cases
+        # gathers without return_exceptions): degrade this turn to an error
+        # state instead, mirroring run_test's own try/except degradation.
+        try:
+            snapshot = state_snapshot(result)
+            deltas = turn.get("deltas") or {}
+            if deltas and previous_snapshot is not None:
+                delta_result = evaluate_deltas(previous_snapshot, snapshot, deltas)
+                turn_entry["checks"]["state_delta"] = delta_result["state_delta_score"]
+                if delta_result["state_delta_reason"]:
+                    turn_entry.setdefault("reasons", {})["state_delta"] = delta_result[
+                        "state_delta_reason"
+                    ]
+        except Exception as delta_error:
+            turn_entry["error"] = f"delta evaluation failed: {delta_error}"
+            turn_entries.append(turn_entry)
+            break
         previous_snapshot = snapshot
         turn_entries.append(turn_entry)
 
@@ -143,7 +160,11 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
     ]
     if judge_errors:
         entry["judge_errors"] = judge_errors
-    errors = [e["error"] for e in turn_entries if e.get("error")]
+    errors = [
+        f"t{n}: {e['error']}"
+        for n, e in enumerate(turn_entries, start=1)
+        if e.get("error")
+    ]
     if errors:
         entry["error"] = "; ".join(errors)[:500]
     latencies = [e.get("latency_s") for e in turn_entries if e.get("latency_s")]

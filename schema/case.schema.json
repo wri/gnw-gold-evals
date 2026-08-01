@@ -75,7 +75,20 @@
     },
     "fieldList": {
       "type": "array",
-      "items": { "type": "string", "minLength": 1 }
+      "items": {
+        "type": "string",
+        "enum": [
+          "aoi_ids",
+          "dataset_id",
+          "context_layer",
+          "start_date",
+          "end_date",
+          "suggested_datasets",
+          "nudge_type",
+          "dashboard_id"
+        ]
+      },
+      "$comment": "Must equal SNAPSHOT_FIELDS in src/goldset/runner/multiturn.py; tests/test_schema.py enforces the sync. A typo'd field must fail at authoring time, not silently abstain at runtime."
     }
   }
 }

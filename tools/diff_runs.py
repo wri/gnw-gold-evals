@@ -1,7 +1,7 @@
 """Regression diff between two ledger runs.
 
     uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
-      [--json out.json] [--strict] [--fail-on-regression]
+      [--json out.json] [--strict] [--fail-on-regression] [--fail-on-coverage-loss]
 
 Comparison runs over the **intersection of uids** (stale rows excluded), so
 case-set churn is reported but never counted as regression. Transitions per
@@ -14,6 +14,11 @@ check between run A (older) and run B (newer):
 
 ``--strict`` refuses to compare runs with different caseset_versions.
 ``--fail-on-regression`` exits nonzero if any regression exists (CI gate).
+Info-only checks (``INFO_ONLY``, currently just ``date_coverage``) are
+reported but never gate.
+``--fail-on-coverage-loss`` exits nonzero if any non-info-only check went
+evaluated -> not evaluated. Off by default; turn it on to catch a harness
+bug that silently stops evaluating checks (which would otherwise pass CI).
 """
 
 from __future__ import annotations
@@ -124,6 +129,7 @@ def main() -> int:
     parser.add_argument("--json", type=Path, default=None)
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--fail-on-regression", action="store_true")
+    parser.add_argument("--fail-on-coverage-loss", action="store_true")
     args = parser.parse_args()
 
     run_a, run_b = read_run(args.run_a), read_run(args.run_b)
@@ -144,6 +150,9 @@ def main() -> int:
         args.json.write_text(json.dumps(report, indent=2) + "\n")
     real_regressions = [r for r in report["regressions"] if not r["info_only"]]
     if args.fail_on_regression and real_regressions:
+        return 1
+    real_coverage_lost = [c for c in report["coverage_lost"] if not c["info_only"]]
+    if args.fail_on_coverage_loss and real_coverage_lost:
         return 1
     return 0
 

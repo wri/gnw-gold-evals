@@ -52,6 +52,32 @@ def test_query_mismatch_is_stale_not_rekeyed():
     assert entry["stale_case"] is True
 
 
+def test_stale_uid_is_never_rekeyed():
+    # The row asserts a uid the store no longer holds (case content was
+    # edited): even a perfect test_id+query match must not re-key it, or
+    # old scores get attributed to the new case version.
+    row = {**ROW, "uid": "feedfacefeedface"}
+    entry = build_entry(row, {"1-002": CASE}, {CASE.uid})
+    assert entry["uid"] is None
+    assert entry["stale_case"] is True
+    assert "joined_by" not in entry
+
+
+def test_multi_trial_means_become_majority_verdicts():
+    row = {
+        **ROW,
+        "aoi_id_match_score": "0.6667",
+        "agent_answer_score": "0.3333",
+        "charts_answer_score": "1.0",
+        "nudge_match_score": "",
+    }
+    entry = build_entry(row, {"1-002": CASE}, set(), num_trials=3)
+    assert entry["checks"]["aoi_id_match"] == 1.0
+    assert entry["checks"]["agent_answer"] == 0.0
+    assert entry["checks"]["charts_answer"] == 1.0
+    assert entry["checks"]["nudge_match"] is None
+
+
 def test_checks_reasons_and_metadata_mapping():
     entry = build_entry(ROW, {"1-002": CASE}, set())
     assert entry["checks"] == {

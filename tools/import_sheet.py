@@ -128,8 +128,10 @@ def parse_cases(text: str, source_tab: str = "") -> tuple[list[Case], int, list[
 
 
 def fetch(url: str) -> str:
+    # utf-8-sig: Google/Excel CSV exports may lead with a BOM, which would
+    # otherwise glue itself onto the first header cell ("﻿test_id").
     with urllib.request.urlopen(url, timeout=60) as response:
-        return response.read().decode("utf-8")
+        return response.read().decode("utf-8-sig")
 
 
 def run_import(
@@ -146,17 +148,19 @@ def run_import(
         print("invalid cases, aborting:", *problems, sep="\n  ")
         return 1
 
-    existing = {case.id: case for _p, case, _u in load_store(cases_dir)}
+    store = load_store(cases_dir)
+    existing = {case.id: case for _p, case, _u in store}
+    existing_paths = {case.id: path for path, case, _u in store}
 
     # P4: a row colliding with a case from a DIFFERENT source is an error
-    # unless --update makes the takeover explicit.
-    if not update:
+    # unless --update makes the takeover explicit. Without a source_tab we
+    # cannot attribute ownership, so the guard does not apply.
+    if not update and source_tab:
         collisions = [
             case.id
             for case in cases
             if case.id in existing
-            and existing[case.id].notes.get("source_tab", "")
-            != (source_tab or existing[case.id].notes.get("source_tab", ""))
+            and existing[case.id].notes.get("source_tab", "") != source_tab
         ]
         if collisions:
             print(
@@ -164,6 +168,15 @@ def run_import(
                 f"(pass --update to take them over): {sorted(collisions)}"
             )
             return 1
+
+    # An import that changes a case's test_group moves its file. Drop the
+    # old file first — regardless of source_tab ownership — or the same
+    # test_id would exist at two paths and check.py would fail the store.
+    for case in cases:
+        old_path = existing_paths.get(case.id)
+        if old_path and old_path.resolve() != case_path(cases_dir, case).resolve():
+            old_path.unlink()
+            print(f"moved {case.id}: removed superseded file {old_path}")
 
     written = [write_case(cases_dir, case) for case in cases]
 
@@ -218,6 +231,12 @@ def main() -> int:
                              "or the file/url name)")
     args = parser.parse_args()
 
+    if args.source_tab is not None and not args.source_tab.strip():
+        parser.error(
+            "--source-tab must not be empty: an empty label would disable "
+            "both the cross-source collision guard and --prune scoping"
+        )
+
     if args.gid is not None:
         load_dotenv()
         spreadsheet_id = os.environ.get("SPREADSHEET_ID")
@@ -230,7 +249,8 @@ def main() -> int:
         )
         text, source, source_tab = fetch(url), url, f"gid:{args.gid}"
     elif args.csv:
-        text, source = args.csv.read_text(encoding="utf-8"), str(args.csv.name)
+        text = args.csv.read_text(encoding="utf-8-sig")
+        source = str(args.csv.name)
         source_tab = args.csv.stem
     else:
         text, source, source_tab = fetch(args.url), args.url, args.url

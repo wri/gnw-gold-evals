@@ -1,6 +1,6 @@
 id: 1-062
 uid: fadcd8afac449e11
-status: ready
+status: todo
 group: comparative
 query: Which US state lost more forest due to wildfires? Washington or Oregon?
 expected:
@@ -8,9 +8,12 @@ expected:
   dataset_id: 8;10
   scope: analyse
 notes:
-  status_reason: 'Unparked W4 2026-08-01 (1-003 precedent): dataset_id accepts alternatives
-    (8;10 both defensible), the disputed answer and the unexpressable AOI multiplicity expectation
-    dropped pending review.'
+  status_reason: 'Triage W4 2026-08-01: dataset_id accepts alternatives (8;10 both
+    defensible); the disputed answer and the unexpressable AOI multiplicity
+    expectation dropped pending review. Held at todo rather than ready: with
+    aoi_ids and answer gone this row no longer verifies the WA-vs-OR comparison
+    its group promises — reinstate an answer (with ;-alternatives if genuinely
+    dataset-dependent) before activating.'
   aoi_type: gadm 1
   value_1: 62,509 hectares
   value_2: 143,655 hectares
