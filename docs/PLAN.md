@@ -110,17 +110,27 @@ std ≤ 0.10 over 3 trials (the two flakiest sheet-era judges sat at ±0.29 and
 
 ## 5. Roadmap — the PR sequence
 
+**Status 2026-08-01: the whole sequence below (plus PRs 10–13) is merged to
+main**, after a pre-merge review pass that landed fix commits on every
+branch (see each GitHub PR's review comment for findings and rationale).
+Open items live in the README's Status section and the specs' unchecked
+acceptance boxes.
+
 | PR | Spec | What lands | Depends on |
 |---|---|---|---|
-| 01 | `docs/docs/specs/PR-01-case-store.md` | **This initial commit** — case store, uid identity, import/export/check tools | — |
-| 02 | `docs/docs/specs/PR-02-results-ledger.md` | Run-ingest from gnw-evals outputs, `diff_runs.py` regression tool | 01 |
-| 03 | `docs/docs/specs/PR-03-harness-port.md` | Runner + validators ported from gnw-evals, behaviour-preserving | 01 |
-| 04 | `docs/docs/specs/PR-04-fix-first.md` | The six inherited harness debts + four trivial deterministic guards | 03 |
-| 05 | `docs/docs/specs/PR-05-bucket-scoring.md` | Five-bucket registry, row verdicts, regression gate, reconciliation line | 02, 04 |
-| 06 | `docs/docs/specs/PR-06-new-validators.md` | The bucket-filling validators (A2, A3, E1, O2, O3, S1) + new expected fields | 05 |
-| 07 | `docs/docs/specs/PR-07-multiturn.md` | Multi-turn runner + 8 scripted 2-turn cases + state-delta checks | 05 |
-| 08 | `docs/docs/specs/PR-08-live-validation.md` | The staging campaign clearing every live-run acceptance box (parity, guard stds, seed flakiness, G4 pinning, judge probation review) | 02–07, staging token |
-| 09 | `docs/docs/specs/PR-09-hardening-and-ci.md` | CI workflow + defects found while building 02–07 (ingest drift re-keying, merge_trials error loss, multiturn reconciliation, dataset_id alternatives) | 07 |
+| 01 | `docs/specs/PR-01-case-store.md` | **This initial commit** — case store, uid identity, import/export/check tools | — |
+| 02 | `docs/specs/PR-02-results-ledger.md` | Run-ingest from gnw-evals outputs, `diff_runs.py` regression tool | 01 |
+| 03 | `docs/specs/PR-03-harness-port.md` | Runner + validators ported from gnw-evals, behaviour-preserving | 01 |
+| 04 | `docs/specs/PR-04-fix-first.md` | The six inherited harness debts + four trivial deterministic guards | 03 |
+| 05 | `docs/specs/PR-05-bucket-scoring.md` | Five-bucket registry, row verdicts, regression gate, reconciliation line | 02, 04 |
+| 06 | `docs/specs/PR-06-new-validators.md` | The bucket-filling validators (A2, A3, E1, O2, O3, S1) + new expected fields | 05 |
+| 07 | `docs/specs/PR-07-multiturn.md` | Multi-turn runner + 8 scripted 2-turn cases + state-delta checks | 05 |
+| 08 | `docs/specs/PR-08-live-validation.md` | The staging campaign clearing every live-run acceptance box (parity, guard stds, seed flakiness, G4 pinning, judge probation review) | 02–07, staging token |
+| 09 | `docs/specs/PR-09-hardening-and-ci.md` | CI workflow + defects found while building 02–07 (ingest drift re-keying, merge_trials error loss, multiturn reconciliation, dataset_id alternatives) | 07 |
+| 10 | — | Sheet-pull hardening: scoped prune, provenance, `--update` takeover, `--gid` fetch | 09 |
+| 11 | — | Case-set audit tool (`tools/audit_cases.py`) + PR checklist template | 10 |
+| 12 | — | W2 determinism scrub + W4 triage on `cases/v2` | 11 |
+| 13 | — | Sheet push phase 1 (`tools/export_sheet_csv.py`), executed campaign artifacts, run-report ritual | 12 |
 
 Ordering rationale: results tracking (02) and a faithful port (03) can
 proceed in parallel; fixes (04) deliberately land *after* the

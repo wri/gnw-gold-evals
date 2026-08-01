@@ -55,6 +55,15 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
   `caseset_version`; regression comparisons (PR-02's `diff_runs.py`) are
   computed over the **intersection of uids** between two runs, so set growth
   never masquerades as regression or recovery.
+- **Stale means stale.** A row that carries a uid the store no longer holds
+  is recorded `stale_case: true` — it is never re-resolved through the
+  weaker `test_id`+query join, however well the query text still matches.
+  Only rows with no uid at all (legacy sheet runs) may use that fallback,
+  and it is drift-checked against the case's current expectations.
+- **Run files are immutable.** `write_run` refuses to overwrite an existing
+  run file with different content; byte-identical re-ingest (idempotence) is
+  allowed. Re-ingesting after a tooling fix means deleting the file first,
+  visibly, in a reviewable commit.
 - **Checks are tri-state.** `1.0` pass, `0.0` fail, `null` not evaluated.
   Every run report must state evaluated-vs-implied check counts (the
   reconciliation line) — see PR-05.

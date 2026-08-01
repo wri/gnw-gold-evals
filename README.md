@@ -1,17 +1,14 @@
 # gnw-gold-evals
 
 The **GOLD capability smoke-test set** for the Global Nature Watch (GNW) /
-Project Zeno agent — as a versioned repo instead of a live spreadsheet.
+Project Zeno agent — cases, harness, and results ledger in one versioned
+repo instead of a live spreadsheet.
 
 GOLD answers one question at release time: **did an agent change break a
 capability that used to work?** It is not a quality or accuracy measure
 (that is the CHALLENGE programme's job). Consequences: coverage across
 capabilities is the design criterion, determinism outranks realism, and the
 headline number is a **regression count**, not a mean score.
-
-This repo holds the **cases** (one YAML per case, content-addressed), the
-**results ledger** (committed per-run JSONs, keyed to exact case versions),
-and — incrementally, see `docs/specs/` — the harness that runs them.
 
 ## Why a repo and not the sheet
 
@@ -22,49 +19,113 @@ scored against. Here:
 - **Every case has a `uid`** — a truncated SHA-256 of its query + all
   non-empty expected values. Editing the prompt or any expectation mints a
   new uid; annotating triage notes does not. Results key on the uid, so a
-  score is always pinned to the exact case content it ran against.
-- **The set has a `caseset_version`** (hash of all uids, in
-  `cases/MANIFEST.json`) — two runs are comparable iff it matches.
-- Case edits arrive as **reviewable PRs**, with `tools/check.py` keeping the
-  uids truthful in CI.
+  score is always pinned to the exact case content it ran against. A result
+  carrying a uid the store no longer holds is recorded `stale_case`, never
+  re-keyed.
+- **Each store has a `caseset_version`** (hash of all uids, in its
+  `MANIFEST.json`) — two runs are comparable iff it matches.
+- Case edits arrive as **reviewable PRs**, with `tools/check.py` and the
+  schema tests keeping uids truthful in CI.
+
+## The two case stores
+
+```
+cases/v1/   frozen as-imported baseline (sheet lineage) — re-imports only
+cases/v2/   the curated working set — all improvement work lands here
+```
+
+Tools default to `v2`. v1 is pinned by `tests/test_v1_frozen.py` (the
+caseset_version is recomputed from the case files, so curation leaking into
+v1 fails CI). Run the same build against both stores and diff the reports to
+measure what curation bought. See `cases/README.md` for authoring rules.
 
 ## Quickstart
 
 ```bash
 uv sync
-uv run python -m pytest                 # 131 tests
+uv run python -m pytest -q              # 475 tests, no network
 
-# re-import from the sheet (one-way: sheet -> repo; see docs/PLAN.md §2.4)
-uv run python tools/import_sheet.py \
-  --url "https://docs.google.com/spreadsheets/d/1_G1aq2fSCPqhT6w55_Od6VU7sov76t1lHQTBeZZxbdM/export?format=csv&gid=0"
+# secrets: API_TOKEN (environment-specific) and ANTHROPIC_API_KEY (judge)
+# may live in .env — loaded before the token check.
+
+# run the GOLD set against staging (the harness lives here now):
+uv run gold run --env staging --trials 3
+uv run gold run --env staging --id 1-030 --verbose   # one case
+# writes results/runs/<run_id>.json + gzipped raw artifacts
+
+# reports from a ledger run:
+uv run python tools/report_run.py results/runs/<run_id>.json   # markdown
+uv run python tools/render_html.py results/runs/<run_id>.json  # stakeholder HTML
+
+# regression gate between two runs:
+uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
+  --fail-on-regression            # exit 1 on any real (non-info-only) regression
+# add --fail-on-coverage-loss to also fail when checks silently stop evaluating
 
 # after hand-editing any case YAML:
-uv run python tools/check.py --fix      # recompute uids + manifest
+uv run python tools/check.py --fix      # recompute uids + manifest (defaults to v2)
 uv run python tools/check.py            # verify only (CI mode)
 
-# run the set today, via the existing gnw-evals harness:
-uv run python tools/export_csv.py --out scratch/gold.csv --status-exclude "not doing"
-# then in ../gnw-evals:
-#   uv run gnw_evals --test-file <path to gold.csv> --sample-size -1 \
-#     --api-base-url https://api.staging.globalnaturewatch.org --num-workers 5
+# case-set hygiene (report-only in CI; --strict to gate):
+uv run python tools/audit_cases.py
+
+# sheet bridge (one-way each direction):
+uv run python tools/import_sheet.py --gid 0        # sheet -> repo (safe tab imports)
+uv run python tools/export_sheet_csv.py            # repo -> sheet-uploadable CSVs
+uv run python tools/ingest_run.py --detailed <gnw-evals _detailed.csv> ...  # legacy runs
 ```
 
 ## Layout
 
 ```
-cases/                  one YAML per case, grouped by capability (test_group)
-  MANIFEST.json         generated: caseset_version + id->uid index
-results/                committed run ledger (contract in results/README.md)
-schema/case.schema.json the case contract; every file is validated in tests
-src/goldset/            canonical hashing + store library
-tools/                  import_sheet / export_csv / check
-
+cases/v1, cases/v2      one YAML per case, grouped by capability; MANIFEST.json each
+results/                committed run ledger + reports (contract: results/README.md)
+schema/case.schema.json the case contract; every file validated in tests
+src/goldset/            store, canonical hashing, ledger, adapter, buckets,
+                        evaluator registry, runner/ (API + multiturn), cli (gold)
+tools/                  check / audit_cases / import_sheet / export_csv /
+                        export_sheet_csv / ingest_run / diff_runs / report_run /
+                        render_html / parity / flakiness
 docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
+.github/workflows/ci.yml  lint + tests + store integrity on PRs; manual staging run
 ```
 
-## Status
+## How scoring reads
 
-Initial slice (PR-01): case store imported from the sheet snapshot of
-2026-07-31 — 107 cases, `caseset_version 2f8b10272938527c`. The harness
-still lives in [gnw-evals](https://github.com/wri/gnw-evals); the export
-bridge above runs today's set unchanged. See `docs/PLAN.md` for what lands next.
+- Checks are tri-state (`1.0` / `0.0` / `null` = not evaluated) and roll up
+  into **five buckets** (retrieval, analysis, explanation, output, scope);
+  a run's verdict comes from per-row verdicts and per-bucket tallies, never
+  a flat mean. Errored rows are errors, not measurements — they are excluded
+  from tallies rather than banking partial passes.
+- **Multi-turn cases** share one thread; per-turn checks flatten to
+  `t<N>.<check>` plus `state_delta` assertions between turns. A turn that
+  errors aborts its conversation rather than polluting later turns.
+- Gates are built to fail loudly on emptiness: `parity.py` exits nonzero
+  when nothing was comparable, `flakiness.py` flags partial samples as
+  INSUFFICIENT DATA instead of "stable", and `diff_runs.py` can gate on
+  silent coverage loss.
+
+## Status (2026-08-01)
+
+The 12-PR build-out is merged: harness ported from
+[gnw-evals](https://github.com/wri/gnw-evals) (behaviour-preserving, then
+six inherited scoring defects fixed), bucket scoring + release gate + HTML
+report, six new validators, multi-turn support, live-validation campaign
+tooling, hardening + CI, sheet pull/push bridges, and the v1/v2 split.
+Baseline 3-trial staging campaign committed as run
+`20260801T093002Z_staging_experimental` (104 cases; see
+`results/campaigns/` and `results/recommendations/`).
+
+Known open items (tracked in specs/case notes, deliberately not papered
+over):
+
+- `chart_type` seeding is deferred until live chart types are verified
+  (`docs/specs/PR-06-new-validators.md`) — the validator is wired but no
+  case exercises it yet.
+- `1-062` and `mt-007` are held at `todo`: each needs its dropped/pending
+  expectation resolved before activation (see their `status_reason`).
+- `1-072` / `1-011` carry relative-date phrasing pending a team call;
+  `audit_cases.py` now flags 1-072.
+- No per-case info-only mechanism exists yet for judged checks on
+  probation (mt-007's caveat) — probation is currently handled by holding
+  the case at `todo`.
