@@ -1,10 +1,19 @@
-"""Import the GOLD Google-Sheet CSV export into the case store.
+"""Import a GOLD Google-Sheet tab (CSV export) into the case store.
 
 Usage::
 
+    uv run python tools/import_sheet.py --gid 123456789     # tab of $SPREADSHEET_ID
     uv run python tools/import_sheet.py --csv path/to/gold.csv
     uv run python tools/import_sheet.py --url "https://docs.google.com/...gid=0"
-    uv run python tools/import_sheet.py --csv gold.csv --prune
+    uv run python tools/import_sheet.py --gid 0 --prune
+
+Every imported case records its origin in ``notes.source_tab``; ``--prune``
+is **scoped to that source** — it only deletes orphans the same tab
+imported earlier, and reports (never touches) unmanaged orphans. A row
+whose ``test_id`` already exists from a *different* source errors unless
+``--update`` is passed. A sheet ``uid`` column, if present, is never
+trusted (uids are always recomputed) but is compared: rows whose sheet uid
+differs are listed as "edited on sheet since last push".
 
 Column handling (lossless by construction):
 
@@ -58,8 +67,17 @@ def note_key(column: str) -> str:
     return key.removeprefix("note_")
 
 
-def parse_cases(text: str) -> tuple[list[Case], int]:
-    """Parse the sheet CSV into cases. Returns (cases, skipped_empty_query)."""
+# Sheet columns that are sync metadata, never case content.
+SYNC_COLUMNS = {"uid", "last_changed"}
+
+
+def parse_cases(text: str, source_tab: str = "") -> tuple[list[Case], int, list[str]]:
+    """Parse the sheet CSV into cases.
+
+    Returns (cases, skipped_empty_query, sheet_edited_ids) — the last being
+    rows whose sheet ``uid`` column no longer matches their recomputed uid,
+    i.e. edited on the sheet since the last push (P5).
+    """
     rows = list(csv.reader(io.StringIO(text)))
     header_index = find_header(rows)
     header = [cell.strip() for cell in rows[header_index]]
@@ -69,6 +87,7 @@ def parse_cases(text: str) -> tuple[list[Case], int]:
 
     cases: list[Case] = []
     skipped = 0
+    sheet_edited: list[str] = []
     for row in rows[header_index + 1 :]:
         record = dict(zip(header, [cell for cell in row]))
         if not normalize_text(record.get("query")):
@@ -83,24 +102,29 @@ def parse_cases(text: str) -> tuple[list[Case], int]:
             note_key(column): normalize_text(value)
             for column, value in record.items()
             if column not in META_COLUMNS
+            and column not in SYNC_COLUMNS
             and not column.startswith("expected_")
             and normalize_text(value)
         }
-        cases.append(
-            Case(
-                id=normalize_text(record["test_id"]),
-                status=normalize_text(record["status"]).lower(),
-                group=normalize_text(record["test_group"]),
-                query=normalize_text(record["query"]),
-                expected=expected,
-                notes=notes,
-            )
+        if source_tab:
+            notes["source_tab"] = source_tab
+        case = Case(
+            id=normalize_text(record["test_id"]),
+            status=normalize_text(record["status"]).lower(),
+            group=normalize_text(record["test_group"]),
+            query=normalize_text(record["query"]),
+            expected=expected,
+            notes=notes,
         )
+        sheet_uid = normalize_text(record.get("uid"))
+        if sheet_uid and sheet_uid != case.uid:
+            sheet_edited.append(case.id)
+        cases.append(case)
 
     duplicate_ids = {c.id for c in cases if [x.id for x in cases].count(c.id) > 1}
     if duplicate_ids:
         raise ValueError(f"duplicate test_ids in sheet: {sorted(duplicate_ids)}")
-    return cases, skipped
+    return cases, skipped, sheet_edited
 
 
 def fetch(url: str) -> str:
@@ -108,28 +132,65 @@ def fetch(url: str) -> str:
         return response.read().decode("utf-8")
 
 
-def run_import(text: str, cases_dir: Path, source: str, prune: bool) -> int:
-    cases, skipped = parse_cases(text)
+def run_import(
+    text: str,
+    cases_dir: Path,
+    source: str,
+    prune: bool,
+    source_tab: str = "",
+    update: bool = False,
+) -> int:
+    cases, skipped, sheet_edited = parse_cases(text, source_tab=source_tab)
     problems = [p for case in cases for p in case.validate()]
     if problems:
         print("invalid cases, aborting:", *problems, sep="\n  ")
         return 1
 
+    existing = {case.id: case for _p, case, _u in load_store(cases_dir)}
+
+    # P4: a row colliding with a case from a DIFFERENT source is an error
+    # unless --update makes the takeover explicit.
+    if not update:
+        collisions = [
+            case.id
+            for case in cases
+            if case.id in existing
+            and existing[case.id].notes.get("source_tab", "")
+            != (source_tab or existing[case.id].notes.get("source_tab", ""))
+        ]
+        if collisions:
+            print(
+                "test_ids already exist from a different source "
+                f"(pass --update to take them over): {sorted(collisions)}"
+            )
+            return 1
+
     written = [write_case(cases_dir, case) for case in cases]
-    manifest = build_manifest(cases, source)
+
+    # P3: prune is scoped to this import's source — unmanaged orphans
+    # (no or different source_tab) are reported, never deleted.
+    wanted = {case_path(cases_dir, case).resolve() for case in cases}
+    for path, case, _uid in load_store(cases_dir):
+        if path.resolve() in wanted:
+            continue
+        owned = source_tab and case.notes.get("source_tab") == source_tab
+        if prune and owned:
+            path.unlink()
+            print(f"pruned: {path}")
+        elif owned:
+            print(f"ORPHAN of this tab (use --prune): {path}")
+        else:
+            print(f"orphan from another source, untouched: {path}")
+
+    survivors = [case for _p, case, _u in load_store(cases_dir)]
+    manifest = build_manifest(survivors, source)
     write_manifest(cases_dir, manifest)
 
-    wanted = {case_path(cases_dir, case).resolve() for case in cases}
-    orphans = [
-        path
-        for path, _case, _uid in load_store(cases_dir)
-        if path.resolve() not in wanted
-    ]
-    for path in orphans:
-        if prune:
-            path.unlink()
-        print(f"{'pruned' if prune else 'ORPHAN (use --prune)'}: {path}")
-
+    if sheet_edited:
+        print(
+            f"edited on sheet since last push ({len(sheet_edited)}): "
+            + ", ".join(sorted(sheet_edited))
+        )
     print(
         f"imported {len(written)} cases ({skipped} empty-query rows skipped), "
         f"caseset_version={manifest['caseset_version']}"
@@ -138,19 +199,47 @@ def run_import(text: str, cases_dir: Path, source: str, prune: bool) -> int:
 
 
 def main() -> int:
+    import os
+
+    from dotenv import load_dotenv
+
     parser = argparse.ArgumentParser(description=__doc__)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--csv", type=Path, help="path to a sheet CSV export")
     group.add_argument("--url", help="CSV export URL of the sheet")
+    group.add_argument("--gid", help="tab gid within $SPREADSHEET_ID (P1)")
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
-    parser.add_argument("--prune", action="store_true")
+    parser.add_argument("--prune", action="store_true",
+                        help="delete orphans previously imported from this same tab")
+    parser.add_argument("--update", action="store_true",
+                        help="allow taking over test_ids owned by another source")
+    parser.add_argument("--source-tab", default=None,
+                        help="override the source_tab label (defaults to gid:<gid> "
+                             "or the file/url name)")
     args = parser.parse_args()
 
-    if args.csv:
+    if args.gid is not None:
+        load_dotenv()
+        spreadsheet_id = os.environ.get("SPREADSHEET_ID")
+        if not spreadsheet_id:
+            print("SPREADSHEET_ID is not set (env or .env)")
+            return 1
+        url = (
+            f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}"
+            f"/export?format=csv&gid={args.gid}"
+        )
+        text, source, source_tab = fetch(url), url, f"gid:{args.gid}"
+    elif args.csv:
         text, source = args.csv.read_text(encoding="utf-8"), str(args.csv.name)
+        source_tab = args.csv.stem
     else:
-        text, source = fetch(args.url), args.url
-    return run_import(text, args.cases_dir, source, args.prune)
+        text, source, source_tab = fetch(args.url), args.url, args.url
+    if args.source_tab is not None:
+        source_tab = args.source_tab
+    return run_import(
+        text, args.cases_dir, source, args.prune,
+        source_tab=source_tab, update=args.update,
+    )
 
 
 if __name__ == "__main__":
