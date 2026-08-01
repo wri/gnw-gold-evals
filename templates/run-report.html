@@ -132,6 +132,61 @@ function flappedChecks(entry) {
   });
 }
 
+// Re-score a plain checks map (one trial's worth) without entry-level
+// error context — good enough for spread-between-repeats estimates.
+function checksVerdict(checks, infoOnly) {
+  const scored = Object.entries(checks || {})
+    .filter(([n, v]) => v !== null && !infoOnly.includes(baseName(n)));
+  if (!scored.length) return "uncovered";
+  return scored.some(([, v]) => v === 0) ? "fail" : "pass";
+}
+
+// "± N pts": population std of a rate across repeats, in percentage points.
+function spreadPts(rates) {
+  if (rates.length < 2) return null;
+  const mean = rates.reduce((a, b) => a + b, 0) / rates.length;
+  const variance = rates.reduce((a, r) => a + (r - mean) ** 2, 0) / rates.length;
+  return Math.sqrt(variance) * 100;
+}
+
+function trialChecks(entry, k) {
+  return entry.trials?.[k]?.checks ?? entry.checks;
+}
+
+// Pass-rate spread across repeats: score every question with only trial
+// k's results, k times over.
+function overallSpread(entries, trials, infoOnly) {
+  if (trials < 2 || !entries.some(e => e.trials)) return null;
+  const rates = [];
+  for (let k = 0; k < trials; k++) {
+    const pass = entries.filter(
+      e => checksVerdict(trialChecks(e, k), infoOnly) === "pass").length;
+    rates.push(pass / entries.length);
+  }
+  return spreadPts(rates);
+}
+
+// Per-bucket dedicated pass-share spread across repeats.
+function bucketSpread(entries, trials, infoOnly, dedicatedMap, bucket) {
+  if (trials < 2 || !entries.some(e => e.trials)) return null;
+  const rates = [];
+  for (let k = 0; k < trials; k++) {
+    let passed = 0, evaluated = 0;
+    for (const entry of entries) {
+      for (const [name, value] of Object.entries(trialChecks(entry, k) || {})) {
+        if (value === null || infoOnly.includes(baseName(name))) continue;
+        if (dedicatedMap[baseName(name)] !== bucket) continue;
+        evaluated += 1; passed += value === 1 ? 1 : 0;
+      }
+    }
+    if (evaluated) rates.push(passed / evaluated);
+  }
+  return rates.length === trials ? spreadPts(rates) : null;
+}
+
+const fmtSpread = pts => pts == null ? ""
+  : ` <span class="frac">± ${pts < 0.05 ? "0" : pts.toFixed(1)} pts between repeats</span>`;
+
 function trialTally(entry, name) {
   const trials = entry.trials || [];
   if (trials.length < 2) return "";
@@ -217,13 +272,18 @@ function render(payload) {
       times</b>. A check's overall result is the majority across repeats,
       and a question whose results <i>changed between repeats</i> is
       flagged as unstable — instability usually means the AI behaves
-      differently on identical input, which matters as much as a failure.</p>` : ""}
+      differently on identical input, which matters as much as a failure.
+      The small <b>± figures</b> are the spread of that rate when each
+      repeat is scored on its own — a large ± means the headline depends
+      on which repeat you happened to get.</p>` : ""}
     </details>`;
 
+  const passSpread = overallSpread(entries, trials, infoOnly);
   const tiles = `
     <div class="tiles">
       <div class="tile good"><div class="n">✓ ${pct(verdicts.pass ?? 0, total)}</div>
-        <div class="l">passed all checks (${verdicts.pass ?? "?"} of ${total})</div></div>
+        <div class="l">passed all checks (${verdicts.pass ?? "?"} of ${total})${
+          passSpread != null ? `<br>±${passSpread < 0.05 ? "0" : passSpread.toFixed(1)} pts between repeats` : ""}</div></div>
       <div class="tile bad"><div class="n">✕ ${pct(verdicts.fail ?? 0, total)}</div>
         <div class="l">failed a check (${verdicts.fail ?? "?"} of ${total})</div></div>
       <div class="tile warn"><div class="n">⚠ ${verdicts.error ?? 0}</div>
@@ -250,7 +310,9 @@ function render(payload) {
     const [label, blurb] = BUCKET_INFO[name];
     const main = unmeasured
       ? `<span class="chip info">not measured yet</span>`
-      : `<span class="pctbig">${pct(d.passed, d.evaluated)}</span>
+      : `<span class="pctbig">${pct(d.passed, d.evaluated)}</span>${
+           fmtSpread(bucketSpread(entries, trials, infoOnly,
+                                  payload.dedicated_map || {}, name))}
          <span class="frac">${d.evaluated ? `${d.passed}/${d.evaluated} checks` : "no specific checks"}</span>
          ${d.evaluated ? `<div class="meter" aria-hidden="true">
            <i style="width:${(100 * d.passed / d.evaluated).toFixed(1)}%"></i></div>` : ""}`;

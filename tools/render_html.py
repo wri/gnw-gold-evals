@@ -18,7 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from goldset.buckets import INFO_ONLY
+from goldset.buckets import DEDICATED, INFO_ONLY
 from goldset.ledger import read_run
 from goldset.store import load_store
 
@@ -68,6 +68,7 @@ def render_report(
         {
             "run": run,
             "info_only": sorted(INFO_ONLY),
+            "dedicated_map": dict(DEDICATED),
             "generated": generated,
             "cases": cases or {},
         },
