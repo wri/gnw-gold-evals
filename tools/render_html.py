@@ -82,15 +82,13 @@ def main() -> int:
     parser.add_argument("run", type=Path, help="results/runs/<run_id>.json")
     parser.add_argument("--out", type=Path, default=None,
                         help="default: results/reports/<run_id>.html")
-    parser.add_argument("--cases-dir", type=Path, default=None,
-                        help="default: cases/v2 if present, else cases")
+    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     args = parser.parse_args()
 
     run = read_run(args.run)
-    cases_dir = args.cases_dir or (
-        Path("cases/v2") if Path("cases/v2").exists() else Path("cases")
+    contexts = (
+        load_case_contexts(args.cases_dir, run) if args.cases_dir.exists() else {}
     )
-    contexts = load_case_contexts(cases_dir, run) if cases_dir.exists() else {}
     out = args.out or args.run.parents[1] / "reports" / f"{run['run_id']}.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     generated = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
