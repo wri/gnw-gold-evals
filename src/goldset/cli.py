@@ -18,7 +18,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from goldset.adapter import case_to_expected, turn_to_expected
+from goldset.adapter import case_to_expected
 from goldset.buckets import summarize_buckets
 from goldset.eval_types import TestResult
 from goldset.ledger import majority, make_run_id, reason_name_from_column, write_run
@@ -105,6 +105,7 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     # Deferred import: langchain/httpx stay out of store-only invocations.
     from goldset.runner.api import APITestRunner
     from goldset.runner.artifacts import ArtifactWriter, build_artifact  # noqa: F401
+    from goldset.runner.multiturn import run_conversation
 
     runner = APITestRunner(
         api_base_url=args.resolved_url,
@@ -115,78 +116,21 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
     semaphore = asyncio.Semaphore(args.workers)
 
-    async def run_conversation(case: Case, trial: int) -> dict:
-        """One scripted conversation: same thread across turns, per-turn
-        checks flattened under t<N>. prefixes, delta assertions between
-        consecutive snapshots."""
-        from uuid import uuid4
-
-        from goldset.runner.multiturn import (
-            evaluate_deltas,
-            flatten_turn_checks,
-            state_snapshot,
-        )
-
-        thread_id = str(uuid4())
-        turn_entries: list[dict] = []
-        previous_snapshot: dict[str, str] | None = None
-        for number, turn in enumerate(case.turns, start=1):
-            result = await runner.run_test(
-                turn["query"],
-                turn_to_expected(case, turn),
-                artifact_sink=lambda a, c=case, t=trial, n=number: writer(
-                    f"{c.uid}_turn{n}", t, a
-                ),
-                thread_id=thread_id,
-            )
-            turn_entry = result_to_entry(result, case.uid)
-            snapshot = state_snapshot(result)
-            deltas = turn.get("deltas") or {}
-            if deltas and previous_snapshot is not None:
-                delta_result = evaluate_deltas(previous_snapshot, snapshot, deltas)
-                turn_entry["checks"]["state_delta"] = delta_result["state_delta_score"]
-                if delta_result["state_delta_reason"]:
-                    turn_entry.setdefault("reasons", {})["state_delta"] = (
-                        delta_result["state_delta_reason"]
-                    )
-            previous_snapshot = snapshot
-            turn_entries.append(turn_entry)
-
-        entry: dict = {
-            "uid": case.uid,
-            "id": case.id,
-            "checks": flatten_turn_checks(turn_entries),
-            "turns_detail": [
-                {
-                    "query": turn["query"],
-                    "reasons": e.get("reasons"),
-                    "latency_s": e.get("latency_s"),
-                    "trace_url": e.get("trace_url"),
-                }
-                for turn, e in zip(case.turns, turn_entries)
-            ],
-        }
-        judge_errors = [
-            f"t{n}.{check}"
-            for n, e in enumerate(turn_entries, start=1)
-            for check in e.get("judge_errors", [])
-        ]
-        if judge_errors:
-            entry["judge_errors"] = judge_errors
-        errors = [e["error"] for e in turn_entries if e.get("error")]
-        if errors:
-            entry["error"] = "; ".join(errors)[:500]
-        latencies = [e.get("latency_s") for e in turn_entries if e.get("latency_s")]
-        if latencies:
-            entry["latency_s"] = round(sum(latencies), 1)
-        return entry
-
     async def run_one(case: Case) -> dict:
         async with semaphore:
             trials = []
             for trial in range(1, args.trials + 1):
                 if case.is_multiturn:
-                    trials.append(await run_conversation(case, trial))
+                    trials.append(
+                        await run_conversation(
+                            runner,
+                            case,
+                            result_to_entry,
+                            artifact_sink_factory=lambda n, c=case, t=trial: (
+                                lambda a: writer(f"{c.uid}_turn{n}", t, a)
+                            ),
+                        )
+                    )
                 else:
                     result = await runner.run_test(
                         case.query,
