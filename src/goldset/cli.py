@@ -61,6 +61,17 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
     return entry
 
 
+def latency_info(latency_s: float | None, slow_threshold: float) -> dict | None:
+    """G3: info-only slow flag for a merged entry — reported, never scored.
+
+    Strictly over-threshold flags; at or under (or no recorded latency)
+    returns None so no ``info`` key is written.
+    """
+    if latency_s is None or latency_s <= slow_threshold:
+        return None
+    return {"slow": True, "threshold_s": slow_threshold}
+
+
 def merge_trials(entries: list[dict]) -> dict:
     """Fold per-trial entries into one: majority verdict + per-trial detail."""
     if len(entries) == 1:
@@ -126,9 +137,9 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
                 trials.append(result_to_entry(result, case.uid))
             entry = merge_trials(trials)
             # G3: slow rows get an info flag — reported, never scored.
-            latency = entry.get("latency_s")
-            if latency is not None and latency > args.slow_threshold:
-                entry["info"] = {"slow": True, "threshold_s": args.slow_threshold}
+            info = latency_info(entry.get("latency_s"), args.slow_threshold)
+            if info:
+                entry["info"] = info
             clean = (
                 all(v != 0.0 for v in entry["checks"].values())
                 and not entry.get("error")
