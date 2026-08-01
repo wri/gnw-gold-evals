@@ -48,14 +48,14 @@ runs.
 
 ## Acceptance criteria
 
-- [ ] Ingesting the same CSVs twice is idempotent (same file, byte-equal).
-- [ ] A doctored fixture pair produces exactly the expected regression /
+- [x] Ingesting the same CSVs twice is idempotent (same file, byte-equal).
+- [x] A doctored fixture pair produces exactly the expected regression /
       recovery / coverage-change lists (unit-tested, no live API).
-- [ ] Stale-case rows are flagged, counted in the summary line, excluded
+- [x] Stale-case rows are flagged, counted in the summary line, excluded
       from regression math.
-- [ ] `diff_runs.py` on runs with different `caseset_version` prints the
+- [x] `diff_runs.py` on runs with different `caseset_version` prints the
       intersection size and refuses `--strict` mode.
-- [ ] One real staging run ingested and committed as the ledger's first
+- [x] One real staging run ingested and committed as the ledger's first
       entry.
 
 ## Test plan
