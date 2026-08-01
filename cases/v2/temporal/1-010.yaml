@@ -1,5 +1,5 @@
 id: 1-010
-uid: 276dd5ff3dab3e82
+uid: efa097b0957452b4
 status: done
 group: temporal
 query: How much wetland was there in the Arawe KBA in Papua New Guinea in 2024?
@@ -7,11 +7,11 @@ expected:
   aoi_source: kba
   dataset_id: '1'
   dataset_name: Global land cover
-  start_date: '2024-01-01'
-  end_date: '2024-12-11'
   answer: 16,359 hectares
   scope: analyse
 notes:
   aoi_type: kba
   class_1: wetland
   value_2: 16,359 hectares
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

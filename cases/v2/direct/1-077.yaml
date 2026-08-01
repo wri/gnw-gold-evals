@@ -1,5 +1,5 @@
 id: 1-077
-uid: 19caeadb43bc5b5b
+uid: 1eb80386fe2714ff
 status: done
 group: direct
 query: How much deforestation in intact forests in Russia in 2025?
@@ -8,7 +8,8 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   context_layer: intact_forest
-  start_date: '2025-01-01'
-  end_date: '2025-12-31'
   answer: 590 kha
   scope: analyse
+notes:
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

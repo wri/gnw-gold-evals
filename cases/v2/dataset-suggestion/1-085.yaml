@@ -12,3 +12,5 @@ expected:
   scope: suggest
 notes:
   aoi_type: gadm 0
+  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
+    staging, then unpark, rewrite, or delete with the reason written down.'

@@ -1,5 +1,5 @@
 id: 1-035
-uid: c6d844c8a0c38ae5
+uid: 8f62c9e6bb8f8363
 status: done
 group: parent-child
 query: Which state in belgium had the least deforestation from 2005 to 2015?
@@ -8,10 +8,10 @@ expected:
   aoi_source: gadm
   dataset_id: '4'
   dataset_name: Tree cover loss
-  start_date: '2005-01-01'
-  end_date: '2015-12-31'
   answer: Bruxelles (Brussels)
   scope: analyse
 notes:
   aoi_type: gadm 0
   value_1: 42 hectares
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

@@ -1,5 +1,5 @@
 id: 1-048
-uid: e92f2c04f8e4637a
+uid: 00bb3895326ac32a
 status: done
 group: temporal
 query: 'True or false: in Alto Rio Guama, more tree cover was gained in the period between
@@ -8,11 +8,11 @@ expected:
   aoi_source: wdpa
   dataset_id: '5'
   dataset_name: tree cover gain
-  start_date: '2000-01-01'
-  end_date: '2020-12-31'
   answer: 'TRUE'
   scope: analyse
 notes:
   aoi_type: wdpa
   value_1: 7,266.24 hectares
   value_2: 1,510.20 hectares
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

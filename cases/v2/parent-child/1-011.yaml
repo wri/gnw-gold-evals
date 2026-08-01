@@ -11,8 +11,11 @@ expected:
   answer: 564,406 hectares
   scope: analyse
 notes:
-  status_reason: Agent asks which protected areas to use; no data retrieved. Query is ambiguous
-    about scope.
+  status_reason: 'Agent asks which protected areas to use; no data retrieved. Query is ambiguous
+    about scope. | triage-proposed: REWRITE — relative window (''past decade'') plus genuine
+    scope ambiguity (agent clarifies). Either close the window and name the scope (''all protected
+    areas of Colorado, 2015-2024'', answer needs reverification) or accept clarification as
+    correct (clarification: TRUE, scope: clarify). Team call.'
   aoi_type: wdpa
   class_1: all
   class_2: short vegetation

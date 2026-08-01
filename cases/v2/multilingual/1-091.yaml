@@ -1,5 +1,5 @@
 id: 1-091
-uid: 2d4ecaa5f9030d67
+uid: c7e6de1b063ca7e1
 status: done
 group: multilingual
 query: Quelle superficie forestière a été perdue au Sénégal en 2022 ?
@@ -8,6 +8,7 @@ expected:
   aoi_source: gadm
   dataset_id: '4'
   dataset_name: Tree cover loss
-  start_date: '2022-01-01'
-  end_date: '2022-12-31'
   text: Provides good response in the same language as the prompt
+notes:
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'
