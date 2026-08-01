@@ -76,6 +76,28 @@ def majority(values: list[float | None]) -> float | None:
     return 1.0 if passes * 2 > len(evaluated) else 0.0
 
 
+def majority_from_mean(cell: object, num_trials: int) -> float | None:
+    """Majority verdict recovered from a trial-mean score column.
+
+    Multi-trial gnw-evals CSVs write the mean of the per-trial scores into
+    the primary ``*_score`` column, so the pass count is ``mean * trials``.
+    A mean that doesn't correspond to a whole number of passes (e.g. some
+    trials returned None and shrank the denominator) is refused loudly
+    rather than mis-ingested. Ties fail conservatively, as in ``majority``.
+    """
+    text = str(cell or "").strip()
+    if not text:
+        return None
+    mean = float(text)
+    passes = round(mean * num_trials)
+    if not 0 <= passes <= num_trials or abs(mean - passes / num_trials) > 0.005:
+        raise ValueError(
+            f"{mean!r} is not a mean of {num_trials} binary scores — "
+            "were some trials unevaluated? ingest per-trial data instead"
+        )
+    return 1.0 if passes * 2 > num_trials else 0.0
+
+
 def make_run_id(started_utc: str, environment: str, ff: str | None) -> str:
     """``<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>]`` from an ISO-8601 UTC timestamp."""
     compact = re.sub(r"[-:]", "", started_utc.split(".")[0]).removesuffix("Z")
@@ -105,7 +127,11 @@ def validate_run(run: dict) -> list[str]:
             problems.append(f"{label}: missing checks mapping")
             continue
         for name, value in entry["checks"].items():
-            if value not in (0.0, 1.0, None):
+            if value is None:
+                continue
+            # bool == float equivalence would let True/1 slip through an
+            # `in (0.0, 1.0)` test; the contract is floats only.
+            if not isinstance(value, float) or value not in (0.0, 1.0):
                 problems.append(f"{label}: check {name} = {value!r} (not tri-state)")
     return problems
 
@@ -117,9 +143,13 @@ def write_run(results_dir: Path, run: dict) -> Path:
     runs_dir = results_dir / RUNS_DIRNAME
     runs_dir.mkdir(parents=True, exist_ok=True)
     path = runs_dir / f"{run['run_id']}.json"
-    path.write_text(
-        json.dumps(run, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
+    content = json.dumps(run, indent=2, ensure_ascii=False) + "\n"
+    if path.exists() and path.read_text(encoding="utf-8") != content:
+        raise ValueError(
+            f"{path} exists with different content — runs are immutable; "
+            "delete the file first if this re-ingest is intentional"
+        )
+    path.write_text(content, encoding="utf-8")
     return path
 
 

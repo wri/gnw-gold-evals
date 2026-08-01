@@ -18,6 +18,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from goldset.adapter import case_to_expected
 from goldset.buckets import summarize_buckets
 from goldset.eval_types import TestResult
@@ -62,6 +64,17 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
     return entry
 
 
+def latency_info(latency_s: float | None, slow_threshold: float) -> dict | None:
+    """G3: info-only slow flag for a merged entry — reported, never scored.
+
+    Strictly over-threshold flags; at or under (or no recorded latency)
+    returns None so no ``info`` key is written.
+    """
+    if latency_s is None or latency_s <= slow_threshold:
+        return None
+    return {"slow": True, "threshold_s": slow_threshold}
+
+
 def merge_trials(entries: list[dict]) -> dict:
     """Fold per-trial entries into one: majority verdict + per-trial detail."""
     if len(entries) == 1:
@@ -104,7 +117,7 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
 async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     # Deferred import: langchain/httpx stay out of store-only invocations.
     from goldset.runner.api import APITestRunner
-    from goldset.runner.artifacts import ArtifactWriter, build_artifact  # noqa: F401
+    from goldset.runner.artifacts import ArtifactWriter
 
     runner = APITestRunner(
         api_base_url=args.resolved_url,
@@ -113,7 +126,8 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
         verbose=args.verbose,
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
-    semaphore = asyncio.Semaphore(args.workers)
+    # hard cap concurrency against the live API, as gnw-evals always did
+    semaphore = asyncio.Semaphore(max(1, min(args.workers, 5)))
 
     async def run_one(case: Case) -> dict:
         async with semaphore:
@@ -127,9 +141,9 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
                 trials.append(result_to_entry(result, case.uid))
             entry = merge_trials(trials)
             # G3: slow rows get an info flag — reported, never scored.
-            latency = entry.get("latency_s")
-            if latency is not None and latency > args.slow_threshold:
-                entry["info"] = {"slow": True, "threshold_s": args.slow_threshold}
+            info = latency_info(entry.get("latency_s"), args.slow_threshold)
+            if info:
+                entry["info"] = info
             clean = (
                 all(v != 0.0 for v in entry["checks"].values())
                 and not entry.get("error")
@@ -182,6 +196,10 @@ def main() -> int:
             print(f"{case.id}  {case.uid}  [{case.status}] {case.query[:70]}")
         print(f"{len(cases)} cases selected (dry run)")
         return 0
+    # Secrets may live in .env (as in gnw-evals). Loaded here, before the
+    # token check, and never used for anything but secrets — CLI defaults
+    # still cannot be overridden by the environment.
+    load_dotenv()
     if not os.environ.get("API_TOKEN"):
         print("API_TOKEN is not set (environment-specific machine token)")
         return 1
