@@ -23,8 +23,10 @@ jobs:
         run: uvx ruff check src tools tests
       - name: Tests (includes per-case schema conformance)
         run: uv run pytest -q
-      - name: Case-store integrity (uids + manifest truthful)
-        run: uv run python tools/check.py
+      - name: Case-store integrity (uids + manifest truthful, both versions)
+        run: |
+          uv run python tools/check.py --cases-dir cases/v1
+          uv run python tools/check.py --cases-dir cases/v2
 
   # The release gate as a button: a live staging run + regression diff
   # against the most recent committed run. Needs API_TOKEN_STAGING and

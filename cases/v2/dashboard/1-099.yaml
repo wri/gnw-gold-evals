@@ -1,0 +1,11 @@
+id: 1-099
+uid: 5886b0a757af4bb3
+status: done
+group: dashboard
+query: Create a dashboard for the city of Bern, Switzerland and add a satellite imagery map
+  to it
+expected:
+  aoi_ids: CHE.6.3.1_1
+  aoi_source: gadm
+  dashboard_created: 'TRUE'
+  dashboard_widgets: map

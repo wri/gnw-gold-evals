@@ -122,7 +122,7 @@ def render(run: dict, expected_by_uid: dict[str, dict[str, str]]) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run", type=Path)
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases"))
+    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     args = parser.parse_args()
 
     run = read_run(args.run)

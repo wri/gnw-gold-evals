@@ -1,0 +1,11 @@
+id: 1-040
+uid: 7fe4846142a0f70d
+status: done
+group: temporal
+query: How much carbon was emitted in the North Baikal wetlands KBA in 2024?
+expected:
+  aoi_source: kba
+  dataset_id: '4'
+  dataset_name: Forest GHG emissions
+notes:
+  aoi_type: kba

@@ -256,7 +256,7 @@ def main() -> int:
     run.add_argument("--id", action="append", default=None,
                      help="run only this case id (repeatable)")
     run.add_argument("--group", default=None, help="substring match on group")
-    run.add_argument("--cases-dir", type=Path, default=Path("cases"))
+    run.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     run.add_argument("--results-dir", type=Path, default=Path("results"))
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")

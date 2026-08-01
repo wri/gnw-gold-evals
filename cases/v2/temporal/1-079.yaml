@@ -1,0 +1,11 @@
+id: 1-079
+uid: a3640f16e259f2c6
+status: done
+group: temporal
+query: What was the peak grassland extent in mongolia?
+expected:
+  aoi_ids: MNG
+  dataset_id: '2'
+  dataset_name: Natural/Semi-Natural Grasslands
+  answer: 80.63 million hectares
+  scope: analyse

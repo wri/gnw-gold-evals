@@ -1,0 +1,12 @@
+id: 1-075
+uid: 40e00c89329a649f
+status: not doing
+group: direct
+query: How much tree cover loss within intact forest landscapes in Sweden since 2020?
+expected:
+  aoi_ids: SWE
+  dataset_id: '4'
+  dataset_name: Tree cover loss
+  context_layer: intact_forest
+  answer: 3.3 kha
+  scope: analyse

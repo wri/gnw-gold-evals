@@ -57,7 +57,7 @@ def expected_columns(cases) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases"))
+    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument(
         "--status-exclude",

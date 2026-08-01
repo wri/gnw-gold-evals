@@ -1,0 +1,16 @@
+id: 1-049
+uid: 61c3e00dc35a5b87
+status: not doing
+group: direct
+query: How much tree cover was gained between 2010 and 2015 in the Senanga Reserve, Zambia?
+expected:
+  aoi_source: Landmark
+  dataset_id: '5'
+  dataset_name: tree cover gain
+  start_date: '2010-01-01'
+  end_date: '2015-12-31'
+  answer: 1.41 hectares
+  scope: analyse
+notes:
+  aoi_type: Landmark
+  value_1: 1.41 hectares

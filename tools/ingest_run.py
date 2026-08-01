@@ -126,7 +126,7 @@ def build_entry(row: dict, by_id: dict, by_uid: set) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--detailed", type=Path, required=True)
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases"))
+    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--results-dir", type=Path, default=Path("results"))
     parser.add_argument("--environment", required=True, choices=["staging", "prod"])
     parser.add_argument("--build", required=True, help="agent build, e.g. 'GNW 2026.7.29.1'")

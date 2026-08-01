@@ -142,7 +142,7 @@ def main() -> int:
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--csv", type=Path, help="path to a sheet CSV export")
     group.add_argument("--url", help="CSV export URL of the sheet")
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases"))
+    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--prune", action="store_true")
     args = parser.parse_args()
 
