@@ -1,5 +1,5 @@
 id: 1-093
-uid: b5903d916129499f
+uid: 3e72d7cfd58b865a
 status: done
 group: multilingual
 query: Berapa luas hutan yang hilang di Indonesia pada tahun 2022?
@@ -9,8 +9,9 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   context_layer: primary_forest
-  start_date: '2022-01-01'
-  end_date: '2022-12-31'
   answer: 230.003 hektar
   text: Provides good response in the same language as the prompt
   scope: analyse
+notes:
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

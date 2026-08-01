@@ -1,5 +1,5 @@
 id: 1-043
-uid: a87f73a5cc1bb4bc
+uid: d82779da1abd7c9d
 status: done
 group: parent-child
 query: Which state of NZ has the highest total deforestation-related carbon emissions in NZ
@@ -9,9 +9,9 @@ expected:
   aoi_source: gadm
   dataset_id: '4'
   dataset_name: Forest GHG emissions
-  start_date: '2005-01-01'
-  end_date: '2020-12-31'
   answer: Waikato
   scope: analyse
 notes:
   aoi_type: gadm 0
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

@@ -1,5 +1,5 @@
 id: 1-069
-uid: 73c23701832b400f
+uid: 37ff8ee88ab32434
 status: done
 group: parent-child
 query: Which country in the world had the most natural grassland in 2022?
@@ -8,9 +8,9 @@ expected:
   aoi_source: gadm
   dataset_id: '2'
   dataset_name: Natural/Semi-Natural Grasslands
-  start_date: '2022-01-01'
-  end_date: '2022-12-31'
   answer: Russia
   scope: analyse
 notes:
   aoi_type: gadm 0
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

@@ -1,5 +1,5 @@
 id: 1-051
-uid: 1067cc76e8fe2629
+uid: abb5da3d94e10151
 status: done
 group: parent-child
 query: Which province of Galicia (ESP), gained the least tree cover between 2000-2020?
@@ -8,10 +8,10 @@ expected:
   aoi_source: gadm
   dataset_id: '5'
   dataset_name: tree cover gain
-  start_date: '2000-01-01'
-  end_date: '2020-12-31'
   answer: Pontevedra
   scope: analyse
 notes:
   aoi_type: gadm 1
   value_1: 9,623.86 hectares
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

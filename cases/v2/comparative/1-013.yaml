@@ -1,5 +1,5 @@
 id: 1-013
-uid: 7f751fa8bce053e5
+uid: 291512b4b3133033
 status: done
 group: comparative
 query: Which had more cropland area in 2024, Nigeria or Ghana?
@@ -8,11 +8,11 @@ expected:
   aoi_source: gadm
   dataset_id: '1'
   dataset_name: Global land cover
-  start_date: '2024-01-01'
-  end_date: '2024-12-11'
   answer: Nigeria
   scope: analyse
 notes:
   aoi_type: gadm 0
   class_1: cropland
   value_2: 924,000 km²
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

@@ -13,3 +13,5 @@ expected:
 notes:
   aoi_type: gadm 0
   value_1: 1.43 million hectares
+  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
+    staging, then unpark, rewrite, or delete with the reason written down.'

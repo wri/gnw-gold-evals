@@ -11,3 +11,5 @@ expected:
   scope: analyse
 notes:
   aoi_type: Landmark
+  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
+    staging, then unpark, rewrite, or delete with the reason written down.'

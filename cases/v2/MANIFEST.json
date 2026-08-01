@@ -1,6 +1,6 @@
 {
-  "caseset_version": "d564c1b3b4786bc0",
-  "case_count": 115,
+  "caseset_version": "a93cedfc97c98a4d",
+  "case_count": 114,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -59,7 +59,7 @@
     },
     {
       "id": "1-010",
-      "uid": "276dd5ff3dab3e82",
+      "uid": "efa097b0957452b4",
       "group": "temporal",
       "status": "done"
     },
@@ -71,13 +71,13 @@
     },
     {
       "id": "1-012",
-      "uid": "7c631607116c8c4d",
+      "uid": "b4ac95ef09acbd00",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-013",
-      "uid": "7f751fa8bce053e5",
+      "uid": "291512b4b3133033",
       "group": "comparative",
       "status": "done"
     },
@@ -95,7 +95,7 @@
     },
     {
       "id": "1-016",
-      "uid": "35b0dc5875fea7d8",
+      "uid": "563a24c88bb41ff0",
       "group": "class-comparison",
       "status": "done"
     },
@@ -107,13 +107,13 @@
     },
     {
       "id": "1-018",
-      "uid": "9aedc6984f2df38a",
+      "uid": "7bdad9eaabf10663",
       "group": "temporal",
       "status": "done"
     },
     {
       "id": "1-019",
-      "uid": "50f04e58d163410f",
+      "uid": "8b2984c432bf7197",
       "group": "direct",
       "status": "done"
     },
@@ -125,19 +125,19 @@
     },
     {
       "id": "1-021",
-      "uid": "361d30f06b16437c",
+      "uid": "760fd80f56e8957a",
       "group": "parent-child",
       "status": "todo"
     },
     {
       "id": "1-022",
-      "uid": "07614bc87b1513ca",
+      "uid": "50b52979fd6325df",
       "group": "temporal",
       "status": "done"
     },
     {
       "id": "1-023",
-      "uid": "5513eaee4860bf18",
+      "uid": "98b824fc7837819f",
       "group": "comparative",
       "status": "done"
     },
@@ -149,7 +149,7 @@
     },
     {
       "id": "1-025",
-      "uid": "3eaef783721b8cb7",
+      "uid": "a1e60287bee28804",
       "group": "temporal",
       "status": "done"
     },
@@ -197,19 +197,19 @@
     },
     {
       "id": "1-033",
-      "uid": "a2520adba100dc46",
+      "uid": "ee3aa00838f367d3",
       "group": "direct",
       "status": "not doing"
     },
     {
       "id": "1-034",
-      "uid": "ded1e88efcdf341c",
+      "uid": "2addb89ac3e338e4",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-035",
-      "uid": "c6d844c8a0c38ae5",
+      "uid": "8f62c9e6bb8f8363",
       "group": "parent-child",
       "status": "done"
     },
@@ -245,7 +245,7 @@
     },
     {
       "id": "1-041",
-      "uid": "113a39df3dbccc50",
+      "uid": "96530a9c1e1134b6",
       "group": "direct",
       "status": "not doing"
     },
@@ -257,7 +257,7 @@
     },
     {
       "id": "1-043",
-      "uid": "a87f73a5cc1bb4bc",
+      "uid": "d82779da1abd7c9d",
       "group": "parent-child",
       "status": "done"
     },
@@ -269,7 +269,7 @@
     },
     {
       "id": "1-045",
-      "uid": "980753f8735d62b4",
+      "uid": "ccb9a993c360b04f",
       "group": "comparative",
       "status": "done"
     },
@@ -281,37 +281,37 @@
     },
     {
       "id": "1-047",
-      "uid": "b11c498e8cd4b54e",
+      "uid": "77093531222f6f06",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-048",
-      "uid": "e92f2c04f8e4637a",
+      "uid": "00bb3895326ac32a",
       "group": "temporal",
       "status": "done"
     },
     {
       "id": "1-049",
-      "uid": "61c3e00dc35a5b87",
+      "uid": "7f73ddd1f9e3c884",
       "group": "direct",
       "status": "not doing"
     },
     {
       "id": "1-050",
-      "uid": "0dcc2ef821acd921",
+      "uid": "7b6e0b653649793a",
       "group": "comparative",
       "status": "done"
     },
     {
       "id": "1-051",
-      "uid": "1067cc76e8fe2629",
+      "uid": "abb5da3d94e10151",
       "group": "parent-child",
       "status": "done"
     },
     {
       "id": "1-052",
-      "uid": "d5b3d9bc2d641790",
+      "uid": "91cb2a767c23fc94",
       "group": "direct",
       "status": "done"
     },
@@ -371,9 +371,9 @@
     },
     {
       "id": "1-062",
-      "uid": "a5dcbdbb07b619b7",
+      "uid": "fadcd8afac449e11",
       "group": "comparative",
-      "status": "not doing"
+      "status": "ready"
     },
     {
       "id": "1-063",
@@ -413,19 +413,19 @@
     },
     {
       "id": "1-069",
-      "uid": "73c23701832b400f",
+      "uid": "37ff8ee88ab32434",
       "group": "parent-child",
       "status": "done"
     },
     {
       "id": "1-070",
-      "uid": "1a9ad2b81fa88801",
+      "uid": "b1bfd013e644c5bc",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-071",
-      "uid": "129941023fb6c929",
+      "uid": "0db0995c89dae994",
       "group": "temporal",
       "status": "done"
     },
@@ -437,13 +437,13 @@
     },
     {
       "id": "1-073",
-      "uid": "b49a4e8d1d9e75a3",
+      "uid": "0ab14c56d2159549",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-074",
-      "uid": "251919520a7a3b9c",
+      "uid": "d78f1fc485f498ba",
       "group": "direct",
       "status": "done"
     },
@@ -455,13 +455,13 @@
     },
     {
       "id": "1-076",
-      "uid": "ddbf301551d8b03f",
+      "uid": "3684831b6c373d2d",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-077",
-      "uid": "19caeadb43bc5b5b",
+      "uid": "1eb80386fe2714ff",
       "group": "direct",
       "status": "done"
     },
@@ -539,37 +539,37 @@
     },
     {
       "id": "1-090",
-      "uid": "d284a6d4fd94b4b8",
+      "uid": "98ff258bc3be8557",
       "group": "multilingual",
       "status": "done"
     },
     {
       "id": "1-091",
-      "uid": "2d4ecaa5f9030d67",
+      "uid": "c7e6de1b063ca7e1",
       "group": "multilingual",
       "status": "done"
     },
     {
       "id": "1-092",
-      "uid": "67b7bbc6b410ef85",
+      "uid": "d1c2a4f1b4add263",
       "group": "multilingual",
       "status": "done"
     },
     {
       "id": "1-093",
-      "uid": "b5903d916129499f",
+      "uid": "3e72d7cfd58b865a",
       "group": "multilingual",
       "status": "done"
     },
     {
       "id": "1-094",
-      "uid": "a97b2961d2cc6a98",
+      "uid": "387d2fec71402027",
       "group": "multilingual",
       "status": "done"
     },
     {
       "id": "1-095",
-      "uid": "b0f78ddf79838e30",
+      "uid": "445b4bb1fae102ed",
       "group": "dataset-parameters",
       "status": "done"
     },
@@ -632,12 +632,6 @@
       "uid": "1aaeeba8c987a8fc",
       "group": "nudge",
       "status": "ready"
-    },
-    {
-      "id": "1-106",
-      "uid": "e8e871318e3e5a60",
-      "group": "nudge",
-      "status": "not doing"
     },
     {
       "id": "1-107",

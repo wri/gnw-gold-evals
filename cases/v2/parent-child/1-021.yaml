@@ -1,5 +1,5 @@
 id: 1-021
-uid: 361d30f06b16437c
+uid: 760fd80f56e8957a
 status: todo
 group: parent-child
 query: Which communidad of Spain (Iberian peninsula only) had the least grassland in 2022?
@@ -8,8 +8,6 @@ expected:
   aoi_source: gadm
   dataset_id: '2'
   dataset_name: Natural/Semi-Natural Grasslands
-  start_date: '2022-01-01'
-  end_date: '2022-12-31'
   answer: Pais Vasco
   scope: analyse
 notes:
@@ -17,3 +15,5 @@ notes:
 
     Added (Iberian peninsula only)'
   aoi_type: gadm 0
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

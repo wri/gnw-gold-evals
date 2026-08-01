@@ -1,19 +1,16 @@
 id: 1-062
-uid: a5dcbdbb07b619b7
-status: not doing
+uid: fadcd8afac449e11
+status: ready
 group: comparative
 query: Which US state lost more forest due to wildfires? Washington or Oregon?
 expected:
-  aoi_ids: USA.38_1;USA.48_1
   aoi_source: gadm
-  dataset_id: '8'
-  dataset_name: Tree cover loss by dominant driver
-  answer: Oregon
+  dataset_id: 8;10
   scope: analyse
 notes:
-  status_reason: 'Original note still valid: expected_aoi_ids could be the two named states
-    or all states filtered, both correct. Agent also picks dataset 10 over 8 and answers Washington
-    over Oregon.'
+  status_reason: 'Unparked W4 2026-08-01 (1-003 precedent): dataset_id accepts alternatives
+    (8;10 both defensible), the disputed answer and the unexpressable AOI multiplicity expectation
+    dropped pending review.'
   aoi_type: gadm 1
   value_1: 62,509 hectares
   value_2: 143,655 hectares

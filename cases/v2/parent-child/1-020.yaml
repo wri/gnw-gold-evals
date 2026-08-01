@@ -9,6 +9,8 @@ expected:
   dataset_id: '2'
   dataset_name: Natural/Semi-Natural Grasslands
 notes:
-  status_reason: Sheet expects GBR; agent selects the 4 UK constituent countries. expected_aoi_ids
-    uses set-equality and cannot express 'GBR or its children'. AOI fix needed
+  status_reason: 'Sheet expects GBR; agent selects the 4 UK constituent countries. expected_aoi_ids
+    uses set-equality and cannot express ''GBR or its children''. AOI fix needed | triage-proposed:
+    REWRITE — query names ''country in the UK'' but AOI set-equality cannot express GBR-or-children;
+    rephrase to name the constituent level explicitly, then unpark.'
   aoi_type: gadm 0

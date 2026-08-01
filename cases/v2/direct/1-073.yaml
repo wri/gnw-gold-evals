@@ -1,5 +1,5 @@
 id: 1-073
-uid: b49a4e8d1d9e75a3
+uid: 0ab14c56d2159549
 status: done
 group: direct
 query: How much primary forest was lost in the Democratic Republic of Congo since the turn
@@ -9,6 +9,7 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   context_layer: primary_forest
-  start_date: '2002-01-01'
-  end_date: '2025-12-31'
   text: Cautions about start year for primary forest being 2002 not 2001
+notes:
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

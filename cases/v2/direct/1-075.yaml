@@ -10,3 +10,6 @@ expected:
   context_layer: intact_forest
   answer: 3.3 kha
   scope: analyse
+notes:
+  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
+    staging, then unpark, rewrite, or delete with the reason written down.'

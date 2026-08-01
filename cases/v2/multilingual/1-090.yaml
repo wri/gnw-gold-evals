@@ -1,5 +1,5 @@
 id: 1-090
-uid: d284a6d4fd94b4b8
+uid: 98ff258bc3be8557
 status: done
 group: multilingual
 query: Cuánta superficie forestal se perdió en España en 2022?
@@ -8,8 +8,9 @@ expected:
   aoi_source: gadm
   dataset_id: '4'
   dataset_name: Tree cover loss
-  start_date: '2022-01-01'
-  end_date: '2022-12-31'
   answer: 137,821 hectares
   text: Provides good response in the same language as the prompt
   scope: analyse
+notes:
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'

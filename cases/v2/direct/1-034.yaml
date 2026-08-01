@@ -1,5 +1,5 @@
 id: 1-034
-uid: ded1e88efcdf341c
+uid: 2addb89ac3e338e4
 status: done
 group: direct
 query: In total, how much tree cover loss was recorded in Champoton community land in Mexico,
@@ -9,9 +9,9 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   context_layer: primary_forest
-  start_date: '2001-01-01'
-  end_date: '2024-12-31'
   answer: 10,765.60 ha
   scope: analyse
 notes:
   aoi_type: Landmark
+  date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
+    the full range and slices in code; the answer carries the year'
