@@ -18,6 +18,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 from goldset.adapter import case_to_expected
 from goldset.eval_types import TestResult
 from goldset.ledger import majority, make_run_id, reason_name_from_column, write_run
@@ -114,7 +116,7 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
 async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     # Deferred import: langchain/httpx stay out of store-only invocations.
     from goldset.runner.api import APITestRunner
-    from goldset.runner.artifacts import ArtifactWriter, build_artifact  # noqa: F401
+    from goldset.runner.artifacts import ArtifactWriter
 
     runner = APITestRunner(
         api_base_url=args.resolved_url,
@@ -123,7 +125,8 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
         verbose=args.verbose,
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
-    semaphore = asyncio.Semaphore(args.workers)
+    # hard cap concurrency against the live API, as gnw-evals always did
+    semaphore = asyncio.Semaphore(max(1, min(args.workers, 5)))
 
     async def run_one(case: Case) -> dict:
         async with semaphore:
@@ -192,6 +195,10 @@ def main() -> int:
             print(f"{case.id}  {case.uid}  [{case.status}] {case.query[:70]}")
         print(f"{len(cases)} cases selected (dry run)")
         return 0
+    # Secrets may live in .env (as in gnw-evals). Loaded here, before the
+    # token check, and never used for anything but secrets — CLI defaults
+    # still cannot be overridden by the environment.
+    load_dotenv()
     if not os.environ.get("API_TOKEN"):
         print("API_TOKEN is not set (environment-specific machine token)")
         return 1
