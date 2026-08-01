@@ -1,0 +1,213 @@
+"""The five-bucket scoring model (PR-05).
+
+Buckets answer "which part of the pipeline broke": Retrieval (did the agent
+extract the right things from the prompt), Analysis (right computation),
+Explanation (prose faithful to the data), Output (artifacts presented
+correctly), Scope (right amount of work). Every check is tagged dedicated
+to one bucket or shared across two — a shared check's failure cannot be
+attributed, which is why the bucket table reports the two populations
+separately.
+
+Three verdict rules the flat mean got wrong, now explicit:
+
+- a row with zero evaluated checks is **uncovered**, never a pass;
+- info-only checks and judge errors never enter a verdict — an errored row
+  is an *error*, not a failure;
+- an unmeasured bucket renders as unmeasured, never omitted.
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+RETRIEVAL = "retrieval"
+ANALYSIS = "analysis"
+EXPLANATION = "explanation"
+OUTPUT = "output"
+SCOPE = "scope"
+BUCKETS = (RETRIEVAL, ANALYSIS, EXPLANATION, OUTPUT, SCOPE)
+
+# Checks that speak for exactly one bucket (ledger names, no _score suffix).
+DEDICATED: dict[str, str] = {
+    "aoi_id_match": RETRIEVAL,
+    "dataset_id_match": RETRIEVAL,
+    "dataset_parameter_match": RETRIEVAL,
+    "context_layer_match": RETRIEVAL,
+    "date_extraction": RETRIEVAL,
+    "data_pull_exists": RETRIEVAL,
+    "pull_source_match": RETRIEVAL,
+    "answered_without_data": RETRIEVAL,
+    "expected_text_match": EXPLANATION,
+    "web_fallback": EXPLANATION,
+    "chart_produced": OUTPUT,
+    "dashboard_aoi_match": OUTPUT,
+    "dashboard_widgets_match": OUTPUT,
+    "dashboard_widgets_valid": OUTPUT,
+    "clarification_requested": SCOPE,
+    "suggested_datasets_match": SCOPE,
+    "nudge_match": SCOPE,
+    # PR-06 bucket-filling validators
+    "class_value_match": ANALYSIS,
+    "chart_integrity": ANALYSIS,
+    "answer_traceability": EXPLANATION,
+    "chart_well_formed": OUTPUT,
+    "chart_type_match": OUTPUT,
+    "scope_match": SCOPE,
+}
+
+# Checks whose failure straddles two buckets and cannot be attributed.
+SHARED: dict[str, tuple[str, str]] = {
+    "charts_answer": (ANALYSIS, OUTPUT),
+    "agent_answer": (ANALYSIS, EXPLANATION),
+    "dashboard_created": (OUTPUT, SCOPE),
+}
+
+# Reported for diagnosis, never part of any verdict.
+INFO_ONLY: frozenset[str] = frozenset({"date_coverage"})
+
+
+def buckets_for(check: str) -> tuple[str, ...]:
+    if check in DEDICATED:
+        return (DEDICATED[check],)
+    return SHARED.get(check, ())
+
+
+def row_verdict(entry: dict[str, Any]) -> str:
+    """pass | fail | error | uncovered, per the rules above."""
+    if entry.get("error") or entry.get("judge_errors"):
+        return "error"
+    evaluated = {
+        name: value
+        for name, value in entry.get("checks", {}).items()
+        if name not in INFO_ONLY and value is not None
+    }
+    if not evaluated:
+        return "uncovered"
+    return "fail" if any(value == 0.0 for value in evaluated.values()) else "pass"
+
+
+def _tally(entries: list[dict], names: set[str], bucket: str) -> dict:
+    passed = evaluated = 0
+    for entry in entries:
+        for name, value in entry.get("checks", {}).items():
+            if name in names and bucket in buckets_for(name) and value is not None:
+                evaluated += 1
+                passed += value == 1.0
+    return {"passed": passed, "evaluated": evaluated}
+
+
+def summarize_buckets(entries: list[dict[str, Any]]) -> dict[str, Any]:
+    """The per-run bucket block stored in the ledger and rendered in reports."""
+    summary: dict[str, Any] = {}
+    for bucket in BUCKETS:
+        dedicated = _tally(entries, set(DEDICATED), bucket)
+        shared = _tally(entries, set(SHARED), bucket)
+        rows_covered = sum(
+            1
+            for entry in entries
+            if any(
+                bucket in buckets_for(name) and value is not None
+                for name, value in entry.get("checks", {}).items()
+            )
+        )
+        summary[bucket] = {
+            "dedicated": dedicated,
+            "shared": shared,
+            "rows_covered": rows_covered,
+        }
+    verdicts: dict[str, int] = {"pass": 0, "fail": 0, "error": 0, "uncovered": 0}
+    for entry in entries:
+        verdicts[row_verdict(entry)] += 1
+    summary["rows_total"] = len(entries)
+    summary["verdicts"] = verdicts
+    return summary
+
+
+# ---------------------------------------------------------------------------
+# Reconciliation: checks the case set implies vs checks that actually ran.
+
+def _tri(value: str | None) -> bool | None:
+    text = str(value or "").strip().lower()
+    if text in ("true", "1", "yes"):
+        return True
+    if text in ("false", "0", "no"):
+        return False
+    return None
+
+
+def _case_expects_data_pull(expected: dict[str, str]) -> bool:
+    if _tri(expected.get("clarification")) is True:
+        return False
+    if expected.get("answer"):
+        return True
+    return "insight" in (expected.get("dashboard_widgets") or "")
+
+
+def implied_checks(expected: dict[str, str]) -> set[str]:
+    """Checks that MUST evaluate given a case's expectations. Conditional
+    checks (charts_answer, web_fallback, pull_source_match, dashboard
+    sub-checks, date_coverage) may legitimately abstain and are never
+    implied — so every reconciliation miss is a real hole."""
+    implied: set[str] = set()
+    if expected.get("aoi_ids"):
+        implied.add("aoi_id_match")
+    if expected.get("dataset_id"):
+        implied.add("dataset_id_match")
+    if expected.get("dataset_parameters"):
+        implied.add("dataset_parameter_match")
+    if expected.get("context_layer"):
+        implied.add("context_layer_match")
+    if expected.get("start_date") and expected.get("end_date"):
+        implied.add("date_extraction")
+    if expected.get("answer"):
+        implied.update({"agent_answer", "chart_produced"})
+    if _case_expects_data_pull(expected):
+        implied.update({"data_pull_exists", "answered_without_data"})
+    if expected.get("text"):
+        implied.add("expected_text_match")
+    if _tri(expected.get("clarification")) is not None:
+        implied.add("clarification_requested")
+    if expected.get("suggested_datasets"):
+        implied.add("suggested_datasets_match")
+    if expected.get("nudge_type") or expected.get("nudge_options"):
+        implied.add("nudge_match")
+    if _tri(expected.get("dashboard_created")) is not None:
+        implied.add("dashboard_created")
+    if expected.get("dashboard_widgets"):
+        implied.add("dashboard_widgets_match")
+    if expected.get("class_values"):
+        implied.add("class_value_match")
+    if expected.get("chart_type"):
+        implied.add("chart_type_match")
+    if expected.get("scope"):
+        implied.add("scope_match")
+    return implied
+
+
+def reconcile(
+    entries: list[dict[str, Any]], expected_by_uid: dict[str, dict[str, str]]
+) -> dict[str, Any]:
+    """Implied-vs-evaluated ledger line. ``missing`` must be empty or every
+    item explained — silent non-measurement is the bug class this kills."""
+    implied_total = evaluated_of_implied = 0
+    missing: list[dict[str, str]] = []
+    unmatched_rows = 0
+    for entry in entries:
+        expected = expected_by_uid.get(entry.get("uid") or "")
+        if expected is None:
+            unmatched_rows += 1
+            continue
+        for check in sorted(implied_checks(expected)):
+            implied_total += 1
+            if entry.get("checks", {}).get(check) is not None:
+                evaluated_of_implied += 1
+            else:
+                missing.append(
+                    {"id": entry.get("id", "?"), "uid": entry["uid"], "check": check}
+                )
+    return {
+        "implied": implied_total,
+        "evaluated_of_implied": evaluated_of_implied,
+        "missing": missing,
+        "rows_not_in_store": unmatched_rows,
+    }

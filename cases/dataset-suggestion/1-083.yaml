@@ -1,5 +1,5 @@
 id: 1-083
-uid: a570b7f3833d3074
+uid: 7768f7b92e6691bc
 status: done
 group: dataset-suggestion
 query: Brazil deforestation linked to agricultural commodities in 2017
@@ -8,5 +8,6 @@ expected:
   aoi_source: gadm
   text: Provides good reason for each dataset suggestion that relate to the user query
   suggested_datasets: 4;8;9
+  scope: suggest
 notes:
   aoi_type: gadm 0

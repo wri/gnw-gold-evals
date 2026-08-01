@@ -1,5 +1,5 @@
 id: 1-061
-uid: 1b667a069fc0604a
+uid: e9df2f14ec791255
 status: done
 group: parent-child
 query: Which state in australia lost the most forest due to settlements and infra?
@@ -9,6 +9,7 @@ expected:
   dataset_id: '8'
   dataset_name: Tree cover loss by dominant driver
   answer: Queensland
+  scope: analyse
 notes:
   aoi_type: gadm 0
   value_2: 3,643 hectares

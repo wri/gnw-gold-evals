@@ -1,7 +1,7 @@
 """Regression diff between two ledger runs.
 
     uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
-      [--json out.json] [--strict] [--fail-on-regression]
+      [--json out.json] [--strict] [--fail-on-regression] [--fail-on-coverage-loss]
 
 Comparison runs over the **intersection of uids** (stale rows excluded), so
 case-set churn is reported but never counted as regression. Transitions per
@@ -14,6 +14,11 @@ check between run A (older) and run B (newer):
 
 ``--strict`` refuses to compare runs with different caseset_versions.
 ``--fail-on-regression`` exits nonzero if any regression exists (CI gate).
+Info-only checks (``INFO_ONLY``, currently just ``date_coverage``) are
+reported but never gate.
+``--fail-on-coverage-loss`` exits nonzero if any non-info-only check went
+evaluated -> not evaluated. Off by default; turn it on to catch a harness
+bug that silently stops evaluating checks (which would otherwise pass CI).
 """
 
 from __future__ import annotations
@@ -25,6 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from goldset.buckets import BUCKETS, INFO_ONLY, buckets_for
 from goldset.ledger import read_run
 
 TRANSITIONS = ("regressions", "recoveries", "coverage_gained", "coverage_lost")
@@ -59,12 +65,20 @@ def diff(run_a: dict, run_b: dict) -> dict:
         for check in sorted(set(entry_a["checks"]) | set(entry_b["checks"])):
             kind = classify(entry_a["checks"].get(check), entry_b["checks"].get(check))
             if kind:
-                item = {"uid": uid, "id": entry_b.get("id") or entry_a.get("id"), "check": check}
+                item = {"uid": uid, "id": entry_b.get("id") or entry_a.get("id"), "check": check,
+                        "buckets": list(buckets_for(check)), "info_only": check in INFO_ONLY}
                 if kind == "regressions":
                     reason = (entry_b.get("reasons") or {}).get(check)
                     if reason:
                         item["reason"] = reason
                 result[kind].append(item)
+    result["regressions_by_bucket"] = {
+        bucket: sum(
+            1 for item in result["regressions"]
+            if bucket in item["buckets"] and not item["info_only"]
+        )
+        for bucket in BUCKETS
+    }
     result["shared_cases"] = len(shared)
     result["only_in_a"] = len(set(index_a) - set(index_b))
     result["only_in_b"] = len(set(index_b) - set(index_a))
@@ -87,6 +101,12 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
         f"{len(report['coverage_gained'])} checks gained, "
         f"{len(report['coverage_lost'])} checks lost**",
     ]
+    by_bucket = report.get("regressions_by_bucket") or {}
+    if any(by_bucket.values()):
+        lines.append(
+            "Regressions by bucket: "
+            + ", ".join(f"{b} {n}" for b, n in by_bucket.items() if n)
+        )
     for kind, marker in (("regressions", "✗"), ("recoveries", "✓")):
         if report[kind]:
             lines += ["", f"## {kind}", ""]
@@ -109,6 +129,7 @@ def main() -> int:
     parser.add_argument("--json", type=Path, default=None)
     parser.add_argument("--strict", action="store_true")
     parser.add_argument("--fail-on-regression", action="store_true")
+    parser.add_argument("--fail-on-coverage-loss", action="store_true")
     args = parser.parse_args()
 
     run_a, run_b = read_run(args.run_a), read_run(args.run_b)
@@ -127,7 +148,11 @@ def main() -> int:
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(report, indent=2) + "\n")
-    if args.fail_on_regression and report["regressions"]:
+    real_regressions = [r for r in report["regressions"] if not r["info_only"]]
+    if args.fail_on_regression and real_regressions:
+        return 1
+    real_coverage_lost = [c for c in report["coverage_lost"] if not c["info_only"]]
+    if args.fail_on_coverage_loss and real_coverage_lost:
         return 1
     return 0
 

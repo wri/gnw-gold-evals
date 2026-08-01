@@ -1,5 +1,5 @@
 id: 1-002
-uid: 0fa55d427af482af
+uid: 1d5d3e04685ceac9
 status: todo
 group: direct
 query: How much of Sao Paulo was impacted disturbance alerts in the second half of 2024, considering
@@ -12,6 +12,7 @@ expected:
   start_date: '2024-07-01'
   end_date: '2024-12-31'
   answer: 1,319,600 hectares
+  scope: analyse
 notes:
   status_reason: Chart shows all confidence levels
   aoi_type: gadm

@@ -1,5 +1,5 @@
 id: 1-081
-uid: 7678830548e2e62c
+uid: 79cc1e9782f778f6
 status: not doing
 group: parent-child
 query: Which norwegian state had the most tree cover in 2010?
@@ -9,6 +9,7 @@ expected:
   dataset_id: '7'
   dataset_name: tree cover
   answer: Hedmark
+  scope: analyse
 notes:
   aoi_type: gadm 0
   value_1: 1.43 million hectares

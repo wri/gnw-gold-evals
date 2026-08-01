@@ -1,5 +1,5 @@
 id: 1-015
-uid: ab5b5342c2a9614e
+uid: 0f0db06a7f4ae3a7
 status: done
 group: parent-child
 query: Which Welsh county had the most short vegetation in 2024?
@@ -9,6 +9,8 @@ expected:
   dataset_id: '1'
   dataset_name: Global land cover
   answer: Powys
+  scope: analyse
+  class_values: short vegetation=53,498 hectares
 notes:
   aoi_type: gadm 1
   class_1: short vegetation

@@ -1,5 +1,5 @@
 id: 1-041
-uid: 838f0e0415324b04
+uid: 113a39df3dbccc50
 status: not doing
 group: direct
 query: Which year had the most carbon emissions due to tree cover loss in Sebangau National
@@ -11,6 +11,7 @@ expected:
   start_date: '2002-01-01'
   end_date: '2008-12-31'
   answer: '2007'
+  scope: analyse
 notes:
   aoi_type: wdpa
   value_1: 65,806

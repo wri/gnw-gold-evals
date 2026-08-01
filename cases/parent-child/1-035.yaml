@@ -1,5 +1,5 @@
 id: 1-035
-uid: a2619e0e8dbed11a
+uid: c6d844c8a0c38ae5
 status: done
 group: parent-child
 query: Which state in belgium had the least deforestation from 2005 to 2015?
@@ -11,6 +11,7 @@ expected:
   start_date: '2005-01-01'
   end_date: '2015-12-31'
   answer: Bruxelles (Brussels)
+  scope: analyse
 notes:
   aoi_type: gadm 0
   value_1: 42 hectares

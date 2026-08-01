@@ -1,5 +1,5 @@
 id: 1-003
-uid: b31a0eb4a0117edf
+uid: 7b3d25e8ba188b5a
 status: not doing
 group: parent-child
 query: What was the total area affected by high conf. disturbance alerts between January 2025
@@ -11,6 +11,7 @@ expected:
   start_date: '2025-01-01'
   end_date: '2025-04-30'
   answer: 26.95 hectares
+  scope: analyse
 notes:
   status_reason: 'Dataset choice is defensible either way - sheet expects 0 (DIST-ALERT),
     agent picks 11 (Integrated alerts). Answer also disputed: 26.95 ha expected vs 21,073

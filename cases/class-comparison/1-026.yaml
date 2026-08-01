@@ -1,5 +1,5 @@
 id: 1-026
-uid: 750dbc1e4ea8600b
+uid: 00b7bcb79abcc5ed
 status: done
 group: class-comparison
 query: Whats the second largest natural land class in the Plaine du Villefagnan key biodiversity
@@ -9,5 +9,6 @@ expected:
   dataset_id: '3'
   dataset_name: SBTN Natural Lands Map
   answer: natural short vegetation
+  scope: analyse
 notes:
   aoi_type: kba

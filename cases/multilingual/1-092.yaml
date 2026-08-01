@@ -1,5 +1,5 @@
 id: 1-092
-uid: 72d75a73ce93fe91
+uid: 67b7bbc6b410ef85
 status: done
 group: multilingual
 query: Qual foi a área florestal perdida em Portugal em 2022?
@@ -12,3 +12,4 @@ expected:
   end_date: '2022-12-31'
   answer: 46,875 hectares
   text: Provides good response in the same language as the prompt
+  scope: analyse

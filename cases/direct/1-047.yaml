@@ -1,5 +1,5 @@
 id: 1-047
-uid: fc6449933231f298
+uid: b11c498e8cd4b54e
 status: done
 group: direct
 query: How much tree cover was gained between 2000 and 2020 in the Rio Capim KBA?
@@ -11,5 +11,6 @@ expected:
   end_date: '2020-12-31'
   answer: 270.95 hectares
   text: 270.95 hectares
+  scope: analyse
 notes:
   aoi_type: kba

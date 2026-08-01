@@ -1,5 +1,5 @@
 id: 1-001
-uid: 1ea312d58b8aa517
+uid: 6226a0caaf487e4b
 status: done
 group: temporal
 query: 'True or false: Mount Hakusan biodiversity area had more area with high confidence
@@ -12,5 +12,6 @@ expected:
   start_date: '2024-08-01'
   end_date: '2024-09-30'
   answer: 'TRUE'
+  scope: analyse
 notes:
   aoi_type: kba

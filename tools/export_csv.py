@@ -42,6 +42,9 @@ PREFERRED_EXPECTED_ORDER = [
     "nudge_options",
     "dashboard_created",
     "dashboard_widgets",
+    "chart_type",
+    "scope",
+    "class_values",
 ]
 
 

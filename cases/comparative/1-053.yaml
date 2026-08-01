@@ -1,5 +1,5 @@
 id: 1-053
-uid: 2d4090455a2a252c
+uid: 966465dd57772891
 status: todo
 group: comparative
 query: 'True or False: the UK has a lower net GHG flux than the Rep. of Ireland'
@@ -11,6 +11,7 @@ expected:
   answer: 'TRUE'
   text: States that both are carbon sinks and the statement is True, the UK does have a lower
     flux.
+  scope: analyse
 notes:
   aoi_type: gadm 0
   value_1: -323451481 MgCO₂e

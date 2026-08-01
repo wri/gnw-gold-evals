@@ -1,5 +1,5 @@
 id: 1-105
-uid: 8870ad3bf4778311
+uid: 1aaeeba8c987a8fc
 status: ready
 group: nudge
 query: Select an area named Puri
@@ -8,3 +8,4 @@ expected:
   text: Asks the user to choose between Puri in Odisha, India and Puri in Uige, Angola instead
     of guessing
   nudge_options: Uíge, Angola;Odisha, India
+  scope: clarify

@@ -1,5 +1,5 @@
 id: 1-011
-uid: 164bad3a7a0c5fde
+uid: 24cfed1467bce118
 status: not doing
 group: parent-child
 query: How much land changed to short vegetation in protected areas in Colorado in the past
@@ -9,6 +9,7 @@ expected:
   dataset_id: '1'
   dataset_name: Global land cover
   answer: 564,406 hectares
+  scope: analyse
 notes:
   status_reason: Agent asks which protected areas to use; no data retrieved. Query is ambiguous
     about scope.

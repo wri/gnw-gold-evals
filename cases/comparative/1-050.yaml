@@ -1,5 +1,5 @@
 id: 1-050
-uid: d8c929c75b3c99df
+uid: 0dcc2ef821acd921
 status: done
 group: comparative
 query: 'Which country gained more tree cover between 2015 and 2020: France or Germany?'
@@ -11,5 +11,6 @@ expected:
   start_date: '2015-01-01'
   end_date: '2020-12-31'
   answer: France
+  scope: analyse
 notes:
   aoi_type: gadm 0

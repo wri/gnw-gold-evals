@@ -28,6 +28,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from goldset.buckets import summarize_buckets
 from goldset.canonical import normalize_text
 from goldset.ledger import (
     check_name_from_column,
@@ -168,6 +169,7 @@ def main() -> int:
         "caseset_version": manifest["caseset_version"],
         "results": entries,
     }
+    run["buckets"] = summarize_buckets(entries)
     path = write_run(args.results_dir, run)
     print(
         f"wrote {path} — {len(entries)} rows "

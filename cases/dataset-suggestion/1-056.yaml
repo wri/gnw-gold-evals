@@ -1,5 +1,5 @@
 id: 1-056
-uid: d8d7a2ad010a4364
+uid: 0e16c2dc9ca007c9
 status: done
 group: dataset-suggestion
 query: Which norwegian state had the most tree cover in 2010?
@@ -8,5 +8,6 @@ expected:
   aoi_source: gadm
   dataset_id: '7'
   dataset_name: tree cover
+  scope: suggest
 notes:
   aoi_type: gadm 0

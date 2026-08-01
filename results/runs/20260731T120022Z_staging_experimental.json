@@ -2784,5 +2784,69 @@
       "latency_s": 17.6,
       "trace_url": "https://langfuse.staging.globalnaturewatch.org/project/wri_lcl/traces/2943ce2e4e7574919cd6e71c868dec5f"
     }
-  ]
+  ],
+  "buckets": {
+    "retrieval": {
+      "dedicated": {
+        "passed": 257,
+        "evaluated": 270
+      },
+      "shared": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "rows_covered": 89
+    },
+    "analysis": {
+      "dedicated": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "shared": {
+        "passed": 102,
+        "evaluated": 122
+      },
+      "rows_covered": 63
+    },
+    "explanation": {
+      "dedicated": {
+        "passed": 22,
+        "evaluated": 24
+      },
+      "shared": {
+        "passed": 56,
+        "evaluated": 63
+      },
+      "rows_covered": 78
+    },
+    "output": {
+      "dedicated": {
+        "passed": 13,
+        "evaluated": 16
+      },
+      "shared": {
+        "passed": 53,
+        "evaluated": 66
+      },
+      "rows_covered": 66
+    },
+    "scope": {
+      "dedicated": {
+        "passed": 5,
+        "evaluated": 7
+      },
+      "shared": {
+        "passed": 7,
+        "evaluated": 7
+      },
+      "rows_covered": 12
+    },
+    "rows_total": 95,
+    "verdicts": {
+      "pass": 69,
+      "fail": 26,
+      "error": 0,
+      "uncovered": 0
+    }
+  }
 }

@@ -1,5 +1,5 @@
 id: 1-018
-uid: a3d6a6958e15c0bc
+uid: 9aedc6984f2df38a
 status: done
 group: temporal
 query: 'Yes or no: did natural grasslands increase from 2017 to 2022 in Hwange national park,
@@ -11,5 +11,6 @@ expected:
   start_date: '2017-01-01'
   end_date: '2022-12-31'
   answer: 'no'
+  scope: analyse
 notes:
   aoi_type: wdpa

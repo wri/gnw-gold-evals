@@ -1,5 +1,5 @@
 id: 1-016
-uid: 8fd8d32a2bb81078
+uid: 35b0dc5875fea7d8
 status: done
 group: class-comparison
 query: In Purbalingga, Indonesia what was the largest single land cover transition from 2015
@@ -12,5 +12,6 @@ expected:
   start_date: '2015-01-01'
   end_date: '2024-12-31'
   answer: tree cover to built-up (8368.74 ha)
+  scope: analyse
 notes:
   aoi_type: gadm 2

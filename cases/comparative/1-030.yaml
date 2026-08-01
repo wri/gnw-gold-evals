@@ -1,5 +1,5 @@
 id: 1-030
-uid: ed5824ddd367f3e8
+uid: f78daf0baa3a7407
 status: todo
 group: comparative
 query: 'Which state has the most mangroves in Senegal: Fatick or Ziguinchor?'
@@ -9,6 +9,8 @@ expected:
   dataset_id: '3'
   dataset_name: SBTN Natural Lands Map
   answer: Ziguinchor
+  scope: analyse
+  class_values: mangroves=78,924 hectares
 notes:
   status_reason: Expecting SBTN analysis but using the Blog skill
   aoi_type: gadm 1

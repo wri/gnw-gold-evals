@@ -1,5 +1,5 @@
 id: 1-006
-uid: c172d09080ee4304
+uid: 21207fde86bdc738
 status: done
 group: class-comparison
 query: What percentage of disturbances in Occitanie (FRA) were due to Crop management in September
@@ -11,5 +11,6 @@ expected:
   dataset_name: Global All Ecosystem Disturbance Alerts (DIST-ALERT)
   context_layer: driver
   answer: 8.57%
+  scope: analyse
 notes:
   aoi_type: gadm 1

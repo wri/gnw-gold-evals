@@ -1,5 +1,5 @@
 id: 1-025
-uid: 92bba1fafcf17fcb
+uid: 3eaef783721b8cb7
 status: done
 group: temporal
 query: 'True or False: Pocho in Cordoba (ARG) gained natural grasslands from 2020 to 2021'
@@ -11,6 +11,7 @@ expected:
   start_date: '2020-01-01'
   end_date: '2021-12-31'
   answer: 'TRUE'
+  scope: analyse
 notes:
   aoi_type: gadm 2
   value_1: 51,966

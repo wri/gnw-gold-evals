@@ -1,5 +1,5 @@
 id: 1-084
-uid: 6f231ad685abc988
+uid: ef48dd07337b34c0
 status: done
 group: dataset-suggestion
 query: Show me trends in natural land loss in Gabon
@@ -9,5 +9,6 @@ expected:
   clarification: 'TRUE'
   text: Provides good reason for each dataset suggestion that relate to the user query
   suggested_datasets: 0;1;2;3;4
+  scope: suggest
 notes:
   aoi_type: gadm 0

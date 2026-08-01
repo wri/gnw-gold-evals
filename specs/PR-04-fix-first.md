@@ -40,7 +40,7 @@ The bucket-filling validators needing new expected fields or parsing work
 
 ## Acceptance criteria
 
-- [ ] Each fix and guard lands with a regression test reproducing the
+- [x] Each fix and guard lands with a regression test reproducing the
       original defect (fixtures built from the run-6 rows named above).
 - [ ] A 3-trial staging run shows every guard at std ≤ 0.04 and zero false
       positives on the known-clean rows from run 6 (69 rows).

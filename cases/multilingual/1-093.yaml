@@ -1,5 +1,5 @@
 id: 1-093
-uid: 19ba12d7ba28fe87
+uid: b5903d916129499f
 status: done
 group: multilingual
 query: Berapa luas hutan yang hilang di Indonesia pada tahun 2022?
@@ -13,3 +13,4 @@ expected:
   end_date: '2022-12-31'
   answer: 230.003 hektar
   text: Provides good response in the same language as the prompt
+  scope: analyse

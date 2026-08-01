@@ -1,5 +1,5 @@
 id: 1-082
-uid: b2a62018a51ded5d
+uid: fe36465d419ab452
 status: done
 group: dataset-suggestion
 query: give me urbanization since 2010 in Brazil
@@ -9,5 +9,6 @@ expected:
   clarification: 'TRUE'
   text: Provides good reason for each dataset suggestion that relate to the user query
   suggested_datasets: 1;3;8
+  scope: suggest
 notes:
   aoi_type: gadm 0
