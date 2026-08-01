@@ -18,6 +18,7 @@ Three verdict rules the flat mean got wrong, now explicit:
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 RETRIEVAL = "retrieval"
@@ -53,6 +54,8 @@ DEDICATED: dict[str, str] = {
     "chart_well_formed": OUTPUT,
     "chart_type_match": OUTPUT,
     "scope_match": SCOPE,
+    # Multi-turn conversation-level checks (PR-07)
+    "state_delta": RETRIEVAL,
 }
 
 # Checks whose failure straddles two buckets and cannot be attributed.
@@ -70,10 +73,7 @@ SHARED: dict[str, tuple[str, str]] = {
 INFO_ONLY: frozenset[str] = frozenset({"date_coverage", "answer_traceability"})
 
 
-_TURN_PREFIX = __import__("re").compile(r"^t\d+\.")
-
-# Multi-turn conversation-level checks (PR-07)
-DEDICATED["state_delta"] = RETRIEVAL
+_TURN_PREFIX = re.compile(r"^t\d+\.")
 
 
 def base_check_name(check: str) -> str:
@@ -119,13 +119,18 @@ def _tally(entries: list[dict], names: set[str], bucket: str) -> dict:
 
 def summarize_buckets(entries: list[dict[str, Any]]) -> dict[str, Any]:
     """The per-run bucket block stored in the ledger and rendered in reports."""
+    # Errored entries are errors, not measurements (row_verdict parity): a
+    # conversation that died at turn N must not bank its earlier turns'
+    # pass/fail counts into bucket tallies or coverage. Verdicts still see
+    # every entry, so the error remains visible.
+    scored = [entry for entry in entries if not entry.get("error")]
     summary: dict[str, Any] = {}
     for bucket in BUCKETS:
-        dedicated = _tally(entries, set(DEDICATED), bucket)
-        shared = _tally(entries, set(SHARED), bucket)
+        dedicated = _tally(scored, set(DEDICATED), bucket)
+        shared = _tally(scored, set(SHARED), bucket)
         rows_covered = sum(
             1
-            for entry in entries
+            for entry in scored
             if any(
                 bucket in buckets_for(name) and value is not None
                 for name, value in entry.get("checks", {}).items()
