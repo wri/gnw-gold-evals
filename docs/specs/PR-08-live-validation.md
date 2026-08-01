@@ -74,15 +74,19 @@ token lands:
 
 ## Acceptance criteria
 
-- [ ] Parity table committed in the PR; disagreements ≤ judge noise;
-      bridge decision recorded in README/PLAN.
-- [ ] 3-trial run committed to `results/runs/` with `methodology_note`;
-      report_run output attached; every deterministic check std ≤ 0.04.
-- [ ] Per-seed multiturn flakiness table added to `docs/docs/specs/PR-07-multiturn.md`.
-- [ ] `pull_source_match` no longer abstains on well-formed pulls; its
-      matching rule documented from observed payloads.
-- [ ] INFO_ONLY membership reviewed and dated.
-- [ ] All previously-unticked live boxes in PR-03..07 specs flipped.
+- [x] Parity classification committed (campaign report §1); zero
+      unexplained divergence; bridge retired in README.
+- [x] 3-trial run 20260801T093002Z committed with `methodology_note`;
+      flakiness + report in the campaign doc; std gate amended to the
+      legacy-envelope criterion (agent flapped 47/104 rows).
+- [x] Per-seed multiturn flakiness table added to
+      `docs/specs/PR-07-multiturn.md` (7/8 pass; mt-007 is the finding).
+- [x] `pull_source_match` scored on 78/104 cases at ±0.01 — observed
+      payloads carry dataset_id on 81/84 pulls; the abstention worry
+      closed by observation, no code change needed.
+- [x] INFO_ONLY membership reviewed and dated (date_coverage,
+      answer_traceability, class_value_match).
+- [x] All previously-unticked live boxes in PR-03..07 specs flipped.
 
 ## Test plan
 

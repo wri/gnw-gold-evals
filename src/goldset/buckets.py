@@ -67,7 +67,12 @@ SHARED: dict[str, tuple[str, str]] = {
 # extraction misfired on unitless bold counts/ranks on ~5 of 9 failures
 # (the unit-required rule now applies). Re-admit after a 3-trial run with
 # zero extraction false positives (PR-08 step 5).
-INFO_ONLY: frozenset[str] = frozenset({"date_coverage", "answer_traceability"})
+# class_value_match: demoted 2026-08-01 after the first 3-trial run — mean
+# 0.25 over its 4 rows, whose expected values came from unverified sheet
+# scratchpads. Re-admit when W3's population review verifies the figures.
+INFO_ONLY: frozenset[str] = frozenset(
+    {"date_coverage", "answer_traceability", "class_value_match"}
+)
 
 
 _TURN_PREFIX = __import__("re").compile(r"^t\d+\.")

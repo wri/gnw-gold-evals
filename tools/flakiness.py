@@ -42,8 +42,16 @@ def trial_values(entry: dict, check: str) -> list[float | None]:
 
 
 def collect(run: dict) -> tuple[dict, list[dict]]:
-    """(per-check stats, per-case flap list)."""
-    per_check: dict[str, list[float]] = {}
+    """(per-check stats, per-case flap list).
+
+    Flakiness is WITHIN-case variance across trials — the std of one case's
+    3 trial values, averaged over cases. Pooling values across cases would
+    measure the pass *rate's* spread instead (a check consistently failing
+    on 3 of 90 rows is not flaky), which is what this tool got wrong on its
+    first live outing (2026-08-01) and what the fixture test now pins.
+    """
+    per_check_means: dict[str, list[float]] = {}
+    per_check_stds: dict[str, list[float]] = {}
     flappy_cases: list[dict] = []
     for entry in run["results"]:
         if entry.get("stale_case"):
@@ -53,23 +61,28 @@ def collect(run: dict) -> tuple[dict, list[dict]]:
             values = [v for v in trial_values(entry, check) if v is not None]
             if not values:
                 continue
-            per_check.setdefault(base_check_name(check), []).extend(values)
+            name = base_check_name(check)
+            per_check_means.setdefault(name, []).append(statistics.mean(values))
+            per_check_stds.setdefault(name, []).append(
+                statistics.pstdev(values) if len(values) > 1 else 0.0
+            )
             if len(set(values)) > 1:
                 flapped.append(check)
         if flapped:
             flappy_cases.append({"id": entry.get("id"), "checks": sorted(flapped)})
 
     stats: dict[str, dict] = {}
-    for check, values in sorted(per_check.items()):
-        std = statistics.pstdev(values) if len(values) > 1 else 0.0
+    for check in sorted(per_check_means):
+        flake_std = statistics.mean(per_check_stds[check])
         gate = JUDGED_STD_GATE if check in JUDGED_CHECKS else DETERMINISTIC_STD_GATE
         stats[check] = {
-            "n": len(values),
-            "mean": statistics.mean(values),
-            "std": std,
+            "n": len(per_check_means[check]),
+            "mean": statistics.mean(per_check_means[check]),
+            "std": flake_std,
+            "flapping_cases": sum(1 for s in per_check_stds[check] if s > 0),
             "kind": "judged" if check in JUDGED_CHECKS else "deterministic",
             "info_only": is_info_only(check),
-            "within_gate": std <= gate,
+            "within_gate": flake_std <= gate,
         }
     return stats, flappy_cases
 
@@ -78,8 +91,8 @@ def render(run: dict, stats: dict, flappy: list[dict], per_case: bool) -> str:
     lines = [
         f"# Flakiness: {run['run_id']} ({run['num_trials']} trials)",
         "",
-        "| check | kind | n | mean | std | gate |",
-        "|---|---|---:|---:|---:|---|",
+        "| check | kind | cases | mean | flake std | flapping | gate |",
+        "|---|---|---:|---:|---:|---:|---|",
     ]
     for check, row in stats.items():
         flag = "info-only" if row["info_only"] else (
@@ -87,7 +100,7 @@ def render(run: dict, stats: dict, flappy: list[dict], per_case: bool) -> str:
         )
         lines.append(
             f"| {check} | {row['kind']} | {row['n']} | {row['mean']:.2f} "
-            f"| ±{row['std']:.2f} | {flag} |"
+            f"| ±{row['std']:.2f} | {row['flapping_cases']} | {flag} |"
         )
     over = [c for c, r in stats.items() if not r["within_gate"] and not r["info_only"]]
     lines += [

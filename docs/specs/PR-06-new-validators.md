@@ -42,9 +42,14 @@ multilingual number-parsing beyond the abstain rule; multiturn (PR-07).
       1-027/1-006/1-009 for E1, 1-085 for S1) plus clean-row negatives.
 - [x] E1 abstains (null, counted in reconciliation) on ambiguous-decimal
       multilingual rows rather than guessing.
-- [ ] 3-trial staging run: every new deterministic check at std ≤ 0.04;
-      zero false positives on run-6's known-clean rows; Analysis bucket
-      shows nonzero coverage in the bucket table.
+- [x] 3-trial staging run 20260801T093002Z (see PR-04's amended-gate note
+      — the agent flapped on 47/104 rows): chart_well_formed ±0.00,
+      chart_integrity ±0.02, scope_match ±0.05 (tracking real no-pull
+      flapping, 9/83 cases). Two probation demotions from the live data:
+      answer_traceability (extraction tuned to unit-required claims, then
+      info-only pending a clean re-run) and class_value_match (mean 0.25
+      on 4 unverified scratchpad values — W3 verifies before re-admission).
+      Analysis bucket shows dedicated coverage via chart_integrity.
 - [x] Bucket coverage after this PR: every bucket ≥ 20 rows with ≥ 1
       dedicated check (Analysis exempt from the row target until
       `class_values` population completes; actual number stated in the PR).

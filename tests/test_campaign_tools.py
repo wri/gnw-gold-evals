@@ -70,9 +70,24 @@ def test_flakiness_stats_and_flap_detection():
     assert stats["aoi_id_match"]["within_gate"] is True
     assert stats["charts_answer"]["kind"] == "judged"
     assert stats["charts_answer"]["std"] > 0.4  # 2/3 pass flaps hard
+    assert stats["charts_answer"]["flapping_cases"] == 1
     assert flappy == [{"id": "1-001", "checks": ["charts_answer"]}]
-    # stale rows excluded entirely
-    assert stats["aoi_id_match"]["n"] == 3
+    # stale rows excluded entirely; n counts CASES, not pooled values
+    assert stats["aoi_id_match"]["n"] == 1
+
+
+def test_flakiness_is_within_case_not_pooled():
+    """A check that consistently fails on one case and passes on nine is
+    NOT flaky — the first live run misread exactly this as OVER GATE."""
+    entries = [{"uid": f"u{i}", "id": f"c{i}",
+                "checks": {"dataset_id_match": 1.0 if i else 0.0},
+                "trials": [{"checks": {"dataset_id_match": 1.0 if i else 0.0}}] * 3}
+               for i in range(10)]
+    stats, flappy = collect(run_fixture(entries, trials=3))
+    assert stats["dataset_id_match"]["mean"] == 0.9   # the pass rate
+    assert stats["dataset_id_match"]["std"] == 0.0    # zero flakiness
+    assert stats["dataset_id_match"]["within_gate"] is True
+    assert flappy == []
 
 
 def test_flakiness_handles_turn_prefixed_checks():
