@@ -30,6 +30,9 @@ def evaluate_chart_well_formed(agent_state: dict[str, Any]) -> dict[str, Any]:
     problems = []
     max_pie_slices = 0
     for index, chart in enumerate(charts):
+        if not isinstance(chart, dict):
+            problems.append(f"chart {index}: not an object")
+            continue
         label = f"chart {index} ({chart.get('type', '?')})"
         data = chart.get("data")
         records = [row for row in data if isinstance(row, dict)] if isinstance(
@@ -68,7 +71,8 @@ def evaluate_chart_type(
         return result
 
     charts = agent_state.get("charts_data") or []
-    actual = str(charts[0].get("type", "")) if charts else ""
+    first = charts[0] if charts and isinstance(charts[0], dict) else None
+    actual = str(first.get("type", "")) if first is not None else ""
     result["actual_chart_type"] = actual or None
     if not actual:
         # a chart-type expectation implies a chart; none is a failure

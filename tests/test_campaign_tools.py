@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 from flakiness import collect
-from parity import LEGACY_CHECKS, compare, render
+from parity import LEGACY_CHECKS, compare, exit_code, render
 
 
 def run_fixture(results, run_id="20260801T000000Z_staging", trials=1):
@@ -51,6 +51,57 @@ def test_parity_holds_when_only_judges_disagree():
                         run_id="20260801T010000Z_staging")
     report = compare(run_a, run_b)
     assert "PARITY HOLDS" in render(run_a, run_b, report)
+    assert exit_code(report) == 0
+
+
+def test_parity_nothing_comparable_is_an_explicit_gate_failure():
+    # No shared uids at all: the gate must fail, and the verdict must say
+    # "nothing compared", not "parity broken" (nothing disagreed) and
+    # certainly not "parity holds".
+    run_a = run_fixture([{"uid": "u1", "id": "1", "checks": {"agent_answer": 1.0}}])
+    run_b = run_fixture([{"uid": "u2", "id": "2", "checks": {"agent_answer": 1.0}}],
+                        run_id="20260801T010000Z_staging")
+    report = compare(run_a, run_b)
+    assert report["comparable_checks"] == 0 and report["disagreements"] == []
+    text = render(run_a, run_b, report)
+    assert "NOTHING COMPARABLE" in text and "0 shared legacy checks" in text
+    assert "PARITY HOLDS" not in text and "PARITY BROKEN" not in text
+    assert exit_code(report) == 1
+
+
+def test_parity_handles_turn_prefixed_checks():
+    # Mirrors test_flakiness_handles_turn_prefixed_checks: a multiturn row
+    # stores its checks as t<N>.<name>; the legacy side stores bare names.
+    # Without base-name normalization this reads as a spurious
+    # DETERMINISTIC disagreement (A=1.0 B=None).
+    run_a = run_fixture([
+        {"uid": "u1", "id": "mt-001", "checks": {"aoi_id_match": 1.0}},
+    ])
+    run_b = run_fixture([
+        {"uid": "u1", "id": "mt-001",
+         "checks": {"t1.aoi_id_match": 1.0, "t2.state_delta": 1.0}},
+    ], run_id="20260801T010000Z_staging")
+    report = compare(run_a, run_b)
+    assert report["comparable_checks"] == 1  # t2.state_delta is not legacy
+    assert report["disagreements"] == []
+    assert exit_code(report) == 0
+
+
+def test_parity_turn_prefix_collision_collapses_any_fail():
+    # Two turns carry the same base check: the collapse keeps the worst
+    # turn's value (any-fail) and that turn's reason.
+    run_a = run_fixture([{"uid": "u1", "id": "mt-002", "checks": {"aoi_id_match": 1.0}}])
+    run_b = run_fixture([
+        {"uid": "u1", "id": "mt-002",
+         "checks": {"t1.aoi_id_match": 1.0, "t2.aoi_id_match": 0.0},
+         "reasons": {"t1.aoi_id_match": "turn 1 ok", "t2.aoi_id_match": "turn 2 wrong AOI"}},
+    ], run_id="20260801T010000Z_staging")
+    report = compare(run_a, run_b)
+    (item,) = report["disagreements"]
+    assert item["check"] == "aoi_id_match" and item["judged"] is False
+    assert item["a"] == 1.0 and item["b"] == 0.0
+    assert item["reason_b"] == "turn 2 wrong AOI"
+    assert exit_code(report) == 1
 
 
 def test_flakiness_stats_and_flap_detection():

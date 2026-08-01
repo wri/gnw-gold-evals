@@ -156,6 +156,24 @@ def test_o3_alternatives_and_missing_chart():
         "chart_type_match_score"] is None
 
 
+# --- non-dict chart elements must never raise (guarded like inner rows)
+
+
+def test_non_dict_chart_elements_are_guarded():
+    charts = ["garbage", CHART_1_027]
+    assert evaluate_chart_integrity(state(charts=charts))[
+        "chart_integrity_score"] == 1.0
+    assert evaluate_class_values(state(charts=charts), "Natural=2,124 ha")[
+        "class_value_match_score"] == 1.0
+    # well-formedness flags the junk element instead of skipping it
+    well_formed = evaluate_chart_well_formed(state(charts=charts))
+    assert well_formed["chart_well_formed_score"] == 0.0
+    assert "not an object" in well_formed["chart_well_formed_reason"]
+    # a non-dict first chart reads as "no chart type" — expectation fails
+    assert evaluate_chart_type(state(charts=["garbage"]), "pie")[
+        "chart_type_match_score"] == 0.0
+
+
 # --- S1 scope_match
 
 PULL = [{"source_url": "https://api/x", "id": "p1", "data": [{"a": 1}]}]

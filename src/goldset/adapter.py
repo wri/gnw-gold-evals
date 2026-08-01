@@ -17,8 +17,8 @@ from goldset.eval_types import ExpectedData
 from goldset.store import Case
 
 
-def case_to_expected(case: Case) -> ExpectedData:
-    payload = {f"expected_{key}": value for key, value in case.expected.items()}
+def _to_expected(case: Case, expected: dict[str, str]) -> ExpectedData:
+    payload = {f"expected_{key}": value for key, value in expected.items()}
     return ExpectedData(
         test_id=case.id,
         test_group=case.group or "unknown",
@@ -26,17 +26,12 @@ def case_to_expected(case: Case) -> ExpectedData:
         uid=case.uid,
         **payload,
     )
+
+
+def case_to_expected(case: Case) -> ExpectedData:
+    return _to_expected(case, case.expected)
 
 
 def turn_to_expected(case: Case, turn: dict) -> ExpectedData:
     """One turn of a multi-turn case, same prefixing rules."""
-    payload = {
-        f"expected_{key}": value for key, value in (turn.get("expected") or {}).items()
-    }
-    return ExpectedData(
-        test_id=case.id,
-        test_group=case.group or "unknown",
-        status=case.status,
-        uid=case.uid,
-        **payload,
-    )
+    return _to_expected(case, turn.get("expected") or {})

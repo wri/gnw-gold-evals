@@ -3,11 +3,15 @@
     uv run python tools/parity.py results/runs/<legacy-ingested>.json \
                                   results/runs/<gold-run>.json
 
-Compares **majority verdicts on the legacy checks only** — the 17 checks
+Compares **majority verdicts on the legacy checks only** — the 16 checks
 that exist on both paths (PR-04/06 checks don't exist in gnw-evals, and
 info-only checks never carry a verdict). Every disagreement is listed with
 both sides' reason strings; the acceptable class is judge-sampling noise,
 and the table in the output is what goes into the PR-03 parity box.
+
+Exit code is the gate: 0 only when at least one legacy check was compared
+and no deterministic check disagreed. Zero comparable checks is a failure
+in its own right — an empty comparison must never read as parity.
 """
 
 from __future__ import annotations
@@ -18,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from goldset.buckets import INFO_ONLY
+from goldset.buckets import INFO_ONLY, base_check_name
 from goldset.ledger import read_run
 
 # The checks the gnw-evals path can produce (PR-03 port surface, minus
@@ -50,6 +54,34 @@ JUDGED = frozenset(
 )
 
 
+def _collapse_entry(entry: dict) -> tuple[dict, dict]:
+    """Fold turn-prefixed check names (``t1.aoi_id_match``) onto their base
+    names so multiturn rows compare against single-turn legacy rows instead
+    of reading as spurious A=x B=None disagreements.
+
+    Collision rule when several turns carry the same base check in one
+    entry: **any-fail** — keep the worst turn's value (0.0 beats 1.0; None
+    only when no turn evaluated the check), and keep the reason attached to
+    the turn that supplied that value. A retirement gate must not hide a
+    failing turn behind a passing sibling.
+    """
+    raw_reasons = entry.get("reasons") or {}
+    checks: dict = {}
+    reasons: dict = {}
+    for name, value in (entry.get("checks") or {}).items():
+        base = base_check_name(name)
+        current = checks.get(base)
+        if value is None:
+            # Record the base name as seen, but never displace a real value.
+            checks.setdefault(base, None)
+            reasons.setdefault(base, raw_reasons.get(name))
+            continue
+        if current is None or value < current:
+            checks[base] = value
+            reasons[base] = raw_reasons.get(name)
+    return checks, reasons
+
+
 def compare(run_a: dict, run_b: dict) -> dict:
     index_a = {e["uid"]: e for e in run_a["results"] if e.get("uid")}
     index_b = {e["uid"]: e for e in run_b["results"] if e.get("uid")}
@@ -59,9 +91,11 @@ def compare(run_a: dict, run_b: dict) -> dict:
     disagreements = []
     for uid in shared:
         entry_a, entry_b = index_a[uid], index_b[uid]
+        checks_a, reasons_a = _collapse_entry(entry_a)
+        checks_b, reasons_b = _collapse_entry(entry_b)
         for check in sorted(LEGACY_CHECKS):
-            value_a = entry_a["checks"].get(check)
-            value_b = entry_b["checks"].get(check)
+            value_a = checks_a.get(check)
+            value_b = checks_b.get(check)
             if value_a is None and value_b is None:
                 continue
             comparable += 1
@@ -76,8 +110,8 @@ def compare(run_a: dict, run_b: dict) -> dict:
                     "judged": check in JUDGED,
                     "a": value_a,
                     "b": value_b,
-                    "reason_a": (entry_a.get("reasons") or {}).get(check),
-                    "reason_b": (entry_b.get("reasons") or {}).get(check),
+                    "reason_a": reasons_a.get(check),
+                    "reason_b": reasons_b.get(check),
                 }
             )
     return {
@@ -86,6 +120,25 @@ def compare(run_a: dict, run_b: dict) -> dict:
         "agreements": agreements,
         "disagreements": disagreements,
     }
+
+
+def _verdict(report: dict) -> str:
+    if report["comparable_checks"] == 0:
+        return (
+            "NOTHING COMPARABLE — 0 shared legacy checks; "
+            "parity is undemonstrated, do not retire the bridge"
+        )
+    if any(not d["judged"] for d in report["disagreements"]):
+        return "PARITY BROKEN — deterministic checks disagree; do not retire the bridge"
+    return "PARITY HOLDS — disagreements confined to judged checks"
+
+
+def exit_code(report: dict) -> int:
+    """The bridge-retirement gate: 0 only when something was actually
+    compared and every deterministic check agreed."""
+    if report["comparable_checks"] == 0:
+        return 1
+    return 1 if any(not d["judged"] for d in report["disagreements"]) else 0
 
 
 def render(run_a: dict, run_b: dict, report: dict) -> str:
@@ -98,13 +151,7 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
         f"disagree {len(report['disagreements'])} "
         f"({len(deterministic_breaks)} on deterministic checks)",
         "",
-        "**Verdict: "
-        + (
-            "PARITY HOLDS — disagreements confined to judged checks"
-            if not deterministic_breaks and report["comparable_checks"]
-            else "PARITY BROKEN — deterministic checks disagree; do not retire the bridge"
-        )
-        + "**",
+        f"**Verdict: {_verdict(report)}**",
     ]
     for item in report["disagreements"]:
         kind = "judged" if item["judged"] else "DETERMINISTIC"
@@ -127,7 +174,7 @@ def main() -> int:
     run_a, run_b = read_run(args.run_a), read_run(args.run_b)
     report = compare(run_a, run_b)
     print(render(run_a, run_b, report))
-    return 1 if any(not d["judged"] for d in report["disagreements"]) else 0
+    return exit_code(report)
 
 
 if __name__ == "__main__":

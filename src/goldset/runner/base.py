@@ -152,6 +152,13 @@ class BaseTestRunner(ABC):
     ) -> float:
         """Calculate overall score from individual evaluation scores.
 
+        LEGACY: the flat mean ported verbatim from gnw-evals, kept only for
+        output parity. Row verdicts and bucket tallies in ``buckets.py``
+        supersede it, and it is deliberately NOT extended with checks added
+        after the port (the PR-04 guards, the PR-06 validators). Its output
+        (``overall_score``) is excluded from ledger check ingestion via
+        ``NON_CHECK_SCORES`` in ``ledger.py``/``cli.py``.
+
         Each check (AOI ID, dataset ID, context layer, data pull,
         date match, answer, clarification) is scored independently as 0 or 1.
 

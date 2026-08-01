@@ -6,10 +6,14 @@
       --harness-sha unknown
 
 Joining (see results/README.md): rows carrying a ``uid`` column (exports
-from this repo) join directly; legacy sheet runs fall back to ``test_id``
-plus an exact-normalised-query match against the current store — a warned,
-weaker join. Rows that match neither are recorded with ``stale_case: true``:
-never dropped, never re-keyed, excluded from regression math.
+from this repo) join directly — and if that uid is no longer in the store,
+the row is stale, full stop; falling back to a weaker join would re-key old
+scores onto edited case content, the exact misattribution uids exist to
+prevent. Only rows with no uid at all (legacy sheet runs) fall back to
+``test_id`` plus an exact-normalised-query match against the current store,
+a warned, weaker join. Rows that match neither are recorded with
+``stale_case: true``: never dropped, never re-keyed, excluded from
+regression math.
 
 Idempotent: same inputs and flags produce a byte-identical ledger file.
 """
@@ -28,6 +32,7 @@ from goldset.buckets import summarize_buckets
 from goldset.canonical import normalize_text
 from goldset.ledger import (
     check_name_from_column,
+    majority_from_mean,
     make_run_id,
     parse_score,
     reason_name_from_column,
@@ -35,6 +40,7 @@ from goldset.ledger import (
 )
 from goldset.store import load_store, read_manifest
 
+REPO_ROOT = Path(__file__).resolve().parents[1]
 REASON_TRIM = 500
 _FILENAME_TS = re.compile(r"(\d{8})_(\d{6})")
 
@@ -77,22 +83,33 @@ def expectation_drift(row: dict, case) -> list[str]:
     return drifted
 
 
-def build_entry(row: dict, by_id: dict, by_uid: set) -> dict:
+def build_entry(row: dict, by_id: dict, by_uid: set, num_trials: int = 1) -> dict:
     """One ledger entry from one detailed-CSV row, joined to the store."""
     checks = {}
     reasons = {}
     for column, cell in row.items():
         check = check_name_from_column(column)
         if check is not None:
-            checks[check] = parse_score(cell)
+            # multi-trial CSVs put the trial mean in the score column
+            checks[check] = (
+                parse_score(cell)
+                if num_trials == 1
+                else majority_from_mean(cell, num_trials)
+            )
         reason_for = reason_name_from_column(column)
         if reason_for is not None and normalize_text(cell):
             reasons[reason_for] = normalize_text(cell)[:REASON_TRIM]
 
     entry: dict = {"uid": None, "id": normalize_text(row.get("test_id"))}
     row_uid = normalize_text(row.get("uid"))
-    if row_uid and row_uid in by_uid:
-        entry["uid"] = row_uid
+    if row_uid:
+        if row_uid in by_uid:
+            entry["uid"] = row_uid
+        else:
+            # The row asserts a specific case version that no longer
+            # exists; re-keying via test_id+query would attribute its
+            # scores to the case's edited content.
+            entry["stale_case"] = True
     else:
         case = by_id.get(entry["id"])
         if case is not None and normalize_text(row.get("query")) == normalize_text(
@@ -126,8 +143,9 @@ def build_entry(row: dict, by_id: dict, by_uid: set) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--detailed", type=Path, required=True)
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
-    parser.add_argument("--results-dir", type=Path, default=Path("results"))
+    # defaults are repo-root-relative so the tool works from any cwd
+    parser.add_argument("--cases-dir", type=Path, default=REPO_ROOT / "cases/v2")
+    parser.add_argument("--results-dir", type=Path, default=REPO_ROOT / "results")
     parser.add_argument("--environment", required=True, choices=["staging", "prod"])
     parser.add_argument("--build", required=True, help="agent build, e.g. 'GNW 2026.7.29.1'")
     parser.add_argument("--ff", default=None, help="agent tool profile, if any")
@@ -157,11 +175,23 @@ def main() -> int:
         print(f"{args.detailed}: no data rows")
         return 1
 
-    entries = [build_entry(row, by_id, by_uid) for row in rows]
+    entries = [
+        build_entry(row, by_id, by_uid, num_trials=args.num_trials) for row in rows
+    ]
     stale = sum(1 for e in entries if e.get("stale_case"))
+    stale_uid = sum(
+        1
+        for row, e in zip(rows, entries)
+        if e.get("stale_case") and normalize_text(row.get("uid"))
+    )
     weak = sum(1 for e in entries if e.get("joined_by") == "test_id")
     if weak:
         print(f"warning: {weak} rows joined by test_id+query (no uid column)")
+    if stale_uid:
+        print(
+            f"warning: {stale_uid} rows carry a uid no longer in the store "
+            "-> stale_case (case content edited since the run?)"
+        )
 
     run = {
         "run_id": make_run_id(started, args.environment, args.ff),

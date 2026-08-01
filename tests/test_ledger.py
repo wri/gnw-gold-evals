@@ -5,6 +5,7 @@ import pytest
 from goldset.ledger import (
     check_name_from_column,
     majority,
+    majority_from_mean,
     make_run_id,
     parse_score,
     read_run,
@@ -59,6 +60,17 @@ def test_majority():
     assert majority([None, 1.0]) == 1.0
 
 
+def test_majority_from_mean():
+    assert majority_from_mean("", 3) is None
+    assert majority_from_mean(None, 3) is None
+    assert majority_from_mean("0.6667", 3) == 1.0
+    assert majority_from_mean("0.3333", 3) == 0.0
+    assert majority_from_mean("0.5", 2) == 0.0  # ties fail conservatively
+    assert majority_from_mean("1.0", 3) == 1.0
+    with pytest.raises(ValueError, match="binary"):
+        majority_from_mean("0.4", 3)  # not a whole number of passes
+
+
 def test_make_run_id():
     assert (
         make_run_id("2026-07-31T12:00:22Z", "staging", "experimental")
@@ -86,3 +98,17 @@ def test_validate_rejects_bad_records(tmp_path):
     assert any("not tri-state" in p for p in validate_run(non_tri))
     with pytest.raises(ValueError, match="invalid run"):
         write_run(tmp_path, non_tri)
+
+
+def test_validate_rejects_non_float_checks():
+    # bool == float equivalence must not let True/1 pass as tri-state
+    for bad in (True, False, 1, 0, "1.0"):
+        run = {**RUN, "results": [{"uid": "u", "id": "x", "checks": {"a": bad}}]}
+        assert any("not tri-state" in p for p in validate_run(run)), repr(bad)
+
+
+def test_write_run_refuses_divergent_overwrite(tmp_path):
+    write_run(tmp_path, RUN)
+    write_run(tmp_path, RUN)  # identical re-write is fine (idempotent)
+    with pytest.raises(ValueError, match="immutable"):
+        write_run(tmp_path, {**RUN, "build": "GNW other"})

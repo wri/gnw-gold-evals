@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from audit_cases import audit, depth_violation, dont_violations, render
+from audit_cases import audit, depth_violation, dont_violations, main, render
 
 from goldset.store import Case
 
@@ -47,6 +47,24 @@ def test_relative_dates_flagged_only_with_pinned_expectations():
     assert not any("relative-date" in v for v in dont_violations(routing_only))
 
 
+def test_relative_date_exempt_only_when_all_keys_are_routing_only():
+    # class_values drifts with the window: outside the allow-list -> caught
+    # (the old date/answer-only check let this straight through).
+    caught = Case(id="rc", status="done", group="class-comparison",
+                  query="Which land cover class shrank most in the last 5 years?",
+                  expected={"dataset_id": "7", "scope": "analyse",
+                            "class_values": "forest:-120"})
+    assert any("relative-date" in v for v in dont_violations(caught))
+    # Every key inside ROUTING_ONLY_FIELDS -> still the tolerated pattern.
+    exempt = Case(id="re", status="done", group="direct",
+                  query="Most recent disturbance alerts in Puri district, India?",
+                  expected={"aoi_ids": "IND.26.10_1", "aoi_source": "gadm",
+                            "dataset_id": "11", "dataset_name": "DIST alerts",
+                            "context_layer": "no_selection",
+                            "scope": "analyse", "clarification": "FALSE"})
+    assert not any("relative-date" in v for v in dont_violations(exempt))
+
+
 def test_annual_dataset_dates_flagged_alert_datasets_pass():
     annual = Case(id="a", status="done", group="temporal", query="q",
                   expected={"dataset_id": "4", "start_date": "2022-01-01",
@@ -60,6 +78,19 @@ def test_annual_dataset_dates_flagged_alert_datasets_pass():
                         expected={"dataset_id": "0;11", "start_date": "2025-01-01",
                                   "end_date": "2025-04-30"})
     assert dont_violations(alternatives) == []
+    # Mixed alternatives may resolve to the annual dataset: ALL must be
+    # date-scoped, not just one of them.
+    mixed = Case(id="d", status="done", group="temporal", query="q",
+                 expected={"dataset_id": "4;11", "start_date": "2024-01-01",
+                           "end_date": "2024-12-31"})
+    assert any("non-date-scoped" in v for v in dont_violations(mixed))
+
+
+def test_judged_only_answer_in_non_exempt_group_flagged():
+    judged = Case(id="j", status="done", group="direct",
+                  query="How much tree cover did Brazil lose in 2022?",
+                  expected={"answer": "1.7 Mha"})
+    assert dont_violations(judged) == ["j: judged-only expectations"]
 
 
 def test_multiturn_delta_turns_are_not_judged_only():
@@ -82,3 +113,21 @@ def test_audit_rollup_and_floors():
     text = render(report)
     assert "Active cases: 1 (+1 parked)" in text
     assert "- direct: 1" in text
+
+
+def test_main_cli_reports_by_default_and_fails_under_strict(tmp_path, capsys):
+    (tmp_path / "direct").mkdir()
+    (tmp_path / "direct" / "fx-1.yaml").write_text(
+        "id: fx-1\n"
+        "status: done\n"
+        "group: direct\n"
+        "query: Forest loss in Brazil in the past decade?\n"
+        "expected:\n"
+        "  answer: 42 ha\n",
+        encoding="utf-8",
+    )
+    assert main(["--cases-dir", str(tmp_path)]) == 0
+    report = capsys.readouterr().out
+    assert "judged-only" in report
+    assert "relative-date" in report
+    assert main(["--cases-dir", str(tmp_path), "--strict"]) == 1
