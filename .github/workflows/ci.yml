@@ -23,6 +23,8 @@ jobs:
         run: uvx ruff check src tools tests
       - name: Tests (includes per-case schema conformance)
         run: uv run pytest -q
+      - name: Case-set audit (report-only until W1-W4 land)
+        run: uv run python tools/audit_cases.py
       - name: Case-store integrity (uids + manifest truthful, both versions)
         run: |
           uv run python tools/check.py --cases-dir cases/v1
