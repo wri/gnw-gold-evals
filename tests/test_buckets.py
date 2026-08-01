@@ -67,6 +67,13 @@ def test_implied_checks_from_expectations():
     # a map-only dashboard implies no pull; an insight widget does
     assert "data_pull_exists" not in implied_checks({"dashboard_widgets": "map"})
     assert "data_pull_exists" in implied_checks({"dashboard_widgets": "insight;map"})
+    # each PR-06 expected field implies exactly its dedicated check —
+    # equality, so a typo'd field-name lookup in implied_checks fails here
+    assert implied_checks({"class_values": "Natural=2,124 ha"}) == {
+        "class_value_match"
+    }
+    assert implied_checks({"chart_type": "pie;table"}) == {"chart_type_match"}
+    assert implied_checks({"scope": "analyse"}) == {"scope_match"}
 
 
 def test_reconcile_itemises_every_hole():
