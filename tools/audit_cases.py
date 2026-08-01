@@ -39,6 +39,19 @@ RELATIVE_DATE_RE = re.compile(
     r"\b(last|past|recent|latest|this (year|month|week))\b", re.IGNORECASE
 )
 
+# The rule (cases/README.md, DON'T #1): relative-date phrasing is tolerated
+# only when the case asserts *routing alone* — which AOI/dataset/layer/
+# parameters the agent selected, its scope, and whether it asked to clarify.
+# Those stay true whatever the calendar says. Every other expectation
+# (answers, dates, class values, chart/dashboard/nudge content, judged text,
+# and any key added in the future) is presumed to drift with time or data
+# versions and flags. Allow-list rather than deny-list so that new
+# expectation vocabulary fails safe.
+ROUTING_ONLY_FIELDS = {
+    "aoi_ids", "aoi_source", "dataset_id", "dataset_name",
+    "dataset_parameters", "context_layer", "scope", "clarification",
+}
+
 DETERMINISTIC_FIELDS = {
     "aoi_ids", "dataset_id", "dataset_parameters", "context_layer",
     "start_date", "end_date", "suggested_datasets", "nudge_type",
@@ -92,14 +105,16 @@ def dont_violations(case: Case) -> list[str]:
     for query, expected, deltas in zip(
         _queries(case), _expected_maps(case), _turn_deltas(case)
     ):
-        if RELATIVE_DATE_RE.search(query):
-            routing_only = not any(
-                expected.get(f) for f in ("start_date", "end_date", "answer")
+        match = RELATIVE_DATE_RE.search(query)
+        if match:
+            drifting = sorted(
+                key for key, value in expected.items()
+                if str(value).strip() and key not in ROUTING_ONLY_FIELDS
             )
-            if not routing_only:
+            if drifting:
                 problems.append(
-                    f"{case.id}: relative-date phrasing with pinned "
-                    f"date/answer expectations ({RELATIVE_DATE_RE.search(query).group(0)!r})"
+                    f"{case.id}: relative-date phrasing ({match.group(0)!r}) "
+                    f"with non-routing expectation(s) {drifting}"
                 )
         has_dates = expected.get("start_date") or expected.get("end_date")
         if has_dates and case.group not in DATE_SCOPED_GROUPS:
@@ -107,7 +122,9 @@ def dont_violations(case: Case) -> list[str]:
                 a.strip() for a in str(expected.get("dataset_id", "")).split(";")
                 if a.strip()
             }
-            if alternatives and not (alternatives & DATE_SCOPED_DATASET_IDS):
+            # Every alternative must be date-scoped: "4;11" may resolve to
+            # the annual dataset 4, so a mixed list is as unsafe as a bare 4.
+            if alternatives and not alternatives <= DATE_SCOPED_DATASET_IDS:
                 problems.append(
                     f"{case.id}: date expectations on non-date-scoped "
                     f"dataset(s) {sorted(alternatives)}"
@@ -169,13 +186,13 @@ def render(report: dict) -> str:
     return "\n".join(lines)
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--strict", action="store_true",
                         help="exit 1 on depth/DON'T violations (coverage floors "
                              "stay report-only until W1 lands)")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     cases = [case for _p, case, _u in load_store(args.cases_dir)]
     report = audit(cases)
