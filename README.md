@@ -97,6 +97,20 @@ docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
   a run's verdict comes from per-row verdicts and per-bucket tallies, never
   a flat mean. Errored rows are errors, not measurements — they are excluded
   from tallies rather than banking partial passes.
+- **Which check answers for which bucket** (full map with descriptions and
+  case examples: [`docs/evaluator-map.html`](docs/evaluator-map.html);
+  † = shared between two buckets, ° = info-only, never gates):
+
+  | Bucket — the question it answers | Checks |
+  |---|---|
+  | **Retrieval** — did it understand the question? | `aoi_id_match` `dataset_id_match` `dataset_parameter_match` `context_layer_match` `date_extraction` `data_pull_exists` `pull_source_match` `answered_without_data` `state_delta` |
+  | **Analysis** — right numbers? | `chart_integrity` `class_value_match`° `charts_answer`† `agent_answer`† |
+  | **Explanation** — prose faithful to the data? | `expected_text_match` `web_fallback` `answer_traceability`° `agent_answer`† |
+  | **Output** — artifacts presented correctly? | `chart_produced` `chart_well_formed` `chart_type_match` `dashboard_aoi_match` `dashboard_widgets_match` `dashboard_widgets_valid` `charts_answer`† `dashboard_created`† |
+  | **Scope** — right amount of work? | `scope_match` `clarification_requested` `suggested_datasets_match` `nudge_match` `dashboard_created`† |
+
+  `date_coverage` is also info-only (annual datasets always pull their full
+  range, so the recorded window flips without the answer being wrong).
 - **Multi-turn cases** share one thread; per-turn checks flatten to
   `t<N>.<check>` plus `state_delta` assertions between turns. A turn that
   errors aborts its conversation rather than polluting later turns.

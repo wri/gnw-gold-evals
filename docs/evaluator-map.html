@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GOLD evaluator map — what gets measured, by bucket</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1f24; --muted: #5b6570; --line: #e3e7ea;
+    --card: #f7f9fa; --code-bg: #f1f3f5;
+    --retrieval: #2563eb; --analysis: #b45309; --explanation: #7c3aed;
+    --output: #0d9488; --scope: #be185d;
+    --det: #64748b; --judge: #b45309; --shared: #6d28d9; --info: #9ca3af;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14181c; --fg: #e6e9ec; --muted: #98a2ad; --line: #2a3138;
+      --card: #1b2127; --code-bg: #20262d;
+      --retrieval: #60a5fa; --analysis: #fbbf24; --explanation: #b48cf7;
+      --output: #2dd4bf; --scope: #f472b6;
+      --det: #94a3b8; --judge: #fbbf24; --shared: #b48cf7; --info: #6b7280;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  main { max-width: 980px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+  h1 { font-size: 1.6rem; margin: 0 0 .3rem; }
+  h2 { font-size: 1.2rem; margin: 2.8rem 0 .2rem; }
+  h3 { font-size: 1rem; margin: 1.6rem 0 .4rem; }
+  .sub { color: var(--muted); margin: 0 0 1rem; }
+  .prov { font-size: .8rem; color: var(--muted); border-left: 3px solid var(--line); padding-left: .7rem; margin: 1.2rem 0 0; }
+  .strip { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.4rem 0; }
+  .strip > div { flex: 1 1 200px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: .7rem .85rem; font-size: .85rem; }
+  .strip b { display: block; margin-bottom: .15rem; }
+  .badge { display: inline-block; font-size: .68rem; font-weight: 600; letter-spacing: .04em;
+    padding: .1rem .45rem; border-radius: 99px; vertical-align: 1px; white-space: nowrap; }
+  .b-det    { background: color-mix(in srgb, var(--det) 15%, transparent); color: var(--det); }
+  .b-judge  { background: color-mix(in srgb, var(--judge) 15%, transparent); color: var(--judge); }
+  .b-shared { background: color-mix(in srgb, var(--shared) 15%, transparent); color: var(--shared); }
+  .b-info   { background: color-mix(in srgb, var(--info) 20%, transparent); color: var(--info); }
+  .bucket { border: 1px solid var(--line); border-radius: 10px; margin: 1.2rem 0; overflow: hidden; }
+  .bucket > header { padding: .8rem 1rem; border-bottom: 1px solid var(--line); }
+  .bucket > header .tag { font-size: .72rem; font-weight: 700; letter-spacing: .08em; }
+  .bucket > header h3 { margin: .1rem 0 0; font-size: 1.05rem; }
+  .bucket > header p { margin: .15rem 0 0; font-size: .85rem; color: var(--muted); }
+  .r { border-color: var(--retrieval); } .r .tag { color: var(--retrieval); }
+  .a { border-color: var(--analysis); } .a .tag { color: var(--analysis); }
+  .e { border-color: var(--explanation); } .e .tag { color: var(--explanation); }
+  .o { border-color: var(--output); } .o .tag { color: var(--output); }
+  .s { border-color: var(--scope); } .s .tag { color: var(--scope); }
+  table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+  .tablewrap { overflow-x: auto; }
+  th { text-align: left; font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+       color: var(--muted); padding: .5rem .75rem .3rem; }
+  td { padding: .45rem .75rem; border-top: 1px solid var(--line); vertical-align: top; }
+  td:first-child { white-space: nowrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; }
+  td.trigger { white-space: nowrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .78rem; color: var(--muted); }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: .9rem; margin-top: .9rem; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: .9rem 1rem; }
+  .card h4 { margin: 0 0 .3rem; font-size: .92rem; }
+  .card p { margin: .3rem 0; font-size: .82rem; color: var(--muted); }
+  .card pre { background: var(--code-bg); border-radius: 6px; padding: .6rem .7rem; overflow-x: auto;
+    font-size: .72rem; line-height: 1.45; margin: .5rem 0; }
+  .checks { font-size: .76rem; line-height: 1.9; }
+  .checks code { background: var(--code-bg); padding: .08rem .35rem; border-radius: 4px;
+    font-size: .72rem; white-space: nowrap; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .fine { font-size: .82rem; color: var(--muted); }
+  .fine li { margin: .35rem 0; }
+  .groups { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+  .groups span { font-size: .74rem; background: var(--card); border: 1px solid var(--line);
+    border-radius: 99px; padding: .12rem .6rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+
+<h1>GOLD evaluator map</h1>
+<p class="sub">What each check measures, which evaluator produces it, and which of the five
+buckets it answers for — plus the case shapes that switch each check on.</p>
+
+<div class="strip">
+  <div><b>Every check is tri-state</b> 1.0 pass · 0.0 fail · <code>null</code> not evaluated.
+    Checks are opt-in: a blank expected field means the check abstains, not that it passes.</div>
+  <div><b>Row verdicts</b> pass · fail · <b>error</b> (API/judge failure — never counted as fail)
+    · <b>uncovered</b> (nothing evaluated — never counted as pass).</div>
+  <div><b>Badges</b> <span class="badge b-det">DET</span> deterministic
+    <span class="badge b-judge">JUDGE</span> LLM-judged (claude-haiku-4-5, temp 0)
+    <span class="badge b-shared">SHARED</span> failure straddles two buckets
+    <span class="badge b-info">INFO-ONLY</span> reported, never gates a verdict.</div>
+  <div><b>Multi-turn</b> per-turn checks flatten to <code>t1.</code>/<code>t2.</code> prefixes;
+    <code>state_delta</code> asserts changes between turn snapshots.</div>
+</div>
+
+<!-- ==================== RETRIEVAL ==================== -->
+<section class="bucket r">
+<header>
+  <span class="tag">RETRIEVAL</span>
+  <h3>Understanding the question</h3>
+  <p>Did the agent extract the right things from the prompt — place, dataset, dates — and actually fetch the data?</p>
+</header>
+<div class="tablewrap"><table>
+<tr><th>check</th><th>evaluator</th><th>switched on by</th><th>what it measures</th></tr>
+<tr><td>aoi_id_match <span class="badge b-det">DET</span></td><td>aoi</td><td class="trigger">expected.aoi_ids</td>
+  <td>The agent resolved exactly the expected GADM/KBA area set (set equality, <code>;</code>-separated). Expected-but-none-resolved scores 0, not null.</td></tr>
+<tr><td>dataset_id_match <span class="badge b-det">DET</span></td><td>dataset</td><td class="trigger">expected.dataset_id</td>
+  <td>The right dataset was selected. <code>;</code> lists acceptable alternatives (e.g. <code>8;10</code>) — any one matches.</td></tr>
+<tr><td>dataset_parameter_match <span class="badge b-det">DET</span></td><td>dataset</td><td class="trigger">expected.dataset_parameters</td>
+  <td>Dataset parameters (e.g. canopy-cover threshold) match on name + values.</td></tr>
+<tr><td>context_layer_match <span class="badge b-det">DET</span></td><td>dataset</td><td class="trigger">expected.context_layer</td>
+  <td>The right context layer; <code>no_selection</code> asserts none was chosen.</td></tr>
+<tr><td>date_extraction <span class="badge b-det">DET</span></td><td>date_extraction</td><td class="trigger">expected.start_date + end_date</td>
+  <td>The agent parsed the requested time window out of the prompt. Set only on date-scoped datasets (alerts, imagery) — annual datasets always pull their full range.</td></tr>
+<tr><td>data_pull_exists <span class="badge b-det">DET</span></td><td>data_pull</td><td class="trigger">implied: answer set, or insight widget expected</td>
+  <td>A real data pull happened whenever the expectations imply one (<code>expects_data_pull()</code>; false when a clarification is expected instead).</td></tr>
+<tr><td>pull_source_match <span class="badge b-det">DET</span></td><td>guards</td><td class="trigger">expected.dataset_id (guard)</td>
+  <td>The pulled statistics entry's <code>dataset_id</code> equals the expected dataset — whole-value equality, never substring matching. Abstains (with the source recorded) when the payload carries no id.</td></tr>
+<tr><td>answered_without_data <span class="badge b-det">DET</span></td><td>guards</td><td class="trigger">implied (guard)</td>
+  <td>Tripwire: a substantive answer (≥80 chars) with no pull and no dataset selected scores 0. A refusal is not a violation.</td></tr>
+<tr><td>state_delta <span class="badge b-det">DET</span></td><td>multiturn runner</td><td class="trigger">turns[n].deltas</td>
+  <td>Between-turn assertions: <code>changed</code> / <code>retain</code> / <code>absent</code> on snapshot fields (aoi_ids, dataset_id, dates, …). Field names are schema-validated, so typos fail at authoring time.</td></tr>
+</table></div>
+</section>
+
+<!-- ==================== ANALYSIS ==================== -->
+<section class="bucket a">
+<header>
+  <span class="tag">ANALYSIS</span>
+  <h3>Computing the right numbers</h3>
+  <p>Given the right data, did the agent produce the right figures?</p>
+</header>
+<div class="tablewrap"><table>
+<tr><th>check</th><th>evaluator</th><th>switched on by</th><th>what it measures</th></tr>
+<tr><td>charts_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·OUTPUT</span></td><td>answer</td><td class="trigger">expected.answer</td>
+  <td>The chart JSON (not the prose) answers the question; numeric figures are compared in code at 2% tolerance, the judge handles structure and semantics.</td></tr>
+<tr><td>agent_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·EXPLANATION</span></td><td>answer</td><td class="trigger">expected.answer</td>
+  <td>The final prose answer states the expected result (numerics within 2%, years and booleans exact, entities semantic).</td></tr>
+<tr><td>chart_integrity <span class="badge b-det">DET</span></td><td>analysis_checks</td><td class="trigger">always (when a chart exists)</td>
+  <td>Every figure in the chart exists in the pulled data — no invented or transformed-beyond-recognition numbers.</td></tr>
+<tr><td>class_value_match <span class="badge b-det">DET</span> <span class="badge b-info">INFO-ONLY</span></td><td>analysis_checks</td><td class="trigger">expected.class_values</td>
+  <td>Per-class figures (e.g. per land-cover tier) match expected values. Demoted to info-only 2026-08-01: its 4 seed rows came from unverified sheet scratchpads (mean 0.25); re-admitted once W3 verifies the figures.</td></tr>
+</table></div>
+</section>
+
+<!-- ==================== EXPLANATION ==================== -->
+<section class="bucket e">
+<header>
+  <span class="tag">EXPLANATION</span>
+  <h3>Prose faithful to the data</h3>
+  <p>Does what the agent says match what the data shows?</p>
+</header>
+<div class="tablewrap"><table>
+<tr><th>check</th><th>evaluator</th><th>switched on by</th><th>what it measures</th></tr>
+<tr><td>agent_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·ANALYSIS</span></td><td>answer</td><td class="trigger">expected.answer</td>
+  <td>(Shared with Analysis — a wrong prose answer can be a computation error or an explanation error; the failure is not attributed.)</td></tr>
+<tr><td>expected_text_match <span class="badge b-judge">JUDGE</span></td><td>answer</td><td class="trigger">expected.text</td>
+  <td>Semantic-inclusion judge for behaviours: "refuses because the dataset is annual", "maintains its figure instead of capitulating". The workhorse for behavioural expectations.</td></tr>
+<tr><td>web_fallback <span class="badge b-det">DET</span></td><td>guards</td><td class="trigger">implied (guard)</td>
+  <td>Tripwire: the answer cites an external (non-GNW) URL when a data pull was expected — the agent explained from the web, not the data.</td></tr>
+<tr><td>answer_traceability <span class="badge b-det">DET</span> <span class="badge b-info">INFO-ONLY</span></td><td>traceability</td><td class="trigger">always (when data was pulled)</td>
+  <td>Every unit-bearing claim in the answer traces back to the pulled data. Demoted to info-only 2026-08-01 after claim extraction misfired on unitless counts/ranks; re-admitted after a clean 3-trial run.</td></tr>
+</table></div>
+</section>
+
+<!-- ==================== OUTPUT ==================== -->
+<section class="bucket o">
+<header>
+  <span class="tag">OUTPUT</span>
+  <h3>Artifacts presented correctly</h3>
+  <p>Charts and dashboards: present when they should be, structurally sound, the right kind.</p>
+</header>
+<div class="tablewrap"><table>
+<tr><th>check</th><th>evaluator</th><th>switched on by</th><th>what it measures</th></tr>
+<tr><td>chart_produced <span class="badge b-det">DET</span></td><td>guards</td><td class="trigger">expected.answer (guard)</td>
+  <td>A row whose expected answer implies a chart actually produced one — the failure that previously vanished as null.</td></tr>
+<tr><td>chart_well_formed <span class="badge b-det">DET</span></td><td>output_checks</td><td class="trigger">always (when a chart exists)</td>
+  <td>Structural sanity of the chart JSON: fields present, rows are objects, no truncation damage.</td></tr>
+<tr><td>chart_type_match <span class="badge b-det">DET</span></td><td>output_checks</td><td class="trigger">expected.chart_type</td>
+  <td>The chart is the requested kind (pie/bar/line). Wired and unit-tested, but <b>no v2 case sets it yet</b> — seeding is deferred until live chart types are verified.</td></tr>
+<tr><td>charts_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·ANALYSIS</span></td><td>answer</td><td class="trigger">expected.answer</td>
+  <td>(Shared with Analysis.)</td></tr>
+<tr><td>dashboard_created <span class="badge b-det">DET</span> <span class="badge b-shared">SHARED ·SCOPE</span></td><td>dashboard_created</td><td class="trigger">expected.dashboard_created</td>
+  <td>Tri-state: TRUE requires one, FALSE forbids one — and an <em>unsolicited</em> dashboard (blank expectation) scores 0.</td></tr>
+<tr><td>dashboard_aoi_match <span class="badge b-det">DET</span></td><td>dashboard_aoi</td><td class="trigger">expected.aoi_ids (+dashboard)</td>
+  <td>The dashboard holds exactly one AOI and it matches; any other count fails.</td></tr>
+<tr><td>dashboard_widgets_match <span class="badge b-det">DET</span></td><td>dashboard_widgets</td><td class="trigger">expected.dashboard_widgets</td>
+  <td>Widget types as a multiset (<code>insight;insight;map</code>).</td></tr>
+<tr><td>dashboard_widgets_valid <span class="badge b-det">DET</span></td><td>dashboard_widgets</td><td class="trigger">expected.dashboard_widgets</td>
+  <td>Widgets carry their required payloads (insight text, map tile URL) — not empty shells.</td></tr>
+</table></div>
+</section>
+
+<!-- ==================== SCOPE ==================== -->
+<section class="bucket s">
+<header>
+  <span class="tag">SCOPE</span>
+  <h3>The right amount of work</h3>
+  <p>Clarify when ambiguous, suggest when asked to suggest, analyse when asked to analyse — no more, no less.</p>
+</header>
+<div class="tablewrap"><table>
+<tr><th>check</th><th>evaluator</th><th>switched on by</th><th>what it measures</th></tr>
+<tr><td>scope_match <span class="badge b-det">DET</span></td><td>scope</td><td class="trigger">expected.scope</td>
+  <td>The route the agent took (analyse / suggest / clarify / refuse) equals the expected one.</td></tr>
+<tr><td>clarification_requested <span class="badge b-judge">JUDGE</span></td><td>clarification</td><td class="trigger">expected.clarification</td>
+  <td>Tri-state: TRUE — it must ask; FALSE — it must not; blank — not evaluated.</td></tr>
+<tr><td>suggested_datasets_match <span class="badge b-det">DET</span></td><td>suggested_datasets</td><td class="trigger">expected.suggested_datasets</td>
+  <td>Suggestions are a non-empty subset of the acceptable set (<code>0;1;2;3;4</code>): at least one hit, nothing outside it.</td></tr>
+<tr><td>nudge_match <span class="badge b-det">DET</span></td><td>nudge</td><td class="trigger">expected.nudge_type / nudge_options</td>
+  <td>The nudge is one of the acceptable types (OR), and its options cover the expected ones (substring, case-insensitive).</td></tr>
+<tr><td>dashboard_created <span class="badge b-det">DET</span> <span class="badge b-shared">SHARED ·OUTPUT</span></td><td>dashboard_created</td><td class="trigger">expected.dashboard_created</td>
+  <td>(Shared with Output — an unsolicited dashboard is also a scope failure.)</td></tr>
+</table></div>
+</section>
+
+<p class="fine"><span class="badge b-info">INFO-ONLY</span> also includes <code>date_coverage</code>
+(did the pulled data cover the requested window) — permanently informational because annual datasets
+always pull their full range and slice in code, so the recorded window flips between runs without
+the answer being wrong.</p>
+
+<!-- ==================== CASE SHAPES ==================== -->
+<h2>The case shapes (cases/v2 — 114 cases, 16 groups)</h2>
+<p class="sub">A case is one YAML file; every non-empty <code>expected</code> key switches on the
+matching checks above. These five real archetypes cover the shapes in use.</p>
+
+<div class="cards">
+
+<div class="card">
+<h4>Direct analysis <span class="badge b-det">1-002 · direct</span></h4>
+<pre>query: How much of Sao Paulo was impacted
+  [by] disturbance alerts in H2 2024 ...?
+expected:
+  aoi_ids: BRA.25_1
+  dataset_id: '11'
+  start_date: '2024-07-01'
+  end_date: '2024-12-31'
+  answer: 1,319,600 hectares
+  scope: analyse</pre>
+<p class="checks">Lights up: <code>aoi_id_match</code> <code>dataset_id_match</code>
+<code>date_extraction</code> <code>data_pull_exists</code> <code>agent_answer</code>
+<code>charts_answer</code> <code>scope_match</code> + always-on guards/chart checks.
+The workhorse shape: one question, one pinned window, one number.</p>
+</div>
+
+<div class="card">
+<h4>Suggestion + clarification <span class="badge b-det">1-084 · dataset-suggestion</span></h4>
+<pre>query: Show me trends in natural land
+  loss in Gabon
+expected:
+  aoi_ids: GAB
+  clarification: 'TRUE'
+  suggested_datasets: 0;1;2;3;4
+  text: Provides good reason for each
+    dataset suggestion ...
+  scope: suggest</pre>
+<p class="checks">Lights up: <code>clarification_requested</code>
+<code>suggested_datasets_match</code> <code>expected_text_match</code> <code>scope_match</code>.
+Because a clarification is expected, <code>expects_data_pull()</code> is false — no pull demanded.</p>
+</div>
+
+<div class="card">
+<h4>Multi-turn delta <span class="badge b-det">mt-001 · multiturn</span></h4>
+<pre>turns:
+- query: Show me recent disturbance
+    alerts in Puri
+  expected: { clarification: 'TRUE' }
+- query: I mean the Puri district in
+    Odisha, India
+  expected: { scope: analyse }
+  deltas:
+    changed: [aoi_ids]</pre>
+<p class="checks">One thread, sequential turns; checks flatten to
+<code>t1.clarification_requested</code>, <code>t2.scope_match</code>,
+<code>t2.state_delta</code> (the AOI must actually change after the user disambiguates).
+A turn that errors aborts the conversation rather than polluting later turns.</p>
+</div>
+
+<div class="card">
+<h4>Dashboard <span class="badge b-det">1-096 · dashboard</span></h4>
+<pre>query: Create a dashboard for brazil
+expected:
+  aoi_ids: BRA
+  dashboard_created: 'TRUE'</pre>
+<p class="checks">Lights up: <code>dashboard_created</code> <code>dashboard_aoi_match</code>
+(+ widget checks when <code>dashboard_widgets</code> is set). Map-only dashboards don't demand a
+data pull. Staging-only capability — prod lacks dashboards.</p>
+</div>
+
+<div class="card">
+<h4>Nudge / disambiguation <span class="badge b-det">1-105 · nudge</span></h4>
+<pre>query: Select an area named Puri
+expected:
+  text: Asks the user to choose between
+    Puri in Odisha and Puri in Uige ...
+  nudge_options: Uíge, Angola;Odisha, India
+  scope: clarify</pre>
+<p class="checks">Lights up: <code>nudge_match</code> <code>expected_text_match</code>
+<code>scope_match</code>. The structured nudge state and the prose behaviour are checked
+separately — an agent that clarifies in prose but sends no nudge fails half of this.</p>
+</div>
+
+</div>
+
+<div class="groups">
+<span>direct ×23</span><span>parent-child ×15</span><span>temporal ×14</span><span>comparative ×13</span>
+<span>class-comparison ×9</span><span>multiturn ×8</span><span>dashboard ×7</span><span>dataset-suggestion ×7</span>
+<span>metadata ×5</span><span>multilingual ×5</span><span>context-layer ×2</span><span>nudge ×2</span>
+<span>dataset-parameters ×1</span><span>imagery ×1</span><span>ranking ×1</span><span>refusal ×1</span>
+</div>
+
+<!-- ==================== DEEPER DETAIL ==================== -->
+<h2>Deeper detail worth knowing</h2>
+<ul class="fine">
+  <li><b>Null is a decision, not an accident.</b> Every check's spec says whether an absence is
+      <code>null</code> (not applicable) or <code>0.0</code> (failure). The four historic
+      "vanishing" cases — no AOI resolved, no chart produced, judge exception, empty dashboard —
+      now fail or surface as errors instead of silently abstaining.</li>
+  <li><b>Shared checks never attribute blame.</b> <code>agent_answer</code> failing could be
+      Analysis or Explanation; the bucket table counts dedicated and shared populations separately
+      rather than guessing.</li>
+  <li><b>Verdicts exclude noise by construction.</b> Info-only checks and errored rows never enter
+      pass/fail; a row with zero evaluated checks is <em>uncovered</em>, not passing. Errored rows
+      are also excluded from bucket tallies.</li>
+  <li><b>The console <code>[FAIL]</code> print is coarser than the report</b> — it fires on any
+      zero-valued check including info-only ones; trust the bucket report and
+      <code>diff_runs.py</code>, not the live print.</li>
+  <li><b>Identity:</b> a case's <code>uid</code> hashes query + expectations (notes and status
+      don't count); results key on uid, so an edited case can never inherit old scores. Runs are
+      comparable iff <code>caseset_version</code> matches; regressions are computed over the uid
+      intersection.</li>
+  <li><b>Held cases still execute:</b> the default run filter excludes only
+      <code>not doing</code> — <code>todo</code> cases (1-062, mt-007) run and report, they're
+      just flagged as not yet curation-approved.</li>
+</ul>
+
+<p class="prov">Generated 2026-08-01 from <code>src/goldset/registry.py</code> (16 evaluators →
+27 checks) and <code>src/goldset/buckets.py</code> @ main a0a3e8c · case figures from
+<code>cases/v2</code> (114 cases, caseset_version a93cedfc97c98a4d). Regenerate by hand when the
+registry or bucket tags change — <code>tests/test_buckets.py</code> pins the code side.</p>
+
+</main>
+</body>
+</html>
