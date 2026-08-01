@@ -104,7 +104,7 @@ def render(run: dict, expected_by_uid: dict[str, dict[str, str]]) -> str:
             lines.append(f"- {entry['id']}: {cause}")
     slow = [e for e in entries if (e.get("info") or {}).get("slow")]
     if slow:
-        lines += ["", f"Slow rows (> threshold): "
+        lines += ["", "Slow rows (> threshold): "
                   + ", ".join(f"{e['id']} ({e.get('latency_s')}s)" for e in slow)]
     return "\n".join(lines)
 
