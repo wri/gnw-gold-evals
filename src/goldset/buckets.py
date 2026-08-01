@@ -63,7 +63,11 @@ SHARED: dict[str, tuple[str, str]] = {
 }
 
 # Reported for diagnosis, never part of any verdict.
-INFO_ONLY: frozenset[str] = frozenset({"date_coverage"})
+# answer_traceability: demoted 2026-08-01 after its first live run — claim
+# extraction misfired on unitless bold counts/ranks on ~5 of 9 failures
+# (the unit-required rule now applies). Re-admit after a 3-trial run with
+# zero extraction false positives (PR-08 step 5).
+INFO_ONLY: frozenset[str] = frozenset({"date_coverage", "answer_traceability"})
 
 
 _TURN_PREFIX = __import__("re").compile(r"^t\d+\.")

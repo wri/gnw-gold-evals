@@ -2,7 +2,7 @@
 
 **How to evolve the 115 cases so the set actually does its one job: fail
 when a release breaks a capability, pass otherwise.** Companion to
-`PLAN.md` (which owns harness design); this file owns what's *in*
+`docs/PLAN.md` (which owns harness design); this file owns what's *in*
 `cases/`. Numbers below are from a store audit on 2026-08-01
 (caseset `185eb0b1bb6ea24a`: 107 single-turn + 8 multiturn).
 

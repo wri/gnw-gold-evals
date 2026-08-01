@@ -34,11 +34,20 @@ from goldset.evaluators.llm_judges import NUMERIC_TOLERANCE
 
 _BOLD_RE = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
 
+# A measure carries a unit, scale word, or percent. Bare numbers in bold are
+# counts and ranks ("**2** datasets", "top **5**") — first live run showed
+# them as the dominant false-positive class (2026-08-01).
+_MEASURE_RE = re.compile(
+    r"\d[\d,.]*\s*(?:%|(?:percent|mha|kha|ha|hectares?|hektare?|hektar|km²|km2"
+    r"|tonnes?|mgco2e|tco2e|thousand|million|billion)\b)",
+    re.IGNORECASE,
+)
+
 
 def first_bold_claim(prose: str) -> str | None:
-    """The first bolded segment carrying a parseable non-year number."""
+    """The first bolded segment carrying a parseable number WITH a unit."""
     for segment in _BOLD_RE.findall(prose):
-        if parse_expected_number(segment) is not None:
+        if _MEASURE_RE.search(segment) and parse_expected_number(segment) is not None:
             return segment.strip()
     return None
 

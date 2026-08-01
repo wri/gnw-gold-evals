@@ -52,6 +52,9 @@ def reason_name_from_column(column: str) -> str | None:
     if column.endswith("_score_reason"):
         stem = column.removesuffix("_score_reason")
         return REASON_ALIASES.get(stem, stem)
+    if column.endswith("_reason"):
+        # deterministic validators write plain <check>_reason fields
+        return column.removesuffix("_reason")
     return None
 
 

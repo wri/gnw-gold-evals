@@ -78,7 +78,7 @@ token lands:
       bridge decision recorded in README/PLAN.
 - [ ] 3-trial run committed to `results/runs/` with `methodology_note`;
       report_run output attached; every deterministic check std ≤ 0.04.
-- [ ] Per-seed multiturn flakiness table added to `specs/PR-07-multiturn.md`.
+- [ ] Per-seed multiturn flakiness table added to `docs/docs/specs/PR-07-multiturn.md`.
 - [ ] `pull_source_match` no longer abstains on well-formed pulls; its
       matching rule documented from observed payloads.
 - [ ] INFO_ONLY membership reviewed and dated.

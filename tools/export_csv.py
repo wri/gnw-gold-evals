@@ -68,7 +68,13 @@ def main() -> int:
 
     excluded = {s.strip().lower() for s in args.status_exclude.split(",") if s.strip()}
     cases = [case for _path, case, _uid in load_store(args.cases_dir)]
-    cases = [case for case in cases if case.status.lower() not in excluded]
+    multiturn = sum(1 for case in cases if case.is_multiturn)
+    if multiturn:
+        print(f"note: {multiturn} multi-turn cases excluded (bridge is single-turn)")
+    cases = [
+        case for case in cases
+        if case.status.lower() not in excluded and not case.is_multiturn
+    ]
     if not cases:
         print("no cases to export (check --cases-dir / --status-exclude)")
         return 1

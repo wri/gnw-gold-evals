@@ -10,7 +10,7 @@ release: *did an agent change break a capability that used to work?* It is
 not a quality measure — the headline is a **regression count**, never a mean
 score, and determinism outranks realism in every design call.
 
-Read `PLAN.md` before proposing changes; `specs/PR-0N-*.md` sequence the
+Read `docs/PLAN.md` before proposing changes; `docs/specs/PR-0N-*.md` sequence the
 build (case store → results ledger → harness port → fixes → bucket scoring →
 new validators → multiturn). Work arrives as one PR per spec, and each spec
 states its acceptance criteria. The parent evidence base is
@@ -45,7 +45,7 @@ The harness moves in-repo at PR-03.
   versioning mechanism, not an error. `status`, `group`, `notes`, key order,
   whitespace, and CRLF never affect it: triage must not mint versions.
 - The hash deliberately covers **all** expected fields, scored or not
-  (PLAN.md §2.2 has the rationale — don't "optimise" it to scored-only).
+  (docs/PLAN.md §2.2 has the rationale — don't "optimise" it to scored-only).
 - **`caseset_version`** in `cases/MANIFEST.json` hashes all sorted uids.
   Results (see `results/README.md`) key on uid + caseset_version; regression
   diffs run over uid intersections between runs.
@@ -74,7 +74,7 @@ Consequently: any edit to a case file must be followed by
   source of truth and re-imports are reviewable PRs whose diff is the sheet
   delta. Import is byte-idempotent on an unchanged sheet.
 
-## Working agreements (from PLAN.md §6)
+## Working agreements (from docs/PLAN.md §6)
 
 - Numbers in code; structure and semantics to the judge — no LLM judge is
   ever asked to do arithmetic.
