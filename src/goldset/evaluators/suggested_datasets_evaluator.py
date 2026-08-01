@@ -23,12 +23,9 @@ def evaluate_suggested_datasets(
           suggested datasets from agent state
 
     """
-    if not expected_suggested_datasets:
-        return {
-            "suggested_datasets_match_score": None,
-            "actual_suggested_datasets": None,
-        }
-
+    # Actual values are extracted unconditionally (like the AOI and dataset
+    # evaluators): multi-turn delta snapshots and triage need them even on
+    # turns with no expectation (PR-07). Scores stay gated on the expectation.
     actual = agent_state.get("suggested_datasets", [])
     if isinstance(actual, str):
         raw_list = [s.strip() for s in actual.split(";") if s.strip()]
@@ -45,6 +42,12 @@ def evaluate_suggested_datasets(
 
     actual_list = [_to_id_str(s) for s in raw_list if _to_id_str(s)]
     actual_str = "; ".join(actual_list) if actual_list else None
+
+    if not expected_suggested_datasets:
+        return {
+            "suggested_datasets_match_score": None,
+            "actual_suggested_datasets": actual_str,
+        }
 
     if not actual_list:
         return {

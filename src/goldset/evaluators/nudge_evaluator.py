@@ -61,13 +61,9 @@ def evaluate_nudge(
           options from agent state
 
     """
-    if not expected_nudge_type and not expected_nudge_options:
-        return {
-            "nudge_match_score": None,
-            "actual_nudge_type": None,
-            "actual_nudge_options": None,
-        }
-
+    # Actual values are extracted unconditionally (like the AOI and dataset
+    # evaluators): multi-turn delta snapshots and triage need them even on
+    # turns with no expectation (PR-07). Scores stay gated on the expectation.
     nudge = agent_state.get("nudge")
     nudge = nudge if isinstance(nudge, dict) else {}
 
@@ -82,6 +78,13 @@ def evaluate_nudge(
         actual_options_list = []
 
     actual_options_str = "; ".join(actual_options_list) if actual_options_list else None
+
+    if not expected_nudge_type and not expected_nudge_options:
+        return {
+            "nudge_match_score": None,
+            "actual_nudge_type": actual_type or None,
+            "actual_nudge_options": actual_options_str,
+        }
 
     type_ok = True
     if expected_nudge_type:

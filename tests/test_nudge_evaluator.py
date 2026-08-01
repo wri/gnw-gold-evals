@@ -13,7 +13,9 @@ from goldset.evaluators.nudge_evaluator import evaluate_nudge
 
 
 def test_nudge_evaluator_no_expectation():
-    """No expected_nudge_type/options means the check is skipped entirely."""
+    """No expected_nudge_type/options means the score abstains, but the
+    actuals are still extracted — multi-turn delta snapshots and triage
+    need them on turns with no nudge expectation (PR-07)."""
     result = evaluate_nudge(
         agent_state={"nudge": {"type": "aoi_choice", "options": ["A", "B"]}},
         expected_nudge_type=None,
@@ -21,8 +23,8 @@ def test_nudge_evaluator_no_expectation():
     )
 
     assert result["nudge_match_score"] is None
-    assert result["actual_nudge_type"] is None
-    assert result["actual_nudge_options"] is None
+    assert result["actual_nudge_type"] == "aoi_choice"
+    assert result["actual_nudge_options"] == "A; B"
 
 
 def test_nudge_evaluator_type_and_options_match():

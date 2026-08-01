@@ -2,6 +2,7 @@
 and the PR-10 sheet-pull hardening (source_tab scoping, collisions,
 sheet-uid drift)."""
 
+import codecs
 import sys
 from pathlib import Path
 
@@ -9,9 +10,10 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from import_sheet import find_header, parse_cases, run_import
+import import_sheet
+from import_sheet import fetch, find_header, main, parse_cases, run_import
 
-from goldset.store import Case, read_case, write_case
+from goldset.store import Case, load_store, read_case, read_manifest, write_case
 
 SHEET = """\
 GOLD set,,do not edit row,,,
@@ -127,3 +129,101 @@ def test_collision_with_other_source_errors_without_update(tmp_path):
                       source_tab="gid:0", update=True) == 0
     taken, _ = read_case(tmp_path / "temporal" / "1-001.yaml")
     assert taken.notes["source_tab"] == "gid:0"
+
+
+def test_update_takeover_with_group_change_leaves_single_file(tmp_path):
+    """A takeover whose winning row also changes test_group moves the case
+    file; the loser's old file must be deleted, or the store holds two
+    files with the same test_id forever (its stale source_tab means no
+    later prune would ever touch it) and check.py fails."""
+    theirs = Case(id="1-001", status="ready", group="legacy group",
+                  query="theirs", notes={"source_tab": "gid:999"})
+    old_path = write_case(tmp_path, theirs)
+    assert old_path == tmp_path / "legacy-group" / "1-001.yaml"
+
+    # SHEET puts 1-001 in group "temporal" -> different path than theirs.
+    assert run_import(SHEET, tmp_path, "test", prune=False,
+                      source_tab="gid:0", update=True) == 0
+    assert not old_path.exists()
+    assert list(tmp_path.rglob("1-001.yaml")) == [
+        tmp_path / "temporal" / "1-001.yaml"
+    ]
+    ids = [case.id for _p, case, _u in load_store(tmp_path)]
+    assert ids.count("1-001") == 1
+    manifest_ids = [c["id"] for c in read_manifest(tmp_path)["cases"]]
+    assert manifest_ids.count("1-001") == 1
+
+    # idempotent: a re-run changes nothing on disk
+    snapshot = {p: p.read_text() for p in tmp_path.rglob("*") if p.is_file()}
+    assert run_import(SHEET, tmp_path, "test", prune=False,
+                      source_tab="gid:0", update=True) == 0
+    assert snapshot == {
+        p: p.read_text() for p in tmp_path.rglob("*") if p.is_file()
+    }
+
+
+def test_group_change_within_same_tab_moves_the_file(tmp_path):
+    """Same leak, no takeover involved: re-importing one's own tab after a
+    test_group edit must relocate the file, not duplicate the id."""
+    assert run_import(SHEET, tmp_path, "test", prune=False,
+                      source_tab="gid:0") == 0
+    regrouped = SHEET.replace("1-001,done,,temporal,", "1-001,done,,direct,")
+    assert run_import(regrouped, tmp_path, "test", prune=False,
+                      source_tab="gid:0") == 0
+    assert list(tmp_path.rglob("1-001.yaml")) == [
+        tmp_path / "direct" / "1-001.yaml"
+    ]
+
+
+def test_empty_source_tab_rejected_at_cli(tmp_path, monkeypatch, capsys):
+    """An explicit --source-tab '' would silently disable the collision
+    guard and prune scoping; the CLI must refuse it outright."""
+    sheet_csv = tmp_path / "tab.csv"
+    sheet_csv.write_text(SHEET, encoding="utf-8")
+    for empty in ("", "   "):
+        monkeypatch.setattr(sys, "argv", [
+            "import_sheet.py", "--csv", str(sheet_csv),
+            "--cases-dir", str(tmp_path / "cases"), "--source-tab", empty,
+        ])
+        with pytest.raises(SystemExit) as excinfo:
+            main()
+        assert excinfo.value.code == 2
+        assert "--source-tab must not be empty" in capsys.readouterr().err
+    assert not (tmp_path / "cases").exists()  # nothing was imported
+
+
+def test_bom_prefixed_csv_imports(tmp_path, monkeypatch):
+    """A BOM-prefixed export whose header is the first row must parse; with
+    plain utf-8 the BOM glues onto 'test_id' and the import aborts with a
+    misleading 'missing required columns' error."""
+    no_preamble = SHEET.split("\n", 1)[1]  # header row first, no preamble
+    sheet_csv = tmp_path / "tab.csv"
+    sheet_csv.write_bytes(codecs.BOM_UTF8 + no_preamble.encode("utf-8"))
+    monkeypatch.setattr(sys, "argv", [
+        "import_sheet.py", "--csv", str(sheet_csv),
+        "--cases-dir", str(tmp_path / "cases"),
+    ])
+    assert main() == 0
+    imported, _ = read_case(tmp_path / "cases" / "temporal" / "1-001.yaml")
+    assert imported.id == "1-001"  # no BOM residue in the id column
+
+
+def test_fetch_decodes_bom(monkeypatch):
+    payload = codecs.BOM_UTF8 + "test_id,query\n1-001,héllo\n".encode()
+
+    class FakeResponse:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+        def read(self):
+            return payload
+
+    monkeypatch.setattr(
+        import_sheet.urllib.request,
+        "urlopen",
+        lambda url, timeout: FakeResponse(),
+    )
+    assert fetch("https://example.test/export") == "test_id,query\n1-001,héllo\n"
