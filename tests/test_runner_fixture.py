@@ -6,7 +6,9 @@ registry, artifact capture, and the CLI's result->ledger-entry mapping.
 
 import gzip
 import json
+import time
 
+import anyio
 import httpx
 import pytest
 
@@ -144,3 +146,41 @@ def test_failed_checks_carry_their_actuals():
     assert entry["actuals"]["aoi_id_match"] == "XYZ.9_1"
     assert len(entry["actuals"]["agent_answer"]) == 300  # trimmed
     assert "dataset_id_match" not in entry["actuals"]  # passed: not recorded
+
+
+class _KeepaliveStream(httpx.AsyncByteStream):
+    """A stream that never finishes but keeps every per-read timeout happy —
+    the exact staging failure mode of 2026-08-01."""
+
+    async def __aiter__(self):
+        yield b'{"node": "keepalive"}\n'
+        while True:
+            await anyio.sleep(0.02)
+            yield b"\n"
+
+
+class _HangingTransport(httpx.AsyncBaseTransport):
+    async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, stream=_KeepaliveStream(), request=request)
+
+
+@pytest.mark.anyio
+async def test_wall_clock_limit_bounds_a_keepalive_stream(monkeypatch):
+    """The per-read HTTP timeout resets on every keepalive; only the
+    wall-clock limit can end such a trial — as an error row, quickly."""
+    real_client = httpx.AsyncClient
+    monkeypatch.setattr(
+        httpx,
+        "AsyncClient",
+        lambda **kwargs: real_client(transport=_HangingTransport()),
+    )
+    runner = APITestRunner(
+        api_base_url="https://api.example",
+        api_token="tok",
+        wall_clock_limit=0.3,
+    )
+    start = time.monotonic()
+    result = await runner.run_test(CASE.query, case_to_expected(CASE))
+    assert time.monotonic() - start < 5.0
+    assert "wall-clock" in (result.error or "")
+    assert result.aoi_id_match_score is None

@@ -9,6 +9,7 @@ from typing import Any
 from urllib.parse import urlparse, urlunparse
 from uuid import uuid4
 
+import anyio
 import httpx
 from langchain_core.load import loads
 
@@ -26,12 +27,14 @@ class APITestRunner(BaseTestRunner):
         api_token: str | None = None,
         ff: str | None = None,
         verbose: bool = False,
+        wall_clock_limit: float = 900.0,
     ):
         """Initialize with API configuration."""
         self.api_base_url = api_base_url
         self.api_token = api_token
         self.ff = ff
         self.verbose = verbose
+        self.wall_clock_limit = wall_clock_limit
 
     @staticmethod
     def _build_app_thread_url(api_base_url: str, thread_id: str) -> str:
@@ -97,64 +100,70 @@ class APITestRunner(BaseTestRunner):
             if self.api_token:
                 headers["Authorization"] = f"Bearer {self.api_token}"
 
-            # Use httpx async client for streaming
-            async with httpx.AsyncClient(timeout=240.0) as client:
-                async with client.stream(
-                    "POST",
-                    f"{self.api_base_url}/api/chat",
-                    json=payload,
-                    headers=headers,
-                ) as response:
-                    response.raise_for_status()
+            # Use httpx async client for streaming, under a hard per-trial
+            # deadline. The 240s httpx timeout is per-read: a stream that
+            # keeps sending keepalives resets it forever (staging pinned
+            # four workers for 2h+ this way on 2026-08-01). The wall clock
+            # bounds the whole trial; TimeoutError degrades to an error
+            # row via the handler below.
+            with anyio.fail_after(self.wall_clock_limit):
+                async with httpx.AsyncClient(timeout=240.0) as client:
+                    async with client.stream(
+                        "POST",
+                        f"{self.api_base_url}/api/chat",
+                        json=payload,
+                        headers=headers,
+                    ) as response:
+                        response.raise_for_status()
 
-                    async for line in response.aiter_lines():
-                        if line.strip():
-                            stream_data = json.loads(line)
-                            responses.append(stream_data)
+                        async for line in response.aiter_lines():
+                            if line.strip():
+                                stream_data = json.loads(line)
+                                responses.append(stream_data)
 
-                            # Capture trace ID from stream
-                            if stream_data.get("node") == "trace_info":
-                                update_data = json.loads(
-                                    stream_data.get("update", "{}"),
-                                )
-                                trace_id = update_data.get("trace_id")
-                                trace_url = update_data.get("trace_url")
+                                # Capture trace ID from stream
+                                if stream_data.get("node") == "trace_info":
+                                    update_data = json.loads(
+                                        stream_data.get("update", "{}"),
+                                    )
+                                    trace_id = update_data.get("trace_id")
+                                    trace_url = update_data.get("trace_url")
 
-                # Get final agent state using the state endpoint
-                state_response = await client.get(
-                    f"{self.api_base_url}/api/threads/{thread_id}/state",
-                    headers=headers,
-                )
-                state_response.raise_for_status()
-                response_data = state_response.json()
-                agent_state = response_data.get("state", {})
-                agent_state = loads(agent_state)
+                    # Get final agent state using the state endpoint
+                    state_response = await client.get(
+                        f"{self.api_base_url}/api/threads/{thread_id}/state",
+                        headers=headers,
+                    )
+                    state_response.raise_for_status()
+                    response_data = state_response.json()
+                    agent_state = response_data.get("state", {})
+                    agent_state = loads(agent_state)
 
-                # Fetch dashboard details when a dashboard was created this turn.
-                # agent_state only carries the dashboard_id; AOI/widget details
-                # live on the dashboard resource itself. A failed fetch degrades
-                # to dashboard=None (soft failure) rather than erroring the row -
-                # the primary chat result already succeeded.
-                dashboard: dict[str, Any] | None = None
-                dashboard_id = (
-                    agent_state.get("dashboard_id")
-                    if isinstance(agent_state, dict)
-                    else None
-                )
-                if dashboard_id:
-                    try:
-                        dashboard_response = await client.get(
-                            f"{self.api_base_url}/api/dashboards/{dashboard_id}",
-                            headers=headers,
-                        )
-                        dashboard_response.raise_for_status()
-                        dashboard = dashboard_response.json()
-                    except Exception as dashboard_error:
-                        print(
-                            f"Warning: failed to fetch dashboard {dashboard_id}: "
-                            f"{dashboard_error}",
-                        )
-                        dashboard = None
+                    # Fetch dashboard details when a dashboard was created this turn.
+                    # agent_state only carries the dashboard_id; AOI/widget details
+                    # live on the dashboard resource itself. A failed fetch degrades
+                    # to dashboard=None (soft failure) rather than erroring the row -
+                    # the primary chat result already succeeded.
+                    dashboard: dict[str, Any] | None = None
+                    dashboard_id = (
+                        agent_state.get("dashboard_id")
+                        if isinstance(agent_state, dict)
+                        else None
+                    )
+                    if dashboard_id:
+                        try:
+                            dashboard_response = await client.get(
+                                f"{self.api_base_url}/api/dashboards/{dashboard_id}",
+                                headers=headers,
+                            )
+                            dashboard_response.raise_for_status()
+                            dashboard = dashboard_response.json()
+                        except Exception as dashboard_error:
+                            print(
+                                f"Warning: failed to fetch dashboard {dashboard_id}: "
+                                f"{dashboard_error}",
+                            )
+                            dashboard = None
 
             api_duration_seconds = time.time() - start_time
 
@@ -210,15 +219,34 @@ class APITestRunner(BaseTestRunner):
                 **kwargs,
             )
 
-        except Exception as e:
-            print(f"Error: {e}")
+        except TimeoutError:
+            message = (
+                f"trial exceeded the {self.wall_clock_limit:.0f}s "
+                "wall-clock limit (stream kept the connection alive)"
+            )
+            print(f"Error: {message}")
             return self._create_empty_evaluation_result(
                 thread_id,
                 trace_url or "",
                 app_thread_url,
                 query,
                 expected_data,
-                str(e),
+                message,
+                duration_seconds=time.time() - start_time,
+            )
+        except Exception as e:
+            # str(e) can be empty (bare exceptions print as "Error: " and
+            # land unreadable in the ledger) — always carry at least the
+            # exception type.
+            error_text = str(e) or type(e).__name__
+            print(f"Error: {error_text}")
+            return self._create_empty_evaluation_result(
+                thread_id,
+                trace_url or "",
+                app_thread_url,
+                query,
+                expected_data,
+                error_text,
                 duration_seconds=time.time() - start_time,
             )
 

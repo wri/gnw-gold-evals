@@ -185,6 +185,7 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
         api_token=os.environ.get("API_TOKEN"),
         ff=args.ff,
         verbose=args.verbose,
+        wall_clock_limit=args.trial_timeout,
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
     # hard cap concurrency against the live API, as gnw-evals always did
@@ -266,6 +267,11 @@ def main() -> int:
     run.add_argument("--results-dir", type=Path, default=Path("results"))
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")
+    run.add_argument("--trial-timeout", type=float, default=900.0,
+                     help="hard per-trial wall-clock limit in seconds; a trial "
+                          "over it degrades to an error row (the per-read HTTP "
+                          "timeout cannot bound a stream that keeps sending "
+                          "keepalives)")
     run.add_argument("--note", default=None,
                      help="methodology note recorded on the run (e.g. after a "
                           "check-semantics change, so diffs aren't read as agent movement)")
