@@ -176,12 +176,18 @@ class APITestRunner(BaseTestRunner):
                 except Exception as artifact_error:
                     print(f"Warning: artifact capture failed: {artifact_error}")
 
-            # Run evaluations
-            evaluations = self._run_evaluations(
+            # Run evaluations off the loop thread: judge calls inside are
+            # synchronous HTTP, and a slow one on the loop thread freezes
+            # every other worker (and every timer — including the wall
+            # clock above). abandon_on_cancel lets cancellation proceed;
+            # the abandoned thread dies on the judge client's own timeout.
+            evaluations = await anyio.to_thread.run_sync(
+                self._run_evaluations,
                 agent_state,
                 expected_data,
                 query,
                 dashboard,
+                abandon_on_cancel=True,
             )
             overall_score = self._calculate_overall_score(evaluations, expected_data)
 
