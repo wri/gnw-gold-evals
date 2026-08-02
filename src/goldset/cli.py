@@ -188,8 +188,8 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
         wall_clock_limit=args.trial_timeout,
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
-    # hard cap concurrency against the live API, as gnw-evals always did
-    semaphore = asyncio.Semaphore(max(1, min(args.workers, 5)))
+    # hard cap concurrency against the live API (20 ran fine on gnw-evals)
+    semaphore = asyncio.Semaphore(max(1, min(args.workers, 20)))
 
     async def run_one(case: Case) -> dict:
         async with semaphore:
