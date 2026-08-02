@@ -29,6 +29,8 @@ jobs:
         run: |
           uv run python tools/check.py --cases-dir cases/v1
           uv run python tools/check.py --cases-dir cases/v2
+      - name: Coverage doc freshness (COVERAGE.md derived, never hand-edited)
+        run: uv run python tools/coverage_doc.py --check
 
   # The release gate as a button: a live staging run + regression diff
   # against the most recent committed run. Needs API_TOKEN_STAGING and
