@@ -1,5 +1,5 @@
 id: 1-070
-uid: b1bfd013e644c5bc
+uid: b00b22aa8fe7903b
 status: done
 group: direct
 query: How much tree cover loss was there in Colombia in 2025?
@@ -7,6 +7,10 @@ expected:
   aoi_ids: COL
   dataset_id: '4'
   dataset_name: Tree cover loss
+  answer: 186,034 hectares
+  scope: analyse
 notes:
   date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
     the full range and slices in code; the answer carries the year'
+  depth: '2026-08-04: answer + scope added to clear a depth violation. 186,034 ha on 6/6 committed
+    trials.'

@@ -1,15 +1,18 @@
 id: 1-075
-uid: 40e00c89329a649f
-status: not doing
+uid: f551ba835b7f3b88
+status: ready
 group: direct
-query: How much tree cover loss within intact forest landscapes in Sweden since 2020?
+query: How much tree cover loss occurred within intact forest landscapes in Sweden between
+  2020 and 2024?
 expected:
   aoi_ids: SWE
   dataset_id: '4'
   dataset_name: Tree cover loss
   context_layer: intact_forest
-  answer: 3.3 kha
+  answer: 3,300 hectares
   scope: analyse
+  aoi_source: gadm
 notes:
-  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
-    staging, then unpark, rewrite, or delete with the reason written down.'
+  status_reason: 'unparked 2026-08-04: ''since 2020'' drifts with every data drop, so the
+    window is closed. Added the missing aoi_source. answer restated in hectares for consistency
+    with every other row (was ''3.3 kha'') and pending verification for the closed window.'

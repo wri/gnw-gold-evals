@@ -1,6 +1,6 @@
 id: 1-033
 uid: ee3aa00838f367d3
-status: not doing
+status: ready
 group: direct
 query: How much tree cover loss was there in the Corona Forestal protected area in Tenerife
   in 2023?
@@ -15,5 +15,6 @@ notes:
   value_1: 1,436.02 hectares
   date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
     the full range and slices in code; the answer carries the year'
-  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
-    staging, then unpark, rewrite, or delete with the reason written down.'
+  status_reason: 'unparked 2026-08-04: the best-value unpark in the set — a single named WDPA,
+    a closed year, an annual dataset with dates already scrubbed, and all four properties
+    hold. answer 1,436.02 ha pending verification.'

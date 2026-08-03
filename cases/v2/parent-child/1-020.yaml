@@ -1,16 +1,19 @@
 id: 1-020
-uid: c3bcf6094e81e0dd
-status: not doing
+uid: 277de563aabc6d39
+status: ready
 group: parent-child
-query: Which country in the UK has the least natural grassland in 2022?
+query: Which of the four countries of the United Kingdom (England, Northern Ireland, Scotland,
+  Wales) had the least natural grassland in 2022?
 expected:
-  aoi_ids: GBR
+  aoi_ids: GBR.1_1;GBR.2_1;GBR.3_1;GBR.4_1
   aoi_source: gadm
   dataset_id: '2'
   dataset_name: Natural/Semi-Natural Grasslands
+  scope: analyse
 notes:
-  status_reason: 'Sheet expects GBR; agent selects the 4 UK constituent countries. expected_aoi_ids
-    uses set-equality and cannot express ''GBR or its children''. AOI fix needed | triage-proposed:
-    REWRITE — query names ''country in the UK'' but AOI set-equality cannot express GBR-or-children;
-    rephrase to name the constituent level explicitly, then unpark.'
+  status_reason: 'unparked 2026-08-04: ''Which country in the UK'' with aoi_ids GBR could
+    never match — aoi_id_match is set-equality and cannot express ''GBR or its children'',
+    while the agent selects the four constituents. Now lists them, the pattern 1-056 and 1-021
+    already use. Says ''natural grassland'' per the metric-precision rule. The four ids need
+    confirming against a run''s actual_id, and an answer minting, before this goes to done.'
   aoi_type: gadm 0

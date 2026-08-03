@@ -23,8 +23,12 @@ jobs:
         run: uv run ruff check src tools tests
       - name: Tests (includes per-case schema conformance)
         run: uv run pytest -q
-      - name: Case-set audit (report-only until W1-W4 land)
-        run: uv run python tools/audit_cases.py
+      # Enforcing from 2026-08-04, once W1-W4 cleared the last depth and DON'T
+      # violations. --strict fails the build on those two classes only; the
+      # coverage floors (groups/datasets below 3) stay report-only, because
+      # clearing them means authoring new cases rather than fixing existing ones.
+      - name: Case-set audit (rubric gate)
+        run: uv run python tools/audit_cases.py --strict
       - name: Case-store integrity (uids + manifest truthful, both versions)
         run: |
           uv run python tools/check.py --cases-dir cases/v1

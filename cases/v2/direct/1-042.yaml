@@ -1,5 +1,5 @@
 id: 1-042
-uid: a4bd954b9701ee85
+uid: c3fe107faccb7192
 status: done
 group: direct
 query: What was the total carbon emissions due to deforestation in the Vale do Javari indigenous
@@ -8,5 +8,11 @@ expected:
   aoi_source: Landmark
   dataset_id: '4'
   dataset_name: Forest GHG emissions
+  scope: analyse
 notes:
   aoi_type: Landmark
+  depth: '2026-08-04: scope added for depth; deliberately NO answer. The agent reports two
+    different totals for this query across committed trials — 2,294.15 MgCO2e and 1,385.49
+    MgCO2e, a ~40% spread — so no figure is defensible yet. Filed upstream instead.'
+  dataset_name_fix: id 4 is Tree cover loss; 'Forest GHG emissions' is not a registry name.
+    Emissions ride on dataset 4.

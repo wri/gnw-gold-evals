@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 396a519113ee584b` · 113 cases · done 88 · not doing 8 · ready 10 · todo 7 · **105 active** (everything but `not doing` runs by default)
+`caseset_version eeb3e8f31a039f34` · 114 cases · done 88 · not doing 3 · ready 16 · todo 7 · **111 active** (everything but `not doing` runs by default)
 
 ## Groups
 
@@ -17,13 +17,13 @@ info-only checks are listed separately (they never enter a verdict).
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 7 | 6 | done 6, not doing 1 |
-| direct | 23 | 18 | done 16, not doing 5, todo 2 |
+| direct | 24 | 22 | done 16, not doing 2, ready 4, todo 2 |
 | imagery | 1 | 1 | done 1 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
 | multiturn | 8 | 8 | ready 7, todo 1 |
 | nudge | 2 | 2 | ready 2 |
-| parent-child | 14 | 12 | done 10, not doing 2, ready 1, todo 1 |
+| parent-child | 14 | 14 | done 10, ready 3, todo 1 |
 | ranking | 1 | 1 | done 1 |
 | refusal | 1 | 1 | done 1 |
 | temporal | 14 | 14 | done 14 |
@@ -37,24 +37,24 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 99 | 0 | 99 | 94% |
-| analysis | 0 | 66 | 66 | 63% |
-| explanation | 25 | 55 | 80 | 76% |
-| output | 71 | 3 | 74 | 70% |
-| scope | 85 | 7 | 92 | 88% |
+| retrieval | 105 | 0 | 105 | 95% |
+| analysis | 0 | 72 | 72 | 65% |
+| explanation | 25 | 61 | 86 | 77% |
+| output | 77 | 3 | 80 | 72% |
+| scope | 96 | 7 | 103 | 93% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 89 | dataset_id_match |
-| scope | 84 | scope_match |
-| aoi_source | 83 | reference only (dashboard AOI source) |
-| dataset_name | 82 | reference only |
-| aoi_ids | 74 | aoi_id_match |
-| answer | 66 | agent_answer, charts_answer, chart_produced |
+| dataset_id | 95 | dataset_id_match |
+| scope | 95 | scope_match |
+| aoi_source | 89 | reference only (dashboard AOI source) |
+| dataset_name | 88 | reference only |
+| aoi_ids | 78 | aoi_id_match |
+| answer | 72 | agent_answer, charts_answer, chart_produced |
 | text | 25 | expected_text_match |
-| context_layer | 11 | context_layer_match |
+| context_layer | 13 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | end_date | 8 | date_extraction (with start_date) |
 | start_date | 8 | date_extraction (with end_date) |
@@ -75,13 +75,8 @@ friends) run on top of it whenever their trigger state exists.
 
 | id | status | group | reason |
 |---|---|---|---|
-| 1-011 | not doing | parent-child | Agent asks which protected areas to use; no data retrieved. Query is ambiguous about scope. | triage-propos... |
-| 1-020 | not doing | parent-child | Sheet expects GBR; agent selects the 4 UK constituent countries. expected_aoi_ids uses set-equality and can... |
 | 1-028 | not doing | direct | parked 2026-08-03: percentage answer (2.10%) and Landmark AOI resolution both unverified here, and the row ... |
-| 1-033 | not doing | direct | triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on staging, then unpark, rewrite, or... |
-| 1-041 | not doing | direct | triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on staging, then unpark, rewrite, or... |
 | 1-049 | not doing | direct | parked 2026-08-03: answer 1.41 hectares of tree cover gain over 2010-2015 for a whole reserve is implausibl... |
-| 1-075 | not doing | direct | triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on staging, then unpark, rewrite, or... |
 | 1-085 | not doing | dataset-suggestion | parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for sugge... |
 | 1-002 | todo | direct | promote to done once re-verified on a --ff experimental run |
 | 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |

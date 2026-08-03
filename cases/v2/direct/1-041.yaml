@@ -1,13 +1,13 @@
 id: 1-041
-uid: 96530a9c1e1134b6
-status: not doing
+uid: 4daa7c2397a8a54d
+status: ready
 group: direct
 query: Which year had the most carbon emissions due to tree cover loss in Sebangau National
   Park between 2002 and 2008?
 expected:
   aoi_source: wdpa
   dataset_id: '4'
-  dataset_name: Forest GHG emissions
+  dataset_name: Tree cover loss
   answer: '2007'
   scope: analyse
 notes:
@@ -15,5 +15,6 @@ notes:
   value_1: 65,806
   date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
     the full range and slices in code; the answer carries the year'
-  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
-    staging, then unpark, rewrite, or delete with the reason written down.'
+  status_reason: 'unparked 2026-08-04: query and window were already closed and deterministic.
+    dataset_name corrected — id 4 is Tree cover loss; there is no ''Forest GHG emissions''
+    registry id, emissions ride on dataset 4. answer 2007 pending verification.'

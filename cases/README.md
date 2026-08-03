@@ -85,10 +85,15 @@ compare the reports.
 
 ## DON'Ts
 
-- **DON'T use relative dates.** ✘ `"…in the past decade"` (1-011) drifts
-  every year. The one tolerated pattern is when only *routing* is
-  asserted: `"most recent year"` (1-072) works because its expectations
-  are dataset-only — copy that pattern deliberately or not at all.
+- **DON'T use relative dates.** ✘ `"…in the past decade"` — 1-011 carried
+  that for a year before being closed to `2015–2024` in 2026-08. The one
+  tolerated pattern is a query whose expectations are **routing-only**: no
+  `answer`, no `text`, nothing that drifts. 1-072 used to be the exemplar
+  ("most recent year" + dataset-only expectations) until it was rewritten in
+  2026-08 to drop the relative phrasing entirely, so **no active row
+  demonstrates the pattern today** — which is the point. Reach for it only
+  when routing genuinely is all you want to assert, and prefer closing the
+  window.
 - **DON'T set date expectations on annual datasets** (Tree cover loss and
   friends). The agent pulls the full range and slices in code; the
   recorded window flips between runs while the answer stays right. Let
@@ -191,3 +196,40 @@ turns:
 - [ ] the four properties hold; expectations imply ≥2 checks in ≥2 buckets
 - [ ] `env_gated` noted if the capability is environment-dependent
 - [ ] PR text says *why* the semantics changed (uid churn is the record)
+
+## The audit gate (enforced in CI from 2026-08-04)
+
+`uv run python tools/audit_cases.py --strict` runs on every PR and **fails the
+build** on two classes of defect. Both are things you can fix in the case you are
+already editing:
+
+- **Depth violations** — a case whose expectations imply checks in fewer than
+  2 buckets. A row like that can "pass" while measuring almost nothing, which is
+  the failure mode `docs/PLAN.md` §4 exists to prevent: an unmeasured bucket must
+  be visibly different from a passing one. Usually fixed by adding a verified
+  `answer` (which buys Analysis, Explanation *and* Output at once) — prefer that
+  over `scope`, which is the least reliable stage in the suite.
+- **DON'T violations** — currently the relative-date rule: phrasing like "recent"
+  or "past decade" is tolerated **only** when the row asserts routing alone.
+  Pair it with an `answer` or `text` and the row drifts as time passes.
+
+Deliberately **not** gated: the coverage floors (groups or datasets with fewer
+than 3 cases). Clearing those means authoring new cases, which is a different
+kind of work from fixing the one in front of you — so they stay report-only and
+the report is worth reading.
+
+Run the audit before you open a PR; it takes under a second and it is the same
+command CI runs.
+
+**Two known blind spots — a green audit is not proof.** The DON'T rule matches a
+fixed vocabulary (`last|past|recent|latest|this year…`) on **single-turn queries
+only**, so it currently misses:
+
+- **1-073** — *"…since the turn of the century"* with a `text` expectation. A
+  relative window the regex doesn't recognise.
+- **mt-001** — *"Show me **recent** disturbance alerts in Puri"* with a
+  `clarification` expectation. Multi-turn rows aren't walked at all.
+
+Both are real instances of the rule they escape. They are left alone for now
+rather than widened into the gate, because fixing 1-073 means closing its window
+and re-verifying its figure. Read the rule, not just the exit code.
