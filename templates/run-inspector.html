@@ -79,6 +79,16 @@
     font-family:ui-monospace,Menlo,monospace; font-size:.7rem; word-break:break-word; }
   .trials { letter-spacing:.15em; font-family:ui-monospace,Menlo,monospace; }
   .qline { color:var(--muted); font-size:.72rem; margin-bottom:.5rem; }
+  .prompt { background:var(--code); border-radius:7px; padding:.55rem .75rem;
+    margin:0 0 .55rem; font-size:.85rem; }
+  .prompt .t { color:var(--muted); font-size:.68rem; font-weight:600;
+    letter-spacing:.05em; margin-right:.45rem; }
+  .errbox { border:1px solid color-mix(in srgb,var(--fail) 45%,transparent);
+    background:color-mix(in srgb,var(--fail) 8%,transparent);
+    border-radius:7px; padding:.55rem .75rem; margin:0 0 .55rem;
+    font-size:.8rem; }
+  .errbox b { color:var(--fail); }
+  .errbox code { background:transparent; padding:0; word-break:break-word; }
   .b-retrieval{color:var(--retrieval);} .b-analysis{color:var(--analysis);}
   .b-explanation{color:var(--explanation);} .b-output{color:var(--output);}
   .b-scope{color:var(--scope);} .b-shared{color:var(--shared);} .b-info{color:var(--info);}
@@ -303,13 +313,28 @@ function expectedFor(check, ctx, turn) {
 function detailHTML(entry, ctx, flk, infoOnly) {
   const reasons = entry.reasons || {}, actuals = entry.actuals || {};
   const trials = entry.trials || [];
-  let html = `<div class="qline">${esc(ctx.group || "")} · uid ${esc(entry.uid || "?")}` +
+  // The full prompt(s) sent, across the top — per turn for conversations.
+  let html = "";
+  if (ctx.turns && ctx.turns.length) {
+    html += `<div class="prompt">` + ctx.turns.map((t, i) =>
+      `<div><span class="t">T${i + 1}</span>${esc(t.query || "")}</div>`
+    ).join("") + `</div>`;
+  } else if (ctx.query) {
+    html += `<div class="prompt"><span class="t">PROMPT</span>${esc(ctx.query)}</div>`;
+  }
+  html += `<div class="qline">${esc(ctx.group || "")} · uid ${esc(entry.uid || "?")}` +
     (entry.latency_s ? ` · ${entry.latency_s}s` : "") +
     (entry.trace_url ? (/^https?:\/\//i.test(entry.trace_url)
       ? ` · <a href="${esc(entry.trace_url)}">trace</a>` : "") : "") + `</div>`;
-  if (entry.error) html += `<div class="qline">error: <code>${esc(entry.error)}</code></div>`;
+  if (entry.error)
+    html += `<div class="errbox"><b>error</b> — the row is an <i>error</i>, not a ` +
+      `failure: its checks did not evaluate.<br><code>${esc(entry.error)}</code>` +
+      `<br><span class="qline">t1/t2 prefixes name the conversation turn that ` +
+      `died; ReadTimeout means the agent stopped streaming for 240s+.</span></div>`;
   if ((entry.judge_errors || []).length)
-    html += `<div class="qline">judge errors: <code>${esc(entry.judge_errors.join(", "))}</code></div>`;
+    html += `<div class="errbox"><b>judge errors</b> — these checks abstained ` +
+      `because the judge call failed, not because the agent was wrong:<br>` +
+      `<code>${esc(entry.judge_errors.join(", "))}</code></div>`;
 
   const cards = [];
   const names = Object.entries(entry.checks || {}).filter(([, v]) => v !== null);
