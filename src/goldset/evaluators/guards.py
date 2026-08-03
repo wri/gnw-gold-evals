@@ -26,8 +26,15 @@ from goldset.evaluators.utils import normalize_value
 # arrives with no data behind it is an answer the user will believe.
 SUBSTANTIVE_ANSWER_CHARS = 80
 
-# Links to the product itself are not web fallback.
-_OWN_DOMAINS = ("globalnaturewatch.org",)
+# Links to the product itself are not web fallback. globalforestwatch.org is
+# ours too — the product serves its own map tiles from tiles.globalforestwatch.org
+# and links GFW dashboards for the same figures it just pulled, so flagging it
+# made G2's premise ("the answer came from web knowledge") false on 1-095, which
+# had answered correctly from a real pull.
+#
+# wri.org is deliberately NOT here: a wri.org citation is the blog-skill tell
+# that 1-030 exists to catch (see the module docstring).
+_OWN_DOMAINS = ("globalnaturewatch.org", "globalforestwatch.org")
 _LINK_RE = re.compile(r"https?://\S+|www\.\S+", re.IGNORECASE)
 
 
@@ -132,7 +139,17 @@ def evaluate_guards(
             )
         else:
             result["actual_pull_source"] = reference
-            expected = normalize_value(expected_dataset_id)
-            result["pull_source_match_score"] = 1.0 if reference == expected else 0.0
+            # ``;``-separated alternatives, matching evaluate_dataset_selection
+            # (PR-09 H7). Without this the sanctioned defensible-either-way
+            # pattern — 1-003's ``dataset_id: "0;11"`` — could never match, so
+            # the practice cases/README.md recommends guaranteed a failure.
+            expected_alternatives = {
+                normalize_value(alternative)
+                for alternative in str(expected_dataset_id).split(";")
+                if normalize_value(alternative)
+            }
+            result["pull_source_match_score"] = (
+                1.0 if reference in expected_alternatives else 0.0
+            )
 
     return result

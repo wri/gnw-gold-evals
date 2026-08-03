@@ -62,8 +62,16 @@ _NON_MEASURE_KEYS = frozenset(
 # decimal group, is unresolvable from the string alone.
 _AMBIGUOUS_DECIMAL = re.compile(r"^\d{1,3}\.\d{3}$")
 
-# A leading number, optionally with thousands separators and a decimal part.
-_NUMBER = re.compile(r"(\d[\d,]*(?:\.\d+)?)")
+# A leading number, optionally signed, with thousands separators and a decimal
+# part. The sign is load-bearing: net-flux rows express a carbon *sink* as a
+# negative (1-055: "-286,994 Mg CO2e"), and dropping it compared +286,994
+# against a chart whose own net-flux series held -286,993.69 — an exact match
+# reported as an 86.96% miss.
+#
+# The lookbehind keeps a word-internal hyphen from reading as a minus: 1-104's
+# expectation mentions "Sentinel-2", whose 2 is positive. A hyphen preceded by
+# an alphanumeric is a separator, never a sign.
+_NUMBER = re.compile(r"(?<![A-Za-z0-9])(-?\d[\d,]*(?:\.\d+)?)")
 
 _YEAR = re.compile(r"^(19|20)\d{2}$")
 
@@ -104,9 +112,12 @@ def parse_expected_number(expected_answer: str) -> ExpectedNumber | None:
         return None
 
     token = match.group(1)
-    if _YEAR.match(token):
+    # The year and ambiguous-separator guards describe the digits, so they are
+    # tested against the magnitude — a sign must not smuggle a value past them.
+    magnitude = token.lstrip("-")
+    if _YEAR.match(magnitude):
         return None
-    if _AMBIGUOUS_DECIMAL.match(token):
+    if _AMBIGUOUS_DECIMAL.match(magnitude):
         return None
 
     try:

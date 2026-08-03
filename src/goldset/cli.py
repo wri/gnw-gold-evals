@@ -258,7 +258,12 @@ def main() -> int:
     run.add_argument("--build", default="unknown",
                      help="agent build label, e.g. 'GNW 2026.7.29.1'")
     run.add_argument("--trials", type=int, default=1)
-    run.add_argument("--workers", type=int, default=5)
+    # Default raised 5 -> 10 on 2026-08-03 for fast iteration runs. Concurrency
+    # is recorded on the run (see the ledger's `workers`) because the 08-02
+    # run's 19 ReadTimeouts arrived as one contiguous block over the last
+    # quarter of the run — a load-shaped signature that is undiagnosable
+    # without knowing what concurrency produced it.
+    run.add_argument("--workers", type=int, default=10)
     run.add_argument("--status-exclude", default="not doing")
     run.add_argument("--id", action="append", default=None,
                      help="run only this case id (repeatable)")
@@ -334,6 +339,8 @@ def main() -> int:
         "harness": {"repo": "gnw-gold-evals", "sha": _harness_sha()},
         "judge_model": JUDGE_MODEL,
         "num_trials": args.trials,
+        "workers": args.workers,
+        "trial_timeout": args.trial_timeout,
         "caseset_version": manifest["caseset_version"],
         "results": entries,
     }

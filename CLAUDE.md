@@ -36,11 +36,29 @@ Runs execute in-repo (the gnw-evals bridge was retired after the
 
 ```bash
 export API_TOKEN="$STAGING_API_TOKEN"   # .env holds it; the CLI reads API_TOKEN
-uv run gold run --env staging --trials 3 --build "<label>"
+
+uv run gold run --env staging --build "<label>"              # iteration (1 trial, 10 workers)
+uv run gold run --env staging --trials 3 --build "<label>"   # official / gate
 ```
 
-Official runs are **3 trials, always** — the agent flaps on ~45% of rows
-between identical trials, so single-trial verdicts are smoke only.
+**Two tiers, deliberately (set 2026-08-03).** The CLI defaults to
+`--trials 1 --workers 10` for fast iteration — answering "did my prompt rewrite
+stop the nudge?" in minutes. Those runs are **smoke only**: not committed, not
+diffed, never a baseline.
+
+**Anything that produces a regression count stays `--trials 3`.** Measured on
+the two 3-trial runs: comparing two trials *of the same run* — same build, same
+cases, nothing changed — reports **18–29 spurious regressions**, which is larger
+than the **15** real regressions between two genuinely different runs. A
+single-trial diff cannot separate a clean release from a broken one, and
+`diff_runs.py --fail-on-regression` would fail on nearly every run. A 1-trial run
+compared against a 3-trial baseline is worse still, so the two sides of any
+comparison must carry the same trial count.
+
+Runs now record `workers` and `trial_timeout`, because the 2026-08-02 run's 19
+`ReadTimeout`s arrived as one contiguous block across the final quarter of the
+run — a load-shaped signature that cannot be diagnosed without knowing the
+concurrency that produced it. Raising workers is the main suspect to watch.
 
 ## After every run (do all four, in order)
 
