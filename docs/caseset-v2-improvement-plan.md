@@ -25,12 +25,24 @@ skipped by decision (§12).
 | **Phase 2** baseline run | **skipped** | `20260802T055915Z` is the baseline |
 | **Phase 3** verification pulls | done | run `20260803T195628Z` — 1-054 confirmed, 1-010 resolved, 1-043 deferred |
 | **Phase 4** case train C1–C4 | done | 30 rows edited, 1 deleted; `caseset_version` → `753d18470d2b6000` |
-| **Phase 5** validation run | in progress | 3 trials, to diff against `20260802T055915Z` |
+| **Phase 5** validation run | done | run `20260803T201245Z` — **88/105 pass (84%)**, was 56%; see `results/recommendations/20260803T201245Z.md` |
 | **Phase 6** second wave | not started | unparks, 1-062, audit `--strict` |
 
-**Smoke result on the 14 rewritten rows** (run `20260803T200444Z`, 3 trials):
-**13/14 pass**, and 1-007 passes after a second pass (run `20260803T201019Z`), so
-**14/14**. Before these edits every one of those rows was failing or flapping.
+**Result — validation run `20260803T201245Z`** (3 trials, 10 workers):
+
+| measure | baseline `20260802` | after |
+|---|---|---|
+| rows passing | 59/105 = **56%** | **88/105 = 84%** |
+| rows clean on every trial | 43/105 = 41% | **67/105 = 64%** |
+| error rows | 19 (`ReadTimeout` tail) | 1 (an upstream 500) |
+
+**Excluding the 7 rows that fail because the dashboard capability is absent from
+this build, 88/98 = 90%.** The §9 projection said case + harness work alone
+reaches ~90% — which is where it landed.
+
+The 14 rewritten rows went 14/14 in their own smoke runs (`20260803T200444Z`
+gave 13/14; 1-007 needed a second pass, `20260803T201019Z`). Before the edits
+every one of them was failing or flapping.
 
 Two findings from execution worth carrying:
 
