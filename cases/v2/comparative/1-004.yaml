@@ -1,12 +1,13 @@
 id: 1-004
-uid: e7997bd40a4bc6e1
+uid: 3b339c8fd5aca521
 status: done
 group: comparative
-query: Which country had the most distrubed area in November 2025, Australia or Brazil?
+query: Which country had more area affected by high confidence disturbance alerts in November
+  2025, Australia or Brazil?
 expected:
   aoi_ids: BRA;AUS
   aoi_source: gadm
-  dataset_id: '11'
+  dataset_id: 0;11
   dataset_name: Integrated alerts
   start_date: '2025-11-01'
   end_date: '2025-11-30'
@@ -14,3 +15,7 @@ expected:
   scope: analyse
 notes:
   aoi_type: gadm 0
+  sentinel: 'W1 2026-08-03: deliberately kept routing-loose per plan §8. dataset_id accepts
+    0;11 because DIST-ALERT and integrated alerts are both defensible here (1-003 sets the
+    precedent), so the row passes on any real analysis and fails only on a nudge — which is
+    exactly the over-nudging sensor. Needs H2, landed 2026-08-03.'

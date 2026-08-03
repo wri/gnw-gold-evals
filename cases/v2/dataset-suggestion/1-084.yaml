@@ -1,5 +1,5 @@
 id: 1-084
-uid: ef48dd07337b34c0
+uid: 215cea7820632351
 status: done
 group: dataset-suggestion
 query: Show me trends in natural land loss in Gabon
@@ -8,7 +8,14 @@ expected:
   aoi_source: gadm
   clarification: 'TRUE'
   text: Provides good reason for each dataset suggestion that relate to the user query
-  suggested_datasets: 0;1;2;3;4
   scope: suggest
+  nudge_type: dataset_choice
+  nudge_options: DIST-ALERT;Global land cover;grassland;SBTN;Tree cover loss
 notes:
   aoi_type: gadm 0
+  surface_move: 'W2 2026-08-03: expectations moved off suggested_datasets (populated in 0
+    of 1,298 retained trials — project-zeno#770 moved suggestion onto the nudge surface) and
+    onto nudge_type/nudge_options. Every trial''s observed option set was already a subset
+    of the old expected ids, so the expectation was right all along; only the surface moved.
+    Token ''grassland'' is singular deliberately: the agent''s option reads ''Global natural/semi-natural
+    grassland extent''.'

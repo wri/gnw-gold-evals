@@ -1,8 +1,9 @@
 id: 1-053
-uid: 966465dd57772891
+uid: 7a45e7b8b2e1d0e1
 status: todo
 group: comparative
-query: 'True or False: the UK has a lower net GHG flux than the Rep. of Ireland'
+query: 'True or False: the UK has a lower net forest greenhouse gas flux than the Rep. of
+  Ireland?'
 expected:
   aoi_ids: GBR;IRL
   aoi_source: gadm
@@ -16,3 +17,5 @@ notes:
   aoi_type: gadm 0
   value_1: -323451481 MgCO₂e
   value_2: -55.4 million MgCO₂e
+  rewrite: 'W1 2026-08-03: spelled out ''net forest greenhouse gas flux''; the abbreviation
+    nudged 1/7. Sibling 1-055 spells it out and never nudges.'

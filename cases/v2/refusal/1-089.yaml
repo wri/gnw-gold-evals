@@ -1,5 +1,5 @@
 id: 1-089
-uid: 2c71d01c4ec18a83
+uid: ffc6b164922dfc42
 status: done
 group: refusal
 query: Show me monthly tree cover loss for Brazil in 2024
@@ -8,4 +8,11 @@ expected:
   aoi_source: gadm
   text: Refuses to analyse due to TCL dataset having an annual temporal resolution, or acknowledge
     and caution that TCL is annual
-  scope: refuse
+  scope: refuse;suggest
+notes:
+  rewrite: 'W2 2026-08-03: the case contradicted itself — its text expectation explicitly
+    permits ''Refuses ... OR acknowledge and caution that TCL is annual'', and the agent does
+    both across identical trials (prose refusal -> none -> pass 4/6; caution + dataset_choice
+    nudge -> fail 2/6). expected_text passes 6/6, so the capability is intact every trial;
+    only the scope pin flapped. suggest not clarify because H4 classifies a dataset_choice
+    nudge as suggest.'

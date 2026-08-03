@@ -1,5 +1,5 @@
 id: 1-002
-uid: 1d5d3e04685ceac9
+uid: 84d15618a7a7ac67
 status: todo
 group: direct
 query: How much of Sao Paulo was impacted disturbance alerts in the second half of 2024, considering
@@ -11,8 +11,15 @@ expected:
   dataset_name: Integrated alerts
   start_date: '2024-07-01'
   end_date: '2024-12-31'
-  answer: 1,319,600 hectares
+  answer: 1,299,278 hectares
   scope: analyse
 notes:
   status_reason: Chart shows all confidence levels
   aoi_type: gadm
+  rewrite: 'W3 2026-08-03: answer re-pinned from 1,319,600, which matched nothing. The agent
+    reports 1,299,278.14 on 6/6 trials — exactly high (1,286,327.39) + highest (12,950.75).
+    H6 already makes the row supported on the old value, but at a 1.54% margin inside a 2%
+    tolerance; this puts it at ~0.00%. Prompt deliberately unchanged (query is hashed; the
+    1-063 precedent says don''t churn a uid for a typo). Note this encodes ''high confidence''
+    as meaning at least high, i.e. including the highest tier — filed upstream as a semantic
+    clarification.'

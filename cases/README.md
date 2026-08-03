@@ -39,11 +39,34 @@ compare the reports.
   `start_date: '2025-01-01'`, `end_date: '2025-04-30'`
 - **DO give every case a `scope`** (`analyse` / `suggest` / `clarify` /
   `refuse`) — it is the cheapest deterministic check in the suite.
-- **DO use `;`-alternatives where two answers are genuinely defensible.**
+- **DO name the metric unambiguously** — the class, the gas basis, the
+  confidence tier. ✔ `"gross greenhouse gas emissions from tree cover loss"`
+  ✘ `"deforestation-related carbon emissions"`. ✔ `"natural grassland"`
+  ✘ `"grassland"`. ✔ `"the short vegetation land cover class"`.
+  Measured over 312 trials: precisely-worded rows trigger a dataset-choice
+  nudge on **1.2%** of trials, loosely-worded ones on **38%** — and one nudge
+  fails 5–7 checks at once, because no data is pulled. This is the AOI rule
+  below, applied to the metric axis.
+- **DON'T name the dataset by id or product name.** ✘ `"Using the SBTN
+  Natural Lands Map…"` hands over the answer and turns `dataset_id_match`
+  into a string-copy test. The exceptions are the groups whose subject *is*
+  the dataset: `dataset-parameters`, `dataset-suggestion`, `context-layer`,
+  `dashboard`.
+- **DO use `;`-alternatives where two answers are genuinely defensible** —
+  in preference to disambiguating the prompt.
   ✔ 1-003 expects `dataset_id: "0;11"` because DIST-ALERT and integrated
   alerts are both correct routings for that query. A single-value
   expectation on a defensible-either-way row is a flaky case you authored
-  yourself.
+  yourself. The row then still tests "route somewhere defensible and
+  analyse", passes on either choice, and fails only on a nudge. Two families
+  need it: alerts (`0;11`) and emissions (`4;6`). `scope` accepts
+  alternatives too (`refuse;suggest` on 1-089).
+- **DO keep a few deliberately loose sentinels.** If every row names its
+  metric precisely, nothing detects the *next* over-nudging regression —
+  the `nudge` and `clarification` rows only test that the agent nudges when
+  it *should*. 1-004 and 1-043 are the nominated dataset-side sentinels
+  (loose wording + `;`-alternatives + `scope: analyse`), and 1-014 the
+  AOI-side one. Don't tighten them without nominating replacements.
 - **DO put per-class figures in `class_values`** when the query implies a
   breakdown: ✔ `class_values: "mangroves=15,444 hectares"` — it is the
   Analysis bucket's main expectation-driven check, catching wrong
@@ -102,11 +125,18 @@ expected:
   dataset_id: '11'
   start_date: '2024-07-01'   # closed absolute window, date-scoped dataset
   end_date: '2024-12-31'
-  answer: 1,319,600 hectares # closed period -> stable number
+  answer: 1,299,278 hectares # closed period -> stable number
   scope: analyse
 ```
 Implied checks: aoi, dataset, dates, pull, answer (x2), chart_produced,
 answered_without_data, scope — five buckets covered by one row.
+
+The figure was `1,319,600` until 2026-08-03 and matched nothing the agent
+produced. Two lessons worth carrying: an expected number must come from a
+real run, not a scratchpad; and pick the value that sits **far** inside the
+2% tolerance rather than just inside it — `1,319,600` was 1.54% off the
+agent's stable answer, so one data refresh would have flipped a passing row
+to a hard failure with nothing changed.
 
 **Bad case, and its repair:**
 
