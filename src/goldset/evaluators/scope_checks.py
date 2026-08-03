@@ -37,6 +37,16 @@ def classify_scope(agent_state: dict[str, Any]) -> str:
         return "suggest"
     nudge = agent_state.get("nudge") or {}
     if isinstance(nudge, dict) and nudge.get("type"):
+        # A dataset_choice nudge IS a dataset suggestion (H4). The
+        # ``suggested_datasets`` state field above is populated in 0 of 1,298
+        # retained case-trials: the pick_aoi/pick_dataset -> nudge migration
+        # (wri/project-zeno#770) moved suggestion onto the nudge surface, and
+        # dataset_choice appears 162 times there. Without this, every row
+        # expecting ``suggest`` failed on a field the product no longer writes,
+        # so the "suggest" coverage the case set claimed was fictional.
+        # aoi_choice and friends remain ``clarify`` — a different class.
+        if nudge.get("type") == "dataset_choice":
+            return "suggest"
         return "clarify"
     return "none"
 

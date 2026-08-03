@@ -1,3 +1,5 @@
+from typing import Any
+
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel
 
@@ -232,6 +234,64 @@ def llm_judge(
     return llm_judgement.score
 
 
+def resolve_chart_verdict(
+    judge_score: int | float | None,
+    judge_reason: str,
+    support: str | None,
+    explanation: str,
+) -> dict[str, Any]:
+    """Combine the deterministic comparator and the judge into one verdict (H5).
+
+    The comparator decides; the judge is recorded but never gates. Rationale, from
+    the two 3-trial staging runs: five of the six rows where ``charts_answer``
+    flapped were rows where the comparator had already passed or abstained, so
+    100% of the movement was the judge's appropriateness opinion. 1-059 is the
+    proof — the chart's own data contained the expected global total to 0.07%, the
+    judge failed it twice on framing ("the user would need to manually sum all
+    regions"), then passed an identical third trial.
+
+    Tri-state, per the working agreement that every check states what an absence
+    means:
+
+    ``unsupported`` -> 0.0   the chart's data does not contain the figure
+    ``supported``   -> 1.0   it does; the judge's framing objection is info-only
+    ``None``        -> None  no numeric claim to check (a boolean or a place
+                             name), so the row carries no gating chart verdict
+                             rather than a coin-flip aesthetic one
+
+    ``cases/README.md`` already forbids staking a verdict on chart choice; before
+    this, ``charts_answer`` was the one gating check that did.
+    """
+    judge = None if judge_score is None else float(judge_score)
+
+    if support == "unsupported":
+        score: float | None = 0.0
+        if judge == 0.0:
+            reason = f"{explanation}. {judge_reason}"
+        else:
+            reason = (
+                f"{explanation} — overriding the judge (info-only), "
+                f"which said: {judge_reason}"
+            )
+    elif support == "supported":
+        score = 1.0
+        if judge == 0.0:
+            reason = (
+                f"{explanation} — the judge (info-only) disagreed on framing: "
+                f"{judge_reason}"
+            )
+        else:
+            reason = f"{explanation}. {judge_reason}"
+    else:
+        score = None
+        reason = (
+            "no numeric claim to check deterministically; not scored. "
+            f"Judge (info-only) said: {judge_reason}"
+        )
+
+    return {"score": score, "reason": reason, "judge_score": judge}
+
+
 def llm_judge_chart(
     query: str,
     expected_answer: str,
@@ -339,28 +399,18 @@ structurally right is a 1 even if you suspect its numbers.
 
     llm_judgement = judge_chain.invoke(invoke_kwargs)
 
-    score = llm_judgement.score
-    reason = llm_judgement.reason
-
-    # The model judged structure; the figures are compared here, against the chart's own
-    # data. A structurally sound chart whose numbers don't support the expected answer
-    # still fails, and a numeric gap inside tolerance can no longer fail one.
     numeric = evaluate_numeric_support(expected_answer, charts_json, NUMERIC_TOLERANCE)
-    if numeric["support"] == "unsupported":
-        if score != 0:
-            reason = (
-                f"{numeric['explanation']} — overriding the judge, which said: {reason}"
-            )
-        else:
-            reason = f"{numeric['explanation']}. {reason}"
-        score = 0
-    elif numeric["support"] == "supported":
-        reason = f"{numeric['explanation']}. {reason}"
+    verdict = resolve_chart_verdict(
+        judge_score=llm_judgement.score,
+        judge_reason=llm_judgement.reason,
+        support=numeric["support"],
+        explanation=numeric["explanation"],
+    )
 
     if include_reason:
-        return {"score": score, "reason": reason}
+        return verdict
 
-    return score
+    return verdict["score"]
 
 
 def llm_judge_expected_text(

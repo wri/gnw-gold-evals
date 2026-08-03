@@ -129,18 +129,31 @@ def test_h2_dataset_id_zero_is_a_real_registry_id():
 # --------------------------------------------------------------------------- H3
 
 def test_h3_scope_accepts_alternatives():
-    """1-089's own `text` licenses two behaviours: refuse, or caution via a
-    nudge. `refuse;clarify` must accept both."""
+    """1-089's own `text` licenses two behaviours: refuse outright, or caution
+    and offer the annual dataset via a nudge. Both must pass.
+
+    Note the alternative is `refuse;suggest`, not `refuse;clarify`: H4 classifies
+    a `dataset_choice` nudge as `suggest`, and 1-089's observed nudge offers
+    datasets ("Tree cover loss"). This is the coordination the plan flagged — H3
+    and H4 together decide 1-089's expectation.
+    """
     refused = {"statistics": None, "suggested_datasets": [], "nudge": {}}
-    clarified = {"statistics": None, "suggested_datasets": [],
+    cautioned = {"statistics": None, "suggested_datasets": [],
                  "nudge": {"type": "dataset_choice"}}
-    for state in (refused, clarified):
-        assert evaluate_scope(state, "refuse;clarify")["scope_match_score"] == 1.0
+    for state in (refused, cautioned):
+        assert evaluate_scope(state, "refuse;suggest")["scope_match_score"] == 1.0
+
+
+def test_h3_alternatives_accept_an_aoi_clarification():
+    """The `clarify` class still exists for aoi_choice-shaped nudges."""
+    state = {"statistics": None, "suggested_datasets": [],
+             "nudge": {"type": "aoi_choice"}}
+    assert evaluate_scope(state, "analyse;clarify")["scope_match_score"] == 1.0
 
 
 def test_h3_scope_alternatives_still_reject_an_unlisted_class():
     analysed = {"statistics": {"data": [1]}, "suggested_datasets": [], "nudge": {}}
-    assert evaluate_scope(analysed, "refuse;clarify")["scope_match_score"] == 0.0
+    assert evaluate_scope(analysed, "refuse;suggest")["scope_match_score"] == 0.0
 
 
 def test_h3_single_scope_is_unchanged():

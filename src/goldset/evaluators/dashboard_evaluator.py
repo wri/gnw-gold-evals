@@ -160,13 +160,23 @@ def evaluate_dashboard_widgets(
         match = Counter(actual_types) == Counter(expected_dashboard_widgets)
         result["dashboard_widgets_match_score"] = 1.0 if match else 0.0
 
-    # An existing dashboard with zero widgets is an empty artifact: fail
-    # validity rather than skipping it (PR-04 F3). Only dashboard=None means
-    # "nothing to check".
     if widgets:
         all_valid = all(_widget_is_valid(w) for w in widgets)
         result["dashboard_widgets_valid_score"] = 1.0 if all_valid else 0.0
-    else:
+    elif expected_dashboard_widgets:
+        # Content was requested and is missing — PR-04 F3's real intent.
         result["dashboard_widgets_valid_score"] = 0.0
+    else:
+        # H7, reversing part of F3: an empty dashboard is only an "empty
+        # artifact" if something was asked to be in it. 1-096's prompt is just
+        # "Create a dashboard for brazil" and sets no widget expectation, yet it
+        # failed on 4 of 6 trials and passed only where the agent volunteered an
+        # *unsolicited* text widget — while evaluate_dashboard_created treats an
+        # unsolicited dashboard as a guardrail violation. The case also had no
+        # way to answer the check: there is no syntax for "expect zero widgets"
+        # (an empty value parses to None, i.e. no expectation). If the product
+        # stance really is "a created dashboard must never be empty", that
+        # belongs in its own check with its own spec decision.
+        result["dashboard_widgets_valid_score"] = None
 
     return result

@@ -48,9 +48,20 @@ def test_f3_legacy_flat_text_key_still_accepted():
         "dashboard_widgets_valid_score"] == 1.0
 
 
-def test_f3_empty_dashboard_fails_validity():
-    assert evaluate_dashboard_widgets({"widgets": []}, None)[
+def test_f3_empty_dashboard_fails_validity_when_widgets_were_expected():
+    """F3 narrowed by H7 on 2026-08-03 (see docs/specs/PR-04-fix-first.md).
+
+    "An existing dashboard with zero widgets is an empty artifact" holds only
+    when the case asked for content. 1-096 ("Create a dashboard for brazil")
+    sets no widget expectation and cannot express one, so it was failing for
+    obeying its prompt — and passing only on the trials where the agent added an
+    *unsolicited* widget, which evaluate_dashboard_created treats as a violation.
+    """
+    assert evaluate_dashboard_widgets({"widgets": []}, ["map"])[
         "dashboard_widgets_valid_score"] == 0.0
+    # nothing requested -> nothing to validate
+    assert evaluate_dashboard_widgets({"widgets": []}, None)[
+        "dashboard_widgets_valid_score"] is None
     # no dashboard at all is still "nothing to check"
     assert evaluate_dashboard_widgets(None, None)[
         "dashboard_widgets_valid_score"] is None

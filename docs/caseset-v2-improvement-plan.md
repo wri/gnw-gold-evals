@@ -876,9 +876,21 @@ both have exact reproductions in §4.
   the amendment to `docs/specs/PR-04-fix-first.md:22`, since this reverses a
   documented F3 decision.
 
-H6 also unblocks **1-055** on the merits once H1 fixes the sign: the chart's
-gross-emissions/gross-removals decomposition sums to the expected net flux, which
-today is not a candidate at all.
+**H6 verified against real artifacts (2026-08-03).** The worry with adding
+candidates is permissiveness — a wider candidate set makes a false "supported"
+likelier, which matters more now that H5 makes the comparator the sole gate. So
+numeric support was recomputed over every stored chart artifact, with and without
+H6:
+
+| row | without H6 | with H6 | |
+|---|---|---|---|
+| 1-002 | supported on **3/15** trials | **15/15** | fixed *and* made deterministic |
+| 1-055 | 7/8 | 8/8 | H1 did most of it; H6 closed the last trial |
+| 1-027, 1-034, 1-010, 1-059, 1-009, 1-103 | — | **identical** | **no false supported introduced** |
+
+So H6 fixes exactly the two rows it was designed for and moves nothing else.
+Note 1-002 becomes *stable* on its **original** expected value; the re-pin above
+is purely to move the margin off 1.54% of a 2% tolerance.
 
 ### Phase 2 — SKIPPED (decided 2026-08-03)
 

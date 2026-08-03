@@ -120,6 +120,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         kind="mixed",
         score_fields=(
             "charts_answer_score",
+            "charts_answer_judge_score",
             "agent_answer_score",
             "expected_text_match_score",
         ),

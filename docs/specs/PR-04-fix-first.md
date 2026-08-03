@@ -19,7 +19,7 @@ rows could never pass. Every one is an inherited, documented defect.
 |---|---|---|
 | F1 | Expected AOIs set, agent resolved none → **0.0** (was `None`) | absence is failure when expected |
 | F2 | `expected_answer` set, no chart produced → new `chart_produced` = **0.0** (was: chart check silently `None`) | 4 rows on run 6 become visible |
-| F3 | Empty dashboard → widget checks **0.0** (was `None`); `_widget_is_valid` reads `config.text` (was `widget["text"]`, unfulfillable) | rows 1-096, 1-100, 1-101 measured correctly |
+| F3 | Empty dashboard → widget checks **0.0** (was `None`); `_widget_is_valid` reads `config.text` (was `widget["text"]`, unfulfillable) | rows 1-096, 1-100, 1-101 measured correctly — **narrowed 2026-08-03, see below** |
 | F4 | Judge call failure → explicit `error` state that fails the row loudly (was: clarification judge swallowed to `False` — scoring 1.0 on `expected=False` rows during outages; other judges crashed the whole row) | outages are visible, never scored |
 | F5 | Chart JSON truncation: truncate **per chart with valid-JSON repair** instead of a blind 80k slice that yields unparseable JSON → forced numeric-override failures | no false 0s on large charts |
 | F6 | Audit all judge structured outputs: **reasoning field precedes score field** (haiku commits to a score then argues with itself otherwise — slice-1 finding) | judge self-consistency |
@@ -58,3 +58,35 @@ The bucket-filling validators needing new expected fields or parsing work
 
 Unit tests per fix/guard + the 3-trial validation run committed to the
 ledger with its diff-vs-previous annotated.
+
+---
+
+## Amendment 2026-08-03 — F3 narrowed (H7)
+
+F3's rule "an existing dashboard with zero widgets is an empty artifact → 0.0"
+now applies **only when the case expects widgets**. With no
+`expected_dashboard_widgets`, `dashboard_widgets_valid` returns `None`.
+
+Why, from two 3-trial staging runs:
+
+- **1-096's prompt is only "Create a dashboard for brazil".** It sets no widget
+  expectation, so an empty dashboard is the prompt being obeyed, not an empty
+  artifact. It scored 0.0 on 4 of 6 trials and 1.0 only on the two where the
+  agent volunteered an *unsolicited* text widget.
+- That made the suite internally inconsistent: `evaluate_dashboard_created`
+  treats an unsolicited dashboard as a guardrail violation, while
+  `dashboard_widgets_valid` **rewarded** unsolicited widgets.
+- The case had no way to satisfy the check either: there is no syntax for
+  "expect zero widgets" — an empty value parses to `None`, i.e. no expectation.
+
+F3's real intent is preserved: where a case *does* ask for content and the
+dashboard is empty, the score is still 0.0 (covered by
+`tests/test_fix_first.py::test_f3_empty_dashboard_fails_validity_when_widgets_were_expected`).
+
+1-100 and 1-101 are unaffected — they expect widgets and produce them; their
+historical F3 zeros came from the pre-PR-04 `_widget_is_valid` bug, already fixed.
+
+If the product stance is "a created dashboard must never be empty", that is a
+different assertion and belongs in its own check with its own spec decision on
+whether absence is `null` or `0.0` — not folded into a check the case cannot
+address.
