@@ -36,9 +36,18 @@ skipped by decision (§12).
 | rows clean on every trial | 43/105 = 41% | **67/105 = 64%** |
 | error rows | 19 (`ReadTimeout` tail) | 1 (an upstream 500) |
 
-**Excluding the 7 rows that fail because the dashboard capability is absent from
-this build, 88/98 = 90%.** The §9 projection said case + harness work alone
-reaches ~90% — which is where it landed.
+**That run omitted `--ff experimental` and is superseded.** `ff` is the agent's
+tool profile, and **dashboards and satellite imagery live behind the experimental
+profile** — without it the agent has no dashboard tool at all, so 7 rows failed for
+the run configuration rather than for anything in the case set or the agent. All
+comparable historical runs, including the baseline, are `ff=experimental`; the
+run_id encodes it (`…_staging_experimental` vs a bare `…_staging`), which is the
+tell to check before diffing two runs. `CLAUDE.md` now documents this.
+
+Excluding those 7, the run gives **88/98 = 90%**, matching the §9 projection that
+case + harness work alone reaches ~90%. The corrected run with the flag set should
+land higher, since those 7 rows pass immediately once the tools exist
+(demonstrated on 1-096 and 1-098, run `20260803T213717Z_staging_experimental`).
 
 The 14 rewritten rows went 14/14 in their own smoke runs (`20260803T200444Z`
 gave 13/14; 1-007 needed a second pass, `20260803T201019Z`). Before the edits

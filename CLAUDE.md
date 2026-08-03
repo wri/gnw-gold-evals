@@ -37,9 +37,28 @@ Runs execute in-repo (the gnw-evals bridge was retired after the
 ```bash
 export API_TOKEN="$STAGING_API_TOKEN"   # .env holds it; the CLI reads API_TOKEN
 
-uv run gold run --env staging --build "<label>"              # iteration (1 trial, 10 workers)
-uv run gold run --env staging --trials 3 --build "<label>"   # official / gate
+uv run gold run --env staging --ff experimental --build "<label>"              # iteration (1 trial, 10 workers)
+uv run gold run --env staging --ff experimental --trials 3 --build "<label>"   # official / gate
 ```
+
+**`--ff experimental` is required on any run whose verdict you intend to trust.**
+`ff` is the agent's tool profile, passed through in the request payload and
+omitted entirely when unset, so the agent runs its **default** toolset. Two
+capabilities live behind the experimental profile and are simply *absent* without
+it: **dashboards** and **satellite imagery**. Every historical run in
+`results/runs/` used `ff=experimental`.
+
+Without the flag, all seven `dashboard` rows plus mt-008 fail `dashboard_created`
+on every trial — the agent never calls a dashboard tool at all, and the artifacts
+show `dashboard_widgets: null`. That is *indistinguishable from the capability
+having been removed* unless you check `ff`, and it cost a full misdiagnosis on
+2026-08-03 (see `results/recommendations/20260803T201245Z.md` item 1). With
+`--ff experimental` on the same case set and harness, those rows pass immediately.
+
+**The tell is the run_id**: `…_staging_experimental` versus a bare `…_staging`.
+`make_run_id` encodes `ff` in the filename, so a run whose name lacks the suffix
+was not exercising those capabilities — check this before comparing two runs, and
+never diff across a differing `ff`.
 
 **Two tiers, deliberately (set 2026-08-03).** The CLI defaults to
 `--trials 1 --workers 10` for fast iteration — answering "did my prompt rewrite

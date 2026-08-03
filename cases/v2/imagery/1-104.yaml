@@ -14,3 +14,7 @@ notes:
     2 — both weak, i.e. the geocoder was guessing. ;-alternatives cannot express this: aoi_ids
     splits on '';'' into a SET compared by set-equality, which is how sibling rows list children,
     so a two-level either-or is unexpressable. The imagery path itself is healthy.'
+  env_gated: satellite imagery is reported to sit behind --ff experimental, but show_imagery
+    was observed working with ff unset (run 20260803T201245Z, 1-104 passed), so treat imagery
+    as flag-sensitive rather than flag-dependent and set --ff experimental on any run you
+    intend to trust.
