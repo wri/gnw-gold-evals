@@ -111,7 +111,14 @@ def parse_expected_number(expected_answer: str) -> ExpectedNumber | None:
     if not match:
         return None
 
-    token = match.group(1)
+    # Trailing separators are punctuation, not part of the number: "In 2020, 25.5
+    # Mha" matches "2020," whose trailing comma made it miss the ^(19|20)\d{2}$
+    # year guard, so the expected value became 2020 rather than abstaining. Found
+    # while documenting the evaluators (2026-08-04); no cases/v2 row has that
+    # shape, and this ensures none can.
+    token = match.group(1).rstrip(",.")
+    if not token or token == "-":
+        return None
     # The year and ambiguous-separator guards describe the digits, so they are
     # tested against the magnitude — a sign must not smuggle a value past them.
     magnitude = token.lstrip("-")

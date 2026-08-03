@@ -204,3 +204,31 @@ def test_h8_wri_org_citation_still_fires():
                              expected_dataset_id="4")
     assert result["web_fallback_score"] == 0.0
     assert "wri.org" in (result["actual_web_links"] or "")
+
+
+# --------------------------------------------------------------------- H1 (cont.)
+
+def test_h1_a_year_followed_by_a_comma_still_abstains():
+    """Found while documenting the evaluators (2026-08-04): the token "2020,"
+    carries a trailing comma, so it missed the `^(19|20)\\d{2}$` year guard and
+    became the expected *value* — an expectation of 2020 hectares.
+
+    Abstention, rather than skipping ahead to 25.5 Mha, is the deliberate
+    outcome: it matches what the same string without the comma has always done
+    (`"In 2020 25.5 Mha"` -> None). A leading year means the claim is ambiguous,
+    and this check abstains rather than guessing which number is the answer.
+    No cases/v2 row has this shape; the guard is here so none can.
+    """
+    assert parse_expected_number("In 2020, 25.5 Mha of loss") is None
+    assert parse_expected_number("In 2020 25.5 Mha of loss") is None
+    # the bare year, with or without trailing punctuation, is not a measurement
+    assert parse_expected_number("2020") is None
+    assert parse_expected_number("2020,") is None
+    assert parse_expected_number("2020.") is None
+
+
+def test_h1_thousands_separators_still_parse():
+    """The trailing-punctuation strip must not damage normal figures."""
+    assert parse_expected_number("1,299,278 hectares").value == 1_299_278.0
+    assert parse_expected_number("25.54 million hectares").value == 25_540_000.0
+    assert parse_expected_number("679.17 ha").value == 679.17
