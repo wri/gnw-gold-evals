@@ -118,11 +118,11 @@ compare the reports.
 id: 1-002
 status: ready
 group: direct
-query: How much of Sao Paulo was impacted disturbance alerts in the second
-  half of 2024, considering high confidence alerts only?
+query: How much of Sao Paulo was affected by disturbance alerts in the second
+  half of 2024, considering high and highest confidence alerts only?
 expected:
   aoi_ids: BRA.25_1          # named state, no ambiguity
-  dataset_id: '11'
+  dataset_id: 0;11           # both alert datasets answer this — see the DO above
   start_date: '2024-07-01'   # closed absolute window, date-scoped dataset
   end_date: '2024-12-31'
   answer: 1,299,278 hectares # closed period -> stable number
@@ -131,12 +131,27 @@ expected:
 Implied checks: aoi, dataset, dates, pull, answer (x2), chart_produced,
 answered_without_data, scope — five buckets covered by one row.
 
-The figure was `1,319,600` until 2026-08-03 and matched nothing the agent
-produced. Two lessons worth carrying: an expected number must come from a
-real run, not a scratchpad; and pick the value that sits **far** inside the
-2% tolerance rather than just inside it — `1,319,600` was 1.54% off the
-agent's stable answer, so one data refresh would have flipped a passing row
-to a hard failure with nothing changed.
+This row was repaired twice on 2026-08-03 and each repair is a rule above:
+
+- **The figure was `1,319,600` and matched nothing the agent produced.** An
+  expected number must come from a real run, not a scratchpad — and pick a
+  value that sits *far* inside the 2% tolerance, not just inside it.
+  `1,319,600` was 1.54% off the agent's stable answer, so one data refresh
+  would have flipped a passing row to a hard failure with nothing changed.
+- **`dataset_id` was `'11'` alone.** Across three identical trials the agent
+  nudged once, routed to DIST-ALERT once and to integrated alerts once — and
+  the answer is the same either way (1,294,914 vs 1,297,969 ha, both inside
+  tolerance). A single-value pin on a defensible-either-way row is a flaky
+  case you authored yourself.
+- **The prompt said "was impacted disturbance alerts … high confidence only".**
+  Broken grammar, and silent about whether the `highest` tier counts. Fixed in
+  the same edit as `dataset_id`, because the uid churns either way — that is
+  usually the moment to fix wording you would otherwise leave alone.
+
+What it still cannot fix: "disturbance alerts" maps onto two datasets no matter
+how the sentence is written, and only naming the dataset would settle it — which
+the DON'T above forbids. So the row keeps a residual nudge and passes on
+majority-of-3. That is the honest ceiling for this shape of question.
 
 **Bad case, and its repair:**
 
