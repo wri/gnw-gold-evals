@@ -906,14 +906,51 @@ compares against it directly. Two consequences accepted deliberately:
 
 The validation run must be **3 trials** to be comparable with the baseline.
 
-### Phase 3 — verification pulls (cheap, unblocks Phase 4)
+### Phase 3 — verification pulls — DONE 2026-08-03
 
-Single-row runs. Do not mint any number without one.
+Run `20260803T195628Z_staging` (3 trials, post-PR-Ha/Hb harness, `--note` marks
+it as a verification pull, not a baseline).
 
-- **Blocking Phase 4 edits:** 1-010 (all-wetland-classes total), 1-043
-  (unfiltered gross-emissions ranking — is it Waikato or West Coast?), 1-054
-  (confirm −2,793,765 for the whole archipelago).
-- **Parked-row probes:** 1-033, 1-041, 1-028.
+**1-054 — CONFIRMED.** The agent reports **−2,793,765 MgCO₂e** and calls the
+archipelago a net carbon sink. So `text` becomes *"…approximately -2,793,765 Mg
+CO2e"*, and the authoring error is proven: −286,993.68 is 1-055's Las Palmas
+*province* figure. (Also a live demonstration of H5: `charts_answer` now reads
+*"no numeric claim to check deterministically; not scored"* because the expected
+answer is "Sink", where before it carried a judge-only verdict.)
+
+**1-010 — RESOLVED, and the plan's proposed rewrite is withdrawn.** The chart
+lists every land-cover class in the Arawe KBA:
+
+| class | hectares |
+|---|---|
+| Tree cover | 86,403.67 |
+| Bare and sparse vegetation | 26,663.61 |
+| Built-up | 1,176.05 |
+| Water | 480.32 |
+| Short vegetation | 169.42 |
+| **Wetland – short vegetation** | **110.10** |
+| Agriculture | 4.28 |
+
+Total ≈ 115,007 ha, matching the agent's own stated KBA area. **There is exactly
+one wetland class**, so "all wetland classes" = 110.10 ha and the prompt was never
+ambiguous — the agent has answered it correctly on 12/12 trials. The expected
+`16,359 hectares` matches no class, no total, and no chart figure: it is simply
+wrong, consistent with the "unverified sheet scratchpads" note in
+`results/recommendations/20260801T093002Z.md` §5.
+
+So: **`answer` → `110.10 hectares`, `query` unchanged**, and add
+`class_values: "wetland – short vegetation=110.10 hectares"` — a verified figure
+for the Analysis bucket, which is what recommendation item 5 asked for. Correct
+`notes.value_2` (currently the same wrong 16,359) while there.
+
+**1-043 — still blocked.** It nudged again (`actual_scope: suggest` — H4 working),
+offering "Tree cover loss (Annual Emissions)" against net flux, so no pull
+happened and Waikato is still unverified. The rewrite has to land *first*, then
+the answer gets verified against a run that actually analyses. Sequence: apply the
+C1 prompt rewrite keeping `answer: Waikato` provisionally, re-run, and correct the
+answer if the agent names a different region.
+
+- **Parked-row probes** (1-033, 1-041, 1-028) remain outstanding — Phase 6.
 
 ### Phase 4 — the case train (four stacked PRs, one merge)
 
