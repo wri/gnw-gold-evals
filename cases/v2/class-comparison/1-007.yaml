@@ -1,8 +1,8 @@
 id: 1-007
-uid: eea47d0f06e81470
+uid: b336cdfe8b3ea20e
 status: done
 group: class-comparison
-query: How much peatland area was disturbed in Scotland in July 2024?
+query: How much peatland was affected by disturbance alerts in Scotland in July 2024?
 expected:
   aoi_ids: GBR.3_1
   aoi_source: gadm
@@ -13,6 +13,9 @@ expected:
   scope: analyse
 notes:
   aoi_type: gadm 1
-  rewrite: 'W1 2026-08-03: repaired the broken grammar (''What how much peatland area was
-    disturbed Scotland'') and added scope — it was a depth violation. dataset_id flapped 6/9
-    with no nudge, i.e. silent routing disagreement between alerts datasets.'
+  rewrite: 'W1 2026-08-03 (second pass): repaired the broken grammar and added scope, then
+    the row still nudged 3/3 — the agent could not tell "disturbance alerts over peatland"
+    from "peatland extent", offering DIST-ALERT vs Global land cover every trial. Naming the
+    alerts phenomenon removes the land-cover reading. dataset_id stays 0: the nudge itself
+    proposes dataset 0 for this question, and integrated alerts (11) was never offered, so
+    single-value routing is still a real test here.'
