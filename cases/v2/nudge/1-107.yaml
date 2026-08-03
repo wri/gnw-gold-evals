@@ -9,4 +9,5 @@ expected:
   nudge_options: Global land cover;SBTN
   scope: clarify
 notes:
-  status_reason: Validator not working
+  status_reason: 'validator confirmed working 2026-08-03: nudge_match 6/6 across the 08-01
+    and 08-02 runs; the earlier failure was the pre-migration 07-31 harness'

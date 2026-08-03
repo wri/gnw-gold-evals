@@ -7,3 +7,5 @@ expected:
   aoi_ids: BRA
   aoi_source: gadm
   dashboard_created: 'TRUE'
+notes:
+  env_gated: dashboards absent on prod as of 2026-07-30

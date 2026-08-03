@@ -11,5 +11,6 @@ expected:
   scope: analyse
 notes:
   aoi_type: Landmark
-  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
-    staging, then unpark, rewrite, or delete with the reason written down.'
+  status_reason: 'parked 2026-08-03: percentage answer (2.10%) and Landmark AOI resolution
+    both unverified here, and the row has never run in this repo. Probe once with --id 1-028,
+    then unpark or delete with the outcome recorded. Landmark has 5 other active carriers.'

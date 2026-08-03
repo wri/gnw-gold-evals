@@ -8,3 +8,6 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   dashboard_created: 'FALSE'
+notes:
+  env_gated: dashboards absent on prod as of 2026-07-30 — this row expects dashboard_created
+    FALSE, so on prod it passes vacuously; a prod pass is not evidence the guardrail works

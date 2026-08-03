@@ -12,5 +12,7 @@ expected:
   scope: suggest
 notes:
   aoi_type: gadm 0
-  status_reason: 'triage-proposed: INVESTIGATE — parked without a recorded reason; rerun on
-    staging, then unpark, rewrite, or delete with the reason written down.'
+  status_reason: 'parked 2026-08-03: the most on-charter prompt in the dataset-suggestion
+    group (it explicitly asks for suggestions), but its expectations sit on the dead suggested_datasets
+    surface (0 of 1,298 trials populate it). Unpark after rewriting onto nudge_type/nudge_options,
+    fixing ''wilfires'' in the same edit.'

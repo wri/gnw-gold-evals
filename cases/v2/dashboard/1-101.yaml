@@ -11,3 +11,5 @@ expected:
   dataset_name: Tree cover loss
   dashboard_created: 'TRUE'
   dashboard_widgets: insight;insight;map;text
+notes:
+  env_gated: dashboards absent on prod as of 2026-07-30

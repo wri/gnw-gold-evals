@@ -13,6 +13,7 @@ expected:
 notes:
   aoi_type: gadm 0
   class_1: cropland
-  value_2: 924,000 km²
+  value_2: 374,000 km² (37.4 million ha) — was 924,000 km², which is Nigeria's land area,
+    not its cropland
   date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
     the full range and slices in code; the answer carries the year'
