@@ -11,6 +11,40 @@ not restate them; it says what to change and why.
 
 ---
 
+## Execution status — 2026-08-03
+
+Branch `caseset-v2-improvements`. Phases 1, 3 and 4 are **done**; Phase 2 was
+skipped by decision (§12).
+
+| phase | state | commits / evidence |
+|---|---|---|
+| Doc decisions (scope-30, H6 in, 1/10 default) | done | §6, §12, §13; `cli.py`, `CLAUDE.md` |
+| **Phase 0** notes-only | done | uid-neutral, proven: `caseset_version` stayed `a93cedfc97c98a4d` |
+| **Phase 1** PR-Ha (H1, H2, H3, H8) | done | 15 tests, written first |
+| **Phase 1** PR-Hb (H4, H5, H6, H7) | done | 17 tests; `PR-04-fix-first.md` amended for H7 |
+| **Phase 2** baseline run | **skipped** | `20260802T055915Z` is the baseline |
+| **Phase 3** verification pulls | done | run `20260803T195628Z` — 1-054 confirmed, 1-010 resolved, 1-043 deferred |
+| **Phase 4** case train C1–C4 | done | 30 rows edited, 1 deleted; `caseset_version` → `753d18470d2b6000` |
+| **Phase 5** validation run | in progress | 3 trials, to diff against `20260802T055915Z` |
+| **Phase 6** second wave | not started | unparks, 1-062, audit `--strict` |
+
+**Smoke result on the 14 rewritten rows** (run `20260803T200444Z`, 3 trials):
+**13/14 pass**, and 1-007 passes after a second pass (run `20260803T201019Z`), so
+**14/14**. Before these edits every one of those rows was failing or flapping.
+
+Two findings from execution worth carrying:
+
+- **1-007 needed two passes.** Repairing the grammar and adding `scope` was not
+  enough — it still nudged 3/3 because the agent could not tell "disturbance
+  alerts over peatland" from "peatland extent". Naming the *phenomenon* fixed it.
+  Metric precision means naming what is being measured, not merely writing a
+  grammatical sentence.
+- **H6 fixed 1-002 without any case edit**, and made it deterministic (supported
+  on 3/15 trials → 15/15). The expectation re-pin remains worthwhile purely for
+  margin. Verified to introduce zero false-supported verdicts elsewhere (§4 H6).
+
+---
+
 ## 0. Action index
 
 | action | rows | where |
