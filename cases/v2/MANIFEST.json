@@ -1,5 +1,5 @@
 {
-  "caseset_version": "eeb3e8f31a039f34",
+  "caseset_version": "2276185a231bfdad",
   "case_count": 114,
   "source": "gold-live.csv",
   "cases": [
@@ -67,7 +67,7 @@
       "id": "1-011",
       "uid": "8b4135b1aedc2ec5",
       "group": "parent-child",
-      "status": "ready"
+      "status": "not doing"
     },
     {
       "id": "1-012",
@@ -119,9 +119,9 @@
     },
     {
       "id": "1-020",
-      "uid": "277de563aabc6d39",
+      "uid": "040a04675f98f126",
       "group": "parent-child",
-      "status": "ready"
+      "status": "done"
     },
     {
       "id": "1-021",
@@ -197,9 +197,9 @@
     },
     {
       "id": "1-033",
-      "uid": "ee3aa00838f367d3",
+      "uid": "703163c80e077978",
       "group": "direct",
-      "status": "ready"
+      "status": "done"
     },
     {
       "id": "1-034",
@@ -245,9 +245,9 @@
     },
     {
       "id": "1-041",
-      "uid": "4daa7c2397a8a54d",
+      "uid": "2544dd07dab514ae",
       "group": "direct",
-      "status": "ready"
+      "status": "done"
     },
     {
       "id": "1-042",
@@ -449,9 +449,9 @@
     },
     {
       "id": "1-075",
-      "uid": "f551ba835b7f3b88",
+      "uid": "2b4e103df3c17e7e",
       "group": "direct",
-      "status": "ready"
+      "status": "done"
     },
     {
       "id": "1-076",
@@ -637,7 +637,7 @@
       "id": "1-108",
       "uid": "2113af0ee5d2bd98",
       "group": "direct",
-      "status": "ready"
+      "status": "not doing"
     },
     {
       "id": "mt-001",

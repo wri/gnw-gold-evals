@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version eeb3e8f31a039f34` · 114 cases · done 88 · not doing 3 · ready 16 · todo 7 · **111 active** (everything but `not doing` runs by default)
+`caseset_version 2276185a231bfdad` · 114 cases · done 92 · not doing 5 · ready 10 · todo 7 · **109 active** (everything but `not doing` runs by default)
 
 ## Groups
 
@@ -17,13 +17,13 @@ info-only checks are listed separately (they never enter a verdict).
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 7 | 6 | done 6, not doing 1 |
-| direct | 24 | 22 | done 16, not doing 2, ready 4, todo 2 |
+| direct | 24 | 21 | done 19, not doing 3, todo 2 |
 | imagery | 1 | 1 | done 1 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
 | multiturn | 8 | 8 | ready 7, todo 1 |
 | nudge | 2 | 2 | ready 2 |
-| parent-child | 14 | 14 | done 10, ready 3, todo 1 |
+| parent-child | 14 | 13 | done 11, not doing 1, ready 1, todo 1 |
 | ranking | 1 | 1 | done 1 |
 | refusal | 1 | 1 | done 1 |
 | temporal | 14 | 14 | done 14 |
@@ -37,22 +37,22 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 105 | 0 | 105 | 95% |
-| analysis | 0 | 72 | 72 | 65% |
-| explanation | 25 | 61 | 86 | 77% |
-| output | 77 | 3 | 80 | 72% |
-| scope | 96 | 7 | 103 | 93% |
+| retrieval | 103 | 0 | 103 | 94% |
+| analysis | 0 | 73 | 73 | 67% |
+| explanation | 25 | 62 | 87 | 80% |
+| output | 78 | 3 | 81 | 74% |
+| scope | 94 | 7 | 101 | 93% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 95 | dataset_id_match |
-| scope | 95 | scope_match |
-| aoi_source | 89 | reference only (dashboard AOI source) |
-| dataset_name | 88 | reference only |
-| aoi_ids | 78 | aoi_id_match |
-| answer | 72 | agent_answer, charts_answer, chart_produced |
+| dataset_id | 93 | dataset_id_match |
+| scope | 93 | scope_match |
+| aoi_source | 87 | reference only (dashboard AOI source) |
+| dataset_name | 86 | reference only |
+| aoi_ids | 75 | aoi_id_match |
+| answer | 73 | agent_answer, charts_answer, chart_produced |
 | text | 25 | expected_text_match |
 | context_layer | 13 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
@@ -75,9 +75,11 @@ friends) run on top of it whenever their trigger state exists.
 
 | id | status | group | reason |
 |---|---|---|---|
+| 1-011 | not doing | parent-child | RE-PARKED 2026-08-04 after verification (run 20260803T220705Z). Unparking it was premature: the agent selec... |
 | 1-028 | not doing | direct | parked 2026-08-03: percentage answer (2.10%) and Landmark AOI resolution both unverified here, and the row ... |
 | 1-049 | not doing | direct | parked 2026-08-03: answer 1.41 hectares of tree cover gain over 2010-2015 for a whole reserve is implausibl... |
 | 1-085 | not doing | dataset-suggestion | parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for sugge... |
+| 1-108 | not doing | direct | PARKED 2026-08-04 on creation, after verification (run 20260803T220705Z). It was authored to repay the leve... |
 | 1-002 | todo | direct | promote to done once re-verified on a --ff experimental run |
 | 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
