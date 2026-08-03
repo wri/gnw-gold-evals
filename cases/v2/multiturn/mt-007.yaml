@@ -31,3 +31,13 @@ notes:
     framing was my inference and it is withdrawn. T2 defends the same figure, so the answer
     anchor and the ''maintains its original figure'' text now agree — which was the whole
     point of the root fix.'
+  finding: '2026-08-04 (run 20260803T222038Z, ff=experimental): the agent has NO stable policy
+    for a bare tree cover loss question. T1 applied context_layer=primary_forest and answered
+    230,003 ha on 1 of 3 trials, and applied no context layer and answered 885,237/885,238
+    ha (total) on the other 2. This also explains the earlier confusion: under the total framing
+    it looked like primary forest was the 2-of-3 default, and under the primary framing it
+    looks like total is. It is neither — it is close to a coin flip. Under the 2026-08-04
+    decision that primary forest IS correct, this row is now a working sensor for a real inconsistency
+    and SHOULD fail until the agent is consistent. Same family as 1-070 (2/3 total), 1-071
+    (4/6 total) and 1-093. Separately, t2.web_fallback fails on 2/3 — under pushback the agent
+    cites wri.org pages rather than the data it pulled, which is an independent standing finding.'
