@@ -25,7 +25,7 @@ skipped by decision (§12).
 | **Phase 2** baseline run | **skipped** | `20260802T055915Z` is the baseline |
 | **Phase 3** verification pulls | done | run `20260803T195628Z` — 1-054 confirmed, 1-010 resolved, 1-043 deferred |
 | **Phase 4** case train C1–C4 | done | 30 rows edited, 1 deleted; `caseset_version` → `753d18470d2b6000` |
-| **Phase 5** validation run | done | run `20260803T201245Z` — **88/105 pass (84%)**, was 56%; see `results/recommendations/20260803T201245Z.md` |
+| **Phase 5** validation run | **partial — see below** | `20260803T201245Z` ran without `--ff experimental`; the corrected re-run was stopped by request |
 | **Phase 6** second wave | not started | unparks, 1-062, audit `--strict` |
 
 **Result — validation run `20260803T201245Z`** (3 trials, 10 workers):
@@ -45,9 +45,36 @@ run_id encodes it (`…_staging_experimental` vs a bare `…_staging`), which is
 tell to check before diffing two runs. `CLAUDE.md` now documents this.
 
 Excluding those 7, the run gives **88/98 = 90%**, matching the §9 projection that
-case + harness work alone reaches ~90%. The corrected run with the flag set should
-land higher, since those 7 rows pass immediately once the tools exist
-(demonstrated on 1-096 and 1-098, run `20260803T213717Z_staging_experimental`).
+case + harness work alone reaches ~90%. Those 7 rows pass immediately once the
+tools exist (demonstrated on 1-096 and 1-098, run
+`20260803T213717Z_staging_experimental`).
+
+### Outstanding — a clean validation run
+
+**A corrected full run with `--ff experimental` was launched and then stopped by
+request, so no comparable 3-trial validation exists yet.** What we have instead:
+
+| evidence | status |
+|---|---|
+| `20260803T201245Z` — 105 rows, 3 trials, **`ff` unset** | committed, but not comparable with the baseline; understates by up to 7 rows |
+| `20260803T213717Z_staging_experimental` — 2 dashboard rows, 1 trial, flag set | confirms the flag is the cause; too narrow to be a headline |
+| `20260803T200444Z` + `20260803T201019Z` — the 14 rewritten rows, 3 trials | 14/14 pass; none of those rows touch dashboards or imagery, so `ff` does not affect them |
+
+So the defensible claim today is **88/98 = 90% on the flag-independent rows**, with
+the 7 flag-affected rows unmeasured at 3 trials. To close it out, one run:
+
+```bash
+uv run gold run --env staging --ff experimental --trials 3 \
+  --build "<label>" --note "<semantics changes>"
+```
+
+then `diff_runs.py` against `20260802T055915Z_staging_experimental` (also
+`ff=experimental`, so like-for-like), and a fresh recommendations doc superseding
+`results/recommendations/20260803T201245Z.md`.
+
+**Also unverified by any run:** the mt-007 T1 root fix (§7.5 / the recommendations
+doc item 9). Its standalone re-verification was stopped along with the full run, so
+the fix is reasoned but unconfirmed — that row's `status` stays `todo`.
 
 The 14 rewritten rows went 14/14 in their own smoke runs (`20260803T200444Z`
 gave 13/14; 1-007 needed a second pass, `20260803T201019Z`). Before the edits
