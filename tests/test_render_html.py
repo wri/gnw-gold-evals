@@ -83,3 +83,28 @@ def test_case_context_extraction(tmp_path):
 def test_injection_requires_placeholder():
     with pytest.raises(ValueError, match="placeholder"):
         render_report(RUN, "<html>no slot</html>", "t")
+
+
+def test_all_runs_injection_embeds_every_run():
+    from render_html import render_report_all
+
+    second = {**RUN, "run_id": "20260802T000000Z_staging",
+              "started": "2026-08-02T00:00:00Z"}
+    html = render_report_all([second, RUN], TEMPLATE.read_text(), "t")
+    payload = html.split('type="application/json">')[1].split("</script>")[0]
+    assert '"runs"' in payload and '"run":' not in payload
+    assert "20260801T000000Z_staging" in payload
+    assert "20260802T000000Z_staging" in payload
+
+
+def test_template_has_run_picker():
+    text = TEMPLATE.read_text()
+    assert 'id="runsel"' in text          # dropdown exists
+    assert "toLocaleString" in text       # human-readable datetime labels
+
+
+def test_load_all_runs_rejects_empty_dir(tmp_path):
+    from render_html import load_all_runs
+
+    with pytest.raises(FileNotFoundError, match="no run JSONs"):
+        load_all_runs(tmp_path)

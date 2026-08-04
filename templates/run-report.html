@@ -1,10 +1,14 @@
 <!-- GOLD run report skeleton — written for a non-technical reader.
 
-     Reusable two ways:
+     Reusable three ways:
      1. tools/render_html.py injects a payload into the RUN_PAYLOAD script
         tag below and writes a standalone file per run.
-     2. Opened raw (placeholder intact), it shows a drop zone — drop any
+     2. tools/render_html.py --all injects every ledger run at once; a
+        dropdown (newest first, human-readable datetime) switches between
+        them, and the URL hash deep-links a specific run.
+     3. Opened raw (placeholder intact), it shows a drop zone — drop any
         results/runs/<id>.json onto it to render locally, no server.
+        Dropping more files adds them to the dropdown in every mode.
 
      Accessibility notes: every percentage is printed as text (meters are
      decorative, aria-hidden); status never rides on colour alone (glyph +
@@ -92,11 +96,22 @@
   .prompt { font-size: 14.5px; margin: 2px 0 1px; }
   table.evm { margin: 8px 0 4px; font-size: 13px; width: auto; min-width: 60%; }
   table.evm th, table.evm td { padding: 4px 10px 4px 0; border-bottom: 1px dotted var(--line); }
+  #runbar { margin: 0 0 16px; }
+  #runbar label { font-size: 13px; color: var(--ink-2); }
+  #runbar select { max-width: 100%; margin-left: 6px; padding: 5px 8px;
+                   font: 13px ui-monospace, Menlo, monospace;
+                   background: var(--panel); color: var(--ink);
+                   border: 1px solid var(--line); border-radius: 8px; }
+  #loadmsg { color: var(--bad-ink); font-size: 13px; margin: 0 0 10px; }
+  .hidden { display: none; }
   #drop { border: 2px dashed var(--line); border-radius: 12px; padding: 60px 20px;
           text-align: center; color: var(--ink-2); margin-top: 40px; }
   footer { margin-top: 44px; color: var(--ink-3); font-size: 12.5px;
            border-top: 1px solid var(--line); padding-top: 12px; }
 </style>
+<div id="runbar" class="hidden"><label>viewing run
+  <select id="runsel"></select></label></div>
+<p id="loadmsg" class="hidden"></p>
 <div id="app"></div>
 <script>
 "use strict";
@@ -412,20 +427,81 @@ function render(payload) {
       · generated ${esc(payload.generated || "locally")}.</footer>`;
 }
 
+/* ---------- run selection: the payload carries one run or many ---------- */
+let SHARED = { info_only: ["date_coverage"], dedicated_map: {}, cases: {},
+               generated: "locally" };
+let RUNS = [];   // newest first
+
+function fmtWhen(run) {
+  const m = (run.run_id || "").match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/);
+  const iso = run.started || (m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}Z` : "");
+  const d = new Date(iso);
+  return isNaN(d) ? (run.run_id || "unknown run")
+    : d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric",
+        hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC" }) + " UTC";
+}
+
+function labelFor(run) {
+  return [fmtWhen(run), run.environment,
+          run.ff ? `ff ${run.ff}` : null,
+          `${(run.results || []).length} case(s) × ${run.num_trials || 1} trial(s)`,
+          run.build]
+    .filter(Boolean).join(" · ");
+}
+
+function refreshPicker(selectedId) {
+  document.getElementById("runbar").classList.toggle("hidden", RUNS.length < 2);
+  document.getElementById("runsel").innerHTML = RUNS.map(r =>
+    `<option value="${esc(r.run_id)}"${r.run_id === selectedId ? " selected" : ""}>${
+      esc(labelFor(r))}</option>`).join("");
+}
+
+function addRun(run) {
+  if (!run || !run.run_id) throw new Error("no run_id — not a ledger run record");
+  RUNS = [...RUNS.filter(r => r.run_id !== run.run_id), run].sort((a, b) =>
+    String(b.started || b.run_id).localeCompare(String(a.started || a.run_id)));
+}
+
+function show(runId) {
+  const run = RUNS.find(r => r.run_id === runId) || RUNS[0];
+  if (!run) return;
+  refreshPicker(run.run_id);
+  document.getElementById("loadmsg").classList.add("hidden");
+  try { history.replaceState(null, "", `#${run.run_id}`); } catch (e) {}
+  render({ ...SHARED, run });
+}
+
+document.getElementById("runsel").addEventListener("change", e => show(e.target.value));
+document.addEventListener("dragover", e => e.preventDefault());
+document.addEventListener("drop", e => {
+  e.preventDefault();
+  const file = e.dataTransfer.files[0];
+  if (!file) return;
+  file.text().then(text => {
+    const run = JSON.parse(text);
+    addRun(run);
+    show(run.run_id);
+  }).catch(err => {
+    const msg = document.getElementById("loadmsg");
+    msg.textContent = `Could not read that file as a run JSON: ${err.message}`;
+    msg.classList.remove("hidden");
+  });
+});
+
 const raw = document.getElementById("run-payload").textContent.trim();
 if (raw && !raw.startsWith("__RUN_")) {
-  render(JSON.parse(raw));
+  const payload = JSON.parse(raw);
+  const { run, runs, ...rest } = payload;
+  SHARED = { ...SHARED, ...rest };
+  for (const r of (runs || (run ? [run] : []))) addRun(r);
+}
+if (RUNS.length) {
+  const fromHash = decodeURIComponent(location.hash.slice(1));
+  show(RUNS.some(r => r.run_id === fromHash) ? fromHash : RUNS[0].run_id);
 } else {
   document.getElementById("app").innerHTML =
     `<h1>GOLD run report</h1>
      <div id="drop">Drop a <span class="mono">results/runs/&lt;run_id&gt;.json</span>
-       file here to render it.</div>`;
-  const zone = document.getElementById("drop");
-  zone.addEventListener("dragover", e => e.preventDefault());
-  zone.addEventListener("drop", e => {
-    e.preventDefault();
-    e.dataTransfer.files[0].text().then(t =>
-      render({ run: JSON.parse(t), generated: "drag-and-drop" }));
-  });
+       file here to render it — drop more to compare via the dropdown.</div>`;
 }
 </script>

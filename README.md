@@ -56,6 +56,10 @@ uv run gold run --env staging --id 1-030 --verbose   # one case
 # reports from a ledger run:
 uv run python tools/report_run.py results/runs/<run_id>.json   # markdown
 uv run python tools/render_html.py results/runs/<run_id>.json  # stakeholder HTML
+uv run python tools/render_inspector.py results/runs/<run_id>.json  # per-check matrix
+uv run python tools/render_html.py --all       # every run behind one dropdown
+uv run python tools/render_inspector.py --all  # ditto for the matrix
+uv run python tools/render_trends.py           # pass-rate ticker across all runs
 
 # regression gate between two runs:
 uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
@@ -85,7 +89,8 @@ src/goldset/            store, canonical hashing, ledger, adapter, buckets,
                         evaluator registry, runner/ (API + multiturn), cli (gold)
 tools/                  check / audit_cases / import_sheet / export_csv /
                         export_sheet_csv / ingest_run / diff_runs / report_run /
-                        render_html / parity / flakiness
+                        render_html / render_inspector / render_trends /
+                        parity / flakiness
 docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
 .github/workflows/ci.yml  lint + tests + store integrity on PRs; manual staging run
 ```

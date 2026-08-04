@@ -83,7 +83,11 @@ concurrency that produced it. Raising workers is the main suspect to watch.
 
 1. **Render the report**: `uv run python tools/render_html.py
    results/runs/<run_id>.json` → `results/reports/<run_id>.html`
-   (the template also accepts a run JSON by drag-and-drop).
+   (the template also accepts a run JSON by drag-and-drop). Refresh the
+   cross-run pages too: `render_html.py --all`, `render_inspector.py --all`
+   (one file each, run-selector dropdown, deep-linkable via `#<run_id>`)
+   and `render_trends.py` (pass-rate ticker; never trends across a
+   differing `ff`).
 2. **Flakiness + diff**: `uv run python tools/flakiness.py
    results/runs/<run_id>.json --per-case`, and `tools/diff_runs.py
    <previous> <current>` against the last comparable run.

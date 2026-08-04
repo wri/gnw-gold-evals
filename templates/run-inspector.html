@@ -45,6 +45,11 @@
   .toolbar button.on { border-color:var(--fg); font-weight:600; }
   .toolbar input { background:var(--card); color:var(--fg); border:1px solid var(--line);
     border-radius:6px; padding:.3rem .6rem; font-size:.8rem; min-width:220px; }
+  #runbar select { background:var(--card); color:var(--fg); border:1px solid var(--line);
+    border-radius:6px; padding:.3rem .6rem; font-size:.78rem;
+    font-family:ui-monospace,Menlo,monospace; max-width:100%; }
+  #runbar label { font-size:.78rem; color:var(--muted); }
+  #loadmsg { color:var(--fail); font-size:.8rem; margin:.3rem 0; }
   .matrixwrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
   table { border-collapse:separate; border-spacing:0; font-size:.75rem; width:max-content; min-width:100%; }
   thead th { position:sticky; top:0; background:var(--bg); z-index:2; }
@@ -104,6 +109,9 @@
 <main>
   <h1>GOLD run inspector</h1>
   <p class="sub" id="runline">No run loaded.</p>
+  <div class="toolbar hidden" id="runbar"><label>run
+    <select id="runsel"></select></label></div>
+  <p id="loadmsg" class="hidden"></p>
 
   <section class="explain">
     <div><b>Every check is tri-state.</b> <span class="v-pass">✓</span> pass (1.0) ·
@@ -143,10 +151,21 @@
 <script id="run-payload" type="application/json">__RUN_PAYLOAD__</script>
 <script>
 "use strict";
-/* ---------- payload ---------- */
+/* ---------- payload: one run or many ---------- */
 let P = null;
+let SHARED = { info_only: ["date_coverage", "answer_traceability", "class_value_match"],
+               cases: {} };
+let RUNS = [];   // newest first
 const rawText = document.getElementById("run-payload").textContent.trim();
-if (rawText && rawText !== "__RUN" + "_PAYLOAD__") { try { P = JSON.parse(rawText); } catch (e) {} }
+if (rawText && rawText !== "__RUN" + "_PAYLOAD__") {
+  try {
+    const payload = JSON.parse(rawText);
+    const { run, runs, ...rest } = payload;
+    SHARED = { ...SHARED, ...rest };
+    RUNS = (runs || (run ? [run] : [])).slice().sort((a, b) =>
+      String(b.started || b.run_id).localeCompare(String(a.started || a.run_id)));
+  } catch (e) {}
+}
 
 /* ---------- column model ---------- */
 const GROUPS = [
@@ -364,6 +383,43 @@ function detailHTML(entry, ctx, flk, infoOnly) {
   return html + `<div class="dgrid">${cards.join("")}</div>`;
 }
 
+/* ---------- run selection ---------- */
+function fmtWhen(run) {
+  const m = (run.run_id || "").match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/);
+  const iso = run.started || (m ? `${m[1]}-${m[2]}-${m[3]}T${m[4]}:${m[5]}:${m[6]}Z` : "");
+  const d = new Date(iso);
+  return isNaN(d) ? (run.run_id || "unknown run")
+    : d.toLocaleString("en-GB", { day: "numeric", month: "short", year: "numeric",
+        hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "UTC" }) + " UTC";
+}
+function labelFor(run) {
+  return [fmtWhen(run), run.environment,
+          run.ff ? `ff ${run.ff}` : null,
+          `${(run.results || []).length} case(s) × ${run.num_trials || 1} trial(s)`,
+          run.build]
+    .filter(Boolean).join(" · ");
+}
+function refreshPicker(selectedId) {
+  document.getElementById("runbar").classList.toggle("hidden", RUNS.length < 2);
+  document.getElementById("runsel").innerHTML = RUNS.map(r =>
+    `<option value="${esc(r.run_id)}"${r.run_id === selectedId ? " selected" : ""}>${
+      esc(labelFor(r))}</option>`).join("");
+}
+function addRun(run) {
+  if (!run || !run.run_id) throw new Error("no run_id — not a ledger run record");
+  RUNS = RUNS.filter(r => r.run_id !== run.run_id).concat([run]).sort((a, b) =>
+    String(b.started || b.run_id).localeCompare(String(a.started || a.run_id)));
+}
+function show(runId) {
+  const run = RUNS.find(r => r.run_id === runId) || RUNS[0];
+  if (!run) return;
+  P = { ...SHARED, run };
+  refreshPicker(run.run_id);
+  document.getElementById("loadmsg").classList.add("hidden");
+  try { history.replaceState(null, "", `#${run.run_id}`); } catch (e) {}
+  render();
+}
+
 /* ---------- toolbar + drag-drop ---------- */
 document.getElementById("toolbar").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
@@ -372,18 +428,25 @@ document.getElementById("toolbar").addEventListener("click", e => {
   render();
 });
 document.getElementById("search").addEventListener("input", render);
+document.getElementById("runsel").addEventListener("change", e => show(e.target.value));
 document.addEventListener("dragover", e => e.preventDefault());
 document.addEventListener("drop", e => {
   e.preventDefault();
   const f = e.dataTransfer.files[0]; if (!f) return;
   f.text().then(text => {
     const run = JSON.parse(text);
-    P = Object.assign({ info_only: ["date_coverage","answer_traceability","class_value_match"],
-                        cases: {} }, P || {}, { run });
-    render();
+    addRun(run);
+    show(run.run_id);
+  }).catch(err => {
+    const msg = document.getElementById("loadmsg");
+    msg.textContent = `Could not read that file as a run JSON: ${err.message}`;
+    msg.classList.remove("hidden");
   });
 });
-if (P) render();
+if (RUNS.length) {
+  const fromHash = decodeURIComponent(location.hash.slice(1));
+  show(RUNS.some(r => r.run_id === fromHash) ? fromHash : RUNS[0].run_id);
+}
 </script>
 </body>
 </html>
