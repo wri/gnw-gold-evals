@@ -1,4 +1,4 @@
-"""PR-Ha — the four corrective harness fixes (docs/caseset-v2-improvement-plan.md §4).
+"""PR-Ha — the four corrective harness fixes (docs/specs/caseset-v2-improvement-plan.md §4).
 
 Each of these turned a *correct* agent answer into a failing check, so every
 case below is taken from the row that exposed it in a real staging run.

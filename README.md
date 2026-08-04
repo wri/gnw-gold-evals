@@ -90,7 +90,8 @@ schema/case.schema.json the case contract; every file validated in tests
 src/goldset/            store, canonical hashing, ledger, adapter, buckets,
                         evaluator registry, runner/ (API + multiturn), cli (gold)
 tools/                  thin CLIs over src/goldset — see tools/README.md
-docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
+docs/                   evaluator-map.html; planning notes live in docs/specs/
+                        (gitignored, local-only)
 .github/workflows/ci.yml  lint + tests + store integrity on PRs; manual staging run
 ```
 
@@ -100,10 +101,6 @@ docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
 
 - [CLAUDE.md](CLAUDE.md) — working agreements, run playbook, the
   `ff=experimental` rule, after-run ritual
-- [docs/PLAN.md](docs/PLAN.md) — the design plan (identity system §2,
-  working agreements §6); read before proposing changes
-- [docs/specs/](docs/specs/) — one spec per PR with acceptance criteria,
-  sequencing the build (case store → ledger → harness → … → multiturn)
 
 **Cases**
 
@@ -112,10 +109,6 @@ docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
 - [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md) — generated coverage doc:
   groups, buckets, expected-field census, dataset coverage vs the
   project-zeno catalog, parked cases, known gaps
-- [docs/CASESET_PLAN.md](docs/CASESET_PLAN.md) — how the case set should
-  evolve to serve GOLD's purpose
-- [docs/caseset-v2-improvement-plan.md](docs/caseset-v2-improvement-plan.md)
-  — the 2026-08-03/04 v2 curation campaign (what changed and why)
 
 **Checks and scoring**
 
@@ -123,8 +116,6 @@ docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
   triage reference for every check the harness can emit
 - [docs/evaluator-map.html](docs/evaluator-map.html) — visual check ↔ bucket
   map with case archetypes
-- [docs/analysis-checks-investigation.md](docs/analysis-checks-investigation.md)
-  — do the Analysis-bucket chart checks survive aggregated data?
 
 **Results**
 
@@ -135,12 +126,10 @@ docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
 - [results/campaigns/](results/campaigns/) — campaign narratives
 - [tools/README.md](tools/README.md) — every CLI, grouped by lifecycle
 
-**Historical / planning**
-
-- [docs/caseset-implementation-plan.md](docs/caseset-implementation-plan.md)
-  — execution layer for CASESET_PLAN
-- [docs/case-slug-plan.md](docs/case-slug-plan.md) — readable case slugs
-  (proposed, not yet executed)
+Planning notes (design plan, PR specs, case-set plans, one-off
+investigations) are **local-only** in `docs/specs/`, which is gitignored —
+docs elsewhere cite them as `docs/specs/<name>.md §N` for readers working in
+a team checkout that has them.
 
 ## How scoring reads
 
@@ -192,12 +181,10 @@ Baseline 3-trial staging campaign committed as run
 `20260801T093002Z_staging_experimental` (104 cases; see
 `results/campaigns/` and `results/recommendations/`).
 
-Known open items (tracked in specs/case notes, deliberately not papered
-over):
+Known open items (tracked in case notes, deliberately not papered over):
 
-- `chart_type` seeding is deferred until live chart types are verified
-  (`docs/specs/PR-06-new-validators.md`) — the validator is wired but no
-  case exercises it yet.
+- `chart_type` seeding is deferred until live chart types are verified —
+  the validator is wired but no case exercises it yet.
 - `1-062` and `mt-007` are held at `todo`: each needs its dropped/pending
   expectation resolved before activation (see their `status_reason`).
 - `1-072` / `1-011` carry relative-date phrasing pending a team call;

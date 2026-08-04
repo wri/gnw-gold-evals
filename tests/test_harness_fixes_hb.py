@@ -1,4 +1,4 @@
-"""PR-Hb — the four check-semantics changes (docs/caseset-v2-improvement-plan.md §4).
+"""PR-Hb — the four check-semantics changes (docs/specs/caseset-v2-improvement-plan.md §4).
 
     H4  classify_scope: a dataset_choice nudge with no pull IS `suggest`
     H5  charts_answer gated on numeric support; the judge becomes info-only

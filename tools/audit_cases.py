@@ -4,7 +4,7 @@
     uv run python tools/audit_cases.py --strict       # exit 1 on violations
 
 Encodes the rules from ``cases/README.md`` and the acceptance criteria
-from ``docs/caseset-implementation-plan.md`` (W1/W2/W3):
+from ``docs/specs/caseset-implementation-plan.md`` (W1/W2/W3):
 
 - depth: every ready/done/todo case implies >=2 checks across >=2 buckets
   (the ``metadata`` group is the sanctioned judged-only exception)

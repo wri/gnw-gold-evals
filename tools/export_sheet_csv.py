@@ -2,7 +2,7 @@
 
     uv run python tools/export_sheet_csv.py --out scratch/push/
 
-Writes two files (docs/caseset-implementation-plan.md §1.2):
+Writes two files (docs/specs/caseset-implementation-plan.md §1.2):
 
 - ``cases.csv``     — the tab replacement (File -> Import -> Replace).
   Carries ``uid`` and ``last_changed`` as row-wise version markers sheet
