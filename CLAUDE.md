@@ -29,7 +29,34 @@ uv run python tools/check.py             # verify uids + manifest (CI gate; nonz
 uv run python tools/check.py --fix       # REQUIRED after hand-editing any case YAML
 uv run python tools/import_sheet.py --csv <export.csv>   # or --url; idempotent; --prune for removals
 uv run python tools/export_csv.py --out scratch/gold.csv --status-exclude "not doing"
+
+# coverage doc + dataset catalog snapshot
+uv run python tools/coverage_doc.py       # regenerate cases/v2/COVERAGE.md (CI: --check)
+uv run python tools/sync_zeno_catalog.py  # refresh cases/zeno_catalog.json from project-zeno main
 ```
+
+## Dataset coverage against project-zeno
+
+COVERAGE.md's "Dataset coverage" section reports the case set against the
+**agent's dataset catalog**: `src/agent/datasets/catalog/*.yml` on
+`wri/project-zeno` main. Each catalog YAML defines the `dataset_id`/name, any
+dataset-specific `parameters` (e.g. `canopy_cover` with its legal values),
+`context_layers`, and four per-dataset instruction fields
+(`prompt_instructions`, `selection_hints`, `code_instructions`,
+`presentation_instructions`).
+
+To get this info next time: the sibling checkout lives at
+`../project-zeno`; `tools/sync_zeno_catalog.py` runs `git fetch origin main`
+there and reads the files with `git show origin/main:<path>` — the working
+tree is never touched (override with `--zeno <path>` / `--ref <ref>`). It
+writes the trimmed, committed snapshot `cases/zeno_catalog.json` (source sha
++ sync date recorded), and `coverage_doc.py` renders only from that snapshot
+so CI's freshness gate needs no network and no sibling repo. When zeno's
+catalog changes: re-run the sync, regenerate COVERAGE.md, and commit both
+together. Coverage semantics: a case counts toward every dataset its
+`dataset_id` accepts; `answer`/`text`-graded cases are the ones that exercise
+a dataset's prompt/code/presentation instructions, while any `dataset_id`
+check exercises its `selection_hints`.
 
 Runs execute in-repo (the gnw-evals bridge was retired after the
 2026-08-01 parity run; `export_csv.py` remains for triage):
