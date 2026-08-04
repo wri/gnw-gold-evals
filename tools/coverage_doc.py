@@ -16,8 +16,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import Counter
+from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
@@ -258,6 +260,8 @@ def render(cases_dir: Path, catalog_path: Path | None = None) -> str:
         + " · ".join(f"{s} {n}" for s, n in sorted(statuses.items()))
         + f" · **{len(active)} active** (everything but `not doing` runs by default)",
         "",
+        f"_Last updated: {date.today().isoformat()}_",
+        "",
         "## Groups",
         "",
         "| group | cases | active | statuses |",
@@ -379,8 +383,12 @@ def main() -> int:
     out = args.out or (args.cases_dir / "COVERAGE.md")
     text = render(args.cases_dir, args.catalog)
     if args.check:
+        # the Last-updated stamp records when the doc was regenerated; a
+        # date-only difference is not drift, so normalise it on both sides
+        stamp = re.compile(r"^_Last updated: \d{4}-\d{2}-\d{2}_$", re.MULTILINE)
         current = out.read_text(encoding="utf-8") if out.exists() else ""
-        if current != text:
+        if stamp.sub("_Last updated: <date>_", current) != stamp.sub(
+                "_Last updated: <date>_", text):
             print(f"{out} is stale — regenerate with: "
                   f"uv run python tools/coverage_doc.py --cases-dir {args.cases_dir}")
             return 1

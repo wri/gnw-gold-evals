@@ -5,7 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 2276185a231bfdad` · 114 cases · done 92 · not doing 5 · ready 10 · todo 7 · **109 active** (everything but `not doing` runs by default)
+`caseset_version 2276185a231bfdad` · 114 cases · done 93 · not doing 5 · ready 10 · todo 6 · **109 active** (everything but `not doing` runs by default)
+
+_Last updated: 2026-08-04_
 
 ## Groups
 
@@ -17,7 +19,7 @@ info-only checks are listed separately (they never enter a verdict).
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 7 | 6 | done 6, not doing 1 |
-| direct | 24 | 21 | done 19, not doing 3, todo 2 |
+| direct | 24 | 21 | done 20, not doing 3, todo 1 |
 | imagery | 1 | 1 | done 1 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
@@ -105,7 +107,6 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-049 | not doing | direct | parked 2026-08-03: answer 1.41 hectares of tree cover gain over 2010-2015 for a whole reserve is implausibl... |
 | 1-085 | not doing | dataset-suggestion | parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for sugge... |
 | 1-108 | not doing | direct | PARKED 2026-08-04 on creation, after verification (run 20260803T220705Z). It was authored to repay the leve... |
-| 1-002 | todo | direct | promote to done once re-verified on a --ff experimental run |
 | 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |

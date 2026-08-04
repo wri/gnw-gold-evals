@@ -23,7 +23,11 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
   "harness": {"repo": "gnw-evals", "sha": "5a377cd"},
   "judge_model": "claude-haiku-4-5",
   "num_trials": 1,
-  "caseset_version": "2f8b10272938527c",  // must match cases/MANIFEST.json
+  "caseset": "v2",                      // store directory loaded (cases/<caseset>);
+                                        // recorded from 2026-08-04 — older runs
+                                        // lack it (attribute via caseset_version
+                                        // against the manifests' git history)
+  "caseset_version": "2f8b10272938527c",  // must match cases/<caseset>/MANIFEST.json
   "results": [
     {
       "uid": "0fa55d427af482af",       // the exact case version scored
@@ -97,3 +101,14 @@ uid** (supplements win over the primary, later supplements over earlier), prints
 per-row provenance, names any row nothing has measured, warns when the sources
 disagree on `ff`, and writes nothing to `results/runs/`. Both runs stay in the
 ledger as honest, independently reproducible records; only the summary is joined.
+
+## Ledger resets
+
+- **2026-08-04 — v2 baseline reset.** All runs against v2 curation states
+  (the 2026-08-02 run and the 2026-08-03 verification/iteration runs) and all
+  generated reports were removed in one reviewable commit, so the first
+  official v2 run (staging, `ff=experimental`, 3 trials) starts the v2 record
+  clean. The v1 sheet-lineage runs (2026-07-31 / 2026-08-01,
+  `caseset_version d564c1b3b4786bc0`) were kept, as were
+  `results/recommendations/` and `results/campaigns/` — analysis history
+  survives its inputs. The removed files remain in git history.

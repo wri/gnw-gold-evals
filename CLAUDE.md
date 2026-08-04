@@ -31,9 +31,16 @@ uv run python tools/import_sheet.py --csv <export.csv>   # or --url; idempotent;
 uv run python tools/export_csv.py --out scratch/gold.csv --status-exclude "not doing"
 
 # coverage doc + dataset catalog snapshot
-uv run python tools/coverage_doc.py       # regenerate cases/v2/COVERAGE.md (CI: --check)
+uv run python tools/coverage_doc.py       # REQUIRED after any case edit, alongside check.py --fix
 uv run python tools/sync_zeno_catalog.py  # refresh cases/zeno_catalog.json from project-zeno main
 ```
+
+**COVERAGE.md must move with the case set.** Any change to a case —
+prompt, expected values, status, group, a new or deleted case — is
+incomplete until `tools/check.py --fix` *and* `tools/coverage_doc.py` have
+run and both results are committed with the edit. The doc carries a
+`Last updated` stamp (date-only differences don't trip the gate) and CI
+fails the PR via `coverage_doc.py --check` if the content is stale.
 
 ## Dataset coverage against project-zeno
 
@@ -145,7 +152,9 @@ concurrency that produced it. Raising workers is the main suspect to watch.
 - `id` (the sheet's `test_id`) is the stable lineage handle across versions.
 
 Consequently: any edit to a case file must be followed by
-`tools/check.py --fix`, and CI-style verification is plain `check.py`.
+`tools/check.py --fix` **and** `tools/coverage_doc.py` (COVERAGE.md derives
+from the store), and CI-style verification is plain `check.py` plus
+`coverage_doc.py --check`.
 `tests/test_schema.py` validates every case file against
 `schema/case.schema.json`, so a malformed case fails the suite, not a run.
 

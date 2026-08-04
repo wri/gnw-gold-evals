@@ -48,9 +48,11 @@ uv run python -m pytest -q              # 475 tests, no network
 # secrets: API_TOKEN (environment-specific) and ANTHROPIC_API_KEY (judge)
 # may live in .env — loaded before the token check.
 
-# run the GOLD set against staging (the harness lives here now):
-uv run gold run --env staging --trials 3
-uv run gold run --env staging --id 1-030 --verbose   # one case
+# run the GOLD set against staging (the harness lives here now).
+# --ff experimental is REQUIRED on any run whose verdict you trust:
+# dashboards + satellite imagery only exist behind that profile (CLAUDE.md).
+uv run gold run --env staging --ff experimental --trials 3
+uv run gold run --env staging --ff experimental --id 1-030 --verbose   # one case
 # writes results/runs/<run_id>.json + gzipped raw artifacts
 
 # reports from a ledger run:
@@ -87,13 +89,58 @@ results/                committed run ledger + reports (contract: results/README
 schema/case.schema.json the case contract; every file validated in tests
 src/goldset/            store, canonical hashing, ledger, adapter, buckets,
                         evaluator registry, runner/ (API + multiturn), cli (gold)
-tools/                  check / audit_cases / import_sheet / export_csv /
-                        export_sheet_csv / ingest_run / diff_runs / report_run /
-                        render_html / render_inspector / render_trends /
-                        parity / flakiness
+tools/                  thin CLIs over src/goldset — see tools/README.md
 docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
 .github/workflows/ci.yml  lint + tests + store integrity on PRs; manual staging run
 ```
+
+## Documentation map
+
+**Start here**
+
+- [CLAUDE.md](CLAUDE.md) — working agreements, run playbook, the
+  `ff=experimental` rule, after-run ritual
+- [docs/PLAN.md](docs/PLAN.md) — the design plan (identity system §2,
+  working agreements §6); read before proposing changes
+- [docs/specs/](docs/specs/) — one spec per PR with acceptance criteria,
+  sequencing the build (case store → ledger → harness → … → multiturn)
+
+**Cases**
+
+- [cases/README.md](cases/README.md) — what makes a good GOLD prompt;
+  authoring rules for the two stores
+- [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md) — generated coverage doc:
+  groups, buckets, expected-field census, dataset coverage vs the
+  project-zeno catalog, parked cases, known gaps
+- [docs/CASESET_PLAN.md](docs/CASESET_PLAN.md) — how the case set should
+  evolve to serve GOLD's purpose
+- [docs/caseset-v2-improvement-plan.md](docs/caseset-v2-improvement-plan.md)
+  — the 2026-08-03/04 v2 curation campaign (what changed and why)
+
+**Checks and scoring**
+
+- [src/goldset/evaluators/README.md](src/goldset/evaluators/README.md) —
+  triage reference for every check the harness can emit
+- [docs/evaluator-map.html](docs/evaluator-map.html) — visual check ↔ bucket
+  map with case archetypes
+- [docs/analysis-checks-investigation.md](docs/analysis-checks-investigation.md)
+  — do the Analysis-bucket chart checks survive aggregated data?
+
+**Results**
+
+- [results/README.md](results/README.md) — the ledger contract: keying,
+  immutability, tri-state checks, composing across runs
+- [results/recommendations/](results/recommendations/) — per-run action
+  docs (the run isn't done until one exists)
+- [results/campaigns/](results/campaigns/) — campaign narratives
+- [tools/README.md](tools/README.md) — every CLI, grouped by lifecycle
+
+**Historical / planning**
+
+- [docs/caseset-implementation-plan.md](docs/caseset-implementation-plan.md)
+  — execution layer for CASESET_PLAN
+- [docs/case-slug-plan.md](docs/case-slug-plan.md) — readable case slugs
+  (proposed, not yet executed)
 
 ## How scoring reads
 
@@ -124,7 +171,17 @@ docs/                   plans + PR specs (PLAN, CASESET_PLAN, docs/specs/)
   INSUFFICIENT DATA instead of "stable", and `diff_runs.py` can gate on
   silent coverage loss.
 
-## Status (2026-08-01)
+## Status
+
+**2026-08-04 — v2 baseline reset.** Case-set v2 curation is complete (109
+active cases; see `cases/v2/COVERAGE.md`). The ledger was cleared of v2
+*iteration* runs (scoped verifications and mid-curation snapshots at now-stale
+caseset_versions) and all generated reports, keeping the v1 sheet-lineage runs
+intact — so the next official run (staging, `--ff experimental`, 3 trials) is
+the clean v2 baseline every later release is diffed against. Runs now record
+which case store they loaded (`caseset` field).
+
+## Build history (2026-08-01)
 
 The 12-PR build-out is merged: harness ported from
 [gnw-evals](https://github.com/wri/gnw-evals) (behaviour-preserving, then

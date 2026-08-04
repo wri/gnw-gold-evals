@@ -136,5 +136,13 @@ def test_check_mode_gates_freshness(tmp_path):
     assert subprocess.run(base, check=False).returncode == 0
     assert subprocess.run([*base, "--check"], check=False).returncode == 0
     doc = cases_dir / "COVERAGE.md"
+    # the Last-updated stamp exists, and a date-only difference is not drift
+    text = doc.read_text(encoding="utf-8")
+    assert "_Last updated: " in text
+    import re
+    doc.write_text(re.sub(r"_Last updated: \d{4}-\d{2}-\d{2}_",
+                          "_Last updated: 2000-01-01_", text), encoding="utf-8")
+    assert subprocess.run([*base, "--check"], check=False).returncode == 0
+    # any real content change is drift
     doc.write_text(doc.read_text() + "\ndrift\n", encoding="utf-8")
     assert subprocess.run([*base, "--check"], check=False).returncode == 1
