@@ -2,7 +2,7 @@
 
 GOLD is a **capability smoke test**. A case earns its place by failing when
 a release breaks a capability and passing otherwise. Everything below
-follows from that one job. (Strategy lives in `docs/CASESET_PLAN.md`; this
+follows from that one job. (Strategy lives in `docs/specs/CASESET_PLAN.md`; this
 file is the working guide you read before adding or editing a case.)
 
 ## The two stores
@@ -205,7 +205,7 @@ already editing:
 
 - **Depth violations** — a case whose expectations imply checks in fewer than
   2 buckets. A row like that can "pass" while measuring almost nothing, which is
-  the failure mode `docs/PLAN.md` §4 exists to prevent: an unmeasured bucket must
+  the failure mode `docs/specs/PLAN.md` §4 exists to prevent: an unmeasured bucket must
   be visibly different from a passing one. Usually fixed by adding a verified
   `answer` (which buys Analysis, Explanation *and* Output at once) — prefer that
   over `scope`, which is the least reliable stage in the suite.

@@ -2,7 +2,7 @@
 
 This is the triage reference for every check the GOLD harness can emit. It
 describes behaviour **as the code in this directory stands** (last evaluator
-changes: 2026-08-03/04, H1–H8 of `docs/caseset-v2-improvement-plan.md` §4).
+changes: 2026-08-03/04, H1–H8 of `docs/specs/caseset-v2-improvement-plan.md` §4).
 Where the code and an older spec disagree, the code wins and the difference is
 called out.
 
@@ -38,7 +38,7 @@ with checks added after the port (`runner/base.py:148-166`) — never read it.
 ### Tri-state, and why `null` vs `0.0` is the whole game
 
 Every check is `1.0` (pass), `0.0` (fail), or `null` (not applicable). The
-ledger refuses anything else (`ledger.py:61-69`). `docs/PLAN.md` §6 requires each
+ledger refuses anything else (`ledger.py:61-69`). `docs/specs/PLAN.md` §6 requires each
 check to decide *deliberately* whether an absence is `null` or `0.0`, so each
 section below states its rule. Two consequences worth internalising while
 triaging:
@@ -53,7 +53,7 @@ triaging:
 
 ### Numbers in code, structure to the judge
 
-No judge is ever asked to do arithmetic (`docs/PLAN.md` §6). The precedent is
+No judge is ever asked to do arithmetic (`docs/specs/PLAN.md` §6). The precedent is
 recorded at the top of `chart_numeric.py:3-8`: asked about a chart whose 25
 yearly values sum to 25.31 Mha, Haiku reported the same chart as summing to
 27.4 Mha and to 26.0 Mha, each "within tolerance" of whatever expected value it
@@ -69,7 +69,7 @@ now-info-only `charts_answer_judge`.
 A **gating** check can turn a row's verdict to `fail`. An **info-only** check is
 reported and never enters a verdict (`buckets.py:83-90`, `113-124`). Demotion is
 an admission-discipline device, not silencing: judged checks run info-only until
-they show std ≤ 0.10 over 3 trials (`docs/PLAN.md` §4), and a check that proves
+they show std ≤ 0.10 over 3 trials (`docs/specs/PLAN.md` §4), and a check that proves
 unreliable in a live run is demoted with a stated re-admission condition. See
 [Info-only checks](#info-only-checks-and-what-re-admission-requires) at the end.
 
@@ -152,7 +152,7 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 Two expected fields drive **no** check of their own: `aoi_source` is read only by
 `dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
 at all — it is present on 90 of the 114 `cases/v2` cases and, per
-`docs/PLAN.md` §2.2, is hashed into the uid regardless of being unscored. Do not
+`docs/specs/PLAN.md` §2.2, is hashed into the uid regardless of being unscored. Do not
 read either as coverage.
 
 `chart_type_match` currently fires on **zero** `cases/v2` rows (no case sets
@@ -819,7 +819,7 @@ presence check, and everything about the chart's quality belongs to
 **Gotchas — read this one before filing anything.** `chart_produced` is currently
 **the worst gating check in the suite**: 0.89, ±0.10, 14 flapping rows over 66 in
 `20260803T201245Z`, sitting exactly on the admission gate. Two distinct
-populations (`docs/caseset-v2-improvement-plan.md` §5, "the other flake
+populations (`docs/specs/caseset-v2-improvement-plan.md` §5, "the other flake
 engine"): cascade-driven rows (no pull → no chart), and ~6 standalone rows where
 the agent pulls, answers correctly, and simply omits the chart (1-008, 1-012,
 1-035, 1-048, 1-050, 1-069). No case edit fixes the second population — it needs
@@ -1168,7 +1168,7 @@ knowing before you read a bucket table:
 
 ## Adding or changing a check
 
-The two rules that bite hardest, both from `docs/PLAN.md` §6:
+The two rules that bite hardest, both from `docs/specs/PLAN.md` §6:
 
 1. Decide, and write down in the check's spec, whether an absence is `null` or
    `0.0`. Every section above exists because someone had to reconstruct that
@@ -1180,6 +1180,6 @@ The two rules that bite hardest, both from `docs/PLAN.md` §6:
 
 Deterministic checks ship after a clean run against known-good rows; judged
 checks ship info-only until they demonstrate std ≤ 0.10 over 3 trials
-(`docs/PLAN.md` §4). And whenever check semantics change, the next run must carry
+(`docs/specs/PLAN.md` §4). And whenever check semantics change, the next run must carry
 `--note` — the after-every-run ritual in `CLAUDE.md` depends on it to keep a
 `diff_runs` regression from being misread as an agent change.

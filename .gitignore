@@ -15,3 +15,6 @@ scratch/
 
 # Per-run raw artifacts (large, regenerable) — the committed ledger lives in results/runs/
 results/artifacts/
+
+# AI planning (local-only; untracked 2026-08-04)
+docs/specs/
