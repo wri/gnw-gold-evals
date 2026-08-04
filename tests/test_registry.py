@@ -36,7 +36,9 @@ def test_registry_order_matches_legacy_merge_order():
 
 
 def test_every_known_score_field_is_owned_exactly_once():
-    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 27
+    # 28 as of 2026-08-03: charts_answer_judge_score joined as an info-only
+    # companion to charts_answer_score (H5).
+    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 28
 
 
 def test_run_evaluations_with_no_expectations_scores_nothing():

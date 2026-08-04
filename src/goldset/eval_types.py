@@ -83,6 +83,8 @@ class TestResult(BaseModel):
 
     # Answer evaluation fields
     charts_answer_score: float | None = None
+    # The chart judge's own appropriateness verdict: reported, never gating (H5).
+    charts_answer_judge_score: float | None = None
     chart_answer_score_reason: str | None = None
     agent_answer_score: float | None = None
     agent_answer_score_reason: str | None = None
@@ -154,6 +156,7 @@ class TestResult(BaseModel):
     date_coverage_score_std: float | None = None
     date_extraction_score_std: float | None = None
     charts_answer_score_std: float | None = None
+    charts_answer_judge_score_std: float | None = None
     agent_answer_score_std: float | None = None
     expected_text_match_score_std: float | None = None
     clarification_requested_score_std: float | None = None

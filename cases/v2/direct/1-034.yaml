@@ -1,9 +1,9 @@
 id: 1-034
-uid: 2addb89ac3e338e4
+uid: e52c28e867147021
 status: done
 group: direct
-query: In total, how much tree cover loss was recorded in Champoton community land in Mexico,
-  between 2001 and 2024
+query: In total, how much primary forest loss was recorded in Champoton community land in
+  Mexico, between 2001 and 2024?
 expected:
   aoi_source: Landmark
   dataset_id: '4'
@@ -15,3 +15,7 @@ notes:
   aoi_type: Landmark
   date_scrub: 'W2 2026-08-01: date expectations removed — annual dataset, the agent pulls
     the full range and slices in code; the answer carries the year'
+  rewrite: 'W1 2026-08-03: the prompt was silent about which quantity it wanted, so the agent
+    flapped between all tree cover loss (13,359.47) and the primary-forest subset (10,765.60).
+    NOT a stale expectation: on 0801 trial 2 the agent applied the primary-forest layer and
+    context_layer_match, agent_answer and charts_answer all scored 1.0 together.'

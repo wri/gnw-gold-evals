@@ -37,23 +37,51 @@ def classify_scope(agent_state: dict[str, Any]) -> str:
         return "suggest"
     nudge = agent_state.get("nudge") or {}
     if isinstance(nudge, dict) and nudge.get("type"):
+        # A dataset_choice nudge IS a dataset suggestion (H4). The
+        # ``suggested_datasets`` state field above is populated in 0 of 1,298
+        # retained case-trials: the pick_aoi/pick_dataset -> nudge migration
+        # (wri/project-zeno#770) moved suggestion onto the nudge surface, and
+        # dataset_choice appears 162 times there. Without this, every row
+        # expecting ``suggest`` failed on a field the product no longer writes,
+        # so the "suggest" coverage the case set claimed was fictional.
+        # aoi_choice and friends remain ``clarify`` — a different class.
+        if nudge.get("type") == "dataset_choice":
+            return "suggest"
         return "clarify"
     return "none"
 
 
 def evaluate_scope(agent_state: dict[str, Any], expected_scope: str) -> dict[str, Any]:
+    """Score the observed scope class against the expectation.
+
+    ``expected_scope`` accepts ``;``-separated alternatives, matching the
+    dataset_id convention (cases/README.md): some rows are legitimately
+    either-way and a single pin makes them flap. 1-089 is the reference case —
+    its own ``text`` expectation licenses two behaviours ("Refuses … **or**
+    acknowledge and caution that TCL is annual"), and the agent does both across
+    identical trials, so ``refuse;clarify`` is the honest expectation.
+
+    Any invalid alternative abstains for the whole expectation rather than
+    silently scoring on the remainder — a typo must be loud, not lenient.
+    """
     result: dict[str, Any] = {"scope_match_score": None, "actual_scope": None}
-    expected = _EXPECTED_ALIASES.get(
-        expected_scope.strip().lower(), expected_scope.strip().lower()
-    )
-    if not expected:
+    alternatives = [
+        _EXPECTED_ALIASES.get(part.strip().lower(), part.strip().lower())
+        for part in str(expected_scope).split(";")
+        if part.strip()
+    ]
+    if not alternatives:
         return result
-    if expected not in VALID_SCOPES:
-        result["actual_scope"] = f"invalid expected_scope {expected_scope!r}; abstained"
+
+    invalid = [alt for alt in alternatives if alt not in VALID_SCOPES]
+    if invalid:
+        result["actual_scope"] = (
+            f"invalid expected_scope {expected_scope!r}; abstained"
+        )
         return result
 
     actual = classify_scope(agent_state)
     result["actual_scope"] = actual
-    wanted = "none" if expected == "refuse" else expected
-    result["scope_match_score"] = 1.0 if actual == wanted else 0.0
+    wanted = {"none" if alt == "refuse" else alt for alt in alternatives}
+    result["scope_match_score"] = 1.0 if actual in wanted else 0.0
     return result

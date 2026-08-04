@@ -161,20 +161,25 @@ def evaluate_final_answer(
 
     judge_errors: list[str] = []
 
-    # Score chart JSON, not prose insight text.
+    # Score chart JSON, not prose insight text. The gating score comes from the
+    # deterministic comparator (H5); the judge's own verdict rides along as
+    # `charts_answer_judge`, reported and never gating, so its reliability can be
+    # tracked toward re-admission the way answer_traceability's is.
     charts_answer_score = None
     charts_answer_score_reason = None
+    charts_answer_judge_score = None
     if expected_answer and actual_charts_json:
         try:
-            charts_answer_score, charts_answer_score_reason = _score_and_reason(
-                llm_judge_chart(
-                    query,
-                    expected_answer,
-                    actual_charts_json,
-                    codeact_summary=codeact_summary,
-                    include_reason=True,
-                ),
+            verdict = llm_judge_chart(
+                query,
+                expected_answer,
+                actual_charts_json,
+                codeact_summary=codeact_summary,
+                include_reason=True,
             )
+            charts_answer_score, charts_answer_score_reason = _score_and_reason(verdict)
+            if isinstance(verdict, dict):
+                charts_answer_judge_score = verdict.get("judge_score")
         except Exception as error:  # judge outage: error, never a verdict (F4)
             charts_answer_score_reason = f"JUDGE ERROR: {error}"
             judge_errors.append("charts_answer")
@@ -215,6 +220,7 @@ def evaluate_final_answer(
     # Set actual values to None if empty strings for cleaner CSV output
     return {
         "charts_answer_score": charts_answer_score,
+        "charts_answer_judge_score": charts_answer_judge_score,
         "chart_answer_score_reason": charts_answer_score_reason,
         "agent_answer_score": agent_answer_score,
         "agent_answer_score_reason": agent_answer_score_reason,

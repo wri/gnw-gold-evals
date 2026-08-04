@@ -190,8 +190,10 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--strict", action="store_true",
-                        help="exit 1 on depth/DON'T violations (coverage floors "
-                             "stay report-only until W1 lands)")
+                        help="exit 1 on depth/DON'T violations. Coverage floors "
+                             "stay report-only: clearing them means authoring new "
+                             "cases, not fixing existing ones. Enforced in CI from "
+                             "2026-08-04.")
     args = parser.parse_args(argv)
 
     cases = [case for _p, case, _u in load_store(args.cases_dir)]

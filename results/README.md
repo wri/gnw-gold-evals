@@ -72,3 +72,28 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
   top-level `checks` value is the majority verdict.
 - **No fabricated or backfilled runs.** A ledger entry is written by the
   ingester from real harness output, never by hand.
+
+## Composing a current picture across runs
+
+A scoped re-run is often all that's needed — when only a handful of rows changed,
+or when one capability was unreachable (a missing `ff`, a service outage). The
+temptation is then to write those fresher scores into the earlier run file so
+there is a single number to quote. **Don't**: `write_run` refuses it, and the rules
+above forbid it — but the deeper reason is that a run record also describes *how*
+its rows were produced (`ff`, `workers`, `build`, `harness`, `caseset_version`).
+Splice in rows produced under different conditions and that metadata becomes a lie,
+so the next person to diff the file is misled. That is precisely how the 2026-08-03
+`ff=experimental` misdiagnosis happened.
+
+Compose in the **analysis** instead:
+
+```bash
+uv run python tools/compose_runs.py results/runs/<primary>.json \
+    results/runs/<supplementary>.json
+```
+
+It resolves every active case to its freshest measurement **at the case's current
+uid** (supplements win over the primary, later supplements over earlier), prints
+per-row provenance, names any row nothing has measured, warns when the sources
+disagree on `ff`, and writes nothing to `results/runs/`. Both runs stay in the
+ledger as honest, independently reproducible records; only the summary is joined.

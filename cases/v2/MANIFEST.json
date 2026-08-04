@@ -1,5 +1,5 @@
 {
-  "caseset_version": "a93cedfc97c98a4d",
+  "caseset_version": "2276185a231bfdad",
   "case_count": 114,
   "source": "gold-live.csv",
   "cases": [
@@ -11,7 +11,7 @@
     },
     {
       "id": "1-002",
-      "uid": "1d5d3e04685ceac9",
+      "uid": "c0aba25b266c0416",
       "group": "direct",
       "status": "todo"
     },
@@ -23,13 +23,13 @@
     },
     {
       "id": "1-004",
-      "uid": "e7997bd40a4bc6e1",
+      "uid": "3b339c8fd5aca521",
       "group": "comparative",
       "status": "done"
     },
     {
       "id": "1-005",
-      "uid": "85c044795857542e",
+      "uid": "6c8b9a9d674922d2",
       "group": "parent-child",
       "status": "done"
     },
@@ -41,7 +41,7 @@
     },
     {
       "id": "1-007",
-      "uid": "d8e53dddfeb1a93b",
+      "uid": "b336cdfe8b3ea20e",
       "group": "class-comparison",
       "status": "done"
     },
@@ -53,19 +53,19 @@
     },
     {
       "id": "1-009",
-      "uid": "06567da9ff5ebd32",
+      "uid": "eff330e9e3130aa7",
       "group": "class-comparison",
       "status": "done"
     },
     {
       "id": "1-010",
-      "uid": "efa097b0957452b4",
+      "uid": "c3d61476d0cc3fa3",
       "group": "temporal",
       "status": "done"
     },
     {
       "id": "1-011",
-      "uid": "24cfed1467bce118",
+      "uid": "8b4135b1aedc2ec5",
       "group": "parent-child",
       "status": "not doing"
     },
@@ -89,7 +89,7 @@
     },
     {
       "id": "1-015",
-      "uid": "0f0db06a7f4ae3a7",
+      "uid": "d65307f2917a3fcb",
       "group": "parent-child",
       "status": "done"
     },
@@ -119,13 +119,13 @@
     },
     {
       "id": "1-020",
-      "uid": "c3bcf6094e81e0dd",
+      "uid": "040a04675f98f126",
       "group": "parent-child",
-      "status": "not doing"
+      "status": "done"
     },
     {
       "id": "1-021",
-      "uid": "760fd80f56e8957a",
+      "uid": "f0a5f23c12a8fea4",
       "group": "parent-child",
       "status": "todo"
     },
@@ -161,7 +161,7 @@
     },
     {
       "id": "1-027",
-      "uid": "369692d7d64e157e",
+      "uid": "12fafcc85ace2b62",
       "group": "direct",
       "status": "todo"
     },
@@ -197,13 +197,13 @@
     },
     {
       "id": "1-033",
-      "uid": "ee3aa00838f367d3",
+      "uid": "703163c80e077978",
       "group": "direct",
-      "status": "not doing"
+      "status": "done"
     },
     {
       "id": "1-034",
-      "uid": "2addb89ac3e338e4",
+      "uid": "e52c28e867147021",
       "group": "direct",
       "status": "done"
     },
@@ -239,25 +239,25 @@
     },
     {
       "id": "1-040",
-      "uid": "7fe4846142a0f70d",
+      "uid": "f5f18132c4662d74",
       "group": "temporal",
       "status": "done"
     },
     {
       "id": "1-041",
-      "uid": "96530a9c1e1134b6",
+      "uid": "2544dd07dab514ae",
       "group": "direct",
-      "status": "not doing"
+      "status": "done"
     },
     {
       "id": "1-042",
-      "uid": "a4bd954b9701ee85",
+      "uid": "c3fe107faccb7192",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-043",
-      "uid": "d82779da1abd7c9d",
+      "uid": "be74ef9c8efa1e1d",
       "group": "parent-child",
       "status": "done"
     },
@@ -269,7 +269,7 @@
     },
     {
       "id": "1-045",
-      "uid": "ccb9a993c360b04f",
+      "uid": "9ffb79b5a677c2ba",
       "group": "comparative",
       "status": "done"
     },
@@ -317,13 +317,13 @@
     },
     {
       "id": "1-053",
-      "uid": "966465dd57772891",
+      "uid": "7a45e7b8b2e1d0e1",
       "group": "comparative",
       "status": "todo"
     },
     {
       "id": "1-054",
-      "uid": "6f89b935b038c6f0",
+      "uid": "c53631b7aac17921",
       "group": "direct",
       "status": "done"
     },
@@ -335,7 +335,7 @@
     },
     {
       "id": "1-056",
-      "uid": "0e16c2dc9ca007c9",
+      "uid": "7a7e8cbd2482b2f4",
       "group": "dataset-suggestion",
       "status": "done"
     },
@@ -347,7 +347,7 @@
     },
     {
       "id": "1-058",
-      "uid": "288e33b003b0ffc8",
+      "uid": "3dd92e59c37107a2",
       "group": "direct",
       "status": "done"
     },
@@ -365,7 +365,7 @@
     },
     {
       "id": "1-061",
-      "uid": "e9df2f14ec791255",
+      "uid": "b2d47495ed86ff9a",
       "group": "parent-child",
       "status": "done"
     },
@@ -419,19 +419,19 @@
     },
     {
       "id": "1-070",
-      "uid": "b1bfd013e644c5bc",
+      "uid": "b00b22aa8fe7903b",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-071",
-      "uid": "0db0995c89dae994",
+      "uid": "ea82abbf1cd347c2",
       "group": "temporal",
       "status": "done"
     },
     {
       "id": "1-072",
-      "uid": "a637b9ac4664d286",
+      "uid": "ab97d4aa0671848e",
       "group": "metadata",
       "status": "done"
     },
@@ -449,9 +449,9 @@
     },
     {
       "id": "1-075",
-      "uid": "40e00c89329a649f",
+      "uid": "2b4e103df3c17e7e",
       "group": "direct",
-      "status": "not doing"
+      "status": "done"
     },
     {
       "id": "1-076",
@@ -473,7 +473,7 @@
     },
     {
       "id": "1-079",
-      "uid": "a3640f16e259f2c6",
+      "uid": "bce4877b54b94b65",
       "group": "temporal",
       "status": "done"
     },
@@ -484,26 +484,20 @@
       "status": "done"
     },
     {
-      "id": "1-081",
-      "uid": "79cc1e9782f778f6",
-      "group": "parent-child",
-      "status": "not doing"
-    },
-    {
       "id": "1-082",
-      "uid": "fe36465d419ab452",
+      "uid": "fcf8804e97e16b19",
       "group": "dataset-suggestion",
       "status": "done"
     },
     {
       "id": "1-083",
-      "uid": "7768f7b92e6691bc",
+      "uid": "314c62fe24b0f6cd",
       "group": "dataset-suggestion",
       "status": "done"
     },
     {
       "id": "1-084",
-      "uid": "ef48dd07337b34c0",
+      "uid": "215cea7820632351",
       "group": "dataset-suggestion",
       "status": "done"
     },
@@ -515,13 +509,13 @@
     },
     {
       "id": "1-086",
-      "uid": "a8a54bc897de75ba",
+      "uid": "ae8e62af3bc353ba",
       "group": "dataset-suggestion",
       "status": "done"
     },
     {
       "id": "1-087",
-      "uid": "212cd56065c87ece",
+      "uid": "743a4f6170aad334",
       "group": "context-layer",
       "status": "done"
     },
@@ -533,7 +527,7 @@
     },
     {
       "id": "1-089",
-      "uid": "2c71d01c4ec18a83",
+      "uid": "ffc6b164922dfc42",
       "group": "refusal",
       "status": "done"
     },
@@ -545,7 +539,7 @@
     },
     {
       "id": "1-091",
-      "uid": "c7e6de1b063ca7e1",
+      "uid": "f114e0cca389d316",
       "group": "multilingual",
       "status": "done"
     },
@@ -557,7 +551,7 @@
     },
     {
       "id": "1-093",
-      "uid": "3e72d7cfd58b865a",
+      "uid": "14d2332465d48c5d",
       "group": "multilingual",
       "status": "done"
     },
@@ -593,7 +587,7 @@
     },
     {
       "id": "1-099",
-      "uid": "5886b0a757af4bb3",
+      "uid": "954e901dfc103ec9",
       "group": "dashboard",
       "status": "done"
     },
@@ -605,7 +599,7 @@
     },
     {
       "id": "1-101",
-      "uid": "ff2186e8a5fb94b9",
+      "uid": "15954ef596fb8fd3",
       "group": "dashboard",
       "status": "done"
     },
@@ -617,13 +611,13 @@
     },
     {
       "id": "1-103",
-      "uid": "72471621c8891460",
+      "uid": "edf7fc39b6789b92",
       "group": "dataset-suggestion",
       "status": "done"
     },
     {
       "id": "1-104",
-      "uid": "5021fbee3fa1e8c5",
+      "uid": "ce209c126ebe9ace",
       "group": "imagery",
       "status": "done"
     },
@@ -635,9 +629,15 @@
     },
     {
       "id": "1-107",
-      "uid": "8efc9f397852c90b",
+      "uid": "a4b115ea2533bb7a",
       "group": "nudge",
       "status": "ready"
+    },
+    {
+      "id": "1-108",
+      "uid": "2113af0ee5d2bd98",
+      "group": "direct",
+      "status": "not doing"
     },
     {
       "id": "mt-001",
@@ -677,7 +677,7 @@
     },
     {
       "id": "mt-007",
-      "uid": "9f26bd9bbacaee59",
+      "uid": "ea4e5bf8c098c152",
       "group": "multiturn",
       "status": "todo"
     },

@@ -36,11 +36,48 @@ Runs execute in-repo (the gnw-evals bridge was retired after the
 
 ```bash
 export API_TOKEN="$STAGING_API_TOKEN"   # .env holds it; the CLI reads API_TOKEN
-uv run gold run --env staging --trials 3 --build "<label>"
+
+uv run gold run --env staging --ff experimental --build "<label>"              # iteration (1 trial, 10 workers)
+uv run gold run --env staging --ff experimental --trials 3 --build "<label>"   # official / gate
 ```
 
-Official runs are **3 trials, always** — the agent flaps on ~45% of rows
-between identical trials, so single-trial verdicts are smoke only.
+**`--ff experimental` is required on any run whose verdict you intend to trust.**
+`ff` is the agent's tool profile, passed through in the request payload and
+omitted entirely when unset, so the agent runs its **default** toolset. Two
+capabilities live behind the experimental profile and are simply *absent* without
+it: **dashboards** and **satellite imagery**. Every historical run in
+`results/runs/` used `ff=experimental`.
+
+Without the flag, all seven `dashboard` rows plus mt-008 fail `dashboard_created`
+on every trial — the agent never calls a dashboard tool at all, and the artifacts
+show `dashboard_widgets: null`. That is *indistinguishable from the capability
+having been removed* unless you check `ff`, and it cost a full misdiagnosis on
+2026-08-03 (see `results/recommendations/20260803T201245Z.md` item 1). With
+`--ff experimental` on the same case set and harness, those rows pass immediately.
+
+**The tell is the run_id**: `…_staging_experimental` versus a bare `…_staging`.
+`make_run_id` encodes `ff` in the filename, so a run whose name lacks the suffix
+was not exercising those capabilities — check this before comparing two runs, and
+never diff across a differing `ff`.
+
+**Two tiers, deliberately (set 2026-08-03).** The CLI defaults to
+`--trials 1 --workers 10` for fast iteration — answering "did my prompt rewrite
+stop the nudge?" in minutes. Those runs are **smoke only**: not committed, not
+diffed, never a baseline.
+
+**Anything that produces a regression count stays `--trials 3`.** Measured on
+the two 3-trial runs: comparing two trials *of the same run* — same build, same
+cases, nothing changed — reports **18–29 spurious regressions**, which is larger
+than the **15** real regressions between two genuinely different runs. A
+single-trial diff cannot separate a clean release from a broken one, and
+`diff_runs.py --fail-on-regression` would fail on nearly every run. A 1-trial run
+compared against a 3-trial baseline is worse still, so the two sides of any
+comparison must carry the same trial count.
+
+Runs now record `workers` and `trial_timeout`, because the 2026-08-02 run's 19
+`ReadTimeout`s arrived as one contiguous block across the final quarter of the
+run — a load-shaped signature that cannot be diagnosed without knowing the
+concurrency that produced it. Raising workers is the main suspect to watch.
 
 ## After every run (do all four, in order)
 

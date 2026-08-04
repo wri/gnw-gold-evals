@@ -62,8 +62,16 @@ _NON_MEASURE_KEYS = frozenset(
 # decimal group, is unresolvable from the string alone.
 _AMBIGUOUS_DECIMAL = re.compile(r"^\d{1,3}\.\d{3}$")
 
-# A leading number, optionally with thousands separators and a decimal part.
-_NUMBER = re.compile(r"(\d[\d,]*(?:\.\d+)?)")
+# A leading number, optionally signed, with thousands separators and a decimal
+# part. The sign is load-bearing: net-flux rows express a carbon *sink* as a
+# negative (1-055: "-286,994 Mg CO2e"), and dropping it compared +286,994
+# against a chart whose own net-flux series held -286,993.69 — an exact match
+# reported as an 86.96% miss.
+#
+# The lookbehind keeps a word-internal hyphen from reading as a minus: 1-104's
+# expectation mentions "Sentinel-2", whose 2 is positive. A hyphen preceded by
+# an alphanumeric is a separator, never a sign.
+_NUMBER = re.compile(r"(?<![A-Za-z0-9])(-?\d[\d,]*(?:\.\d+)?)")
 
 _YEAR = re.compile(r"^(19|20)\d{2}$")
 
@@ -103,10 +111,20 @@ def parse_expected_number(expected_answer: str) -> ExpectedNumber | None:
     if not match:
         return None
 
-    token = match.group(1)
-    if _YEAR.match(token):
+    # Trailing separators are punctuation, not part of the number: "In 2020, 25.5
+    # Mha" matches "2020," whose trailing comma made it miss the ^(19|20)\d{2}$
+    # year guard, so the expected value became 2020 rather than abstaining. Found
+    # while documenting the evaluators (2026-08-04); no cases/v2 row has that
+    # shape, and this ensures none can.
+    token = match.group(1).rstrip(",.")
+    if not token or token == "-":
         return None
-    if _AMBIGUOUS_DECIMAL.match(token):
+    # The year and ambiguous-separator guards describe the digits, so they are
+    # tested against the magnitude — a sign must not smuggle a value past them.
+    magnitude = token.lstrip("-")
+    if _YEAR.match(magnitude):
+        return None
+    if _AMBIGUOUS_DECIMAL.match(magnitude):
         return None
 
     try:
@@ -191,6 +209,63 @@ def _series_aggregates(node: Any) -> list[float]:
     return aggregates
 
 
+def _cross_column_totals(node: Any) -> list[float]:
+    """Per-record sums across measure columns, plus their grand total (H6).
+
+    A chart that splits one quantity into several measure columns never draws the
+    combined figure, but a reader takes it straight off the chart. 1-002 is the
+    reference: São Paulo's alerts are plotted as `high_confidence` and
+    `highest_confidence` columns, and the answer (1,299,278.14 ha) is their sum —
+    which was not a candidate at all, so the row failed on every trial while the
+    agent's prose was right.
+
+    Only record sets with at least two measure columns contribute, so
+    single-series charts gain nothing. This does widen the candidate set, and a
+    wider set is a more permissive check; the trade is deliberate, and the guard
+    against it is that label-ish columns never enter a sum (`year` + an area is
+    not a figure anyone reads).
+    """
+    totals: list[float] = []
+
+    def walk(value: Any) -> None:
+        if isinstance(value, dict):
+            for item in value.values():
+                walk(item)
+            return
+        if not isinstance(value, list):
+            return
+
+        records = [item for item in value if isinstance(item, dict)]
+        if records:
+            measure_keys = sorted(
+                {
+                    key
+                    for record in records
+                    for key in record
+                    if key.lower() not in _NON_MEASURE_KEYS
+                },
+            )
+            if len(measure_keys) >= 2:
+                row_sums: list[float] = []
+                for record in records:
+                    numbers = [
+                        float(record[key])
+                        for key in measure_keys
+                        if isinstance(record.get(key), int | float)
+                        and not isinstance(record.get(key), bool)
+                    ]
+                    if len(numbers) >= 2:
+                        row_sums.append(sum(numbers))
+                totals.extend(row_sums)
+                if row_sums:
+                    totals.append(sum(row_sums))
+        for item in value:
+            walk(item)
+
+    walk(node)
+    return totals
+
+
 def _percent_candidates(node: Any) -> list[float]:
     """Each measure value as a percentage of its own column total.
 
@@ -232,9 +307,10 @@ def _percent_candidates(node: Any) -> list[float]:
 def chart_candidate_values(charts_json: str, is_percent: bool = False) -> list[float]:
     """Every figure a reader could take from the chart, for matching against expected.
 
-    Leaf values, column totals and column maxima; plus per-column shares when the expected
-    answer is a percentage. Label-ish columns (`year`, `id`, ...) are excluded from
-    aggregates so their sums don't become candidates.
+    Leaf values, column totals and column maxima; cross-column row sums and their grand
+    total (H6); plus per-column shares when the expected answer is a percentage.
+    Label-ish columns (`year`, `id`, ...) are excluded from every aggregate so their sums
+    don't become candidates.
     """
     try:
         charts = json.loads(charts_json or "")
@@ -245,6 +321,7 @@ def chart_candidate_values(charts_json: str, is_percent: bool = False) -> list[f
         value for key, value in _numeric_items(charts) if key not in _NON_MEASURE_KEYS
     ]
     candidates += _series_aggregates(charts)
+    candidates += _cross_column_totals(charts)
     if is_percent:
         candidates += _percent_candidates(charts)
     return [value for value in candidates if value != 0]

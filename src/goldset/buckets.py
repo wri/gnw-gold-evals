@@ -73,8 +73,20 @@ SHARED: dict[str, tuple[str, str]] = {
 # class_value_match: demoted 2026-08-01 after the first 3-trial run — mean
 # 0.25 over its 4 rows, whose expected values came from unverified sheet
 # scratchpads. Re-admit when W3's population review verifies the figures.
+# charts_answer_judge: born info-only 2026-08-03 (H5). charts_answer is now
+# gated on the deterministic comparator alone; this records what the chart judge
+# thought, because five of the six rows where charts_answer flapped over two
+# 3-trial runs were rows the comparator had already passed or abstained on —
+# i.e. all the movement was the judge's framing opinion, and cases/README.md
+# forbids staking a verdict on chart choice. Re-admit only if it demonstrates
+# std <= 0.10 over 3 trials.
 INFO_ONLY: frozenset[str] = frozenset(
-    {"date_coverage", "answer_traceability", "class_value_match"}
+    {
+        "date_coverage",
+        "answer_traceability",
+        "class_value_match",
+        "charts_answer_judge",
+    }
 )
 
 
