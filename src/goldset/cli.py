@@ -229,6 +229,35 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     return list(await asyncio.gather(*(run_one(case) for case in cases)))
 
 
+def build_run_record(args: argparse.Namespace, manifest: dict,
+                     entries: list[dict], started: str, environment: str) -> dict:
+    """The ledger record for a finished run (contract: results/README.md).
+
+    ``caseset`` names the store directory the run loaded (``v1``/``v2``) —
+    ``caseset_version`` alone is a content hash a reader can't attribute to
+    a store without git archaeology. Runs before 2026-08-04 lack the field.
+    """
+    record = {
+        "run_id": args.run_id,
+        "started": started,
+        "environment": environment,
+        "build": args.build,
+        "ff": args.ff,
+        "harness": {"repo": "gnw-gold-evals", "sha": _harness_sha()},
+        "judge_model": JUDGE_MODEL,
+        "num_trials": args.trials,
+        "workers": args.workers,
+        "trial_timeout": args.trial_timeout,
+        "caseset": args.cases_dir.name,
+        "caseset_version": manifest["caseset_version"],
+        "results": entries,
+        "buckets": summarize_buckets(entries),
+    }
+    if args.note:
+        return {**record, "methodology_note": args.note}
+    return record
+
+
 def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
     """Artifacts are regenerable and unbounded (PR-09 H6): keep the newest
     N run directories (run_ids sort chronologically), delete the rest."""
@@ -330,23 +359,7 @@ def main() -> int:
           f"against {args.resolved_url}")
     entries = asyncio.run(run_cases(args, cases))
 
-    run_record = {
-        "run_id": args.run_id,
-        "started": started,
-        "environment": environment,
-        "build": args.build,
-        "ff": args.ff,
-        "harness": {"repo": "gnw-gold-evals", "sha": _harness_sha()},
-        "judge_model": JUDGE_MODEL,
-        "num_trials": args.trials,
-        "workers": args.workers,
-        "trial_timeout": args.trial_timeout,
-        "caseset_version": manifest["caseset_version"],
-        "results": entries,
-    }
-    run_record["buckets"] = summarize_buckets(entries)
-    if args.note:
-        run_record["methodology_note"] = args.note
+    run_record = build_run_record(args, manifest, entries, started, environment)
     path = write_run(args.results_dir, run_record)
     failed = sum(
         1 for e in entries

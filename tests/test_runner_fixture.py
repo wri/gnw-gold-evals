@@ -108,6 +108,30 @@ async def test_result_maps_to_ledger_entry(patched_client, tmp_path):
     assert entry["latency_s"] is not None
 
 
+def test_run_record_names_its_caseset():
+    """A run must say which store it loaded, not just the content hash —
+    caseset_version alone can't tell a reader v1 from v2 without git
+    archaeology over the manifests."""
+    import argparse
+
+    from goldset.cli import build_run_record
+    from goldset.ledger import validate_run
+
+    args = argparse.Namespace(
+        run_id="20260804T120000Z_staging_experimental", build="b", ff="experimental",
+        trials=3, workers=10, trial_timeout=900.0, note=None,
+        cases_dir=__import__("pathlib").Path("cases/v2"),
+    )
+    entries = [{"uid": "u1", "id": "1-001", "checks": {"aoi_id_match": 1.0}}]
+    record = build_run_record(
+        args, {"caseset_version": "2276185a231bfdad"}, entries,
+        started="2026-08-04T12:00:00Z", environment="staging",
+    )
+    assert record["caseset"] == "v2"
+    assert record["caseset_version"] == "2276185a231bfdad"
+    assert validate_run(record) == []
+
+
 def test_merge_trials_majority_and_detail():
     trials = [
         {"uid": "u", "id": "1-002", "checks": {"aoi_id_match": 1.0}, "latency_s": 1.0},
