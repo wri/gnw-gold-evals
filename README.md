@@ -92,8 +92,25 @@ src/goldset/            store, canonical hashing, ledger, adapter, buckets,
 tools/                  thin CLIs over src/goldset — see tools/README.md
 docs/                   evaluator-map.html; planning notes live in docs/specs/
                         (gitignored, local-only)
+.claude/skills/         Claude Code workflow skills (see "Claude Code skills")
 .github/workflows/ci.yml  lint + tests + store integrity on PRs; manual staging run
 ```
+
+## Claude Code skills
+
+Committed under `.claude/skills/`, so anyone using [Claude
+Code](https://claude.com/claude-code) in this repo gets the same workflows —
+invoke by name (`/gold-run`) or just describe the task and the matching skill
+loads. Rules live in CLAUDE.md; these encode the *procedures* around them.
+
+| skill | use it when |
+|---|---|
+| [`gold-run`](.claude/skills/gold-run/SKILL.md) | running the set: preflight (ff/trials/build), the run, and the full after-run ritual through to the commit |
+| [`case-edit`](.claude/skills/case-edit/SKILL.md) | changing any case — uid consequences up front, then check --fix + coverage + audit, with status-transition rules enforced |
+| [`triage-run`](.claude/skills/triage-run/SKILL.md) | analysing a finished run — classified failures (agent / stale case / harness / flake) and a filled recommendations doc |
+| [`new-case`](.claude/skills/new-case/SKILL.md) | authoring a case — capability interview, field→check mapping, verified answers before `done` |
+| [`release-gate`](.claude/skills/release-gate/SKILL.md) | the two-run verdict — comparability preconditions, diff_runs gate, trial-noise framing |
+| [`sync-catalog`](.claude/skills/sync-catalog/SKILL.md) | refreshing the project-zeno dataset catalog snapshot and reading the coverage impact |
 
 ## Documentation map
 
@@ -101,6 +118,7 @@ docs/                   evaluator-map.html; planning notes live in docs/specs/
 
 - [CLAUDE.md](CLAUDE.md) — working agreements, run playbook, the
   `ff=experimental` rule, after-run ritual
+- [.claude/skills/](.claude/skills/) — the six workflow skills (table above)
 
 **Cases**
 
