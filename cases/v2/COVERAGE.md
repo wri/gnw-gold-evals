@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 2276185a231bfdad` · 114 cases · done 93 · not doing 5 · ready 10 · todo 6 · **109 active** (everything but `not doing` runs by default)
+`caseset_version bf5a593d71d658ae` · 120 cases · done 93 · not doing 5 · ready 13 · todo 9 · **115 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-08-04_
+_Last updated: 2026-08-07_
 
 ## Groups
 
@@ -18,8 +18,8 @@ _Last updated: 2026-08-04_
 | context-layer | 2 | 2 | done 2 |
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
-| dataset-suggestion | 7 | 6 | done 6, not doing 1 |
-| direct | 24 | 21 | done 20, not doing 3, todo 1 |
+| dataset-suggestion | 8 | 7 | done 6, not doing 1, todo 1 |
+| direct | 26 | 23 | done 20, not doing 3, ready 1, todo 2 |
 | imagery | 1 | 1 | done 1 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
@@ -27,8 +27,8 @@ _Last updated: 2026-08-04_
 | nudge | 2 | 2 | ready 2 |
 | parent-child | 14 | 13 | done 11, not doing 1, ready 1, todo 1 |
 | ranking | 1 | 1 | done 1 |
-| refusal | 1 | 1 | done 1 |
-| temporal | 14 | 14 | done 14 |
+| refusal | 3 | 3 | done 1, ready 1, todo 1 |
+| temporal | 15 | 15 | done 14, ready 1 |
 
 ## Bucket coverage (active cases)
 
@@ -39,28 +39,28 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 103 | 0 | 103 | 94% |
-| analysis | 0 | 73 | 73 | 67% |
-| explanation | 25 | 62 | 87 | 80% |
-| output | 78 | 3 | 81 | 74% |
-| scope | 94 | 7 | 101 | 93% |
+| retrieval | 107 | 0 | 107 | 93% |
+| analysis | 0 | 73 | 73 | 63% |
+| explanation | 31 | 62 | 93 | 81% |
+| output | 78 | 3 | 81 | 70% |
+| scope | 100 | 7 | 107 | 93% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 93 | dataset_id_match |
-| scope | 93 | scope_match |
-| aoi_source | 87 | reference only (dashboard AOI source) |
-| dataset_name | 86 | reference only |
-| aoi_ids | 75 | aoi_id_match |
+| scope | 99 | scope_match |
+| dataset_id | 96 | dataset_id_match |
+| aoi_source | 91 | reference only (dashboard AOI source) |
+| dataset_name | 89 | reference only |
+| aoi_ids | 79 | aoi_id_match |
 | answer | 73 | agent_answer, charts_answer, chart_produced |
-| text | 25 | expected_text_match |
+| text | 31 | expected_text_match |
 | context_layer | 13 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | end_date | 8 | date_extraction (with start_date) |
 | start_date | 8 | date_extraction (with end_date) |
-| class_values | 6 | class_value_match (info-only) |
+| class_values | 7 | class_value_match (info-only) |
 | nudge_options | 6 | nudge_match |
 | dashboard_widgets | 5 | dashboard_widgets_match, dashboard_widgets_valid |
 | clarification | 3 | clarification_requested |
@@ -71,7 +71,7 @@ friends) run on top of it whenever their trigger state exists.
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@7a0f7b6 (origin/main, synced 2026-08-04), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@f9cf409 (origin/main, synced 2026-08-07), 13 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -93,6 +93,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
 | 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
 | 11 | Integrated alerts | 5 | 4 | — | — |
+| 12 | Land GHG Monitoring System (LGMS) | 3 | 3 | — | — |
 
 ## Multi-turn
 
@@ -112,6 +113,9 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
 | 1-053 | todo | comparative | — |
 | 1-062 | todo | comparative | Triage W4 2026-08-01: dataset_id accepts alternatives (8;10 both defensible); the disputed answer and the u... |
+| 1-115 | todo | direct | todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent instead raised a d... |
+| 1-116 | todo | refusal | todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent did the opposite o... |
+| 1-117 | todo | dataset-suggestion | todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent answered with a ge... |
 | mt-007 | todo | multiturn | todo pending the 3-trial validation the probation note requires: no per-case info-only mechanism exists, so... |
 
 ## Known gaps
