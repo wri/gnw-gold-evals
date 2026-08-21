@@ -17,7 +17,7 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
 {
   "run_id": "20260731T120022Z_staging_experimental",
   "started": "2026-07-31T12:00:22Z",
-  "environment": "staging",            // staging | prod
+  "environment": "staging",            // staging | prod | local
   "build": "GNW 2026.7.29.1",          // agent build the API reported
   "ff": "experimental",                 // agent tool profile, or null
   "harness": {"repo": "gnw-evals", "sha": "5a377cd"},

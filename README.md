@@ -55,6 +55,10 @@ uv run gold run --env staging --ff experimental --trials 3
 uv run gold run --env staging --ff experimental --id 1-030 --verbose   # one case
 # writes results/runs/<run_id>.json + gzipped raw artifacts
 
+# against a local project-zeno checkout (`make api` there, port 8000):
+# smoke-only — don't commit these; the CLI still requires API_TOKEN to be set.
+uv run gold run --env local --id 1-030 --verbose
+
 # reports from a ledger run:
 uv run python tools/report_run.py results/runs/<run_id>.json   # markdown
 uv run python tools/render_html.py results/runs/<run_id>.json  # stakeholder HTML
