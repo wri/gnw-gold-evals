@@ -2,9 +2,9 @@
   "source": {
     "repo": "git@github.com:wri/project-zeno.git",
     "ref": "origin/main",
-    "sha": "7a0f7b62234e136b8c82e79123ad6f5ea0f62464",
+    "sha": "f9cf409cccf0a7ba2a985e8d0945db1c6fd44cc9",
     "path": "src/agent/datasets/catalog",
-    "synced": "2026-08-04"
+    "synced": "2026-08-07"
   },
   "datasets": [
     {
@@ -216,6 +216,18 @@
     {
       "dataset_id": "11",
       "dataset_name": "Integrated alerts",
+      "parameters": [],
+      "context_layers": [],
+      "instructions": [
+        "prompt_instructions",
+        "selection_hints",
+        "code_instructions",
+        "presentation_instructions"
+      ]
+    },
+    {
+      "dataset_id": "12",
+      "dataset_name": "Land GHG Monitoring System (LGMS)",
       "parameters": [],
       "context_layers": [],
       "instructions": [
