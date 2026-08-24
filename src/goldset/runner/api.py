@@ -137,7 +137,7 @@ class APITestRunner(BaseTestRunner):
                     state_response.raise_for_status()
                     response_data = state_response.json()
                     agent_state = response_data.get("state", {})
-                    agent_state = loads(agent_state)
+                    agent_state = loads(agent_state, allowed_objects="core")
 
                     # Fetch dashboard details when a dashboard was created this turn.
                     # agent_state only carries the dashboard_id; AOI/widget details

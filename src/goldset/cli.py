@@ -29,6 +29,7 @@ from goldset.store import Case, load_store, read_manifest
 ENV_URLS = {
     "staging": "https://api.staging.globalnaturewatch.org",
     "prod": "https://api.globalnaturewatch.org",
+    "local": "http://localhost:8000",
 }
 JUDGE_MODEL = "claude-haiku-4-5"
 NON_CHECK_SCORES = {"overall_score"}
@@ -349,9 +350,14 @@ def main() -> int:
         return 1
 
     args.resolved_url = args.api_base_url or ENV_URLS[args.env]
-    environment = args.env if not args.api_base_url else (
-        "prod" if "staging" not in args.api_base_url else "staging"
-    )
+    if not args.api_base_url:
+        environment = args.env
+    elif "staging" in args.api_base_url:
+        environment = "staging"
+    elif any(h in args.api_base_url for h in ("localhost", "127.0.0.1", "0.0.0.0")):
+        environment = "local"
+    else:
+        environment = "prod"
     started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
 
