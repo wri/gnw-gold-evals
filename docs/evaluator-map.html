@@ -137,7 +137,7 @@ buckets it answers for — plus the case shapes that switch each check on.</p>
 <tr><td>charts_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·OUTPUT</span></td><td>answer</td><td class="trigger">expected.answer</td>
   <td>The chart JSON (not the prose) answers the question; numeric figures are compared in code at 2% tolerance, the judge handles structure and semantics.</td></tr>
 <tr><td>agent_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·EXPLANATION</span></td><td>answer</td><td class="trigger">expected.answer</td>
-  <td>The final prose answer states the expected result (numerics within 2%, years and booleans exact, entities semantic).</td></tr>
+  <td>The final prose answer states the expected result (numerics compared in code at 2% tolerance against a judge-extracted figure, years and booleans exact, entities semantic).</td></tr>
 <tr><td>chart_integrity <span class="badge b-det">DET</span></td><td>analysis_checks</td><td class="trigger">always (when a chart exists)</td>
   <td>Every figure in the chart exists in the pulled data — no invented or transformed-beyond-recognition numbers.</td></tr>
 <tr><td>class_value_match <span class="badge b-det">DET</span> <span class="badge b-info">INFO-ONLY</span></td><td>analysis_checks</td><td class="trigger">expected.class_values</td>

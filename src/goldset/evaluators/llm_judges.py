@@ -3,18 +3,25 @@ from typing import Any
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel
 
-from goldset.evaluators.chart_numeric import evaluate_numeric_support
+from goldset.evaluators.chart_numeric import (
+    evaluate_numeric_support,
+    format_number,
+    parse_expected_number,
+)
 from goldset.models import HAIKU
 
 # Relative tolerance for numeric answers, as a fraction of the expected value.
 # Interpolated into the prompt so the threshold and its worked examples cannot drift.
 #
-# `llm_judge` applies it from the prompt: that judge reliably does the arithmetic.
-# `llm_judge_chart` does not — asked about a chart whose 25 yearly values sum to 25.31 Mha
-# it reported that same chart as summing to 27.4 Mha and to 26.0 Mha, each "within
-# tolerance" of whatever expected value it was given. So for charts the same constant is
-# applied in code by `chart_numeric.evaluate_numeric_support`, against the chart's own
-# encoded data, and the prompt tells the model not to judge numbers at all.
+# Neither judge is trusted with the arithmetic. `llm_judge_chart` never was — asked
+# about a chart whose 25 yearly values sum to 25.31 Mha it reported that same chart as
+# summing to 27.4 Mha and to 26.0 Mha, each "within tolerance" of whatever expected value
+# it was given. `llm_judge` used to do the comparison itself from prose, and a live run
+# caught it disagreeing with its own rule on identical input (1-009: accepted a 0.51%
+# delta in one trial, rejected the same delta in another, citing a tolerance the delta
+# was actually inside). So for both, the model only extracts — which figure in the chart
+# data or the prose answers the question — and `resolve_chart_verdict`/
+# `resolve_answer_verdict` apply this constant in code against that extraction.
 NUMERIC_TOLERANCE = 0.02
 _TOLERANCE_PCT = f"{NUMERIC_TOLERANCE:.0%}"
 
@@ -24,23 +31,11 @@ _TOLERANCE_PCT = f"{NUMERIC_TOLERANCE:.0%}"
 _NUMERIC_RULES = f"""
                 **NUMERIC** (numbers with optional units):
                 - Expected answer contains numbers: "198.4 hectares", "0.20%", "211 kha", "924,000 km²"
-                - **Extraction rule**: Identify THE main answer number (usually stated as "total", "X hectares were", or the first/most prominent number directly answering the question)
-                - **Tolerance formula**: Calculate |actual - expected| / expected
-                  - If result <= {NUMERIC_TOLERANCE} ({_TOLERANCE_PCT}), then MATCH (1)
-                  - If result > {NUMERIC_TOLERANCE} ({_TOLERANCE_PCT}), then NO MATCH (0)
-                - Examples of MATCH (within {_TOLERANCE_PCT} tolerance):
-                  - Expected "198.4 hectares" vs Actual "200 hectares" → MATCH (1) [0.8% difference]
-                  - Expected "211 kha" vs Actual "215 kha" → MATCH (1) [1.9% difference]
-                  - Expected "100 hectares" vs Actual "102 hectares" → MATCH (1) [exactly {_TOLERANCE_PCT}, the boundary is inclusive]
-                  - Expected "200 kha" vs Actual "200,000 hectares" → MATCH (1) [same value, different units]
-                - Examples of NO MATCH (exceeds {_TOLERANCE_PCT} tolerance):
-                  - Expected "100 hectares" vs Actual "103 hectares" → NO MATCH (0) [3% difference]
-                  - Expected "0.20%" vs Actual "0.19%" → NO MATCH (0) [5% difference]
-                  - Expected "211 kha" vs Actual "235 kha" → NO MATCH (0) [11.4% difference]
-                  - Expected "198.4 hectares" vs Actual "232 hectares" → NO MATCH (0) [16.9% difference]
-                - For percentages, compare the percentage values directly
-                - **When multiple numbers present**: Use the number that directly answers the question, not breakdown/detail numbers
-                  - Example: "A total of 231.97 hectares were affected. Short vegetation had 176.36 ha..." → Use 231.97, not 176.36
+                - **Extraction rule**: Identify THE main answer number (usually stated as "total", "X hectares were", or the first/most prominent number directly answering the question) — not a breakdown/detail number.
+                  - Example: "A total of 231.97 hectares were affected. Short vegetation had 176.36 ha..." → the main number is 231.97, not 176.36
+                - Copy that number into `extracted_number` **exactly as written** in the actual answer, including its unit and sign (e.g. "200 hectares", "-286,994 Mg CO2e", "0.19%"). Do not convert units, round it, or compare it to the expected value yourself — a deterministic check applies the {_TOLERANCE_PCT} tolerance to `extracted_number` afterward, because that comparison is not reliable coming from you.
+                - Still set `score` to your own best guess for this row. It is a fallback used only on the rare row where `extracted_number` cannot be parsed automatically, so it is normally overridden.
+                - Leave `extracted_number` as an empty string for every answer type other than NUMERIC.
 """
 
 ANSWER_JUDGE_PROMPT = (
@@ -98,6 +93,9 @@ ANSWER_JUDGE_PROMPT = (
                    - score: 1 if it matches according to the rules, 0 if it does not
                    - reason: one concise sentence explaining why you gave that score
                    - answer_eval_type: one of "boolean", "numeric", "year", "named_entity"
+                   - extracted_number: for NUMERIC answers only, the main answer number
+                     copied verbatim from the actual answer (see the NUMERIC rules above);
+                     an empty string for every other answer_eval_type
 
                 Be strict with the rules above, especially for boolean, numeric, and year types.
                 """
@@ -202,6 +200,48 @@ def llm_judge_clarification(agent_state: dict, query: str) -> dict:
         raise JudgeError("clarification_requested", error) from error
 
 
+def resolve_answer_verdict(
+    answer_eval_type: str,
+    expected_answer: str,
+    extracted_number: str,
+    judge_reason: str,
+    judge_score: int,
+) -> dict[str, Any]:
+    """Override the judge's numeric score with a deterministic tolerance check.
+
+    Mirrors ``resolve_chart_verdict``: the judge only extracts which number in the
+    prose answers the question; the match/no-match decision is computed here against
+    ``NUMERIC_TOLERANCE``, the same constant and the same parser (``parse_expected_number``)
+    the chart comparator uses, so an answer and its chart cannot disagree about what
+    "within tolerance" means. This exists because the judge was not applying its own
+    stated rule consistently (see the module comment on ``NUMERIC_TOLERANCE``).
+
+    Falls back to the judge's own score/reason whenever the deterministic check cannot
+    run at all: a non-numeric row, an empty extraction, either side failing to parse
+    (an ambiguous decimal, no number found), or expected/actual disagreeing on whether
+    the figure is a percentage. That population is left exactly as reliable as it was
+    before this change — no worse, and no new ``null``s introduced.
+    """
+    if answer_eval_type != "numeric" or not extracted_number:
+        return {"score": judge_score, "reason": judge_reason}
+
+    expected = parse_expected_number(expected_answer)
+    actual = parse_expected_number(extracted_number)
+    if expected is None or actual is None or expected.is_percent != actual.is_percent:
+        return {"score": judge_score, "reason": judge_reason}
+
+    difference = abs(actual.value - expected.value) / abs(expected.value)
+    within = difference <= NUMERIC_TOLERANCE
+    unit = "%" if expected.is_percent else ""
+    reason = (
+        f"deterministic check: expected {format_number(expected.value)}{unit}, "
+        f"extracted {format_number(actual.value)}{unit} from \"{extracted_number}\", "
+        f"a {difference:.2%} difference, "
+        f"{'within' if within else 'exceeding'} the {_TOLERANCE_PCT} tolerance"
+    )
+    return {"score": 1 if within else 0, "reason": reason}
+
+
 def llm_judge(
     expected_answer: str,
     actual_answer: str,
@@ -213,6 +253,7 @@ def llm_judge(
         answer_eval_type: str  # "boolean", "numeric", "named_entity", "year"
         reason: str
         score: int
+        extracted_number: str = ""  # numeric rows only; see resolve_answer_verdict
 
     JUDGE_PROMPT = ChatPromptTemplate.from_messages([("user", ANSWER_JUDGE_PROMPT)])
 
@@ -225,13 +266,18 @@ def llm_judge(
         },
     )
 
-    if include_reason:
-        return {
-            "score": llm_judgement.score,
-            "reason": llm_judgement.reason,
-        }
+    verdict = resolve_answer_verdict(
+        answer_eval_type=llm_judgement.answer_eval_type,
+        expected_answer=expected_answer,
+        extracted_number=llm_judgement.extracted_number,
+        judge_score=llm_judgement.score,
+        judge_reason=llm_judgement.reason,
+    )
 
-    return llm_judgement.score
+    if include_reason:
+        return verdict
+
+    return verdict["score"]
 
 
 def resolve_chart_verdict(

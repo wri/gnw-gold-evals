@@ -60,9 +60,26 @@ yearly values sum to 25.31 Mha, Haiku reported the same chart as summing to
 had been handed. So numeric agreement is computed in
 `chart_numeric.evaluate_numeric_support` against the chart's own encoded data,
 and `llm_judge_chart`'s prompt explicitly forbids the model from judging
-numbers (`llm_judges.py:366-372`). Only three checks are judged at all —
-`clarification_requested`, `agent_answer`, `expected_text_match` — plus the
-now-info-only `charts_answer_judge`.
+numbers (`llm_judges.py:366-372`).
+
+`agent_answer` used to be the one exception — the judge did its own
+tolerance arithmetic from prose, and a live run caught it disagreeing with its
+own stated rule on identical input (1-009: accepted a 0.51% delta in one
+trial, rejected the same delta in another, citing a tolerance the delta was
+actually inside — `results/recommendations/20260804T104634Z.md` §3). It now
+follows the same split as the chart check: the judge only extracts which
+number in the prose answers the question (`extracted_number`), and
+`resolve_answer_verdict` applies `NUMERIC_TOLERANCE` in code, against the same
+`parse_expected_number` parser the chart comparator uses, so an answer and its
+chart cannot disagree about what "within tolerance" means. The judge's own
+score is kept only as a fallback for the rare row where `extracted_number`
+can't be parsed deterministically (empty, ambiguous decimal, or a
+percent/non-percent unit mismatch) — that population is exactly as reliable as
+it was before.
+
+Only three checks are judged at all — `clarification_requested`,
+`agent_answer`, `expected_text_match` — plus the now-info-only
+`charts_answer_judge`.
 
 ### Gating vs info-only
 
@@ -665,11 +682,20 @@ manually sum all regions"), which is a framing preference, not a data problem.
 **Measures** whether the final assistant message captures the expected answer,
 judged by Haiku against a typed rubric — boolean, numeric, year, or named entity
 (`ANSWER_JUDGE_PROMPT`, `llm_judges.py:46-104`; call at
-`answer_evaluator.py:189-201`). This is the one place a judge *is* trusted with
-arithmetic, and the trust is explicitly scoped: the tolerance formula and its
-worked examples are interpolated from `NUMERIC_TOLERANCE` so prompt and constant
-cannot drift (`llm_judges.py:9-44`), and the module comment records that this
-judge does the arithmetic reliably while the chart judge does not.
+`answer_evaluator.py:189-201`). Boolean/year/named-entity rows are the judge's own
+call, same as always. For numeric rows the judge only extracts which number in the
+prose answers the question into `extracted_number`; `resolve_answer_verdict`
+(`llm_judges.py`) then applies `NUMERIC_TOLERANCE` in code against
+`parse_expected_number`, the same parser and constant the chart comparator uses —
+the same H5-style split as `charts_answer`, and for the same reason. This used to
+be the one place a judge was trusted with arithmetic, until a live run caught it
+disagreeing with its own stated rule on identical input: 1-009 accepted a 0.51%
+delta as a match in one trial and rejected the same delta in another, citing a
+tolerance the delta was actually inside
+(`results/recommendations/20260804T104634Z.md` §3). The judge's own score survives
+only as a fallback for the row where `extracted_number` can't be parsed
+deterministically (empty, an ambiguous decimal, or a percent/non-percent
+mismatch) — exactly as reliable on that population as before.
 
 **Fires on** `answer` **and** a non-empty final message text
 (`answer_evaluator.py:191`).
@@ -680,10 +706,13 @@ with `"JUDGE ERROR: …"` in the reason and the check name in `judge_errors`, wh
 makes the row an `error` (`:199-201`, `buckets.py:115-116`). Otherwise the
 judge's 0/1.
 
-**Reason**: `reasons.agent_answer` — one concise sentence from the judge, with
-`answer_eval_type` decided internally (it is in the structured output but is not
-persisted separately). `actuals.agent_answer` = the full final answer text,
-trimmed to 300 chars.
+**Reason**: `reasons.agent_answer` — the judge's own sentence for boolean/year/
+named-entity rows, or (for numeric rows where the deterministic override ran) a
+generated string in the same shape as `charts_answer`'s: `"deterministic check:
+expected 100 hectares, extracted 102 hectares from \"102 hectares\", a 2.00%
+difference, within the 2% tolerance"`. `answer_eval_type` is decided internally
+(in the structured output but not persisted separately). `actuals.agent_answer` =
+the full final answer text, trimmed to 300 chars.
 
 **Gotchas.**
 - Shared-tagged (analysis + explanation): a failure here cannot be attributed to

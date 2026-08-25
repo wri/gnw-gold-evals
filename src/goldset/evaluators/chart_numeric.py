@@ -76,11 +76,12 @@ _NUMBER = re.compile(r"(?<![A-Za-z0-9])(-?\d[\d,]*(?:\.\d+)?)")
 _YEAR = re.compile(r"^(19|20)\d{2}$")
 
 
-def _fmt(value: float) -> str:
+def format_number(value: float) -> str:
     """Render a figure the way the sheet writes them, not as 2.5e+07.
 
-    These strings land in `chart_answer_score_reason` and get read next to the sheet's
-    own cells, so thousands separators matter more than compactness.
+    These strings land in check reason text next to the sheet's own cells, so
+    thousands separators matter more than compactness. Shared by the chart
+    comparator and the answer judge's numeric override (`llm_judges.py`).
     """
     if abs(value) >= 1_000:
         return f"{value:,.0f}" if float(value).is_integer() else f"{value:,.2f}"
@@ -358,7 +359,7 @@ def evaluate_numeric_support(
         result["support"] = "unsupported"
         result["explanation"] = (
             f"deterministic check: the chart data holds no figure to compare against the "
-            f"expected {_fmt(expected.value)}{unit}"
+            f"expected {format_number(expected.value)}{unit}"
         )
         return result
 
@@ -371,7 +372,7 @@ def evaluate_numeric_support(
     result["difference"] = difference
     result["explanation"] = (
         f"deterministic check: the chart's closest figure to the expected "
-        f"{_fmt(expected.value)}{unit} is {_fmt(closest)}{unit}, "
+        f"{format_number(expected.value)}{unit} is {format_number(closest)}{unit}, "
         f"a {difference:.2%} difference, "
         f"{'within' if within else 'exceeding'} the {tolerance:.0%} tolerance"
     )
