@@ -1,6 +1,6 @@
 id: 1-005
 uid: 6c8b9a9d674922d2
-status: done
+status: not doing
 group: parent-child
 query: In what district in Amazonas, Brazil were natural lands most disturbed in Q1 2024?
 expected:
@@ -12,6 +12,8 @@ expected:
   scope: analyse
 notes:
   aoi_type: gadm 1
+  status_reason: 'parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely
+    about DIST-ALERT over natural lands and cannot be answered without it.'
   rewrite: 'W1 2026-08-03: ''most disturbed'' not ''most at risk'' — the old wording nudged
     between land cover and disturbance alerts on 3/9. scope added (was a depth violation:
     3 checks, 1 bucket).'

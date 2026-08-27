@@ -1,9 +1,9 @@
 id: mt-001
-uid: f25772290e4699fd
+uid: 39840a3c054ab3bf
 status: ready
 group: multiturn
 turns:
-- query: Show me recent disturbance alerts in Puri
+- query: Show me recent integrated alerts in Puri
   expected:
     clarification: 'TRUE'
 - query: I mean the Puri district in Odisha, India
