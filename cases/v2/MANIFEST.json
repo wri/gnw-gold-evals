@@ -1,6 +1,6 @@
 {
-  "caseset_version": "bf5a593d71d658ae",
-  "case_count": 120,
+  "caseset_version": "cca31ecfcb1e224a",
+  "case_count": 124,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -674,6 +674,30 @@
       "uid": "afc11a22d898e7e3",
       "group": "dataset-suggestion",
       "status": "todo"
+    },
+    {
+      "id": "1-118",
+      "uid": "cc887d4637b0c8cb",
+      "group": "imagery",
+      "status": "ready"
+    },
+    {
+      "id": "1-119",
+      "uid": "4dde8287424bf279",
+      "group": "imagery",
+      "status": "ready"
+    },
+    {
+      "id": "1-120",
+      "uid": "0658d8517285c63a",
+      "group": "imagery",
+      "status": "ready"
+    },
+    {
+      "id": "1-121",
+      "uid": "64cd4b18a0afee8c",
+      "group": "imagery",
+      "status": "ready"
     },
     {
       "id": "mt-001",

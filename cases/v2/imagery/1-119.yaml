@@ -1,0 +1,17 @@
+id: 1-119
+uid: 4dde8287424bf279
+status: ready
+group: imagery
+query: Show me alerts from the past two weeks and the latest imagery for Tabatinga, Amazonas,
+  Brazil.
+expected:
+  aoi_source: gadm
+  dataset_id: 0;11
+  dataset_name: Integrated alerts
+  text: Returns Sentinel-2 imagery covering the most recent period
+notes:
+  planet_routing: Planet MVP (wri/project-zeno#800) — tests that latest/recent imagery routes
+    to Sentinel-2, not Planet, because Planet publishes only completed monthly mosaics and
+    has no current-month imagery.
+  aoi_pending: AOI ID unverified — Tabatinga may resolve to different admin levels; add aoi_ids
+    after first validation run.
