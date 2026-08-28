@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version cca31ecfcb1e224a` · 124 cases · done 93 · not doing 5 · ready 17 · todo 9 · **119 active** (everything but `not doing` runs by default)
+`caseset_version 201b1209337f4ed0` · 124 cases · done 93 · not doing 5 · ready 17 · todo 9 · **119 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-08-28_
 
@@ -39,7 +39,7 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 110 | 0 | 110 | 92% |
+| retrieval | 111 | 0 | 111 | 93% |
 | analysis | 0 | 73 | 73 | 61% |
 | explanation | 35 | 62 | 97 | 82% |
 | output | 78 | 3 | 81 | 68% |
@@ -49,7 +49,7 @@ friends) run on top of it whenever their trigger state exists.
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 99 | dataset_id_match |
+| dataset_id | 100 | dataset_id_match |
 | scope | 99 | scope_match |
 | aoi_source | 95 | reference only (dashboard AOI source) |
 | dataset_name | 92 | reference only |
@@ -81,7 +81,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 11 | 8 | — | driver ×1, natural_lands ×2, grasslands ×0 ← gap, land_cover ×0 ← gap |
+| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 12 | 9 | — | driver ×1, natural_lands ×2, grasslands ×0 ← gap, land_cover ×0 ← gap |
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
@@ -92,7 +92,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 8 | Tree cover loss by dominant driver | 5 | 4 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
 | 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
-| 11 | Integrated alerts | 8 | 7 | — | — |
+| 11 | Integrated alerts | 9 | 8 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 3 | 3 | — | — |
 
 ## Multi-turn
