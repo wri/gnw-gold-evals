@@ -115,6 +115,14 @@ def test_ambiguous_decimal_separator_is_skipped():
     assert parse_expected_number("230.003 hektar") is None
 
 
+def test_sub_one_magnitude_is_not_ambiguous():
+    """No locale writes a leading zero group, so '0.068' can only be a
+    decimal — DR-PR11's acceptance quartet ends on exactly this value."""
+    parsed = parse_expected_number("0.068 ha")
+    assert parsed is not None
+    assert parsed.value == 0.068
+
+
 def test_zero_expected_value_is_skipped():
     """A relative difference against zero is undefined."""
     assert parse_expected_number("0 hectares") is None

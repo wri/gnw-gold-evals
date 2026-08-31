@@ -59,8 +59,10 @@ _NON_MEASURE_KEYS = frozenset(
 
 # A number written as `230.003` may be two hundred thousand (Indonesian, Spanish) or two
 # hundred point oh oh three. Exactly three digits after a single dot, with no second
-# decimal group, is unresolvable from the string alone.
-_AMBIGUOUS_DECIMAL = re.compile(r"^\d{1,3}\.\d{3}$")
+# decimal group, is unresolvable from the string alone. A magnitude below one
+# ("0.068") is exempt: no locale writes a leading zero group, so the dot can only
+# be a decimal separator (DR-PR11's acceptance value is exactly this shape).
+_AMBIGUOUS_DECIMAL = re.compile(r"^(?!0\.)\d{1,3}\.\d{3}$")
 
 # A leading number, optionally signed, with thousands separators and a decimal
 # part. The sign is load-bearing: net-flux rows express a carbon *sink* as a
