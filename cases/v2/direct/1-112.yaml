@@ -1,6 +1,6 @@
 id: 1-112
 uid: 88d8747649779fb8
-status: ready
+status: not doing
 group: direct
 query: How much emissions were there from forests in India?
 expected:
@@ -24,7 +24,10 @@ notes:
     inventory table — a computed aggregate is never a chart candidate, so any numeric answer
     expectation fails charts_answer deterministically (closest candidate this run was 55%
     off). The text expectation carries the presentation-instruction surface instead.'
-  status_reason: '2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental — every
-    gating check passed at this uid before the text expectation was added (aoi, dataset 12,
-    pull_source, scope analyse; answer_traceability 0.0 is info-only and structural, see no_answer_rationale).
-    Needs a 3-trial ff=experimental pass at the final uid for done.'
+  status_reason: '2026-08-31: not doing while gold runs target the default agent profile —
+    LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without
+    the flag. Re-admit when runs return to the experimental profile or LGMS joins the default
+    catalog. | prior: 2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental —
+    every gating check passed at this uid before the text expectation was added (aoi, dataset
+    12, pull_source, scope analyse; answer_traceability 0.0 is info-only and structural, see
+    no_answer_rationale). Needs a 3-trial ff=experimental pass at the final uid for done.'

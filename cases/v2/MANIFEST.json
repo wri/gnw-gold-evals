@@ -643,37 +643,37 @@
       "id": "1-112",
       "uid": "88d8747649779fb8",
       "group": "direct",
-      "status": "ready"
+      "status": "not doing"
     },
     {
       "id": "1-113",
       "uid": "426c2d3acd2083ce",
       "group": "temporal",
-      "status": "ready"
+      "status": "not doing"
     },
     {
       "id": "1-114",
       "uid": "8bb4a04e1d9f780a",
       "group": "refusal",
-      "status": "ready"
+      "status": "not doing"
     },
     {
       "id": "1-115",
       "uid": "24ca3663de0cb044",
       "group": "direct",
-      "status": "todo"
+      "status": "not doing"
     },
     {
       "id": "1-116",
       "uid": "9eb1c3b8104ae74a",
       "group": "refusal",
-      "status": "todo"
+      "status": "not doing"
     },
     {
       "id": "1-117",
       "uid": "afc11a22d898e7e3",
       "group": "dataset-suggestion",
-      "status": "todo"
+      "status": "not doing"
     },
     {
       "id": "mt-001",
