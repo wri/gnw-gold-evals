@@ -286,6 +286,48 @@ def _values_for_year(
     return candidates, saw_time_series, series_resolved
 
 
+# Pairwise differences are O(n^2) per column; a pathological chart must not
+# stall a run, and a series longer than this is beyond what prose derives
+# deltas from anyway.
+_MAX_DIFF_VALUES = 100
+
+
+def _column_differences(
+    charts: list[dict[str, Any]],
+) -> tuple[list[float], list[float]]:
+    """Pairwise deltas within each time-series measure column.
+
+    "An overall gain of 670,971 hectares" is the difference of two figures
+    the chart holds, not a figure it holds itself — caught live on the first
+    staging probe, where exactly that claim (true to 0.1%) failed for want
+    of a candidate. Returns (absolute differences, relative changes as
+    percentages); same-column only, so cross-series arithmetic never
+    manufactures support.
+    """
+    differences: list[float] = []
+    percent_changes: list[float] = []
+    for chart in charts:
+        for records in _record_sets(chart):
+            year_key = _year_key(records)
+            if year_key is None:
+                continue
+            for key in _measure_keys(records, year_key):
+                values = [
+                    float(record[key])
+                    for record in records
+                    if isinstance(record.get(key), int | float)
+                    and not isinstance(record.get(key), bool)
+                ][:_MAX_DIFF_VALUES]
+                for i, earlier in enumerate(values):
+                    for later in values[i + 1 :]:
+                        delta = abs(later - earlier)
+                        if delta:
+                            differences.append(delta)
+                        if earlier:
+                            percent_changes.append(abs(delta / earlier * 100))
+    return differences, percent_changes
+
+
 def _within(value: float, target: float) -> bool:
     return target != 0 and abs(value - target) / abs(target) <= NUMERIC_TOLERANCE
 
@@ -325,10 +367,15 @@ def _match_value(claim: NumericClaim, charts: list[dict[str, Any]]) -> ClaimVerd
                 f"claimed {format_number(parsed.value)}{unit} for {year}; the "
                 f"closest figure that year is {format_number(closest)}{unit}{note}",
             )
-    # No usable year anywhere: any figure a reader could take from the charts.
+    # No usable year anywhere: any figure a reader could take from the charts,
+    # including within-series deltas ("a gain of N since ...").
     candidates = chart_candidate_values(
         _serialize_charts_json(charts), is_percent=parsed.is_percent
     )
+    differences, percent_changes = _column_differences(charts)
+    candidates += differences
+    if parsed.is_percent:
+        candidates += percent_changes
     if not candidates:
         return ClaimVerdict(
             claim, "unsupported", "the chart data holds no figure to compare against"

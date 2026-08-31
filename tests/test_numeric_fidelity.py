@@ -157,6 +157,24 @@ def test_unparseable_figure_is_skipped_never_guessed():
     assert one(value("several hundred ha"), [CHART_PIE]).status == "skipped"
 
 
+def test_within_series_delta_is_a_candidate():
+    # The first staging probe: "an overall gain of approximately 670,971
+    # hectares" is 80,229,886.04 - 79,558,914.57 — true to 0.1%, but not a
+    # leaf, sum, max, or share, so it failed for want of a candidate.
+    chart = {
+        "data": [
+            {"year": 2000, "area_ha": 79_558_914.57},
+            {"year": 2011, "area_ha": 80_626_409.65},
+            {"year": 2022, "area_ha": 80_229_886.04},
+        ],
+    }
+    assert one(value("670,971 hectares"), [chart]).status == "supported"
+    # its relative form, "+0.84%", is a candidate for percent claims
+    assert one(value("0.84%"), [chart]).status == "supported"
+    # a fabricated delta still fails
+    assert one(value("2,500,000 hectares"), [chart]).status == "unsupported"
+
+
 # --- peak claims (run-2's wrong-year, 3.8x-inflated peak)
 
 
