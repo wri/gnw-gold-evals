@@ -1,0 +1,28 @@
+id: mt-010
+uid: ff0704c2938350e3
+status: ready
+group: numeric-fidelity
+turns:
+- query: How much tree cover loss did Indonesia have between 2010 and 2024?
+  expected:
+    aoi_ids: IDN
+    dataset_id: '4'
+    scope: analyse
+- query: Write two short paragraphs for a news editor summarising this analysis. Cite only
+    numbers that appear in the analysis data, name the peak year and its loss value, and state
+    whether annual loss rose or fell over the period.
+  expected:
+    text: names a peak year with its loss value and states a direction (rose or fell) for
+      annual loss over the period
+  deltas:
+    retain:
+    - aoi_ids
+    - dataset_id
+notes:
+  scenario: 'numeric fidelity: narrative reporter prose (Explanation). Elicits value, peak,
+    and trend-direction claims embedded in flowing text — the shapes the info-only numeric_fidelity
+    and trend_fidelity checks extract from prose and verify in code against charts_data. The
+    riskiest fabrication surface is publication-shaped prose, where wrong figures read as
+    authoritative.'
+  status_reason: authored 2026-08-31 with the numeric_fidelity/trend_fidelity checks. Promote
+    to done after a 3-trial ff=experimental pass at this uid.

@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version bf5a593d71d658ae` · 120 cases · done 93 · not doing 5 · ready 13 · todo 9 · **115 active** (everything but `not doing` runs by default)
+`caseset_version 63c8cdc4d74a21ce` · 123 cases · done 93 · not doing 5 · ready 16 · todo 9 · **118 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-08-31_
 
@@ -25,6 +25,7 @@ _Last updated: 2026-08-31_
 | multilingual | 5 | 5 | done 5 |
 | multiturn | 8 | 8 | ready 7, todo 1 |
 | nudge | 2 | 2 | ready 2 |
+| numeric-fidelity | 3 | 3 | ready 3 |
 | parent-child | 14 | 13 | done 11, not doing 1, ready 1, todo 1 |
 | ranking | 1 | 1 | done 1 |
 | refusal | 3 | 3 | done 1, ready 1, todo 1 |
@@ -39,23 +40,23 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 107 | 0 | 107 | 93% |
-| analysis | 0 | 73 | 73 | 63% |
-| explanation | 31 | 62 | 93 | 81% |
-| output | 78 | 3 | 81 | 70% |
-| scope | 100 | 7 | 107 | 93% |
+| retrieval | 110 | 0 | 110 | 93% |
+| analysis | 0 | 73 | 73 | 62% |
+| explanation | 34 | 62 | 96 | 81% |
+| output | 78 | 3 | 81 | 69% |
+| scope | 103 | 7 | 110 | 93% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| scope | 99 | scope_match |
-| dataset_id | 96 | dataset_id_match |
+| scope | 102 | scope_match |
+| dataset_id | 99 | dataset_id_match |
 | aoi_source | 91 | reference only (dashboard AOI source) |
 | dataset_name | 89 | reference only |
-| aoi_ids | 79 | aoi_id_match |
+| aoi_ids | 82 | aoi_id_match |
 | answer | 73 | agent_answer, charts_answer, chart_produced |
-| text | 31 | expected_text_match |
+| text | 34 | expected_text_match |
 | context_layer | 13 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | end_date | 8 | date_extraction (with start_date) |
@@ -83,9 +84,9 @@ answer-graded cases (`answer` or `text` expected) actually check.
 |---|---|---|---|---|---|
 | 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 8 | 5 | — | driver ×1, natural_lands ×2, grasslands ×0 ← gap, land_cover ×0 ← gap |
 | 1 | Global land cover | 6 | 6 | — | — |
-| 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
+| 2 | Global natural/semi-natural grassland extent | 13 | 12 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 43 | 31 | canopy_cover ×1 | primary_forest ×6, intact_forest ×4 |
+| 4 | Tree cover loss | 45 | 31 | canopy_cover ×1 | primary_forest ×6, intact_forest ×4 |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
@@ -97,7 +98,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Multi-turn
 
-8 active conversations (16 turns). Delta assertions: absent ×1, changed ×7, retain ×7
+10 active conversations (20 turns). Delta assertions: absent ×1, changed ×7, retain ×11
 
 ## Parked and held cases
 

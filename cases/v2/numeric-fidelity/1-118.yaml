@@ -1,0 +1,27 @@
+id: 1-118
+uid: e0a72e96c9b5a063
+status: ready
+group: numeric-fidelity
+query: Analyse the extent of natural and semi-natural grassland in Mongolia between 2000 and
+  2022. Then report the exact extent values for 2005 and 2020 exactly as they appear in the
+  data, and state whether grassland extent rose or fell across the period. If the data holds
+  no value for a year, say so explicitly.
+expected:
+  aoi_ids: MNG
+  dataset_id: '2'
+  scope: analyse
+  text: reports specific grassland extent figures for 2005 and 2020 and states a direction
+    (rose or fell) for the period, or explicitly says a year's value is absent
+notes:
+  scenario: 'numeric fidelity: single-turn analyse-then-quote on grassland extent (Explanation),
+    for dataset diversity beyond tree cover loss. Elicits year-tied value claims and a trend-direction
+    claim in one answer; the info-only numeric_fidelity and trend_fidelity checks verify both
+    against charts_data.'
+  rewrite: '2026-08-31, same day as authoring: the first version asked for gross greenhouse
+    gas emissions from tree cover loss (dataset 4;6 alternatives), and nudged a dataset choice
+    on 3 of 3 staging trials — systematic, not the tolerable 1-002-style residual, so the
+    row would have been a self-authored permanent failure. Re-anchored on natural/semi-natural
+    grassland extent, whose metric name maps to one dataset ("natural grassland", per the
+    cases/README.md precision rule).'
+  status_reason: authored 2026-08-31 with the numeric_fidelity/trend_fidelity checks. Promote
+    to done after a 3-trial ff=experimental pass at this uid.

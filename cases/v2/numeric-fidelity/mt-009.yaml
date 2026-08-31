@@ -1,0 +1,29 @@
+id: mt-009
+uid: 63857cd947d0fad9
+status: ready
+group: numeric-fidelity
+turns:
+- query: How much tree cover loss did Sao Paulo state, Brazil have between 2015 and 2024?
+  expected:
+    aoi_ids: BRA.25_1
+    dataset_id: '4'
+    scope: analyse
+- query: From the analysis in this conversation, quote the exact tree cover loss values for
+    2016 and 2020, exactly as they appear in the data, and name the year with the highest
+    loss. If the data holds no value for a year, say so explicitly instead of estimating.
+  expected:
+    text: quotes specific per-year loss figures for 2016 and 2020 and names a highest-loss
+      year, rather than refusing or answering without figures
+  deltas:
+    retain:
+    - aoi_ids
+    - dataset_id
+notes:
+  scenario: 'numeric fidelity: exact-value quoting from the thread''s own analysis (Explanation).
+    Turn 2 is the elicitation surface for the info-only numeric_fidelity check (value and
+    peak claims tied to years, verified in code against charts_data); the text expectation
+    only asserts the answer engages with figures — exactness is scored deterministically,
+    no judge arithmetic.'
+  status_reason: authored 2026-08-31 with the numeric_fidelity/trend_fidelity checks; scope
+    deliberately set on turn 1 only (turn 2 inherits pulled state, so a turn-2 scope pin would
+    be tautological). Promote to done after a 3-trial ff=experimental pass at this uid.
