@@ -74,7 +74,15 @@ export API_TOKEN="$STAGING_API_TOKEN"   # .env holds it; the CLI reads API_TOKEN
 
 uv run gold run --env staging --ff experimental --build "<label>"              # iteration (1 trial, 10 workers)
 uv run gold run --env staging --ff experimental --trials 3 --build "<label>"   # official / gate
+uv run gold run --resume <run_id>                                              # finish a killed run
 ```
+
+Runs stream each completed case to `results/runs/<run_id>.partial.jsonl`
+(gitignored, fsynced per line), so a killed run loses at most the case that
+was mid-flight. `--resume` rebuilds the run's config from that file's header
+(other flags are ignored), refuses if the caseset changed, runs only the
+missing cases, and writes the same immutable run JSON — marked
+`resumed: true` — before deleting the partial.
 
 **`--ff experimental` is required on any run whose verdict you intend to trust.**
 `ff` is the agent's tool profile, passed through in the request payload and
