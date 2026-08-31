@@ -7,16 +7,20 @@ config from the partial's header line and runs only what's missing.
 
 from __future__ import annotations
 
+import argparse
 import json
 
 import pytest
 
+from goldset import cli
 from goldset.ledger import (
     append_partial_entry,
     partial_path,
     read_partial,
+    read_run,
     write_partial_header,
 )
+from goldset.store import Case, build_manifest, write_case, write_manifest
 
 
 def make_header(**overrides) -> dict:
@@ -116,3 +120,122 @@ def test_read_refuses_empty_file(tmp_path):
     path.write_text("", encoding="utf-8")
     with pytest.raises(ValueError, match="empty"):
         read_partial(path)
+
+
+# --- the --resume CLI path -------------------------------------------------
+
+RUN_ID = "20260831T143429Z_prod_experimental"
+
+CASE_A = Case(id="1-001", status="ready", group="direct", query="q one",
+              expected={"dataset_id": "4"})
+CASE_B = Case(id="1-002", status="ready", group="direct", query="q two",
+              expected={"dataset_id": "11"})
+
+
+def make_store(tmp_path):
+    cases_dir = tmp_path / "cases" / "v2"
+    for case in (CASE_A, CASE_B):
+        write_case(cases_dir, case)
+    manifest = build_manifest([CASE_A, CASE_B], source="test")
+    write_manifest(cases_dir, manifest)
+    return cases_dir, manifest
+
+
+def entry_for(case: Case, score: float = 1.0) -> dict:
+    return {"uid": case.uid, "id": case.id,
+            "checks": {"dataset_id_match": score}}
+
+
+def make_partial(tmp_path, cases_dir, manifest, done: list[dict]):
+    header = make_header(
+        run_id=RUN_ID,
+        trials=1,
+        cases_dir=str(cases_dir),
+        caseset_version=manifest["caseset_version"],
+    )
+    path = write_partial_header(tmp_path / "results", header)
+    for entry in done:
+        append_partial_entry(path, entry)
+    return path
+
+
+def resume_args(tmp_path) -> argparse.Namespace:
+    return argparse.Namespace(resume=RUN_ID, results_dir=tmp_path / "results")
+
+
+@pytest.fixture
+def hermetic(monkeypatch):
+    monkeypatch.setattr(cli, "load_dotenv", lambda: None)
+    monkeypatch.setenv("API_TOKEN", "test-token")
+
+
+def test_resume_runs_only_missing_cases(tmp_path, monkeypatch, hermetic):
+    cases_dir, manifest = make_store(tmp_path)
+    partial = make_partial(tmp_path, cases_dir, manifest, [entry_for(CASE_A)])
+    seen: list[list[Case]] = []
+
+    async def fake_run_cases(args, cases, entry_sink=None):
+        seen.append(cases)
+        entries = [entry_for(case, score=0.0) for case in cases]
+        for entry in entries:
+            entry_sink(entry)
+        return entries
+
+    monkeypatch.setattr(cli, "run_cases", fake_run_cases)
+    assert cli.resume_run(resume_args(tmp_path)) == 0
+
+    assert [c.uid for c in seen[0]] == [CASE_B.uid]
+    record = read_run(tmp_path / "results" / "runs" / f"{RUN_ID}.json")
+    assert record["resumed"] is True
+    assert [e["id"] for e in record["results"]] == ["1-001", "1-002"]
+    assert record["results"][0]["checks"] == {"dataset_id_match": 1.0}
+    assert record["results"][1]["checks"] == {"dataset_id_match": 0.0}
+    assert record["caseset_version"] == manifest["caseset_version"]
+    assert not partial.exists()
+
+
+def test_resume_finalises_when_nothing_remains(tmp_path, monkeypatch, hermetic):
+    cases_dir, manifest = make_store(tmp_path)
+    partial = make_partial(
+        tmp_path, cases_dir, manifest, [entry_for(CASE_A), entry_for(CASE_B)]
+    )
+
+    async def unexpected(*a, **kw):  # pragma: no cover - failure path
+        raise AssertionError("run_cases must not be called")
+
+    monkeypatch.setattr(cli, "run_cases", unexpected)
+    assert cli.resume_run(resume_args(tmp_path)) == 0
+    record = read_run(tmp_path / "results" / "runs" / f"{RUN_ID}.json")
+    assert record["resumed"] is True
+    assert len(record["results"]) == 2
+    assert not partial.exists()
+
+
+def test_resume_refuses_caseset_drift(tmp_path, hermetic):
+    cases_dir, manifest = make_store(tmp_path)
+    partial = make_partial(tmp_path, cases_dir, manifest, [entry_for(CASE_A)])
+    case_c = Case(id="1-003", status="ready", group="direct",
+                  query="q three", expected={"dataset_id": "0"})
+    write_case(cases_dir, case_c)
+    write_manifest(cases_dir, build_manifest([CASE_A, CASE_B, case_c],
+                                             source="test"))
+
+    assert cli.resume_run(resume_args(tmp_path)) == 1
+    assert partial.exists()
+    assert not (tmp_path / "results" / "runs" / f"{RUN_ID}.json").exists()
+
+
+def test_resume_without_partial(tmp_path, capsys):
+    assert cli.resume_run(resume_args(tmp_path)) == 1
+    assert "nothing to resume" in capsys.readouterr().out
+
+
+def test_resume_removes_stale_partial_after_finalised_run(tmp_path, hermetic):
+    cases_dir, manifest = make_store(tmp_path)
+    partial = make_partial(tmp_path, cases_dir, manifest, [entry_for(CASE_A)])
+    final = tmp_path / "results" / "runs" / f"{RUN_ID}.json"
+    final.write_text("{}", encoding="utf-8")
+
+    assert cli.resume_run(resume_args(tmp_path)) == 0
+    assert not partial.exists()
+    assert final.read_text(encoding="utf-8") == "{}"
