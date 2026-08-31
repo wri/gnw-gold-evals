@@ -51,6 +51,9 @@ DEDICATED: dict[str, str] = {
     "class_value_match": ANALYSIS,
     "chart_integrity": ANALYSIS,
     "answer_traceability": EXPLANATION,
+    # DR-PR11 numeric-fidelity pair: prose claims vs the thread's own data
+    "numeric_fidelity": EXPLANATION,
+    "trend_fidelity": EXPLANATION,
     "chart_well_formed": OUTPUT,
     "chart_type_match": OUTPUT,
     "scope_match": SCOPE,
@@ -80,12 +83,19 @@ SHARED: dict[str, tuple[str, str]] = {
 # i.e. all the movement was the judge's framing opinion, and cases/README.md
 # forbids staking a verdict on chart choice. Re-admit only if it demonstrates
 # std <= 0.10 over 3 trials.
+# numeric_fidelity / trend_fidelity: born info-only 2026-08-31 (DR-PR11).
+# Claim extraction is an LLM pass (verdicts are code), so per the working
+# agreement both run info-only until they show std <= 0.10 over 3 trials
+# with no extraction false positives; promote together with the DR-PR11
+# gold cases.
 INFO_ONLY: frozenset[str] = frozenset(
     {
         "date_coverage",
         "answer_traceability",
         "class_value_match",
         "charts_answer_judge",
+        "numeric_fidelity",
+        "trend_fidelity",
     }
 )
 

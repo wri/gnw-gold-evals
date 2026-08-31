@@ -13,6 +13,7 @@ from .data_pull_evaluator import (
 )
 from .dataset_evaluator import evaluate_dataset_selection
 from .nudge_evaluator import evaluate_nudge
+from .numeric_fidelity import evaluate_numeric_fidelity
 from .suggested_datasets_evaluator import evaluate_suggested_datasets
 
 __all__ = [
@@ -27,5 +28,6 @@ __all__ = [
     "evaluate_date_selection",
     "evaluate_final_answer",
     "evaluate_nudge",
+    "evaluate_numeric_fidelity",
     "evaluate_suggested_datasets",
 ]

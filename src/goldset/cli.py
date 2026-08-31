@@ -57,6 +57,8 @@ ACTUALS_FOR_CHECK = {
     "scope_match": ("actual_scope",),
     "class_value_match": ("actual_class_values",),
     "answer_traceability": ("actual_traceability_claim",),
+    "numeric_fidelity": ("actual_numeric_claims",),
+    "trend_fidelity": ("actual_numeric_claims",),
     "dashboard_created": ("actual_dashboard_created",),
     "dashboard_aoi_match": ("actual_dashboard_aoi_id", "actual_dashboard_aoi_count"),
     "dashboard_widgets_match": ("actual_dashboard_widget_types",),

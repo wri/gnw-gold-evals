@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version bf5a593d71d658ae` · 120 cases · done 93 · not doing 5 · ready 13 · todo 9 · **115 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-08-07_
+_Last updated: 2026-08-31_
 
 ## Groups
 
@@ -122,7 +122,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 - Expected fields no active case uses: chart_type, suggested_datasets —
   the checks they switch on can never fire until cases set them.
-- Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
+- Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage, numeric_fidelity, trend_fidelity.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
 - Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: grasslands (0), land_cover (0), primary_forest (7, 10), intact_forest (10).

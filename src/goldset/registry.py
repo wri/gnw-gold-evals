@@ -26,6 +26,7 @@ from goldset.evaluators import (
     evaluate_date_selection,
     evaluate_final_answer,
     evaluate_nudge,
+    evaluate_numeric_fidelity,
     evaluate_suggested_datasets,
 )
 from goldset.evaluators.analysis_checks import (
@@ -202,6 +203,14 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         score_fields=("answer_traceability_score",),
         run=lambda state, expected, query, dashboard: (
             evaluate_answer_traceability(state)
+        ),
+    ),
+    EvaluatorSpec(
+        name="numeric_fidelity",
+        kind="mixed",
+        score_fields=("numeric_fidelity_score", "trend_fidelity_score"),
+        run=lambda state, expected, query, dashboard: (
+            evaluate_numeric_fidelity(state)
         ),
     ),
     EvaluatorSpec(
