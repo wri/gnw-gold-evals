@@ -454,12 +454,8 @@ def _match_bound(claim: NumericClaim, charts: list[dict[str, Any]]) -> ClaimVerd
     )
 
 
-def trend_direction(points: list[tuple[int, float]]) -> str | None:
-    """Least-squares slope direction, with a flatness deadband.
-
-    None when fewer than ``_MIN_TREND_POINTS`` points or the series has no
-    magnitude to compare against — a slope over two points is an anecdote.
-    """
+def _slope(points: list[tuple[int, float]]) -> tuple[float, float] | None:
+    """Least-squares (slope, relative predicted change over the span)."""
     if len(points) < _MIN_TREND_POINTS:
         return None
     n = len(points)
@@ -471,9 +467,55 @@ def trend_direction(points: list[tuple[int, float]]) -> str | None:
         return None
     slope = sum((x - mean_x) * (y - mean_y) for x, y in points) / denominator
     span = max(x for x, _ in points) - min(x for x, _ in points)
-    if abs(slope * span) < _TREND_DEADBAND * scale:
+    return slope, abs(slope * span) / scale
+
+
+def trend_direction(points: list[tuple[int, float]]) -> str | None:
+    """Least-squares slope direction, with a flatness deadband.
+
+    None when fewer than ``_MIN_TREND_POINTS`` points or the series has no
+    magnitude to compare against — a slope over two points is an anecdote.
+    """
+    stats = _slope(points)
+    if stats is None:
+        return None
+    slope, relative_change = stats
+    if relative_change < _TREND_DEADBAND:
         return "stable"
     return "rising" if slope > 0 else "falling"
+
+
+def _direction_verdict(claimed: str, points: list[tuple[int, float]]) -> tuple[str, str] | None:
+    """One column's verdict on a direction claim, or None if no slope.
+
+    Only a DECISIVE contradiction fails: rising claimed on decisively
+    falling data, or "stable" claimed on decisively moving data. Inside the
+    flatness deadband a rising/falling claim whose sign matches the drift is
+    a defensible description ("rose slightly"), so it passes — caught live
+    on the first staging probe, where extent that drifted +0.8% over 22
+    years was described as "rose" with both endpoints quoted exactly, and
+    the deadband alone called that unsupported. A sign-opposing claim inside
+    the deadband abstains: flat-plus-noise is not evidence either way.
+    """
+    stats = _slope(points)
+    if stats is None:
+        return None
+    slope, _ = stats
+    computed = trend_direction(points)
+    if claimed == computed:
+        return "supported", f"the data's direction is {computed}"
+    if computed == "stable":
+        drift = "rising" if slope > 0 else "falling"
+        if claimed == drift:
+            return (
+                "supported",
+                f"mild {drift} drift, within the flatness deadband",
+            )
+        return (
+            "skipped",
+            "flat within the deadband; direction claim not decidable",
+        )
+    return "unsupported", f"the data's direction is {computed}"
 
 
 def _match_trend(claim: NumericClaim, charts: list[dict[str, Any]]) -> ClaimVerdict:
@@ -481,38 +523,37 @@ def _match_trend(claim: NumericClaim, charts: list[dict[str, Any]]) -> ClaimVerd
         return ClaimVerdict(claim, "skipped", f'direction "{claim.direction}" unknown')
     columns, resolved = _time_series_columns(charts, claim.series)
     start, end = _period(claim)
-    directions: dict[str, str] = {}
+    votes: dict[str, tuple[str, str]] = {}
     for name, points in columns:
         scoped = [(year, v) for year, v in points if _in_period(year, start, end)]
-        direction = trend_direction(scoped)
-        if direction is not None:
-            directions[name] = direction
-    if not directions:
-        return ClaimVerdict(
-            claim, "skipped", "no time series long enough to carry a trend"
-        )
-    # A trend claim is about one series. Resolved hint: judge that series.
-    # Unresolved across several disagreeing series: attributing the claim
-    # would be a guess, so abstain rather than fail (precision over recall).
-    distinct = set(directions.values())
-    if len(distinct) > 1 and not (claim.series and resolved):
+        verdict = _direction_verdict(claim.direction, scoped)
+        if verdict is not None:
+            votes[name] = verdict
+    decisive = {name: v for name, v in votes.items() if v[0] != "skipped"}
+    if not decisive:
         return ClaimVerdict(
             claim,
             "skipped",
-            "series disagree on direction ("
-            + ", ".join(f'"{k}": {v}' for k, v in sorted(directions.items())[:4])
-            + ") and the claim's series could not be resolved",
+            "; ".join(detail for _, detail in votes.values())
+            or "no time series long enough to carry a trend",
         )
-    if claim.direction in distinct:
-        return ClaimVerdict(
-            claim, "supported", f"the data's direction is {claim.direction}"
-        )
-    return ClaimVerdict(
-        claim,
-        "unsupported",
-        f"claimed {claim.direction}; the data's direction is "
-        + ", ".join(f'"{k}": {v}' for k, v in sorted(directions.items())[:4]),
+    # A trend claim is about one series. A resolved hint has already scoped
+    # the columns; unresolved across series with disagreeing verdicts,
+    # attributing the claim would be a guess, so abstain rather than fail
+    # (precision over recall).
+    verdicts = {v[0] for v in decisive.values()}
+    detail = "; ".join(
+        f'"{name}": {d}' for name, (_, d) in sorted(decisive.items())[:4]
     )
+    if len(verdicts) > 1 and not (claim.series and resolved):
+        return ClaimVerdict(
+            claim,
+            "skipped",
+            f"series disagree ({detail}) and the claim's series could not be resolved",
+        )
+    if "supported" in verdicts:
+        return ClaimVerdict(claim, "supported", detail)
+    return ClaimVerdict(claim, "unsupported", f"claimed {claim.direction}; {detail}")
 
 
 _MATCHERS = {

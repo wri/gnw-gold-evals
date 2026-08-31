@@ -241,6 +241,41 @@ def test_flat_series_reads_as_stable():
     assert trend_direction(points[:2]) is None  # two points are an anecdote
 
 
+# The first staging probe of 1-118: extent drifted +0.8% over 22 years, the
+# answer said "rose" with both endpoints quoted exactly, and the deadband
+# alone called that unsupported — a false failure. Inside the deadband a
+# sign-matching claim is a defensible reading; only decisive contradictions
+# fail.
+MILD_DRIFT = {
+    "data": [
+        {"year": 2000, "area_ha": 100.0},
+        {"year": 2006, "area_ha": 100.2},
+        {"year": 2012, "area_ha": 100.4},
+        {"year": 2018, "area_ha": 100.6},
+        {"year": 2022, "area_ha": 100.8},
+    ],
+}
+
+
+def test_mild_drift_supports_a_sign_matching_direction_claim():
+    verdict = one(trend("rising"), [MILD_DRIFT])
+    assert verdict.status == "supported"
+    assert "mild rising drift" in verdict.reason
+    # "stable" is equally defensible on the same data
+    assert one(trend("stable"), [MILD_DRIFT]).status == "supported"
+
+
+def test_mild_drift_abstains_on_a_sign_opposing_claim():
+    # flat-plus-noise is not evidence the claim is wrong; abstain, never guess
+    verdict = one(trend("falling"), [MILD_DRIFT])
+    assert verdict.status == "skipped"
+    assert "not decidable" in verdict.reason
+
+
+def test_stable_claim_on_decisively_moving_data_is_unsupported():
+    assert one(trend("stable"), [CHART_NOVA]).status == "unsupported"
+
+
 def test_disagreeing_series_abstain_unless_the_hint_resolves():
     chart = {
         "data": [
