@@ -12,10 +12,12 @@ Naming quirk handled here once: the gnw-evals CSVs call the score
 from __future__ import annotations
 
 import json
+import os
 import re
 from pathlib import Path
 
 RUNS_DIRNAME = "runs"
+PARTIAL_SUFFIX = ".partial.jsonl"
 
 # reason-column stem -> check name (gnw-evals historical inconsistency)
 REASON_ALIASES = {"chart_answer": "charts_answer"}
@@ -154,6 +156,95 @@ def write_run(results_dir: Path, run: dict) -> Path:
         )
     path.write_text(content, encoding="utf-8")
     return path
+
+
+# Everything a resumed invocation needs to reconstruct the run's config —
+# flags on a --resume invocation are ignored in favour of these, so the two
+# halves of a resumed run cannot diverge.
+REQUIRED_PARTIAL_HEADER_FIELDS = (
+    "run_id",
+    "started",
+    "environment",
+    "resolved_url",
+    "ff",
+    "build",
+    "trials",
+    "workers",
+    "trial_timeout",
+    "slow_threshold",
+    "cases_dir",
+    "caseset_version",
+    "status_exclude",
+    "id",
+    "group",
+    "note",
+)
+
+
+def partial_path(results_dir: Path, run_id: str) -> Path:
+    return results_dir / RUNS_DIRNAME / f"{run_id}{PARTIAL_SUFFIX}"
+
+
+def _append_jsonl(path: Path, obj: dict) -> None:
+    # One fsynced line per completed case: a kill can truncate at most the
+    # final line, which read_partial discards (that case simply re-runs).
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(obj, ensure_ascii=False) + "\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+
+
+def write_partial_header(results_dir: Path, header: dict) -> Path:
+    missing = [f for f in REQUIRED_PARTIAL_HEADER_FIELDS if f not in header]
+    if missing:
+        raise ValueError(f"partial header missing fields: {missing}")
+    path = partial_path(results_dir, header["run_id"])
+    if path.exists():
+        raise ValueError(f"{path} already exists — resume or delete it first")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    _append_jsonl(path, header)
+    return path
+
+
+def append_partial_entry(path: Path, entry: dict) -> None:
+    _append_jsonl(path, entry)
+
+
+def read_partial(path: Path) -> tuple[dict, list[dict]]:
+    """Header + completed entries from an in-flight run file.
+
+    A truncated final line is the expected signature of a killed run and is
+    dropped; corruption anywhere else is refused loudly.
+    """
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines:
+        raise ValueError(f"{path} is empty — no header to resume from")
+    parsed: list[dict] = []
+    for number, line in enumerate(lines, start=1):
+        try:
+            parsed.append(json.loads(line))
+        except json.JSONDecodeError:
+            if number == len(lines):
+                break
+            raise ValueError(f"{path}:{number}: corrupt line mid-file") from None
+    if not parsed:
+        raise ValueError(f"{path}: header line is unreadable")
+    header, entries = parsed[0], parsed[1:]
+    missing = [f for f in REQUIRED_PARTIAL_HEADER_FIELDS if f not in header]
+    if missing:
+        raise ValueError(f"{path}: first line is not a run header ({missing=})")
+    seen: set[str] = set()
+    for entry in entries:
+        uid = entry.get("uid")
+        if not uid or "checks" not in entry:
+            raise ValueError(f"{path}: entry without uid/checks: {entry!r:.120}")
+        if uid in seen:
+            raise ValueError(
+                f"{path}: duplicate entry for uid {uid} — "
+                "was the run resumed twice in parallel?"
+            )
+        seen.add(uid)
+    return header, entries
 
 
 def read_run(path: Path) -> dict:
