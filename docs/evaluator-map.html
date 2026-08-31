@@ -162,6 +162,10 @@ buckets it answers for — plus the case shapes that switch each check on.</p>
   <td>Tripwire: the answer cites an external (non-GNW) URL when a data pull was expected — the agent explained from the web, not the data.</td></tr>
 <tr><td>answer_traceability <span class="badge b-det">DET</span> <span class="badge b-info">INFO-ONLY</span></td><td>traceability</td><td class="trigger">always (when data was pulled)</td>
   <td>Every unit-bearing claim in the answer traces back to the pulled data. Demoted to info-only 2026-08-01 after claim extraction misfired on unitless counts/ranks; re-admitted after a clean 3-trial run.</td></tr>
+<tr><td>numeric_fidelity <span class="badge b-judge">JUDGE</span> <span class="badge b-info">INFO-ONLY</span></td><td>numeric_fidelity</td><td class="trigger">always (charts + prose)</td>
+  <td>DR-PR11: every value, peak, and threshold claim in the answer — narrative prose included — verified against the thread's own chart data, tied to the year and series it cites. The LLM only extracts claims verbatim; all verdicts are computed in code. Born info-only until std &le; 0.10 over 3 trials.</td></tr>
+<tr><td>trend_fidelity <span class="badge b-judge">JUDGE</span> <span class="badge b-info">INFO-ONLY</span></td><td>numeric_fidelity</td><td class="trigger">always (charts + prose)</td>
+  <td>DR-PR11 companion: rising/falling/stable claims scored against the least-squares direction of the cited series over the cited period; abstains when several series disagree and the claim's series cannot be resolved. Born info-only alongside numeric_fidelity.</td></tr>
 </table></div>
 </section>
 
@@ -335,8 +339,9 @@ separately — an agent that clarifies in prose but sends no nudge fails half of
       just flagged as not yet curation-approved.</li>
 </ul>
 
-<p class="prov">Generated 2026-08-01 from <code>src/goldset/registry.py</code> (17 evaluators →
-27 checks) and <code>src/goldset/buckets.py</code> @ main a0a3e8c · case figures from
+<p class="prov">Generated 2026-08-01 from <code>src/goldset/registry.py</code>, amended by hand
+2026-08-31 for the DR-PR11 numeric-fidelity pair (18 evaluators →
+30 checks) and <code>src/goldset/buckets.py</code> @ main a0a3e8c · case figures from
 <code>cases/v2</code> (114 cases, caseset_version a93cedfc97c98a4d). Regenerate by hand when the
 registry or bucket tags change — <code>tests/test_buckets.py</code> pins the code side.</p>
 

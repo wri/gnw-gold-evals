@@ -168,7 +168,7 @@ a team checkout that has them.
   |---|---|
   | **Retrieval** — did it understand the question? | `aoi_id_match` `dataset_id_match` `dataset_parameter_match` `context_layer_match` `date_extraction` `data_pull_exists` `pull_source_match` `answered_without_data` `state_delta` |
   | **Analysis** — right numbers? | `chart_integrity` `class_value_match`° `charts_answer`† `agent_answer`† |
-  | **Explanation** — prose faithful to the data? | `expected_text_match` `web_fallback` `answer_traceability`° `agent_answer`† |
+  | **Explanation** — prose faithful to the data? | `expected_text_match` `web_fallback` `answer_traceability`° `numeric_fidelity`° `trend_fidelity`° `agent_answer`† |
   | **Output** — artifacts presented correctly? | `chart_produced` `chart_well_formed` `chart_type_match` `dashboard_aoi_match` `dashboard_widgets_match` `dashboard_widgets_valid` `charts_answer`† `dashboard_created`† |
   | **Scope** — right amount of work? | `scope_match` `clarification_requested` `suggested_datasets_match` `nudge_match` `dashboard_created`† |
 
