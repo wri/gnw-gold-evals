@@ -1,0 +1,15 @@
+id: ch-aoi-052
+uid: 6836a6d1eca66103
+status: ready
+set: aoi
+group: multilingual
+query: Покажи мне Москву
+expected:
+  aoi_ids: RUS.43
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: ADR-001 transliteration; RUS.44 Moskva oblast is the near-miss alternative
+  verify_query: Moscow|Moskva
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

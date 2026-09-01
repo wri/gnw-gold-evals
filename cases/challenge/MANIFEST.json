@@ -6,787 +6,918 @@
     {
       "id": "ch-aoi-001",
       "uid": "d368c2c205c3e822",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-002",
       "uid": "e50c4564b9fa5c09",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-003",
       "uid": "504c61ab6dae208f",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-004",
       "uid": "22dcf73834137da3",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-005",
       "uid": "8d18cb5f5ea66cf4",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-006",
       "uid": "3eca84c8d211222b",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-007",
       "uid": "beda3578c1c61a59",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-008",
       "uid": "a6a3dba2786f98b7",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-009",
       "uid": "7396e476ca456f71",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-010",
       "uid": "71f952f82ef89a64",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-011",
       "uid": "f6b9de5215de397f",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-012",
       "uid": "215bdd18561ae76a",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-013",
       "uid": "cc1cdcb5bc7f4074",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-014",
       "uid": "d417f76f0d795e7b",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-015",
       "uid": "f0b1f463f81c1296",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-016",
       "uid": "48ddeb7ebfb48c31",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-017",
       "uid": "3b6d3241c6dc0de2",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-018",
       "uid": "60e1b2776be534ba",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-019",
       "uid": "630328ae07a75f68",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-020",
       "uid": "70bf03007532f811",
-      "group": "aoi-direct",
+      "set": "aoi",
+      "group": "direct",
       "status": "ready"
     },
     {
       "id": "ch-aoi-021",
       "uid": "12c7814abbfaab08",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-022",
       "uid": "78786cfbbf9fc016",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-023",
       "uid": "9485ef9f3dc187a8",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-024",
       "uid": "67fe937abb496757",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-025",
       "uid": "324829ac6646452f",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-026",
       "uid": "49ebf23dfed7c5fb",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-027",
       "uid": "c8360dcb2db3b14b",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-028",
       "uid": "9c5ca1052ef1c4c8",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-029",
       "uid": "90656dedc7ef7154",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-030",
       "uid": "9440cdf47dae8e1c",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-031",
       "uid": "30fd8946483db323",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-032",
       "uid": "1f27456aed0245c9",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-033",
       "uid": "59ad3cfb95cdf8a6",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-034",
       "uid": "fcb95a4dd5613562",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-035",
       "uid": "fd9617cf4fd937cb",
-      "group": "aoi-sources",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
       "id": "ch-aoi-036",
       "uid": "720aaf03a4022ee1",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-037",
       "uid": "382c79009511409a",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-038",
       "uid": "ad1c03a140db762e",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-039",
       "uid": "7963215b23bf0efd",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-040",
       "uid": "626f32490476a26c",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-041",
       "uid": "728fc346694914ff",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-042",
       "uid": "b2485457cdd995e5",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-043",
       "uid": "a320e5a73667e88d",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-044",
       "uid": "8c249da10a958530",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-045",
       "uid": "498e9b28ecb871e7",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-046",
       "uid": "80c9514f8ccba35e",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-047",
       "uid": "c8e284ce1653c175",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-048",
       "uid": "8ef13ba5753b3b4d",
-      "group": "aoi-acronyms",
+      "set": "aoi",
+      "group": "acronyms",
       "status": "ready"
     },
     {
       "id": "ch-aoi-049",
       "uid": "12b2e66fcfbf986b",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-050",
       "uid": "3df7a2151f6c951a",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-051",
       "uid": "d98ae2c46022d338",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-052",
       "uid": "6836a6d1eca66103",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-053",
       "uid": "af2ce8fb65075f30",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-054",
       "uid": "ae37fed74db65003",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-055",
       "uid": "ce8233990e7e8b6c",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-056",
       "uid": "4ff8b2b6f8174510",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-057",
       "uid": "d8631cb5b81ed607",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-058",
       "uid": "6052899cfaa5dc26",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-059",
       "uid": "46cbe1086ab96427",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-060",
       "uid": "cd9e2f05521280e5",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-061",
       "uid": "4926e9ace2350c60",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-062",
       "uid": "871b13b9497ff70a",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-063",
       "uid": "d29b1af5dc8a9873",
-      "group": "aoi-multilingual",
+      "set": "aoi",
+      "group": "multilingual",
       "status": "ready"
     },
     {
       "id": "ch-aoi-064",
       "uid": "f52e20677dedbec3",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-065",
       "uid": "fdf968e1f849230f",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-066",
       "uid": "77765765117a4399",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-067",
       "uid": "55fcccf2c16543c0",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-068",
       "uid": "50c9c938998f6c89",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-069",
       "uid": "9eca1f0bb89580e7",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-070",
       "uid": "83a5b049b1d55aec",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-071",
       "uid": "6ab726cd8146edf2",
-      "group": "aoi-data-quality",
+      "set": "aoi",
+      "group": "data-quality",
       "status": "ready"
     },
     {
       "id": "ch-aoi-072",
       "uid": "3cbe6839351fe072",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-073",
       "uid": "79829a99ecff7729",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-074",
       "uid": "aaaf7805afef78da",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-075",
       "uid": "f5d755626c2a38df",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-076",
       "uid": "20c1621a75ff9075",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-077",
       "uid": "c1277932e269804a",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-078",
       "uid": "1e94f5a9bcf110e5",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-079",
       "uid": "00be169e3d0b8f1f",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-080",
       "uid": "a6cc7e36dceeafc1",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-081",
       "uid": "c79a41c9443c2e54",
-      "group": "aoi-ambiguity",
+      "set": "aoi",
+      "group": "ambiguity",
       "status": "ready"
     },
     {
       "id": "ch-aoi-082",
       "uid": "ff9bf236cae92133",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-083",
       "uid": "6f744f4b08dab999",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-084",
       "uid": "2dd9fdc9528e64e3",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-085",
       "uid": "ce0b1d166b890c0d",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-086",
       "uid": "37a7afff4a188e6b",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-087",
       "uid": "b7cf71c08e4c5d5d",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-088",
       "uid": "db4676ee2aaba4ab",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-089",
       "uid": "15590edf0721b2d7",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-090",
       "uid": "7e726b01090b9c3a",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-091",
       "uid": "088216452a0e63b7",
-      "group": "aoi-multi",
+      "set": "aoi",
+      "group": "multi",
       "status": "ready"
     },
     {
       "id": "ch-aoi-092",
       "uid": "5b0e2bbde3fc60a4",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "ready"
     },
     {
       "id": "ch-aoi-093",
       "uid": "5e355356e66cc43f",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "ready"
     },
     {
       "id": "ch-aoi-094",
       "uid": "3e84886cc8782a99",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "ready"
     },
     {
       "id": "ch-aoi-095",
       "uid": "4b1049766a8e3c53",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "todo"
     },
     {
       "id": "ch-aoi-096",
       "uid": "9db868dee86492c4",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "ready"
     },
     {
       "id": "ch-aoi-097",
       "uid": "4b1731430884ea5e",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "ready"
     },
     {
       "id": "ch-aoi-098",
       "uid": "e1adf95783ac49dd",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "todo"
     },
     {
       "id": "ch-aoi-099",
       "uid": "4e8025d0891f1f0c",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "todo"
     },
     {
       "id": "ch-aoi-100",
       "uid": "31609e971091b4aa",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "ready"
     },
     {
       "id": "ch-aoi-101",
       "uid": "4b9a9d81c4a81d63",
-      "group": "aoi-expansion",
+      "set": "aoi",
+      "group": "expansion",
       "status": "todo"
     },
     {
       "id": "ch-aoi-102",
       "uid": "61e7268e94674ea3",
-      "group": "aoi-global",
+      "set": "aoi",
+      "group": "global",
       "status": "ready"
     },
     {
       "id": "ch-aoi-103",
       "uid": "81729796a50f71ff",
-      "group": "aoi-global",
+      "set": "aoi",
+      "group": "global",
       "status": "ready"
     },
     {
       "id": "ch-aoi-104",
       "uid": "46e20456c819e3bf",
-      "group": "aoi-global",
+      "set": "aoi",
+      "group": "global",
       "status": "ready"
     },
     {
       "id": "ch-aoi-105",
       "uid": "8d924533f96eef98",
-      "group": "aoi-global",
+      "set": "aoi",
+      "group": "global",
       "status": "ready"
     },
     {
       "id": "ch-aoi-106",
       "uid": "5eff2900bbc14539",
-      "group": "aoi-global",
+      "set": "aoi",
+      "group": "global",
       "status": "ready"
     },
     {
       "id": "ch-aoi-107",
       "uid": "8e7c829043d15753",
-      "group": "aoi-global",
+      "set": "aoi",
+      "group": "global",
       "status": "ready"
     },
     {
       "id": "ch-aoi-108",
       "uid": "b40ac95ca0120986",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "todo"
     },
     {
       "id": "ch-aoi-109",
       "uid": "83fe9017fc5535f7",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "ready"
     },
     {
       "id": "ch-aoi-110",
       "uid": "7ca936cb3b13d529",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "ready"
     },
     {
       "id": "ch-aoi-111",
       "uid": "81d25cb5a7327019",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "ready"
     },
     {
       "id": "ch-aoi-112",
       "uid": "6566e0480b239334",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "ready"
     },
     {
       "id": "ch-aoi-113",
       "uid": "64138afa6793eeaa",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "ready"
     },
     {
       "id": "ch-aoi-114",
       "uid": "dfe2bb15f4b4bbd2",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "ready"
     },
     {
       "id": "ch-aoi-115",
       "uid": "ffe60cbc569e2219",
-      "group": "aoi-vague",
+      "set": "aoi",
+      "group": "vague",
       "status": "ready"
     },
     {
       "id": "ch-aoi-116",
       "uid": "1c5bb28fe57e595a",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-117",
       "uid": "71f6a773681a98ae",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-118",
       "uid": "5cd2fb1d2bbffb08",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-119",
       "uid": "ec7df4648226bad3",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-120",
       "uid": "da479d5a547d43d2",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-121",
       "uid": "83f5fa3c29375155",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-122",
       "uid": "b063c875b658c60a",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-123",
       "uid": "b1b495a1023df6e7",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-124",
       "uid": "27e75e01fa6a671c",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-125",
       "uid": "c4067878f2a66b12",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-126",
       "uid": "7708fd9ec37b6cf9",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-127",
       "uid": "cd9d694a0c9c304b",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-128",
       "uid": "26e69e27bed0e9c7",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-129",
       "uid": "0a9120e6489898b5",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-130",
       "uid": "ae5bfdb82a59e76b",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     },
     {
       "id": "ch-aoi-131",
       "uid": "47b80583a5c62150",
-      "group": "aoi-concepts",
+      "set": "aoi",
+      "group": "concepts",
       "status": "ready"
     }
   ]

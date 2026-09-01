@@ -1,0 +1,17 @@
+id: ch-aoi-111
+uid: 81d25cb5a7327019
+status: ready
+set: aoi
+group: vague
+query: Show me the French Alps
+expected:
+  clarification: 'TRUE'
+  text: Asks the user to clarify (for example which departments or region) rather than selecting
+    an unrelated area
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: vague mountain region
+  verify_query: French Alps
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

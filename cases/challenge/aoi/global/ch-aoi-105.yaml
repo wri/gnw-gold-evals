@@ -1,0 +1,15 @@
+id: ch-aoi-105
+uid: 8d924533f96eef98
+status: ready
+set: aoi
+group: global
+query: Take me to Earth in Texas
+expected:
+  text: States that it cannot find Earth, Texas; must not treat the request as a global selection
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: substring hijack probe; Earth (city) not in GADM
+  verify_query: Earth
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

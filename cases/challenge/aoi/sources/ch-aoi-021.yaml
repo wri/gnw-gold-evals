@@ -1,0 +1,15 @@
+id: ch-aoi-021
+uid: 12c7814abbfaab08
+status: ready
+set: aoi
+group: sources
+query: Show me Serengeti National Park
+expected:
+  aoi_ids: '916'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: SPEC-PR8 designation swamping; kba 6972 carries the identical name (source ambiguity)
+  verify_query: Serengeti
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,15 @@
+id: ch-aoi-077
+uid: c1277932e269804a
+status: ready
+set: aoi
+group: ambiguity
+query: Go to Punjab
+expected:
+  nudge_type: aoi_choice
+notes:
+  difficulty: medium
+  behaviour: nudge
+  lineage: IND vs PAK
+  verify_query: Punjab
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

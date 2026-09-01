@@ -13,17 +13,17 @@ _Last updated: 2026-09-01_
 
 | group | cases | active | statuses |
 |---|---|---|---|
-| aoi-acronyms | 13 | 13 | ready 13 |
-| aoi-ambiguity | 10 | 10 | ready 10 |
-| aoi-concepts | 16 | 16 | ready 16 |
-| aoi-data-quality | 8 | 8 | ready 8 |
-| aoi-direct | 20 | 20 | ready 20 |
-| aoi-expansion | 10 | 10 | ready 6, todo 4 |
-| aoi-global | 6 | 6 | ready 6 |
-| aoi-multi | 10 | 10 | ready 10 |
-| aoi-multilingual | 15 | 15 | ready 15 |
-| aoi-sources | 15 | 15 | ready 15 |
-| aoi-vague | 8 | 8 | ready 7, todo 1 |
+| acronyms | 13 | 13 | ready 13 |
+| ambiguity | 10 | 10 | ready 10 |
+| concepts | 16 | 16 | ready 16 |
+| data-quality | 8 | 8 | ready 8 |
+| direct | 20 | 20 | ready 20 |
+| expansion | 10 | 10 | ready 6, todo 4 |
+| global | 6 | 6 | ready 6 |
+| multi | 10 | 10 | ready 10 |
+| multilingual | 15 | 15 | ready 15 |
+| sources | 15 | 15 | ready 15 |
+| vague | 8 | 8 | ready 7, todo 1 |
 
 ## Bucket coverage (active cases)
 
@@ -98,11 +98,11 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | status | group | reason |
 |---|---|---|---|
-| ch-aoi-095 | todo | aoi-expansion | — |
-| ch-aoi-098 | todo | aoi-expansion | — |
-| ch-aoi-099 | todo | aoi-expansion | — |
-| ch-aoi-101 | todo | aoi-expansion | — |
-| ch-aoi-108 | todo | aoi-vague | — |
+| ch-aoi-095 | todo | expansion | — |
+| ch-aoi-098 | todo | expansion | — |
+| ch-aoi-099 | todo | expansion | — |
+| ch-aoi-101 | todo | expansion | — |
+| ch-aoi-108 | todo | vague | — |
 
 ## Known gaps
 

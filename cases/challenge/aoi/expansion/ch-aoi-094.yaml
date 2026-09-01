@@ -1,0 +1,15 @@
+id: ch-aoi-094
+uid: 3e84886cc8782a99
+status: ready
+set: aoi
+group: expansion
+query: Show me the four countries of the United Kingdom
+expected:
+  aoi_ids: GBR.1;GBR.2;GBR.3;GBR.4
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: PZB-1270 Bug 2 live
+  verify_query: United Kingdom
+  verified: structural
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,15 @@
+id: ch-aoi-033
+uid: 59ad3cfb95cdf8a6
+status: ready
+set: aoi
+group: sources
+query: Go to the Osceola Research Natural Area
+expected:
+  aoi_ids: '555608530'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: wdpa 555608530 post unified table; pzb-909.csv vintage listed landmark USA20100
+  verify_query: Osceola
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

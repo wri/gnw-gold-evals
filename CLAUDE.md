@@ -18,7 +18,11 @@ workspace). Everything about it that differs from GOLD is deliberate and
 documented in `cases/challenge/README.md` — read that before touching the
 set. The short version:
 
-- Verdicts are **pass rates per cohort** (`tools/challenge_rollup.py`),
+- The store is hierarchical — **set → cohort → case** — via the optional
+  `set:` case field (`cases/challenge/<set>/<cohort>/<id>.yaml`; `aoi` is
+  the first set, new sets are added beside it). Run one set with
+  `gold run --set <name>`. Like `group`, `set` is never hashed into the uid.
+- Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
   never regression counts. Many cases are *expected to fail*: do not triage
   those failures as regressions, and never "fix" a case to make it pass.
 - Canonical published series: **prod, default profile, 3 trials**, run with

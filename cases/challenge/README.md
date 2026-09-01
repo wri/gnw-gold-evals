@@ -15,9 +15,15 @@ perform on prompts like X?" with a **pass rate per cohort**. Plan of record:
   keep running; that is the point. There is no "verified passing" status
   ladder here. Statuses: `ready` (runs), `todo` (authored but held, e.g.
   expectation not yet pinned), `not doing` (retired).
+- **The store is hierarchical: set → cohort → case.** Each case carries
+  `set:` (the level new CHALLENGE sets are added at — `aoi` today; a future
+  `dataset`, `custom-areas`, ... sits beside it) and `group:` (its cohort
+  within the set); files live at `cases/challenge/<set>/<cohort>/<id>.yaml`.
+  Like `group`, `set` is organisational and never hashed into the uid.
 - **The headline is a rate, never a regression count.** Verdicts come from
-  `tools/challenge_rollup.py`: pass rate per group and per difficulty with
-  Wilson 95% confidence intervals, against `TARGETS.yml`.
+  `tools/challenge_rollup.py`: pass rates overall, per set, and per
+  cohort/difficulty within each set, with Wilson 95% confidence intervals,
+  against `TARGETS.yml`.
 - **Every case still has a defined correct behaviour**, including the ones
   expected to fail today. `notes.behaviour` records it: `select` (right
   AOI(s) chosen), `nudge` (asks with the right options), `clarify` /
@@ -78,16 +84,20 @@ GOLD's trend pages, diffs, or CI baseline logic. The ledger contract
 
 ## Targets (the OKR loop)
 
-`TARGETS.yml` maps cohort to target pass rate. Each cycle: add or extend a
+`TARGETS.yml` mirrors the store hierarchy: a challenge-wide `overall`, then
+per-set blocks (`sets.<set>.overall` and `sets.<set>.targets.<cohort>`).
+Each cycle: add or extend a
 cohort whose prompts do not yet pass, set its target, and commit the baseline
 rollup showing the sub-target rate; that commit is the commitment. At cycle
 end, one canonical run plus rollup answers "the system now handles N% of
 prompts of this type".
 
-## Batch 1: the AOI picker set
+## Batch 1: the `aoi` set
 
-131 prompts across 11 cohorts (`aoi-*`), every prompt isolated in scope so
-only `pick_aoi` executes. Seed and per-case lineage:
+131 prompts across 11 cohorts (`cases/challenge/aoi/<cohort>/`), every
+prompt isolated in scope so
+only `pick_aoi` executes. Run it alone with `--set aoi` (the run CLI's
+exact-match filter on `case.set`). Seed and per-case lineage:
 `seeds/challenge-aoi-v1.csv`; PZB tickets and specs in `notes.lineage`.
 Expectations verified against prod `/api/aois` on 2026-09-01 (121 rows), or
 structural GADM id ranges (5 expansion rows).
@@ -102,7 +112,7 @@ Known scoring gaps accepted for batch 1 (candidates for future evaluators):
 - The scope classifier has no class for "resolved an AOI and stopped", so
   cases omit `scope`.
 
-Deferred (see the PRD): custom-areas cohort (needs seeded areas under the
+Deferred (see the PRD): a custom-areas set (needs seeded areas under the
 run token's user), multi-turn AOI refinement, coordinate support.
 
 ### Pinning the todo rows
