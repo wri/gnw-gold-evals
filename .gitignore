@@ -16,5 +16,8 @@ scratch/
 # Per-run raw artifacts (large, regenerable) — the committed ledger lives in results/runs/
 results/artifacts/
 
+# CHALLENGE ledger (results/challenge/) follows the same rules
+results/challenge/artifacts/
+
 # AI planning (local-only; untracked 2026-08-04)
 docs/specs/

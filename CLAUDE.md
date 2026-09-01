@@ -10,6 +10,28 @@ release: *did an agent change break a capability that used to work?* It is
 not a quality measure — the headline is a **regression count**, never a mean
 score, and determinism outranks realism in every design call.
 
+## The CHALLENGE set (second case set — quality rates, not regressions)
+
+`cases/challenge/` houses the CHALLENGE set, the quality/accuracy
+counterpart to GOLD (plan of record: `PRDs/challenge-set.md` in the GNW
+workspace). Everything about it that differs from GOLD is deliberate and
+documented in `cases/challenge/README.md` — read that before touching the
+set. The short version:
+
+- Verdicts are **pass rates per cohort** (`tools/challenge_rollup.py`),
+  never regression counts. Many cases are *expected to fail*: do not triage
+  those failures as regressions, and never "fix" a case to make it pass.
+- Canonical published series: **prod, default profile, 3 trials**, run with
+  `--cases-dir cases/challenge --results-dir results/challenge
+  --status-exclude "not doing,todo"`. Its ledger lives under
+  `results/challenge/` and never mixes with GOLD's runs, trends, or diffs.
+- The GOLD skills (gold-run, case-edit, new-case, release-gate, triage-run)
+  and `audit_cases.py --strict` apply to `cases/v2` only.
+- Identity and ledger discipline are unchanged: after any case edit, run
+  `tools/check.py --fix --cases-dir cases/challenge` and
+  `tools/coverage_doc.py --cases-dir cases/challenge`, and commit both with
+  the edit (CI gates both).
+
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR
 per spec (case store → results ledger → harness port → fixes → bucket scoring →
 new validators → multiturn). All planning docs — the design plan, PR specs, and
