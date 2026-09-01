@@ -1,0 +1,22 @@
+id: ch-quant-004
+uid: 558df6c90a56288d
+status: ready
+set: quantification
+group: tcl
+query: How much tree cover, across all forest types, has Costa Rica lost in total between
+  2001 and 2023?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked for all forest types, so no forest-type filter should
+    be applied.
+  eval_subtype: multi_year_total
+  manifest_id: m-tcl-quant-04
+  lineage: gnw-evals eval-metrics-slice-1 gt-quant-04
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

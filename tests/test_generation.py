@@ -57,10 +57,8 @@ def _row(**overrides) -> dict:
     return row
 
 
-def _build(row, manifest_rows=None):
-    return promote.build_case(
-        row, manifest_rows or {}, "ch-quant-001", "ready", "test-lineage", "31a4d1e"
-    )
+def _build(row):
+    return promote.build_case(row, "ch-quant-001", "ready", "test-lineage", "31a4d1e")
 
 
 def test_basic_mapping_and_hierarchy():
@@ -78,15 +76,14 @@ def test_basic_mapping_and_hierarchy():
 
 
 def test_default_canopy_is_noted_not_scored():
-    manifest_rows = {"m-tcl-quant-01": {"canopy_cover": ""}}
-    case = _build(_row(), manifest_rows)
+    # wordings never state the default, so the state may not carry it either
+    case = _build(_row())
     assert "dataset_parameters" not in case.expected
     assert "default 30" in case.notes["canopy"]
 
 
-def test_explicit_canopy_becomes_parameters_json():
-    manifest_rows = {"m-tcl-quant-01": {"canopy_cover": "75"}}
-    case = _build(_row(expected_canopy_cover="75"), manifest_rows)
+def test_non_default_canopy_becomes_parameters_json():
+    case = _build(_row(expected_canopy_cover="75"))
     assert case.expected["dataset_parameters"] == (
         '[{"name":"canopy_cover","values":[75]}]'
     )
@@ -115,7 +112,7 @@ def test_two_period_whitelist_suppresses_dates():
         eval_subtype="two_period",
         evaluators="clarification;aoi;dataset;parameters;data_pull;answer;chart_type;ground_truth",
     )
-    case = promote.build_case(row, {}, "ch-comp-001", "ready", "", "31a4d1e")
+    case = promote.build_case(row, "ch-comp-001", "ready", "", "31a4d1e")
     assert "start_date" not in case.expected
     assert "end_date" not in case.expected
     # a whitelist that includes date keeps the expectation

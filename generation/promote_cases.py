@@ -12,8 +12,9 @@ The field mapping is the port's contract (retrieval-first scoring):
   ``date`` (two-period comparisons: any sub-window of the compared span is
   defensible) get NO date expectation.
 - ``canopy_cover`` becomes a scored ``dataset_parameters`` expectation ONLY
-  when the manifest row sets it explicitly (stated in the prompt); the
-  default 30 is recorded in notes, unscored.
+  when it differs from the dataset's default (the generation rules forbid
+  stating the default in the wording); the default is recorded in notes,
+  unscored.
 - ``forest_filter`` maps to ``context_layer``; for forest-layer datasets a
   blank filter maps to ``no_selection`` — the wordings explicitly opt out,
   so silently applying a filter (the primary-forest-substitution bug) fails.
@@ -47,19 +48,9 @@ sys.path.insert(0, str(REPO_ROOT / "src"))
 
 from goldset.store import Case, load_store, write_case  # noqa: E402
 
-MANIFEST_DIR = REPO_ROOT / "generation" / "manifests"
 CASES_DIR = REPO_ROOT / "cases" / "challenge"
 
 _ID_RE = re.compile(r"^(ch-[a-z]+)-(\d+)$")
-
-
-def load_manifest_rows(manifest_dir: Path) -> dict[str, dict]:
-    rows: dict[str, dict] = {}
-    for path in sorted(manifest_dir.glob("*.manifest.csv")):
-        with open(path, encoding="utf-8") as f:
-            for row in csv.DictReader(f):
-                rows[row["manifest_id"]] = row
-    return rows
 
 
 def catalog_sha() -> str:
@@ -67,15 +58,16 @@ def catalog_sha() -> str:
     return str(snapshot["source"]["sha"])[:7]
 
 
-def _scores_date(row: dict) -> bool:
+def _whitelisted(row: dict, name: str) -> bool:
     """The gnw-evals per-case evaluator whitelist, reduced to what the port
-    needs: an explicit whitelist that omits ``date`` suppresses the date
-    expectation."""
+    needs: an explicit whitelist that omits ``date`` (two-period rows) or
+    ``parameters`` suppresses that expectation. An empty whitelist means
+    everything applies."""
     whitelist = [e.strip() for e in (row.get("evaluators") or "").split(";") if e.strip()]
-    return not whitelist or "date" in whitelist
+    return not whitelist or name in whitelist
 
 
-def build_case(row: dict, manifest_rows: dict[str, dict], case_id: str,
+def build_case(row: dict, case_id: str,
                status: str, lineage_prefix: str, sha: str) -> Case:
     slug = row["expected_dataset_name"]
     cfg = DATASET_CONFIGS[slug]
@@ -87,7 +79,7 @@ def build_case(row: dict, manifest_rows: dict[str, dict], case_id: str,
         "aoi_ids": row["expected_aoi_ids"],
         "dataset_id": row["expected_dataset_id"],
     }
-    if _scores_date(row):
+    if _whitelisted(row, "date"):
         if row.get("expected_start_date"):
             expected["start_date"] = row["expected_start_date"]
         if row.get("expected_end_date"):
@@ -95,12 +87,8 @@ def build_case(row: dict, manifest_rows: dict[str, dict], case_id: str,
 
     notes: dict[str, str] = {}
     canopy = (row.get("expected_canopy_cover") or "").strip()
-    if canopy and cfg.canopy_default is not None:
-        manifest = manifest_rows.get(row.get("manifest_id", ""), {})
-        explicit = bool((manifest.get("canopy_cover") or "").strip()) or (
-            not manifest and canopy != cfg.canopy_default
-        )
-        if explicit:
+    if canopy and cfg.canopy_default is not None and _whitelisted(row, "parameters"):
+        if canopy != cfg.canopy_default:
             expected["dataset_parameters"] = json.dumps(
                 [{"name": "canopy_cover", "values": [int(canopy)]}],
                 separators=(",", ":"),
@@ -173,14 +161,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("csvs", nargs="+", type=Path, help="case-row CSV file(s)")
     parser.add_argument("--cases-dir", type=Path, default=CASES_DIR)
-    parser.add_argument("--manifest-dir", type=Path, default=MANIFEST_DIR)
     parser.add_argument("--status", default="ready")
     parser.add_argument("--lineage", default="",
                         help="lineage prefix recorded per case (row test_id appended)")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
-    manifest_rows = load_manifest_rows(args.manifest_dir)
     entries = load_store(args.cases_dir)
     existing_uids = {case.uid for _p, case, _u in entries}
     highest = next_id_numbers([case.id for _p, case, _u in entries])
@@ -193,7 +179,7 @@ def main() -> int:
                 prefix = INTENT_ID_PREFIX[row["intent"]]
                 highest[prefix] = highest.get(prefix, 0) + 1
                 case = build_case(
-                    row, manifest_rows, f"{prefix}-{highest[prefix]:03d}",
+                    row, f"{prefix}-{highest[prefix]:03d}",
                     args.status, args.lineage, sha,
                 )
                 if case.uid in existing_uids:

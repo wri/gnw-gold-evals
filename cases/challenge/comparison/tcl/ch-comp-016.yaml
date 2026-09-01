@@ -1,0 +1,21 @@
+id: ch-comp-016
+uid: 691393da72ede49f
+status: ready
+set: comparison
+group: tcl
+query: Comparing Brazil and Indonesia, which had greater tree cover loss in 2022 when counting
+  all tree cover at a 75% canopy threshold?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '4'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: The 75% canopy threshold must be applied to both countries.
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-10
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-10b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

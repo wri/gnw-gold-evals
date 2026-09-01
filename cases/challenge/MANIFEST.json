@@ -1,6 +1,6 @@
 {
-  "caseset_version": "202cff8c19f9c579",
-  "case_count": 131,
+  "caseset_version": "e20b9414abca7758",
+  "case_count": 221,
   "source": "challenge-aoi-v1.csv",
   "cases": [
     {
@@ -918,6 +918,636 @@
       "uid": "47b80583a5c62150",
       "set": "aoi",
       "group": "concepts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-001",
+      "uid": "9015f40f05fe0dcb",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-002",
+      "uid": "8a92fc69cd23bf4b",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-003",
+      "uid": "e4a3cad71da68a94",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-004",
+      "uid": "5d0d9bfa51255d86",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-005",
+      "uid": "8b80ead730a494d1",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-006",
+      "uid": "e19508a08b37ef52",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-007",
+      "uid": "daa64b323f2abb70",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-008",
+      "uid": "628d23153ba00c13",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-009",
+      "uid": "a9c88208d8086e0c",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-010",
+      "uid": "922f567e0261c278",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-011",
+      "uid": "8d793d52107053a7",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-012",
+      "uid": "5787839995226bd5",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-013",
+      "uid": "a54b1b695cac314c",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-014",
+      "uid": "03e203613469d813",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-015",
+      "uid": "1a3364634d37d004",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-016",
+      "uid": "691393da72ede49f",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-017",
+      "uid": "d19126aa8350e1dc",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-018",
+      "uid": "eb23f058c9f6aa4f",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-019",
+      "uid": "c8158bac6bda1603",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-020",
+      "uid": "69311281b4f0b44d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-021",
+      "uid": "78ae4c3d86a517c0",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-022",
+      "uid": "2690ed13ffa98b3d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-023",
+      "uid": "5524dbacbcf9a196",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-024",
+      "uid": "13192d5d5f4038f9",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-025",
+      "uid": "f437e76338429fe1",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-026",
+      "uid": "96a3730c61f3065b",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-027",
+      "uid": "ed6c9f7c7d3d7df9",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-028",
+      "uid": "21f0c7c5b248acf6",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-029",
+      "uid": "9f4066130abac8c4",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-030",
+      "uid": "d562fc610c821e0b",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-001",
+      "uid": "970fb685b7da35fd",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-002",
+      "uid": "9764ad150cf74869",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-003",
+      "uid": "558567bca6e94783",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-004",
+      "uid": "558df6c90a56288d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-005",
+      "uid": "e88dfbb2bf4798c0",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-006",
+      "uid": "82141bbd9ace397c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-007",
+      "uid": "7587643048ef8a9b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-008",
+      "uid": "a4b351fefea58cc0",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-009",
+      "uid": "01f4547696dba49e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-010",
+      "uid": "bce1a479c172dea3",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-011",
+      "uid": "690b48011d1721ce",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-012",
+      "uid": "230fc8436909c0be",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-013",
+      "uid": "65b2fc1e66d2344a",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-014",
+      "uid": "fb4289ddaac5bc11",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-015",
+      "uid": "324b8ab4b295c9a2",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-016",
+      "uid": "2d5afc6e901cfafe",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-017",
+      "uid": "8d8c473d94cfc84c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-018",
+      "uid": "112600e0f67eeb28",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-019",
+      "uid": "78b919e65a2c256d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-020",
+      "uid": "2e1a934de6405645",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-021",
+      "uid": "559aebf17d01e03c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-022",
+      "uid": "beaa731779f15389",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-023",
+      "uid": "bdb55cb41d412311",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-024",
+      "uid": "342ac1311954c2ac",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-025",
+      "uid": "880ee949c37bac89",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-026",
+      "uid": "e5ff5a48f8ca428c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-027",
+      "uid": "c8db9544eb2c2667",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-028",
+      "uid": "41c727cb97fdf6ff",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-029",
+      "uid": "c769733e47d2a4c1",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-030",
+      "uid": "db92a96dd15e2b9e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-031",
+      "uid": "976ac91a0909c36c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-032",
+      "uid": "63a9e2cde827c707",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-001",
+      "uid": "a7eff4f0bc836cae",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-002",
+      "uid": "5d672a256806d24f",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-003",
+      "uid": "7196029027b3458f",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-004",
+      "uid": "aaad1a1d4bb4843c",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-005",
+      "uid": "42d0a2d5020fa5e6",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-006",
+      "uid": "d58b38448d7c1a22",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-007",
+      "uid": "a645e33258d22184",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-008",
+      "uid": "5ebf21749672bfef",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-009",
+      "uid": "9d91134dfd0843e4",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-010",
+      "uid": "ebdeeb5d7382c751",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-011",
+      "uid": "3c415cfd2383d198",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-012",
+      "uid": "d8afc080e4176f20",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-013",
+      "uid": "e1dd1c58579ab756",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-014",
+      "uid": "c466f61a561b01d6",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-015",
+      "uid": "c7196832089f91e4",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-016",
+      "uid": "998580890c6d8f2e",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-017",
+      "uid": "5bc559c2fd8e714b",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-018",
+      "uid": "463f9db28bd35ba9",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-019",
+      "uid": "85160360329a154f",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-020",
+      "uid": "01e370db984a8ba9",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-021",
+      "uid": "9e409709e08acd95",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-022",
+      "uid": "63d9da27a7eacbcd",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-023",
+      "uid": "80c3254564f87bec",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-024",
+      "uid": "51980329ddb85aa7",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-025",
+      "uid": "1740ad71cd323950",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-026",
+      "uid": "3eb501901bb471ed",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-027",
+      "uid": "da1616bbaa269986",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-028",
+      "uid": "9e10a4cc5c7b082a",
+      "set": "trend",
+      "group": "tcl",
       "status": "ready"
     }
   ]

@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 202cff8c19f9c579` · 131 cases · ready 126 · todo 5 · **131 active** (everything but `not doing` runs by default)
+`caseset_version e20b9414abca7758` · 221 cases · ready 216 · todo 5 · **221 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-01_
 
@@ -23,6 +23,9 @@ _Last updated: 2026-09-01_
 | multi | 10 | 10 | ready 10 |
 | multilingual | 15 | 15 | ready 15 |
 | sources | 15 | 15 | ready 15 |
+| tcl | 88 | 88 | ready 88 |
+| tcl-drivers | 1 | 1 | ready 1 |
+| tcl-fires | 1 | 1 | ready 1 |
 | vague | 8 | 8 | ready 7, todo 1 |
 
 ## Bucket coverage (active cases)
@@ -34,34 +37,35 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 88 | 0 | 88 | 67% |
+| retrieval | 178 | 0 | 178 | 81% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 30 | 0 | 30 | 23% |
+| explanation | 30 | 0 | 30 | 14% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 26 | 0 | 26 | 20% |
+| scope | 26 | 0 | 26 | 12% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| aoi_ids | 88 | aoi_id_match |
+| aoi_ids | 178 | aoi_id_match |
+| data_pull | 90 | data_pull_exists, answered_without_data |
+| dataset_id | 90 | dataset_id_match |
+| context_layer | 89 | context_layer_match |
+| end_date | 78 | date_extraction (with start_date) |
+| start_date | 78 | date_extraction (with end_date) |
 | text | 30 | expected_text_match |
 | clarification | 18 | clarification_requested |
+| dataset_parameters | 12 | dataset_parameter_match |
 | nudge_type | 8 | nudge_match |
 | nudge_options | 2 | nudge_match |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
 | aoi_source | 0 ← unused | reference only (dashboard AOI source) |
 | chart_type | 0 ← unused | chart_type_match |
 | class_values | 0 ← unused | class_value_match (info-only) |
-| context_layer | 0 ← unused | context_layer_match |
 | dashboard_created | 0 ← unused | dashboard_created |
 | dashboard_widgets | 0 ← unused | dashboard_widgets_match, dashboard_widgets_valid |
-| dataset_id | 0 ← unused | dataset_id_match |
 | dataset_name | 0 ← unused | reference only |
-| dataset_parameters | 0 ← unused | dataset_parameter_match |
-| end_date | 0 ← unused | date_extraction (with start_date) |
 | scope | 0 ← unused | scope_match |
-| start_date | 0 ← unused | date_extraction (with end_date) |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
 ## Dataset coverage (project-zeno catalog)
@@ -79,13 +83,13 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 0 ← gap | 0 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 0 ← gap | 0 | — | — |
 | 3 | SBTN Natural Lands Map | 0 ← gap | 0 | — | — |
-| 4 | Tree cover loss | 0 ← gap | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
+| 4 | Tree cover loss | 88 | 0 | canopy_cover ×12 | primary_forest ×14, intact_forest ×1 |
 | 5 | Tree cover gain | 0 ← gap | 0 | — | — |
 | 6 | Forest greenhouse gas net flux | 0 ← gap | 0 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 0 ← gap | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
-| 8 | Tree cover loss by dominant driver | 0 ← gap | 0 | canopy_cover ×0 ← gap | — |
+| 8 | Tree cover loss by dominant driver | 1 | 0 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 0 ← gap | 0 | — | — |
-| 10 | Tree cover loss due to fires | 0 ← gap | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
+| 10 | Tree cover loss due to fires | 1 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
 | 11 | Integrated alerts | 0 ← gap | 0 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
@@ -105,11 +109,11 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, context_layer, dashboard_created, dashboard_widgets, dataset_id, dataset_name, dataset_parameters, end_date, scope, start_date, suggested_datasets —
+- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, scope, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
-- Catalog datasets with no active case: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12.
-- Catalog features no active case exercises — parameters: canopy_cover (4, 6, 7, 8, 10); context layers: primary_forest (4, 7, 10), intact_forest (4, 10).
+- Catalog datasets with no active case: 1, 2, 3, 5, 6, 7, 9, 11, 12.
+- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: primary_forest (7, 10), intact_forest (10).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

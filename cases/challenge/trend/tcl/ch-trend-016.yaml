@@ -1,0 +1,22 @@
+id: ch-trend-016
+uid: 998580890c6d8f2e
+status: ready
+set: trend
+group: tcl
+query: Trying to get a feel for the UK's tree cover loss trend, across all forest types, from
+  2011 through 2023 - is it climbing, dropping, or basically not moving much?
+expected:
+  aoi_ids: GBR
+  dataset_id: '4'
+  start_date: '2011-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Values are small; a description of a weak or noisy trend passes only
+    if the series supports it.
+  eval_subtype: direction
+  manifest_id: m-tcl-trend-10
+  lineage: gnw-evals eval-metrics-slice-1 tcl-trend-10b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

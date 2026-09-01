@@ -1,0 +1,22 @@
+id: ch-trend-006
+uid: d58b38448d7c1a22
+status: ready
+set: trend
+group: tcl
+query: Looking at the full period 2001 to 2023, in which year did the United Kingdom lose
+  the most tree cover across all forest types?
+expected:
+  aoi_ids: GBR
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: All forest types, so no forest-type filter should be applied. A caveat
+    about the 2001-2010 vs 2011-2023 methodology change is acceptable and must not be penalised.
+  eval_subtype: peak_year
+  manifest_id: m-tcl-trend-06
+  lineage: gnw-evals eval-metrics-slice-1 gt-trend-06
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
