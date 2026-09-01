@@ -1,0 +1,16 @@
+id: ch-aoi-120
+uid: da479d5a547d43d2
+status: ready
+group: aoi-concepts
+query: Show me the Colombian coastline
+expected:
+  clarification: 'TRUE'
+  text: Asks the user to clarify (for example which coastal departments) rather than silently
+    selecting all of Colombia or an unrelated area
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: ADR-001 false-positive class
+  verify_query: Colombia
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

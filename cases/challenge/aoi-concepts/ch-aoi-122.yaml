@@ -1,0 +1,16 @@
+id: ch-aoi-122
+uid: b063c875b658c60a
+status: ready
+group: aoi-concepts
+query: Show me Amazônia Legal
+expected:
+  clarification: 'TRUE'
+  text: Explains that Amazônia Legal is not directly selectable and asks the user to specify
+    the member states, or offers them; does not substitute a wrong area
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: SPEC-PR5 D
+  verify_query: Amazonia Legal
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

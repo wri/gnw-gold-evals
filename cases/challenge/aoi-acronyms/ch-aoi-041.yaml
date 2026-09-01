@@ -1,0 +1,15 @@
+id: ch-aoi-041
+uid: 728fc346694914ff
+status: ready
+group: aoi-acronyms
+query: Go to Ivory Coast
+expected:
+  aoi_ids: CIV
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'ADR-001 exonym confirmed live: ''Ivory Coast'' search returns coastline junk;
+    stored Cote d''Ivoire'
+  verify_query: Ivory Coast|Côte d'Ivoire
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

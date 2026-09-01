@@ -1,0 +1,15 @@
+id: ch-aoi-075
+uid: f5d755626c2a38df
+status: ready
+group: aoi-ambiguity
+query: Go to Paris
+expected:
+  aoi_ids: FRA.8.3
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'negative control: only one gadm Paris (FRA.8.3); should select, not nudge, despite
+    USA wdpa noise'
+  verify_query: Paris
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

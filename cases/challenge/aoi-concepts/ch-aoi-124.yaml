@@ -1,0 +1,16 @@
+id: ch-aoi-124
+uid: 27e75e01fa6a671c
+status: ready
+group: aoi-concepts
+query: Show me the Sahel
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Sahel is not a selectable area and asks the user to specify countries
+    instead
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: 'trap confirmed: gadm BFA.12 is literally named ''Sahel, Burkina Faso'''
+  verify_query: Sahel
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,13 @@
+id: ch-aoi-099
+uid: 4e8025d0891f1f0c
+status: todo
+group: aoi-expansion
+query: Show me the protected areas of Bhutan
+expected: {}
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: wdpa expansion; ids need DB or smoke run
+  verify_query: Bhutan PAs
+  verified: todo
+  source_tab: challenge-aoi-v1

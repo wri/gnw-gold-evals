@@ -1,0 +1,16 @@
+id: ch-aoi-117
+uid: 71f6a773681a98ae
+status: ready
+group: aoi-concepts
+query: Go to the Amazon rainforest
+expected:
+  clarification: 'TRUE'
+  text: Explains it cannot select the Amazon rainforest as a region and asks the user to specify
+    administrative areas; does not substitute a wrong area
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: ADR-001
+  verify_query: Amazon
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

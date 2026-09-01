@@ -1,0 +1,14 @@
+id: ch-aoi-030
+uid: 9440cdf47dae8e1c
+status: ready
+group: aoi-sources
+query: Show me Mabira Forest
+expected:
+  aoi_ids: '7052'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: kba 7052 Mabira Forest Reserve; wdpa 34808 acceptable alternative
+  verify_query: Mabira
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

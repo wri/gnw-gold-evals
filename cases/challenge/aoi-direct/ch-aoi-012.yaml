@@ -1,0 +1,14 @@
+id: ch-aoi-012
+uid: 215bdd18561ae76a
+status: ready
+group: aoi-direct
+query: Take me to the Cusco region of Peru
+expected:
+  aoi_ids: PER.8
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: baseline
+  verify_query: Cusco
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

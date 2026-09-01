@@ -1,0 +1,14 @@
+id: ch-aoi-013
+uid: cc1cdcb5bc7f4074
+status: ready
+group: aoi-direct
+query: Go to the municipality of Ouro Preto in Brazil
+expected:
+  aoi_ids: BRA.13.540
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: baseline
+  verify_query: Ouro Preto
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

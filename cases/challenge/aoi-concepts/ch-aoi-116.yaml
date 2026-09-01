@@ -1,0 +1,16 @@
+id: ch-aoi-116
+uid: 1c5bb28fe57e595a
+status: ready
+group: aoi-concepts
+query: Show me the Amazon
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Amazon is not a selectable administrative area and asks the user
+    to specify countries or states instead; does not substitute a small similarly named area
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: ADR-001 concept class
+  verify_query: Amazon
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

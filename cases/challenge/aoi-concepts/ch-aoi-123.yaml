@@ -1,0 +1,16 @@
+id: ch-aoi-123
+uid: b1b495a1023df6e7
+status: ready
+group: aoi-concepts
+query: Take me to the Mata Atlântica
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Mata Atlântica biome is not a selectable area and asks for administrative
+    areas instead
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: SPEC-PR5 D
+  verify_query: Mata Atlantica
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

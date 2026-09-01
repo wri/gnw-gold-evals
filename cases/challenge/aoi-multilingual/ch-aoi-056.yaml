@@ -1,0 +1,14 @@
+id: ch-aoi-056
+uid: 4ff8b2b6f8174510
+status: ready
+group: aoi-multilingual
+query: Go to Para in Brazil
+expected:
+  aoi_ids: BRA.14
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'ADR-001 accent trap confirmed live: BRA.16 Parana outranks BRA.14 Para in candidates'
+  verify_query: Para, Brazil
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

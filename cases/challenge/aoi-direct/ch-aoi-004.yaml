@@ -1,0 +1,14 @@
+id: ch-aoi-004
+uid: 22dcf73834137da3
+status: ready
+group: aoi-direct
+query: Take me to Indonesia
+expected:
+  aoi_ids: IDN
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: baseline
+  verify_query: Indonesia
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

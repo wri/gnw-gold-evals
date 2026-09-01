@@ -1,0 +1,14 @@
+id: ch-aoi-081
+uid: c79a41c9443c2e54
+status: ready
+group: aoi-ambiguity
+query: Take me to San José
+expected:
+  nudge_type: aoi_choice
+notes:
+  difficulty: hard
+  behaviour: nudge
+  lineage: CRI vs USA vs others
+  verify_query: San José|San Jose
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

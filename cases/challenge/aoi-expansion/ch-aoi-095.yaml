@@ -1,0 +1,13 @@
+id: ch-aoi-095
+uid: 4b1049766a8e3c53
+status: todo
+group: aoi-expansion
+query: Show me every district in Wales
+expected: {}
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: GBR.4.x ids need DB or smoke run
+  verify_query: Wales districts
+  verified: todo
+  source_tab: challenge-aoi-v1

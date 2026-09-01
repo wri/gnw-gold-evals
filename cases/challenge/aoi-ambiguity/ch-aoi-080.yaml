@@ -1,0 +1,15 @@
+id: ch-aoi-080
+uid: a6cc7e36dceeafc1
+status: ready
+group: aoi-ambiguity
+query: Zoom to Amazonas
+expected:
+  nudge_type: aoi_choice
+  nudge_options: Peru;Brazil;Colombia;Venezuela
+notes:
+  difficulty: hard
+  behaviour: nudge
+  lineage: four gadm states share the leaf name (PER.1, BRA.4, COL.1, VEN.1) - confirmed live
+  verify_query: Amazonas
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

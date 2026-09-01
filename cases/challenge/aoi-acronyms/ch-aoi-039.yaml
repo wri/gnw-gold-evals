@@ -1,0 +1,14 @@
+id: ch-aoi-039
+uid: 7963215b23bf0efd
+status: ready
+group: aoi-acronyms
+query: Take me to the DRC
+expected:
+  aoi_ids: COD
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: SPEC-PR6 acronym class
+  verify_query: Democratic Republic of the Congo
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

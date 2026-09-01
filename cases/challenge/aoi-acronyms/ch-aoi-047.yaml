@@ -1,0 +1,14 @@
+id: ch-aoi-047
+uid: c8e284ce1653c175
+status: ready
+group: aoi-acronyms
+query: Go to South Korea
+expected:
+  aoi_ids: KOR
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: control
+  verify_query: South Korea
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

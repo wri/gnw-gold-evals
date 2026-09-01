@@ -1,0 +1,16 @@
+id: ch-aoi-091
+uid: 088216452a0e63b7
+status: ready
+group: aoi-multi
+query: Show me Sumatra and Borneo
+expected:
+  clarification: 'TRUE'
+  text: Explains that Sumatra and Borneo are islands rather than selectable administrative
+    areas, or asks which provinces the user means; does not substitute unrelated areas
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: islands not GADM units
+  verify_query: Sumatra|Borneo
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

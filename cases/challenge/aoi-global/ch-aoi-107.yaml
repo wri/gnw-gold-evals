@@ -1,0 +1,15 @@
+id: ch-aoi-107
+uid: 8e7c829043d15753
+status: ready
+group: aoi-global
+query: Show me all the states in the world
+expected:
+  text: Explains that worldwide selection is only available at country level, or asks the
+    user to narrow the request; does not select an arbitrary set of states
+notes:
+  difficulty: medium
+  behaviour: decline
+  lineage: global supports country only
+  verify_query: (global)
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

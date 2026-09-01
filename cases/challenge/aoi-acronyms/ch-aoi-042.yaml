@@ -1,0 +1,14 @@
+id: ch-aoi-042
+uid: b2485457cdd995e5
+status: ready
+group: aoi-acronyms
+query: Take me to Burma
+expected:
+  aoi_ids: MMR
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: exonym (stored Myanmar)
+  verify_query: Myanmar
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,16 @@
+id: ch-aoi-131
+uid: 47b80583a5c62150
+status: ready
+group: aoi-concepts
+query: Go to Middle Earth
+expected:
+  text: States that it cannot find a place named Middle Earth and does not select any other
+    area; must not treat the query as a global selection
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: 'fictional + ''earth'' global hijack probe (global_queries.py:31); trap confirmed:
+    Middle Karelia, Finland in candidates'
+  verify_query: Middle Earth
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

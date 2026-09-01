@@ -1,0 +1,14 @@
+id: ch-aoi-076
+uid: 20c1621a75ff9075
+status: ready
+group: aoi-ambiguity
+query: Take me to Córdoba
+expected:
+  nudge_type: aoi_choice
+notes:
+  difficulty: medium
+  behaviour: nudge
+  lineage: ESP vs ARG
+  verify_query: Córdoba
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

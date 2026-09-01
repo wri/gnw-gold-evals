@@ -1,0 +1,16 @@
+id: ch-aoi-118
+uid: 5cd2fb1d2bbffb08
+status: ready
+group: aoi-concepts
+query: Show me the Cerrado
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Cerrado biome is not a selectable area and asks for countries or
+    states instead; does not silently select a small KBA with Cerrado in its name
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: PZB-638/PZB-605
+  verify_query: Cerrado
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

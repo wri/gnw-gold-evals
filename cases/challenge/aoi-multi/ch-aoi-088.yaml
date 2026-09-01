@@ -1,0 +1,14 @@
+id: ch-aoi-088
+uid: db4676ee2aaba4ab
+status: ready
+group: aoi-multi
+query: Compare Brazil with the state of São Paulo
+expected:
+  aoi_ids: BRA;BRA.25
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: parent-child pair
+  verify_query: São Paulo
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

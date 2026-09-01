@@ -1,0 +1,15 @@
+id: ch-aoi-087
+uid: b7cf71c08e4c5d5d
+status: ready
+group: aoi-multi
+query: Show me Yellowstone and Wyoming together
+expected:
+  text: Acknowledges that it cannot combine Yellowstone (a protected area) and Wyoming (a
+    state) in a single selection, and explains the limitation or asks the user how to proceed
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: mixed sources rejected by design (tool.py check_aoi_selection)
+  verify_query: Wyoming
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

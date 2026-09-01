@@ -1,0 +1,15 @@
+id: ch-aoi-068
+uid: 50c9c938998f6c89
+status: ready
+group: aoi-data-quality
+query: Show me County Cork
+expected:
+  aoi_ids: IRL.4
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'SPEC-PR7: IRL.4 row is named ''NA, Ireland''; only child districts carry Cork
+    in their names'
+  verify_query: Cork
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

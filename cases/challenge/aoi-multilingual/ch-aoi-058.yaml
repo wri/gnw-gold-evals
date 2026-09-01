@@ -1,0 +1,14 @@
+id: ch-aoi-058
+uid: 6052899cfaa5dc26
+status: ready
+group: aoi-multilingual
+query: Take me to Odémira
+expected:
+  aoi_ids: PRT.3.11
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: GEOCODER_PROMPT example
+  verify_query: Odemira
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

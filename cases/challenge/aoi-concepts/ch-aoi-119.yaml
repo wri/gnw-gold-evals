@@ -1,0 +1,16 @@
+id: ch-aoi-119
+uid: ec7df4648226bad3
+status: ready
+group: aoi-concepts
+query: Take me to the Congo Basin
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Congo Basin is not a selectable area and asks the user to specify
+    countries instead; does not substitute a wrong area
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: ADR-001 watershed class
+  verify_query: Congo Basin
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

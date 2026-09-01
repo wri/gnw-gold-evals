@@ -1,0 +1,14 @@
+id: ch-aoi-034
+uid: fcb95a4dd5613562
+status: ready
+group: aoi-sources
+query: Show me the Kayapo Indigenous Territory
+expected:
+  aoi_ids: BRA1507
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: landmark BRA1507 Kayapo Tierra Indigena; wdpa 34004 acceptable alternative
+  verify_query: Kayapo
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

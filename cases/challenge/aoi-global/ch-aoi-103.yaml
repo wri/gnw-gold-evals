@@ -1,0 +1,14 @@
+id: ch-aoi-103
+uid: 81729796a50f71ff
+status: ready
+group: aoi-global
+query: Show me every country on Earth
+expected:
+  text: Confirms that all countries in the world have been selected
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: global path
+  verify_query: (global)
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

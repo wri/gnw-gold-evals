@@ -1,0 +1,14 @@
+id: ch-aoi-078
+uid: 1e94f5a9bcf110e5
+status: ready
+group: aoi-ambiguity
+query: Show me La Rioja
+expected:
+  nudge_type: aoi_choice
+notes:
+  difficulty: medium
+  behaviour: nudge
+  lineage: ESP vs ARG
+  verify_query: La Rioja
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,14 @@
+id: ch-aoi-093
+uid: 5e355356e66cc43f
+status: ready
+group: aoi-expansion
+query: Show me all the states of Brazil
+expected:
+  aoi_ids: BRA.1;BRA.2;BRA.3;BRA.4;BRA.5;BRA.6;BRA.7;BRA.8;BRA.9;BRA.10;BRA.11;BRA.12;BRA.13;BRA.14;BRA.15;BRA.16;BRA.17;BRA.18;BRA.19;BRA.20;BRA.21;BRA.22;BRA.23;BRA.24;BRA.25;BRA.26;BRA.27
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: fixture-backed 27 states
+  verify_query: Brazil
+  verified: structural
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,13 @@
+id: ch-aoi-101
+uid: 4b9a9d81c4a81d63
+status: todo
+group: aoi-expansion
+query: Show me the regions of New Zealand
+expected: {}
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: NZL level-1 count to confirm
+  verify_query: New Zealand regions
+  verified: todo
+  source_tab: challenge-aoi-v1

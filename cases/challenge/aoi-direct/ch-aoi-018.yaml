@@ -1,0 +1,14 @@
+id: ch-aoi-018
+uid: 60e1b2776be534ba
+status: ready
+group: aoi-direct
+query: Show me Aberdeenshire
+expected:
+  aoi_ids: GBR.3.2
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: baseline
+  verify_query: Aberdeenshire
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

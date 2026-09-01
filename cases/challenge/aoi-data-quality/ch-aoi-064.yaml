@@ -1,0 +1,15 @@
+id: ch-aoi-064
+uid: f52e20677dedbec3
+status: ready
+group: aoi-data-quality
+query: Go to England
+expected:
+  aoi_ids: GBR.1
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'PZB-1270 Bug 1 confirmed live: top-8 candidates for England are all ''NA, England''
+    junk districts'
+  verify_query: England
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

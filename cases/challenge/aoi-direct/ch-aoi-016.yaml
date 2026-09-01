@@ -1,0 +1,14 @@
+id: ch-aoi-016
+uid: 48ddeb7ebfb48c31
+status: ready
+group: aoi-direct
+query: Go to Sabah
+expected:
+  aoi_ids: MYS.13
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: baseline
+  verify_query: Sabah
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

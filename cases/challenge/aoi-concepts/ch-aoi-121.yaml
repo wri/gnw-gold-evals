@@ -1,0 +1,16 @@
+id: ch-aoi-121
+uid: 83f5fa3c29375155
+status: ready
+group: aoi-concepts
+query: Go to the Levant
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Levant is not a selectable area and asks the user to specify countries
+    instead
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: SPEC-PR5 D
+  verify_query: Levant
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1
