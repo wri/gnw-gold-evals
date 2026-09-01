@@ -41,7 +41,7 @@ import argparse
 import json
 import math
 import sys
-from collections import defaultdict
+from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -322,7 +322,17 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
             if ids:
                 lines.append("")
                 lines.append(f"## {label}")
-                lines.append(", ".join(ids))
+                # A set-scoped run legitimately skips every other set; a
+                # 400-id dump would drown the report, so collapse to per-set
+                # counts once the listing stops being readable.
+                if len(ids) > 25:
+                    prefixes = Counter(i.rsplit("-", 1)[0] for i in ids)
+                    lines.append(
+                        f"{len(ids)} cases, by id prefix: "
+                        + ", ".join(f"{p} ×{n}" for p, n in sorted(prefixes.items()))
+                    )
+                else:
+                    lines.append(", ".join(ids))
         lines.append("")
     if len(rollups) > 1:
         configs = {
