@@ -115,6 +115,34 @@ Known scoring gaps accepted for batch 1 (candidates for future evaluators):
 Deferred (see the PRD): a custom-areas set (needs seeded areas under the
 run token's user), multi-turn AOI refinement, coordinate support.
 
+## Batch 2: the numeric sets (quantification, trend, comparison)
+
+Ported from gnw-evals `eval-metrics-slice-1` (the eval-metrics programme's
+Phase 2 numeric expansion; rationale in its `PHASE2_HANDOFF.md` and the
+workspace PRDs). Set = intent, cohort = dataset (short names in
+`generation/dataset_config.py`): quantification and comparison cells for
+the 11 default-profile catalog datasets, trend for the time-series five.
+The 90 slice-1 TCL cases came over with reviewed wordings; the other cells'
+wordings were generated per the held Phase 2 manifests. Authoring machinery
+and workflow: `generation/README.md`.
+
+Scoring is **retrieval-first**: dataset/AOI/date checks, explicit
+(non-default) canopy as `dataset_parameters`, forest-filter behaviour as
+`context_layer` (explicit opt-outs score `no_selection`, which is the
+primary-forest-substitution detector), and `data_pull` on every row.
+Ground-truth numeric fidelity — the slice-1 `data_fidelity`/`number_usage`
+machinery — is deliberately NOT ported: it was TCL-hardwired, and
+generalising it is the Phase 2 W1/W2 evaluator work. Until then the
+Explanation bucket rides in `notes.judge_instruction`, unscored, and no
+case stores an expected number (ground truth must be computed at run time
+so it survives data-version bumps).
+
+Known coverage informed by live bugs: primary-forest substitution
+(`no_selection` rows), the canopy-default quirk (explicit-canopy rows),
+date-scoping flakiness (the biggest slice-1 retrieval drag; every dated
+row scores `date_extraction`), and alert routing after DIST-ALERT's
+removal (all alert cells expect integrated alerts, id 11).
+
 ### Pinning the todo rows
 
 `ch-aoi-095/098/099/101` (expansion id lists) and `ch-aoi-108` (Lahti,

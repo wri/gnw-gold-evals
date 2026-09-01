@@ -12,10 +12,11 @@ RADD, 10m, from 1 December 2023 to present).
    alerts is the DEFAULT for a plain recent-disturbance / clearing /
    deforestation-alert query over a whole area. Every prompt MUST be plain:
    ask about recent disturbance (or clearing / deforestation alerts) for
-   the AOI and window, with NO ecosystem, class or driver breakdown. Any
+   the AOI and window, with NO ecosystem, class or driver breakdown. A
    request to break results down by driver, land cover, natural lands or
-   grasslands would make the agent correctly pick DIST-ALERT instead, so it
-   is a broken case here.
+   grasslands is outside this dataset's surface (DIST-ALERT, which carried
+   those breakdowns, left the catalog at zeno@31a4d1e), so it is a broken
+   case here.
 2. **No intersections, ever.** This dataset has no context layers and takes
    no intersections. Never ask for a driver / land-cover / natural-lands /
    grasslands split. The only categorical dimension is the confidence tier

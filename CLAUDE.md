@@ -19,9 +19,12 @@ documented in `cases/challenge/README.md` — read that before touching the
 set. The short version:
 
 - The store is hierarchical — **set → cohort → case** — via the optional
-  `set:` case field (`cases/challenge/<set>/<cohort>/<id>.yaml`; `aoi` is
-  the first set, new sets are added beside it). Run one set with
-  `gold run --set <name>`. Like `group`, `set` is never hashed into the uid.
+  `set:` case field (`cases/challenge/<set>/<cohort>/<id>.yaml`). Sets:
+  `aoi` (cohorts = prompt classes) and the numeric intents
+  `quantification`/`trend`/`comparison` (cohorts = datasets; ported from
+  gnw-evals eval-metrics-slice-1, authored via `generation/` — see
+  `generation/README.md`). Run one set with `gold run --set <name>`. Like
+  `group`, `set` is never hashed into the uid.
 - Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
   never regression counts. Many cases are *expected to fail*: do not triage
   those failures as regressions, and never "fix" a case to make it pass.

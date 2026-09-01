@@ -19,3 +19,13 @@ sets:
       data-quality: 0.80
       sources: 0.70
       concepts: 0.70
+  # The numeric sets (ported from gnw-evals eval-metrics-slice-1) carry no
+  # targets yet: slice-1's published rates (quant 74 / trend 93 / comp 89)
+  # were e2e scores including ground-truth fidelity, which this port does
+  # not score. Set targets from the first committed 3-trial baseline.
+  quantification:
+    targets: {}
+  trend:
+    targets: {}
+  comparison:
+    targets: {}
