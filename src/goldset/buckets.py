@@ -181,6 +181,9 @@ def _tri(value: str | None) -> bool | None:
 def _case_expects_data_pull(expected: dict[str, str]) -> bool:
     if _tri(expected.get("clarification")) is True:
         return False
+    explicit = _tri(expected.get("data_pull"))
+    if explicit is not None:
+        return explicit
     if expected.get("answer"):
         return True
     return "insight" in (expected.get("dashboard_widgets") or "")

@@ -48,6 +48,7 @@ FIELD_CHECKS = {
     "start_date": "date_extraction (with end_date)",
     "end_date": "date_extraction (with start_date)",
     "answer": "agent_answer, charts_answer, chart_produced",
+    "data_pull": "data_pull_exists, answered_without_data",
     "text": "expected_text_match",
     "clarification": "clarification_requested",
     "suggested_datasets": "suggested_datasets_match",
