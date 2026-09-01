@@ -1,0 +1,21 @@
+id: ch-quant-072
+uid: fe08bbad2f99e15a
+status: ready
+set: quantification
+group: grasslands
+query: How many hectares of natural/semi-natural grassland were lost in Bolivia between 2005
+  and 2015?
+expected:
+  aoi_ids: BOL
+  dataset_id: '2'
+  start_date: '2005-01-01'
+  end_date: '2015-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Headline is total natural/semi-natural grassland area lost over the range
+    (sum of the annual loss column, hectares); loss is not necessarily permanent conversion;
+    exclude zero or missing years.
+  eval_subtype: multi_year_total
+  manifest_id: m-grass-quant-04
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-quant-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,19 @@
+id: ch-trend-060
+uid: cf183c3b254116ec
+status: ready
+set: trend
+group: integrated-alerts
+query: What was the month-by-month pattern of deforestation alert area (in hectares) in Côte
+  d'Ivoire from January 2024 to December 2024?
+expected:
+  aoi_ids: CIV
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Month-by-month alert area (area_ha) over 2024; line chart.
+  eval_subtype: monthly_trend
+  manifest_id: m-ialert-trend-10
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-10a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

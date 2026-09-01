@@ -1,0 +1,20 @@
+id: ch-comp-044
+uid: 3ae9bda3b8200c4c
+status: ready
+set: comparison
+group: ghg-flux
+query: Comparing the whole 2001-2025 record, does Brazil or Indonesia have the greater net
+  forest carbon flux?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare whole-period net GHG flux totals (2001-2025) in MgCO2e; direction
+    must be correct; do not annualise; use net source/sink language per each country's sign.
+  eval_subtype: two_country
+  manifest_id: m-flux-comp-01
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

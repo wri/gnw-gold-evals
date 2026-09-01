@@ -1,0 +1,18 @@
+id: ch-quant-125
+uid: b03b387ebb3ea4da
+status: ready
+set: quantification
+group: tc-gain
+query: How many hectares of cumulative tree cover gain did Mexico record from 2000 to 2020?
+expected:
+  aoi_ids: MEX
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Cumulative gain over the full 2000-2020 period (ha). Gain is not restoration.
+  eval_subtype: gain_total
+  manifest_id: m-gain-quant-09
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,25 @@
+id: ch-quant-140
+uid: c309a56ad682f9e3
+status: ready
+set: quantification
+group: tcl-fires
+query: For Brazil in 2020, what was the fire-driven tree cover loss in hectares versus the
+  non-fire tree cover loss, looking at all tree cover rather than just a specific forest type?
+expected:
+  aoi_ids: BRA
+  dataset_id: '10'
+  start_date: '2020-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Report tree cover loss due to fires vs all other (non-fire) loss for
+    the year (tree_cover_loss_from_fires_area_ha and tree_cover_loss_non_fires_area_ha, which
+    sum to total area_ha), in hectares. NEVER report carbon emissions. No forest layer applied,
+    so use 'tree cover loss', not 'deforestation'. 30% canopy default.
+  eval_subtype: single_year
+  manifest_id: m-fires-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

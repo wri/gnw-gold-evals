@@ -1,0 +1,24 @@
+id: ch-trend-071
+uid: 9e2802ad7bfb4dc1
+status: ready
+set: trend
+group: tcl-fires
+query: Between 2001 and 2020, did tree cover loss due to fires in Brazil, across all forest
+  types, trend upward or downward?
+expected:
+  aoi_ids: BRA
+  dataset_id: '10'
+  start_date: '2001-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Direction of fire-driven tree cover loss over the window. The window
+    crosses the 2011 methodology break; a caution caveat is acceptable and must not be penalised.
+    NEVER report carbon emissions. 30% default.
+  eval_subtype: direction
+  manifest_id: m-fires-trend-08
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-trend-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

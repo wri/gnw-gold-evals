@@ -1,0 +1,20 @@
+id: ch-comp-126
+uid: 2488662fef64004f
+status: ready
+set: comparison
+group: tcl-drivers
+query: 'Quick question for a piece I''m writing: comparing Peru and Bolivia overall, whose
+  tree cover loss from permanent agriculture has been bigger?'
+expected:
+  aoi_ids: PER;BOL
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Which country lost more tree cover to permanent agriculture over 2001-2025;
+    whole-record aggregate; direction correct; avoid 'deforestation' for raw loss.
+  eval_subtype: two_country
+  manifest_id: m-driver-comp-03
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-03b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

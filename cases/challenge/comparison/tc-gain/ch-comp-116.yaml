@@ -1,0 +1,20 @@
+id: ch-comp-116
+uid: 1e8cea806ca5e0fd
+status: ready
+set: comparison
+group: tc-gain
+query: Between Ghana and Côte d'Ivoire, which country recorded more cumulative tree cover
+  gain from 2015 to 2020?
+expected:
+  aoi_ids: GHA;CIV
+  dataset_id: '5'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare cumulative gain over the 2015-2020 period; direction correct.
+    Gain is not restoration.
+  eval_subtype: two_country
+  manifest_id: m-gain-comp-05
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

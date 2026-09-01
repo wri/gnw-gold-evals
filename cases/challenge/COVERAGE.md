@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version e20b9414abca7758` · 221 cases · ready 216 · todo 5 · **221 active** (everything but `not doing` runs by default)
+`caseset_version e2340e5caf33e404` · 496 cases · ready 491 · todo 5 · **496 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-01_
 
@@ -19,13 +19,21 @@ _Last updated: 2026-09-01_
 | data-quality | 8 | 8 | ready 8 |
 | direct | 20 | 20 | ready 20 |
 | expansion | 10 | 10 | ready 6, todo 4 |
+| ghg-flux | 23 | 23 | ready 23 |
 | global | 6 | 6 | ready 6 |
+| grasslands | 35 | 35 | ready 35 |
+| integrated-alerts | 35 | 35 | ready 35 |
+| land-cover | 24 | 24 | ready 24 |
 | multi | 10 | 10 | ready 10 |
 | multilingual | 15 | 15 | ready 15 |
+| natural-lands | 21 | 21 | ready 21 |
+| sluc | 33 | 33 | ready 33 |
 | sources | 15 | 15 | ready 15 |
+| tc-gain | 24 | 24 | ready 24 |
 | tcl | 88 | 88 | ready 88 |
-| tcl-drivers | 1 | 1 | ready 1 |
-| tcl-fires | 1 | 1 | ready 1 |
+| tcl-drivers | 24 | 24 | ready 24 |
+| tcl-fires | 36 | 36 | ready 36 |
+| tree-cover | 22 | 22 | ready 22 |
 | vague | 8 | 8 | ready 7, todo 1 |
 
 ## Bucket coverage (active cases)
@@ -37,25 +45,25 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 178 | 0 | 178 | 81% |
+| retrieval | 453 | 0 | 453 | 91% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 30 | 0 | 30 | 14% |
+| explanation | 30 | 0 | 30 | 6% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 26 | 0 | 26 | 12% |
+| scope | 26 | 0 | 26 | 5% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| aoi_ids | 178 | aoi_id_match |
-| data_pull | 90 | data_pull_exists, answered_without_data |
-| dataset_id | 90 | dataset_id_match |
-| context_layer | 89 | context_layer_match |
-| end_date | 78 | date_extraction (with start_date) |
-| start_date | 78 | date_extraction (with end_date) |
+| aoi_ids | 453 | aoi_id_match |
+| data_pull | 365 | data_pull_exists, answered_without_data |
+| dataset_id | 365 | dataset_id_match |
+| end_date | 226 | date_extraction (with start_date) |
+| start_date | 226 | date_extraction (with end_date) |
+| context_layer | 146 | context_layer_match |
+| dataset_parameters | 31 | dataset_parameter_match |
 | text | 30 | expected_text_match |
 | clarification | 18 | clarification_requested |
-| dataset_parameters | 12 | dataset_parameter_match |
 | nudge_type | 8 | nudge_match |
 | nudge_options | 2 | nudge_match |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
@@ -80,17 +88,17 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 1 | Global land cover | 0 ← gap | 0 | — | — |
-| 2 | Global natural/semi-natural grassland extent | 0 ← gap | 0 | — | — |
-| 3 | SBTN Natural Lands Map | 0 ← gap | 0 | — | — |
+| 1 | Global land cover | 24 | 0 | — | — |
+| 2 | Global natural/semi-natural grassland extent | 35 | 0 | — | — |
+| 3 | SBTN Natural Lands Map | 21 | 0 | — | — |
 | 4 | Tree cover loss | 88 | 0 | canopy_cover ×12 | primary_forest ×14, intact_forest ×1 |
-| 5 | Tree cover gain | 0 ← gap | 0 | — | — |
-| 6 | Forest greenhouse gas net flux | 0 ← gap | 0 | canopy_cover ×0 ← gap | — |
-| 7 | Tree cover | 0 ← gap | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
-| 8 | Tree cover loss by dominant driver | 1 | 0 | canopy_cover ×0 ← gap | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 0 ← gap | 0 | — | — |
-| 10 | Tree cover loss due to fires | 1 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
-| 11 | Integrated alerts | 0 ← gap | 0 | — | — |
+| 5 | Tree cover gain | 24 | 0 | — | — |
+| 6 | Forest greenhouse gas net flux | 23 | 0 | canopy_cover ×5 | — |
+| 7 | Tree cover | 22 | 0 | canopy_cover ×7 | primary_forest ×4 |
+| 8 | Tree cover loss by dominant driver | 24 | 0 | canopy_cover ×4 | — |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 33 | 0 | — | — |
+| 10 | Tree cover loss due to fires | 36 | 0 | canopy_cover ×3 | primary_forest ×4, intact_forest ×1 |
+| 11 | Integrated alerts | 35 | 0 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
@@ -114,6 +122,5 @@ answer-graded cases (`answer` or `text` expected) actually check.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
-- Catalog datasets with no active case: 1, 2, 3, 5, 6, 7, 9, 11, 12.
-- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: primary_forest (7, 10), intact_forest (10).
+- Catalog datasets with no active case: 12.
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

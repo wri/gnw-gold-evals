@@ -1,0 +1,19 @@
+id: ch-trend-039
+uid: fe01c1b0eb15404d
+status: ready
+set: trend
+group: grasslands
+query: How has natural/semi-natural grassland extent in Brazil changed between 2000 and 2022?
+expected:
+  aoi_ids: BRA
+  dataset_id: '2'
+  start_date: '2000-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Direction of natural/semi-natural grassland extent (area_ha) over the
+    window; volunteered figures must match the annual series; exclude zero or missing years.
+  eval_subtype: direction
+  manifest_id: m-grass-trend-01
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

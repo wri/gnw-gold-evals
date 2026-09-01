@@ -1,0 +1,20 @@
+id: ch-comp-109
+uid: 5e65ae17eb812e9d
+status: ready
+set: comparison
+group: tree-cover
+query: so like, between India and Mexico, which one's got more tree cover overall, roughly?
+expected:
+  aoi_ids: IND;MEX
+  dataset_id: '7'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare tree cover area_ha in the fixed 2000 snapshot at the default
+    30% canopy threshold (unstated in the prompt); the direction must be correct and cited
+    figures are areas in hectares, never percentages.
+  eval_subtype: two_country
+  manifest_id: m-tc-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-comp-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

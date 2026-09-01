@@ -1,6 +1,6 @@
 {
-  "caseset_version": "e20b9414abca7758",
-  "case_count": 221,
+  "caseset_version": "e2340e5caf33e404",
+  "case_count": 496,
   "source": "challenge-aoi-v1.csv",
   "cases": [
     {
@@ -1131,6 +1131,804 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-031",
+      "uid": "57b0195a0674e71a",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-032",
+      "uid": "75a72ebb561f2a84",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-033",
+      "uid": "317b090ae19a127a",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-034",
+      "uid": "8f6602721943d315",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-035",
+      "uid": "98663fece3c92959",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-036",
+      "uid": "a6f9e3b5f1dedb1d",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-037",
+      "uid": "29b7aad962c47172",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-038",
+      "uid": "305f50bd72eb6f7b",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-039",
+      "uid": "75abe8f026a50343",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-040",
+      "uid": "86b813124bc3e4ca",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-041",
+      "uid": "245cc4e7e26c9976",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-042",
+      "uid": "606969e6781a9bb6",
+      "set": "comparison",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-043",
+      "uid": "2e8b94ec55788318",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-044",
+      "uid": "3ae9bda3b8200c4c",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-045",
+      "uid": "1ec0712de7bf4313",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-046",
+      "uid": "365dddecd2a36ff4",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-047",
+      "uid": "ab0dd4cacab53e95",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-048",
+      "uid": "666e2112f9410727",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-049",
+      "uid": "5c472b514bbb021e",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-050",
+      "uid": "e0d8d79168dbac76",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-051",
+      "uid": "ed748aee516c0aa5",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-052",
+      "uid": "78b7823f442da7da",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-053",
+      "uid": "0c5b2651ff7d72cb",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-054",
+      "uid": "72b5aa927aa9e9ec",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-055",
+      "uid": "10e0ce11fc05bc4c",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-056",
+      "uid": "b878ff17828ab778",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-057",
+      "uid": "e089c3ce70280cfd",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-058",
+      "uid": "566fdd59789d5014",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-059",
+      "uid": "f718181afb40ed2b",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-060",
+      "uid": "3a65b6eb18b94116",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-061",
+      "uid": "0bd835951a039312",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-062",
+      "uid": "f16fc287295eeb94",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-063",
+      "uid": "dad62a5418746857",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-064",
+      "uid": "549218d82c8734bb",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-065",
+      "uid": "abb0e262eaa17ddd",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-066",
+      "uid": "8ce507f087019cc9",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-067",
+      "uid": "41d55f4bd6c70fa1",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-068",
+      "uid": "3050d45cf32974a6",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-069",
+      "uid": "b00870414381043b",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-070",
+      "uid": "2e74b88b941dcdf3",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-071",
+      "uid": "0be12a8ab2b5d1ad",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-072",
+      "uid": "cb9cfea732310001",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-073",
+      "uid": "cdf35f2fc31dca2c",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-074",
+      "uid": "bf71c858c5938709",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-075",
+      "uid": "1107e0b958734f60",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-076",
+      "uid": "ad36cecdb04bc0d1",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-077",
+      "uid": "8d6852df049d4819",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-078",
+      "uid": "4d461cbb8d731201",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-079",
+      "uid": "6fbd2db571b0a2ca",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-080",
+      "uid": "00bdaf9b07801c3c",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-081",
+      "uid": "bbfebfa21a5b08f0",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-082",
+      "uid": "7ee40ec01feecddb",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-083",
+      "uid": "f880d2c18302361b",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-084",
+      "uid": "f08466fa7c4d13fc",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-085",
+      "uid": "d80e089a55148d43",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-086",
+      "uid": "4c447fe87daea09e",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-087",
+      "uid": "26e237c6d9f8b310",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-088",
+      "uid": "956ea0dc85b591dd",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-089",
+      "uid": "89ae3486136f2c88",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-090",
+      "uid": "9a9a874e541c9818",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-091",
+      "uid": "9b0f18582c57ec2e",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-092",
+      "uid": "e5e5b6f12195ea79",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-093",
+      "uid": "26262d065c49f7f2",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-094",
+      "uid": "dfbfe20d36b26d88",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-095",
+      "uid": "eb4d12b2b6c57dcf",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-096",
+      "uid": "fa906bd57dfd8594",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-097",
+      "uid": "4db1bd18397d734f",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-098",
+      "uid": "1694f8f8b9a95e3c",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-099",
+      "uid": "ed2f871bfc201201",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-100",
+      "uid": "e41aaf5300c3d3fc",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-101",
+      "uid": "d884f97a1a5f298d",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-102",
+      "uid": "cbd627d068d508bc",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-103",
+      "uid": "b79bf79187304d89",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-104",
+      "uid": "f3a940dc9b4502e5",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-105",
+      "uid": "60b3d337c96ebf61",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-106",
+      "uid": "f44b7c1b086021e8",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-107",
+      "uid": "13ee84fdf2bf7ce6",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-108",
+      "uid": "d8dce80995fd3990",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-109",
+      "uid": "5e65ae17eb812e9d",
+      "set": "comparison",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-110",
+      "uid": "f292fbd71589af61",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-111",
+      "uid": "1acb3fc5f62ca777",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-112",
+      "uid": "1a861ccd29a3f623",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-113",
+      "uid": "9e1b10ef2ed4f5a8",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-114",
+      "uid": "cdd8cbf014084eda",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-115",
+      "uid": "54c858303cda1d98",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-116",
+      "uid": "1e8cea806ca5e0fd",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-117",
+      "uid": "e9c367131c6797b9",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-118",
+      "uid": "deb2b071199d861a",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-119",
+      "uid": "61186b1f1f0ee398",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-120",
+      "uid": "d908a1d311f73a03",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-121",
+      "uid": "2ee91bca1e556deb",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-122",
+      "uid": "e9758565aa3a5ac9",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-123",
+      "uid": "841a8c7571ac0fad",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-124",
+      "uid": "162f06d067628063",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-125",
+      "uid": "b019988329f6b802",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-126",
+      "uid": "2488662fef64004f",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-127",
+      "uid": "89642a3c16ff8f62",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-128",
+      "uid": "17b451f9ddabcf8c",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-129",
+      "uid": "02cf224ef8f9ae24",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-130",
+      "uid": "68ea06e0d170363a",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-131",
+      "uid": "22bd716f3b52f83e",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-132",
+      "uid": "7f4c928e7af85a72",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-133",
+      "uid": "7bb3b6cc9e049b64",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-134",
+      "uid": "19da1b3fbde4e4e4",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-135",
+      "uid": "df5a7585e68f8771",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-136",
+      "uid": "34ca8eb91afaa1ec",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-137",
+      "uid": "fb4fca77e9af5cf2",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-138",
+      "uid": "803c60e175c46bdb",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-139",
+      "uid": "c06f02c2877cf527",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-140",
+      "uid": "8e3915f13824f03b",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-141",
+      "uid": "29c50ac3a2f37fcb",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-142",
+      "uid": "de442a73210dd8ae",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-143",
+      "uid": "86a639e00d99930a",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-144",
+      "uid": "ac8da816fb8dd16f",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-001",
       "uid": "970fb685b7da35fd",
       "set": "quantification",
@@ -1355,6 +2153,832 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-033",
+      "uid": "74d5eb38dc9754ed",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-034",
+      "uid": "87cef7da244cb19c",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-035",
+      "uid": "b96ff3990dd6f491",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-036",
+      "uid": "7198724ef06a3691",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-037",
+      "uid": "bb7b053b711a8f81",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-038",
+      "uid": "55389c79f17b67a7",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-039",
+      "uid": "762c1af13b6f7d1d",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-040",
+      "uid": "25d2fc43e90350eb",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-041",
+      "uid": "4007119d0b85bb1a",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-042",
+      "uid": "5d389f2fde3e4762",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-043",
+      "uid": "81cc75235536be49",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-044",
+      "uid": "ed6811b2c3ff8cca",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-045",
+      "uid": "91814837658a209b",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-046",
+      "uid": "c7c5f5923c502bfd",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-047",
+      "uid": "dc9c71e0d39e6096",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-048",
+      "uid": "acb8035b3cbf7003",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-049",
+      "uid": "92b1917cae03173e",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-050",
+      "uid": "8bab87862df62af1",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-051",
+      "uid": "7d8ba58ecc8bc2d5",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-052",
+      "uid": "fa9edce9b696bed0",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-053",
+      "uid": "cb7ba9caca85cf22",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-054",
+      "uid": "37a5c7bc7c8f24a2",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-055",
+      "uid": "9dea31eeae90b0d6",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-056",
+      "uid": "0e25d2f6ad16fa44",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-057",
+      "uid": "e88c56caa3cda74c",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-058",
+      "uid": "f529b8bfe3e6683d",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-059",
+      "uid": "e076188f9898cb55",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-060",
+      "uid": "e1a91b1a560f18b4",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-061",
+      "uid": "24cd43eb05d179bc",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-062",
+      "uid": "0aabd69a115626c8",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-063",
+      "uid": "407981e7b908787a",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-064",
+      "uid": "a8ca83872928692d",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-065",
+      "uid": "168ba3da3272f144",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-066",
+      "uid": "79302bef0f594269",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-067",
+      "uid": "138f941308d3dab5",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-068",
+      "uid": "f33817a4ff26af2f",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-069",
+      "uid": "9f6163c3a4dc918d",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-070",
+      "uid": "3ba0df9e65fecce1",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-071",
+      "uid": "6a66ab8f89b704fa",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-072",
+      "uid": "fe08bbad2f99e15a",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-073",
+      "uid": "fdfd18f42d07250d",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-074",
+      "uid": "8df8f9ccd7f6c7b0",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-075",
+      "uid": "df2135821e6c1b41",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-076",
+      "uid": "4f0373f573e917e1",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-077",
+      "uid": "29a8fefed382e75a",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-078",
+      "uid": "20b1278a6e5a3848",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-079",
+      "uid": "edb9823f8d1e04e3",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-080",
+      "uid": "2a62d1a67c1bf3b1",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-081",
+      "uid": "885a19daf8c09c96",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-082",
+      "uid": "c51f3daa0e435286",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-083",
+      "uid": "aa11a9d863a7d267",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-084",
+      "uid": "90bfd898af6662d4",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-085",
+      "uid": "7f7d8a8f59daf1dd",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-086",
+      "uid": "1d0b540fb8556ca0",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-087",
+      "uid": "03670966773c1631",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-088",
+      "uid": "6d3452dc98d298e1",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-089",
+      "uid": "b449e8a30882155d",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-090",
+      "uid": "d7f88fa3c2c58bf2",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-091",
+      "uid": "c134afb9f533f6fc",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-092",
+      "uid": "5e2b62bc275b83ad",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-093",
+      "uid": "35b3e5f33afaa1ad",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-094",
+      "uid": "50ad0caee18f25b8",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-095",
+      "uid": "4e6aa39f9da3de6e",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-096",
+      "uid": "ce16479824493350",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-097",
+      "uid": "b62b130045af35e3",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-098",
+      "uid": "2e111f7406630924",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-099",
+      "uid": "0a9fffb95ed3c98d",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-100",
+      "uid": "ce70b654e936515b",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-101",
+      "uid": "60022a0e721b3b9d",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-102",
+      "uid": "941c44fda179c126",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-103",
+      "uid": "5b17f53bca85cbe8",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-104",
+      "uid": "f42b8b45ccad676f",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-105",
+      "uid": "9354e0400fb0c894",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-106",
+      "uid": "293034bfea372827",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-107",
+      "uid": "c061c972dec04129",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-108",
+      "uid": "9104b973ec973a6b",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-109",
+      "uid": "2b6808e0eb622f6d",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-110",
+      "uid": "7824a9476a0dc246",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-111",
+      "uid": "e33ec3acf4b5bad2",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-112",
+      "uid": "777cb8b8240088ca",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-113",
+      "uid": "6503ace7dc179126",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-114",
+      "uid": "ca8cee61a4ae7779",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-115",
+      "uid": "ddbe4aac1ca1be55",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-116",
+      "uid": "732f82c2b5c9355c",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-117",
+      "uid": "182acf7300167836",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-118",
+      "uid": "05a6c6adc2167dbf",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-119",
+      "uid": "8345dc9cbbde9c09",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-120",
+      "uid": "c723c793b27984c2",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-121",
+      "uid": "786617bf54a221fc",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-122",
+      "uid": "3494eebabc22fd1f",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-123",
+      "uid": "7dea4ea73d1ef483",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-124",
+      "uid": "f9ae25c1c846f536",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-125",
+      "uid": "b03b387ebb3ea4da",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-126",
+      "uid": "b504768468b91165",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-127",
+      "uid": "34d2239d87854110",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-128",
+      "uid": "e8cdd93b49975eac",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-129",
+      "uid": "1108bf58f2e923be",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-130",
+      "uid": "f3e540edfe24a4a5",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-131",
+      "uid": "84c90d4d5616b862",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-132",
+      "uid": "513cc7b29fadd796",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-133",
+      "uid": "b7dd536d8ce4f51b",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-134",
+      "uid": "aebe454fbd95b5f8",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-135",
+      "uid": "b927ae67e29aa58c",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-136",
+      "uid": "f57a6058cebda543",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-137",
+      "uid": "e8bbe3bccf19d8f4",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-138",
+      "uid": "0558e6e578b9f583",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-139",
+      "uid": "24650753464b7689",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-140",
+      "uid": "c309a56ad682f9e3",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-141",
+      "uid": "a315dc099dceb544",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-142",
+      "uid": "64fb1908b38a4417",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-143",
+      "uid": "4acfcf2a7c38ffbb",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-144",
+      "uid": "515d31ae696b4599",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-145",
+      "uid": "a902daaf2dc8304a",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-146",
+      "uid": "9cdbe6cb52a79068",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-147",
+      "uid": "709ced3d39012780",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-148",
+      "uid": "4f4a0f217265ef55",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-149",
+      "uid": "15f95daea1712fa6",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-150",
+      "uid": "6540da098b7f83ab",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
       "id": "ch-trend-001",
       "uid": "a7eff4f0bc836cae",
       "set": "trend",
@@ -1548,6 +3172,307 @@
       "uid": "9e10a4cc5c7b082a",
       "set": "trend",
       "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-029",
+      "uid": "28c14ff5e8ef7827",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-030",
+      "uid": "3450d65aee17e379",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-031",
+      "uid": "6f80f0970f8f5568",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-032",
+      "uid": "2d1d3edefdf829a4",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-033",
+      "uid": "00f2d046c386370a",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-034",
+      "uid": "eacecf2440e3d34c",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-035",
+      "uid": "acd6862063e5a625",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-036",
+      "uid": "f686339e2b35d96b",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-037",
+      "uid": "e41084774d3e510f",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-038",
+      "uid": "def5de275ac5bcb4",
+      "set": "trend",
+      "group": "sluc",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-039",
+      "uid": "fe01c1b0eb15404d",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-040",
+      "uid": "699816c97c19d7ab",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-041",
+      "uid": "ed0ee07c316fa9e0",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-042",
+      "uid": "e7bc2e2998cb6903",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-043",
+      "uid": "048722f966608f87",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-044",
+      "uid": "e53660b27b590949",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-045",
+      "uid": "30089ff2a8838732",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-046",
+      "uid": "0b329187e8a2eae2",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-047",
+      "uid": "2b8e79586399d16a",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-048",
+      "uid": "38a83bf61f7333ad",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-049",
+      "uid": "95f823af73dc1a45",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-050",
+      "uid": "76fc1c6f5f34a5e8",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-051",
+      "uid": "f2fb98d0a0a55b6f",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-052",
+      "uid": "2fbce8db0984c0a3",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-053",
+      "uid": "d8dae01a3ac29eb3",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-054",
+      "uid": "26cc43f704366b32",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-055",
+      "uid": "b37fa2df9a38f9fd",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-056",
+      "uid": "0511bbc80106f305",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-057",
+      "uid": "4e0ad62653c3a160",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-058",
+      "uid": "6eeb9ab6b720c1ac",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-059",
+      "uid": "79e9b8c7ce28a883",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-060",
+      "uid": "cf183c3b254116ec",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-061",
+      "uid": "1769058128129d7d",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-062",
+      "uid": "ec6f577a4a1da38e",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-063",
+      "uid": "a6c77ae2c9c2cdd9",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-064",
+      "uid": "b2c55c8ffde37e1e",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-065",
+      "uid": "1d7b75e0055b10ae",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-066",
+      "uid": "0599cda134ea650b",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-067",
+      "uid": "3cd15590e93cce9d",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-068",
+      "uid": "17e8090fc0614011",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-069",
+      "uid": "2044415c62a486ee",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-070",
+      "uid": "a983f72c5f2daed0",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-071",
+      "uid": "9e2802ad7bfb4dc1",
+      "set": "trend",
+      "group": "tcl-fires",
       "status": "ready"
     }
   ]

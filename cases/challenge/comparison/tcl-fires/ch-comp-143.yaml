@@ -1,0 +1,23 @@
+id: ch-comp-143
+uid: 86a639e00d99930a
+status: ready
+set: comparison
+group: tcl-fires
+query: In 2022, which country had greater fire-driven tree cover loss at a 75% canopy density
+  threshold, across all tree cover types, Brazil or Indonesia?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '10'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Compare fire-driven tree cover loss between the two countries at a 75%
+    canopy threshold (hectares); apply 75% to both. NEVER report carbon emissions.
+  eval_subtype: two_country
+  manifest_id: m-fires-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-comp-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

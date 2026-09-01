@@ -1,0 +1,23 @@
+id: ch-comp-142
+uid: de442a73210dd8ae
+status: ready
+set: comparison
+group: tcl-fires
+query: Comparing Indonesia's fire-driven tree cover loss across all forest types, was more
+  area lost to fires from 2001 to 2010 or from 2011 to 2020?
+expected:
+  aoi_ids: IDN
+  dataset_id: '10'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Compare fire-driven tree cover loss between 2001-2010 and 2011-2020.
+    The window crosses the 2011 methodology break; a caution caveat is expected and must not
+    be penalised; the comparative direction must still follow the data. NEVER report carbon
+    emissions. 30% default.
+  eval_subtype: two_period
+  manifest_id: m-fires-comp-07
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-comp-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

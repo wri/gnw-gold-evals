@@ -1,0 +1,21 @@
+id: ch-comp-050
+uid: e0d8d79168dbac76
+status: ready
+set: comparison
+group: ghg-flux
+query: Comparing Brazil and the Democratic Republic of the Congo at a 50% canopy density threshold,
+  which country's forests are the larger net source of CO2e emissions over the full 2001-2025
+  record?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '6'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  data_pull: 'TRUE'
+notes:
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: 50% canopy density threshold applied to both. Compare whole-period net
+    flux totals (2001-2025) in MgCO2e; direction correct; net source/sink per sign.
+  eval_subtype: two_country
+  manifest_id: m-flux-comp-06
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
