@@ -25,6 +25,10 @@ set. The short version:
   `--cases-dir cases/challenge --results-dir results/challenge
   --status-exclude "not doing,todo"`. Its ledger lives under
   `results/challenge/` and never mixes with GOLD's runs, trends, or diffs.
+- The after-run ritual applies to CHALLENGE too, adapted to rates: rollup,
+  then a recommendations doc in `results/challenge/recommendations/<run_id>.md`,
+  then commit run + rollup + recommendations together (see "After every
+  run" in `cases/challenge/README.md`).
 - The GOLD skills (gold-run, case-edit, new-case, release-gate, triage-run)
   and `audit_cases.py --strict` apply to `cases/v2` only.
 - Identity and ledger discipline are unchanged: after any case edit, run

@@ -49,7 +49,7 @@ uv run gold run --cases-dir cases/challenge --results-dir results/challenge \
 uv run gold run --cases-dir cases/challenge --results-dir results/challenge \
   --env staging --status-exclude "not doing,todo" --build "<label>"
 
-# rollup (the after-run ritual)
+# rollup (step 1 of the after-run ritual)
 uv run python tools/challenge_rollup.py results/challenge/runs/<run_id>.json
 ```
 
@@ -57,6 +57,24 @@ The run ledger lives in `results/challenge/` so CHALLENGE runs never enter
 GOLD's trend pages, diffs, or CI baseline logic. The ledger contract
 (`results/README.md`) applies unchanged: immutable run files, no backfills,
 1-trial runs are smoke only.
+
+## After every run (mirrors GOLD's ritual, adapted to rates)
+
+1. **Rollup**: `tools/challenge_rollup.py` as above; read rates against
+   `TARGETS.yml`.
+2. **Write `results/challenge/recommendations/<run_id>.md`** — the run is
+   not done until someone can act on it. Cover: what to file upstream
+   (agent behaviour, with failing rows and trace URLs as evidence), what
+   the run says about the case set (expectation reviews, scoring gaps,
+   todo pinning — remember failures are data, never fix a case to make it
+   pass), what it says about the harness, and a next-run watchlist. Frame
+   everything as rates vs targets, never regression counts.
+   `results/challenge/recommendations/20260901T131519Z_prod.md` is the
+   model.
+3. **Commit** the run JSON, artifacts, and the recommendations doc
+   together. Only canonical runs (prod, default, 3 trials) enter the
+   published series; a diagnostic run's recommendations doc must say so in
+   its header and treat its rates as directional.
 
 ## Targets (the OKR loop)
 
