@@ -24,10 +24,15 @@ interval, compared against ``cases/challenge/TARGETS.yml``. Semantics:
 - Confidence intervals are Wilson 95%; a published "70%" from 12 cases must
   say how soft it is.
 
-Cohort = ``case.group``; difficulty = ``notes.difficulty`` (unlabelled rows
-group under ``unlabelled``). Passing several runs renders one section per
-run plus a cross-run rate table (comparable runs only — same env, ff,
-trials, caseset_version; the tool warns, but does not refuse, on a mix).
+The hierarchy is **set → cohort → case**: set = ``case.set`` (the level new
+CHALLENGE sets are added at — ``aoi`` first; rows without one group under
+``unset``), cohort = ``case.group``, difficulty = ``notes.difficulty``
+(unlabelled rows group under ``unlabelled``). Rates are rolled up overall,
+per set, and per cohort/difficulty within each set; ``TARGETS.yml`` scopes
+cohort targets per set. Passing several runs renders one section per run
+plus a cross-run rate table over overall + per-set rates (comparable runs
+only — same env, ff, trials, caseset_version; the tool warns, but does not
+refuse, on a mix).
 """
 
 from __future__ import annotations
@@ -97,8 +102,13 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
     errored: list[dict[str, str]] = []
     uncovered: list[str] = []
     overall = _new_stat()
-    by_group: dict[str, dict] = defaultdict(_new_stat)
-    by_difficulty: dict[str, dict] = defaultdict(_new_stat)
+    sets: dict[str, dict] = defaultdict(
+        lambda: {
+            "stat": _new_stat(),
+            "by_group": defaultdict(_new_stat),
+            "by_difficulty": defaultdict(_new_stat),
+        }
+    )
     failing: list[dict[str, str]] = []
 
     measured_uids: set[str] = set()
@@ -117,10 +127,17 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
         if verdict == "uncovered":
             uncovered.append(case.id)
             continue
+        case_set = case.set or "unset"
         difficulty = case.notes.get("difficulty", "unlabelled")
         passed = verdict == "pass"
         strict = strict_clean(entry)
-        for stat in (overall, by_group[case.group], by_difficulty[difficulty]):
+        bucket = sets[case_set]
+        for stat in (
+            overall,
+            bucket["stat"],
+            bucket["by_group"][case.group],
+            bucket["by_difficulty"][difficulty],
+        ):
             stat["n"] += 1
             stat["passed"] += passed
             stat["strict_passed"] += strict
@@ -128,6 +145,7 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
             failing.append(
                 {
                     "id": case.id,
+                    "set": case_set,
                     "group": case.group,
                     "difficulty": difficulty,
                     "failed_checks": ", ".join(
@@ -165,18 +183,37 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
         "uncovered": sorted(uncovered),
         "not_run": active_not_run,
         "overall": _finish(overall),
-        "by_group": {k: _finish(v) for k, v in sorted(by_group.items())},
-        "by_difficulty": {k: _finish(v) for k, v in sorted(by_difficulty.items())},
+        "by_set": {
+            name: {
+                **_finish(bucket["stat"]),
+                "by_group": {
+                    k: _finish(v) for k, v in sorted(bucket["by_group"].items())
+                },
+                "by_difficulty": {
+                    k: _finish(v) for k, v in sorted(bucket["by_difficulty"].items())
+                },
+            }
+            for name, bucket in sorted(sets.items())
+        },
         "failing": sorted(failing, key=lambda f: f["id"]),
     }
 
 
 def load_targets(path: Path) -> dict[str, Any]:
+    """Targets keyed set -> {overall, targets: {cohort: rate}}, plus a
+    challenge-wide overall."""
     if not path.exists():
-        return {"targets": {}, "overall": None, "meta": {}}
+        return {"sets": {}, "overall": None, "meta": {}}
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    sets = {
+        name: {
+            "overall": block.get("overall"),
+            "targets": block.get("targets") or {},
+        }
+        for name, block in (data.get("sets") or {}).items()
+    }
     return {
-        "targets": data.get("targets") or {},
+        "sets": sets,
         "overall": data.get("overall"),
         "meta": data.get("meta") or {},
     }
@@ -230,35 +267,46 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
         overall_target = targets.get("overall")
         if overall_target is not None:
             lines.append(f"target: {_target_cell(o['rate'], overall_target)}")
-        lines.append("")
-        lines.append("## By cohort")
-        lines.append("| cohort | n | passed | rate | 95% CI | strict | target |")
-        lines.append("|---|---|---|---|---|---|---|")
-        group_targets = targets.get("targets", {})
-        for group, stat in r["by_group"].items():
+        set_targets = targets.get("sets", {})
+        for set_name, s in r["by_set"].items():
+            st = set_targets.get(set_name, {})
+            lines.append("")
+            lines.append(f"## Set: {set_name}")
             lines.append(
-                f"| {group} | {stat['n']} | {stat['passed']} | "
-                f"{_pct(stat['rate'])} | {_ci(stat)} | {_pct(stat['strict_rate'])} "
-                f"| {_target_cell(stat['rate'], group_targets.get(group))} |"
+                f"pass rate **{_pct(s['rate'])}** ({s['passed']}/{s['n']}, "
+                f"95% CI {_ci(s)}) | strict {_pct(s['strict_rate'])}"
             )
-        lines.append("")
-        lines.append("## By difficulty")
-        lines.append("| difficulty | n | passed | rate | 95% CI | strict |")
-        lines.append("|---|---|---|---|---|---|")
-        for difficulty, stat in r["by_difficulty"].items():
-            lines.append(
-                f"| {difficulty} | {stat['n']} | {stat['passed']} | "
-                f"{_pct(stat['rate'])} | {_ci(stat)} | "
-                f"{_pct(stat['strict_rate'])} |"
-            )
+            if st.get("overall") is not None:
+                lines.append(f"target: {_target_cell(s['rate'], st['overall'])}")
+            lines.append("")
+            lines.append("### By cohort")
+            lines.append("| cohort | n | passed | rate | 95% CI | strict | target |")
+            lines.append("|---|---|---|---|---|---|---|")
+            group_targets = st.get("targets", {})
+            for group, stat in s["by_group"].items():
+                lines.append(
+                    f"| {group} | {stat['n']} | {stat['passed']} | "
+                    f"{_pct(stat['rate'])} | {_ci(stat)} | {_pct(stat['strict_rate'])} "
+                    f"| {_target_cell(stat['rate'], group_targets.get(group))} |"
+                )
+            lines.append("")
+            lines.append("### By difficulty")
+            lines.append("| difficulty | n | passed | rate | 95% CI | strict |")
+            lines.append("|---|---|---|---|---|---|")
+            for difficulty, stat in s["by_difficulty"].items():
+                lines.append(
+                    f"| {difficulty} | {stat['n']} | {stat['passed']} | "
+                    f"{_pct(stat['rate'])} | {_ci(stat)} | "
+                    f"{_pct(stat['strict_rate'])} |"
+                )
         if r["failing"]:
             lines.append("")
             lines.append("## Failing rows")
-            lines.append("| id | cohort | difficulty | failed checks |")
-            lines.append("|---|---|---|---|")
+            lines.append("| id | set | cohort | difficulty | failed checks |")
+            lines.append("|---|---|---|---|---|")
             for f in r["failing"]:
                 lines.append(
-                    f"| {f['id']} | {f['group']} | {f['difficulty']} | "
+                    f"| {f['id']} | {f['set']} | {f['group']} | {f['difficulty']} | "
                     f"{f['failed_checks']} |"
                 )
         if r["errored"]:
@@ -288,13 +336,13 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
             )
             lines.append("")
         lines.append("## Cross-run rates (majority verdict)")
-        groups = sorted({g for r in rollups for g in r["by_group"]})
-        lines.append("| run | overall | " + " | ".join(groups) + " |")
-        lines.append("|---" * (len(groups) + 2) + "|")
+        set_names = sorted({s for r in rollups for s in r["by_set"]})
+        lines.append("| run | overall | " + " | ".join(set_names) + " |")
+        lines.append("|---" * (len(set_names) + 2) + "|")
         for r in rollups:
             cells = [_pct(r["overall"]["rate"])]
-            for group in groups:
-                stat = r["by_group"].get(group)
+            for set_name in set_names:
+                stat = r["by_set"].get(set_name)
                 cells.append(_pct(stat["rate"]) if stat else "-")
             lines.append(f"| {r['run_id']} | " + " | ".join(cells) + " |")
         lines.append("")

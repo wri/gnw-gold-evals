@@ -28,17 +28,17 @@ from goldset.store import Case, build_manifest, write_case, write_manifest  # no
 def make_store(tmp_path):
     cases = [
         Case(
-            id="ch-t-001", status="ready", group="g1",
+            id="ch-t-001", status="ready", set="s1", group="g1",
             query="Go to A", expected={"aoi_ids": "AAA"},
             notes={"difficulty": "easy"},
         ),
         Case(
-            id="ch-t-002", status="ready", group="g1",
+            id="ch-t-002", status="ready", set="s1", group="g1",
             query="Go to B", expected={"aoi_ids": "BBB"},
             notes={"difficulty": "easy"},
         ),
         Case(
-            id="ch-t-003", status="ready", group="g1",
+            id="ch-t-003", status="ready", set="s1", group="g1",
             query="Go to C", expected={"aoi_ids": "CCC"},
             notes={"difficulty": "hard"},
         ),
@@ -142,14 +142,17 @@ def test_error_is_availability_not_quality(tmp_path):
 
 def test_grouping(tmp_path):
     rollup, _ = build(tmp_path)
-    g1 = rollup["by_group"]["g1"]
+    s1 = rollup["by_set"]["s1"]
+    assert (s1["n"], s1["passed"]) == (2, 1)
+    g1 = s1["by_group"]["g1"]
     assert (g1["n"], g1["passed"]) == (2, 1)
-    g2 = rollup["by_group"]["g2"]
+    # cases without a set roll up under "unset"
+    g2 = rollup["by_set"]["unset"]["by_group"]["g2"]
     assert (g2["n"], g2["passed"], g2["strict_passed"]) == (1, 1, 0)
-    easy = rollup["by_difficulty"]["easy"]
+    easy = s1["by_difficulty"]["easy"]
     assert (easy["n"], easy["passed"]) == (2, 1)
     # the errored hard case never enters difficulty tallies
-    assert "hard" not in rollup["by_difficulty"]
+    assert "hard" not in s1["by_difficulty"]
 
 
 def test_stale_and_not_run_reported_never_counted(tmp_path):
@@ -164,6 +167,7 @@ def test_failing_rows_name_the_checks(tmp_path):
     assert rollup["failing"] == [
         {
             "id": "ch-t-002",
+            "set": "s1",
             "group": "g1",
             "difficulty": "easy",
             "failed_checks": "aoi_id_match",
@@ -173,10 +177,19 @@ def test_failing_rows_name_the_checks(tmp_path):
 
 def test_targets_and_render(tmp_path):
     rollup, _ = build(tmp_path)
-    targets = {"targets": {"g1": 0.9, "g2": 0.5}, "overall": 0.5, "meta": {}}
+    targets = {
+        "sets": {
+            "s1": {"overall": 0.8, "targets": {"g1": 0.9}},
+            "unset": {"overall": None, "targets": {"g2": 0.5}},
+        },
+        "overall": 0.5,
+        "meta": {},
+    }
     text = challenge_rollup.render_markdown([rollup], targets)
     assert "pass rate **66.7%** (2/3" in text
     assert "MET (+16.7 pts)" in text        # overall 66.7 vs 50
+    assert "## Set: s1" in text
+    assert "80% / BELOW (-30.0 pts)" in text  # set s1 50 vs 80
     assert "90% / BELOW (-40.0 pts)" in text  # g1 50 vs 90
     assert "Errored rows (availability, not quality)" in text
     assert "ch-t-005" in text  # not-run listing
@@ -186,7 +199,7 @@ def test_cross_run_table_warns_on_mixed_config(tmp_path):
     rollup, _ = build(tmp_path)
     other = dict(rollup, num_trials=1, run_id="20260902T000000Z_prod")
     text = challenge_rollup.render_markdown(
-        [rollup, other], {"targets": {}, "overall": None, "meta": {}}
+        [rollup, other], {"sets": {}, "overall": None, "meta": {}}
     )
     assert "NOT comparable" in text
     assert "Cross-run rates" in text
@@ -194,4 +207,17 @@ def test_cross_run_table_warns_on_mixed_config(tmp_path):
 
 def test_load_targets_missing_file(tmp_path):
     targets = challenge_rollup.load_targets(tmp_path / "absent.yml")
-    assert targets == {"targets": {}, "overall": None, "meta": {}}
+    assert targets == {"sets": {}, "overall": None, "meta": {}}
+
+
+def test_load_targets_nested_shape(tmp_path):
+    path = tmp_path / "TARGETS.yml"
+    path.write_text(
+        "overall: 0.7\nsets:\n  aoi:\n    overall: 0.7\n    targets:\n"
+        "      acronyms: 0.8\n",
+        encoding="utf-8",
+    )
+    targets = challenge_rollup.load_targets(path)
+    assert targets["overall"] == 0.7
+    assert targets["sets"]["aoi"]["overall"] == 0.7
+    assert targets["sets"]["aoi"]["targets"] == {"acronyms": 0.8}
