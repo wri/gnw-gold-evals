@@ -53,22 +53,22 @@ uv run python -m pytest -q              # 475 tests, no network
 # dashboards + satellite imagery only exist behind that profile (CLAUDE.md).
 uv run gold run --env staging --ff experimental --trials 3
 uv run gold run --env staging --ff experimental --id 1-030 --verbose   # one case
-# writes results/runs/<run_id>.json + gzipped raw artifacts
+# writes results/gold/runs/<run_id>.json + gzipped raw artifacts
 
 # against a local project-zeno checkout (`make api` there, port 8000):
 # smoke-only — don't commit these; the CLI still requires API_TOKEN to be set.
 uv run gold run --env local --id 1-030 --verbose
 
 # reports from a ledger run:
-uv run python tools/report_run.py results/runs/<run_id>.json   # markdown
-uv run python tools/render_html.py results/runs/<run_id>.json  # stakeholder HTML
-uv run python tools/render_inspector.py results/runs/<run_id>.json  # per-check matrix
+uv run python tools/report_run.py results/gold/runs/<run_id>.json   # markdown
+uv run python tools/render_html.py results/gold/runs/<run_id>.json  # stakeholder HTML
+uv run python tools/render_inspector.py results/gold/runs/<run_id>.json  # per-check matrix
 uv run python tools/render_html.py --all       # every run behind one dropdown
 uv run python tools/render_inspector.py --all  # ditto for the matrix
 uv run python tools/render_trends.py           # pass-rate ticker across all runs
 
 # regression gate between two runs:
-uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
+uv run python tools/diff_runs.py results/gold/runs/A.json results/gold/runs/B.json \
   --fail-on-regression            # exit 1 on any real (non-info-only) regression
 # add --fail-on-coverage-loss to also fail when checks silently stop evaluating
 
@@ -89,7 +89,9 @@ uv run python tools/ingest_run.py --detailed <gnw-evals _detailed.csv> ...  # le
 
 ```
 cases/v1, cases/v2      one YAML per case, grouped by capability; MANIFEST.json each
-results/                committed run ledger + reports (contract: results/README.md)
+results/gold/           committed GOLD run ledger + reports (contract: results/README.md)
+results/challenge/      committed CHALLENGE run ledger + rollup recommendations
+                        (rates, not regressions — see cases/challenge/README.md)
 schema/case.schema.json the case contract; every file validated in tests
 src/goldset/            store, canonical hashing, ledger, adapter, buckets,
                         evaluator registry, runner/ (API + multiturn), cli (gold)
@@ -143,9 +145,11 @@ loads. Rules live in CLAUDE.md; these encode the *procedures* around them.
 
 - [results/README.md](results/README.md) — the ledger contract: keying,
   immutability, tri-state checks, composing across runs
-- [results/recommendations/](results/recommendations/) — per-run action
+- [results/gold/recommendations/](results/gold/recommendations/) — per-run action
   docs (the run isn't done until one exists)
-- [results/campaigns/](results/campaigns/) — campaign narratives
+- [results/challenge/](results/challenge/) — the CHALLENGE ledger: same
+  contract, pass-rate verdicts via `tools/challenge_rollup.py`
+- [results/gold/campaigns/](results/gold/campaigns/) — campaign narratives
 - [tools/README.md](tools/README.md) — every CLI, grouped by lifecycle
 
 Planning notes (design plan, PR specs, case-set plans, one-off
@@ -201,7 +205,7 @@ report, six new validators, multi-turn support, live-validation campaign
 tooling, hardening + CI, sheet pull/push bridges, and the v1/v2 split.
 Baseline 3-trial staging campaign committed as run
 `20260801T093002Z_staging_experimental` (104 cases; see
-`results/campaigns/` and `results/recommendations/`).
+`results/gold/campaigns/` and `results/gold/recommendations/`).
 
 Known open items (tracked in case notes, deliberately not papered over):
 

@@ -29,7 +29,7 @@ for the contract they all respect.
 |---|---|
 | `diff_runs.py` | Regression diff between two runs over their uid intersection. `--fail-on-regression` / `--fail-on-coverage-loss` to gate. Only compare runs with the same trial count and `ff`. |
 | `flakiness.py` | Flakiness table from a multi-trial run (`--per-case` for detail); flags partial samples as INSUFFICIENT DATA. |
-| `compose_runs.py` | Compose a current picture from a primary run plus scoped supplements — analysis-side only, never writes to `results/runs/` (see results/README.md §Composing). |
+| `compose_runs.py` | Compose a current picture from a primary run plus scoped supplements — analysis-side only, never writes to `results/gold/runs/` (see results/README.md §Composing). |
 | `ingest_run.py` | Ingest a legacy gnw-evals `*_detailed.csv` into the ledger (historical runs only; in-repo runs write the ledger directly). |
 | `parity.py` | Old-path vs new-path parity for the 2026-08-01 harness port (PR-08 step 1; historical). |
 
@@ -46,6 +46,6 @@ for the contract they all respect.
 
 After every run, in order: `render_html.py` (+ `--all`, `render_inspector.py
 --all`, `render_trends.py`), then `flakiness.py` + `diff_runs.py` against the
-last comparable run, then write `results/recommendations/<run_id>.md`, then
+last comparable run, then write `results/gold/recommendations/<run_id>.md`, then
 commit run + report + recommendation together. CLAUDE.md has the full
 checklist.

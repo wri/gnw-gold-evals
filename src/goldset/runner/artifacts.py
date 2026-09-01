@@ -1,7 +1,8 @@
 """Per-case raw-artifact capture: keep more than we score.
 
 The committed ledger stays small; these gzipped JSONs (gitignored, under
-``results/artifacts/<run_id>/<uid>.json.gz``) hold the signals future
+``<results-dir>/artifacts/<run_id>/<uid>.json.gz`` — ``results/gold/`` for
+GOLD, ``results/challenge/`` for CHALLENGE) hold the signals future
 validators and triage need — decoded codeact, the tool-call sequence, the
 last statistics payload, chart specs, dashboard widget bodies — so a run
 can be re-analysed without being re-executed.

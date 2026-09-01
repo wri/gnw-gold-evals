@@ -58,12 +58,12 @@ jobs:
             --build "${{ inputs.build_label }}"
       - name: Regression gate vs previous committed run
         run: |
-          PREV=$(ls results/runs/*.json | sort | tail -2 | head -1)
-          NEW=$(ls results/runs/*.json | sort | tail -1)
+          PREV=$(ls results/gold/runs/*.json | sort | tail -2 | head -1)
+          NEW=$(ls results/gold/runs/*.json | sort | tail -1)
           uv run python tools/diff_runs.py "$PREV" "$NEW" --fail-on-regression
       - name: Upload run + report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: gold-run
-          path: results/runs/
+          path: results/gold/runs/

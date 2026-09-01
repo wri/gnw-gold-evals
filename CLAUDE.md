@@ -107,13 +107,13 @@ uv run gold run --env staging --ff experimental --trials 3 --build "<label>"   #
 omitted entirely when unset, so the agent runs its **default** toolset. Two
 capabilities live behind the experimental profile and are simply *absent* without
 it: **dashboards** and **satellite imagery**. Every historical run in
-`results/runs/` used `ff=experimental`.
+`results/gold/runs/` used `ff=experimental`.
 
 Without the flag, all seven `dashboard` rows plus mt-008 fail `dashboard_created`
 on every trial — the agent never calls a dashboard tool at all, and the artifacts
 show `dashboard_widgets: null`. That is *indistinguishable from the capability
 having been removed* unless you check `ff`, and it cost a full misdiagnosis on
-2026-08-03 (see `results/recommendations/20260803T201245Z.md` item 1). With
+2026-08-03 (see `results/gold/recommendations/20260803T201245Z.md` item 1). With
 `--ff experimental` on the same case set and harness, those rows pass immediately.
 
 **The tell is the run_id**: `…_staging_experimental` versus a bare `…_staging`.
@@ -143,21 +143,21 @@ concurrency that produced it. Raising workers is the main suspect to watch.
 ## After every run (do all four, in order)
 
 1. **Render the report**: `uv run python tools/render_html.py
-   results/runs/<run_id>.json` → `results/reports/<run_id>.html`
+   results/gold/runs/<run_id>.json` → `results/gold/reports/<run_id>.html`
    (the template also accepts a run JSON by drag-and-drop). Refresh the
    cross-run pages too: `render_html.py --all`, `render_inspector.py --all`
    (one file each, run-selector dropdown, deep-linkable via `#<run_id>`)
    and `render_trends.py` (pass-rate ticker; never trends across a
    differing `ff`).
 2. **Flakiness + diff**: `uv run python tools/flakiness.py
-   results/runs/<run_id>.json --per-case`, and `tools/diff_runs.py
+   results/gold/runs/<run_id>.json --per-case`, and `tools/diff_runs.py
    <previous> <current>` against the last comparable run.
-3. **Write `results/recommendations/<run_id>.md`** — the run is not done
+3. **Write `results/gold/recommendations/<run_id>.md`** — the run is not done
    until someone can act on it. Cover: what to file upstream (agent
    behaviour, with the flapping/failing row lists as evidence), what the
    run says about the case set (stale expectations, coverage holes,
    probation re-admissions), what it says about the harness, and a
-   next-run watchlist. `results/recommendations/20260801T093002Z.md` is
+   next-run watchlist. `results/gold/recommendations/20260801T093002Z.md` is
    the model.
 4. **Commit** the ledger JSON, the report, and the recommendation doc
    together; use `--note` on the run whenever check semantics changed
@@ -196,7 +196,8 @@ from the store), and CI-style verification is plain `check.py` plus
   `notes:` = unhashed annotations. Unknown top-level keys are rejected on
   read. Import routes sheet columns by prefix: `expected_*` → expected,
   everything else → notes.
-- `results/` — committed per-run JSON ledger (contract fixed in
+- `results/` — committed per-run JSON ledgers, one subtree per set
+  (`results/gold/`, `results/challenge/`; contract fixed in
   `results/README.md` even though the ingester lands in PR-02). Checks are
   tri-state `1.0/0.0/null`; **no hand-written or backfilled entries, ever**.
 - Sheet relationship is **one-way**: import sheet → repo; the repo is the
