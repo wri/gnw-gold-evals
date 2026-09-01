@@ -66,7 +66,7 @@ friends) run on top of it whenever their trigger state exists.
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@f9cf409 (origin/main, synced 2026-08-07), 13 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@31a4d1e (origin/main, synced 2026-09-01), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -76,7 +76,6 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 0 ← gap | 0 | — | driver ×0 ← gap, natural_lands ×0 ← gap, grasslands ×0 ← gap, land_cover ×0 ← gap |
 | 1 | Global land cover | 0 ← gap | 0 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 0 ← gap | 0 | — | — |
 | 3 | SBTN Natural Lands Map | 0 ← gap | 0 | — | — |
@@ -111,6 +110,6 @@ answer-graded cases (`answer` or `text` expected) actually check.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
-- Catalog datasets with no active case: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12.
-- Catalog features no active case exercises — parameters: canopy_cover (4, 6, 7, 8, 10); context layers: driver (0), natural_lands (0), grasslands (0), land_cover (0), primary_forest (4, 7, 10), intact_forest (4, 10).
+- Catalog datasets with no active case: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12.
+- Catalog features no active case exercises — parameters: canopy_cover (4, 6, 7, 8, 10); context layers: primary_forest (4, 7, 10), intact_forest (4, 10).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

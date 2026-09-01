@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version bf5a593d71d658ae` · 120 cases · done 93 · not doing 5 · ready 13 · todo 9 · **115 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-08-07_
+_Last updated: 2026-09-01_
 
 ## Groups
 
@@ -71,7 +71,7 @@ friends) run on top of it whenever their trigger state exists.
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@f9cf409 (origin/main, synced 2026-08-07), 13 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@31a4d1e (origin/main, synced 2026-09-01), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -81,7 +81,6 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 8 | 5 | — | driver ×1, natural_lands ×2, grasslands ×0 ← gap, land_cover ×0 ← gap |
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
@@ -94,6 +93,8 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
 | 11 | Integrated alerts | 5 | 4 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 3 | 3 | — | — |
+
+Expected `dataset_id` values not in the catalog: 0 (8 cases) — fix the cases or refresh the snapshot.
 
 ## Multi-turn
 
@@ -125,5 +126,5 @@ answer-graded cases (`answer` or `text` expected) actually check.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
-- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: grasslands (0), land_cover (0), primary_forest (7, 10), intact_forest (10).
+- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: primary_forest (7, 10), intact_forest (10).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.
