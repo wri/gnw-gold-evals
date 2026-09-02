@@ -1,6 +1,6 @@
 id: 1-120
 uid: 0658d8517285c63a
-status: ready
+status: not doing
 group: imagery
 query: Show me alerts and imagery from June 2026 for Tabatinga, Amazonas, Brazil.
 expected:

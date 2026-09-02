@@ -1,6 +1,6 @@
 id: 1-118
 uid: cc887d4637b0c8cb
-status: ready
+status: not doing
 group: imagery
 query: Show me integrated deforestation alerts and imagery for Mirití-Paraná, Amazonas, Colombia.
 expected:

@@ -1,6 +1,6 @@
 id: 1-119
 uid: bb9037bc4660887e
-status: ready
+status: not doing
 group: imagery
 query: Show me alerts and imagery from {current_month} for Tabatinga, Amazonas, Brazil.
 expected:

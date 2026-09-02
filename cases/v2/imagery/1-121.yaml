@@ -1,6 +1,6 @@
 id: 1-121
 uid: 49e6011c7b4db2e7
-status: ready
+status: not doing
 group: imagery
 query: Show me alerts and imagery from {last_month} for Zurich, Switzerland.
 expected:

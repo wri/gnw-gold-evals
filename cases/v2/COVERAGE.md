@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 10 · ready 17 · todo 9 · **114 active** (everything but `not doing` runs by default)
+`caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 14 · ready 13 · todo 9 · **110 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-02_
 
@@ -20,7 +20,7 @@ _Last updated: 2026-09-02_
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 7 | done 6, not doing 1, todo 1 |
 | direct | 26 | 23 | done 20, not doing 3, ready 1, todo 2 |
-| imagery | 5 | 5 | done 1, ready 4 |
+| imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
 | multiturn | 8 | 8 | ready 7, todo 1 |
@@ -39,23 +39,23 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 106 | 0 | 106 | 93% |
-| analysis | 0 | 70 | 70 | 61% |
-| explanation | 35 | 59 | 94 | 82% |
-| output | 75 | 3 | 78 | 68% |
-| scope | 95 | 7 | 102 | 89% |
+| retrieval | 102 | 0 | 102 | 93% |
+| analysis | 0 | 70 | 70 | 64% |
+| explanation | 31 | 59 | 90 | 82% |
+| output | 75 | 3 | 78 | 71% |
+| scope | 95 | 7 | 102 | 93% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 95 | dataset_id_match |
 | scope | 94 | scope_match |
-| aoi_source | 90 | reference only (dashboard AOI source) |
-| dataset_name | 87 | reference only |
+| dataset_id | 91 | dataset_id_match |
+| aoi_source | 86 | reference only (dashboard AOI source) |
+| dataset_name | 84 | reference only |
 | aoi_ids | 74 | aoi_id_match |
 | answer | 70 | agent_answer, charts_answer, chart_produced |
-| text | 35 | expected_text_match |
+| text | 31 | expected_text_match |
 | context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | class_values | 7 | class_value_match (info-only) |
@@ -81,7 +81,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 4 | 4 | — | driver ×0 ← gap, natural_lands ×0 ← gap, grasslands ×0 ← gap, land_cover ×0 ← gap |
+| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 0 ← gap | 0 | — | driver ×0 ← gap, natural_lands ×0 ← gap, grasslands ×0 ← gap, land_cover ×0 ← gap |
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
@@ -92,7 +92,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 8 | Tree cover loss by dominant driver | 5 | 4 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
 | 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
-| 11 | Integrated alerts | 9 | 8 | — | — |
+| 11 | Integrated alerts | 5 | 4 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 3 | 3 | — | — |
 
 ## Multi-turn
@@ -113,6 +113,10 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-085 | not doing | dataset-suggestion | parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for sugge... |
 | 1-088 | not doing | context-layer | parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT with natural_... |
 | 1-108 | not doing | direct | PARKED 2026-08-04 on creation, after verification (run 20260803T220705Z). It was authored to repay the leve... |
+| 1-118 | not doing | imagery | — |
+| 1-119 | not doing | imagery | — |
+| 1-120 | not doing | imagery | — |
+| 1-121 | not doing | imagery | — |
 | 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
@@ -130,5 +134,6 @@ answer-graded cases (`answer` or `text` expected) actually check.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
+- Catalog datasets with no active case: 0.
 - Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: driver (0), natural_lands (0), grasslands (0), land_cover (0), primary_forest (7, 10), intact_forest (10).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.
