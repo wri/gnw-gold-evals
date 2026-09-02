@@ -23,6 +23,7 @@ from goldset.store import (
     write_case,
     write_manifest,
 )
+from goldset.templates import validate_templates
 
 
 def main() -> int:
@@ -39,6 +40,13 @@ def main() -> int:
     problems: list[str] = []
     for path, case, stored_uid in entries:
         problems += case.validate()
+        queries = (
+            [turn["query"] for turn in case.turns]
+            if case.is_multiturn else [case.query]
+        )
+        for query in queries:
+            for issue in validate_templates(query):
+                problems.append(f"{path}: {issue}")
         if stored_uid != case.uid:
             if args.fix:
                 write_case(args.cases_dir, case)

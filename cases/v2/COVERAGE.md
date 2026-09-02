@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version d38fed0bec207834` · 120 cases · done 88 · not doing 10 · ready 13 · todo 9 · **110 active** (everything but `not doing` runs by default)
+`caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 14 · ready 13 · todo 9 · **110 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-08-27_
+_Last updated: 2026-09-02_
 
 ## Groups
 
@@ -20,7 +20,7 @@ _Last updated: 2026-08-27_
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 7 | done 6, not doing 1, todo 1 |
 | direct | 26 | 23 | done 20, not doing 3, ready 1, todo 2 |
-| imagery | 1 | 1 | done 1 |
+| imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
 | multiturn | 8 | 8 | ready 7, todo 1 |
@@ -113,6 +113,10 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-085 | not doing | dataset-suggestion | parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for sugge... |
 | 1-088 | not doing | context-layer | parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT with natural_... |
 | 1-108 | not doing | direct | PARKED 2026-08-04 on creation, after verification (run 20260803T220705Z). It was authored to repay the leve... |
+| 1-118 | not doing | imagery | — |
+| 1-119 | not doing | imagery | — |
+| 1-120 | not doing | imagery | — |
+| 1-121 | not doing | imagery | — |
 | 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
