@@ -1,5 +1,5 @@
 {
-  "caseset_version": "201b1209337f4ed0",
+  "caseset_version": "50a0ea07bb4bb90b",
   "case_count": 124,
   "source": "gold-live.csv",
   "cases": [
@@ -11,19 +11,19 @@
     },
     {
       "id": "1-002",
-      "uid": "c0aba25b266c0416",
+      "uid": "33251684549f20a2",
       "group": "direct",
       "status": "done"
     },
     {
       "id": "1-003",
-      "uid": "6fc8f4c3f62762c0",
+      "uid": "c8c477045d9f6593",
       "group": "parent-child",
       "status": "ready"
     },
     {
       "id": "1-004",
-      "uid": "3b339c8fd5aca521",
+      "uid": "989821bd935975d6",
       "group": "comparative",
       "status": "done"
     },
@@ -31,25 +31,25 @@
       "id": "1-005",
       "uid": "6c8b9a9d674922d2",
       "group": "parent-child",
-      "status": "done"
+      "status": "not doing"
     },
     {
       "id": "1-006",
       "uid": "21207fde86bdc738",
       "group": "class-comparison",
-      "status": "done"
+      "status": "not doing"
     },
     {
       "id": "1-007",
       "uid": "b336cdfe8b3ea20e",
       "group": "class-comparison",
-      "status": "done"
+      "status": "not doing"
     },
     {
       "id": "1-008",
       "uid": "e8b61a62e383f16e",
       "group": "class-comparison",
-      "status": "done"
+      "status": "not doing"
     },
     {
       "id": "1-009",
@@ -491,13 +491,13 @@
     },
     {
       "id": "1-083",
-      "uid": "314c62fe24b0f6cd",
+      "uid": "9198d265bbfde9e0",
       "group": "dataset-suggestion",
       "status": "done"
     },
     {
       "id": "1-084",
-      "uid": "215cea7820632351",
+      "uid": "a8f937053af97d9c",
       "group": "dataset-suggestion",
       "status": "done"
     },
@@ -523,7 +523,7 @@
       "id": "1-088",
       "uid": "dc1b3d52d49b28b2",
       "group": "context-layer",
-      "status": "done"
+      "status": "not doing"
     },
     {
       "id": "1-089",
@@ -701,7 +701,7 @@
     },
     {
       "id": "mt-001",
-      "uid": "f25772290e4699fd",
+      "uid": "39840a3c054ab3bf",
       "group": "multiturn",
       "status": "ready"
     },
@@ -713,7 +713,7 @@
     },
     {
       "id": "mt-003",
-      "uid": "cb1fee067c39f4ba",
+      "uid": "9bbb055d80fab8dd",
       "group": "multiturn",
       "status": "ready"
     },

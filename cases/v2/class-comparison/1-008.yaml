@@ -1,6 +1,6 @@
 id: 1-008
 uid: e8b61a62e383f16e
-status: done
+status: not doing
 group: class-comparison
 query: What type of natural ecosystem in Uganda had the most disturbances in 2025?
 expected:
@@ -15,3 +15,5 @@ expected:
 notes:
   aoi_type: gadm 0
   value_2: 2,847.8 hectares
+  status_reason: 'parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely
+    about DIST-ALERT and cannot be answered without it.'
