@@ -301,7 +301,7 @@ async def test_cli_dispatches_conversations_to_run_conversation(
         "goldset.runner.multiturn.run_conversation", fake_run_conversation
     )
     args = argparse.Namespace(
-        resolved_url="https://api.example", ff=None, verbose=False,
+        resolved_url="https://api.example", api_token="tok", ff=None, verbose=False,
         results_dir=tmp_path, run_id="r1", workers=1, trials=1,
         slow_threshold=180.0, trial_timeout=900.0,
     )
