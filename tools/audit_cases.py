@@ -25,6 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from goldset.buckets import buckets_for, implied_checks_for_case
 from goldset.store import Case, load_store
+from goldset.templates import validate_templates
 
 COVERAGE_FLOOR = 3
 EXEMPT_GROUPS = {"metadata"}  # sanctioned judged-only capability
@@ -100,12 +101,18 @@ def _turn_deltas(case: Case) -> list[dict]:
     return [{}]
 
 
+_TEMPLATE_TOKEN_RE = re.compile(r"\{[a-z_]+\}")
+
+
 def dont_violations(case: Case) -> list[str]:
     problems = []
     for query, expected, deltas in zip(
         _queries(case), _expected_maps(case), _turn_deltas(case)
     ):
-        match = RELATIVE_DATE_RE.search(query)
+        for problem in validate_templates(query):
+            problems.append(f"{case.id}: {problem}")
+        query_sans_templates = _TEMPLATE_TOKEN_RE.sub("", query)
+        match = RELATIVE_DATE_RE.search(query_sans_templates)
         if match:
             drifting = sorted(
                 key for key, value in expected.items()

@@ -23,8 +23,19 @@ from dotenv import load_dotenv
 from goldset.adapter import case_to_expected
 from goldset.buckets import summarize_buckets
 from goldset.eval_types import TestResult
-from goldset.ledger import majority, make_run_id, reason_name_from_column, write_run
+from goldset.ledger import (
+    RUNS_DIRNAME,
+    append_partial_entry,
+    majority,
+    make_run_id,
+    partial_path,
+    read_partial,
+    reason_name_from_column,
+    write_partial_header,
+    write_run,
+)
 from goldset.store import Case, load_store, read_manifest
+from goldset.templates import resolve_templates
 
 ENV_URLS = {
     "staging": "https://api.staging.globalnaturewatch.org",
@@ -177,7 +188,11 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
     return sorted(cases, key=lambda c: c.id)
 
 
-async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
+async def run_cases(
+    args: argparse.Namespace,
+    cases: list[Case],
+    entry_sink=None,
+) -> list[dict]:
     # Deferred import: langchain/httpx stay out of store-only invocations.
     from goldset.runner.api import APITestRunner
     from goldset.runner.artifacts import ArtifactWriter
@@ -194,39 +209,64 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     # hard cap concurrency against the live API (20 ran fine on gnw-evals)
     semaphore = asyncio.Semaphore(max(1, min(args.workers, 20)))
 
+    run_started = datetime.now()
+
+    def _resolve_case(case: Case) -> Case:
+        """Expand template variables in queries, preserving the original uid."""
+        if case.is_multiturn:
+            resolved_turns = tuple(
+                {**turn, "query": resolve_templates(turn["query"], now=run_started)}
+                for turn in case.turns
+            )
+            return Case(
+                id=case.id, status=case.status, group=case.group,
+                expected=case.expected, notes=case.notes, turns=resolved_turns,
+            )
+        return Case(
+            id=case.id, status=case.status, group=case.group,
+            query=resolve_templates(case.query, now=run_started),
+            expected=case.expected, notes=case.notes,
+        )
+
     async def run_one(case: Case) -> dict:
         async with semaphore:
+            original_uid = case.uid
+            resolved = _resolve_case(case)
             trials = []
             for trial in range(1, args.trials + 1):
-                if case.is_multiturn:
-                    trials.append(
-                        await run_conversation(
-                            runner,
-                            case,
-                            result_to_entry,
-                            artifact_sink_factory=lambda n, c=case, t=trial: (
-                                lambda a: writer(f"{c.uid}_turn{n}", t, a)
-                            ),
-                        )
+                if resolved.is_multiturn:
+                    entry = await run_conversation(
+                        runner,
+                        resolved,
+                        result_to_entry,
+                        artifact_sink_factory=lambda n, c=case, t=trial: (
+                            lambda a: writer(f"{c.uid}_turn{n}", t, a)
+                        ),
                     )
+                    entry["uid"] = original_uid
+                    trials.append(entry)
                 else:
                     result = await runner.run_test(
-                        case.query,
+                        resolved.query,
                         case_to_expected(case),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
-                    trials.append(result_to_entry(result, case.uid))
+                    trials.append(result_to_entry(result, original_uid))
             entry = merge_trials(trials)
             # G3: slow rows get an info flag — reported, never scored.
             info = latency_info(entry.get("latency_s"), args.slow_threshold)
             if info:
                 entry["info"] = info
+            if entry_sink is not None:
+                entry_sink(entry)
             clean = (
                 all(v != 0.0 for v in entry["checks"].values())
                 and not entry.get("error")
                 and not entry.get("judge_errors")
             )
-            print(f"  {case.id} [{'ok' if clean else 'FAIL'}]")
+            # flush: through a pipe, block buffering can hold every progress
+            # line until exit — exactly when a killed run needs them visible.
+            print(f"  {case.id} [{'ok' if clean else 'FAIL'}]", flush=True)
             return entry
 
     return list(await asyncio.gather(*(run_one(case) for case in cases)))
@@ -259,6 +299,88 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
     if args.note:
         return {**record, "methodology_note": args.note}
     return record
+
+
+def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
+              started: str, environment: str, partial: Path,
+              resumed: bool) -> int:
+    """Write the immutable run record and retire the in-flight partial."""
+    entries = sorted(entries, key=lambda e: e["id"])
+    run_record = build_run_record(args, manifest, entries, started, environment)
+    if resumed:
+        run_record["resumed"] = True
+    path = write_run(args.results_dir, run_record)
+    partial.unlink()
+    failed = sum(
+        1 for e in entries
+        if any(v == 0.0 for v in e["checks"].values()) or e.get("error")
+    )
+    judge_failures = sum(1 for e in entries if e.get("judge_errors"))
+    line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
+    if judge_failures:
+        line += f", {judge_failures} with JUDGE ERRORS (rerun before trusting)"
+    print(line)
+    return 0
+
+
+def resume_run(args: argparse.Namespace) -> int:
+    """Finish a killed run from its in-flight partial file.
+
+    All run configuration comes from the partial's header — flags on the
+    resume invocation are ignored except ``--results-dir``, which locates
+    the partial. The final record is indistinguishable from an unbroken run
+    bar a ``resumed: true`` marker (its timing mixes two sessions).
+    """
+    partial = partial_path(args.results_dir, args.resume)
+    final = args.results_dir / RUNS_DIRNAME / f"{args.resume}.json"
+    if not partial.exists():
+        state = "is already finalised" if final.exists() else "has no partial file"
+        print(f"run {args.resume} {state}; nothing to resume")
+        return 1
+    header, done = read_partial(partial)
+    if final.exists():
+        # killed between write_run and unlink: the run is complete
+        print(f"{final} already exists — removing the stale partial")
+        partial.unlink()
+        return 0
+
+    args.cases_dir = Path(header["cases_dir"])
+    manifest = read_manifest(args.cases_dir)
+    if manifest is None:
+        print(f"no manifest under {args.cases_dir}")
+        return 1
+    if manifest["caseset_version"] != header["caseset_version"]:
+        print(
+            "caseset_version has changed since the run started "
+            f"({header['caseset_version']} -> {manifest['caseset_version']}); "
+            "a run must score one case set — start a fresh run instead"
+        )
+        return 1
+    for field in ("ff", "build", "trials", "workers", "trial_timeout",
+                  "slow_threshold", "status_exclude", "id", "group", "note"):
+        setattr(args, field, header[field])
+    args.run_id = header["run_id"]
+    args.resolved_url = header["resolved_url"]
+
+    load_dotenv()
+    if not os.environ.get("API_TOKEN"):
+        print("API_TOKEN is not set (environment-specific machine token)")
+        return 1
+
+    done_uids = {entry["uid"] for entry in done}
+    remaining = [c for c in select_cases(args) if c.uid not in done_uids]
+    print(f"resume {args.run_id}: {len(done)} case(s) already scored, "
+          f"{len(remaining)} remaining against {args.resolved_url}", flush=True)
+    new_entries = (
+        asyncio.run(run_cases(
+            args, remaining,
+            entry_sink=lambda e: append_partial_entry(partial, e),
+        ))
+        if remaining
+        else []
+    )
+    return _finalise(args, manifest, done + new_entries, header["started"],
+                     header["environment"], partial, resumed=True)
 
 
 def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
@@ -317,6 +439,10 @@ def main() -> int:
                           "check-semantics change, so diffs aren't read as agent movement)")
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
+    run.add_argument("--resume", default=None, metavar="RUN_ID",
+                     help="finish a killed run from its .partial.jsonl; all "
+                          "other flags are ignored (the run's config comes "
+                          "from the partial's header)")
     run.add_argument("--verbose", action="store_true")
 
     prune = sub.add_parser(
@@ -329,6 +455,9 @@ def main() -> int:
 
     if args.command == "prune-artifacts":
         return prune_artifacts(args.results_dir, args.keep_runs)
+
+    if args.resume:
+        return resume_run(args)
 
     manifest = read_manifest(args.cases_dir)
     if manifest is None:
@@ -366,22 +495,34 @@ def main() -> int:
     started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
 
-    print(f"run {args.run_id}: {len(cases)} cases x {args.trials} trial(s) "
-          f"against {args.resolved_url}")
-    entries = asyncio.run(run_cases(args, cases))
+    partial = write_partial_header(args.results_dir, {
+        "run_id": args.run_id,
+        "started": started,
+        "environment": environment,
+        "resolved_url": args.resolved_url,
+        "ff": args.ff,
+        "build": args.build,
+        "trials": args.trials,
+        "workers": args.workers,
+        "trial_timeout": args.trial_timeout,
+        "slow_threshold": args.slow_threshold,
+        "cases_dir": str(args.cases_dir),
+        "caseset_version": manifest["caseset_version"],
+        "status_exclude": args.status_exclude,
+        "id": args.id,
+        "group": args.group,
+        "note": args.note,
+    })
 
-    run_record = build_run_record(args, manifest, entries, started, environment)
-    path = write_run(args.results_dir, run_record)
-    failed = sum(
-        1 for e in entries
-        if any(v == 0.0 for v in e["checks"].values()) or e.get("error")
-    )
-    judge_failures = sum(1 for e in entries if e.get("judge_errors"))
-    line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
-    if judge_failures:
-        line += f", {judge_failures} with JUDGE ERRORS (rerun before trusting)"
-    print(line)
-    return 0
+    print(f"run {args.run_id}: {len(cases)} cases x {args.trials} trial(s) "
+          f"against {args.resolved_url}", flush=True)
+    print(f"  in-flight ledger: {partial} "
+          f"(if killed: gold run --resume {args.run_id})", flush=True)
+    entries = asyncio.run(run_cases(
+        args, cases, entry_sink=lambda e: append_partial_entry(partial, e),
+    ))
+    return _finalise(args, manifest, entries, started, environment, partial,
+                     resumed=False)
 
 
 if __name__ == "__main__":

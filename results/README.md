@@ -73,6 +73,13 @@ results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | ch
   run file with different content; byte-identical re-ingest (idempotence) is
   allowed. Re-ingesting after a tooling fix means deleting the file first,
   visibly, in a reviewable commit.
+- **In-flight state is a sidecar, never the run file.** While a run
+  executes, completed entries stream to `results/runs/<run_id>.partial.jsonl`
+  (gitignored, fsynced per case). The immutable run JSON is still written
+  once, at the end, and the partial deleted. A killed run is finished with
+  `gold run --resume <run_id>`; a record completed that way carries
+  `resumed: true` (its timing mixes two sessions — everything else is
+  identical to an unbroken run).
 - **Checks are tri-state.** `1.0` pass, `0.0` fail, `null` not evaluated.
   Every run report must state evaluated-vs-implied check counts (the
   reconciliation line) — see PR-05.
