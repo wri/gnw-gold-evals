@@ -123,6 +123,7 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
 
 
 def main() -> int:
+    sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run_a", type=Path, help="older run JSON")
     parser.add_argument("run_b", type=Path, help="newer run JSON")
