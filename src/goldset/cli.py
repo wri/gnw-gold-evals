@@ -45,6 +45,18 @@ ENV_URLS = {
 JUDGE_MODEL = "claude-haiku-4-5"
 NON_CHECK_SCORES = {"overall_score"}
 REASON_TRIM = 500
+ENV_TOKEN_VARS = {"staging": "STAGING_API_TOKEN", "prod": "PROD_API_TOKEN"}
+
+
+def require_api_token(environment: str) -> str | None:
+    """Prefer the env-specific token (STAGING_API_TOKEN, PROD_API_TOKEN),
+    fall back to API_TOKEN; print what was missing when neither is set."""
+    env_var = ENV_TOKEN_VARS.get(environment)
+    token = (env_var and os.environ.get(env_var)) or os.environ.get("API_TOKEN")
+    if not token:
+        candidates = f"{env_var} or API_TOKEN" if env_var else "API_TOKEN"
+        print(f"{candidates} is not set (environment-specific machine token)")
+    return token
 
 
 # Which actual_* diagnostics substantiate each check — recorded on the
@@ -198,7 +210,7 @@ async def run_cases(
 
     runner = APITestRunner(
         api_base_url=args.resolved_url,
-        api_token=os.environ.get("API_TOKEN"),
+        api_token=args.api_token,
         ff=args.ff,
         verbose=args.verbose,
         wall_clock_limit=args.trial_timeout,
@@ -361,8 +373,10 @@ def resume_run(args: argparse.Namespace) -> int:
     args.resolved_url = header["resolved_url"]
 
     load_dotenv()
-    if not os.environ.get("API_TOKEN"):
-        print("API_TOKEN is not set (environment-specific machine token)")
+    # The header pins the environment the run started against, so resume
+    # resolves the same env-specific token main() would have.
+    args.api_token = require_api_token(header["environment"])
+    if not args.api_token:
         return 1
 
     done_uids = {entry["uid"] for entry in done}
@@ -474,9 +488,6 @@ def main() -> int:
     # token check, and never used for anything but secrets — CLI defaults
     # still cannot be overridden by the environment.
     load_dotenv()
-    if not os.environ.get("API_TOKEN"):
-        print("API_TOKEN is not set (environment-specific machine token)")
-        return 1
 
     args.resolved_url = args.api_base_url or ENV_URLS[args.env]
     if not args.api_base_url:
@@ -487,6 +498,10 @@ def main() -> int:
         environment = "local"
     else:
         environment = "prod"
+
+    args.api_token = require_api_token(environment)
+    if not args.api_token:
+        return 1
     started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
 
