@@ -359,6 +359,8 @@ def resume_run(args: argparse.Namespace) -> int:
     for field in ("ff", "build", "trials", "workers", "trial_timeout",
                   "slow_threshold", "status_exclude", "id", "group", "note"):
         setattr(args, field, header[field])
+    # Partials written before the --set selector existed have no "set" key.
+    args.set = header.get("set")
     args.run_id = header["run_id"]
     args.resolved_url = header["resolved_url"]
 
@@ -511,6 +513,7 @@ def main() -> int:
         "status_exclude": args.status_exclude,
         "id": args.id,
         "group": args.group,
+        "set": args.set,
         "note": args.note,
     })
 

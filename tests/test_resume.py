@@ -40,6 +40,7 @@ def make_header(**overrides) -> dict:
         "status_exclude": "not doing",
         "id": None,
         "group": None,
+        "set": None,
         "note": None,
     }
     return {**header, **overrides}
