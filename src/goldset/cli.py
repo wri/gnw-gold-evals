@@ -35,6 +35,7 @@ from goldset.ledger import (
     write_run,
 )
 from goldset.store import Case, load_store, read_manifest
+from goldset.templates import resolve_templates
 
 ENV_URLS = {
     "staging": "https://api.staging.globalnaturewatch.org",
@@ -206,28 +207,49 @@ async def run_cases(
     # hard cap concurrency against the live API (20 ran fine on gnw-evals)
     semaphore = asyncio.Semaphore(max(1, min(args.workers, 20)))
 
+    run_started = datetime.now()
+
+    def _resolve_case(case: Case) -> Case:
+        """Expand template variables in queries, preserving the original uid."""
+        if case.is_multiturn:
+            resolved_turns = tuple(
+                {**turn, "query": resolve_templates(turn["query"], now=run_started)}
+                for turn in case.turns
+            )
+            return Case(
+                id=case.id, status=case.status, group=case.group,
+                expected=case.expected, notes=case.notes, turns=resolved_turns,
+            )
+        return Case(
+            id=case.id, status=case.status, group=case.group,
+            query=resolve_templates(case.query, now=run_started),
+            expected=case.expected, notes=case.notes,
+        )
+
     async def run_one(case: Case) -> dict:
         async with semaphore:
+            original_uid = case.uid
+            resolved = _resolve_case(case)
             trials = []
             for trial in range(1, args.trials + 1):
-                if case.is_multiturn:
-                    trials.append(
-                        await run_conversation(
-                            runner,
-                            case,
-                            result_to_entry,
-                            artifact_sink_factory=lambda n, c=case, t=trial: (
-                                lambda a: writer(f"{c.uid}_turn{n}", t, a)
-                            ),
-                        )
+                if resolved.is_multiturn:
+                    entry = await run_conversation(
+                        runner,
+                        resolved,
+                        result_to_entry,
+                        artifact_sink_factory=lambda n, c=case, t=trial: (
+                            lambda a: writer(f"{c.uid}_turn{n}", t, a)
+                        ),
                     )
+                    entry["uid"] = original_uid
+                    trials.append(entry)
                 else:
                     result = await runner.run_test(
-                        case.query,
+                        resolved.query,
                         case_to_expected(case),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
-                    trials.append(result_to_entry(result, case.uid))
+                    trials.append(result_to_entry(result, original_uid))
             entry = merge_trials(trials)
             # G3: slow rows get an info flag — reported, never scored.
             info = latency_info(entry.get("latency_s"), args.slow_threshold)

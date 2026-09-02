@@ -1,5 +1,5 @@
 id: 1-083
-uid: 314c62fe24b0f6cd
+uid: 9198d265bbfde9e0
 status: done
 group: dataset-suggestion
 query: Brazil deforestation linked to agricultural commodities in 2017
@@ -9,7 +9,7 @@ expected:
   text: Provides good reason for each dataset suggestion that relate to the user query
   scope: suggest
   nudge_type: dataset_choice
-  nudge_options: Tree cover loss by dominant driver;sLUC;DIST-ALERT
+  nudge_options: Tree cover loss by dominant driver;sLUC
 notes:
   aoi_type: gadm 0
   surface_move: 'W2 2026-08-03: expectations moved off suggested_datasets (populated in 0
