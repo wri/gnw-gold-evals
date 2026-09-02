@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 14 · ready 13 · todo 9 · **110 active** (everything but `not doing` runs by default)
+`caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 20 · ready 10 · todo 6 · **104 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-02_
 
@@ -18,8 +18,8 @@ _Last updated: 2026-09-02_
 | context-layer | 2 | 1 | done 1, not doing 1 |
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
-| dataset-suggestion | 8 | 7 | done 6, not doing 1, todo 1 |
-| direct | 26 | 23 | done 20, not doing 3, ready 1, todo 2 |
+| dataset-suggestion | 8 | 6 | done 6, not doing 2 |
+| direct | 26 | 21 | done 20, not doing 5, todo 1 |
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
@@ -27,8 +27,8 @@ _Last updated: 2026-09-02_
 | nudge | 2 | 2 | ready 2 |
 | parent-child | 14 | 12 | done 10, not doing 2, ready 1, todo 1 |
 | ranking | 1 | 1 | done 1 |
-| refusal | 3 | 3 | done 1, ready 1, todo 1 |
-| temporal | 15 | 15 | done 14, ready 1 |
+| refusal | 3 | 1 | done 1, not doing 2 |
+| temporal | 15 | 14 | done 14, not doing 1 |
 
 ## Bucket coverage (active cases)
 
@@ -39,26 +39,26 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 102 | 0 | 102 | 93% |
-| analysis | 0 | 70 | 70 | 64% |
-| explanation | 31 | 59 | 90 | 82% |
-| output | 75 | 3 | 78 | 71% |
-| scope | 95 | 7 | 102 | 93% |
+| retrieval | 98 | 0 | 98 | 94% |
+| analysis | 0 | 70 | 70 | 67% |
+| explanation | 25 | 59 | 84 | 81% |
+| output | 75 | 3 | 78 | 75% |
+| scope | 89 | 7 | 96 | 92% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| scope | 94 | scope_match |
-| dataset_id | 91 | dataset_id_match |
-| aoi_source | 86 | reference only (dashboard AOI source) |
-| dataset_name | 84 | reference only |
-| aoi_ids | 74 | aoi_id_match |
+| dataset_id | 88 | dataset_id_match |
+| scope | 88 | scope_match |
+| aoi_source | 82 | reference only (dashboard AOI source) |
+| dataset_name | 81 | reference only |
 | answer | 70 | agent_answer, charts_answer, chart_produced |
-| text | 31 | expected_text_match |
+| aoi_ids | 70 | aoi_id_match |
+| text | 25 | expected_text_match |
 | context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
-| class_values | 7 | class_value_match (info-only) |
+| class_values | 6 | class_value_match (info-only) |
 | nudge_options | 6 | nudge_match |
 | dashboard_widgets | 5 | dashboard_widgets_match, dashboard_widgets_valid |
 | end_date | 5 | date_extraction (with start_date) |
@@ -93,7 +93,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
 | 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
 | 11 | Integrated alerts | 5 | 4 | — | — |
-| 12 | Land GHG Monitoring System (LGMS) | 3 | 3 | — | — |
+| 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
 
@@ -113,6 +113,12 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-085 | not doing | dataset-suggestion | parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for sugge... |
 | 1-088 | not doing | context-layer | parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT with natural_... |
 | 1-108 | not doing | direct | PARKED 2026-08-04 on creation, after verification (run 20260803T220705Z). It was authored to repay the leve... |
+| 1-112 | not doing | direct | 2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless... |
+| 1-113 | not doing | temporal | 2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless... |
+| 1-114 | not doing | refusal | 2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless... |
+| 1-115 | not doing | direct | 2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless... |
+| 1-116 | not doing | refusal | 2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless... |
+| 1-117 | not doing | dataset-suggestion | 2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless... |
 | 1-118 | not doing | imagery | — |
 | 1-119 | not doing | imagery | — |
 | 1-120 | not doing | imagery | — |
@@ -122,9 +128,6 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
 | 1-053 | todo | comparative | — |
 | 1-062 | todo | comparative | Triage W4 2026-08-01: dataset_id accepts alternatives (8;10 both defensible); the disputed answer and the u... |
-| 1-115 | todo | direct | todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent instead raised a d... |
-| 1-116 | todo | refusal | todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent did the opposite o... |
-| 1-117 | todo | dataset-suggestion | todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent answered with a ge... |
 | mt-007 | todo | multiturn | todo pending the 3-trial validation the probation note requires: no per-case info-only mechanism exists, so... |
 
 ## Known gaps
@@ -134,6 +137,6 @@ answer-graded cases (`answer` or `text` expected) actually check.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
-- Catalog datasets with no active case: 0.
+- Catalog datasets with no active case: 0, 12.
 - Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: driver (0), natural_lands (0), grasslands (0), land_cover (0), primary_forest (7, 10), intact_forest (10).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.
