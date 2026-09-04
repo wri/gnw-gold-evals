@@ -68,7 +68,10 @@ Run all four, in order:
    a next-run watchlist. `results/gold/recommendations/20260801T093002Z.md` is the
    model.
 4. **Commit** — but **stop and show the user what will be committed first**
-   (run JSON + reports + recommendations in one commit). Never hand-edit a
+   (run JSON + reports + recommendations in one commit). After `git add`-ing
+   the run JSON, regenerate the run index (`uv run python
+   tools/build_run_index.py`) and include `results/index.json` in the same
+   commit — CI gates its freshness. Never hand-edit a
    run file; a re-ingest after a tooling fix means visibly deleting the file
    in a reviewable commit.
 

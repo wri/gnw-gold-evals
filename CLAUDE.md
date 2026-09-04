@@ -179,7 +179,10 @@ concurrency that produced it. Raising workers is the main suspect to watch.
    the model.
 4. **Commit** the ledger JSON, the report, and the recommendation doc
    together; use `--note` on the run whenever check semantics changed
-   since the previous one.
+   since the previous one. After `git add`-ing the run JSON, regenerate
+   the run index (`uv run python tools/build_run_index.py` — it
+   enumerates tracked+staged files, so add the run first) and commit
+   `results/index.json` in the same commit; CI gates its freshness.
 
 ## The identity system (load-bearing — do not break)
 

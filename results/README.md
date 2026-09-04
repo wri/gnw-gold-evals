@@ -89,6 +89,18 @@ results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | ch
 - **No fabricated or backfilled runs.** A ledger entry is written by the
   ingester from real harness output, never by hand.
 
+## Derived index
+
+`results/index.json` is a generated projection of the **committed** runs
+(both sets): per run, the header fields plus the `buckets` block verbatim —
+no computed rates, no per-case rows. It exists so web consumers (the evals
+dashboard) can enumerate runs and draw trends from one fetch, since
+raw.githubusercontent.com cannot list directories. Regenerate with
+`uv run python tools/build_run_index.py` after `git add`-ing a new run
+(enumeration is `git ls-files`, so untracked local runs never leak in), and
+commit it with the run; CI gates freshness via `--check`. Like every other
+derived artefact here, it is never hand-edited.
+
 ## Composing a current picture across runs
 
 A scoped re-run is often all that's needed — when only a handful of rows changed,
