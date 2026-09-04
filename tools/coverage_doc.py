@@ -403,8 +403,11 @@ def collect(cases_dir: Path, catalog_path: Path | None = None) -> dict:
 
 def collect_cases_index(cases_dir: Path) -> dict:
     """cases_index.json content: the FE's uid join table — id, uid, set,
-    group, status, difficulty/behaviour notes, query text, expected fields.
-    Queries are already public in the case YAMLs, so nothing new leaks."""
+    group, status, difficulty/behaviour notes, query text, expected fields,
+    and the case's implied gating checks (base names, info-only stripped,
+    same recipe as bucket_case_coverage) so consumers can compute bucket
+    coverage exactly as the harness reconciles it. Queries are already
+    public in the case YAMLs, so nothing new leaks."""
     manifest = read_manifest(cases_dir)
     if manifest is None:
         raise SystemExit(f"no manifest under {cases_dir} — import cases first")
@@ -424,6 +427,10 @@ def collect_cases_index(cases_dir: Path) -> dict:
         else:
             row["query"] = case.query
         row["expected_fields"] = sorted(case_expected_fields(case))
+        implied = {
+            base_check_name(c) for c in implied_checks_for_case(case)
+        } - INFO_ONLY
+        row["implied_checks"] = sorted(implied)
         rows.append(row)
     return {
         "schema_version": 1,

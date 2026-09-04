@@ -19,6 +19,16 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
       ]
     },
     {
@@ -36,6 +46,16 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
       ]
     },
     {
@@ -50,6 +70,11 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
       ]
     },
     {
@@ -67,6 +92,16 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
       ]
     },
     {
@@ -82,6 +117,12 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "context_layer_match",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -98,6 +139,16 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -114,6 +165,12 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
       ]
     },
     {
@@ -131,6 +188,16 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
       ]
     },
     {
@@ -146,6 +213,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -161,6 +237,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -175,6 +259,11 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -190,6 +279,15 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -205,6 +303,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -220,6 +327,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -236,6 +352,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -251,6 +376,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -265,6 +399,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -279,6 +421,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -293,6 +443,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -307,6 +465,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -322,6 +488,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -337,6 +512,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -352,6 +536,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -367,6 +560,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -382,6 +584,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -396,6 +607,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -411,6 +630,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -425,6 +652,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -441,6 +676,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -457,6 +701,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -474,6 +727,16 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -488,6 +751,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -502,6 +773,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -517,6 +796,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -532,6 +820,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -547,6 +844,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -562,6 +868,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -577,6 +892,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -592,6 +916,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -605,6 +938,10 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -619,6 +956,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -632,6 +977,10 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -647,6 +996,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -662,6 +1020,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -677,6 +1044,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -692,6 +1068,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -707,6 +1092,15 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -721,6 +1115,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -735,6 +1137,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -750,6 +1160,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -765,6 +1184,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -780,6 +1208,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -796,6 +1233,16 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -812,6 +1259,16 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -827,6 +1284,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -842,6 +1308,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -857,6 +1332,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -872,6 +1356,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -887,6 +1380,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -902,6 +1404,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -917,6 +1428,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -929,6 +1449,10 @@
         "aoi_source",
         "dataset_id",
         "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -944,6 +1468,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -959,6 +1492,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -969,6 +1511,9 @@
       "query": "What's the resolution of the tree cover loss data?",
       "expected_fields": [
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
       ]
     },
     {
@@ -979,6 +1524,9 @@
       "query": "What's the geographic coverage of the tree cover loss data?",
       "expected_fields": [
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
       ]
     },
     {
@@ -989,6 +1537,9 @@
       "query": "Tell me about the methodology used to produce the Tree cover loss by dominant driver dataset - how should I use this data? Are they any details I should be aware of?",
       "expected_fields": [
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
       ]
     },
     {
@@ -999,6 +1550,9 @@
       "query": "How can I cite the Tree cover loss dataset in my research?",
       "expected_fields": [
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
       ]
     },
     {
@@ -1014,6 +1568,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1028,6 +1591,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1041,6 +1613,11 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1053,6 +1630,10 @@
         "dataset_id",
         "dataset_name",
         "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1067,6 +1648,12 @@
         "dataset_id",
         "dataset_name",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "context_layer_match",
+        "dataset_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1081,6 +1668,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1097,6 +1693,16 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1112,6 +1718,16 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1127,6 +1743,16 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1140,6 +1766,14 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1154,6 +1788,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1168,6 +1811,12 @@
         "dataset_id",
         "dataset_name",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "context_layer_match",
+        "dataset_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1184,6 +1833,13 @@
         "nudge_type",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "clarification_requested",
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
       ]
     },
     {
@@ -1199,6 +1855,12 @@
         "nudge_type",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
       ]
     },
     {
@@ -1215,6 +1877,13 @@
         "nudge_type",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "clarification_requested",
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
       ]
     },
     {
@@ -1230,6 +1899,13 @@
         "scope",
         "suggested_datasets",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "clarification_requested",
+        "expected_text_match",
+        "scope_match",
+        "suggested_datasets_match"
       ]
     },
     {
@@ -1244,6 +1920,11 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1260,6 +1941,16 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1278,6 +1969,17 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
       ]
     },
     {
@@ -1291,6 +1993,11 @@
         "aoi_source",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1307,6 +2014,16 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1323,6 +2040,16 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1339,6 +2066,16 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1356,6 +2093,17 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1372,6 +2120,16 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1388,6 +2146,16 @@
         "dataset_name",
         "dataset_parameters",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "dataset_parameter_match",
+        "scope_match"
       ]
     },
     {
@@ -1399,6 +2167,10 @@
       "expected_fields": [
         "aoi_ids",
         "aoi_source",
+        "dashboard_created"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
         "dashboard_created"
       ]
     },
@@ -1415,6 +2187,14 @@
         "dashboard_widgets",
         "dataset_id",
         "dataset_name"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "data_pull_exists",
+        "dataset_id_match"
       ]
     },
     {
@@ -1430,6 +2210,12 @@
         "dashboard_widgets",
         "dataset_id",
         "dataset_name"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "dataset_id_match"
       ]
     },
     {
@@ -1443,6 +2229,11 @@
         "aoi_source",
         "dashboard_created",
         "dashboard_widgets"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match"
       ]
     },
     {
@@ -1458,6 +2249,14 @@
         "dashboard_widgets",
         "dataset_id",
         "dataset_name"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "data_pull_exists",
+        "dataset_id_match"
       ]
     },
     {
@@ -1473,6 +2272,14 @@
         "dashboard_widgets",
         "dataset_id",
         "dataset_name"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "data_pull_exists",
+        "dataset_id_match"
       ]
     },
     {
@@ -1486,6 +2293,10 @@
         "dashboard_created",
         "dataset_id",
         "dataset_name"
+      ],
+      "implied_checks": [
+        "dashboard_created",
+        "dataset_id_match"
       ]
     },
     {
@@ -1501,6 +2312,15 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1513,6 +2333,10 @@
         "aoi_ids",
         "aoi_source",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1526,6 +2350,11 @@
         "nudge_options",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
       ]
     },
     {
@@ -1538,6 +2367,11 @@
         "nudge_options",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
       ]
     },
     {
@@ -1552,6 +2386,11 @@
         "dataset_id",
         "dataset_name",
         "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
       ]
     },
     {
@@ -1567,6 +2406,12 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1583,6 +2428,12 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1596,6 +2447,11 @@
         "aoi_source",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1611,6 +2467,12 @@
         "dataset_name",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1622,6 +2484,10 @@
       "expected_fields": [
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1633,6 +2499,10 @@
       "expected_fields": [
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
       ]
     },
     {
@@ -1646,6 +2516,10 @@
         "dataset_id",
         "dataset_name",
         "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1659,6 +2533,10 @@
         "dataset_id",
         "dataset_name",
         "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1672,6 +2550,10 @@
         "dataset_id",
         "dataset_name",
         "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1684,6 +2566,10 @@
         "aoi_source",
         "dataset_id",
         "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
       ]
     },
     {
@@ -1698,6 +2584,11 @@
       "expected_fields": [
         "clarification",
         "scope"
+      ],
+      "implied_checks": [
+        "clarification_requested",
+        "scope_match",
+        "state_delta"
       ]
     },
     {
@@ -1712,6 +2603,10 @@
       "expected_fields": [
         "aoi_source",
         "nudge_options"
+      ],
+      "implied_checks": [
+        "nudge_match",
+        "state_delta"
       ]
     },
     {
@@ -1727,6 +2622,11 @@
         "end_date",
         "scope",
         "start_date"
+      ],
+      "implied_checks": [
+        "date_extraction",
+        "scope_match",
+        "state_delta"
       ]
     },
     {
@@ -1741,6 +2641,11 @@
       "expected_fields": [
         "dataset_id",
         "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
       ]
     },
     {
@@ -1756,6 +2661,12 @@
         "aoi_ids",
         "dataset_id",
         "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
       ]
     },
     {
@@ -1771,6 +2682,12 @@
         "context_layer",
         "dataset_id",
         "scope"
+      ],
+      "implied_checks": [
+        "context_layer_match",
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
       ]
     },
     {
@@ -1788,6 +2705,17 @@
         "dataset_id",
         "scope",
         "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match",
+        "state_delta"
       ]
     },
     {
@@ -1803,6 +2731,12 @@
         "dashboard_created",
         "dataset_id",
         "scope"
+      ],
+      "implied_checks": [
+        "dashboard_created",
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
       ]
     }
   ]

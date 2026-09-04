@@ -178,10 +178,19 @@ def test_cases_index_rows(tmp_path):
     one = rows["1-001"]
     assert one["query"] == "How much loss in X in 2022?"
     assert one["expected_fields"] == ["answer", "aoi_ids", "dataset_id", "scope"]
+    # implied gating checks: base names, info-only stripped, harness recipe
+    assert one["implied_checks"] == [
+        "agent_answer", "answered_without_data", "aoi_id_match",
+        "chart_produced", "data_pull_exists", "dataset_id_match",
+        "scope_match",
+    ]
     mt = rows["mt-001"]
     assert mt["turns"] == ["alerts in Puri", "Odisha one"]
     assert "query" not in mt
     assert mt["expected_fields"] == ["clarification", "scope"]
+    assert mt["implied_checks"] == [
+        "clarification_requested", "scope_match", "state_delta",
+    ]
     assert rows["1-002"]["status"] == "not doing"
     # uids agree with the manifest, so run rows join by uid
     manifest = json.loads((cases_dir / "MANIFEST.json").read_text(encoding="utf-8"))
