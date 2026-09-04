@@ -1,0 +1,1144 @@
+{
+  "schema_version": 1,
+  "generated_by": "tools/build_run_index.py",
+  "sets": {
+    "gold": [
+      {
+        "run_id": "20260731T120022Z_staging_experimental",
+        "path": "results/gold/runs/20260731T120022Z_staging_experimental.json",
+        "started": "2026-07-31T12:00:22Z",
+        "environment": "staging",
+        "build": "GNW 2026.7.29.1",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-evals",
+          "sha": "unknown"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "caseset_version": "d564c1b3b4786bc0",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 257,
+              "evaluated": 270
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 89
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 102,
+              "evaluated": 122
+            },
+            "rows_covered": 63
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 22,
+              "evaluated": 24
+            },
+            "shared": {
+              "passed": 56,
+              "evaluated": 63
+            },
+            "rows_covered": 78
+          },
+          "output": {
+            "dedicated": {
+              "passed": 13,
+              "evaluated": 16
+            },
+            "shared": {
+              "passed": 53,
+              "evaluated": 66
+            },
+            "rows_covered": 66
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 5,
+              "evaluated": 7
+            },
+            "shared": {
+              "passed": 7,
+              "evaluated": 7
+            },
+            "rows_covered": 12
+          },
+          "rows_total": 95,
+          "verdicts": {
+            "pass": 69,
+            "fail": 26,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260801T062425Z_staging_experimental",
+        "path": "results/gold/runs/20260801T062425Z_staging_experimental.json",
+        "started": "2026-08-01T06:24:25Z",
+        "environment": "staging",
+        "build": "staging-20260801",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "a054668"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "caseset_version": "d564c1b3b4786bc0",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "rows_covered": 1
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "rows_covered": 1
+          },
+          "output": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "rows_covered": 1
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "rows_total": 1,
+          "verdicts": {
+            "pass": 0,
+            "fail": 1,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260801T062640Z_staging_experimental",
+        "path": "results/gold/runs/20260801T062640Z_staging_experimental.json",
+        "started": "2026-08-01T06:26:40Z",
+        "environment": "staging",
+        "build": "staging-20260801",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "a054668"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "caseset_version": "d564c1b3b4786bc0",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "rows_covered": 1
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "rows_covered": 1
+          },
+          "output": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "rows_covered": 1
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "rows_total": 1,
+          "verdicts": {
+            "pass": 1,
+            "fail": 0,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260801T062750Z_staging_experimental",
+        "path": "results/gold/runs/20260801T062750Z_staging_experimental.json",
+        "started": "2026-08-01T06:27:50Z",
+        "environment": "staging",
+        "build": "staging-20260801",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "a054668"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "caseset_version": "d564c1b3b4786bc0",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 396,
+              "evaluated": 430
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 98
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 76,
+              "evaluated": 82
+            },
+            "shared": {
+              "passed": 97,
+              "evaluated": 116
+            },
+            "rows_covered": 82
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 146,
+              "evaluated": 160
+            },
+            "shared": {
+              "passed": 52,
+              "evaluated": 63
+            },
+            "rows_covered": 94
+          },
+          "output": {
+            "dedicated": {
+              "passed": 147,
+              "evaluated": 159
+            },
+            "shared": {
+              "passed": 54,
+              "evaluated": 62
+            },
+            "rows_covered": 86
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 76,
+              "evaluated": 92
+            },
+            "shared": {
+              "passed": 9,
+              "evaluated": 9
+            },
+            "rows_covered": 87
+          },
+          "rows_total": 104,
+          "verdicts": {
+            "pass": 58,
+            "fail": 46,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260801T084050Z_staging_experimental",
+        "path": "results/gold/runs/20260801T084050Z_staging_experimental.json",
+        "started": "2026-08-01T08:40:50Z",
+        "environment": "staging",
+        "build": "staging-20260801",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-evals",
+          "sha": "5a377cd"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "caseset_version": "d564c1b3b4786bc0",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 247,
+              "evaluated": 270
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 90
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 99,
+              "evaluated": 119
+            },
+            "rows_covered": 63
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 22,
+              "evaluated": 24
+            },
+            "shared": {
+              "passed": 53,
+              "evaluated": 63
+            },
+            "rows_covered": 78
+          },
+          "output": {
+            "dedicated": {
+              "passed": 11,
+              "evaluated": 15
+            },
+            "shared": {
+              "passed": 53,
+              "evaluated": 63
+            },
+            "rows_covered": 63
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 7
+            },
+            "shared": {
+              "passed": 7,
+              "evaluated": 7
+            },
+            "rows_covered": 12
+          },
+          "rows_total": 96,
+          "verdicts": {
+            "pass": 64,
+            "fail": 32,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260801T093002Z_staging_experimental",
+        "path": "results/gold/runs/20260801T093002Z_staging_experimental.json",
+        "started": "2026-08-01T09:30:02Z",
+        "environment": "staging",
+        "build": "staging-20260801",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "d8f4681",
+          "note": "sha repointed post-rebase; original b2fc4df was an amended pre-rebase commit left unreachable by the rebase — d8f4681 is the equivalent reachable commit with identical harness sources (differs only by report-rendering files)"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "methodology_note": "First new-harness validation run: PR-04 guards, PR-05 bucket scoring, PR-06 validators, PR-07 multiturn seeds. Semantics differ from run-6-era: F1-F6 fixes active, guards + 6 new validators scored, dataset_id alternatives (H7). answer_traceability info-only this run (unit-rule tuning landed mid-campaign).",
+        "caseset_version": "d564c1b3b4786bc0",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 404,
+              "evaluated": 435
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 98
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 88,
+              "evaluated": 91
+            },
+            "shared": {
+              "passed": 107,
+              "evaluated": 121
+            },
+            "rows_covered": 86
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 158,
+              "evaluated": 171
+            },
+            "shared": {
+              "passed": 55,
+              "evaluated": 63
+            },
+            "rows_covered": 98
+          },
+          "output": {
+            "dedicated": {
+              "passed": 158,
+              "evaluated": 168
+            },
+            "shared": {
+              "passed": 61,
+              "evaluated": 67
+            },
+            "rows_covered": 90
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 77,
+              "evaluated": 92
+            },
+            "shared": {
+              "passed": 9,
+              "evaluated": 9
+            },
+            "rows_covered": 87
+          },
+          "rows_total": 104,
+          "verdicts": {
+            "pass": 72,
+            "fail": 32,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260804T104634Z_staging_experimental",
+        "path": "results/gold/runs/20260804T104634Z_staging_experimental.json",
+        "started": "2026-08-04T10:46:34Z",
+        "environment": "staging",
+        "build": "v2-baseline",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "0cb8c89"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "First official v2 baseline (caseset 2276185a231bfdad, 109 active cases). Check semantics include the 2026-08-03 HA/HB harness fixes; not comparable to v1-lineage runs.",
+        "caseset": "v2",
+        "caseset_version": "2276185a231bfdad",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 436,
+              "evaluated": 444
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 103
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 98,
+              "evaluated": 102
+            },
+            "shared": {
+              "passed": 99,
+              "evaluated": 106
+            },
+            "rows_covered": 92
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 174,
+              "evaluated": 189
+            },
+            "shared": {
+              "passed": 70,
+              "evaluated": 74
+            },
+            "rows_covered": 104
+          },
+          "output": {
+            "dedicated": {
+              "passed": 185,
+              "evaluated": 187
+            },
+            "shared": {
+              "passed": 38,
+              "evaluated": 41
+            },
+            "rows_covered": 96
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 104,
+              "evaluated": 106
+            },
+            "shared": {
+              "passed": 9,
+              "evaluated": 9
+            },
+            "rows_covered": 101
+          },
+          "rows_total": 109,
+          "verdicts": {
+            "pass": 99,
+            "fail": 10,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260807T125843Z_staging_experimental",
+        "path": "results/gold/runs/20260807T125843Z_staging_experimental.json",
+        "started": "2026-08-07T12:58:43Z",
+        "environment": "staging",
+        "build": "lgms-case-fill",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "38dc972"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "1-trial authoring fill run for new LGMS cases 1-112..1-117; smoke only, not a baseline",
+        "caseset": "v2",
+        "caseset_version": "6d215bade7b2fea8",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 9
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 4
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 2
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "output": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 2
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 5
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "rows_total": 6,
+          "verdicts": {
+            "pass": 3,
+            "fail": 3,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260831T155003Z_prod_experimental",
+        "path": "results/gold/runs/20260831T155003Z_prod_experimental.json",
+        "started": "2026-08-31T15:50:03Z",
+        "environment": "prod",
+        "build": "baseline",
+        "ff": "experimental",
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "e4b3175"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "caseset": "v2",
+        "caseset_version": "bf5a593d71d658ae",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 393,
+              "evaluated": 438
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 106
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 92,
+              "evaluated": 97
+            },
+            "shared": {
+              "passed": 86,
+              "evaluated": 100
+            },
+            "rows_covered": 92
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 168,
+              "evaluated": 189
+            },
+            "shared": {
+              "passed": 61,
+              "evaluated": 72
+            },
+            "rows_covered": 108
+          },
+          "output": {
+            "dedicated": {
+              "passed": 169,
+              "evaluated": 180
+            },
+            "shared": {
+              "passed": 34,
+              "evaluated": 37
+            },
+            "rows_covered": 96
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 94,
+              "evaluated": 111
+            },
+            "shared": {
+              "passed": 9,
+              "evaluated": 9
+            },
+            "rows_covered": 106
+          },
+          "rows_total": 115,
+          "verdicts": {
+            "pass": 87,
+            "fail": 27,
+            "error": 1,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260831T163347Z_prod",
+        "path": "results/gold/runs/20260831T163347Z_prod.json",
+        "started": "2026-08-31T16:33:47Z",
+        "environment": "prod",
+        "build": "baseline",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "28941a8"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "caseset": "v2",
+        "caseset_version": "bf5a593d71d658ae",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 407,
+              "evaluated": 438
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 103
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 95,
+              "evaluated": 99
+            },
+            "shared": {
+              "passed": 97,
+              "evaluated": 104
+            },
+            "rows_covered": 92
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 171,
+              "evaluated": 186
+            },
+            "shared": {
+              "passed": 67,
+              "evaluated": 74
+            },
+            "rows_covered": 103
+          },
+          "output": {
+            "dedicated": {
+              "passed": 178,
+              "evaluated": 185
+            },
+            "shared": {
+              "passed": 39,
+              "evaluated": 39
+            },
+            "rows_covered": 96
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 98,
+              "evaluated": 106
+            },
+            "shared": {
+              "passed": 9,
+              "evaluated": 9
+            },
+            "rows_covered": 101
+          },
+          "rows_total": 109,
+          "verdicts": {
+            "pass": 94,
+            "fail": 15,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      }
+    ],
+    "challenge": [
+      {
+        "run_id": "20260901T131519Z_prod",
+        "path": "results/challenge/runs/20260901T131519Z_prod.json",
+        "started": "2026-09-01T13:15:19Z",
+        "environment": "prod",
+        "build": "Test AOI",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "88b64b6"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "caseset": "challenge",
+        "caseset_version": "202cff8c19f9c579",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 66,
+              "evaluated": 88
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 88
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 17,
+              "evaluated": 31
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 31
+          },
+          "output": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 14,
+              "evaluated": 26
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 26
+          },
+          "rows_total": 126,
+          "verdicts": {
+            "pass": 86,
+            "fail": 40,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260901T181904Z_prod",
+        "path": "results/challenge/runs/20260901T181904Z_prod.json",
+        "started": "2026-09-01T18:19:04Z",
+        "environment": "prod",
+        "build": "challenge-numeric trend smoke",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "c91250a"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "caseset": "challenge",
+        "caseset_version": "e2340e5caf33e404",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 445,
+              "evaluated": 460
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 71
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 57,
+              "evaluated": 58
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 58
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 109,
+              "evaluated": 121
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 71
+          },
+          "output": {
+            "dedicated": {
+              "passed": 58,
+              "evaluated": 58
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 58
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 71,
+          "verdicts": {
+            "pass": 63,
+            "fail": 8,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260901T203951Z_prod",
+        "path": "results/challenge/runs/20260901T203951Z_prod.json",
+        "started": "2026-09-01T20:39:51Z",
+        "environment": "prod",
+        "build": "challenge-numeric quantification smoke",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "be04f20"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "caseset": "challenge",
+        "caseset_version": "e2340e5caf33e404",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 869,
+              "evaluated": 906
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 150
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 128,
+              "evaluated": 131
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 131
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 263,
+              "evaluated": 277
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 150
+          },
+          "output": {
+            "dedicated": {
+              "passed": 131,
+              "evaluated": 131
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 131
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 150,
+          "verdicts": {
+            "pass": 130,
+            "fail": 20,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260901T204946Z_prod",
+        "path": "results/challenge/runs/20260901T204946Z_prod.json",
+        "started": "2026-09-01T20:49:46Z",
+        "environment": "prod",
+        "build": "challenge-numeric comparison smoke",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "be04f20"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 1,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "caseset": "challenge",
+        "caseset_version": "e2340e5caf33e404",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 756,
+              "evaluated": 824
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 144
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 116,
+              "evaluated": 118
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 118
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 196,
+              "evaluated": 226
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 144
+          },
+          "output": {
+            "dedicated": {
+              "passed": 118,
+              "evaluated": 118
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 118
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 144,
+          "verdicts": {
+            "pass": 119,
+            "fail": 25,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      }
+    ]
+  }
+}

@@ -80,7 +80,10 @@ GOLD's trend pages, diffs, or CI baseline logic. The ledger contract
 3. **Commit** the run JSON, artifacts, and the recommendations doc
    together. Only canonical runs (prod, default, 3 trials) enter the
    published series; a diagnostic run's recommendations doc must say so in
-   its header and treat its rates as directional.
+   its header and treat its rates as directional. After `git add`-ing the
+   run JSON, regenerate `results/index.json`
+   (`uv run python tools/build_run_index.py`) and commit it in the same
+   commit; CI gates its freshness.
 
 ## Targets (the OKR loop)
 
