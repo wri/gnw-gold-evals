@@ -1,0 +1,20 @@
+id: ch-quant-055
+uid: 9dea31eeae90b0d6
+status: ready
+set: quantification
+group: ghg-flux
+query: so like whats the total net co2e coming out of (or into) peru's forests overall, since
+  forever basically
+expected:
+  aoi_ids: PER
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Whole-period net GHG flux total (2001-2025) in MgCO2e; not annual; net
+    source/sink per sign.
+  eval_subtype: net_flux
+  manifest_id: m-flux-quant-09
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

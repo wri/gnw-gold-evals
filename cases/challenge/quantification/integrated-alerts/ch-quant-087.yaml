@@ -1,0 +1,21 @@
+id: ch-quant-087
+uid: 03670966773c1631
+status: ready
+set: quantification
+group: integrated-alerts
+query: so like, roughly how much land in Indonesia got flagged with disturbance alerts between
+  April 1 and June 30, 2025? just need a hectares ballpark tbh
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  start_date: '2025-04-01'
+  end_date: '2025-06-30'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Relative 'last three months' resolved to 2025-04-01..2025-06-30; headline
+    is total alert area (area_ha). Recent alerts may include not-yet-confirmed false positives
+    (caveat context only).
+  eval_subtype: disturbed_area
+  manifest_id: m-ialert-quant-06
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

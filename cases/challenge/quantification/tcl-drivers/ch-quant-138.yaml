@@ -1,0 +1,19 @@
+id: ch-quant-138
+uid: 0558e6e578b9f583
+status: ready
+set: quantification
+group: tcl-drivers
+query: How much of Malaysia's tree cover loss since 2001 is attributable to hard commodities?
+expected:
+  aoi_ids: MYS
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Share/area of loss attributed to hard commodities over 2001-2025; exclude
+    Unknown; avoid 'deforestation' for raw loss.
+  eval_subtype: driver_share
+  manifest_id: m-driver-quant-11
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-quant-11a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

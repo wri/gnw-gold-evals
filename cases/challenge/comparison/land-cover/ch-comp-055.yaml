@@ -1,0 +1,21 @@
+id: ch-comp-055
+uid: 10e0ce11fc05bc4c
+status: ready
+set: comparison
+group: land-cover
+query: Between Brazil and the Democratic Republic of the Congo, whose land cover includes
+  a larger area of tree cover?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'tree cover (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the 2024 tree cover class area_ha between Brazil and the Democratic
+    Republic of the Congo; the comparative direction must be correct and cited figures must
+    match the composition data. This is the land-cover class, not the Tree Cover (2000) extent
+    dataset.
+  eval_subtype: two_country
+  manifest_id: m-lc-comp-01
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

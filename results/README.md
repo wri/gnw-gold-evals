@@ -1,14 +1,19 @@
 # Results ledger — contract
 
-Committed, per-run JSON files: the longitudinal record GOLD exists to keep.
-(The gnw-evals `outputs/` directory is gitignored scratch; this is the
+Committed, per-run JSON files: the longitudinal record this repo exists to
+keep. (The gnw-evals `outputs/` directory is gitignored scratch; this is the
 opposite — small, stable, committed.) The ingester that writes these lands
 in **PR-02**; this contract is fixed now so nothing has to be re-scored.
+
+The contract applies to both ledgers, which never mix: `results/gold/` (GOLD,
+regression counts) and `results/challenge/` (CHALLENGE, pass rates — see
+`cases/challenge/README.md`). Each holds its own `runs/`, `recommendations/`,
+and gitignored `artifacts/`; report pages and campaigns are GOLD-only today.
 
 ## File naming
 
 ```
-results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
+results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | challenge
 ```
 
 ## Shape
@@ -84,6 +89,18 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
 - **No fabricated or backfilled runs.** A ledger entry is written by the
   ingester from real harness output, never by hand.
 
+## Derived index
+
+`results/index.json` is a generated projection of the **committed** runs
+(both sets): per run, the header fields plus the `buckets` block verbatim —
+no computed rates, no per-case rows. It exists so web consumers (the evals
+dashboard) can enumerate runs and draw trends from one fetch, since
+raw.githubusercontent.com cannot list directories. Regenerate with
+`uv run python tools/build_run_index.py` after `git add`-ing a new run
+(enumeration is `git ls-files`, so untracked local runs never leak in), and
+commit it with the run; CI gates freshness via `--check`. Like every other
+derived artefact here, it is never hand-edited.
+
 ## Composing a current picture across runs
 
 A scoped re-run is often all that's needed — when only a handful of rows changed,
@@ -99,14 +116,14 @@ so the next person to diff the file is misled. That is precisely how the 2026-08
 Compose in the **analysis** instead:
 
 ```bash
-uv run python tools/compose_runs.py results/runs/<primary>.json \
-    results/runs/<supplementary>.json
+uv run python tools/compose_runs.py results/gold/runs/<primary>.json \
+    results/gold/runs/<supplementary>.json
 ```
 
 It resolves every active case to its freshest measurement **at the case's current
 uid** (supplements win over the primary, later supplements over earlier), prints
 per-row provenance, names any row nothing has measured, warns when the sources
-disagree on `ff`, and writes nothing to `results/runs/`. Both runs stay in the
+disagree on `ff`, and writes nothing to `results/gold/runs/`. Both runs stay in the
 ledger as honest, independently reproducible records; only the summary is joined.
 
 ## Ledger resets
@@ -117,5 +134,5 @@ ledger as honest, independently reproducible records; only the summary is joined
   official v2 run (staging, `ff=experimental`, 3 trials) starts the v2 record
   clean. The v1 sheet-lineage runs (2026-07-31 / 2026-08-01,
   `caseset_version d564c1b3b4786bc0`) were kept, as were
-  `results/recommendations/` and `results/campaigns/` — analysis history
+  `results/gold/recommendations/` and `results/gold/campaigns/` — analysis history
   survives its inputs. The removed files remain in git history.

@@ -1,9 +1,9 @@
 """Compose a current picture from a primary run plus scoped supplementary runs.
 
-    uv run python tools/compose_runs.py results/runs/PRIMARY.json \
-        results/runs/SUPP1.json [results/runs/SUPP2.json ...] [--json out.json]
+    uv run python tools/compose_runs.py results/gold/runs/PRIMARY.json \
+        results/gold/runs/SUPP1.json [results/gold/runs/SUPP2.json ...] [--json out.json]
 
-**This never writes to `results/runs/`.** The ledger contract
+**This never writes to `results/gold/runs/`.** The ledger contract
 (`results/README.md`) is explicit: *"Run files are immutable"* and *"No
 fabricated or backfilled runs — a ledger entry is written by the ingester from
 real harness output, never by hand."* Splicing later scores into an earlier run

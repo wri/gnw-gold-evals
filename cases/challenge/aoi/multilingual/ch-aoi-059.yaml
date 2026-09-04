@@ -1,0 +1,15 @@
+id: ch-aoi-059
+uid: 46cbe1086ab96427
+status: ready
+set: aoi
+group: multilingual
+query: Go to Bern, Schweiz
+expected:
+  aoi_ids: CHE.6
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: GEOCODER_PROMPT example; district CHE.6.3 same name also plausible
+  verify_query: Bern
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

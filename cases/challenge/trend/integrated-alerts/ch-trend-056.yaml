@@ -1,0 +1,21 @@
+id: ch-trend-056
+uid: 0511bbc80106f305
+status: ready
+set: trend
+group: integrated-alerts
+query: so like, for Brazil, can u break down month by month how the deforestation alerts area
+  moved from January 2025 to June 2025? just kinda curious about the pattern across those
+  months
+expected:
+  aoi_ids: BRA
+  dataset_id: '11'
+  start_date: '2025-01-01'
+  end_date: '2025-06-30'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Relative 'last six months' resolved to 2025-01-01..2025-06-30; month-by-month
+    alert area (area_ha); line chart.
+  eval_subtype: monthly_trend
+  manifest_id: m-ialert-trend-06
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

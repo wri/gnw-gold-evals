@@ -1,0 +1,22 @@
+id: ch-quant-045
+uid: 91814837658a209b
+status: ready
+set: quantification
+group: ghg-flux
+query: Over the whole 2001-2025 record, what is Brazil's forest net GHG flux total, expressed
+  in MgCO2e?
+expected:
+  aoi_ids: BRA
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Single net GHG flux total over the whole model period 2001-2025, in MgCO2e;
+    not annual and not a time series (do not divide by 25). Present as a split bar (emissions
+    positive y, removals negative y). State net source (net-positive) or net sink (net-negative)
+    per the sign.
+  eval_subtype: net_flux
+  manifest_id: m-flux-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

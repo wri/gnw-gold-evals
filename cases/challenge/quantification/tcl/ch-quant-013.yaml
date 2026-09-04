@@ -1,0 +1,22 @@
+id: ch-quant-013
+uid: 65b2fc1e66d2344a
+status: ready
+set: quantification
+group: tcl
+query: Across all forest types, how many hectares of tree cover did Indonesia lose in total
+  between 2015 and 2020?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked for all forest types, so no forest-type filter should
+    be applied.
+  eval_subtype: multi_year_total
+  manifest_id: m-tcl-quant-03
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-03b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

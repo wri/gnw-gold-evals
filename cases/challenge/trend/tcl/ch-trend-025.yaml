@@ -1,0 +1,20 @@
+id: ch-trend-025
+uid: 1740ad71cd323950
+status: ready
+set: trend
+group: tcl
+query: I'm digging into the DRC's forest data - counting all tree cover types, how does annual
+  tree cover loss in 2023 compare to what it was back in 2013?
+expected:
+  aoi_ids: COD
+  dataset_id: '4'
+  start_date: '2013-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  eval_subtype: change_over_period
+  manifest_id: m-tcl-trend-15
+  lineage: gnw-evals eval-metrics-slice-1 tcl-trend-15a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,7 +1,7 @@
 """Render every ledger run into a standalone performance-trends page.
 
     uv run python tools/render_trends.py
-    # -> results/reports/trends.html
+    # -> results/gold/reports/trends.html
 
 A run-over-run ticker: overall pass rate (one line per ff profile — never
 drawn across differing tool profiles), KPI tiles with deltas against the
@@ -38,10 +38,10 @@ def render_trends(runs: list[dict], template_text: str, generated: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--runs-dir", type=Path, default=Path("results/runs"),
+    parser.add_argument("--runs-dir", type=Path, default=Path("results/gold/runs"),
                         help="ledger directory to chart")
     parser.add_argument("--out", type=Path, default=None,
-                        help="default: results/reports/trends.html")
+                        help="default: results/gold/reports/trends.html")
     args = parser.parse_args()
 
     runs = load_all_runs(args.runs_dir)

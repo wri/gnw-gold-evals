@@ -1,0 +1,25 @@
+id: ch-quant-148
+uid: 4f4a0f217265ef55
+status: ready
+set: quantification
+group: tcl-fires
+query: Hey, I'm trying to get a sense of fire damage in Brazil's primary forests — do you
+  know how many hectares of primary forest deforestation there in 2023 was actually caused
+  by fires?
+expected:
+  aoi_ids: BRA
+  dataset_id: '10'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Report fire-driven loss within primary forest for the year (hectares).
+    Primary-forest layer applied, so 'deforestation' terminology is acceptable. NEVER report
+    carbon emissions.
+  eval_subtype: primary_forest
+  manifest_id: m-fires-quant-07
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

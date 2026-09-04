@@ -1,0 +1,20 @@
+id: ch-trend-048
+uid: 38a83bf61f7333ad
+status: ready
+set: trend
+group: grasslands
+query: So Costa Rica's natural grasslands, like from 2000 all the way to 2022, have they been
+  going up or down or just kinda flat overall, any idea?
+expected:
+  aoi_ids: CRI
+  dataset_id: '2'
+  start_date: '2000-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Direction of grassland extent over the window; values are small, a weak
+    or noisy trend passes only if the series supports it.
+  eval_subtype: direction
+  manifest_id: m-grass-trend-07
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

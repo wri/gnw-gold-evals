@@ -1,0 +1,20 @@
+id: ch-comp-128
+uid: 17b451f9ddabcf8c
+status: ready
+set: comparison
+group: tcl-drivers
+query: so like for Ghana vs Côte d'Ivoire, whats the main driver behind tree cover loss for
+  each one overall, not looking for a specific year or anything
+expected:
+  aoi_ids: GHA;CIV
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the dominant driver of tree cover loss between the two countries
+    over 2001-2025; identify each country's dominant class; whole-record aggregate.
+  eval_subtype: two_country
+  manifest_id: m-driver-comp-05
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

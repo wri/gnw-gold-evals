@@ -1,0 +1,20 @@
+id: ch-quant-051
+uid: 7d8ba58ecc8bc2d5
+status: ready
+set: quantification
+group: ghg-flux
+query: What is the total net greenhouse gas flux (in MgCO2e) from Brazil's forests over the
+  whole record, using a 50% canopy density threshold?
+expected:
+  aoi_ids: BRA
+  dataset_id: '6'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  data_pull: 'TRUE'
+notes:
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: 50% canopy density threshold. Single whole-period net flux total (2001-2025)
+    in MgCO2e; not annual; split bar; net source/sink per sign.
+  eval_subtype: canopy_threshold
+  manifest_id: m-flux-quant-06
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

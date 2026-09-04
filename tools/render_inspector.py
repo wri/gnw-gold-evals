@@ -1,10 +1,10 @@
 """Render ledger runs as a standalone per-check inspection matrix.
 
-    uv run python tools/render_inspector.py results/runs/<run_id>.json
-    # -> results/reports/<run_id>_inspector.html
+    uv run python tools/render_inspector.py results/gold/runs/<run_id>.json
+    # -> results/gold/reports/<run_id>_inspector.html
 
     uv run python tools/render_inspector.py --all
-    # -> results/reports/all-runs_inspector.html (every run, dropdown)
+    # -> results/gold/reports/all-runs_inspector.html (every run, dropdown)
 
 One row per case, one column per check (grouped by bucket): pass/fail/
 not-evaluated per cell, expected vs measured in the row expansion, row
@@ -64,15 +64,15 @@ def render_inspector_all(runs: list[dict], template_text: str, generated: str,
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("run", type=Path, nargs="?",
-                        help="results/runs/<run_id>.json")
+                        help="results/gold/runs/<run_id>.json")
     parser.add_argument("--all", action="store_true",
                         help="embed every run in --runs-dir behind a "
                              "run-selector dropdown")
-    parser.add_argument("--runs-dir", type=Path, default=Path("results/runs"),
+    parser.add_argument("--runs-dir", type=Path, default=Path("results/gold/runs"),
                         help="ledger directory scanned by --all")
     parser.add_argument("--out", type=Path, default=None,
-                        help="default: results/reports/<run_id>_inspector.html, "
-                             "or results/reports/all-runs_inspector.html with --all")
+                        help="default: results/gold/reports/<run_id>_inspector.html, "
+                             "or results/gold/reports/all-runs_inspector.html with --all")
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     args = parser.parse_args()
     if args.all == (args.run is not None):

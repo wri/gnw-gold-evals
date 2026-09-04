@@ -1,0 +1,19 @@
+id: ch-comp-063
+uid: dad62a5418746857
+status: ready
+set: comparison
+group: land-cover
+query: Which country has seen more land change from tree cover to cropland, Peru or Colombia?
+expected:
+  aoi_ids: PER;COL
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'tree cover;cropland (unscored: no evaluator surface yet)'
+  judge_instruction: 'Change comparison: which country had more area_ha transition from tree
+    cover to cropland between the fixed 2015 and 2024 snapshots; the prompt names no years.
+    Land cover change, not deforestation; the direction must be correct.'
+  eval_subtype: two_country
+  manifest_id: m-lc-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

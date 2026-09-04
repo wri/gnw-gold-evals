@@ -10,6 +10,39 @@ release: *did an agent change break a capability that used to work?* It is
 not a quality measure — the headline is a **regression count**, never a mean
 score, and determinism outranks realism in every design call.
 
+## The CHALLENGE set (second case set — quality rates, not regressions)
+
+`cases/challenge/` houses the CHALLENGE set, the quality/accuracy
+counterpart to GOLD (plan of record: `PRDs/challenge-set.md` in the GNW
+workspace). Everything about it that differs from GOLD is deliberate and
+documented in `cases/challenge/README.md` — read that before touching the
+set. The short version:
+
+- The store is hierarchical — **set → cohort → case** — via the optional
+  `set:` case field (`cases/challenge/<set>/<cohort>/<id>.yaml`). Sets:
+  `aoi` (cohorts = prompt classes) and the numeric intents
+  `quantification`/`trend`/`comparison` (cohorts = datasets; ported from
+  gnw-evals eval-metrics-slice-1, authored via `generation/` — see
+  `generation/README.md`). Run one set with `gold run --set <name>`. Like
+  `group`, `set` is never hashed into the uid.
+- Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
+  never regression counts. Many cases are *expected to fail*: do not triage
+  those failures as regressions, and never "fix" a case to make it pass.
+- Canonical published series: **prod, default profile, 3 trials**, run with
+  `--cases-dir cases/challenge --results-dir results/challenge
+  --status-exclude "not doing,todo"`. Its ledger lives under
+  `results/challenge/` and never mixes with GOLD's runs, trends, or diffs.
+- The after-run ritual applies to CHALLENGE too, adapted to rates: rollup,
+  then a recommendations doc in `results/challenge/recommendations/<run_id>.md`,
+  then commit run + rollup + recommendations together (see "After every
+  run" in `cases/challenge/README.md`).
+- The GOLD skills (gold-run, case-edit, new-case, release-gate, triage-run)
+  and `audit_cases.py --strict` apply to `cases/v2` only.
+- Identity and ledger discipline are unchanged: after any case edit, run
+  `tools/check.py --fix --cases-dir cases/challenge` and
+  `tools/coverage_doc.py --cases-dir cases/challenge`, and commit both with
+  the edit (CI gates both).
+
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR
 per spec (case store → results ledger → harness port → fixes → bucket scoring →
 new validators → multiturn). All planning docs — the design plan, PR specs, and
@@ -77,7 +110,7 @@ uv run gold run --env staging --ff experimental --trials 3 --build "<label>"   #
 uv run gold run --resume <run_id>                                              # finish a killed run
 ```
 
-Runs stream each completed case to `results/runs/<run_id>.partial.jsonl`
+Runs stream each completed case to `results/gold/runs/<run_id>.partial.jsonl`
 (gitignored, fsynced per line), so a killed run loses at most the case that
 was mid-flight. `--resume` rebuilds the run's config from that file's header
 (other flags are ignored), refuses if the caseset changed, runs only the
@@ -91,7 +124,7 @@ the request payload and omitted entirely when unset, so the agent runs its
 imagery** existed only behind `ff=experimental`: without the flag all seven
 `dashboard` rows failed `dashboard_created` on every trial, indistinguishable
 from the capability having been removed, which cost a full misdiagnosis on
-2026-08-03 (`results/recommendations/20260803T201245Z.md` item 1). Every run
+2026-08-03 (`results/gold/recommendations/20260803T201245Z.md` item 1). Every run
 before 2026-08-31 therefore used `ff=experimental`.
 
 As of prod run `20260831T163347Z_prod` (3 trials, no ff), all seven dashboard
@@ -128,25 +161,28 @@ concurrency that produced it. Raising workers is the main suspect to watch.
 ## After every run (do all four, in order)
 
 1. **Render the report**: `uv run python tools/render_html.py
-   results/runs/<run_id>.json` → `results/reports/<run_id>.html`
+   results/gold/runs/<run_id>.json` → `results/gold/reports/<run_id>.html`
    (the template also accepts a run JSON by drag-and-drop). Refresh the
    cross-run pages too: `render_html.py --all`, `render_inspector.py --all`
    (one file each, run-selector dropdown, deep-linkable via `#<run_id>`)
    and `render_trends.py` (pass-rate ticker; never trends across a
    differing `ff`).
 2. **Flakiness + diff**: `uv run python tools/flakiness.py
-   results/runs/<run_id>.json --per-case`, and `tools/diff_runs.py
+   results/gold/runs/<run_id>.json --per-case`, and `tools/diff_runs.py
    <previous> <current>` against the last comparable run.
-3. **Write `results/recommendations/<run_id>.md`** — the run is not done
+3. **Write `results/gold/recommendations/<run_id>.md`** — the run is not done
    until someone can act on it. Cover: what to file upstream (agent
    behaviour, with the flapping/failing row lists as evidence), what the
    run says about the case set (stale expectations, coverage holes,
    probation re-admissions), what it says about the harness, and a
-   next-run watchlist. `results/recommendations/20260801T093002Z.md` is
+   next-run watchlist. `results/gold/recommendations/20260801T093002Z.md` is
    the model.
 4. **Commit** the ledger JSON, the report, and the recommendation doc
    together; use `--note` on the run whenever check semantics changed
-   since the previous one.
+   since the previous one. After `git add`-ing the run JSON, regenerate
+   the run index (`uv run python tools/build_run_index.py` — it
+   enumerates tracked+staged files, so add the run first) and commit
+   `results/index.json` in the same commit; CI gates its freshness.
 
 ## The identity system (load-bearing — do not break)
 
@@ -181,7 +217,8 @@ from the store), and CI-style verification is plain `check.py` plus
   `notes:` = unhashed annotations. Unknown top-level keys are rejected on
   read. Import routes sheet columns by prefix: `expected_*` → expected,
   everything else → notes.
-- `results/` — committed per-run JSON ledger (contract fixed in
+- `results/` — committed per-run JSON ledgers, one subtree per set
+  (`results/gold/`, `results/challenge/`; contract fixed in
   `results/README.md` even though the ingester lands in PR-02). Checks are
   tri-state `1.0/0.0/null`; **no hand-written or backfilled entries, ever**.
 - Sheet relationship is **one-way**: import sheet → repo; the repo is the

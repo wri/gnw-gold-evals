@@ -1,0 +1,21 @@
+id: ch-quant-083
+uid: aa11a9d863a7d267
+status: ready
+set: quantification
+group: integrated-alerts
+query: For Indonesia, how does the total disturbance alert area from January 1 to December
+  31, 2024 break down by confidence level (low, high, highest), in hectares?
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Split total alert area (area_ha) by confidence tier (low/high/highest)
+    over 2024; 'highest' may be absent where only one system covered the area, which is not
+    an error; expected as a pie chart.
+  eval_subtype: by_confidence
+  manifest_id: m-ialert-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

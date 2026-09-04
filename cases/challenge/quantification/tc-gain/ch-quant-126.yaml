@@ -1,0 +1,20 @@
+id: ch-quant-126
+uid: b504768468b91165
+status: ready
+set: quantification
+group: tc-gain
+query: I'm digging into India's forest trends for a piece I'm writing - can you tell me how
+  many hectares of tree cover gain the country racked up cumulatively from 2010 to 2020?
+expected:
+  aoi_ids: IND
+  dataset_id: '5'
+  start_date: '2010-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Cumulative gain over the 2010-2020 period (ha). Do not decompose; gain
+    is not restoration.
+  eval_subtype: period_gain
+  manifest_id: m-gain-quant-10
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-10a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,17 @@
+id: ch-quant-095
+uid: 4e6aa39f9da3de6e
+status: ready
+set: quantification
+group: natural-lands
+query: How many hectares of natural land does the United Kingdom have?
+expected:
+  aoi_ids: GBR
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Fixed 2020 baseline; headline is the Natural row's area_ha from the two-row
+    is_natural grouping.
+  eval_subtype: natural_extent
+  manifest_id: m-nl-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

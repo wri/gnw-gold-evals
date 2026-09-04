@@ -56,6 +56,31 @@ def test_read_rejects_unknown_top_level_keys(tmp_path):
         read_case(path)
 
 
+def test_set_field_round_trips_and_nests_path(tmp_path):
+    case = Case(
+        id="ch-x-001", status="ready", set="aoi", group="acronyms",
+        query="Go to the USA", expected={"aoi_ids": "USA"},
+    )
+    path = write_case(tmp_path, case)
+    assert path == tmp_path / "aoi" / "acronyms" / "ch-x-001.yaml"
+    loaded, stored_uid = read_case(path)
+    assert loaded == case
+    assert stored_uid == case.uid
+    # set is organisational, never hashed: same content without it -> same uid
+    assert case.uid == Case(
+        id="ch-x-001", status="ready", group="acronyms",
+        query="Go to the USA", expected={"aoi_ids": "USA"},
+    ).uid
+
+
+def test_manifest_omits_set_when_absent(tmp_path):
+    with_set = Case(id="a", status="ready", set="aoi", group="g", query="q")
+    without = Case(id="b", status="ready", group="g", query="q")
+    manifest = build_manifest([with_set, without], "test")
+    assert manifest["cases"][0]["set"] == "aoi"
+    assert "set" not in manifest["cases"][1]
+
+
 def test_group_slug():
     assert group_slug("Parent-Child") == "parent-child"
     assert group_slug("class comparison") == "class-comparison"

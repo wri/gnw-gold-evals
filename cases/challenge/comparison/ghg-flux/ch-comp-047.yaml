@@ -1,0 +1,20 @@
+id: ch-comp-047
+uid: ab0dd4cacab53e95
+status: ready
+set: comparison
+group: ghg-flux
+query: Quick question - between Peru and Bolivia, whose forests end up releasing more net
+  CO2e overall, or is one of them actually acting more like a carbon sink?
+expected:
+  aoi_ids: PER;BOL
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare whole-period net flux totals (2001-2025) in MgCO2e; direction
+    correct; net source/sink per sign.
+  eval_subtype: two_country
+  manifest_id: m-flux-comp-03
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-03b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

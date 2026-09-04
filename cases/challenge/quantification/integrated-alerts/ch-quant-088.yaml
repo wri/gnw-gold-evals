@@ -1,0 +1,20 @@
+id: ch-quant-088
+uid: 6d3452dc98d298e1
+status: ready
+set: quantification
+group: integrated-alerts
+query: I'm digging into deforestation alerts for Colombia between January 1 and December 31,
+  2024 — could you break down the alert area in hectares by confidence level (low, high, highest)
+  for that period?
+expected:
+  aoi_ids: COL
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Split alert area (area_ha) by confidence tier over 2024.
+  eval_subtype: by_confidence
+  manifest_id: m-ialert-quant-07
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

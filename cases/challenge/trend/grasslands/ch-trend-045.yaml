@@ -1,0 +1,19 @@
+id: ch-trend-045
+uid: 30089ff2a8838732
+status: ready
+set: trend
+group: grasslands
+query: How does natural/semi-natural grassland extent in Colombia in 2022 compare with 2010?
+expected:
+  aoi_ids: COL
+  dataset_id: '2'
+  start_date: '2010-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare grassland extent (area_ha) at the start and end of the window;
+    volunteered figures must match the series.
+  eval_subtype: change_over_period
+  manifest_id: m-grass-trend-05
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

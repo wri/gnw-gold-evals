@@ -1,0 +1,20 @@
+id: ch-comp-070
+uid: 2e74b88b941dcdf3
+status: ready
+set: comparison
+group: grasslands
+query: Quick question - between India and Ghana, whose natural grassland extent was bigger
+  back in 2022?
+expected:
+  aoi_ids: IND;GHA
+  dataset_id: '2'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare grassland extent (area_ha, hectares) between the two countries
+    for the year.
+  eval_subtype: two_country
+  manifest_id: m-grass-comp-03
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-03b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

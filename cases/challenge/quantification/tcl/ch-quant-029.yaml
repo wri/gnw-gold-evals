@@ -1,0 +1,22 @@
+id: ch-quant-029
+uid: c769733e47d2a4c1
+status: ready
+set: quantification
+group: tcl
+query: I'm digging into Indonesia's climate footprint - can you tell me the greenhouse gas
+  emissions from tree cover loss across all forest types there between 2015 and 2020?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The question asks for GHG emissions from tree cover loss; the headline
+    figure is the carbon_emissions_MgCO2e column, in MgCO2e or honest conversions.
+  eval_subtype: emissions
+  manifest_id: m-tcl-quant-19
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-19a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

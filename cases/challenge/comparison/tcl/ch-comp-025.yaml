@@ -1,0 +1,19 @@
+id: ch-comp-025
+uid: f437e76338429fe1
+status: ready
+set: comparison
+group: tcl
+query: In Costa Rica, was more tree cover lost across all forest types from 2012 to 2017 or
+  from 2018 to 2023?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare the two halves of the window (2012-2017 vs 2018-2023).
+  eval_subtype: two_period
+  manifest_id: m-tcl-comp-15
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-15a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

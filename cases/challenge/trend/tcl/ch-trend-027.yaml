@@ -1,0 +1,22 @@
+id: ch-trend-027
+uid: da1616bbaa269986
+status: ready
+set: trend
+group: tcl
+query: How did GHG emissions from tree cover loss across all forest types in Indonesia change
+  between 2016 and 2023?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The question asks how GHG emissions from tree cover loss changed; use
+    the carbon_emissions_MgCO2e column for direction and any figures.
+  eval_subtype: change_over_period
+  manifest_id: m-tcl-trend-16
+  lineage: gnw-evals eval-metrics-slice-1 tcl-trend-16a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

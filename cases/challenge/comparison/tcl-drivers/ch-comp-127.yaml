@@ -1,0 +1,19 @@
+id: ch-comp-127
+uid: 89642a3c16ff8f62
+status: ready
+set: comparison
+group: tcl-drivers
+query: Since 2001, has Malaysia or Indonesia lost more tree cover to hard commodities production?
+expected:
+  aoi_ids: MYS;IDN
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Which country lost more tree cover to hard commodities over 2001-2025;
+    whole-record aggregate; direction correct.
+  eval_subtype: two_country
+  manifest_id: m-driver-comp-04
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

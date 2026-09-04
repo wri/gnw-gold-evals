@@ -1,0 +1,19 @@
+id: ch-comp-087
+uid: 26e237c6d9f8b310
+status: ready
+set: comparison
+group: integrated-alerts
+query: 'Quick question for a piece I''m writing: comparing Brazil and the DRC, whose deforestation
+  alerts covered more ground across all of 2024, from January through December?'
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare total alert area (area_ha) over 2024.
+  eval_subtype: two_country
+  manifest_id: m-ialert-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-comp-08b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,20 @@
+id: ch-comp-118
+uid: deb2b071199d861a
+status: ready
+set: comparison
+group: tc-gain
+query: Hey, quick question - between India and Malaysia, which one actually picked up more
+  tree cover gain cumulatively from 2015 to 2020?
+expected:
+  aoi_ids: IND;MYS
+  dataset_id: '5'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare cumulative gain over the 2015-2020 period; direction correct.
+    Gain is not restoration.
+  eval_subtype: two_country
+  manifest_id: m-gain-comp-07
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

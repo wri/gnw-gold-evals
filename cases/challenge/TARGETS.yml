@@ -1,0 +1,31 @@
+# CHALLENGE targets - the OKR mechanism (see cases/challenge/README.md).
+#
+# Hierarchy mirrors the case store: set -> cohort (case.group). Rates are
+# majority-verdict pass rates over the canonical series (prod, default
+# profile, 3 trials), computed by tools/challenge_rollup.py.
+# Status: PROVISIONAL until the first committed baseline run; revisit the
+# numbers with the baseline rollup in hand, then date each target when set.
+meta:
+  set: "2026-09-01"
+  status: provisional
+  note: initial targets cover the cohorts tracking live bugs; others get
+    targets once the baseline establishes where they stand
+overall: 0.70
+sets:
+  aoi:
+    overall: 0.70
+    targets:
+      acronyms: 0.80
+      data-quality: 0.80
+      sources: 0.70
+      concepts: 0.70
+  # The numeric sets (ported from gnw-evals eval-metrics-slice-1) carry no
+  # targets yet: slice-1's published rates (quant 74 / trend 93 / comp 89)
+  # were e2e scores including ground-truth fidelity, which this port does
+  # not score. Set targets from the first committed 3-trial baseline.
+  quantification:
+    targets: {}
+  trend:
+    targets: {}
+  comparison:
+    targets: {}

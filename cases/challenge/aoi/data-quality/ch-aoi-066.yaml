@@ -1,0 +1,15 @@
+id: ch-aoi-066
+uid: 77765765117a4399
+status: ready
+set: aoi
+group: data-quality
+query: Take me to Wales
+expected:
+  aoi_ids: GBR.4
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: control
+  verify_query: Wales
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

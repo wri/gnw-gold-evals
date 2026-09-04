@@ -1,0 +1,20 @@
+id: ch-comp-113
+uid: 9e1b10ef2ed4f5a8
+status: ready
+set: comparison
+group: tc-gain
+query: I'm curious about Peru versus Bolivia here - which one has racked up more cumulative
+  tree cover gain since 2005, looking through to 2020?
+expected:
+  aoi_ids: PER;BOL
+  dataset_id: '5'
+  start_date: '2005-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare cumulative gain over the 2005-2020 period; direction must be
+    correct; do not decompose the period. Gain is not restoration.
+  eval_subtype: two_country
+  manifest_id: m-gain-comp-03
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

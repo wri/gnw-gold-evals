@@ -1,0 +1,16 @@
+id: ch-aoi-046
+uid: 80c9514f8ccba35e
+status: ready
+set: aoi
+group: acronyms
+query: Show me Kwanza Norte
+expected:
+  aoi_ids: AGO.6
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: SPEC-PR8 (stored Cuanza Norte); trigram already surfaces it for 'Kwanza Norte',
+    so selection can succeed
+  verify_query: Cuanza Norte|Kwanza Norte
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

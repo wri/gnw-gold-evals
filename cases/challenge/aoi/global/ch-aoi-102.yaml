@@ -1,0 +1,15 @@
+id: ch-aoi-102
+uid: 61e7268e94674ea3
+status: ready
+set: aoi
+group: global
+query: Show me all countries in the world
+expected:
+  text: Confirms that all countries in the world have been selected
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: global path
+  verify_query: (global)
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

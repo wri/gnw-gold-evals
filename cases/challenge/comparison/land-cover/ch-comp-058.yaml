@@ -1,0 +1,18 @@
+id: ch-comp-058
+uid: 566fdd59789d5014
+status: ready
+set: comparison
+group: land-cover
+query: I'm curious which one has more built-up land right now - the UK or Costa Rica?
+expected:
+  aoi_ids: GBR;CRI
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'built-up land (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the 2024 built-up land class area_ha between the United Kingdom
+    and Costa Rica; the direction must be correct.
+  eval_subtype: two_country
+  manifest_id: m-lc-comp-04
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
