@@ -74,26 +74,37 @@ export API_TOKEN="$STAGING_API_TOKEN"   # .env holds it; the CLI reads API_TOKEN
 
 uv run gold run --env staging --ff experimental --build "<label>"              # iteration (1 trial, 10 workers)
 uv run gold run --env staging --ff experimental --trials 3 --build "<label>"   # official / gate
+uv run gold run --resume <run_id>                                              # finish a killed run
 ```
 
-**`--ff experimental` is required on any run whose verdict you intend to trust.**
-`ff` is the agent's tool profile, passed through in the request payload and
-omitted entirely when unset, so the agent runs its **default** toolset. Two
-capabilities live behind the experimental profile and are simply *absent* without
-it: **dashboards** and **satellite imagery**. Every historical run in
-`results/runs/` used `ff=experimental`.
+Runs stream each completed case to `results/runs/<run_id>.partial.jsonl`
+(gitignored, fsynced per line), so a killed run loses at most the case that
+was mid-flight. `--resume` rebuilds the run's config from that file's header
+(other flags are ignored), refuses if the caseset changed, runs only the
+missing cases, and writes the same immutable run JSON — marked
+`resumed: true` — before deleting the partial.
 
-Without the flag, all seven `dashboard` rows plus mt-008 fail `dashboard_created`
-on every trial — the agent never calls a dashboard tool at all, and the artifacts
-show `dashboard_widgets: null`. That is *indistinguishable from the capability
-having been removed* unless you check `ff`, and it cost a full misdiagnosis on
-2026-08-03 (see `results/recommendations/20260803T201245Z.md` item 1). With
-`--ff experimental` on the same case set and harness, those rows pass immediately.
+**What `ff` gates changed on 2026-08-31 — read the date on any run before
+trusting old guidance.** `ff` is the agent's tool profile, passed through in
+the request payload and omitted entirely when unset, so the agent runs its
+**default** toolset. Until late August 2026, **dashboards** and **satellite
+imagery** existed only behind `ff=experimental`: without the flag all seven
+`dashboard` rows failed `dashboard_created` on every trial, indistinguishable
+from the capability having been removed, which cost a full misdiagnosis on
+2026-08-03 (`results/recommendations/20260803T201245Z.md` item 1). Every run
+before 2026-08-31 therefore used `ff=experimental`.
 
-**The tell is the run_id**: `…_staging_experimental` versus a bare `…_staging`.
-`make_run_id` encodes `ff` in the filename, so a run whose name lacks the suffix
-was not exercising those capabilities — check this before comparing two runs, and
-never diff across a differing `ff`.
+As of prod run `20260831T163347Z_prod` (3 trials, no ff), all seven dashboard
+rows and the imagery row **pass on the default profile**: the default profile
+now carries dashboards + imagery, and `experimental` only unhides LGMS
+(dataset 12) and adds two view-context tools. The six LGMS cases
+(1-112..1-117) are `not doing` while runs target the default profile; their
+`status_reason` notes carry the re-admission condition.
+
+**Never diff runs with differing `ff`** — the profiles differ in capability
+surface, so a cross-ff diff measures the profile, not the release.
+`make_run_id` encodes ff in the filename (`…_prod` versus
+`…_prod_experimental`); check it before comparing two runs.
 
 **Two tiers, deliberately (set 2026-08-03).** The CLI defaults to
 `--trials 1 --workers 10` for fast iteration — answering "did my prompt rewrite

@@ -24,8 +24,19 @@ from dotenv import load_dotenv
 from goldset.adapter import case_to_expected
 from goldset.buckets import summarize_buckets
 from goldset.eval_types import TestResult
-from goldset.ledger import majority, make_run_id, reason_name_from_column, write_run
+from goldset.ledger import (
+    RUNS_DIRNAME,
+    append_partial_entry,
+    majority,
+    make_run_id,
+    partial_path,
+    read_partial,
+    reason_name_from_column,
+    write_partial_header,
+    write_run,
+)
 from goldset.store import Case, load_store, read_manifest
+from goldset.templates import resolve_templates
 
 ENV_URLS = {
     "staging": "https://api.staging.globalnaturewatch.org",
@@ -35,6 +46,18 @@ ENV_URLS = {
 JUDGE_MODEL = "claude-haiku-4-5"
 NON_CHECK_SCORES = {"overall_score"}
 REASON_TRIM = 500
+ENV_TOKEN_VARS = {"staging": "STAGING_API_TOKEN", "prod": "PROD_API_TOKEN"}
+
+
+def require_api_token(environment: str) -> str | None:
+    """Prefer the env-specific token (STAGING_API_TOKEN, PROD_API_TOKEN),
+    fall back to API_TOKEN; print what was missing when neither is set."""
+    env_var = ENV_TOKEN_VARS.get(environment)
+    token = (env_var and os.environ.get(env_var)) or os.environ.get("API_TOKEN")
+    if not token:
+        candidates = f"{env_var} or API_TOKEN" if env_var else "API_TOKEN"
+        print(f"{candidates} is not set (environment-specific machine token)")
+    return token
 
 
 # Which actual_* diagnostics substantiate each check — recorded on the
@@ -176,7 +199,11 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
     return sorted(cases, key=lambda c: c.id)
 
 
-async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
+async def run_cases(
+    args: argparse.Namespace,
+    cases: list[Case],
+    entry_sink=None,
+) -> list[dict]:
     # Deferred import: langchain/httpx stay out of store-only invocations.
     from goldset.runner.api import APITestRunner
     from goldset.runner.artifacts import ArtifactWriter
@@ -184,7 +211,7 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
 
     runner = APITestRunner(
         api_base_url=args.resolved_url,
-        api_token=os.environ.get("API_TOKEN"),
+        api_token=args.api_token,
         ff=args.ff,
         verbose=args.verbose,
         wall_clock_limit=args.trial_timeout,
@@ -199,39 +226,69 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
     # hard cap concurrency against the live API (20 ran fine on gnw-evals)
     semaphore = asyncio.Semaphore(max(1, min(args.workers, 20)))
 
+    run_started = datetime.now()
+
+    def _resolve_case(case: Case) -> Case:
+        """Expand template variables in queries, preserving the original uid."""
+        if case.is_multiturn:
+            resolved_turns = tuple(
+                {**turn, "query": resolve_templates(turn["query"], now=run_started)}
+                for turn in case.turns
+            )
+            return Case(
+                id=case.id, status=case.status, group=case.group,
+                expected=case.expected, notes=case.notes, turns=resolved_turns,
+            )
+        return Case(
+            id=case.id, status=case.status, group=case.group,
+            query=resolve_templates(case.query, now=run_started),
+            expected=case.expected, notes=case.notes,
+        )
+
     async def run_one(case: Case) -> dict:
         async with semaphore:
+            original_uid = case.uid
+            resolved = _resolve_case(case)
             trials = []
             for trial in range(1, args.trials + 1):
-                if case.is_multiturn:
-                    trials.append(
-                        await run_conversation(
-                            runner,
-                            case,
-                            result_to_entry,
-                            artifact_sink_factory=lambda n, c=case, t=trial: (
-                                lambda a: writer(f"{c.uid}_turn{n}", t, a)
-                            ),
-                        )
+                if resolved.is_multiturn:
+                    entry = await run_conversation(
+                        runner,
+                        resolved,
+                        result_to_entry,
+                        artifact_sink_factory=lambda n, c=case, t=trial: (
+                            lambda a: writer(f"{c.uid}_turn{n}", t, a)
+                        ),
                     )
+                    entry["uid"] = original_uid
+                    trials.append(entry)
                 else:
                     result = await runner.run_test(
-                        case.query,
+                        # `resolved` carries the template-expanded query;
+                        # expectations and the ground-truth key come from the
+                        # ORIGINAL case, whose uid is what prefetch keyed on
+                        # (resolving mints a different query, hence a different
+                        # uid — the same reason original_uid is captured above).
+                        resolved.query,
                         case_to_expected(case, args.ground_truth.get(case.uid)),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
-                    trials.append(result_to_entry(result, case.uid))
+                    trials.append(result_to_entry(result, original_uid))
             entry = merge_trials(trials)
             # G3: slow rows get an info flag — reported, never scored.
             info = latency_info(entry.get("latency_s"), args.slow_threshold)
             if info:
                 entry["info"] = info
+            if entry_sink is not None:
+                entry_sink(entry)
             clean = (
                 all(v != 0.0 for v in entry["checks"].values())
                 and not entry.get("error")
                 and not entry.get("judge_errors")
             )
-            print(f"  {case.id} [{'ok' if clean else 'FAIL'}]")
+            # flush: through a pipe, block buffering can hold every progress
+            # line until exit — exactly when a killed run needs them visible.
+            print(f"  {case.id} [{'ok' if clean else 'FAIL'}]", flush=True)
             return entry
 
     return list(await asyncio.gather(*(run_one(case) for case in cases)))
@@ -264,6 +321,144 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
     if args.note:
         return {**record, "methodology_note": args.note}
     return record
+
+
+def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
+              started: str, environment: str, partial: Path,
+              resumed: bool) -> int:
+    """Write the immutable run record and retire the in-flight partial."""
+    entries = sorted(entries, key=lambda e: e["id"])
+    run_record = build_run_record(args, manifest, entries, started, environment)
+    if resumed:
+        run_record["resumed"] = True
+    path = write_run(args.results_dir, run_record)
+    partial.unlink()
+    failed = sum(
+        1 for e in entries
+        if any(v == 0.0 for v in e["checks"].values()) or e.get("error")
+    )
+    judge_failures = sum(1 for e in entries if e.get("judge_errors"))
+    line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
+    if judge_failures:
+        line += f", {judge_failures} with JUDGE ERRORS (rerun before trusting)"
+    print(line)
+    return 0
+
+
+def prefetch_ground_truth(args: argparse.Namespace, cases: list[Case]) -> bool:
+    """Resolve every ground-truth case before any trial. False means abort.
+
+    Runs before the in-flight partial header is written, so a failed prefetch
+    leaves no partial file behind — nothing has been sent to the agent and
+    there is no half-run to mislead a reader. Sets ``args.ground_truth`` (empty
+    when no case carries a selector), which ``run_cases`` reads per case.
+
+    Called from both entry points: a resumed run's remaining cases include
+    ground-truth ones, and they need values just as much as a fresh run's.
+    Re-fetching on resume is correct — the run already spans two sessions, and
+    the alternative is grading the remainder against nothing.
+    """
+    # Deferred like the runner imports: httpx stays out of store-only
+    # invocations (`--dry-run`, `prune-artifacts`).
+    from goldset.groundtruth import AnalyticsError, RequestError, prefetch
+    from goldset.groundtruth.client import BASE_URL, AnalyticsClient
+    from goldset.groundtruth.fetch import is_ground_truth
+
+    args.ground_truth = {}
+    targets = [case for case in cases if is_ground_truth(case)]
+    if not targets:
+        return True
+
+    args.analytics_base_url = getattr(args, "analytics_base_url", None) or BASE_URL
+    client = AnalyticsClient(
+        # args.api_token is already resolved per environment by
+        # require_api_token; ANALYTICS_API_TOKEN overrides it when the
+        # analytics API ever needs its own credential.
+        token=os.environ.get("ANALYTICS_API_TOKEN") or args.api_token,
+        base_url=args.analytics_base_url,
+    )
+    print(f"prefetch: {len(targets)} ground-truth case(s) "
+          f"from {args.analytics_base_url}", flush=True)
+    started_fetch = time.monotonic()
+    try:
+        args.ground_truth = prefetch(targets, client, verbose=args.verbose)
+    except (RequestError, AnalyticsError) as error:
+        # Abort loudly rather than score against missing data.
+        print(f"  ABORT — ground-truth prefetch failed: {error}", flush=True)
+        return False
+    args.prefetch_seconds = round(time.monotonic() - started_fetch, 1)
+    unresolved = [g for g in args.ground_truth.values() if g.unresolved]
+    line = (f"  resolved {len(args.ground_truth) - len(unresolved)}"
+            f"/{len(targets)} in {args.prefetch_seconds}s")
+    if unresolved:
+        line += (f" — {len(unresolved)} unresolved, will ERROR: "
+                 + ", ".join(g.case_id for g in unresolved))
+    print(line, flush=True)
+    return True
+
+
+def resume_run(args: argparse.Namespace) -> int:
+    """Finish a killed run from its in-flight partial file.
+
+    All run configuration comes from the partial's header — flags on the
+    resume invocation are ignored except ``--results-dir``, which locates
+    the partial. The final record is indistinguishable from an unbroken run
+    bar a ``resumed: true`` marker (its timing mixes two sessions).
+    """
+    partial = partial_path(args.results_dir, args.resume)
+    final = args.results_dir / RUNS_DIRNAME / f"{args.resume}.json"
+    if not partial.exists():
+        state = "is already finalised" if final.exists() else "has no partial file"
+        print(f"run {args.resume} {state}; nothing to resume")
+        return 1
+    header, done = read_partial(partial)
+    if final.exists():
+        # killed between write_run and unlink: the run is complete
+        print(f"{final} already exists — removing the stale partial")
+        partial.unlink()
+        return 0
+
+    args.cases_dir = Path(header["cases_dir"])
+    manifest = read_manifest(args.cases_dir)
+    if manifest is None:
+        print(f"no manifest under {args.cases_dir}")
+        return 1
+    if manifest["caseset_version"] != header["caseset_version"]:
+        print(
+            "caseset_version has changed since the run started "
+            f"({header['caseset_version']} -> {manifest['caseset_version']}); "
+            "a run must score one case set — start a fresh run instead"
+        )
+        return 1
+    for field in ("ff", "build", "trials", "workers", "trial_timeout",
+                  "slow_threshold", "status_exclude", "id", "group", "note"):
+        setattr(args, field, header[field])
+    args.run_id = header["run_id"]
+    args.resolved_url = header["resolved_url"]
+
+    load_dotenv()
+    # The header pins the environment the run started against, so resume
+    # resolves the same env-specific token main() would have.
+    args.api_token = require_api_token(header["environment"])
+    if not args.api_token:
+        return 1
+
+    done_uids = {entry["uid"] for entry in done}
+    remaining = [c for c in select_cases(args) if c.uid not in done_uids]
+    print(f"resume {args.run_id}: {len(done)} case(s) already scored, "
+          f"{len(remaining)} remaining against {args.resolved_url}", flush=True)
+    if not prefetch_ground_truth(args, remaining):
+        return 1
+    new_entries = (
+        asyncio.run(run_cases(
+            args, remaining,
+            entry_sink=lambda e: append_partial_entry(partial, e),
+        ))
+        if remaining
+        else []
+    )
+    return _finalise(args, manifest, done + new_entries, header["started"],
+                     header["environment"], partial, resumed=True)
 
 
 def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
@@ -321,6 +516,10 @@ def main() -> int:
                      help="analytics API host used to fetch ground truth")
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
+    run.add_argument("--resume", default=None, metavar="RUN_ID",
+                     help="finish a killed run from its .partial.jsonl; all "
+                          "other flags are ignored (the run's config comes "
+                          "from the partial's header)")
     run.add_argument("--verbose", action="store_true")
 
     prune = sub.add_parser(
@@ -333,6 +532,9 @@ def main() -> int:
 
     if args.command == "prune-artifacts":
         return prune_artifacts(args.results_dir, args.keep_runs)
+
+    if args.resume:
+        return resume_run(args)
 
     manifest = read_manifest(args.cases_dir)
     if manifest is None:
@@ -354,9 +556,6 @@ def main() -> int:
     # token check, and never used for anything but secrets — CLI defaults
     # still cannot be overridden by the environment.
     load_dotenv()
-    if not os.environ.get("API_TOKEN"):
-        print("API_TOKEN is not set (environment-specific machine token)")
-        return 1
 
     args.resolved_url = args.api_base_url or ENV_URLS[args.env]
     if not args.api_base_url:
@@ -367,64 +566,46 @@ def main() -> int:
         environment = "local"
     else:
         environment = "prod"
+
+    args.api_token = require_api_token(environment)
+    if not args.api_token:
+        return 1
     started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
 
+    # Before the partial header is written: a failed prefetch must leave no
+    # partial file, and nothing has been sent to the agent yet.
+    if not prefetch_ground_truth(args, cases):
+        return 1
+
+    partial = write_partial_header(args.results_dir, {
+        "run_id": args.run_id,
+        "started": started,
+        "environment": environment,
+        "resolved_url": args.resolved_url,
+        "ff": args.ff,
+        "build": args.build,
+        "trials": args.trials,
+        "workers": args.workers,
+        "trial_timeout": args.trial_timeout,
+        "slow_threshold": args.slow_threshold,
+        "cases_dir": str(args.cases_dir),
+        "caseset_version": manifest["caseset_version"],
+        "status_exclude": args.status_exclude,
+        "id": args.id,
+        "group": args.group,
+        "note": args.note,
+    })
+
     print(f"run {args.run_id}: {len(cases)} cases x {args.trials} trial(s) "
-          f"against {args.resolved_url}")
-
-    # Ground truth is resolved BEFORE any trial: a bad token or a dead analytics
-    # API must cost nothing and leave no partial run file, and every trial of a
-    # case must grade against one snapshot (re-fetching per trial would surface
-    # data movement as agent flakiness). Cases with no `ground_truth` field are
-    # skipped entirely, so nothing else in the run changes.
-    # Deferred like the runner import below: httpx stays out of store-only
-    # invocations (`--dry-run`, `prune-artifacts`).
-    from goldset.groundtruth import AnalyticsError, RequestError, prefetch
-    from goldset.groundtruth.client import BASE_URL, AnalyticsClient
-    from goldset.groundtruth.fetch import is_ground_truth
-
-    args.ground_truth = {}
-    targets = [case for case in cases if is_ground_truth(case)]
-    if targets:
-        args.analytics_base_url = args.analytics_base_url or BASE_URL
-        client = AnalyticsClient(
-            token=os.environ.get("ANALYTICS_API_TOKEN") or os.environ["API_TOKEN"],
-            base_url=args.analytics_base_url,
-        )
-        print(f"prefetch: {len(targets)} ground-truth case(s) "
-              f"from {args.analytics_base_url}")
-        started_fetch = time.monotonic()
-        try:
-            args.ground_truth = prefetch(targets, client, verbose=args.verbose)
-        except (RequestError, AnalyticsError) as error:
-            # AC: abort loudly rather than score against missing data. Nothing
-            # has been sent to the agent and no run file exists to mislead.
-            print(f"  ABORT — ground-truth prefetch failed: {error}")
-            return 1
-        args.prefetch_seconds = round(time.monotonic() - started_fetch, 1)
-        unresolved = [g for g in args.ground_truth.values() if g.unresolved]
-        line = (f"  resolved {len(args.ground_truth) - len(unresolved)}"
-                f"/{len(targets)} in {args.prefetch_seconds}s")
-        if unresolved:
-            line += (f" — {len(unresolved)} unresolved, will ERROR: "
-                     + ", ".join(g.case_id for g in unresolved))
-        print(line)
-
-    entries = asyncio.run(run_cases(args, cases))
-
-    run_record = build_run_record(args, manifest, entries, started, environment)
-    path = write_run(args.results_dir, run_record)
-    failed = sum(
-        1 for e in entries
-        if any(v == 0.0 for v in e["checks"].values()) or e.get("error")
-    )
-    judge_failures = sum(1 for e in entries if e.get("judge_errors"))
-    line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
-    if judge_failures:
-        line += f", {judge_failures} with JUDGE ERRORS (rerun before trusting)"
-    print(line)
-    return 0
+          f"against {args.resolved_url}", flush=True)
+    print(f"  in-flight ledger: {partial} "
+          f"(if killed: gold run --resume {args.run_id})", flush=True)
+    entries = asyncio.run(run_cases(
+        args, cases, entry_sink=lambda e: append_partial_entry(partial, e),
+    ))
+    return _finalise(args, manifest, entries, started, environment, partial,
+                     resumed=False)
 
 
 if __name__ == "__main__":

@@ -1,12 +1,12 @@
 id: 1-003
-uid: 6fc8f4c3f62762c0
+uid: c8c477045d9f6593
 status: ready
 group: parent-child
 query: What was the total area affected by high conf. disturbance alerts between January 2025
   to April 2025 in Ucayali, Peru?
 expected:
   aoi_source: Landmark
-  dataset_id: 0;11
+  dataset_id: '11'
   start_date: '2025-01-01'
   end_date: '2025-04-30'
   scope: analyse

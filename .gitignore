@@ -16,5 +16,9 @@ scratch/
 # Per-run raw artifacts (large, regenerable) — the committed ledger lives in results/runs/
 results/artifacts/
 
+# In-flight run state (finalised into the immutable run JSON, then deleted;
+# survives only when a run was killed — resume with `gold run --resume <run_id>`)
+results/runs/*.partial.jsonl
+
 # AI planning (local-only; untracked 2026-08-04)
 docs/specs/

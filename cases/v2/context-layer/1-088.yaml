@@ -1,6 +1,6 @@
 id: 1-088
 uid: dc1b3d52d49b28b2
-status: done
+status: not doing
 group: context-layer
 query: What type of natural ecosystem in Uganda had the most disturbances in 2025?
 expected:
@@ -13,3 +13,6 @@ expected:
   end_date: '2025-12-31'
   answer: Natural short vegetation (507,742 ha)
   scope: analyse
+notes:
+  status_reason: 'parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely
+    about DIST-ALERT with natural_lands context layer and cannot be answered without it.'

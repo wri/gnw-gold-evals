@@ -1,10 +1,10 @@
 id: mt-003
-uid: cb1fee067c39f4ba
+uid: 9bbb055d80fab8dd
 status: ready
 group: multiturn
 turns:
-- query: How much area had high-confidence disturbance alerts in Kalimantan, Indonesia in
-    July 2024?
+- query: How much area had high-confidence integrated alerts in Kalimantan, Indonesia in July
+    2024?
   expected:
     scope: analyse
     start_date: '2024-07-01'

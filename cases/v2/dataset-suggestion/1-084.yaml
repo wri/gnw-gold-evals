@@ -1,5 +1,5 @@
 id: 1-084
-uid: 215cea7820632351
+uid: a8f937053af97d9c
 status: done
 group: dataset-suggestion
 query: Show me trends in natural land loss in Gabon
@@ -10,7 +10,7 @@ expected:
   text: Provides good reason for each dataset suggestion that relate to the user query
   scope: suggest
   nudge_type: dataset_choice
-  nudge_options: DIST-ALERT;Global land cover;grassland;SBTN;Tree cover loss
+  nudge_options: Global land cover;grassland;SBTN;Tree cover loss
 notes:
   aoi_type: gadm 0
   surface_move: 'W2 2026-08-03: expectations moved off suggested_datasets (populated in 0
