@@ -20,7 +20,7 @@ import re
 from typing import Any
 
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
-from goldset.evaluators.utils import normalize_value
+from goldset.evaluators.utils import last_statistics, normalize_value
 
 # Substantive prose (vs a bare refusal/greeting): anything this long that
 # arrives with no data behind it is an answer the user will believe.
@@ -38,15 +38,8 @@ _OWN_DOMAINS = ("globalnaturewatch.org", "globalforestwatch.org")
 _LINK_RE = re.compile(r"https?://\S+|www\.\S+", re.IGNORECASE)
 
 
-def _last_statistics(agent_state: dict[str, Any]) -> dict[str, Any] | None:
-    statistics = agent_state.get("statistics")
-    if isinstance(statistics, list):
-        statistics = statistics[-1] if statistics else None
-    return statistics if isinstance(statistics, dict) else None
-
-
 def _data_was_pulled(agent_state: dict[str, Any]) -> bool:
-    statistics = _last_statistics(agent_state)
+    statistics = last_statistics(agent_state)
     if not statistics:
         return False
     if str(statistics.get("source_url") or "") or str(statistics.get("id") or ""):
@@ -128,7 +121,7 @@ def evaluate_guards(
     # the guard abstains with the source_url/id it saw, so abstentions are
     # auditable rather than silent.
     if expected_dataset_id and pulled:
-        statistics = _last_statistics(agent_state) or {}
+        statistics = last_statistics(agent_state) or {}
         reference = _pull_dataset_reference(statistics)
         if not reference:
             source_url = normalize_value(statistics.get("source_url")) or "none"

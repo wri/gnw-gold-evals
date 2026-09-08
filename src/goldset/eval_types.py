@@ -193,6 +193,10 @@ class ExpectedData(BaseModel):
     expected_dashboard_widgets: list[str] | None = None
     expected_nudge_type: str = ""
     expected_nudge_options: list[str] = []
+    # PR-31 ground-truth grading additions
+    expected_ground_truth: str = ""        # the selector, from the case
+    ground_truth_values: list[float] = []  # fetched at run start — NOT from the case,
+    ground_truth_unresolved: str = ""      # so deliberately unprefixed
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""

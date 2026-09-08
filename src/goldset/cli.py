@@ -188,6 +188,12 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
         ff=args.ff,
         verbose=args.verbose,
         wall_clock_limit=args.trial_timeout,
+        # Only ground-truth cases re-read the agent's pull, so this stays None
+        # for a run with none and no extra request is ever issued.
+        analytics_token=(
+            (os.environ.get("ANALYTICS_API_TOKEN") or os.environ.get("API_TOKEN"))
+            if args.ground_truth else None
+        ),
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
     # hard cap concurrency against the live API (20 ran fine on gnw-evals)
@@ -211,7 +217,7 @@ async def run_cases(args: argparse.Namespace, cases: list[Case]) -> list[dict]:
                 else:
                     result = await runner.run_test(
                         case.query,
-                        case_to_expected(case),
+                        case_to_expected(case, args.ground_truth.get(case.uid)),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
                     trials.append(result_to_entry(result, case.uid))

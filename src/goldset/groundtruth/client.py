@@ -29,8 +29,23 @@ import httpx
 BASE_URL = "https://analytics.globalnaturewatch.org"
 DEFAULT_TIMEOUT = 120.0
 MAX_POLLS = 10
+DEFAULT_ENVIRONMENT = "production"
 DONE = ("success", "saved")
 FAILED = ("failed", "error")
+
+
+def analytics_headers(token: str, environment: str = DEFAULT_ENVIRONMENT) -> dict:
+    """Headers every analytics request needs, wherever it is issued from.
+
+    Shared with the runner, which re-reads the agent's own ``source_url`` to see
+    the table it actually pulled — that GET needs the same auth as ours.
+    """
+    return {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-environment": environment,
+        "Authorization": f"Bearer {token}",
+    }
 
 
 class AnalyticsError(Exception):
@@ -59,7 +74,7 @@ class AnalyticsClient:
     def __init__(
         self,
         token: str,
-        environment: str = "production",
+        environment: str = DEFAULT_ENVIRONMENT,
         base_url: str = BASE_URL,
         timeout: float = DEFAULT_TIMEOUT,
         max_polls: int = MAX_POLLS,
@@ -68,12 +83,7 @@ class AnalyticsClient:
         self.base_url = base_url.rstrip("/")
         self.environment = environment
         self.max_polls = max_polls
-        self._headers = {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "X-environment": environment,
-            "Authorization": f"Bearer {token}",
-        }
+        self._headers = analytics_headers(token, environment)
         self._timeout = timeout
         self._transport = transport
 
