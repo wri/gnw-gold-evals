@@ -15,6 +15,7 @@ import asyncio
 import os
 import subprocess
 import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -310,6 +311,8 @@ def main() -> int:
     run.add_argument("--note", default=None,
                      help="methodology note recorded on the run (e.g. after a "
                           "check-semantics change, so diffs aren't read as agent movement)")
+    run.add_argument("--analytics-base-url", default=None,
+                     help="analytics API host used to fetch ground truth")
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
     run.add_argument("--verbose", action="store_true")
@@ -363,6 +366,45 @@ def main() -> int:
 
     print(f"run {args.run_id}: {len(cases)} cases x {args.trials} trial(s) "
           f"against {args.resolved_url}")
+
+    # Ground truth is resolved BEFORE any trial: a bad token or a dead analytics
+    # API must cost nothing and leave no partial run file, and every trial of a
+    # case must grade against one snapshot (re-fetching per trial would surface
+    # data movement as agent flakiness). Cases with no `ground_truth` field are
+    # skipped entirely, so nothing else in the run changes.
+    # Deferred like the runner import below: httpx stays out of store-only
+    # invocations (`--dry-run`, `prune-artifacts`).
+    from goldset.groundtruth import AnalyticsError, RequestError, prefetch
+    from goldset.groundtruth.client import BASE_URL, AnalyticsClient
+    from goldset.groundtruth.fetch import is_ground_truth
+
+    args.ground_truth = {}
+    targets = [case for case in cases if is_ground_truth(case)]
+    if targets:
+        args.analytics_base_url = args.analytics_base_url or BASE_URL
+        client = AnalyticsClient(
+            token=os.environ.get("ANALYTICS_API_TOKEN") or os.environ["API_TOKEN"],
+            base_url=args.analytics_base_url,
+        )
+        print(f"prefetch: {len(targets)} ground-truth case(s) "
+              f"from {args.analytics_base_url}")
+        started_fetch = time.monotonic()
+        try:
+            args.ground_truth = prefetch(targets, client, verbose=args.verbose)
+        except (RequestError, AnalyticsError) as error:
+            # AC: abort loudly rather than score against missing data. Nothing
+            # has been sent to the agent and no run file exists to mislead.
+            print(f"  ABORT — ground-truth prefetch failed: {error}")
+            return 1
+        args.prefetch_seconds = round(time.monotonic() - started_fetch, 1)
+        unresolved = [g for g in args.ground_truth.values() if g.unresolved]
+        line = (f"  resolved {len(args.ground_truth) - len(unresolved)}"
+                f"/{len(targets)} in {args.prefetch_seconds}s")
+        if unresolved:
+            line += (f" — {len(unresolved)} unresolved, will ERROR: "
+                     + ", ".join(g.case_id for g in unresolved))
+        print(line)
+
     entries = asyncio.run(run_cases(args, cases))
 
     run_record = build_run_record(args, manifest, entries, started, environment)

@@ -59,7 +59,7 @@ class AnalyticsClient:
     def __init__(
         self,
         token: str,
-        environment: str = "staging",
+        environment: str = "production",
         base_url: str = BASE_URL,
         timeout: float = DEFAULT_TIMEOUT,
         max_polls: int = MAX_POLLS,
