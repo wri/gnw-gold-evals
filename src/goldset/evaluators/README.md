@@ -72,10 +72,21 @@ number in the prose answers the question (`extracted_number`), and
 `resolve_answer_verdict` applies `NUMERIC_TOLERANCE` in code, against the same
 `parse_expected_number` parser the chart comparator uses, so an answer and its
 chart cannot disagree about what "within tolerance" means. The judge's own
-score is kept only as a fallback for the rare row where `extracted_number`
-can't be parsed deterministically (empty, ambiguous decimal, or a
+score is used outright as a fallback for the row where `extracted_number`
+can't be parsed deterministically at all (empty, ambiguous decimal, or a
 percent/non-percent unit mismatch) — that population is exactly as reliable as
 it was before.
+
+Unlike the chart check, though, a deterministic **FAIL** here is not final.
+`parse_expected_number` only understands English scale words and a period
+decimal separator — fine for the chart comparator, whose candidates are
+already-parsed JSON numbers, but this check parses free-form prose in
+whatever language the agent answered in. Two live rows caught it silently
+misreading a *correct* answer as a huge miss: 1-094 ("61.19万公顷", the Chinese
+scale word for 10,000, read as bare 61.19) and 1-091 ("289,11 hectares", a
+French decimal comma, read as 28,911). So on a deterministic FAIL, the judge's own score is consulted as a
+second opinion, and a judge PASS overrides to give a pass — the judges read the
+actual prose and can apply the language/numeric convention the parser can't.
 
 Only three checks are judged at all — `clarification_requested`,
 `agent_answer`, `expected_text_match` — plus the now-info-only
@@ -697,6 +708,17 @@ only as a fallback for the row where `extracted_number` can't be parsed
 deterministically (empty, an ambiguous decimal, or a percent/non-percent
 mismatch) — exactly as reliable on that population as before.
 
+A deterministic FAIL is not final, though — unlike `charts_answer`.
+`parse_expected_number` only understands English scale words and a period
+decimal separator (fine for the chart comparator, whose candidates are
+already-parsed JSON numbers; not fine for prose in an arbitrary language).
+1-094 ("61.19万公顷") and 1-091 ("289,11 hectares") each parsed a correct
+answer as a huge miss — a Chinese scale word and a French decimal comma,
+respectively, neither of which the parser knows about. So on a deterministic
+FAIL, `resolve_answer_verdict` checks the judge's own score as a second
+opinion, and a judge PASS overrides to a pass; a judge FAIL agrees with the
+deterministic FAIL.
+
 **Fires on** `answer` **and** a non-empty final message text
 (`answer_evaluator.py:191`).
 
@@ -707,12 +729,16 @@ makes the row an `error` (`:199-201`, `buckets.py:115-116`). Otherwise the
 judge's 0/1.
 
 **Reason**: `reasons.agent_answer` — the judge's own sentence for boolean/year/
-named-entity rows, or (for numeric rows where the deterministic override ran) a
-generated string in the same shape as `charts_answer`'s: `"deterministic check:
-expected 100 hectares, extracted 102 hectares from \"102 hectares\", a 2.00%
-difference, within the 2% tolerance"`. `answer_eval_type` is decided internally
-(in the structured output but not persisted separately). `actuals.agent_answer` =
-the full final answer text, trimmed to 300 chars.
+named-entity rows, or, for numeric rows, one of three deterministic-check
+shapes (mirroring `charts_answer`'s): `"deterministic check: expected 100
+hectares, extracted 102 hectares from \"102 hectares\", a 2.00% difference,
+within the 2% tolerance"` on a plain pass or agreed fail (the judge's own
+sentence appended after a fail); or `"… — overriding the deterministic check
+(locale-blind number parsing): the judge read the actual answer and says it
+matches: <judge reason>"` when the judge rescued a FAIL the parser produced
+(1-091, 1-094). `answer_eval_type` is decided internally (in the structured
+output but not persisted separately). `actuals.agent_answer` = the full final
+answer text, trimmed to 300 chars.
 
 **Gotchas.**
 - Shared-tagged (analysis + explanation): a failure here cannot be attributed to
