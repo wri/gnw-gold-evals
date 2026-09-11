@@ -15,6 +15,7 @@ import asyncio
 import os
 import subprocess
 import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -214,6 +215,12 @@ async def run_cases(
         ff=args.ff,
         verbose=args.verbose,
         wall_clock_limit=args.trial_timeout,
+        # Only ground-truth cases re-read the agent's pull, so this stays None
+        # for a run with none and no extra request is ever issued.
+        analytics_token=(
+            (os.environ.get("ANALYTICS_API_TOKEN") or os.environ.get("API_TOKEN"))
+            if args.ground_truth else None
+        ),
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
     # hard cap concurrency against the live API (20 ran fine on gnw-evals)
@@ -257,8 +264,13 @@ async def run_cases(
                     trials.append(entry)
                 else:
                     result = await runner.run_test(
+                        # `resolved` carries the template-expanded query;
+                        # expectations and the ground-truth key come from the
+                        # ORIGINAL case, whose uid is what prefetch keyed on
+                        # (resolving mints a different query, hence a different
+                        # uid — the same reason original_uid is captured above).
                         resolved.query,
-                        case_to_expected(case),
+                        case_to_expected(case, args.ground_truth.get(case.uid)),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
                     trials.append(result_to_entry(result, original_uid))
@@ -333,6 +345,58 @@ def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
     return 0
 
 
+def prefetch_ground_truth(args: argparse.Namespace, cases: list[Case]) -> bool:
+    """Resolve every ground-truth case before any trial. False means abort.
+
+    Runs before the in-flight partial header is written, so a failed prefetch
+    leaves no partial file behind — nothing has been sent to the agent and
+    there is no half-run to mislead a reader. Sets ``args.ground_truth`` (empty
+    when no case carries a selector), which ``run_cases`` reads per case.
+
+    Called from both entry points: a resumed run's remaining cases include
+    ground-truth ones, and they need values just as much as a fresh run's.
+    Re-fetching on resume is correct — the run already spans two sessions, and
+    the alternative is grading the remainder against nothing.
+    """
+    # Deferred like the runner imports: httpx stays out of store-only
+    # invocations (`--dry-run`, `prune-artifacts`).
+    from goldset.groundtruth import AnalyticsError, RequestError, prefetch
+    from goldset.groundtruth.client import BASE_URL, AnalyticsClient
+    from goldset.groundtruth.fetch import is_ground_truth
+
+    args.ground_truth = {}
+    targets = [case for case in cases if is_ground_truth(case)]
+    if not targets:
+        return True
+
+    args.analytics_base_url = getattr(args, "analytics_base_url", None) or BASE_URL
+    client = AnalyticsClient(
+        # args.api_token is already resolved per environment by
+        # require_api_token; ANALYTICS_API_TOKEN overrides it when the
+        # analytics API ever needs its own credential.
+        token=os.environ.get("ANALYTICS_API_TOKEN") or args.api_token,
+        base_url=args.analytics_base_url,
+    )
+    print(f"prefetch: {len(targets)} ground-truth case(s) "
+          f"from {args.analytics_base_url}", flush=True)
+    started_fetch = time.monotonic()
+    try:
+        args.ground_truth = prefetch(targets, client, verbose=args.verbose)
+    except (RequestError, AnalyticsError) as error:
+        # Abort loudly rather than score against missing data.
+        print(f"  ABORT — ground-truth prefetch failed: {error}", flush=True)
+        return False
+    args.prefetch_seconds = round(time.monotonic() - started_fetch, 1)
+    unresolved = [g for g in args.ground_truth.values() if g.unresolved]
+    line = (f"  resolved {len(args.ground_truth) - len(unresolved)}"
+            f"/{len(targets)} in {args.prefetch_seconds}s")
+    if unresolved:
+        line += (f" — {len(unresolved)} unresolved, will ERROR: "
+                 + ", ".join(g.case_id for g in unresolved))
+    print(line, flush=True)
+    return True
+
+
 def resume_run(args: argparse.Namespace) -> int:
     """Finish a killed run from its in-flight partial file.
 
@@ -383,6 +447,8 @@ def resume_run(args: argparse.Namespace) -> int:
     remaining = [c for c in select_cases(args) if c.uid not in done_uids]
     print(f"resume {args.run_id}: {len(done)} case(s) already scored, "
           f"{len(remaining)} remaining against {args.resolved_url}", flush=True)
+    if not prefetch_ground_truth(args, remaining):
+        return 1
     new_entries = (
         asyncio.run(run_cases(
             args, remaining,
@@ -446,6 +512,8 @@ def main() -> int:
     run.add_argument("--note", default=None,
                      help="methodology note recorded on the run (e.g. after a "
                           "check-semantics change, so diffs aren't read as agent movement)")
+    run.add_argument("--analytics-base-url", default=None,
+                     help="analytics API host used to fetch ground truth")
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
     run.add_argument("--resume", default=None, metavar="RUN_ID",
@@ -504,6 +572,11 @@ def main() -> int:
         return 1
     started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
+
+    # Before the partial header is written: a failed prefetch must leave no
+    # partial file, and nothing has been sent to the agent yet.
+    if not prefetch_ground_truth(args, cases):
+        return 1
 
     partial = write_partial_header(args.results_dir, {
         "run_id": args.run_id,

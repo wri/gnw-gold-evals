@@ -208,3 +208,111 @@ async def test_wall_clock_limit_bounds_a_keepalive_stream(monkeypatch):
     assert time.monotonic() - start < 5.0
     assert "wall-clock" in (result.error or "")
     assert result.aoi_id_match_score is None
+
+
+# ---------------------------------------------------------------------------
+# Reading the agent's own pulled table (ground-truth runs only).
+
+def _patched(mock_transport):
+    """A fake httpx.AsyncClient bound to `mock_transport`, matching the
+    `patched_client` fixture above but parameterised per test."""
+    real_client = httpx.AsyncClient
+
+    def fake_client(**kwargs):
+        kwargs.pop("timeout", None)
+        return real_client(transport=mock_transport)
+
+    return fake_client
+
+
+GT_CASE = Case(
+    id="1-046", status="done", group="direct", query="CO2 in Ihorombe 2019?",
+    expected={"aoi_ids": "MDG.3.4_1", "aoi_source": "gadm", "dataset_id": "4",
+              "ground_truth": "sum(carbon_emissions_MgCO2e)"},
+)
+PULLED = {"tree_cover_loss_year": [2019], "carbon_emissions_MgCO2e": [658496.56]}
+PULL_URL = "http://analytics.example/v0/land_change/tree_cover_loss/analytics/abc"
+
+
+def _state_with_pull() -> dict:
+    return {**STATE, "statistics": [{"source_url": PULL_URL, "id": "p1", "data": {}}]}
+
+
+def transport_with_pull(pull_response=None) -> httpx.MockTransport:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/api/chat":
+            return httpx.Response(200, text=json.dumps({"node": "agent", "update": "{}"}))
+        if request.url.path.startswith("/api/threads/"):
+            return httpx.Response(200, json={"state": json.dumps(_state_with_pull())})
+        if str(request.url) == PULL_URL:
+            return pull_response or httpx.Response(
+                200, json={"data": {"result": PULLED}})
+        raise AssertionError(f"unexpected request: {request.url}")
+
+    return httpx.MockTransport(handler)
+
+
+@pytest.mark.anyio
+async def test_pulled_data_is_read_for_a_ground_truth_case(monkeypatch):
+    monkeypatch.setattr(httpx, "AsyncClient", _patched(transport_with_pull()))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    captured: dict = {}
+    await runner.run_test(GT_CASE.query, case_to_expected(GT_CASE),
+                          artifact_sink=captured.update)
+    assert captured["pulled_data"]["carbon_emissions_MgCO2e"] == [658496.56]
+    assert captured["pulled_data"]["_rows_total"] == 1
+
+
+@pytest.mark.anyio
+async def test_a_failed_pull_read_degrades_instead_of_failing_the_trial(monkeypatch):
+    """Enrichment, not a verdict: a 404 here must not kill the row."""
+    monkeypatch.setattr(
+        httpx, "AsyncClient",
+        _patched(transport_with_pull(httpx.Response(404, json={}))))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    captured: dict = {}
+    result = await runner.run_test(GT_CASE.query, case_to_expected(GT_CASE),
+                                   artifact_sink=captured.update)
+    assert result.error is None
+    assert captured["pulled_data"] is None
+
+
+@pytest.mark.anyio
+async def test_no_pull_read_without_ground_truth(monkeypatch):
+    """AC 8 — a case with no selector must not issue the extra request."""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if str(request.url) == PULL_URL:
+            raise AssertionError("must not read the pull for a non-GT case")
+        if request.url.path == "/api/chat":
+            return httpx.Response(200, text=json.dumps({"node": "agent", "update": "{}"}))
+        return httpx.Response(200, json={"state": json.dumps(_state_with_pull())})
+
+    monkeypatch.setattr(httpx, "AsyncClient", _patched(httpx.MockTransport(handler)))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    captured: dict = {}
+    await runner.run_test(CASE.query, case_to_expected(CASE),
+                          artifact_sink=captured.update)
+    assert captured["pulled_data"] is None
+
+
+def test_sectioned_pulled_data_is_capped_per_section():
+    """LGMS (12) answers {section: {column: [values]}} where every other dataset
+    answers flat. Seen live 2026-09-08; a flat cap left it uncapped."""
+    from goldset.runner.artifacts import STATISTICS_ROW_LIMIT, _pulled_data
+
+    sectioned = {
+        "vegetation": {"aoi_id": ["A"] * 300, "net_flux_MgCO2e": [1.0] * 300},
+        "organic_soil": {"aoi_id": [], "area_ha": []},
+    }
+    got = _pulled_data({"pulled_data": sectioned})
+    assert len(got["vegetation"]["aoi_id"]) == STATISTICS_ROW_LIMIT
+    assert got["vegetation"]["_rows_total"] == 300
+    assert got["organic_soil"]["_rows_total"] == 0
+
+    flat = {"tree_cover_loss_year": [2019] * 300, "area_ha": [1.0] * 300}
+    got = _pulled_data({"pulled_data": flat})
+    assert len(got["area_ha"]) == STATISTICS_ROW_LIMIT
+    assert got["_rows_total"] == 300
+
+    assert _pulled_data({}) is None
+    assert _pulled_data({"pulled_data": None}) is None

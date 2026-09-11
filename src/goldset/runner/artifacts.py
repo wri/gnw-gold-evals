@@ -58,10 +58,12 @@ def _tool_calls(agent_state: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _last_statistics(agent_state: dict[str, Any]) -> dict[str, Any] | None:
-    statistics = agent_state.get("statistics")
-    if isinstance(statistics, list):
-        statistics = statistics[-1] if statistics else None
-    if not isinstance(statistics, dict):
+    """The last pull, with its inline rows capped. See ``utils.last_statistics``
+    for the shared lookup; the slimming below is artifact-specific."""
+    from goldset.evaluators.utils import last_statistics
+
+    statistics = last_statistics(agent_state)
+    if statistics is None:
         return None
     slim = {k: v for k, v in statistics.items() if k != "data"}
     data = statistics.get("data")
@@ -71,6 +73,32 @@ def _last_statistics(agent_state: dict[str, Any]) -> dict[str, Any] | None:
     elif data is not None:
         slim["data"] = data
     return slim
+
+
+def _cap_table(table: dict[str, Any]) -> dict[str, Any]:
+    """One column-oriented table with each column's rows capped."""
+    slim: dict[str, Any] = {
+        key: values[:STATISTICS_ROW_LIMIT] if isinstance(values, list) else values
+        for key, values in table.items()
+    }
+    first = next((v for v in table.values() if isinstance(v, list)), None)
+    if first is not None:
+        slim["_rows_total"] = len(first)
+    return slim
+
+
+def _pulled_data(agent_state: dict[str, Any]) -> dict[str, Any] | None:
+    """The agent's raw pulled table (ground-truth runs only), rows capped.
+
+    Two shapes, both seen live. Most datasets answer flat as
+    ``{column: [values]}`` but LGMS (12) answers as ``{section: {column: [values]}}``
+    """
+    pulled = agent_state.get("pulled_data")
+    if not isinstance(pulled, dict) or not pulled:
+        return None
+    if all(isinstance(value, dict) for value in pulled.values()):
+        return {section: _cap_table(table) for section, table in pulled.items()}
+    return _cap_table(pulled)
 
 
 def build_artifact(
@@ -89,6 +117,7 @@ def build_artifact(
         "codeact": _decode_codeact(agent_state),
         "tool_calls": _tool_calls(agent_state),
         "statistics_last": _last_statistics(agent_state),
+        "pulled_data": _pulled_data(agent_state),
         "charts_data": agent_state.get("charts_data"),
         "aoi_selection": agent_state.get("aoi_selection"),
         "dataset": agent_state.get("dataset"),
