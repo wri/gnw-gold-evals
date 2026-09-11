@@ -35,6 +35,7 @@ def _case_context(case) -> dict:
     context = {
         "query": case.query or (turns[0]["query"] if turns else ""),
         "group": case.group,
+        "status": case.status,
         "scope": case.expected.get("scope", ""),
         "expected": dict(case.expected),
     }
