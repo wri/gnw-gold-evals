@@ -359,7 +359,7 @@ function render(payload) {
     const promptLine = context
       ? `<div class="prompt">“${esc(context.query)}”${
           context.turns ? ` <span class="frac">(+${context.turns.length - 1} follow-up turn(s))</span>` : ""}</div>
-         <div class="frac">group: ${esc(context.group)}${
+         <div class="frac">group: ${esc(context.group)} · status: ${esc(context.status || "?")}${
           context.scope ? ` · expected behaviour: ${esc(context.scope)}` : ""}</div>`
       : `<div class="frac">prompt unavailable — case no longer in the store</div>`;
     const evm = expectedVsMeasured(e, context,
