@@ -7,6 +7,7 @@ registry, artifact capture, and the CLI's result->ledger-entry mapping.
 import gzip
 import json
 import time
+from types import SimpleNamespace
 
 import anyio
 import httpx
@@ -234,6 +235,12 @@ PULLED = {"tree_cover_loss_year": [2019], "carbon_emissions_MgCO2e": [658496.56]
 PULL_URL = "http://analytics.example/v0/land_change/tree_cover_loss/analytics/abc"
 
 
+def _gt_expected(values=(658496.56,), unresolved=None):
+    """The adapter reads only `values` and `unresolved` off a GroundTruth."""
+    return case_to_expected(
+        GT_CASE, SimpleNamespace(values=list(values), unresolved=unresolved))
+
+
 def _state_with_pull() -> dict:
     return {**STATE, "statistics": [{"source_url": PULL_URL, "id": "p1", "data": {}}]}
 
@@ -257,10 +264,29 @@ async def test_pulled_data_is_read_for_a_ground_truth_case(monkeypatch):
     monkeypatch.setattr(httpx, "AsyncClient", _patched(transport_with_pull()))
     runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
     captured: dict = {}
-    await runner.run_test(GT_CASE.query, case_to_expected(GT_CASE),
-                          artifact_sink=captured.update)
+    result = await runner.run_test(GT_CASE.query, _gt_expected(),
+                                   artifact_sink=captured.update)
     assert captured["pulled_data"]["carbon_emissions_MgCO2e"] == [658496.56]
     assert captured["pulled_data"]["_rows_total"] == 1
+    # ...and grades it: the agent's pull yields the fetched value.
+    entry = result_to_entry(result, GT_CASE.uid)
+    assert entry["checks"]["ground_truth_match"] == 1.0
+    assert "error" not in entry
+
+
+@pytest.mark.anyio
+async def test_an_unresolved_selector_errors_the_row(monkeypatch):
+    """AC 4 end to end: evaluator -> TestResult.error -> ledger error -> verdict."""
+    from goldset.buckets import row_verdict
+
+    monkeypatch.setattr(httpx, "AsyncClient", _patched(transport_with_pull()))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    result = await runner.run_test(
+        GT_CASE.query, _gt_expected(values=(), unresolved="column 'x' not in the response"))
+    entry = result_to_entry(result, GT_CASE.uid)
+    assert entry["error"] == "ground truth unresolved: column 'x' not in the response"
+    assert entry["checks"]["ground_truth_match"] is None
+    assert row_verdict(entry) == "error"
 
 
 @pytest.mark.anyio
@@ -271,10 +297,12 @@ async def test_a_failed_pull_read_degrades_instead_of_failing_the_trial(monkeypa
         _patched(transport_with_pull(httpx.Response(404, json={}))))
     runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
     captured: dict = {}
-    result = await runner.run_test(GT_CASE.query, case_to_expected(GT_CASE),
+    result = await runner.run_test(GT_CASE.query, _gt_expected(),
                                    artifact_sink=captured.update)
     assert result.error is None
     assert captured["pulled_data"] is None
+    # unreadable pull, no chart: cannot tell agent from harness
+    assert result.ground_truth_match_score is None
 
 
 @pytest.mark.anyio

@@ -86,6 +86,8 @@ ACTUALS_FOR_CHECK = {
     "dashboard_widgets_match": ("actual_dashboard_widget_types",),
     "web_fallback": ("actual_web_links",),
     "pull_source_match": ("actual_pull_source",),
+    "ground_truth_match": ("actual_ground_truth",),
+    "ground_truth_answer": ("actual_ground_truth_answer",),
 }
 ACTUAL_TRIM = 300
 
