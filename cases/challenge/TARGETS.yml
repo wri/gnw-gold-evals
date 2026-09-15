@@ -21,7 +21,7 @@ sets:
       concepts: 0.70
       # designations (PZB-1392): protected areas named with an English designation
       # whose WDPA row stores a French/Spanish one. Diagnostic smoke 2026-09-15:
-      # 12/18 (67%). Target dated when the first canonical 3-trial baseline lands.
+      # 16/22 (73%). Target dated when the first canonical 3-trial baseline lands.
       designations: 0.80
   # The numeric sets (ported from gnw-evals eval-metrics-slice-1) carry no
   # targets yet: slice-1's published rates (quant 74 / trend 93 / comp 89)

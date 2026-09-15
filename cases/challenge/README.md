@@ -97,16 +97,18 @@ prompts of this type".
 
 ## Batch 1: the `aoi` set
 
-149 prompts across 12 cohorts (`cases/challenge/aoi/<cohort>/`), every
+153 prompts across 12 cohorts (`cases/challenge/aoi/<cohort>/`), every
 prompt isolated in scope so
 only `pick_aoi` executes. Run it alone with `--set aoi` (the run CLI's
 exact-match filter on `case.set`). Seed and per-case lineage:
 `seeds/challenge-aoi-v1.csv`; PZB tickets and specs in `notes.lineage`.
 Expectations verified against prod `/api/aois` on 2026-09-01 (121 rows), or
 structural GADM id ranges (5 expansion rows).
-The `designations` cohort (18 rows, added 2026-09-15, lineage PZB-1392) names
-protected areas with an English designation where the WDPA row stores a French
-or Spanish one; its ids were verified against prod `/api/aois` on 2026-09-15.
+The `designations` cohort (22 rows, added 2026-09-15, lineage PZB-1392) names
+protected areas and indigenous lands with an English designation where the
+WDPA or Landmark row stores a French, Spanish or Portuguese one, plus two
+designation-in-leaf controls; its ids were verified against prod `/api/aois`
+on 2026-09-15.
 
 Known scoring gaps accepted for batch 1 (candidates for future evaluators):
 

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "218f71ed5042aa8d",
-  "case_count": 514,
+  "caseset_version": "291259f13da933e2",
+  "case_count": 518,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -2399,6 +2399,70 @@
       "difficulty": "easy",
       "behaviour": "select",
       "query": "Zoom to Parc National de l'Ivindo",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-151",
+      "uid": "57d4f544edbdc2d8",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Show me the Matsés Native Community in Peru",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-152",
+      "uid": "db4264643c069768",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Go to the Kayapó Indigenous Territory",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-153",
+      "uid": "0dc0530dd45ad363",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "select",
+      "query": "Show me Sapo National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-154",
+      "uid": "88e7350d3b3bd94e",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Zoom to Tumucumaque Mountains National Park",
       "expected_fields": [
         "aoi_ids"
       ],
