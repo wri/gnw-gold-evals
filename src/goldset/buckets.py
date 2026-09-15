@@ -56,6 +56,9 @@ DEDICATED: dict[str, str] = {
     "scope_match": SCOPE,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,
+    # Run-time ground truth (PZB-1282). Every way it scores 0.0 is the pull:
+    # a readable pull lacking the value, or no pull at all.
+    "ground_truth_match": RETRIEVAL,
 }
 
 # Checks whose failure straddles two buckets and cannot be attributed.
@@ -63,6 +66,7 @@ SHARED: dict[str, tuple[str, str]] = {
     "charts_answer": (ANALYSIS, OUTPUT),
     "agent_answer": (ANALYSIS, EXPLANATION),
     "dashboard_created": (OUTPUT, SCOPE),
+    "ground_truth_answer": (ANALYSIS, EXPLANATION),
 }
 
 # Reported for diagnosis, never part of any verdict.
@@ -80,12 +84,18 @@ SHARED: dict[str, tuple[str, str]] = {
 # i.e. all the movement was the judge's framing opinion, and cases/README.md
 # forbids staking a verdict on chart choice. Re-admit only if it demonstrates
 # std <= 0.10 over 3 trials.
+# ground_truth_answer: born info-only 2026-09-14 (PZB-1282 AC 7). agent_answer's
+# twin against fetched values — the judge extracts, code compares — and so
+# shared across the same two buckets. Once a case trades `answer` for
+# `ground_truth` it is the only check that could measure Analysis on that row.
+# Re-admit only if it demonstrates std <= 0.10 over 3 trials.
 INFO_ONLY: frozenset[str] = frozenset(
     {
         "date_coverage",
         "answer_traceability",
         "class_value_match",
         "charts_answer_judge",
+        "ground_truth_answer",
     }
 )
 
@@ -181,7 +191,7 @@ def _tri(value: str | None) -> bool | None:
 def _case_expects_data_pull(expected: dict[str, str]) -> bool:
     if _tri(expected.get("clarification")) is True:
         return False
-    if expected.get("answer"):
+    if expected.get("answer") or expected.get("ground_truth"):
         return True
     return "insight" in (expected.get("dashboard_widgets") or "")
 
@@ -204,6 +214,10 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("date_extraction")
     if expected.get("answer"):
         implied.update({"agent_answer", "chart_produced"})
+    if expected.get("ground_truth"):
+        # Abstains only when the harness cannot read the agent's pull — a hole
+        # reconciliation should surface, not excuse.
+        implied.add("ground_truth_match")
     if _case_expects_data_pull(expected):
         implied.update({"data_pull_exists", "answered_without_data"})
     if expected.get("text"):

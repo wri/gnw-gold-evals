@@ -45,9 +45,31 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
         "agent_answer": "1,299,278 ha"  // values, so reports can show
       },                                // expected vs measured (PR-13 on)
       "latency_s": 49.9,
-      "trace_url": "https://langfuse...."
+      "trace_url": "https://langfuse....",
+      "ground_truth": {                 // ground-truth cases only (PZB-1282)
+        "selector": "sum(carbon_emissions_MgCO2e) WHERE tree_cover_loss_year=2019",
+        "values": [658496.56],          // fetched at run start, one fetch per run
+        "digest": "…",                  // absent when `unresolved` is set
+        "dataset_id": "4",
+        "content_date_fixed": false,
+        "resource_id": "09272a7f-…",
+        "fetched_at": "2026-09-14T12:00:05Z",
+        "request": {"endpoint": "/v0/land_change/tree_cover_loss/analytics",
+                    "payload": {"aoi": {"type": "admin", "ids": ["MDG.3.4"]}}},
+        "metadata": {"aoi": {"provider": "gadm", "version": "4.1"}},  // server's echo
+        "agent_values": [[658496.56]],  // per trial, aligned with `trials`: the
+                                        // agent's own pulled figure per value;
+                                        // null where its pull lacked one
+        "unresolved": "column 'x' not in the response"  // only when the selector missed
+      }
     }
-  ]
+  ],
+  "ground_truth": {                     // present iff any entry carries one
+    "base_url": "https://analytics.globalnaturewatch.org",
+    "cases": 1,
+    "prefetch_seconds": 3.4,            // summed across sessions on a resumed run
+    "tolerance": 0.02                   // relative tolerance the run graded with
+  }
 }
 ```
 
@@ -81,6 +103,17 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
 - **Multi-trial runs** store one entry per case with
   `"trials": [{...}, {...}, {...}]` per check where trials > 1; the
   top-level `checks` value is the majority verdict.
+- **Ground truth is recorded, not trusted.** A case carrying
+  `expected.ground_truth` is graded against values fetched from the production
+  analytics API before any trial, and its entry records what was fetched and
+  how. The API exposes no data-version field, so `digest` — a hash of the values
+  the selector picked, not of the whole response — is the only data-version
+  signal: a digest that differs between two runs means that case's data moved.
+  It is omitted on an unresolved selector, where it would be one constant for
+  every such case and prove nothing. `tools/diff_runs.py` reads it: a
+  ground-truth check that flips while its digest moved is a **data bump**,
+  listed but never counted as a regression, and `agent_values` is what lets
+  the diff flag a bump that may hide a real agent break.
 - **No fabricated or backfilled runs.** A ledger entry is written by the
   ingester from real harness output, never by hand.
 

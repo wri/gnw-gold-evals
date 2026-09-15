@@ -28,6 +28,7 @@ class APITestRunner(BaseTestRunner):
         ff: str | None = None,
         verbose: bool = False,
         wall_clock_limit: float = 900.0,
+        analytics_token: str | None = None,
     ):
         """Initialize with API configuration."""
         self.api_base_url = api_base_url
@@ -35,6 +36,39 @@ class APITestRunner(BaseTestRunner):
         self.ff = ff
         self.verbose = verbose
         self.wall_clock_limit = wall_clock_limit
+        # Set only for ground-truth runs: lets the runner re-read the agent's
+        # own `source_url` to see the table it actually pulled.
+        self.analytics_token = analytics_token
+
+    async def _fetch_pulled_data(
+        self, client: httpx.AsyncClient, agent_state: dict[str, Any]
+    ) -> dict[str, Any] | None:
+        """The rows behind the agent's ``statistics.source_url``.
+
+        ``statistics.data`` is empty on every observed pull — the table lives
+        behind the URL, and nothing has ever fetched it, so every numeric check
+        today reconstructs figures from ``charts_data`` instead. Reading it makes
+        "the agent's pulled data" mean the data rather than the chart, so a
+        correct pull that never reached a chart is no longer a failure.
+
+        Soft-fails to None like the dashboard fetch: this is enrichment, and
+        killing a trial over a diagnostic GET would buy nothing.
+        """
+        from goldset.evaluators.utils import last_statistics
+        from goldset.groundtruth.client import analytics_headers
+
+        source_url = (last_statistics(agent_state) or {}).get("source_url")
+        if not source_url:
+            return None
+        try:
+            response = await client.get(
+                str(source_url), headers=analytics_headers(self.analytics_token or "")
+            )
+            response.raise_for_status()
+            return (response.json().get("data") or {}).get("result") or None
+        except Exception as error:
+            print(f"Warning: failed to read pulled data from {source_url}: {error}")
+            return None
 
     @staticmethod
     def _build_app_thread_url(api_base_url: str, thread_id: str) -> str:
@@ -164,6 +198,14 @@ class APITestRunner(BaseTestRunner):
                                 f"{dashboard_error}",
                             )
                             dashboard = None
+
+                    # Carried on agent_state rather than as a fifth evaluator
+                    # argument: it is the bag every evaluator already reads, and
+                    # only the ground-truth check consumes it.
+                    if expected_data.expected_ground_truth and self.analytics_token:
+                        agent_state["pulled_data"] = await self._fetch_pulled_data(
+                            client, agent_state
+                        )
 
             api_duration_seconds = time.time() - start_time
 

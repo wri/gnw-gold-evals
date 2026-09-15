@@ -43,7 +43,7 @@ RUN = {
 
 
 def test_template_has_placeholder_and_drop_zone():
-    text = TEMPLATE.read_text()
+    text = TEMPLATE.read_text(encoding="utf-8")
     assert PLACEHOLDER in text
     assert "Drop a" in text  # standalone (uninjected) mode exists
 
@@ -52,7 +52,7 @@ def test_injection_produces_selfcontained_report():
     contexts = {"u2": {"query": "Sao Paulo disturbance in H2 2024?",
                        "group": "direct", "scope": "analyse",
                        "expected": {"aoi_ids": "BRA.25_1", "answer": "1,319,600 ha"}}}
-    html = render_report(RUN, TEMPLATE.read_text(), "test-time", cases=contexts)
+    html = render_report(RUN, TEMPLATE.read_text(encoding="utf-8"), "test-time", cases=contexts)
     assert PLACEHOLDER not in html
     assert '"run_id": "20260801T000000Z_staging"'.replace(" ", "") \
         in html.replace(" ", "")
@@ -90,7 +90,7 @@ def test_all_runs_injection_embeds_every_run():
 
     second = {**RUN, "run_id": "20260802T000000Z_staging",
               "started": "2026-08-02T00:00:00Z"}
-    html = render_report_all([second, RUN], TEMPLATE.read_text(), "t")
+    html = render_report_all([second, RUN], TEMPLATE.read_text(encoding="utf-8"), "t")
     payload = html.split('type="application/json">')[1].split("</script>")[0]
     assert '"runs"' in payload and '"run":' not in payload
     assert "20260801T000000Z_staging" in payload
@@ -98,7 +98,7 @@ def test_all_runs_injection_embeds_every_run():
 
 
 def test_template_has_run_picker():
-    text = TEMPLATE.read_text()
+    text = TEMPLATE.read_text(encoding="utf-8")
     assert 'id="runsel"' in text          # dropdown exists
     assert "toLocaleString" in text       # human-readable datetime labels
 

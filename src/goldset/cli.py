@@ -15,6 +15,7 @@ import asyncio
 import os
 import subprocess
 import sys
+import time
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -85,6 +86,8 @@ ACTUALS_FOR_CHECK = {
     "dashboard_widgets_match": ("actual_dashboard_widget_types",),
     "web_fallback": ("actual_web_links",),
     "pull_source_match": ("actual_pull_source",),
+    "ground_truth_match": ("actual_ground_truth",),
+    "ground_truth_answer": ("actual_ground_truth_answer",),
 }
 ACTUAL_TRIM = 300
 
@@ -214,6 +217,12 @@ async def run_cases(
         ff=args.ff,
         verbose=args.verbose,
         wall_clock_limit=args.trial_timeout,
+        # Only ground-truth cases re-read the agent's pull, so this stays None
+        # for a run with none and no extra request is ever issued.
+        analytics_token=(
+            (os.environ.get("ANALYTICS_API_TOKEN") or os.environ.get("API_TOKEN"))
+            if args.ground_truth else None
+        ),
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
     # hard cap concurrency against the live API (20 ran fine on gnw-evals)
@@ -243,6 +252,7 @@ async def run_cases(
             original_uid = case.uid
             resolved = _resolve_case(case)
             trials = []
+            agent_values = []   # per trial: the agent's own figures, ground truth only
             for trial in range(1, args.trials + 1):
                 if resolved.is_multiturn:
                     entry = await run_conversation(
@@ -257,12 +267,27 @@ async def run_cases(
                     trials.append(entry)
                 else:
                     result = await runner.run_test(
+                        # `resolved` carries the template-expanded query;
+                        # expectations and the ground-truth key come from the
+                        # ORIGINAL case, whose uid is what prefetch keyed on
+                        # (resolving mints a different query, hence a different
+                        # uid — the same reason original_uid is captured above).
                         resolved.query,
-                        case_to_expected(case),
+                        case_to_expected(case, args.ground_truth.get(case.uid)),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
                     trials.append(result_to_entry(result, original_uid))
+                    agent_values.append(result.actual_ground_truth_values)
             entry = merge_trials(trials)
+            # One fetch serves every trial, so the record sits on the merged
+            # entry; attached before entry_sink so a resume keeps it.
+            ground_truth = args.ground_truth.get(original_uid)
+            if ground_truth is not None:
+                entry["ground_truth"] = {
+                    **ground_truth.to_ledger(),
+                    # aligned with `trials`: what the agent's pull gave each time
+                    "agent_values": agent_values,
+                }
             # G3: slow rows get an info flag — reported, never scored.
             info = latency_info(entry.get("latency_s"), args.slow_threshold)
             if info:
@@ -306,6 +331,22 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
         "results": entries,
         "buckets": summarize_buckets(entries),
     }
+    # Keyed on the entries, not args.ground_truth: a resume's args hold only the
+    # remaining cases, which may carry none even though finished ones did.
+    ground_truth_cases = sum(1 for entry in entries if "ground_truth" in entry)
+    if ground_truth_cases:
+        # Deferred: the judge module loads the model client, which store-only
+        # paths never need. Only a run that graded ground truth reaches here.
+        from goldset.evaluators.llm_judges import NUMERIC_TOLERANCE
+
+        record["ground_truth"] = {
+            "base_url": args.analytics_base_url,
+            "cases": ground_truth_cases,
+            "prefetch_seconds": getattr(args, "prefetch_seconds", None),
+            # The tolerance this run graded with, so diff_runs can compare
+            # figures across runs without importing the judge module.
+            "tolerance": NUMERIC_TOLERANCE,
+        }
     if args.note:
         return {**record, "methodology_note": args.note}
     return record
@@ -331,6 +372,69 @@ def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
         line += f", {judge_failures} with JUDGE ERRORS (rerun before trusting)"
     print(line)
     return 0
+
+
+def prefetch_ground_truth(args: argparse.Namespace, cases: list[Case]) -> bool:
+    """Resolve every ground-truth case before any trial. False means abort.
+
+    Runs before the in-flight partial header is written, so a failed prefetch
+    leaves no partial file behind — nothing has been sent to the agent and
+    there is no half-run to mislead a reader. Sets ``args.ground_truth`` (empty
+    when no case carries a selector), which ``run_cases`` reads per case.
+
+    Called from both entry points: a resumed run's remaining cases include
+    ground-truth ones, and they need values just as much as a fresh run's.
+    Re-fetching on resume is correct — the run already spans two sessions, and
+    the alternative is grading the remainder against nothing.
+    """
+    # Deferred like the runner imports: httpx stays out of store-only
+    # invocations (`--dry-run`, `prune-artifacts`).
+    from goldset.groundtruth import (
+        AnalyticsError,
+        RequestError,
+        SelectorError,
+        prefetch,
+    )
+    from goldset.groundtruth.client import BASE_URL, AnalyticsClient
+    from goldset.groundtruth.fetch import is_ground_truth
+
+    args.ground_truth = {}
+    # Resolved even with no targets: the partial header records it, so a resume
+    # whose remaining cases do carry ground truth fetches from the same host.
+    args.analytics_base_url = getattr(args, "analytics_base_url", None) or BASE_URL
+    targets = [case for case in cases if is_ground_truth(case)]
+    if not targets:
+        return True
+
+    client = AnalyticsClient(
+        # args.api_token is already resolved per environment by
+        # require_api_token; ANALYTICS_API_TOKEN overrides it when the
+        # analytics API ever needs its own credential.
+        token=os.environ.get("ANALYTICS_API_TOKEN") or args.api_token,
+        base_url=args.analytics_base_url,
+    )
+    print(f"prefetch: {len(targets)} ground-truth case(s) "
+          f"from {args.analytics_base_url}", flush=True)
+    started_fetch = time.monotonic()
+    try:
+        args.ground_truth = prefetch(targets, client, verbose=args.verbose)
+    except (RequestError, AnalyticsError, SelectorError) as error:
+        # Abort loudly rather than score against missing data.
+        print(f"  ABORT — ground-truth prefetch failed: {error}", flush=True)
+        return False
+    elapsed = round(time.monotonic() - started_fetch, 1)
+    # Summed, not replaced: a resumed run fetches twice, and the ledger's figure
+    # is the total time spent fetching across both sessions.
+    args.prefetch_seconds = round((getattr(args, "prefetch_seconds", None) or 0.0)
+                                  + elapsed, 1)
+    unresolved = [g for g in args.ground_truth.values() if g.unresolved]
+    line = (f"  resolved {len(args.ground_truth) - len(unresolved)}"
+            f"/{len(targets)} in {elapsed}s")
+    if unresolved:
+        line += (f" — {len(unresolved)} unresolved, will ERROR: "
+                 + ", ".join(g.case_id for g in unresolved))
+    print(line, flush=True)
+    return True
 
 
 def resume_run(args: argparse.Namespace) -> int:
@@ -371,6 +475,10 @@ def resume_run(args: argparse.Namespace) -> int:
         setattr(args, field, header[field])
     args.run_id = header["run_id"]
     args.resolved_url = header["resolved_url"]
+    # .get(): partials written before ground truth lacked both, and must still
+    # resume (None falls back to the default host and a zero timing).
+    args.analytics_base_url = header.get("analytics_base_url")
+    args.prefetch_seconds = header.get("prefetch_seconds")
 
     load_dotenv()
     # The header pins the environment the run started against, so resume
@@ -383,6 +491,8 @@ def resume_run(args: argparse.Namespace) -> int:
     remaining = [c for c in select_cases(args) if c.uid not in done_uids]
     print(f"resume {args.run_id}: {len(done)} case(s) already scored, "
           f"{len(remaining)} remaining against {args.resolved_url}", flush=True)
+    if not prefetch_ground_truth(args, remaining):
+        return 1
     new_entries = (
         asyncio.run(run_cases(
             args, remaining,
@@ -446,6 +556,8 @@ def main() -> int:
     run.add_argument("--note", default=None,
                      help="methodology note recorded on the run (e.g. after a "
                           "check-semantics change, so diffs aren't read as agent movement)")
+    run.add_argument("--analytics-base-url", default=None,
+                     help="analytics API host used to fetch ground truth")
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
     run.add_argument("--resume", default=None, metavar="RUN_ID",
@@ -505,6 +617,11 @@ def main() -> int:
     started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
 
+    # Before the partial header is written: a failed prefetch must leave no
+    # partial file, and nothing has been sent to the agent yet.
+    if not prefetch_ground_truth(args, cases):
+        return 1
+
     partial = write_partial_header(args.results_dir, {
         "run_id": args.run_id,
         "started": started,
@@ -522,6 +639,8 @@ def main() -> int:
         "id": args.id,
         "group": args.group,
         "note": args.note,
+        "analytics_base_url": args.analytics_base_url,
+        "prefetch_seconds": getattr(args, "prefetch_seconds", None),
     })
 
     print(f"run {args.run_id}: {len(cases)} cases x {args.trials} trial(s) "
