@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "e2340e5caf33e404",
-  "case_count": 496,
+  "caseset_version": "218f71ed5042aa8d",
+  "case_count": 514,
   "statuses": {
-    "ready": 491,
+    "ready": 509,
     "todo": 5
   },
-  "active_count": 496,
+  "active_count": 514,
   "groups": [
     {
       "group": "acronyms",
@@ -39,6 +39,14 @@
       "active": 8,
       "statuses": {
         "ready": 8
+      }
+    },
+    {
+      "group": "designations",
+      "cases": 18,
+      "active": 18,
+      "statuses": {
+        "ready": 18
       }
     },
     {
@@ -190,7 +198,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 453,
+      "dedicated": 471,
       "shared_only": 0
     },
     "analysis": {
@@ -213,7 +221,7 @@
   "expected_fields": [
     {
       "field": "aoi_ids",
-      "cases": 453,
+      "cases": 471,
       "switches_on": "aoi_id_match"
     },
     {
@@ -550,7 +558,8 @@
           "acronyms": 0.8,
           "data-quality": 0.8,
           "sources": 0.7,
-          "concepts": 0.7
+          "concepts": 0.7,
+          "designations": 0.8
         }
       },
       "quantification": {

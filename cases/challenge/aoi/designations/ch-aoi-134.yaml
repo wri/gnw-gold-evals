@@ -1,0 +1,20 @@
+id: ch-aoi-134
+uid: d9987bd57cce945d
+status: ready
+set: aoi
+group: designations
+query: Show me the Okapi Wildlife Reserve
+expected:
+  aoi_ids: '37043'
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch: the user names the area with an English
+    designation while the WDPA row stores it as "Okapis, Réserve de Faune, COD". prod 2026-09-03
+    resolved to ''Wildlife, Reserve, USA'' (PZB-1392); 2026-09-15 offered Bomu / Ajai (trace
+    33e73b5ce5f0cf197534c2c2504302e2). Retrieval: /api/aois?name=Okapi finds nothing, name=Okapis
+    finds it.'
+  verify_query: Okapis
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
+  observed: 'prod smoke 2026-09-15 (1 trial): resolved to Bomu, Réserve de Faune, COD (555512073)'

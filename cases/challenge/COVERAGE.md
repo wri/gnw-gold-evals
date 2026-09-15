@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version e2340e5caf33e404` · 496 cases · ready 491 · todo 5 · **496 active** (everything but `not doing` runs by default)
+`caseset_version 218f71ed5042aa8d` · 514 cases · ready 509 · todo 5 · **514 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-01_
+_Last updated: 2026-09-15_
 
 ## Groups
 
@@ -17,6 +17,7 @@ _Last updated: 2026-09-01_
 | ambiguity | 10 | 10 | ready 10 |
 | concepts | 16 | 16 | ready 16 |
 | data-quality | 8 | 8 | ready 8 |
+| designations | 18 | 18 | ready 18 |
 | direct | 20 | 20 | ready 20 |
 | expansion | 10 | 10 | ready 6, todo 4 |
 | ghg-flux | 23 | 23 | ready 23 |
@@ -45,7 +46,7 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 453 | 0 | 453 | 91% |
+| retrieval | 471 | 0 | 471 | 92% |
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 30 | 0 | 30 | 6% |
 | output | 0 | 0 | 0 | 0% |
@@ -55,7 +56,7 @@ friends) run on top of it whenever their trigger state exists.
 
 | field | cases | switches on |
 |---|---|---|
-| aoi_ids | 453 | aoi_id_match |
+| aoi_ids | 471 | aoi_id_match |
 | data_pull | 365 | data_pull_exists, answered_without_data |
 | dataset_id | 365 | dataset_id_match |
 | end_date | 226 | date_extraction (with start_date) |
