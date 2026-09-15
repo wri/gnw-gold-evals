@@ -66,6 +66,10 @@ def _match(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, Any
         "ground_truth_match_score": None,
         "ground_truth_match_score_reason": None,
         "actual_ground_truth": None,
+        # The agent's own figure per expected value, as numbers: diff_runs reads
+        # it to spot a real break hiding behind a data change. None wherever the
+        # agent's pull was absent, unreadable, or lacked the metric.
+        "actual_ground_truth_values": [None] * len(values),
     }
 
     if isinstance(pulled, dict) and pulled:
@@ -95,6 +99,8 @@ def _match(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, Any
         )
         parts.append(f"expected {format_number(value)}, {source} gives {found}")
 
+    if source == "the agent's pull":
+        result["actual_ground_truth_values"] = [_closest(figures, v) for v in values]
     if matched:
         score = 1.0
     elif source.startswith("the chart"):

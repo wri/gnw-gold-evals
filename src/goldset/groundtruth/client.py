@@ -10,12 +10,9 @@
 Mirrors ``AnalyticsHandler`` in project-zeno so the harness asks the same
 question the agent does.
 
-Two things worth knowing. The host is the **same** for staging and production —
-only the ``X-environment`` header differs, so getting it wrong grades a staging
-run against production data with no visible symptom. And the result resource id
-is a UUID5 over the payload, so identical requests reuse one cached result; the
-API exposes no cache headers and no data-version field, which is why the ledger
-records a digest of the fetched values instead.
+The result resource id is a UUID5 over the payload, so identical requests reuse
+one cached result; the API exposes no cache headers and no data-version field,
+which is why the ledger records a digest of the fetched values instead.
 """
 
 from __future__ import annotations
@@ -29,12 +26,14 @@ import httpx
 BASE_URL = "https://analytics.globalnaturewatch.org"
 DEFAULT_TIMEOUT = 120.0
 MAX_POLLS = 10
-DEFAULT_ENVIRONMENT = "production"
+# Always production, whatever `--env` the run targets: no run uses the staging
+# analytics API. Deliberately not a parameter, so no caller can send another.
+X_ENVIRONMENT = "production"
 DONE = ("success", "saved")
 FAILED = ("failed", "error")
 
 
-def analytics_headers(token: str, environment: str = DEFAULT_ENVIRONMENT) -> dict:
+def analytics_headers(token: str) -> dict:
     """Headers every analytics request needs, wherever it is issued from.
 
     Shared with the runner, which re-reads the agent's own ``source_url`` to see
@@ -43,7 +42,7 @@ def analytics_headers(token: str, environment: str = DEFAULT_ENVIRONMENT) -> dic
     return {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "X-environment": environment,
+        "X-environment": X_ENVIRONMENT,
         "Authorization": f"Bearer {token}",
     }
 
@@ -74,16 +73,14 @@ class AnalyticsClient:
     def __init__(
         self,
         token: str,
-        environment: str = DEFAULT_ENVIRONMENT,
         base_url: str = BASE_URL,
         timeout: float = DEFAULT_TIMEOUT,
         max_polls: int = MAX_POLLS,
         transport: httpx.BaseTransport | None = None,
     ):
         self.base_url = base_url.rstrip("/")
-        self.environment = environment
         self.max_polls = max_polls
-        self._headers = analytics_headers(token, environment)
+        self._headers = analytics_headers(token)
         self._timeout = timeout
         self._transport = transport
 

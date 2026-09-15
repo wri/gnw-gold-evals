@@ -15,8 +15,9 @@ Prefetch, not lazy fetch, for four reasons:
 
 Two failure classes, deliberately handled differently:
 
-- the fetch itself failing (HTTP error, failed job, empty result, or a case that
-  cannot be turned into a request) **aborts the run** — there is nothing to
+- the fetch itself failing (HTTP error, failed job, empty result, a case that
+  cannot be turned into a request, or a selector that does not parse) **aborts
+  the run** — there is nothing to
   grade against, and scoring against missing data is the thing this mechanism
   exists to prevent;
 - the selector not resolving against an otherwise-good response is recorded on
@@ -86,11 +87,18 @@ class GroundTruth:
     unresolved: str | None = None
 
     def to_ledger(self) -> dict[str, Any]:
-        """The per-entry ``ground_truth`` block written to the run record."""
+        """The per-entry ``ground_truth`` block written to the run record (AC 5).
+
+        ``dataset_id`` is recorded because 4, 8 and 10 share one endpoint.
+        ``content_date_fixed`` because a digest moving on a fixed dataset points
+        at the harness or the API, not a vintage bump.
+        """
         record: dict[str, Any] = {
             "selector": self.selector,
             "values": self.values,
             "digest": self.digest,
+            "dataset_id": self.request.dataset.dataset_id,
+            "content_date_fixed": self.request.dataset.fixed,
             "resource_id": self.resource_id,
             "fetched_at": self.fetched_at,
             "request": {
@@ -102,6 +110,9 @@ class GroundTruth:
             record["metadata"] = self.metadata
         if self.unresolved:
             record["unresolved"] = self.unresolved
+            # digest([]) is one constant for every unresolved case; two runs
+            # sharing it would read as "same data" while proving nothing.
+            del record["digest"]
         return record
 
 
@@ -147,8 +158,9 @@ def prefetch(
 ) -> dict[str, GroundTruth]:
     """Resolve every ground-truth case, keyed by uid.
 
-    Raises ``RequestError`` or ``AnalyticsError`` on the first case that cannot
-    be fetched — the caller aborts the run. Cases without a ``ground_truth``
+    Raises ``RequestError``, ``AnalyticsError`` or ``SelectorError`` (a selector
+    that does not parse) on the first case that cannot be fetched — the caller
+    aborts the run. Cases without a ``ground_truth``
     field are skipped entirely and never touched.
     """
     targets = [case for case in cases if is_ground_truth(case)]
@@ -172,7 +184,7 @@ def prefetch(
                         else ", ".join(f"{v:,.2f}" for v in ground_truth.values)
                     )
                     print(f"    {case.id}  {ground_truth.selector} -> {detail}")
-        except (RequestError, AnalyticsError):
+        except (RequestError, AnalyticsError, SelectorError):
             # Nothing useful can come of the rest; stop paying for them.
             for future in futures:
                 future.cancel()

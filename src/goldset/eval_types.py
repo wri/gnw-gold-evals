@@ -124,6 +124,7 @@ class TestResult(BaseModel):
     ground_truth_match_score: float | None = None
     ground_truth_match_score_reason: str | None = None
     actual_ground_truth: str | None = None
+    actual_ground_truth_values: list[float | None] | None = None
     ground_truth_answer_score: float | None = None
     ground_truth_answer_score_reason: str | None = None
     actual_ground_truth_answer: str | None = None

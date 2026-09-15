@@ -131,6 +131,73 @@ def test_run_record_names_its_caseset():
     assert record["caseset"] == "v2"
     assert record["caseset_version"] == "2276185a231bfdad"
     assert validate_run(record) == []
+    # AC 8 — a run with no ground-truth entries gains no key at all
+    assert "ground_truth" not in record
+
+
+def test_run_record_carries_the_ground_truth_block_from_its_entries():
+    """Keyed on the entries, not args.ground_truth: a resume's args hold only
+    the remaining cases, which here carry none."""
+    import argparse
+
+    from goldset.cli import build_run_record
+
+    args = argparse.Namespace(
+        run_id="20260914T120000Z_staging", build="b", ff=None, trials=1,
+        workers=10, trial_timeout=900.0, note=None,
+        cases_dir=__import__("pathlib").Path("cases/v2"),
+        ground_truth={}, analytics_base_url="https://analytics.example",
+        prefetch_seconds=3.4,
+    )
+    entries = [
+        {"uid": "u1", "id": "1-046", "checks": {}, "ground_truth": {"values": [1.0]}},
+        {"uid": "u2", "id": "1-002", "checks": {}},
+    ]
+    record = build_run_record(args, {"caseset_version": "c"}, entries,
+                              started="2026-09-14T12:00:00Z", environment="staging")
+    assert record["ground_truth"] == {
+        "base_url": "https://analytics.example", "cases": 1, "prefetch_seconds": 3.4,
+        "tolerance": 0.02,
+    }
+
+
+def test_run_cases_records_the_agent_figure_for_every_trial(monkeypatch, tmp_path):
+    """The ground-truth record carries each trial's figure, aligned with `trials`,
+    so diff_runs can examine exactly the trials that failed."""
+    import argparse
+    import asyncio
+
+    import goldset.runner.api
+    from goldset import cli
+    from goldset.eval_types import TestResult
+
+    figures = iter([[658496.56], [12.0]])
+
+    class FakeRunner:
+        def __init__(self, **kwargs):
+            pass
+
+        async def run_test(self, query, expected, artifact_sink=None):
+            return TestResult(thread_id="t", query=query, overall_score=0.0,
+                              execution_time="now", test_id=expected.test_id,
+                              ground_truth_match_score=1.0,
+                              actual_ground_truth_values=next(figures))
+
+    monkeypatch.setattr(goldset.runner.api, "APITestRunner", FakeRunner)
+    ground_truth = SimpleNamespace(values=[658496.56], unresolved=None,
+                                   to_ledger=lambda: {"values": [658496.56], "digest": "d"})
+    args = argparse.Namespace(
+        resolved_url="https://api.test", api_token="t", ff=None, verbose=False,
+        trial_timeout=60.0, ground_truth={GT_CASE.uid: ground_truth},
+        results_dir=tmp_path, run_id="20260915T000000Z_staging", workers=1,
+        trials=2, slow_threshold=180.0,
+    )
+    # asyncio.run, not the anyio marker: run_cases uses asyncio primitives,
+    # exactly as `gold run` drives it.
+    [entry] = asyncio.run(cli.run_cases(args, [GT_CASE]))
+    assert entry["ground_truth"]["agent_values"] == [[658496.56], [12.0]]
+    assert entry["ground_truth"]["digest"] == "d"
+    assert len(entry["trials"]) == 2
 
 
 def test_merge_trials_majority_and_detail():

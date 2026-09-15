@@ -152,3 +152,41 @@ def test_ledger_block_carries_what_an_audit_needs():
                            "fetched_at", "request", "metadata"}
     assert record["request"]["endpoint"].endswith("/tree_cover_loss/analytics")
     assert record["metadata"] == {"aoi": {"version": "4.1"}}
+    # 4, 8 and 10 share that endpoint, so the dataset is recorded explicitly
+    assert record["dataset_id"] == "4"
+    assert record["content_date_fixed"] is False
+    assert "unresolved" not in record
+
+
+def test_unresolved_ledger_block_carries_no_digest():
+    """digest([]) is one constant for every unresolved case: recording it would
+    let two failing runs read as 'same data'."""
+    case = Case(id="y", status="done", group="direct", query="q",
+                expected={"aoi_ids": "MDG.3.4_1", "aoi_source": "gadm",
+                          "dataset_id": "4", "ground_truth": "sum(no_such_column)"})
+    record = prefetch([case], _client(_ok()))[case.uid].to_ledger()
+    assert "digest" not in record
+    assert "not in the response" in record["unresolved"]
+
+
+def test_unparseable_selector_aborts_the_run_cleanly(capsys):
+    """AC 2 — a selector with no aggregate must reach the ABORT line, not a
+    traceback. Parsing happens before any request, so no transport is needed."""
+    import argparse
+
+    from goldset.cli import prefetch_ground_truth
+    from goldset.groundtruth.client import BASE_URL
+
+    case = Case(id="z", status="done", group="direct", query="q",
+                expected={"aoi_ids": "RUS", "aoi_source": "gadm",
+                          "dataset_id": "4", "ground_truth": "area_ha"})
+    args = argparse.Namespace(api_token="t", verbose=False)
+    assert prefetch_ground_truth(args, [case]) is False
+    assert "ABORT" in capsys.readouterr().out
+    assert args.analytics_base_url == BASE_URL
+
+
+def test_analytics_header_is_always_production():
+    from goldset.groundtruth.client import analytics_headers
+
+    assert analytics_headers("t")["X-environment"] == "production"

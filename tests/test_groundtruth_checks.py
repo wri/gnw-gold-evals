@@ -124,6 +124,19 @@ def test_zero_matches_only_zero(judge):
         "ground_truth_match_score"] == 0.0
 
 
+def test_the_agent_figure_is_recorded_only_from_its_own_pull(judge):
+    """diff_runs compares this against both runs' values to spot a hidden break."""
+    judge()
+    got = evaluate_ground_truth(state(pulled=FULL_TABLE), expected())
+    assert got["actual_ground_truth_values"] == [pytest.approx(VALUE)]
+
+    chart = {"type": "bar", "data": [{"year": 2019, "value": VALUE}]}
+    lgms = {"emissions": {"sector": ["forest"], "net_flux": [5.0]}}
+    for agent_state in (state(charts=[chart]), state(statistics=()), state(pulled=lgms)):
+        assert evaluate_ground_truth(agent_state, expected())[
+            "actual_ground_truth_values"] == [None]
+
+
 def test_every_value_must_match(judge):
     """AC 3 is plural: one unmatched value fails the check."""
     judge()
