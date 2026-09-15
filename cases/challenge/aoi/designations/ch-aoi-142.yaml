@@ -17,5 +17,5 @@ notes:
   origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
   observed: 'prod 2026-09-15: 1-trial smoke pass, then 3/3 pass on re-verification. On the deterministic
     two-term frames recorded for the scorer fix (project-zeno tests/fixtures/aoi_designation_candidates_v1.json,
-    terms = place + canonical only) the shipped scorer loses by 0.0013 to 'Maria, National Park, AUS' (311947); the live geocoder''s extra
+    terms = place + canonical only) the shipped scorer loses by 0.0013 to ''Maria, National Park, AUS'' (311947); the live geocoder''s extra
     alternatives are what carry it on prod, so this row is a margin case, not a solid pass'
