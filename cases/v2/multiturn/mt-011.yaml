@@ -1,5 +1,5 @@
 id: mt-011
-uid: 7698c9dd8c25cdab
+uid: 5910b7e35b413544
 status: not doing
 group: multiturn
 turns:
@@ -8,6 +8,7 @@ turns:
   expected:
     aoi_ids: BRA.14_1
     dataset_id: '12'
+    chart_type: hierarchical-bar;stacked-bar-with-line
     scope: analyse
 - query: How does that compare with Amazonas, Brazil?
   expected:
@@ -31,6 +32,11 @@ notes:
     at turn 2 whichever path runs, because turn 1''s statistics persist in the thread. The
     delta keeps the dataset pinned across the turn, so a row that passes cannot have quietly
     changed subject.'
+  chart_type_rationale: '2026-09-16: turn 1 carries the same deterministic chart anchor as
+    1-124 and 1-126 (see 1-123 for why the field is safe under curated_only): without it,
+    turn 1 can pass while no charts exist, and then turn 2 asserts a decline about a chart
+    that was never drawn.'
+  verification: '2026-09-16: local 3-trial run 20260916T125002Z_local_experimental on the PR branch (feat/lgms-curated-charts @423488a1): t1.aoi_id_match and t1.dataset_id_match 1.0 on 3/3, t2.state_delta 1.0 on 3/3. Turn 2''s decline is unverified: the upstream analytics API returned 401 Invalid or expired token on every trial (stale local WRI_BEARER_TOKEN), which project-zeno renders to the user as "No data found", so turn 1 produced no charts and turn 2 had nothing to compare or refuse; t2.expected_text_match flapped 2/3 on that broken pull, which says nothing about the guard either way.'
   status_reason: '2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden
     unless ff=experimental while gold runs target the default profile. (2) The behaviour is
     unreleased - wri/project-zeno#827 was open at authoring time, and today the agent compares

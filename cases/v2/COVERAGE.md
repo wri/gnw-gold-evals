@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 789f523d2b130a59` · 132 cases · done 88 · not doing 26 · ready 12 · todo 6 · **106 active** (everything but `not doing` runs by default)
+`caseset_version e6b60433461ffed4` · 132 cases · done 88 · not doing 26 · ready 12 · todo 6 · **106 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-16_
 
@@ -23,11 +23,11 @@ _Last updated: 2026-09-16_
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
-| multiturn | 11 | 9 | not doing 2, ready 8, todo 1 |
+| multiturn | 12 | 9 | not doing 3, ready 8, todo 1 |
 | nudge | 2 | 2 | ready 2 |
 | parent-child | 14 | 12 | done 10, not doing 2, ready 1, todo 1 |
 | ranking | 1 | 1 | done 1 |
-| refusal | 5 | 1 | done 1, not doing 4 |
+| refusal | 4 | 1 | done 1, not doing 3 |
 | temporal | 16 | 15 | done 14, not doing 1, ready 1 |
 
 ## Bucket coverage (active cases)
@@ -126,9 +126,9 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-123 | not doing | direct | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-124 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-125 | not doing | comparative | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
-| 1-126 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-010 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-011 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| mt-012 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
