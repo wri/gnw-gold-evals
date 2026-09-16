@@ -1,0 +1,35 @@
+id: mt-010
+uid: 63460e6115f8f83a
+status: not doing
+group: multiturn
+turns:
+- query: Break down greenhouse gas emissions and removals in Pará, Brazil by vegetation, soil
+    and agriculture.
+  expected:
+    aoi_ids: BRA.14_1
+    dataset_id: '12'
+    scope: analyse
+- query: Redraw that as a pie chart.
+  expected:
+    text: Declines to change the chart, saying that only the standard charts are available
+      for this dataset
+  deltas:
+    retain:
+    - aoi_ids
+    - dataset_id
+notes:
+  scenario: '2026-09-16: restyle refused on a curated-charts-only dataset (wri/project-zeno#827).
+    Turn 1 is the 1-123 prompt, so the two rows are single-turn and multi-turn siblings on
+    the same capability; turn 2 asks for the restyle that update_insight_display must refuse.'
+  design: 'turn 2 carries no scope expectation on purpose: statistics accumulate across the
+    thread, so classify_scope reports analyse at turn 2 whether or not the restyle ran, and
+    the expectation would measure nothing. The verdict rests on the text decline plus the
+    deltas asserting the AOI and dataset survive the turn. The row passes whether the agent
+    calls update_insight_display and relays its refusal or declines straight from the session-block
+    rule - both are the required behaviour, and neither changes the chart.'
+  status_reason: '2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden
+    unless ff=experimental while gold runs target the default profile, and update_insight_display
+    is itself an experimental-profile tool. (2) The behaviour is unreleased - wri/project-zeno#827
+    was open at authoring time, and today the reviser restyles LGMS insights on request. Re-admit
+    with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote
+    to done on a 3-trial ff=experimental pass at this uid.'

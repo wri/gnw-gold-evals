@@ -1,0 +1,38 @@
+id: 1-124
+uid: f4d0745ba84ed328
+status: not doing
+group: refusal
+query: Which year had the highest organic soil emissions in Pará, Brazil?
+expected:
+  aoi_ids: BRA.14_1
+  aoi_source: gadm
+  dataset_id: '12'
+  dataset_name: Land GHG Monitoring System (LGMS)
+  text: Declines to name the year or give the figure, saying that only the standard charts
+    are available for this dataset
+  scope: analyse
+notes:
+  aoi_type: gadm 1
+  authored: '2026-09-16: authored for the curated-charts-only behaviour in wri/project-zeno#827.
+    Covers the figure half of the interpretation ban: the agent still pulls and still shows
+    the standard charts, then declines to read a value or a ranking off them. "Organic soil
+    emissions" routes to LGMS alone (the organic/mineral soil split is LGMS-only) and matches
+    a class the curated charts plot, so a break in the guard surfaces as a stated year, not
+    as a routing miss.'
+  design: 'scope is analyse, not refuse: the refusal is textual and happens after the pull,
+    so the deterministic classifier sees statistics and reports analyse (scope_checks.classify_scope).
+    A row expecting refuse here would fail on healthy behaviour. dataset_id_match and aoi_id_match
+    carry the retrieval half, expected_text_match the decline - the same judged surface 1-114
+    and 1-116 already rely on.'
+  risk: '2026-09-16: if the agent instead declines up front without pulling, dataset_id_match,
+    scope_match and the text check all fail together on behaviour that is arguably also correct.
+    The pull-then-decline path is what the #827 skill bullet instructs ("call generate_insights
+    once for one area, then only tell the user the charts are shown") and what its author
+    verified live, so the row is pinned to it deliberately. If a 3-trial run shows both paths,
+    widen scope to analyse;refuse rather than dropping the row.'
+  status_reason: '2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden
+    unless ff=experimental while gold runs target the default profile. (2) The behaviour is
+    unreleased - wri/project-zeno#827 was open at authoring time, and today the agent answers
+    this question with a year and a figure. Re-admit with the other LGMS rows once #827 is
+    deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental
+    pass at this uid.'

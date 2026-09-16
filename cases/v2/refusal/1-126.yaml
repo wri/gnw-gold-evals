@@ -1,0 +1,29 @@
+id: 1-126
+uid: ff85edfea1cad2d6
+status: not doing
+group: refusal
+query: Why did cropland emissions in Pará, Brazil change between 2016 and 2024?
+expected:
+  aoi_ids: BRA.14_1
+  aoi_source: gadm
+  dataset_id: '12'
+  dataset_name: Land GHG Monitoring System (LGMS)
+  text: Declines to explain the cause of the change, saying that only the standard charts
+    are available for this dataset
+  scope: analyse
+notes:
+  aoi_type: gadm 1
+  authored: '2026-09-16: authored for the curated-charts-only behaviour in wri/project-zeno#827.
+    Covers the narrative half of the interpretation ban, which is a different failure mode
+    from 1-124: no figure is asked for, so a guard that only suppresses numbers would still
+    let the agent narrate a cause. "Cropland emissions" routes to LGMS alone (agriculture
+    is LGMS-only) and the window is the dataset''s full extent, so nothing here drifts as
+    new data years land.'
+  design: 'Pairs with 1-124 on the same guard by a different ask - a value versus an explanation
+    - which is how the #827 instruction itself enumerates them. scope analyse for the same
+    reason as 1-124: the pull happens, the decline is textual.'
+  status_reason: '2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden
+    unless ff=experimental while gold runs target the default profile. (2) The behaviour is
+    unreleased - wri/project-zeno#827 was open at authoring time, and today the agent answers
+    with a causal narrative. Re-admit with the other LGMS rows once #827 is deployed and runs
+    carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid.'

@@ -1,0 +1,38 @@
+id: 1-125
+uid: 3e19cd597f43f6d4
+status: not doing
+group: comparative
+query: Compare greenhouse gas emissions from soils in Pará and Amazonas, Brazil.
+expected:
+  aoi_ids: BRA.14_1;BRA.4_1
+  aoi_source: gadm
+  dataset_id: '12'
+  dataset_name: Land GHG Monitoring System (LGMS)
+  text: Explains that this data is available for one area at a time and asks the user to choose
+    a single area
+  scope: refuse
+notes:
+  aoi_type: gadm 1
+  authored: '2026-09-16: authored for the curated-charts-only behaviour in wri/project-zeno#827.
+    Covers the one-area guard in pull_data: a curated_only dataset refuses a multi-area pull,
+    because the curated charts sum every row of a year and two areas would render as one silent
+    total. The refusal lands after pick_aoi and pick_dataset, so both states are still assertable
+    - the row checks that the agent resolved both areas and the dataset and then declined,
+    not that it failed early.'
+  design: 'scope refuse is honest here: the guard returns human feedback and writes no statistics,
+    so classify_scope sees no pull, no nudge and reports none, which matches refuse. aoi_ids
+    uses ; as set equality (both areas), while dataset_id ; would mean alternatives - opposite
+    conventions on the same separator, per the evaluator reference.'
+  risk: '2026-09-16: the guard only covers a single multi-area pull. Nothing stops the agent
+    pulling Pará and then Amazonas in sequence, which yields two single-area insights and
+    scope analyse, failing this row. That escape is worth knowing about either way: it is
+    the gap through which a cross-area comparison could still reach the user, so a failure
+    here is a finding to file upstream, not automatically a stale expectation. Comparison
+    prompts in the comparative group do normally produce one multi-AOI pull, which is why
+    the row is pinned to refuse.'
+  status_reason: '2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden
+    unless ff=experimental while gold runs target the default profile. (2) The behaviour is
+    unreleased - wri/project-zeno#827 was open at authoring time, and today the agent pulls
+    both areas and compares them. Re-admit with the other LGMS rows once #827 is deployed
+    and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at
+    this uid.'
