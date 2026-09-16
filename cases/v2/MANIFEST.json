@@ -1,6 +1,6 @@
 {
-  "caseset_version": "50a0ea07bb4bb90b",
-  "case_count": 124,
+  "caseset_version": "e6d7f0a210b3ca94",
+  "case_count": 126,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -700,6 +700,12 @@
       "status": "not doing"
     },
     {
+      "id": "1-122",
+      "uid": "439a98af199c5d91",
+      "group": "temporal",
+      "status": "ready"
+    },
+    {
       "id": "mt-001",
       "uid": "39840a3c054ab3bf",
       "group": "multiturn",
@@ -744,6 +750,12 @@
     {
       "id": "mt-008",
       "uid": "fa33ca99a2484307",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-009",
+      "uid": "af8932d33bb444c5",
       "group": "multiturn",
       "status": "ready"
     }

@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 20 · ready 10 · todo 6 · **104 active** (everything but `not doing` runs by default)
+`caseset_version e6d7f0a210b3ca94` · 126 cases · done 88 · not doing 20 · ready 12 · todo 6 · **106 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-02_
+_Last updated: 2026-09-15_
 
 ## Groups
 
@@ -23,12 +23,12 @@ _Last updated: 2026-09-02_
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
-| multiturn | 8 | 8 | ready 7, todo 1 |
+| multiturn | 9 | 9 | ready 8, todo 1 |
 | nudge | 2 | 2 | ready 2 |
 | parent-child | 14 | 12 | done 10, not doing 2, ready 1, todo 1 |
 | ranking | 1 | 1 | done 1 |
 | refusal | 3 | 1 | done 1, not doing 2 |
-| temporal | 15 | 14 | done 14, not doing 1 |
+| temporal | 16 | 15 | done 14, not doing 1, ready 1 |
 
 ## Bucket coverage (active cases)
 
@@ -39,23 +39,23 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 98 | 0 | 98 | 94% |
-| analysis | 0 | 70 | 70 | 67% |
-| explanation | 25 | 59 | 84 | 81% |
-| output | 75 | 3 | 78 | 75% |
-| scope | 89 | 7 | 96 | 92% |
+| retrieval | 100 | 0 | 100 | 94% |
+| analysis | 0 | 70 | 70 | 66% |
+| explanation | 26 | 59 | 85 | 80% |
+| output | 75 | 3 | 78 | 74% |
+| scope | 90 | 7 | 97 | 92% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 88 | dataset_id_match |
-| scope | 88 | scope_match |
-| aoi_source | 82 | reference only (dashboard AOI source) |
-| dataset_name | 81 | reference only |
+| dataset_id | 90 | dataset_id_match |
+| scope | 89 | scope_match |
+| aoi_source | 83 | reference only (dashboard AOI source) |
+| dataset_name | 82 | reference only |
+| aoi_ids | 72 | aoi_id_match |
 | answer | 70 | agent_answer, charts_answer, chart_produced |
-| aoi_ids | 70 | aoi_id_match |
-| text | 25 | expected_text_match |
+| text | 26 | expected_text_match |
 | context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | class_values | 6 | class_value_match (info-only) |
@@ -92,12 +92,12 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 8 | Tree cover loss by dominant driver | 5 | 4 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
 | 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
-| 11 | Integrated alerts | 5 | 4 | — | — |
+| 11 | Integrated alerts | 7 | 5 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
 
-8 active conversations (16 turns). Delta assertions: absent ×1, changed ×7, retain ×7
+9 active conversations (18 turns). Delta assertions: absent ×1, changed ×8, retain ×8
 
 ## Parked and held cases
 
