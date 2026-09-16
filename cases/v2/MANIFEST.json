@@ -1,6 +1,6 @@
 {
-  "caseset_version": "98cf5e5440b9d3b0",
-  "case_count": 131,
+  "caseset_version": "789f523d2b130a59",
+  "case_count": 132,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -786,6 +786,12 @@
     {
       "id": "mt-010",
       "uid": "63460e6115f8f83a",
+      "group": "multiturn",
+      "status": "not doing"
+    },
+    {
+      "id": "mt-011",
+      "uid": "7698c9dd8c25cdab",
       "group": "multiturn",
       "status": "not doing"
     }
