@@ -34,3 +34,9 @@ notes:
     all gating checks passed at the pre-fill uid (aoi, dataset 12, pull_source, scope analyse).
     class_values and text added from that run''s verified artifact. Needs a 3-trial ff=experimental
     pass at the final uid for done.'
+  curated_only_conflict: '2026-09-16: as 1-112 - wri/project-zeno#827 bans stating LGMS figures,
+    so the text expectation here goes with it. The class_values expectation may survive: class_value_match
+    reads records from the last statistics entry as well as from charts_data, and the raw
+    LGMS table keeps its class column, so the verified tree_loss figure can still match even
+    when the agent says nothing. It is info-only either way. Re-verify both against a post-#827
+    run before unparking.'
