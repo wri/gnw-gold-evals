@@ -1,6 +1,6 @@
 {
-  "caseset_version": "e2340e5caf33e404",
-  "case_count": 496,
+  "caseset_version": "291259f13da933e2",
+  "case_count": 518,
   "source": "challenge-aoi-v1.csv",
   "cases": [
     {
@@ -918,6 +918,160 @@
       "uid": "47b80583a5c62150",
       "set": "aoi",
       "group": "concepts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-132",
+      "uid": "42d166841c6a11ea",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-133",
+      "uid": "7ae862855f3fd39f",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-134",
+      "uid": "d9987bd57cce945d",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-135",
+      "uid": "a3aeccdb73241936",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-136",
+      "uid": "249e289351f0df08",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-137",
+      "uid": "af5f3b7996bb8b42",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-138",
+      "uid": "b4a6aa9cad673d8e",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-139",
+      "uid": "2a7052010962b88e",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-140",
+      "uid": "e5cbab462d7a5c26",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-141",
+      "uid": "3e7c94d3090ca3f3",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-142",
+      "uid": "36866fcb0ed34020",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-143",
+      "uid": "42211c3bb408a6d5",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-144",
+      "uid": "14d00b8789e525ab",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-145",
+      "uid": "5a4378ca4afe5e1f",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-146",
+      "uid": "e700e16b5058e15c",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-147",
+      "uid": "7ca3447c6b69795a",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-149",
+      "uid": "71f244710af2fb8f",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-150",
+      "uid": "d7e57a8ded12da42",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-151",
+      "uid": "57d4f544edbdc2d8",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-152",
+      "uid": "db4264643c069768",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-153",
+      "uid": "0dc0530dd45ad363",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-154",
+      "uid": "88e7350d3b3bd94e",
+      "set": "aoi",
+      "group": "designations",
       "status": "ready"
     },
     {

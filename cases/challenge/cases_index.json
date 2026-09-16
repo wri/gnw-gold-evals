@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "e2340e5caf33e404",
-  "case_count": 496,
+  "caseset_version": "291259f13da933e2",
+  "case_count": 518,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -2116,6 +2116,358 @@
       ],
       "implied_checks": [
         "expected_text_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-132",
+      "uid": "42d166841c6a11ea",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "select",
+      "query": "Show me Sankuru National Reserve",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-133",
+      "uid": "7ae862855f3fd39f",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "select",
+      "query": "Go to Yaguas National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-134",
+      "uid": "d9987bd57cce945d",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "select",
+      "query": "Show me the Okapi Wildlife Reserve",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-135",
+      "uid": "a3aeccdb73241936",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Zoom to Ivindo National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-136",
+      "uid": "249e289351f0df08",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Show me Rio Pure National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-137",
+      "uid": "af5f3b7996bb8b42",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Go to Virunga National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-138",
+      "uid": "b4a6aa9cad673d8e",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Show me Salonga National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-139",
+      "uid": "2a7052010962b88e",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Zoom to Kahuzi-Biega National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-140",
+      "uid": "e5cbab462d7a5c26",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Show me Lope National Park in Gabon",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-141",
+      "uid": "3e7c94d3090ca3f3",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Go to Odzala-Kokoua National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-142",
+      "uid": "36866fcb0ed34020",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Show me Madidi National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-143",
+      "uid": "42211c3bb408a6d5",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "select",
+      "query": "Zoom to Yasuni National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-144",
+      "uid": "14d00b8789e525ab",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Show me Cordillera Azul National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-145",
+      "uid": "5a4378ca4afe5e1f",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Go to Corcovado National Park in Costa Rica",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-146",
+      "uid": "e700e16b5058e15c",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "select",
+      "query": "Show me Chiribiquete National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-147",
+      "uid": "7ca3447c6b69795a",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "select",
+      "query": "Show me Hin Nam No National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-149",
+      "uid": "71f244710af2fb8f",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "select",
+      "query": "Show me the Réserve de faune à Okapis",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-150",
+      "uid": "d7e57a8ded12da42",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "select",
+      "query": "Zoom to Parc National de l'Ivindo",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-151",
+      "uid": "57d4f544edbdc2d8",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Show me the Matsés Native Community in Peru",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-152",
+      "uid": "db4264643c069768",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Go to the Kayapó Indigenous Territory",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-153",
+      "uid": "0dc0530dd45ad363",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "select",
+      "query": "Show me Sapo National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ]
+    },
+    {
+      "id": "ch-aoi-154",
+      "uid": "88e7350d3b3bd94e",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "select",
+      "query": "Zoom to Tumucumaque Mountains National Park",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
       ]
     },
     {

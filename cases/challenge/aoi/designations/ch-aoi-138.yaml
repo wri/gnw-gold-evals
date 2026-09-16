@@ -1,0 +1,18 @@
+id: ch-aoi-138
+uid: b4a6aa9cad673d8e
+status: ready
+set: aoi
+group: designations
+query: Show me Salonga National Park
+expected:
+  aoi_ids: '555697863'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch: the user names the area with an English
+    designation while the WDPA row stores it as "Salonga, Parc National, COD". French designation,
+    distinctive leaf.'
+  verify_query: Salonga
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
+  observed: 'prod smoke 2026-09-15 (1 trial): pass'

@@ -19,6 +19,10 @@ sets:
       data-quality: 0.80
       sources: 0.70
       concepts: 0.70
+      # designations (PZB-1392): protected areas named with an English designation
+      # whose WDPA row stores a French/Spanish one. Diagnostic smoke 2026-09-15:
+      # 16/22 (73%). Target dated when the first canonical 3-trial baseline lands.
+      designations: 0.80
   # The numeric sets (ported from gnw-evals eval-metrics-slice-1) carry no
   # targets yet: slice-1's published rates (quant 74 / trend 93 / comp 89)
   # were e2e scores including ground-truth fidelity, which this port does
