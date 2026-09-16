@@ -1,6 +1,6 @@
 {
-  "caseset_version": "e6b60433461ffed4",
-  "case_count": 132,
+  "caseset_version": "9fb56facf962a15a",
+  "case_count": 133,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -721,6 +721,12 @@
       "id": "1-125",
       "uid": "ab11c24d6b51cc52",
       "group": "comparative",
+      "status": "not doing"
+    },
+    {
+      "id": "1-127",
+      "uid": "4caeed10d6effd61",
+      "group": "refusal",
       "status": "not doing"
     },
     {
