@@ -61,7 +61,7 @@ def _pull_dataset_reference(statistics: dict[str, Any]) -> str:
     Real statistics entries carry ``dataset_id`` (int-typed) alongside
     ``source_url``/``id``/``data``/``start_date``/``end_date`` — pinned from 84
     live pull-bearing artifacts (81/84 carried it; see
-    results/campaigns/20260801-pr08.md, "Step 4 — G4 pinned"). Presence is
+    results/gold/campaigns/20260801-pr08.md, "Step 4 — G4 pinned"). Presence is
     checked by key, not truthiness: dataset id ``0`` is a real registry id.
     """
     if "dataset_id" in statistics:

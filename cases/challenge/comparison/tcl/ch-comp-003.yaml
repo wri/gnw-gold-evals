@@ -1,0 +1,21 @@
+id: ch-comp-003
+uid: e4a3cad71da68a94
+status: ready
+set: comparison
+group: tcl
+query: Did Costa Rica or the United Kingdom lose more tree cover across all forest types in
+  2022?
+expected:
+  aoi_ids: CRI;GBR
+  dataset_id: '4'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: All forest types, so no forest-type filter should be applied.
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-03
+  lineage: gnw-evals eval-metrics-slice-1 gt-comp-03
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

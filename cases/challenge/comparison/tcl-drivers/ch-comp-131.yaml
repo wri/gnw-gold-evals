@@ -1,0 +1,21 @@
+id: ch-comp-131
+uid: 22bd716f3b52f83e
+status: ready
+set: comparison
+group: tcl-drivers
+query: Hey, I'm curious - between India and Mexico, what's been the main driver behind their
+  tree cover loss since 2001? Do they even share the same top driver, or are they totally
+  different?
+expected:
+  aoi_ids: IND;MEX
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the dominant driver of tree cover loss between the two countries
+    over 2001-2025; whole-record aggregate.
+  eval_subtype: two_country
+  manifest_id: m-driver-comp-07
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

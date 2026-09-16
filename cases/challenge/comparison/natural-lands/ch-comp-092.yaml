@@ -1,0 +1,18 @@
+id: ch-comp-092
+uid: e5e5b6f12195ea79
+status: ready
+set: comparison
+group: natural-lands
+query: Which country has more natural land, the Democratic Republic of the Congo or Indonesia?
+expected:
+  aoi_ids: COD;IDN
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare the Natural row's area_ha (fixed 2020 baseline, two-row is_natural
+    grouping) between the Democratic Republic of the Congo and Indonesia; the direction must
+    be correct.
+  eval_subtype: two_country
+  manifest_id: m-nl-comp-02
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-comp-02a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,19 @@
+id: ch-trend-054
+uid: 26cc43f704366b32
+status: ready
+set: trend
+group: integrated-alerts
+query: What is the month-by-month pattern of disturbance alert area, in hectares, across Peru
+  from January 1 to June 30, 2024?
+expected:
+  aoi_ids: PER
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-06-30'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Month-by-month alert area (area_ha) for 1 Jan to 30 Jun 2024; line chart.
+  eval_subtype: monthly_trend
+  manifest_id: m-ialert-trend-04
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

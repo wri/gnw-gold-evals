@@ -1,0 +1,19 @@
+id: ch-trend-053
+uid: d8dae01a3ac29eb3
+status: ready
+set: trend
+group: integrated-alerts
+query: I've been keeping an eye on the DRC lately—can you tell me if deforestation alerts
+  there have been trending up or down from March 1 to August 31, 2024?
+expected:
+  aoi_ids: COD
+  dataset_id: '11'
+  start_date: '2024-03-01'
+  end_date: '2024-08-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Direction of monthly alert area (area_ha) for 1 Mar to 31 Aug 2024.
+  eval_subtype: direction
+  manifest_id: m-ialert-trend-03
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

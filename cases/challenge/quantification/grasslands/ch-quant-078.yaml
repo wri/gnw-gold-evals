@@ -1,0 +1,20 @@
+id: ch-quant-078
+uid: 20b1278a6e5a3848
+status: ready
+set: quantification
+group: grasslands
+query: What was the total natural/semi-natural grassland extent, in hectares, in the United
+  Kingdom in 2000?
+expected:
+  aoi_ids: GBR
+  dataset_id: '2'
+  start_date: '2000-01-01'
+  end_date: '2000-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Headline is grassland extent (area_ha) in hectares for 2000, the first
+    year of coverage.
+  eval_subtype: single_year
+  manifest_id: m-grass-quant-08
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-quant-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

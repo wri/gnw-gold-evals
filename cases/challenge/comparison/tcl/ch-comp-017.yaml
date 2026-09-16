@@ -1,0 +1,21 @@
+id: ch-comp-017
+uid: d19126aa8350e1dc
+status: ready
+set: comparison
+group: tcl
+query: Quick q - in 2023, who lost more tree cover, the UK or Costa Rica? Countin all forest
+  types, not just some special forest.
+expected:
+  aoi_ids: GBR;CRI
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Both values are small; the comparative direction must still be correct.
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-11
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-11a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

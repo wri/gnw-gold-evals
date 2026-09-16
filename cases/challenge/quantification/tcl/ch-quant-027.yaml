@@ -1,0 +1,22 @@
+id: ch-quant-027
+uid: c8db9544eb2c2667
+status: ready
+set: quantification
+group: tcl
+query: What were the greenhouse gas emissions from tree cover loss across all forest types
+  in Brazil in 2023?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The question asks for GHG emissions from tree cover loss; the headline
+    figure is the carbon_emissions_MgCO2e column, in MgCO2e or honest conversions.
+  eval_subtype: emissions
+  manifest_id: m-tcl-quant-18
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-18a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

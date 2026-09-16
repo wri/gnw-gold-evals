@@ -1,0 +1,20 @@
+id: ch-quant-071
+uid: 6a66ab8f89b704fa
+status: ready
+set: quantification
+group: grasslands
+query: Hey, so like how many hectares of natural/semi-natural grassland did Costa Rica have
+  back in 2022, roughly?
+expected:
+  aoi_ids: CRI
+  dataset_id: '2'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Headline is grassland extent (area_ha) in hectares; values are small,
+    honest rounding in sensible units passes.
+  eval_subtype: single_year
+  manifest_id: m-grass-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

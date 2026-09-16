@@ -1,0 +1,21 @@
+id: ch-trend-004
+uid: aaad1a1d4bb4843c
+status: ready
+set: trend
+group: tcl
+query: In which year between 2011 and 2023 did Brazil experience its highest annual tree cover
+  loss across all forest types?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2011-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: All forest types, so no forest-type filter should be applied.
+  eval_subtype: peak_year
+  manifest_id: m-tcl-trend-04
+  lineage: gnw-evals eval-metrics-slice-1 gt-trend-04
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

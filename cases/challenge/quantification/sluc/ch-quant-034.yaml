@@ -1,0 +1,22 @@
+id: ch-quant-034
+uid: 87cef7da244cb19c
+status: ready
+set: quantification
+group: sluc
+query: For Brazil's 2024 soybean crop, what is the deforestation-related emission factor expressed
+  in tCO2e per tonne of production?
+expected:
+  aoi_ids: BRA
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Soybean (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Headline is the sLUC emission factor (emission_factor_tCO2e_per_tonne_production)
+    for the crop, in tCO2e per tonne; tabular; tCO2e = MgCO2e; default reporting year 2024.
+  eval_subtype: emission_factor
+  manifest_id: m-sluc-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

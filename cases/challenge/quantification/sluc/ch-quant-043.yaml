@@ -1,0 +1,22 @@
+id: ch-quant-043
+uid: 81cc75235536be49
+status: ready
+set: quantification
+group: sluc
+query: What were the total N2O emissions (in tCO2e) from deforestation-driven land use change
+  for cocoa production in Ghana in 2024?
+expected:
+  aoi_ids: GHA
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Cocoa (unscored: no evaluator surface yet)'
+  gas_types: 'N2O (unscored: no evaluator surface yet)'
+  judge_instruction: Headline is N2O emissions from sLUC for the crop (emissions_tCO2e restricted
+    to the N2O gas type), in tCO2e; tabular; default reporting year 2024.
+  eval_subtype: crop_emissions
+  manifest_id: m-sluc-quant-09
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

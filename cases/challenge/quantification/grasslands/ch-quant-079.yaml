@@ -1,0 +1,20 @@
+id: ch-quant-079
+uid: edb9823f8d1e04e3
+status: ready
+set: quantification
+group: grasslands
+query: How many hectares of natural/semi-natural grassland were lost in Brazil from 2000 to
+  2022?
+expected:
+  aoi_ids: BRA
+  dataset_id: '2'
+  start_date: '2000-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Headline is total grassland area lost across the full record (sum of
+    the annual loss column, hectares); exclude zero or missing years.
+  eval_subtype: multi_year_total
+  manifest_id: m-grass-quant-09
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-quant-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

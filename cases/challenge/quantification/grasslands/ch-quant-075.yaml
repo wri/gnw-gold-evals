@@ -1,0 +1,20 @@
+id: ch-quant-075
+uid: df2135821e6c1b41
+status: ready
+set: quantification
+group: grasslands
+query: How many hectares of natural/semi-natural grassland were gained and lost in India in
+  2018?
+expected:
+  aoi_ids: IND
+  dataset_id: '2'
+  start_date: '2018-01-01'
+  end_date: '2018-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Report both the grassland area gained and lost that year (hectares);
+    gains are not necessarily restoration and loss is not necessarily permanent conversion.
+  eval_subtype: gain_loss
+  manifest_id: m-grass-quant-06
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-quant-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

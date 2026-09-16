@@ -1,0 +1,15 @@
+id: ch-aoi-085
+uid: ce0b1d166b890c0d
+status: ready
+set: aoi
+group: multi
+query: Show me both Oregon and Washington
+expected:
+  aoi_ids: USA.38;USA.48
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: PZB-909 WDPA crowding regression
+  verify_query: Washington
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

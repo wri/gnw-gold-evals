@@ -1,0 +1,15 @@
+id: ch-aoi-074
+uid: aaaf7805afef78da
+status: ready
+set: aoi
+group: ambiguity
+query: Show me Georgia
+expected:
+  nudge_type: aoi_choice
+notes:
+  difficulty: hard
+  behaviour: nudge
+  lineage: 'undocumented: country-level picks never nudge (tool.py:308)'
+  verify_query: Georgia
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

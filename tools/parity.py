@@ -1,7 +1,7 @@
 """Parity comparison for PR-08 step 1: old path vs new path, same build.
 
-    uv run python tools/parity.py results/runs/<legacy-ingested>.json \
-                                  results/runs/<gold-run>.json
+    uv run python tools/parity.py results/gold/runs/<legacy-ingested>.json \
+                                  results/gold/runs/<gold-run>.json
 
 Compares **majority verdicts on the legacy checks only** — the 16 checks
 that exist on both paths (PR-04/06 checks don't exist in gnw-evals, and

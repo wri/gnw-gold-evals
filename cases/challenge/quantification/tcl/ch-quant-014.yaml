@@ -1,0 +1,20 @@
+id: ch-quant-014
+uid: fb4289ddaac5bc11
+status: ready
+set: quantification
+group: tcl
+query: What was the total area of primary forest loss recorded in the Democratic Republic
+  of the Congo during 2023?
+expected:
+  aoi_ids: COD
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  eval_subtype: primary_forest
+  manifest_id: m-tcl-quant-07
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-07b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

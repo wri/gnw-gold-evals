@@ -1,0 +1,17 @@
+id: ch-aoi-127
+uid: cd9d694a0c9c304b
+status: ready
+set: aoi
+group: concepts
+query: Take me to the Arctic
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Arctic is not a selectable area and asks the user to specify countries
+    or regions instead
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: 'trap confirmed: ATA (Antarctica) appears in candidates for ''Arctic'''
+  verify_query: Arctic
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

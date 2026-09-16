@@ -1,0 +1,22 @@
+id: ch-trend-029
+uid: 28c14ff5e8ef7827
+status: ready
+set: trend
+group: sluc
+query: Between 2020 and 2024, did Brazil's soybean deforestation emission factor (tCO2e per
+  tonne of production) go up or down?
+expected:
+  aoi_ids: BRA
+  dataset_id: '9'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Soybean (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Direction of the emission factor (emission_factor_tCO2e_per_tonne_production)
+    across reporting years 2020-2024; tabular; tCO2e = MgCO2e.
+  eval_subtype: direction
+  manifest_id: m-sluc-trend-01
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-trend-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

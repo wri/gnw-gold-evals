@@ -1,0 +1,20 @@
+id: ch-quant-134
+uid: aebe454fbd95b5f8
+status: ready
+set: quantification
+group: tcl-drivers
+query: What share of Peru's total tree cover loss since 2001 is attributable to all agriculture,
+  combining permanent agriculture and shifting cultivation?
+expected:
+  aoi_ids: PER
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: All-agriculture grouping = permanent agriculture + shifting cultivation,
+    over 2001-2025; whole-record aggregate; avoid 'deforestation' for raw loss.
+  eval_subtype: driver_grouping
+  manifest_id: m-driver-quant-07
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-quant-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

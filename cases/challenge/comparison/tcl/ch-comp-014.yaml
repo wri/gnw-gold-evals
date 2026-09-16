@@ -1,0 +1,20 @@
+id: ch-comp-014
+uid: 03e203613469d813
+status: ready
+set: comparison
+group: tcl
+query: 'Trying to get a feel for this: between Indonesia and the Democratic Republic of the
+  Congo, which one saw bigger primary forest losses in 2022?'
+expected:
+  aoi_ids: IDN;COD
+  dataset_id: '4'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-09
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-09b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

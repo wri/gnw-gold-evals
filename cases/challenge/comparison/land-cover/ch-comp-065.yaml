@@ -1,0 +1,19 @@
+id: ch-comp-065
+uid: abb0e262eaa17ddd
+status: ready
+set: comparison
+group: land-cover
+query: I'm curious about water coverage in the region - does Malaysia or Indonesia have more
+  land classified as water?
+expected:
+  aoi_ids: MYS;IDN
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'water (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the 2024 water class area_ha between Malaysia and Indonesia;
+    the direction must be correct.
+  eval_subtype: two_country
+  manifest_id: m-lc-comp-09
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

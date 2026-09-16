@@ -1,0 +1,20 @@
+id: ch-quant-117
+uid: 182acf7300167836
+status: ready
+set: quantification
+group: tc-gain
+query: I'm trying to get a handle on Indonesia's tree cover gain story - do you know how many
+  hectares of cumulative tree cover gain there's been across the country from 2000 to 2020?
+expected:
+  aoi_ids: IDN
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Cumulative gain over the full 2000-2020 period; headline is the cumulative
+    gain area (ha). Gain is not restoration.
+  eval_subtype: gain_total
+  manifest_id: m-gain-quant-02
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-02a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

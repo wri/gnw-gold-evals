@@ -1,0 +1,15 @@
+id: ch-aoi-090
+uid: 7e726b01090b9c3a
+status: ready
+set: aoi
+group: multi
+query: Compare Pará and Paraná
+expected:
+  aoi_ids: BRA.14;BRA.16
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: accent pair in one query
+  verify_query: Pará|Paraná
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,15 @@
+id: ch-aoi-045
+uid: 498e9b28ecb871e7
+status: ready
+set: aoi
+group: acronyms
+query: Take me to Cymru
+expected:
+  aoi_ids: GBR.4
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: SPEC-PR8 discarded aliases (stored Wales); Welsh endonym
+  verify_query: Wales
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,650 @@
+{
+  "schema_version": 1,
+  "store": "v2",
+  "caseset_version": "50a0ea07bb4bb90b",
+  "case_count": 124,
+  "statuses": {
+    "done": 88,
+    "not doing": 20,
+    "ready": 10,
+    "todo": 6
+  },
+  "active_count": 104,
+  "groups": [
+    {
+      "group": "class-comparison",
+      "cases": 9,
+      "active": 6,
+      "statuses": {
+        "done": 6,
+        "not doing": 3
+      }
+    },
+    {
+      "group": "comparative",
+      "cases": 13,
+      "active": 13,
+      "statuses": {
+        "done": 10,
+        "todo": 3
+      }
+    },
+    {
+      "group": "context-layer",
+      "cases": 2,
+      "active": 1,
+      "statuses": {
+        "done": 1,
+        "not doing": 1
+      }
+    },
+    {
+      "group": "dashboard",
+      "cases": 7,
+      "active": 7,
+      "statuses": {
+        "done": 7
+      }
+    },
+    {
+      "group": "dataset-parameters",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "done": 1
+      }
+    },
+    {
+      "group": "dataset-suggestion",
+      "cases": 8,
+      "active": 6,
+      "statuses": {
+        "done": 6,
+        "not doing": 2
+      }
+    },
+    {
+      "group": "direct",
+      "cases": 26,
+      "active": 21,
+      "statuses": {
+        "done": 20,
+        "not doing": 5,
+        "todo": 1
+      }
+    },
+    {
+      "group": "imagery",
+      "cases": 5,
+      "active": 1,
+      "statuses": {
+        "done": 1,
+        "not doing": 4
+      }
+    },
+    {
+      "group": "metadata",
+      "cases": 5,
+      "active": 5,
+      "statuses": {
+        "done": 5
+      }
+    },
+    {
+      "group": "multilingual",
+      "cases": 5,
+      "active": 5,
+      "statuses": {
+        "done": 5
+      }
+    },
+    {
+      "group": "multiturn",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "ready": 7,
+        "todo": 1
+      }
+    },
+    {
+      "group": "nudge",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "parent-child",
+      "cases": 14,
+      "active": 12,
+      "statuses": {
+        "done": 10,
+        "not doing": 2,
+        "ready": 1,
+        "todo": 1
+      }
+    },
+    {
+      "group": "ranking",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "done": 1
+      }
+    },
+    {
+      "group": "refusal",
+      "cases": 3,
+      "active": 1,
+      "statuses": {
+        "done": 1,
+        "not doing": 2
+      }
+    },
+    {
+      "group": "temporal",
+      "cases": 15,
+      "active": 14,
+      "statuses": {
+        "done": 14,
+        "not doing": 1
+      }
+    }
+  ],
+  "bucket_coverage": {
+    "retrieval": {
+      "dedicated": 98,
+      "shared_only": 0
+    },
+    "analysis": {
+      "dedicated": 0,
+      "shared_only": 70
+    },
+    "explanation": {
+      "dedicated": 25,
+      "shared_only": 59
+    },
+    "output": {
+      "dedicated": 75,
+      "shared_only": 3
+    },
+    "scope": {
+      "dedicated": 89,
+      "shared_only": 7
+    }
+  },
+  "expected_fields": [
+    {
+      "field": "dataset_id",
+      "cases": 88,
+      "switches_on": "dataset_id_match"
+    },
+    {
+      "field": "scope",
+      "cases": 88,
+      "switches_on": "scope_match"
+    },
+    {
+      "field": "aoi_source",
+      "cases": 82,
+      "switches_on": "reference only (dashboard AOI source)"
+    },
+    {
+      "field": "dataset_name",
+      "cases": 81,
+      "switches_on": "reference only"
+    },
+    {
+      "field": "answer",
+      "cases": 70,
+      "switches_on": "agent_answer, charts_answer, chart_produced"
+    },
+    {
+      "field": "aoi_ids",
+      "cases": 70,
+      "switches_on": "aoi_id_match"
+    },
+    {
+      "field": "text",
+      "cases": 25,
+      "switches_on": "expected_text_match"
+    },
+    {
+      "field": "context_layer",
+      "cases": 10,
+      "switches_on": "context_layer_match"
+    },
+    {
+      "field": "dashboard_created",
+      "cases": 8,
+      "switches_on": "dashboard_created"
+    },
+    {
+      "field": "class_values",
+      "cases": 6,
+      "switches_on": "class_value_match (info-only)"
+    },
+    {
+      "field": "nudge_options",
+      "cases": 6,
+      "switches_on": "nudge_match"
+    },
+    {
+      "field": "dashboard_widgets",
+      "cases": 5,
+      "switches_on": "dashboard_widgets_match, dashboard_widgets_valid"
+    },
+    {
+      "field": "end_date",
+      "cases": 5,
+      "switches_on": "date_extraction (with start_date)"
+    },
+    {
+      "field": "start_date",
+      "cases": 5,
+      "switches_on": "date_extraction (with end_date)"
+    },
+    {
+      "field": "clarification",
+      "cases": 3,
+      "switches_on": "clarification_requested"
+    },
+    {
+      "field": "nudge_type",
+      "cases": 3,
+      "switches_on": "nudge_match"
+    },
+    {
+      "field": "dataset_parameters",
+      "cases": 1,
+      "switches_on": "dataset_parameter_match"
+    },
+    {
+      "field": "chart_type",
+      "cases": 0,
+      "switches_on": "chart_type_match"
+    },
+    {
+      "field": "data_pull",
+      "cases": 0,
+      "switches_on": "data_pull_exists, answered_without_data"
+    },
+    {
+      "field": "suggested_datasets",
+      "cases": 0,
+      "switches_on": "suggested_datasets_match"
+    }
+  ],
+  "unknown_expected_fields": [],
+  "dataset_coverage": {
+    "source": {
+      "repo": "https://github.com/wri/project-zeno.git",
+      "ref": "origin/main",
+      "sha": "31a4d1e87f9c0c3f2541ae8f06d5f81b499e32e3",
+      "path": "src/agent/datasets/catalog",
+      "synced": "2026-09-01"
+    },
+    "datasets": [
+      {
+        "dataset_id": "1",
+        "dataset_name": "Global land cover",
+        "missing_instructions": [],
+        "cases": 6,
+        "answer_graded": 6,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "2",
+        "dataset_name": "Global natural/semi-natural grassland extent",
+        "missing_instructions": [],
+        "cases": 12,
+        "answer_graded": 11,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "3",
+        "dataset_name": "SBTN Natural Lands Map",
+        "missing_instructions": [],
+        "cases": 5,
+        "answer_graded": 5,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "4",
+        "dataset_name": "Tree cover loss",
+        "missing_instructions": [],
+        "cases": 43,
+        "answer_graded": 31,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 1
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 6
+          },
+          {
+            "name": "intact_forest",
+            "cases": 4
+          }
+        ]
+      },
+      {
+        "dataset_id": "5",
+        "dataset_name": "Tree cover gain",
+        "missing_instructions": [],
+        "cases": 5,
+        "answer_graded": 5,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "6",
+        "dataset_name": "Forest greenhouse gas net flux",
+        "missing_instructions": [],
+        "cases": 3,
+        "answer_graded": 3,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "7",
+        "dataset_name": "Tree cover",
+        "missing_instructions": [],
+        "cases": 3,
+        "answer_graded": 3,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 0
+          }
+        ]
+      },
+      {
+        "dataset_id": "8",
+        "dataset_name": "Tree cover loss by dominant driver",
+        "missing_instructions": [],
+        "cases": 5,
+        "answer_graded": 4,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "9",
+        "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
+        "missing_instructions": [],
+        "cases": 1,
+        "answer_graded": 1,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "10",
+        "dataset_name": "Tree cover loss due to fires",
+        "missing_instructions": [],
+        "cases": 2,
+        "answer_graded": 0,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 0
+          },
+          {
+            "name": "intact_forest",
+            "cases": 0
+          }
+        ]
+      },
+      {
+        "dataset_id": "11",
+        "dataset_name": "Integrated alerts",
+        "missing_instructions": [],
+        "cases": 5,
+        "answer_graded": 4,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "12",
+        "dataset_name": "Land GHG Monitoring System (LGMS)",
+        "missing_instructions": [],
+        "cases": 0,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      }
+    ],
+    "unknown_dataset_ids": []
+  },
+  "multi_turn": {
+    "conversations": 8,
+    "turns": 16,
+    "delta_assertions": {
+      "absent": 1,
+      "changed": 7,
+      "retain": 7
+    }
+  },
+  "parked": [
+    {
+      "id": "1-005",
+      "status": "not doing",
+      "group": "parent-child",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT over natural lands and cannot be answered without it."
+    },
+    {
+      "id": "1-006",
+      "status": "not doing",
+      "group": "class-comparison",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT with driver context layer and cannot be answered without it."
+    },
+    {
+      "id": "1-007",
+      "status": "not doing",
+      "group": "class-comparison",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT and cannot be answered without it."
+    },
+    {
+      "id": "1-008",
+      "status": "not doing",
+      "group": "class-comparison",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT and cannot be answered without it."
+    },
+    {
+      "id": "1-011",
+      "status": "not doing",
+      "group": "parent-child",
+      "reason": "RE-PARKED 2026-08-04 after verification (run 20260803T220705Z). Unparking it was premature: the agent selects three arbitrary WDPA polygons (555665453, 1034, 555607614) rather than all protected areas in Colorado, nudges aoi_choice on some trials, and the resulting figure varies about 20x across identical trials (41,339 ha vs 1,920.67 ha). Closing the date window did not touch the real defect — protected areas in Colorado is a multi-AOI aggregate the product does not select deterministically, exactly as the original park note said. Needs a product answer, not a prompt edit."
+    },
+    {
+      "id": "1-028",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "parked 2026-08-03: percentage answer (2.10%) and Landmark AOI resolution both unverified here, and the row has never run in this repo. Probe once with --id 1-028, then unpark or delete with the outcome recorded. Landmark has 5 other active carriers."
+    },
+    {
+      "id": "1-049",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "parked 2026-08-03: answer 1.41 hectares of tree cover gain over 2010-2015 for a whole reserve is implausible on its face — likely a unit/scale error in the sheet. Dataset 5 has 5 other active carriers, so nothing is lost. Unpark only if a run reproduces the figure; otherwise delete."
+    },
+    {
+      "id": "1-085",
+      "status": "not doing",
+      "group": "dataset-suggestion",
+      "reason": "parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for suggestions), but its expectations sit on the dead suggested_datasets surface (0 of 1,298 trials populate it). Unpark after rewriting onto nudge_type/nudge_options, fixing 'wilfires' in the same edit."
+    },
+    {
+      "id": "1-088",
+      "status": "not doing",
+      "group": "context-layer",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT with natural_lands context layer and cannot be answered without it."
+    },
+    {
+      "id": "1-108",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "PARKED 2026-08-04 on creation, after verification (run 20260803T220705Z). It was authored to repay the level-3 AOI coverage debt, and it demonstrated instead that the debt may be unpayable on this build: the city of Bern resolves to CHE.6_1 (the canton) on 1 trial and produces a clarify_area / clarify_aoi nudge on 2. So city/municipality AOI resolution is not deterministic here — the missing level-3 coverage is a PRODUCT limitation, not a case-set gap. Keep the row as the standing probe and unpark when the agent resolves sub-district AOIs reliably."
+    },
+    {
+      "id": "1-112",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: 2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental — every gating check passed at this uid before the text expectation was added (aoi, dataset 12, pull_source, scope analyse; answer_traceability 0.0 is info-only and structural, see no_answer_rationale). Needs a 3-trial ff=experimental pass at the final uid for done."
+    },
+    {
+      "id": "1-113",
+      "status": "not doing",
+      "group": "temporal",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: 2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental — all gating checks passed at the pre-fill uid (aoi, dataset 12, pull_source, scope analyse). class_values and text added from that run's verified artifact. Needs a 3-trial ff=experimental pass at the final uid for done."
+    },
+    {
+      "id": "1-114",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: 2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental — clean pass at this exact uid: aoi_id_match, expected_text_match (\"clearly explains that carbon density and carbon stocks are not available as datasets\") and scope_match (no pull, no nudge -> none, matching refuse) all 1.0. Needs a 3-trial ff=experimental pass for done."
+    },
+    {
+      "id": "1-115",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent instead raised a dataset_choice nudge (options: LGMS, Forest greenhouse gas net flux) — no dataset selected, no pull, actual scope suggest — so dataset_id_match, expected_text_match and scope_match all failed. Expectations kept at the presentation-instruction intent, which the nudge bypasses (those instructions only enter context after selection). One trial cannot separate an always-nudge from the known ~1-in-3 routing nudge: needs a 3-trial ff=experimental run before promoting to ready, or an upstream fix if the nudge is systematic."
+    },
+    {
+      "id": "1-116",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent did the opposite of the expected refusal — it offered to calculate credits and estimate sequestration potential, answering from web knowledge with landcarbonlab.org and wri.org citations (the 1-030 shape; scope_match still passed because no pull happened). Upstream finding: the credits/offsets refusal lives in LGMS presentation_instructions, which never enter context because this query selects no dataset — a platform-level guardrail gap. Promote to ready only after the agent refuses on a 3-trial ff=experimental run."
+    },
+    {
+      "id": "1-117",
+      "status": "not doing",
+      "group": "dataset-suggestion",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent answered with a generic web-knowledge essay citing wri.org insight pages — no pull, no nudge, no clarification (actual scope none), and no statement that mitigation potential is not calculated. Same root cause as 1-116: LGMS presentation_instructions never enter context when no dataset is selected. Promote to ready only after a 3-trial ff=experimental run shows the expected redirect behaviour."
+    },
+    {
+      "id": "1-118",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-119",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-120",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-121",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-021",
+      "status": "todo",
+      "group": "parent-child",
+      "reason": "Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo.\nAdded (Iberian peninsula only)"
+    },
+    {
+      "id": "1-027",
+      "status": "todo",
+      "group": "direct",
+      "reason": "CHART aggregates results, hiding requested class"
+    },
+    {
+      "id": "1-030",
+      "status": "todo",
+      "group": "comparative",
+      "reason": "Expecting SBTN analysis but using the Blog skill"
+    },
+    {
+      "id": "1-053",
+      "status": "todo",
+      "group": "comparative",
+      "reason": null
+    },
+    {
+      "id": "1-062",
+      "status": "todo",
+      "group": "comparative",
+      "reason": "Triage W4 2026-08-01: dataset_id accepts alternatives (8;10 both defensible); the disputed answer and the unexpressable AOI multiplicity expectation dropped pending review. Held at todo rather than ready: with aoi_ids and answer gone this row no longer verifies the WA-vs-OR comparison its group promises — reinstate an answer (with ;-alternatives if genuinely dataset-dependent) before activating."
+    },
+    {
+      "id": "mt-007",
+      "status": "todo",
+      "group": "multiturn",
+      "reason": "todo pending the 3-trial validation the probation note requires: no per-case info-only mechanism exists, so as ready this judged check would fully gate verdicts, contradicting its own caveat"
+    }
+  ],
+  "known_gaps": {
+    "unused_expected_fields": [
+      "chart_type",
+      "data_pull",
+      "suggested_datasets"
+    ],
+    "info_only_checks": [
+      "answer_traceability",
+      "charts_answer_judge",
+      "class_value_match",
+      "date_coverage"
+    ],
+    "catalog_datasets_no_case": [
+      "12"
+    ],
+    "uncovered_parameters": {
+      "canopy_cover": [
+        "6",
+        "7",
+        "8",
+        "10"
+      ]
+    },
+    "uncovered_context_layers": {
+      "primary_forest": [
+        "7",
+        "10"
+      ],
+      "intact_forest": [
+        "10"
+      ]
+    }
+  },
+  "targets": null
+}

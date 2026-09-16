@@ -1,0 +1,21 @@
+id: ch-comp-008
+uid: 628d23153ba00c13
+status: ready
+set: comparison
+group: tcl
+query: Between the United Kingdom and Costa Rica, which had the higher total tree cover loss
+  across all forest types from 2018 to 2023, and what were the totals?
+expected:
+  aoi_ids: GBR;CRI
+  dataset_id: '4'
+  start_date: '2018-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: All forest types, so no forest-type filter should be applied.
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-08
+  lineage: gnw-evals eval-metrics-slice-1 gt-comp-08
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

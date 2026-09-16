@@ -1,0 +1,20 @@
+id: ch-comp-062
+uid: f16fc287295eeb94
+status: ready
+set: comparison
+group: land-cover
+query: So in Bolivia, which one's actually bigger area-wise right now, the cropland or the
+  cultivated grasslands? Just trying to get a rough sense which wins out.
+expected:
+  aoi_ids: BOL
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'cropland;cultivated grasslands (unscored: no evaluator surface yet)'
+  judge_instruction: Within Bolivia the user explicitly compares the cropland class against
+    the cultivated grasslands class, so the two are scored separately; the explicit naming
+    overrides the agriculture-combining rule.
+  eval_subtype: two_class
+  manifest_id: m-lc-comp-07
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

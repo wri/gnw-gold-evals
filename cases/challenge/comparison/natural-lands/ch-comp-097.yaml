@@ -1,0 +1,18 @@
+id: ch-comp-097
+uid: 4db1bd18397d734f
+status: ready
+set: comparison
+group: natural-lands
+query: so between Ghana and Côte d'Ivoire, which one's actually got more natural land overall,
+  like more hectares of it?
+expected:
+  aoi_ids: GHA;CIV
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare the Natural row's area_ha (fixed 2020 baseline, two-row is_natural
+    grouping) between Ghana and Cote d'Ivoire; the direction must be correct.
+  eval_subtype: two_country
+  manifest_id: m-nl-comp-06
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-comp-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

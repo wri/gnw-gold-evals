@@ -1,0 +1,19 @@
+id: ch-quant-091
+uid: c134afb9f533f6fc
+status: ready
+set: quantification
+group: integrated-alerts
+query: For Côte d'Ivoire, how does the disturbance alert area (in hectares) from January 1
+  to June 30, 2024 break down by confidence level?
+expected:
+  aoi_ids: CIV
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-06-30'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Split alert area (area_ha) by confidence tier for 1 Jan to 30 Jun 2024.
+  eval_subtype: by_confidence
+  manifest_id: m-ialert-quant-10
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-10a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

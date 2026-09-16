@@ -1,0 +1,20 @@
+id: ch-trend-018
+uid: 463f9db28bd35ba9
+status: ready
+set: trend
+group: tcl
+query: What is the trend in Indonesia's primary forest loss between 2016 and 2023 - increasing
+  or decreasing?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  eval_subtype: direction
+  manifest_id: m-tcl-trend-11
+  lineage: gnw-evals eval-metrics-slice-1 tcl-trend-11b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

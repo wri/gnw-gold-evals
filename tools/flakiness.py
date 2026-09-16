@@ -1,6 +1,6 @@
 """Flakiness table from a multi-trial run (PR-08 steps 2, 3, 5).
 
-    uv run python tools/flakiness.py results/runs/<trials-run>.json
+    uv run python tools/flakiness.py results/gold/runs/<trials-run>.json
 
 Per check: mean, std (population), and flip count across trials — the
 admission evidence for judged checks (std <= 0.10 over 3 trials, PLAN §4)

@@ -1,0 +1,15 @@
+id: ch-aoi-015
+uid: f0b1f463f81c1296
+status: ready
+set: aoi
+group: direct
+query: Show me the Gulu district of Uganda
+expected:
+  aoi_ids: UGA.8
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: Ugandan district = GADM level 1 (state-province subtype)
+  verify_query: Gulu
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

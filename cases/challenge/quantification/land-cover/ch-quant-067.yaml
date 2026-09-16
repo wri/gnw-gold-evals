@@ -1,0 +1,21 @@
+id: ch-quant-067
+uid: 138f941308d3dab5
+status: ready
+set: quantification
+group: land-cover
+query: Hey so, for Peru, like how much land that used to be tree cover ended up switching
+  to some other land cover class overall - got a rough hectare number?
+expected:
+  aoi_ids: PER
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'tree cover (unscored: no evaluator surface yet)'
+  judge_instruction: 'Change question: total area_ha moving out of the tree cover class between
+    the fixed 2015 and 2024 snapshots, summed across all end classes. Land cover change, not
+    tree cover loss; the user asked about land cover change, so redirecting to the Tree Cover
+    Loss dataset would be wrong.'
+  eval_subtype: change_area
+  manifest_id: m-lc-quant-09
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

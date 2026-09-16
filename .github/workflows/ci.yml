@@ -29,12 +29,17 @@ jobs:
       # clearing them means authoring new cases rather than fixing existing ones.
       - name: Case-set audit (rubric gate)
         run: uv run python tools/audit_cases.py --strict
-      - name: Case-store integrity (uids + manifest truthful, both versions)
+      - name: Case-store integrity (uids + manifest truthful, all stores)
         run: |
           uv run python tools/check.py --cases-dir cases/v1
           uv run python tools/check.py --cases-dir cases/v2
-      - name: Coverage doc freshness (COVERAGE.md derived, never hand-edited)
-        run: uv run python tools/coverage_doc.py --check
+          uv run python tools/check.py --cases-dir cases/challenge
+      - name: Coverage doc freshness (COVERAGE.md + JSON siblings derived, never hand-edited)
+        run: |
+          uv run python tools/coverage_doc.py --check
+          uv run python tools/coverage_doc.py --check --cases-dir cases/challenge
+      - name: Run index freshness (results/index.json derived, never hand-edited)
+        run: uv run python tools/build_run_index.py --check
 
   # The release gate as a button: a live staging run + regression diff
   # against the most recent committed run. Needs API_TOKEN_STAGING and
@@ -55,12 +60,12 @@ jobs:
             --build "${{ inputs.build_label }}"
       - name: Regression gate vs previous committed run
         run: |
-          PREV=$(ls results/runs/*.json | sort | tail -2 | head -1)
-          NEW=$(ls results/runs/*.json | sort | tail -1)
+          PREV=$(ls results/gold/runs/*.json | sort | tail -2 | head -1)
+          NEW=$(ls results/gold/runs/*.json | sort | tail -1)
           uv run python tools/diff_runs.py "$PREV" "$NEW" --fail-on-regression
       - name: Upload run + report
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: gold-run
-          path: results/runs/
+          path: results/gold/runs/

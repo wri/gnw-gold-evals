@@ -1,0 +1,19 @@
+id: ch-quant-085
+uid: 7f7d8a8f59daf1dd
+status: ready
+set: quantification
+group: integrated-alerts
+query: I'm trying to get a handle on deforestation alerts in Peru for May 2024 — do you know
+  roughly how many hectares of disturbance were flagged there between May 1 and May 31, 2024?
+expected:
+  aoi_ids: PER
+  dataset_id: '11'
+  start_date: '2024-05-01'
+  end_date: '2024-05-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Headline is total alert area (area_ha) for May 2024 (single month).
+  eval_subtype: disturbed_area
+  manifest_id: m-ialert-quant-04
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

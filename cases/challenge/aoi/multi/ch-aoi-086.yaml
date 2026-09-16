@@ -1,0 +1,16 @@
+id: ch-aoi-086
+uid: 37a7afff4a188e6b
+status: ready
+set: aoi
+group: multi
+query: Compare the Serengeti and the Maasai Mara
+expected:
+  aoi_ids: 916;1297
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: wdpa 916 + wdpa 1297; kba twins of both exist, so a kba/wdpa mix triggers the multiple-sources
+    rejection
+  verify_query: Maasai Mara|Masai Mara
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

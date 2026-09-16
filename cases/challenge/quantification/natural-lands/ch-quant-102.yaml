@@ -1,0 +1,18 @@
+id: ch-quant-102
+uid: 941c44fda179c126
+status: ready
+set: quantification
+group: natural-lands
+query: so like what chunk of Ghana would you say counts as natural land, percentage-wise or
+  whatever?
+expected:
+  aoi_ids: GHA
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Fixed 2020 baseline; expected value is Natural area_ha / (Natural + Non-natural
+    area_ha) from the two-row is_natural grouping, expressed as a percentage or fraction.
+  eval_subtype: natural_share
+  manifest_id: m-nl-quant-09
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-quant-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
