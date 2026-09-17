@@ -47,11 +47,12 @@ compare the reports.
   nudge on **1.2%** of trials, loosely-worded ones on **38%** — and one nudge
   fails 5–7 checks at once, because no data is pulled. This is the AOI rule
   below, applied to the metric axis.
-- **DON'T name the dataset by id or product name.** ✘ `"Using the SBTN
-  Natural Lands Map…"` hands over the answer and turns `dataset_id_match`
-  into a string-copy test. The exceptions are the groups whose subject *is*
-  the dataset: `dataset-parameters`, `dataset-suggestion`, `context-layer`,
-  `dashboard`.
+- **DO use an extra clause to push toward one dataset, if there are two dataset
+  choices that are similar and therefore possible.**  An example is 1-026, where
+  we added an extra clause to distinguish better between SBTN Natural Lands
+  (what we're aiming for) and Global Land Cover.  Without the extra clause, the
+  agent will sometimes decide to use a nudge to decide between the two
+  datasets, and therefore cause a case failure.
 - **DO use `;`-alternatives where two answers are genuinely defensible** —
   in preference to disambiguating the prompt.
   ✔ 1-003 expects `dataset_id: "0;11"` because DIST-ALERT and integrated
@@ -85,6 +86,11 @@ compare the reports.
 
 ## DON'Ts
 
+- **DON'T name the dataset by id or product name.** ✘ `"Using the SBTN
+  Natural Lands Map…"` hands over the answer and turns `dataset_id_match`
+  into a string-copy test. The exceptions are the groups whose subject *is*
+  the dataset: `dataset-parameters`, `dataset-suggestion`, `context-layer`,
+  `dashboard`.
 - **DON'T use relative dates.** ✘ `"…in the past decade"` — 1-011 carried
   that for a year before being closed to `2015–2024` in 2026-08. The one
   tolerated pattern is a query whose expectations are **routing-only**: no
