@@ -58,6 +58,11 @@ DETERMINISTIC_FIELDS = {
     "start_date", "end_date", "suggested_datasets", "nudge_type",
     "nudge_options", "dashboard_created", "dashboard_widgets",
     "scope", "chart_type", "class_values", "clarification",
+    # ground_truth is the most deterministic expectation in the set: the figure
+    # is fetched at run time and compared in code, never judged. Deliberately
+    # NOT in ROUTING_ONLY_FIELDS above — a fetch still needs a fixed window, so
+    # "deforestation last year" plus a selector must keep flagging.
+    "ground_truth",
 }
 
 

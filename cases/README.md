@@ -104,13 +104,17 @@ compare the reports.
   friends). The agent pulls the full range and slices in code; the
   recorded window flips between runs while the answer stays right. Let
   `answer` carry the year; keep date expectations for genuinely
-  date-scoped pulls (DIST-ALERT, integrated alerts, imagery).
+  date-scoped pulls (integrated alerts, imagery). DIST-ALERT used to be
+  the other one — zeno deleted dataset 0 from its catalog before
+  2026-09-16, and the five cases naming it are all parked.
 - **DON'T stake a verdict on chart choice.** Chart type is the agent's
   most nondeterministic surface (8 of run-5's 19 flaky rows). If chart
   type matters, expect alternatives: `chart_type: "bar;table"`.
 - **DON'T pin expectations that drift with data versions** — "the most
   recent year is 2024" breaks on the next data drop. Expected numbers
-  should come from closed periods on stable datasets.
+  should come from closed periods on stable datasets. **Better: don't pin
+  the number at all** — use `ground_truth` (below) and the harness fetches
+  it at run time.
 - **DON'T author judged-only rows** unless the capability is inherently
   textual (the `metadata` group is the sanctioned exception). Every row
   should carry at least one deterministic expectation.
@@ -120,6 +124,67 @@ compare the reports.
 - **DON'T edit `expected` casually.** Every semantic edit mints a new uid
   — intended, but it resets that case's regression history. Batch
   expectation edits, explain them in the PR, run `check.py --fix`.
+
+## Run-time ground truth (`ground_truth`)
+
+A numeric case can name **which figure** it is about instead of **what value**
+that figure has. The harness fetches the number from the analytics API before
+any trial runs, so the case survives every data release with its uid — and its
+regression history — intact.
+
+```yaml
+expected:
+  aoi_ids: MDG.3.4_1
+  aoi_source: gadm
+  dataset_id: '4'
+  ground_truth: sum(carbon_emissions_MgCO2e) WHERE tree_cover_loss_year=2019
+  chart_type: bar
+  scope: analyse
+```
+
+**Grammar** — `AGG(column)` or `AGG(column) WHERE column=value`, with `AGG` one
+of `sum`, `max`, `min`, `count`. An explicit aggregate is **mandatory**: a bare
+column would be ambiguous whenever the filter matches more than one row, which
+is live (1-059 pulls 254 areas).
+
+**No new request fields.** The request is built from expectations the case
+already carries — `aoi_ids`, `aoi_source`, `dataset_id`, `context_layer`,
+`dataset_parameters`, `start_date`, `end_date` — because a GOLD case already
+asserts what query the agent should build. `ground_truth` is purely the
+*response* side.
+
+**Four rules, each with a case behind it:**
+
+1. **The selector names the API's column, not the agent's.** The agent renames
+   columns in its pandas codeact — 1-076's chart says `loss_area_ha` where the
+   API says `area_ha` — so authoring from an artifact's `charts_data` is a trap.
+   Read column names from project-zeno's `src/api/services/charts.py`, or from a
+   raw `source_url` response.
+2. **The metric is often not the obvious column.** 1-046 asks for "tonnes of
+   CO2", which is `carbon_emissions_MgCO2e`. Picking `area_ha` would compare
+   658,571 against 1,371.15 and report a 99.8% miss as an agent failure.
+3. **On annual datasets the year goes in the selector, not the request.** The
+   DON'T above still applies: the case carries no dates, the request uses the
+   catalog's full window, and `WHERE tree_cover_loss_year=2019` does the
+   narrowing.
+4. **Spell the selector canonically**: lowercase aggregate, uppercase `WHERE`,
+   no padding — `sum(area_ha) WHERE year=2019`. Both spellings parse, but the
+   **raw string is hashed into the uid**, so `where` and `WHERE` would mint two
+   uids for the same test. Not yet enforced by the audit; see
+   `tools/audit_cases.py`.
+
+**The migration cost, stated plainly.** Dropping `answer` for `ground_truth`
+also drops `agent_answer` (analysis + explanation) and `chart_produced`
+(output), because both fire on `answer`. `ground_truth_answer` is info-only, so
+it restores no *gating*. If the row is meant to hold output coverage, **set
+`chart_type` in the same edit** — it is the better check anyway (it abstains
+when there is no chart instead of failing) and, since a migration mints a new
+uid regardless, adding it costs nothing at that moment and a second uid later.
+
+The area identity must be explicit and resolvable: the fetch will not geocode
+from the prompt, because that would redo the agent's own AOI resolution and let
+an AOI regression silently corrupt the ground truth. A case with no `aoi_ids` or
+no `aoi_source` aborts the run rather than guessing.
 
 ## Worked examples
 

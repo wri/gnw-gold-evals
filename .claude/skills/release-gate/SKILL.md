@@ -34,14 +34,26 @@ uv run python tools/diff_runs.py results/runs/<old>.json results/runs/<new>.json
 - **Regressions:** pass→fail on a shared uid, excluding info-only checks.
 - **Recoveries:** fail→pass — report, but recoveries never offset
   regressions in the verdict.
+- **Data bumps:** a ground-truth check flipped (either way) while the digest
+  of the values it was graded against moved — a dataset update served by the
+  analytics API, not agent movement. Never counted or gated. Read the cause:
+  `data` is expected; `request` means GOLD's own request builder changed
+  between the runs (a harness change to explain); `fixed_dataset` means a
+  dataset declared never to change moved (raise it with the analytics team).
+- **Possible hidden regressions:** a data bump whose agent figure matches
+  neither run's values, or that has no figure. A real break that lands in the
+  same run as a data change is filed as a bump, and if the agent stays broken
+  no later diff will ever count it (0.0 → 0.0). Treat each flagged bump as a
+  regression until its evidence says otherwise.
 - **Coverage loss:** checks that silently stopped evaluating (`--fail-on-
   coverage-loss`) — a check that vanished is not a check that passed.
 
 ## 3. The verdict
 
-Report as: **N regressions / M recoveries / K coverage losses over I shared
-uids**, then the row-level evidence for each regression (check, expected vs
-actual, per-trial pattern). Cross-check suspicious regressions against
+Report as: **N regressions / D data bumps (F flagged) / M recoveries / K
+coverage losses over I shared uids**, then the row-level evidence for each
+regression and each flagged data bump (check, expected vs actual, per-trial
+pattern). Cross-check suspicious regressions against
 `flakiness.py --per-case` on the new run before calling them real — a
 flapping check is a flake finding, not a release blocker, unless it flapped
 into consistent failure.

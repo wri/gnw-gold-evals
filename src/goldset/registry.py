@@ -33,6 +33,7 @@ from goldset.evaluators.analysis_checks import (
     evaluate_class_values,
 )
 from goldset.evaluators.explanation_checks import evaluate_answer_traceability
+from goldset.evaluators.groundtruth_checks import evaluate_ground_truth
 from goldset.evaluators.guards import evaluate_guards
 from goldset.evaluators.output_checks import (
     evaluate_chart_type,
@@ -126,6 +127,14 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         ),
         run=lambda state, expected, query, dashboard: evaluate_final_answer(
             state, expected.expected_answer, expected.expected_text, query
+        ),
+    ),
+    EvaluatorSpec(
+        name="ground_truth",
+        kind="mixed",
+        score_fields=("ground_truth_match_score", "ground_truth_answer_score"),
+        run=lambda state, expected, query, dashboard: evaluate_ground_truth(
+            state, expected
         ),
     ),
     EvaluatorSpec(

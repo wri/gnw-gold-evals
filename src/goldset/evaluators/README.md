@@ -157,11 +157,13 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`answered_without_data`](#answered_without_data) | retrieval | deterministic | gates | derived: same as above | `guards.py:100-105` |
 | [`pull_source_match`](#pull_source_match) | retrieval | deterministic | gates | `dataset_id` + a pull happened | `guards.py:119-153` |
 | [`state_delta`](#state_delta) | retrieval | deterministic | gates | a turn's `deltas:` block | `runner/multiturn.py:45` |
+| [`ground_truth_match`](#ground_truth_match) | retrieval | deterministic | gates | `ground_truth` + values fetched at run time | `groundtruth_checks.py:62` |
 | [`class_value_match`](#class_value_match) | analysis | deterministic | **info-only** | `class_values` | `analysis_checks.py:65` |
 | [`chart_integrity`](#chart_integrity) | analysis | deterministic | gates | nothing — any row with charts | `analysis_checks.py:121` |
 | [`charts_answer`](#charts_answer) | analysis + output (shared) | mixed — deterministic comparator decides, judge recorded | gates (on the comparator alone, H5) | `answer` + charts present | `answer_evaluator.py:168-186`, `llm_judges.py:237-292` |
 | [`charts_answer_judge`](#charts_answer_judge) | — (untagged) | judged | **info-only** | same as `charts_answer` | `llm_judges.py:292`, `eval_types.py:86-87` |
 | [`agent_answer`](#agent_answer) | analysis + explanation (shared) | judged | gates | `answer` + non-empty final message | `answer_evaluator.py:189-201` |
+| [`ground_truth_answer`](#ground_truth_answer) | analysis + explanation (shared) | mixed — judge extracts, code compares | **info-only** | `ground_truth` + non-empty final message | `groundtruth_checks.py:119` |
 | [`expected_text_match`](#expected_text_match) | explanation | judged | gates | `text` + non-empty final message | `answer_evaluator.py:203-218` |
 | [`answer_traceability`](#answer_traceability) | explanation | deterministic | **info-only** | nothing — any row with charts + a bold unit-bearing claim | `explanation_checks.py:55` |
 | [`web_fallback`](#web_fallback) | explanation | deterministic | gates | derived data-pull expectation + non-empty answer | `guards.py:107-117` |
@@ -183,8 +185,9 @@ at all — it is present on 90 of the 114 `cases/v2` cases and, per
 `docs/specs/PLAN.md` §2.2, is hashed into the uid regardless of being unscored. Do not
 read either as coverage.
 
-`chart_type_match` currently fires on **zero** `cases/v2` rows (no case sets
-`chart_type`), and `suggested_datasets_match` on one. Both are live code with
+`chart_type_match` fires on **one** `cases/v2` row (1-046, which gained
+`chart_type` when it migrated to `ground_truth` — before that no case set the
+field at all), and `suggested_datasets_match` on one. Both are live code with
 near-empty populations.
 
 ---
@@ -483,6 +486,60 @@ contribute **no checks at all** (`runner/multiturn.py:113-115`) — the row beco
 an `error`, not a partial measurement. 8 rows, 0.96 ±0.06 in
 `20260803T201245Z`, flagged over-gate on small-n only.
 
+## `ground_truth_match`
+
+**Measures** whether the agent's own data pull contains the figure the analytics
+API returns for the case's query. Both sides hit the same API with the same
+auth, so this is **not** a measure of the data: it is retrieval and usage
+fidelity — did the agent build the right query, and did it read the right number
+out of the response (`groundtruth_checks.py:62`).
+
+**Fires on** `ground_truth` (a selector, e.g.
+`sum(carbon_emissions_MgCO2e) WHERE tree_cover_loss_year=2019`) **and** values
+fetched for that case during prefetch. The case file never carries the number —
+that is the whole point. See `cases/README.md` for the grammar.
+
+**Where the candidate figures come from**, in strict precedence:
+
+1. **The agent's own pulled table**, fetched by the runner from
+   `statistics[-1].source_url` (`runner/api.py:44-70`). A readable pull
+   **decides alone**: if the expected value is not in it, the check is `0.0`
+   even when a chart happens to show the right number. The pull is what the
+   agent actually retrieved; a chart that disagrees with it is a different bug.
+2. **`charts_data`, only when the pull could not be read** (the GET failed, or
+   the table has no such column). This is a fallback for harness blindness, not
+   a second chance for the agent.
+
+**`null` vs `0.0`** — three cases, and the distinction is the check's whole
+design:
+
+| situation | score | why |
+|---|---|---|
+| no `ground_truth` on the case | `null` | not applicable |
+| pull readable, value absent or wrong | `0.0` | a real failure |
+| **no pull at all** | `0.0` | a numeric question answered with no data is a failure, not an abstention |
+| **pull unreadable AND no chart match** | `null` | the *harness* could not see; no verdict against the agent |
+
+**Plural by design**: `expected.ground_truth_values` is a list and
+**every** value must be matched within `NUMERIC_TOLERANCE` (0.02). One unmatched
+value fails the check.
+
+**Reason**: `reasons.ground_truth_match`, naming the selector, the expected
+figure and what the agent's pull gave — e.g. `"sum(area_ha): expected
+25,308,961.00, the agent's pull gives 25,807,553.00"`. `actuals` carries
+`agent_ground_truth`.
+
+**Also records** `agent_ground_truth_values` — the agent's own figure per
+trial, and **only when it came from the agent's pull** (never from the chart
+fallback). `tools/diff_runs.py` reads it to tell a data release apart from a
+regression that a data release is masking; see "data bumps" in `results/README.md`.
+
+**Gotcha — an unresolved selector is an error, not a score.** If the fetch
+succeeded but the selector names a column the response lacks, the row gets
+`entry["error"]` and `row_verdict` returns `error`; errored rows are excluded
+from bucket tallies. It never passes vacuously — an empty filter match
+summing to `0.0` would otherwise become a real-looking expected value.
+
 ---
 
 # Analysis
@@ -751,6 +808,36 @@ answer text, trimmed to 300 chars.
   answer with nothing behind it.
 - 0.91 ±0.09 over 66 rows in `20260803T201245Z` — inside the judged gate but the
   loosest of the three judges.
+
+## `ground_truth_answer`
+
+**Measures** whether the agent's **prose** reports the fetched figure — the
+usage half of run-time ground truth, where `ground_truth_match` is the
+retrieval half. A row can pull the right table and then state a different number
+in its answer; this is the check that sees it (`groundtruth_checks.py:119`).
+
+**Fires on** `ground_truth` + a non-empty final message.
+
+**Mixed, on the established split**: the Haiku judge (`judge_answer`,
+`llm_judges.py`) only **extracts which number in the prose answers the
+question**; the tolerance comparison happens in code. No judge does arithmetic
+here (`docs/specs/PLAN.md` §6). Its structured output puts `reason` before
+`score`, per the same working agreement.
+
+**`null` vs `0.0`**: `null` when the case has no `ground_truth`, when the judge
+returns no parseable figure (abstain rather than trust a bad extraction), or
+when the judge call **fails outright**. `0.0` only when a figure was extracted
+and is outside tolerance.
+
+**Gotcha — a judge outage cannot break a row.** The exception is caught, the
+score is `null`, the reason starts `JUDGE ERROR`, and it deliberately stays out
+of `judge_errors` — so `row_verdict` does **not** return `error`
+(`groundtruth_checks.py`, and `test_judge_outage_never_errors_the_row`). This
+was confirmed live during an Anthropic credit outage on 2026-09-14: the row
+still passed on `ground_truth_match` alone. 
+
+**Info-only**, born so (2026-09-14). See the table at the end of this document
+for the re-admission condition.
 
 ---
 
@@ -1185,7 +1272,7 @@ vs observed `analyse` (`:17-19`). 0.94 ±0.05 over 88 rows in
 
 # Info-only checks, and what re-admission requires
 
-Four checks are reported and never enter a verdict (`buckets.py:83-90`). The
+Five checks are reported and never enter a verdict (`buckets.py:83-90`). The
 demotion rationale is recorded in the comments immediately above that frozenset
 (`buckets.py:68-82`), and `tools/flakiness.py` labels them `info-only` instead of
 holding them to a gate.
@@ -1196,6 +1283,7 @@ holding them to a gate.
 | `answer_traceability` | 2026-08-01, after its first live run | Claim extraction misfired on unitless bold counts and ranks on ~5 of 9 failures. The unit-required rule (`explanation_checks.py:40-44`) now applies. | A 3-trial run with **zero** extraction false positives (PR-08 step 5). It ran 0.90 ±0.05 over 86 rows in `20260803T201245Z`. |
 | `class_value_match` | 2026-08-01, after the first 3-trial run | Mean 0.25 over its 4 rows, whose expected values came from unverified sheet scratchpads — i.e. the check was reporting bad expectations, not bad behaviour. | W3's population review verifying the figures. Now 0.44 over 6 rows; two new figures came in verified (1-010's 110.10 ha, 1-027's 679.17 ha) and 1-015's is unsatisfiable against its rewritten chart shape (`results/recommendations/20260803T201245Z.md` item 8). |
 | `charts_answer_judge` | born info-only 2026-08-03 (H5) | `charts_answer` is now gated on the deterministic comparator alone. Five of the six rows where `charts_answer` flapped over two 3-trial runs were rows the comparator had already passed or abstained on — all the movement was the judge's framing opinion — and `cases/README.md` forbids staking a verdict on chart choice. | std ≤ 0.10 over 3 trials. It ran **0.90 ±0.07 with 10 flapping rows** over 64 in `20260803T201245Z`, which is the direct measurement of what used to be gated. Item 13 of that run's recommendations says keep it info-only. |
+| `ground_truth_answer` | born info-only 2026-09-14 (PZB-1282) | It is judged, and every judged check in this repo runs info-only until it has shown it is stable — no exception for a new one. `ground_truth_match` already gates the same figure deterministically, so gating the prose too would double-count one failure across two buckets. | std ≤ 0.10 over 3 trials, the standard judged gate. **No population yet**: it has run on one case, once. |
 
 Two notes on how info-only interacts with the rest of the machinery, both worth
 knowing before you read a bucket table:
@@ -1203,7 +1291,9 @@ knowing before you read a bucket table:
 - `date_coverage` and `charts_answer_judge` are in neither `DEDICATED` nor
   `SHARED`, so `buckets_for` returns `()` and they contribute to no bucket.
   `answer_traceability` and `class_value_match` **are** in `DEDICATED`
-  (explanation and analysis respectively), and `_tally`/`rows_covered` do not
+  (explanation and analysis respectively), and `ground_truth_answer` is in
+  `SHARED` (analysis + explanation), so all three land on the same asymmetry;
+  `_tally`/`rows_covered` do not
   filter info-only (`buckets.py:127-160`) — so they *do* count toward those two
   buckets' pass/evaluated tallies and coverage while being excluded from row
   verdicts (`buckets.py:117-121`). Whether that asymmetry is deliberate is not

@@ -122,6 +122,8 @@ buckets it answers for — plus the case shapes that switch each check on.</p>
   <td>Tripwire: a substantive answer (≥80 chars) with no pull and no dataset selected scores 0. A refusal is not a violation.</td></tr>
 <tr><td>state_delta <span class="badge b-det">DET</span></td><td>multiturn runner</td><td class="trigger">turns[n].deltas</td>
   <td>Between-turn assertions: <code>changed</code> / <code>retain</code> / <code>absent</code> on snapshot fields (aoi_ids, dataset_id, dates, …). Field names are schema-validated, so typos fail at authoring time.</td></tr>
+<tr><td>ground_truth_match <span class="badge b-det">DET</span></td><td>groundtruth_checks</td><td class="trigger">expected.ground_truth</td>
+  <td>The agent's own pulled table contains the figure the analytics API returns for this query — fetched at run time, never pinned in the case. Retrieval, not analysis: every way it scores 0 is the pull (a readable pull missing the value, or no pull at all). Charts are consulted only when the pull cannot be read.</td></tr>
 </table></div>
 </section>
 
@@ -142,6 +144,8 @@ buckets it answers for — plus the case shapes that switch each check on.</p>
   <td>Every figure in the chart exists in the pulled data — no invented or transformed-beyond-recognition numbers.</td></tr>
 <tr><td>class_value_match <span class="badge b-det">DET</span> <span class="badge b-info">INFO-ONLY</span></td><td>analysis_checks</td><td class="trigger">expected.class_values</td>
   <td>Per-class figures (e.g. per land-cover tier) match expected values. Demoted to info-only 2026-08-01: its 4 seed rows came from unverified sheet scratchpads (mean 0.25); re-admitted once W3 verifies the figures.</td></tr>
+<tr><td>ground_truth_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·EXPLANATION</span> <span class="badge b-info">INFO-ONLY</span></td><td>groundtruth_checks</td><td class="trigger">expected.ground_truth</td>
+  <td>The prose reports the run-time-fetched figure. Judge extracts which number answers the question; code applies the 2% tolerance. Born info-only 2026-09-14 — every judged check runs info-only until it shows std ≤ 0.10 over 3 trials, and ground_truth_match already gates the same figure deterministically. A judge outage scores null and cannot error the row.</td></tr>
 </table></div>
 </section>
 
@@ -156,6 +160,8 @@ buckets it answers for — plus the case shapes that switch each check on.</p>
 <tr><th>check</th><th>evaluator</th><th>switched on by</th><th>what it measures</th></tr>
 <tr><td>agent_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·ANALYSIS</span></td><td>answer</td><td class="trigger">expected.answer</td>
   <td>(Shared with Analysis — a wrong prose answer can be a computation error or an explanation error; the failure is not attributed.)</td></tr>
+<tr><td>ground_truth_answer <span class="badge b-judge">JUDGE</span> <span class="badge b-shared">SHARED ·ANALYSIS</span> <span class="badge b-info">INFO-ONLY</span></td><td>groundtruth_checks</td><td class="trigger">expected.ground_truth</td>
+  <td>(Shared with Analysis — same reason as agent_answer. Info-only, so it enters no verdict either way.)</td></tr>
 <tr><td>expected_text_match <span class="badge b-judge">JUDGE</span></td><td>answer</td><td class="trigger">expected.text</td>
   <td>Semantic-inclusion judge for behaviours: "refuses because the dataset is annual", "maintains its figure instead of capitulating". The workhorse for behavioural expectations.</td></tr>
 <tr><td>web_fallback <span class="badge b-det">DET</span></td><td>guards</td><td class="trigger">implied (guard)</td>

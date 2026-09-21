@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version d5e3a1809bdb984a` · 126 cases · done 90 · not doing 20 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
+`caseset_version 0e8c12b0afb37e08` · 126 cases · done 89 · not doing 20 · ready 13 · todo 4 · **106 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-17_
+_Last updated: 2026-09-20_
 
 ## Groups
 
@@ -19,7 +19,7 @@ _Last updated: 2026-09-17_
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
-| direct | 26 | 21 | done 20, not doing 5, todo 1 |
+| direct | 26 | 21 | done 19, not doing 5, ready 1, todo 1 |
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
@@ -40,8 +40,8 @@ friends) run on top of it whenever their trigger state exists.
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
 | retrieval | 100 | 0 | 100 | 94% |
-| analysis | 0 | 71 | 71 | 67% |
-| explanation | 26 | 60 | 86 | 81% |
+| analysis | 0 | 70 | 70 | 66% |
+| explanation | 26 | 59 | 85 | 80% |
 | output | 76 | 3 | 79 | 75% |
 | scope | 90 | 7 | 97 | 92% |
 
@@ -54,7 +54,7 @@ friends) run on top of it whenever their trigger state exists.
 | aoi_source | 83 | reference only (dashboard AOI source) |
 | dataset_name | 82 | reference only |
 | aoi_ids | 73 | aoi_id_match |
-| answer | 71 | agent_answer, charts_answer, chart_produced |
+| answer | 70 | agent_answer, charts_answer, chart_produced |
 | text | 26 | expected_text_match |
 | context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
@@ -65,23 +65,24 @@ friends) run on top of it whenever their trigger state exists.
 | start_date | 5 | date_extraction (with end_date) |
 | clarification | 3 | clarification_requested |
 | nudge_type | 3 | nudge_match |
+| chart_type | 1 | chart_type_match |
 | dataset_parameters | 1 | dataset_parameter_match |
-| chart_type | 0 ← unused | chart_type_match |
+| ground_truth | 1 | ground_truth_match, ground_truth_answer (info-only) |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@f9cf409 (origin/main, synced 2026-08-07), 13 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@64b53a5 (origin/main, synced 2026-09-16), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
 `selection_hints` are exercised by any case grading `dataset_id`,
 while prompt/code/presentation instructions shape behaviour that only
-answer-graded cases (`answer` or `text` expected) actually check.
+answer-graded cases (`answer`, `text` or `ground_truth` expected)
+actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 0 ← gap | 0 | — | driver ×0 ← gap, natural_lands ×0 ← gap, grasslands ×0 ← gap, land_cover ×0 ← gap |
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
@@ -130,11 +131,11 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: chart_type, suggested_datasets —
+- Expected fields no active case uses: suggested_datasets —
   the checks they switch on can never fire until cases set them.
-- Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
+- Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage, ground_truth_answer.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
-- Catalog datasets with no active case: 0, 12.
-- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: driver (0), natural_lands (0), grasslands (0), land_cover (0), primary_forest (7, 10), intact_forest (10).
+- Catalog datasets with no active case: 12.
+- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: primary_forest (7, 10), intact_forest (10).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

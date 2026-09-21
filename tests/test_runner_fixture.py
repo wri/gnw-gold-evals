@@ -7,6 +7,7 @@ registry, artifact capture, and the CLI's result->ledger-entry mapping.
 import gzip
 import json
 import time
+from types import SimpleNamespace
 
 import anyio
 import httpx
@@ -130,6 +131,73 @@ def test_run_record_names_its_caseset():
     assert record["caseset"] == "v2"
     assert record["caseset_version"] == "2276185a231bfdad"
     assert validate_run(record) == []
+    # A run with no ground-truth entries gains no key at all
+    assert "ground_truth" not in record
+
+
+def test_run_record_carries_the_ground_truth_block_from_its_entries():
+    """Keyed on the entries, not args.ground_truth: a resume's args hold only
+    the remaining cases, which here carry none."""
+    import argparse
+
+    from goldset.cli import build_run_record
+
+    args = argparse.Namespace(
+        run_id="20260914T120000Z_staging", build="b", ff=None, trials=1,
+        workers=10, trial_timeout=900.0, note=None,
+        cases_dir=__import__("pathlib").Path("cases/v2"),
+        ground_truth={}, analytics_base_url="https://analytics.example",
+        prefetch_seconds=3.4,
+    )
+    entries = [
+        {"uid": "u1", "id": "1-046", "checks": {}, "ground_truth": {"values": [1.0]}},
+        {"uid": "u2", "id": "1-002", "checks": {}},
+    ]
+    record = build_run_record(args, {"caseset_version": "c"}, entries,
+                              started="2026-09-14T12:00:00Z", environment="staging")
+    assert record["ground_truth"] == {
+        "base_url": "https://analytics.example", "cases": 1, "prefetch_seconds": 3.4,
+        "tolerance": 0.02,
+    }
+
+
+def test_run_cases_records_the_agent_figure_for_every_trial(monkeypatch, tmp_path):
+    """The ground-truth record carries each trial's figure, aligned with `trials`,
+    so diff_runs can examine exactly the trials that failed."""
+    import argparse
+    import asyncio
+
+    import goldset.runner.api
+    from goldset import cli
+    from goldset.eval_types import TestResult
+
+    figures = iter([[658496.56], [12.0]])
+
+    class FakeRunner:
+        def __init__(self, **kwargs):
+            pass
+
+        async def run_test(self, query, expected, artifact_sink=None):
+            return TestResult(thread_id="t", query=query, overall_score=0.0,
+                              execution_time="now", test_id=expected.test_id,
+                              ground_truth_match_score=1.0,
+                              agent_ground_truth_values=next(figures))
+
+    monkeypatch.setattr(goldset.runner.api, "APITestRunner", FakeRunner)
+    ground_truth = SimpleNamespace(values=[658496.56], unresolved=None,
+                                   to_ledger=lambda: {"values": [658496.56], "digest": "d"})
+    args = argparse.Namespace(
+        resolved_url="https://api.test", api_token="t", ff=None, verbose=False,
+        trial_timeout=60.0, ground_truth={GT_CASE.uid: ground_truth},
+        results_dir=tmp_path, run_id="20260915T000000Z_staging", workers=1,
+        trials=2, slow_threshold=180.0,
+    )
+    # asyncio.run, not the anyio marker: run_cases uses asyncio primitives,
+    # exactly as `gold run` drives it.
+    [entry] = asyncio.run(cli.run_cases(args, [GT_CASE]))
+    assert entry["ground_truth"]["agent_values"] == [[658496.56], [12.0]]
+    assert entry["ground_truth"]["digest"] == "d"
+    assert len(entry["trials"]) == 2
 
 
 def test_merge_trials_majority_and_detail():
@@ -208,3 +276,137 @@ async def test_wall_clock_limit_bounds_a_keepalive_stream(monkeypatch):
     assert time.monotonic() - start < 5.0
     assert "wall-clock" in (result.error or "")
     assert result.aoi_id_match_score is None
+
+
+# ---------------------------------------------------------------------------
+# Reading the agent's own pulled table (ground-truth runs only).
+
+def _patched(mock_transport):
+    """A fake httpx.AsyncClient bound to `mock_transport`, matching the
+    `patched_client` fixture above but parameterised per test."""
+    real_client = httpx.AsyncClient
+
+    def fake_client(**kwargs):
+        kwargs.pop("timeout", None)
+        return real_client(transport=mock_transport)
+
+    return fake_client
+
+
+GT_CASE = Case(
+    id="1-046", status="done", group="direct", query="CO2 in Ihorombe 2019?",
+    expected={"aoi_ids": "MDG.3.4_1", "aoi_source": "gadm", "dataset_id": "4",
+              "ground_truth": "sum(carbon_emissions_MgCO2e)"},
+)
+PULLED = {"tree_cover_loss_year": [2019], "carbon_emissions_MgCO2e": [658496.56]}
+PULL_URL = "http://analytics.example/v0/land_change/tree_cover_loss/analytics/abc"
+
+
+def _gt_expected(values=(658496.56,), unresolved=None):
+    """The adapter reads only `values` and `unresolved` off a GroundTruth."""
+    return case_to_expected(
+        GT_CASE, SimpleNamespace(values=list(values), unresolved=unresolved))
+
+
+def _state_with_pull() -> dict:
+    return {**STATE, "statistics": [{"source_url": PULL_URL, "id": "p1", "data": {}}]}
+
+
+def transport_with_pull(pull_response=None) -> httpx.MockTransport:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path == "/api/chat":
+            return httpx.Response(200, text=json.dumps({"node": "agent", "update": "{}"}))
+        if request.url.path.startswith("/api/threads/"):
+            return httpx.Response(200, json={"state": json.dumps(_state_with_pull())})
+        if str(request.url) == PULL_URL:
+            return pull_response or httpx.Response(
+                200, json={"data": {"result": PULLED}})
+        raise AssertionError(f"unexpected request: {request.url}")
+
+    return httpx.MockTransport(handler)
+
+
+@pytest.mark.anyio
+async def test_pulled_data_is_read_for_a_ground_truth_case(monkeypatch):
+    monkeypatch.setattr(httpx, "AsyncClient", _patched(transport_with_pull()))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    captured: dict = {}
+    result = await runner.run_test(GT_CASE.query, _gt_expected(),
+                                   artifact_sink=captured.update)
+    assert captured["pulled_data"]["carbon_emissions_MgCO2e"] == [658496.56]
+    assert captured["pulled_data"]["_rows_total"] == 1
+    # ...and grades it: the agent's pull yields the fetched value.
+    entry = result_to_entry(result, GT_CASE.uid)
+    assert entry["checks"]["ground_truth_match"] == 1.0
+    assert "error" not in entry
+
+
+@pytest.mark.anyio
+async def test_an_unresolved_selector_errors_the_row(monkeypatch):
+    from goldset.buckets import row_verdict
+
+    monkeypatch.setattr(httpx, "AsyncClient", _patched(transport_with_pull()))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    result = await runner.run_test(
+        GT_CASE.query, _gt_expected(values=(), unresolved="column 'x' not in the response"))
+    entry = result_to_entry(result, GT_CASE.uid)
+    assert entry["error"] == "ground truth unresolved: column 'x' not in the response"
+    assert entry["checks"]["ground_truth_match"] is None
+    assert row_verdict(entry) == "error"
+
+
+@pytest.mark.anyio
+async def test_a_failed_pull_read_degrades_instead_of_failing_the_trial(monkeypatch):
+    """Enrichment, not a verdict: a 404 here must not kill the row."""
+    monkeypatch.setattr(
+        httpx, "AsyncClient",
+        _patched(transport_with_pull(httpx.Response(404, json={}))))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    captured: dict = {}
+    result = await runner.run_test(GT_CASE.query, _gt_expected(),
+                                   artifact_sink=captured.update)
+    assert result.error is None
+    assert captured["pulled_data"] is None
+    # unreadable pull, no chart: cannot tell agent from harness
+    assert result.ground_truth_match_score is None
+
+
+@pytest.mark.anyio
+async def test_no_pull_read_without_ground_truth(monkeypatch):
+    """A case with no selector must not issue the extra request."""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if str(request.url) == PULL_URL:
+            raise AssertionError("must not read the pull for a non-GT case")
+        if request.url.path == "/api/chat":
+            return httpx.Response(200, text=json.dumps({"node": "agent", "update": "{}"}))
+        return httpx.Response(200, json={"state": json.dumps(_state_with_pull())})
+
+    monkeypatch.setattr(httpx, "AsyncClient", _patched(httpx.MockTransport(handler)))
+    runner = APITestRunner(api_base_url="https://api.test", analytics_token="t")
+    captured: dict = {}
+    await runner.run_test(CASE.query, case_to_expected(CASE),
+                          artifact_sink=captured.update)
+    assert captured["pulled_data"] is None
+
+
+def test_sectioned_pulled_data_is_capped_per_section():
+    """LGMS (12) answers {section: {column: [values]}} where every other dataset
+    answers flat. Seen live 2026-09-08; a flat cap left it uncapped."""
+    from goldset.runner.artifacts import STATISTICS_ROW_LIMIT, _pulled_data
+
+    sectioned = {
+        "vegetation": {"aoi_id": ["A"] * 300, "net_flux_MgCO2e": [1.0] * 300},
+        "organic_soil": {"aoi_id": [], "area_ha": []},
+    }
+    got = _pulled_data({"pulled_data": sectioned})
+    assert len(got["vegetation"]["aoi_id"]) == STATISTICS_ROW_LIMIT
+    assert got["vegetation"]["_rows_total"] == 300
+    assert got["organic_soil"]["_rows_total"] == 0
+
+    flat = {"tree_cover_loss_year": [2019] * 300, "area_ha": [1.0] * 300}
+    got = _pulled_data({"pulled_data": flat})
+    assert len(got["area_ha"]) == STATISTICS_ROW_LIMIT
+    assert got["_rows_total"] == 300
+
+    assert _pulled_data({}) is None
+    assert _pulled_data({"pulled_data": None}) is None
