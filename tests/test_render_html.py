@@ -77,6 +77,7 @@ def test_case_context_extraction(tmp_path):
     ]})
     assert contexts[case.uid]["query"].startswith("Sao Paulo")
     assert contexts[case.uid]["scope"] == "analyse"
+    assert contexts[case.uid]["status"] == "done"
     assert "absent-uid-1234567" not in contexts  # unresolvable: omitted, not faked
 
 

@@ -51,8 +51,29 @@ def test_report_layers():
     # layer 4: diagnostics
     assert "Errored rows" in text and "1-004" in text
     assert "Slow rows" in text and "200.0s" in text
-    # failing rows name the failed check
-    assert "- 1-002: agent_answer" in text
+    # failing rows name the failed check; no status_by_uid passed here, so
+    # the fallback reads the same as a result whose uid the store no longer
+    # holds (results/README.md's `stale_case`)
+    assert "- 1-002 (status: stale_case): agent_answer" in text
+
+
+def test_failing_row_shows_the_cases_current_status():
+    text = render(RUN, EXPECTED_BY_UID, status_by_uid={"u2": "todo"})
+    assert "- 1-002 (status: todo): agent_answer" in text
+
+
+def test_failing_rows_exclude_info_only_checks_even_when_turn_prefixed():
+    """report_run's failing-row line must use the same is_info_only rule
+    buckets.row_verdict uses — a bare INFO_ONLY membership check misses
+    turn-prefixed names like t2.charts_answer_judge, which would otherwise
+    show up as if it were a reason the row failed, when it never gates."""
+    run = {**RUN, "results": [
+        {"uid": "u5", "id": "mt-001",
+         "checks": {"t1.agent_answer": 0.0, "t2.charts_answer_judge": 0.0}},
+    ]}
+    text = render(run, {"u5": {}})
+    assert "- mt-001 (status: stale_case): t1.agent_answer" in text
+    assert "charts_answer_judge" not in text.split("## Failing rows")[1]
 
 
 def test_unmeasured_bucket_is_rendered_not_omitted():

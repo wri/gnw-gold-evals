@@ -11,6 +11,7 @@ from uuid import uuid4
 
 import anyio
 import httpx
+from langchain_core._api import suppress_langchain_beta_warning
 from langchain_core.load import loads
 
 from goldset.eval_types import ExpectedData, TestResult
@@ -171,7 +172,12 @@ class APITestRunner(BaseTestRunner):
                     state_response.raise_for_status()
                     response_data = state_response.json()
                     agent_state = response_data.get("state", {})
-                    agent_state = loads(agent_state, allowed_objects="core")
+                    # `loads` is LangChain's own beta-decorated deserializer; the
+                    # warning fires on every call, but there's nothing actionable
+                    # in it (we're not choosing to opt into or out of the beta
+                    # status per-call), so it's suppressed at the one call site.
+                    with suppress_langchain_beta_warning():
+                        agent_state = loads(agent_state, allowed_objects="core")
 
                     # Fetch dashboard details when a dashboard was created this turn.
                     # agent_state only carries the dashboard_id; AOI/widget details

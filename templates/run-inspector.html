@@ -341,7 +341,7 @@ function detailHTML(entry, ctx, flk, infoOnly) {
   } else if (ctx.query) {
     html += `<div class="prompt"><span class="t">PROMPT</span>${esc(ctx.query)}</div>`;
   }
-  html += `<div class="qline">${esc(ctx.group || "")} · uid ${esc(entry.uid || "?")}` +
+  html += `<div class="qline">${esc(ctx.group || "")} · status ${esc(ctx.status || "?")} · uid ${esc(entry.uid || "?")}` +
     (entry.latency_s ? ` · ${entry.latency_s}s` : "") +
     (entry.trace_url ? (/^https?:\/\//i.test(entry.trace_url)
       ? ` · <a href="${esc(entry.trace_url)}">trace</a>` : "") : "") + `</div>`;

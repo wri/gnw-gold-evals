@@ -1,6 +1,6 @@
 {
-  "caseset_version": "dd48f8dedb5c4fb8",
-  "case_count": 124,
+  "caseset_version": "d5e3a1809bdb984a",
+  "case_count": 126,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -77,7 +77,7 @@
     },
     {
       "id": "1-013",
-      "uid": "291512b4b3133033",
+      "uid": "4c71ccd0b95bcbe3",
       "group": "comparative",
       "status": "done"
     },
@@ -89,7 +89,7 @@
     },
     {
       "id": "1-015",
-      "uid": "d65307f2917a3fcb",
+      "uid": "2c40cfd206ff2757",
       "group": "parent-child",
       "status": "done"
     },
@@ -127,7 +127,7 @@
       "id": "1-021",
       "uid": "f0a5f23c12a8fea4",
       "group": "parent-child",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "1-022",
@@ -155,7 +155,7 @@
     },
     {
       "id": "1-026",
-      "uid": "00b7bcb79abcc5ed",
+      "uid": "2ca8d841e098e077",
       "group": "class-comparison",
       "status": "done"
     },
@@ -185,7 +185,7 @@
     },
     {
       "id": "1-031",
-      "uid": "06988e33f4f6f8ea",
+      "uid": "43c1fe0c65332041",
       "group": "class-comparison",
       "status": "done"
     },
@@ -319,7 +319,7 @@
       "id": "1-053",
       "uid": "7a45e7b8b2e1d0e1",
       "group": "comparative",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "1-054",
@@ -371,7 +371,7 @@
     },
     {
       "id": "1-062",
-      "uid": "fadcd8afac449e11",
+      "uid": "6bc5b10a4a3f4284",
       "group": "comparative",
       "status": "todo"
     },
@@ -700,6 +700,12 @@
       "status": "not doing"
     },
     {
+      "id": "1-122",
+      "uid": "439a98af199c5d91",
+      "group": "temporal",
+      "status": "ready"
+    },
+    {
       "id": "mt-001",
       "uid": "39840a3c054ab3bf",
       "group": "multiturn",
@@ -744,6 +750,12 @@
     {
       "id": "mt-008",
       "uid": "fa33ca99a2484307",
+      "group": "multiturn",
+      "status": "ready"
+    },
+    {
+      "id": "mt-009",
+      "uid": "af8932d33bb444c5",
       "group": "multiturn",
       "status": "ready"
     }

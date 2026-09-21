@@ -2,12 +2,15 @@
 
 The judge only extracts which number in the prose answers the question
 (`extracted_number`); `resolve_answer_verdict` applies the tolerance in code, the
-same way `resolve_chart_verdict` already does for charts. What's testable without
-an API call: that the tolerance constant is single-sourced and reaches the prompt,
-that the prompt does not ask the model to compute a match itself, that splicing the
-fragment in has not broken the LangChain placeholders (a stray `{` in a shared
-fragment becomes a template variable and the judge call fails at runtime), and that
-the deterministic override behaves correctly on its own.
+same way `resolve_chart_verdict` already does for charts — except a deterministic
+FAIL here falls back to the judge's own score (asymmetrically: never a PASS),
+because the parser is locale-blind in a way the judge is not (1-091, 1-094).
+What's testable without an API call: that the tolerance constant is single-sourced
+and reaches the prompt, that the prompt does not ask the model to compute a match
+itself, that splicing the fragment in has not broken the LangChain placeholders (a
+stray `{` in a shared fragment becomes a template variable and the judge call fails
+at runtime), and that the deterministic-vs-judge combination behaves correctly on
+its own.
 
 Usage
 $ uv run python -m pytest tests/test_numeric_tolerance.py -v
@@ -76,7 +79,13 @@ def test_deterministic_check_overrides_a_wrong_judge_rejection():
     assert "deterministic check" in verdict["reason"]
 
 
-def test_deterministic_check_overrides_a_wrong_judge_acceptance():
+def test_a_deterministic_fail_falls_back_to_a_judge_pass():
+    """The asymmetric fallback: a deterministic FAIL is not final, because the
+    parser is locale-blind in a way the judge (reading the actual prose) is
+    not. This is the accepted tradeoff — a lenient judge could rescue a
+    genuine miss here too — but it's one-directional (see the next test):
+    a deterministic PASS is never revisited, so this can only ever turn a
+    FAIL into a PASS, never the reverse."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
         expected_answer="100 hectares",
@@ -84,7 +93,70 @@ def test_deterministic_check_overrides_a_wrong_judge_acceptance():
         judge_score=1,
         judge_reason="close enough",
     )
+    assert verdict["score"] == 1
+    assert "overriding the deterministic check" in verdict["reason"]
+    assert "close enough" in verdict["reason"]
+
+
+def test_a_deterministic_fail_agreeing_with_a_judge_fail_stays_failed():
+    verdict = resolve_answer_verdict(
+        answer_eval_type="numeric",
+        expected_answer="100 hectares",
+        extracted_number="110 hectares",
+        judge_score=0,
+        judge_reason="the figures genuinely differ",
+    )
     assert verdict["score"] == 0
+    assert "the figures genuinely differ" in verdict["reason"]
+    assert "overriding" not in verdict["reason"]
+
+
+def test_a_deterministic_pass_is_never_revisited_by_the_judge():
+    """The override only runs one direction: a judge FAIL must never drag a
+    correct deterministic PASS down, or a lenient parser bug fix becomes a
+    strict one — reintroducing 1-009's flavor of judge-arithmetic noise from
+    the other side."""
+    verdict = resolve_answer_verdict(
+        answer_eval_type="numeric",
+        expected_answer="100 hectares",
+        extracted_number="100 hectares",
+        judge_score=0,
+        judge_reason="looked wrong to me",
+    )
+    assert verdict["score"] == 1
+    assert "deterministic check" in verdict["reason"]
+    assert "looked wrong to me" not in verdict["reason"]
+
+
+def test_french_decimal_comma_is_rescued_by_the_judge():
+    """1-091: the agent correctly answered "289,11 hectares" (French decimal
+    comma). The parser reads the comma as a thousands separator and gets
+    28,911 — a false ~99x miss — but the judge, reading the actual French
+    sentence, correctly recognises it as a match."""
+    verdict = resolve_answer_verdict(
+        answer_eval_type="numeric",
+        expected_answer="289 hectares",
+        extracted_number="289,11 hectares",
+        judge_score=1,
+        judge_reason='"289,11" is French notation for 289.11, matching the expected 289',
+    )
+    assert verdict["score"] == 1
+    assert "overriding the deterministic check" in verdict["reason"]
+
+
+def test_chinese_scale_word_is_rescued_by_the_judge():
+    """1-094: "61.19万公顷" is Chinese for 611,900 hectares (万 = x10,000).
+    The parser has no notion of non-English scale words and reads it as bare
+    61.19; the judge, reading the actual Chinese text, gets it right."""
+    verdict = resolve_answer_verdict(
+        answer_eval_type="numeric",
+        expected_answer="611,900 hectares",
+        extracted_number="61.19万公顷",
+        judge_score=1,
+        judge_reason="61.19万 is 611,900 in Chinese notation, matching the expected figure",
+    )
+    assert verdict["score"] == 1
+    assert "overriding the deterministic check" in verdict["reason"]
 
 
 def test_boundary_is_inclusive():
