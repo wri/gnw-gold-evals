@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version d5e3a1809bdb984a` · 126 cases · done 90 · not doing 20 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
+`caseset_version 0e8c12b0afb37e08` · 126 cases · done 89 · not doing 20 · ready 13 · todo 4 · **106 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-17_
+_Last updated: 2026-09-20_
 
 ## Groups
 
@@ -40,8 +40,8 @@ friends) run on top of it whenever their trigger state exists.
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
 | retrieval | 100 | 0 | 100 | 94% |
-| analysis | 0 | 71 | 71 | 67% |
-| explanation | 26 | 60 | 86 | 81% |
+| analysis | 0 | 70 | 70 | 66% |
+| explanation | 26 | 59 | 85 | 80% |
 | output | 76 | 3 | 79 | 75% |
 | scope | 90 | 7 | 97 | 92% |
 
@@ -54,7 +54,7 @@ friends) run on top of it whenever their trigger state exists.
 | aoi_source | 83 | reference only (dashboard AOI source) |
 | dataset_name | 82 | reference only |
 | aoi_ids | 73 | aoi_id_match |
-| answer | 71 | agent_answer, charts_answer, chart_produced |
+| answer | 70 | agent_answer, charts_answer, chart_produced |
 | text | 26 | expected_text_match |
 | context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |

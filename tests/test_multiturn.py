@@ -347,7 +347,7 @@ async def test_progress_counter_reaches_total_regardless_of_completion_order(
     args = argparse.Namespace(
         resolved_url="https://api.example", api_token="tok", ff=None, verbose=False,
         results_dir=tmp_path, run_id="r1", workers=3, trials=1,
-        slow_threshold=180.0, trial_timeout=900.0,
+        slow_threshold=180.0, trial_timeout=900.0, ground_truth={},
     )
     await run_cases(args, cases)
     lines = [line for line in capsys.readouterr().out.splitlines() if line.strip()]
