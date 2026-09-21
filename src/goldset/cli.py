@@ -86,8 +86,8 @@ ACTUALS_FOR_CHECK = {
     "dashboard_widgets_match": ("actual_dashboard_widget_types",),
     "web_fallback": ("actual_web_links",),
     "pull_source_match": ("actual_pull_source",),
-    "ground_truth_match": ("actual_ground_truth",),
-    "ground_truth_answer": ("actual_ground_truth_answer",),
+    "ground_truth_match": ("agent_ground_truth",),
+    "ground_truth_answer": ("agent_ground_truth_answer",),
 }
 ACTUAL_TRIM = 300
 
@@ -277,7 +277,7 @@ async def run_cases(
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
                     trials.append(result_to_entry(result, original_uid))
-                    agent_values.append(result.actual_ground_truth_values)
+                    agent_values.append(result.agent_ground_truth_values)
             entry = merge_trials(trials)
             # One fetch serves every trial, so the record sits on the merged
             # entry; attached before entry_sink so a resume keeps it.
@@ -331,20 +331,14 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
         "results": entries,
         "buckets": summarize_buckets(entries),
     }
-    # Keyed on the entries, not args.ground_truth: a resume's args hold only the
-    # remaining cases, which may carry none even though finished ones did.
     ground_truth_cases = sum(1 for entry in entries if "ground_truth" in entry)
     if ground_truth_cases:
-        # Deferred: the judge module loads the model client, which store-only
-        # paths never need. Only a run that graded ground truth reaches here.
         from goldset.evaluators.llm_judges import NUMERIC_TOLERANCE
 
         record["ground_truth"] = {
             "base_url": args.analytics_base_url,
             "cases": ground_truth_cases,
             "prefetch_seconds": getattr(args, "prefetch_seconds", None),
-            # The tolerance this run graded with, so diff_runs can compare
-            # figures across runs without importing the judge module.
             "tolerance": NUMERIC_TOLERANCE,
         }
     if args.note:
@@ -387,8 +381,6 @@ def prefetch_ground_truth(args: argparse.Namespace, cases: list[Case]) -> bool:
     Re-fetching on resume is correct — the run already spans two sessions, and
     the alternative is grading the remainder against nothing.
     """
-    # Deferred like the runner imports: httpx stays out of store-only
-    # invocations (`--dry-run`, `prune-artifacts`).
     from goldset.groundtruth import (
         AnalyticsError,
         RequestError,
@@ -399,17 +391,12 @@ def prefetch_ground_truth(args: argparse.Namespace, cases: list[Case]) -> bool:
     from goldset.groundtruth.fetch import is_ground_truth
 
     args.ground_truth = {}
-    # Resolved even with no targets: the partial header records it, so a resume
-    # whose remaining cases do carry ground truth fetches from the same host.
     args.analytics_base_url = getattr(args, "analytics_base_url", None) or BASE_URL
     targets = [case for case in cases if is_ground_truth(case)]
     if not targets:
         return True
 
     client = AnalyticsClient(
-        # args.api_token is already resolved per environment by
-        # require_api_token; ANALYTICS_API_TOKEN overrides it when the
-        # analytics API ever needs its own credential.
         token=os.environ.get("ANALYTICS_API_TOKEN") or args.api_token,
         base_url=args.analytics_base_url,
     )
@@ -419,12 +406,9 @@ def prefetch_ground_truth(args: argparse.Namespace, cases: list[Case]) -> bool:
     try:
         args.ground_truth = prefetch(targets, client, verbose=args.verbose)
     except (RequestError, AnalyticsError, SelectorError) as error:
-        # Abort loudly rather than score against missing data.
         print(f"  ABORT — ground-truth prefetch failed: {error}", flush=True)
         return False
     elapsed = round(time.monotonic() - started_fetch, 1)
-    # Summed, not replaced: a resumed run fetches twice, and the ledger's figure
-    # is the total time spent fetching across both sessions.
     args.prefetch_seconds = round((getattr(args, "prefetch_seconds", None) or 0.0)
                                   + elapsed, 1)
     unresolved = [g for g in args.ground_truth.values() if g.unresolved]

@@ -226,7 +226,7 @@ def test_fail_on_coverage_loss_ignores_info_only(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# Data bumps (PZB-1282): a ground-truth flip explained by the data moving.
+# Data bumps: a ground-truth check that flips because the fetched data changed.
 
 GT_REQUEST = {"endpoint": "/v0/land_change/tree_cover_loss/analytics",
               "payload": {"aoi": {"type": "admin", "ids": ["MDG.3.4"]}}}

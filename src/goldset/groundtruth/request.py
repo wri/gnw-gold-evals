@@ -163,9 +163,12 @@ def build_request(case: Any, dataset_id: str | None = None) -> AnalyticsRequest:
     layer = (expected.get("context_layer") or "").strip() or None
 
     if dataset.style == "date":
+        # Dates only, matching zeno's Integrated Alerts payload. The API rejects
+        # unknown fields with a 422, so no `intersections` key is sent, not even
+        # an empty one. A context layer on the case is ignored, as zeno ignores
+        # it, so the harness sends the same request as the agent.
         start, end = _dates(expected, dataset)
-        payload |= {"start_date": start, "end_date": end,
-                    "intersections": [layer] if layer else []}
+        payload |= {"start_date": start, "end_date": end}
     elif dataset.style == "year":
         start, end = _years(expected, dataset)
         payload |= {"start_year": start, "end_year": end}

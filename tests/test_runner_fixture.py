@@ -131,7 +131,7 @@ def test_run_record_names_its_caseset():
     assert record["caseset"] == "v2"
     assert record["caseset_version"] == "2276185a231bfdad"
     assert validate_run(record) == []
-    # AC 8 — a run with no ground-truth entries gains no key at all
+    # A run with no ground-truth entries gains no key at all
     assert "ground_truth" not in record
 
 
@@ -181,7 +181,7 @@ def test_run_cases_records_the_agent_figure_for_every_trial(monkeypatch, tmp_pat
             return TestResult(thread_id="t", query=query, overall_score=0.0,
                               execution_time="now", test_id=expected.test_id,
                               ground_truth_match_score=1.0,
-                              actual_ground_truth_values=next(figures))
+                              agent_ground_truth_values=next(figures))
 
     monkeypatch.setattr(goldset.runner.api, "APITestRunner", FakeRunner)
     ground_truth = SimpleNamespace(values=[658496.56], unresolved=None,
@@ -343,7 +343,6 @@ async def test_pulled_data_is_read_for_a_ground_truth_case(monkeypatch):
 
 @pytest.mark.anyio
 async def test_an_unresolved_selector_errors_the_row(monkeypatch):
-    """AC 4 end to end: evaluator -> TestResult.error -> ledger error -> verdict."""
     from goldset.buckets import row_verdict
 
     monkeypatch.setattr(httpx, "AsyncClient", _patched(transport_with_pull()))
@@ -374,7 +373,7 @@ async def test_a_failed_pull_read_degrades_instead_of_failing_the_trial(monkeypa
 
 @pytest.mark.anyio
 async def test_no_pull_read_without_ground_truth(monkeypatch):
-    """AC 8 — a case with no selector must not issue the extra request."""
+    """A case with no selector must not issue the extra request."""
     def handler(request: httpx.Request) -> httpx.Response:
         if str(request.url) == PULL_URL:
             raise AssertionError("must not read the pull for a non-GT case")

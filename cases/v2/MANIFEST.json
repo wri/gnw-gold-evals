@@ -1,5 +1,5 @@
 {
-  "caseset_version": "50a0ea07bb4bb90b",
+  "caseset_version": "dd48f8dedb5c4fb8",
   "case_count": 124,
   "source": "gold-live.csv",
   "cases": [
@@ -275,9 +275,9 @@
     },
     {
       "id": "1-046",
-      "uid": "cf98ea5d8d7d7811",
+      "uid": "20c73adad1bea602",
       "group": "direct",
-      "status": "done"
+      "status": "ready"
     },
     {
       "id": "1-047",

@@ -1,6 +1,4 @@
 """Prefetch: resolve ground truth before any trial, and fail loudly.
-
-No network — every test drives the client through an httpx.MockTransport.
 """
 
 import httpx
@@ -63,7 +61,7 @@ def test_resolves_a_ground_truth_case():
 
 
 def test_cases_without_ground_truth_are_skipped_entirely():
-    """AC 8 — the mechanism must be invisible to the other 90 cases."""
+    """The mechanism must be invisible to the other 90 cases."""
     assert is_ground_truth(GT_CASE) and not is_ground_truth(PLAIN_CASE)
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -73,7 +71,7 @@ def test_cases_without_ground_truth_are_skipped_entirely():
 
 
 def test_fetch_failure_raises_so_the_run_can_abort():
-    """AC 2 — a failed fetch aborts before any trial."""
+    """A failed fetch aborts before any trial."""
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(200, json={"status": "failed", "message": "boom"})
 
@@ -82,7 +80,7 @@ def test_fetch_failure_raises_so_the_run_can_abort():
 
 
 def test_empty_result_raises():
-    """AC 2 — 'returns nothing' is a failure, not an empty expectation."""
+    """'returns nothing' is a failure, not an empty expectation."""
     def handler(request: httpx.Request) -> httpx.Response:
         if request.method == "POST":
             return httpx.Response(
@@ -94,7 +92,7 @@ def test_empty_result_raises():
 
 
 def test_unbuildable_case_raises():
-    """AC 2 — a case whose request cannot be built aborts rather than guessing."""
+    """A case whose request cannot be built aborts rather than guessing."""
     broken = Case(id="x", status="done", group="direct", query="q",
                   expected={"aoi_ids": "RUS", "dataset_id": "4",
                             "ground_truth": "sum(area_ha)"})   # no aoi_source
@@ -103,8 +101,6 @@ def test_unbuildable_case_raises():
 
 
 def test_missing_metric_is_recorded_not_raised():
-    """AC 4 — the fetch worked; this case's metric is absent. That is a row
-    error at scoring time, not a reason to kill the whole run."""
     case = Case(id="y", status="done", group="direct", query="q",
                 expected={"aoi_ids": "MDG.3.4_1", "aoi_source": "gadm",
                           "dataset_id": "4", "ground_truth": "sum(no_such_column)"})
@@ -115,8 +111,40 @@ def test_missing_metric_is_recorded_not_raised():
     assert gt.values == []
 
 
+NULL_EMISSIONS = {
+    "aoi_id": ["FIN", "FIN"],
+    "aoi_type": ["admin", "admin"],
+    "tree_cover_loss_year": [2024, 2025],
+    "area_ha": [198000.0, 241368.24],
+    "carbon_emissions_MgCO2e": None,
+}
+
+
+def _finland(selector: str) -> Case:
+    return Case(id="1-095", status="done", group="dataset-parameters", query="q",
+                expected={"aoi_ids": "FIN", "aoi_source": "gadm", "dataset_id": "4",
+                          "dataset_parameters":
+                              '[{"name": "canopy_cover", "values": [10]}]',
+                          "ground_truth": selector})
+
+
+def test_a_null_column_does_not_abort_the_run():
+    case = _finland("sum(area_ha) WHERE tree_cover_loss_year=2025")
+    gt = prefetch([case], _client(_ok(result=NULL_EMISSIONS)))[case.uid]
+    assert gt.values == pytest.approx([241368.24])
+    assert gt.unresolved is None
+
+
+def test_selecting_the_null_column_is_a_row_error_not_an_abort():
+    """Asking for emissions at canopy 10 asks for a metric the API did not
+    compute: the same absence as a missing column, so the same row error."""
+    case = _finland("sum(carbon_emissions_MgCO2e) WHERE tree_cover_loss_year=2025")
+    gt = prefetch([case], _client(_ok(result=NULL_EMISSIONS)))[case.uid]
+    assert gt.values == []
+    assert "did not compute it" in gt.unresolved
+
+
 def test_digest_moves_with_the_values_and_only_with_them():
-    """AC 6 depends on this: the digest is the only thing that tracks a vintage."""
     assert digest([658496.56]) == digest([658496.56])
     assert digest([658496.56]) != digest([658500.0])
     # order-independent, so a reordered multi-value response is not a bump
@@ -124,8 +152,6 @@ def test_digest_moves_with_the_values_and_only_with_them():
 
 
 def test_selected_values_not_the_whole_table_are_hashed():
-    """1-046 selects only 2019. A new year landing must NOT move its digest, or
-    a genuine agent regression would be excused as a data bump."""
     before = prefetch([GT_CASE], _client(_ok()))[GT_CASE.uid]
     extended = {**RESULT,
                 "aoi_id": [*RESULT["aoi_id"], "MDG.3.4"],
@@ -145,7 +171,7 @@ def test_selected_values_not_the_whole_table_are_hashed():
 
 
 def test_ledger_block_carries_what_an_audit_needs():
-    """AC 5 — request, values, digest, resource id, and the server's echo."""
+    """Request, values, digest, resource id, and the server's echo."""
     gt = prefetch([GT_CASE], _client(_ok(metadata={"aoi": {"version": "4.1"}})))
     record = gt[GT_CASE.uid].to_ledger()
     assert set(record) >= {"selector", "values", "digest", "resource_id",
@@ -170,7 +196,7 @@ def test_unresolved_ledger_block_carries_no_digest():
 
 
 def test_unparseable_selector_aborts_the_run_cleanly(capsys):
-    """AC 2 — a selector with no aggregate must reach the ABORT line, not a
+    """A selector with no aggregate must reach the ABORT line, not a
     traceback. Parsing happens before any request, so no transport is needed."""
     import argparse
 

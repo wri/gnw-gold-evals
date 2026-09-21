@@ -1,25 +1,8 @@
 """Resolve every ground-truth case before any trial runs.
 
-Prefetch, not lazy fetch, for four reasons:
-
-- **Fail fast.** A bad token or a dead analytics API is discovered before the
-  first agent call, so a broken run costs seconds instead of minutes and leaves
-  no partial ledger behind (``write_run`` is never reached).
-- **One snapshot per run.** All trials of a case grade against the same fetched
-  values. Re-fetching per trial would let mid-run data movement surface as agent
-  flakiness and corrupt ``tools/flakiness.py``'s standard-deviation gates.
-- **Concurrency.** ~40 two-hop HTTP jobs are naturally parallel and should not
-  compete with agent calls for the runner's semaphore.
-- **Separation.** The trial path is async; ``AnalyticsClient`` is synchronous
-  because this phase runs before the event loop exists.
-
 Two failure classes, deliberately handled differently:
 
-- the fetch itself failing (HTTP error, failed job, empty result, a case that
-  cannot be turned into a request, or a selector that does not parse) **aborts
-  the run** — there is nothing to
-  grade against, and scoring against missing data is the thing this mechanism
-  exists to prevent;
+- the fetch itself failing -> **aborts the run**
 - the selector not resolving against an otherwise-good response is recorded on
   the entry as ``unresolved`` and becomes a **row error at scoring time**. The
   fetch worked; this one case's metric is absent, which is a finding about that
@@ -46,19 +29,9 @@ MAX_WORKERS = 8
 
 
 def digest(values: list[float]) -> str:
-    """A stable fingerprint of the fetched values.
+    """A stable fingerprint of the fetched values from the analytics API.
 
-    The analytics API exposes no data-version field — none in its OpenAPI spec,
-    no cache headers on its responses — so this derived hash is the only way to
-    tell a data vintage bump from an agent regression (the comparison AC 6
-    needs).
-
-    It hashes the **selected** values, not the whole response, and that is
-    load-bearing. 1-046 selects only 2019: when a new year lands its digest must
-    *not* move, so a verdict flip on that row is correctly read as an agent
-    regression. 1-076 sums every year, so the same new year *does* move its
-    digest. Hashing the whole table would call both a data bump and hide the
-    real regression.
+    It hashes the **selected** values, not the whole response. 
 
     ``repr`` rather than ``str`` so float precision survives, sorted so value
     order never matters.
@@ -78,8 +51,7 @@ class GroundTruth:
     digest: str
     request: AnalyticsRequest
     resource_id: str
-    # The server's own echo of what it computed — better audit evidence than our
-    # reconstruction of the request, and it carries the GADM provider/version.
+    # The server's own echo of what it computed
     metadata: dict[str, Any] = field(default_factory=dict)
     fetched_at: str = ""
     # Set when the response was fine but the selector found no such metric.
@@ -87,11 +59,9 @@ class GroundTruth:
     unresolved: str | None = None
 
     def to_ledger(self) -> dict[str, Any]:
-        """The per-entry ``ground_truth`` block written to the run record (AC 5).
+        """The per-entry ``ground_truth`` block written to the run record.
 
-        ``dataset_id`` is recorded because 4, 8 and 10 share one endpoint.
-        ``content_date_fixed`` because a digest moving on a fixed dataset points
-        at the harness or the API, not a vintage bump.
+        ``dataset_id`` is recorded the TCL-based datasets share an endpoint.
         """
         record: dict[str, Any] = {
             "selector": self.selector,
@@ -185,7 +155,6 @@ def prefetch(
                     )
                     print(f"    {case.id}  {ground_truth.selector} -> {detail}")
         except (RequestError, AnalyticsError, SelectorError):
-            # Nothing useful can come of the rest; stop paying for them.
             for future in futures:
                 future.cancel()
             raise

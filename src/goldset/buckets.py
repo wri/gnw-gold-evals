@@ -56,7 +56,7 @@ DEDICATED: dict[str, str] = {
     "scope_match": SCOPE,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,
-    # Run-time ground truth (PZB-1282). Every way it scores 0.0 is the pull:
+    # Run-time ground truth. Every way it scores 0.0 is a retrieval failure:
     # a readable pull lacking the value, or no pull at all.
     "ground_truth_match": RETRIEVAL,
 }
@@ -84,10 +84,10 @@ SHARED: dict[str, tuple[str, str]] = {
 # i.e. all the movement was the judge's framing opinion, and cases/README.md
 # forbids staking a verdict on chart choice. Re-admit only if it demonstrates
 # std <= 0.10 over 3 trials.
-# ground_truth_answer: born info-only 2026-09-14 (PZB-1282 AC 7). agent_answer's
-# twin against fetched values — the judge extracts, code compares — and so
-# shared across the same two buckets. Once a case trades `answer` for
-# `ground_truth` it is the only check that could measure Analysis on that row.
+# ground_truth_answer: judged, so info-only from the start. It is agent_answer's
+# counterpart for fetched values (the judge extracts, code compares) and is
+# shared across the same two buckets. On a case that uses `ground_truth` instead
+# of `answer`, it is the only check that can measure Analysis.
 # Re-admit only if it demonstrates std <= 0.10 over 3 trials.
 INFO_ONLY: frozenset[str] = frozenset(
     {

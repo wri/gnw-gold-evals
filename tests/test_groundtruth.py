@@ -6,10 +6,13 @@ at once: the GADM suffix strip, a metric that is not the obvious column, and a
 year that lives in the selector rather than the request.
 """
 
+import json
+from pathlib import Path
+
 import httpx
 import pytest
 
-from goldset.groundtruth.catalog import DATASETS
+from goldset.groundtruth.catalog import dataset_for, datasets
 from goldset.groundtruth.client import AnalyticsClient, AnalyticsError
 from goldset.groundtruth.request import RequestError, build_request, canopy_cover
 from goldset.groundtruth.selector import (
@@ -85,13 +88,34 @@ def test_bare_column_is_refused():
 
 
 def test_missing_metric_errors_rather_than_passing_vacuously():
-    """AC #4 — the fetched data lacks the metric the case needs."""
+    """The fetched data lacks the metric the case needs."""
     with pytest.raises(SelectorError, match="not in the response"):
         apply_selector(parse_selector("sum(nonexistent_column)"), RESULT)
     with pytest.raises(SelectorError, match="no rows where"):
         apply_selector(
             parse_selector("sum(area_ha) WHERE tree_cover_loss_year=1999"), RESULT
         )
+
+
+def test_a_null_column_is_read_around_not_crashed_on():
+    """The live 1-095 shape: at canopy_cover 10 the API returns emissions as a
+    bare null. The other columns are fine and must stay readable."""
+    table = {**RESULT, "carbon_emissions_MgCO2e": None}
+    assert apply_selector(
+        parse_selector("sum(area_ha) WHERE tree_cover_loss_year=2019"), table
+    ) == pytest.approx(1371.15)
+
+
+@pytest.mark.parametrize("selector", [
+    "sum(carbon_emissions_MgCO2e)",                            # as the metric
+    "sum(area_ha) WHERE carbon_emissions_MgCO2e=658496.56",    # as the filter
+])
+def test_needing_a_null_column_is_a_selector_error(selector):
+    """SelectorError, never TypeError: only SelectorError becomes a row error;
+    anything else escapes prefetch as a traceback."""
+    table = {**RESULT, "carbon_emissions_MgCO2e": None}
+    with pytest.raises(SelectorError, match="did not compute it"):
+        apply_selector(parse_selector(selector), table)
 
 
 def test_gadm_suffix_stripped_only_for_gadm():
@@ -114,11 +138,39 @@ def test_landmark_spelling_is_normalised():
 
 
 def test_datasets_4_8_10_share_an_endpoint_but_differ_by_intersections():
-    assert (DATASETS["4"].endpoint == DATASETS["8"].endpoint
-            == DATASETS["10"].endpoint)
-    assert DATASETS["4"].intersections == ()
-    assert DATASETS["8"].intersections == ("driver",)
-    assert DATASETS["10"].intersections == ("fire",)
+    table = datasets()
+    assert (table["4"].endpoint == table["8"].endpoint == table["10"].endpoint)
+    assert table["4"].intersections == ()
+    assert table["8"].intersections == ("driver",)
+    assert table["10"].intersections == ("fire",)
+
+
+def test_the_request_table_is_built_from_the_committed_snapshot():
+    """Endpoint/window/fixed come from cases/zeno_catalog.json, so an upstream
+    window extension cannot silently leave the builder computing the old one."""
+    snapshot = json.loads(
+        (Path(__file__).resolve().parents[1] / "cases" / "zeno_catalog.json")
+        .read_text(encoding="utf-8")
+    )
+    entries = {e["dataset_id"]: e for e in snapshot["datasets"]}
+    for dataset_id, dataset in datasets().items():
+        entry = entries[dataset_id]
+        assert dataset.endpoint == entry["analytics_api_endpoint"]
+        assert dataset.start_date == entry["start_date"]
+        assert dataset.end_date == entry["end_date"]
+        assert dataset.fixed == entry["content_date_fixed"]
+
+
+def test_dist_alert_is_retired_not_stale():
+    """zeno deleted dataset 0's catalog entry, so it is absent from the snapshot
+    and the builder refuses it. A hardcoded fallback would have kept issuing
+    requests for a dataset the agent can no longer select."""
+    assert dataset_for("0") is None
+    case = Case(id="d0", status="done", group="direct", query="q",
+                expected={"aoi_ids": "BRA.25_1", "aoi_source": "gadm",
+                          "dataset_id": "0", "ground_truth": "sum(area_ha)"})
+    with pytest.raises(RequestError, match="unknown dataset_id '0'"):
+        build_request(case)
 
 
 def test_missing_aoi_fields_abort_loudly():
@@ -144,16 +196,39 @@ def test_canopy_cover_defaults_and_pins():
     ) == 50
 
 
-def test_dataset_alternatives_select_one_endpoint():
-    """`dataset_id: "0;11"` names two defensible routings (cases/README.md)."""
+@pytest.mark.parametrize("layer", [None, "natural_lands"])
+def test_integrated_alerts_payload_is_dates_only(layer):
+    """Integrated Alerts takes the AOI and full dates only. The API rejects
+    unknown fields with a 422, including an empty `intersections` list, and
+    zeno sends no context layer for this dataset, so neither may appear."""
+    expected = {"aoi_ids": "BRA.25_1", "aoi_source": "gadm", "dataset_id": "11",
+                "start_date": "2024-07-01", "end_date": "2024-12-31",
+                "ground_truth": "sum(area_ha)"}
+    if layer:
+        expected["context_layer"] = layer
+    case = Case(id="1-002", status="done", group="direct", query="q", expected=expected)
+    request = build_request(case)
+    assert request.endpoint == "/v0/land_change/integrated_alerts/analytics"
+    assert request.payload == {
+        "aoi": {"type": "admin", "ids": ["BRA.25"]},
+        "start_date": "2024-07-01",
+        "end_date": "2024-12-31",
+    }
+
+
+def test_dataset_alternatives_select_one_payload():
+    """`dataset_id: "8;10"` names two defensible routings (cases/README.md,
+    1-062). 8 and 10 share an endpoint, so the alternative shows up in the
+    intersections rather than the URL — which is the trap the split exists for."""
     case = Case(id="z", status="done", group="direct", query="q",
                 expected={"aoi_ids": "BRA.25_1", "aoi_source": "gadm",
-                          "dataset_id": "0;11", "start_date": "2024-07-01",
-                          "end_date": "2024-12-31", "ground_truth": "sum(area_ha)"})
-    assert build_request(case).endpoint.endswith("/dist_alerts/analytics")
-    other = build_request(case, dataset_id="11")
-    assert other.endpoint.endswith("/integrated_alerts/analytics")
-    assert other.payload["start_date"] == "2024-07-01"
+                          "dataset_id": "8;10", "ground_truth": "sum(area_ha)"})
+    first = build_request(case)
+    assert first.endpoint.endswith("/tree_cover_loss/analytics")
+    assert first.payload["intersections"] == ["driver"]
+    other = build_request(case, dataset_id="10")
+    assert other.endpoint == first.endpoint
+    assert other.payload["intersections"] == ["fire"]
 
 
 # --------------------------------------------------------------------------
@@ -195,7 +270,7 @@ def test_client_raises_on_failed_job():
 
 
 def test_client_raises_on_empty_result():
-    """AC #2 - an empty payload aborts rather than becoming an empty expectation."""
+    """An empty payload aborts rather than becoming an empty expectation."""
     def handler(request: httpx.Request) -> httpx.Response:
         if request.method == "POST":
             return httpx.Response(
@@ -204,4 +279,53 @@ def test_client_raises_on_empty_result():
 
     client = AnalyticsClient(token="t", transport=httpx.MockTransport(handler))
     with pytest.raises(AnalyticsError, match="empty result"):
+        client.fetch("/v0/x/analytics", {})
+
+
+def _saved_then(second: httpx.Response):
+    """POST resolves immediately; the result-link GET returns `second`."""
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.method == "POST":
+            return httpx.Response(
+                200, json={"status": "saved", "data": {"link": "http://a/x/1"}})
+        return second
+    return handler
+
+
+@pytest.mark.parametrize(
+    "response, expected",
+    [
+        (httpx.Response(404), "404"),
+        (httpx.Response(500), "500"),
+        (httpx.Response(200, text="<html>gateway</html>"), "malformed JSON"),
+    ],
+)
+def test_a_bad_result_link_is_an_analytics_error_not_a_traceback(response, expected):
+    """The result link is a cache entry we do not control, so it can 404 or
+    serve HTML. prefetch catches only AnalyticsError: anything else escapes the
+    ABORT path as a raw traceback."""
+    client = AnalyticsClient(
+        token="t", transport=httpx.MockTransport(_saved_then(response)))
+    with pytest.raises(AnalyticsError, match=expected):
+        client.fetch("/v0/x/analytics", {})
+
+
+def test_a_non_json_post_response_is_an_analytics_error():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, text="upstream timeout")
+
+    client = AnalyticsClient(token="t", transport=httpx.MockTransport(handler))
+    with pytest.raises(AnalyticsError, match="malformed JSON"):
+        client.fetch("/v0/x/analytics", {})
+
+
+def test_a_transport_failure_on_the_get_hop_is_an_analytics_error():
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.method == "POST":
+            return httpx.Response(
+                200, json={"status": "saved", "data": {"link": "http://a/x/1"}})
+        raise httpx.ConnectError("link host unreachable")
+
+    client = AnalyticsClient(token="t", transport=httpx.MockTransport(handler))
+    with pytest.raises(AnalyticsError, match="unreachable"):
         client.fetch("/v0/x/analytics", {})

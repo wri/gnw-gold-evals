@@ -75,7 +75,7 @@ def test_a_wrong_pull_fails_even_when_a_chart_figure_matches(judge):
     chart = {"type": "bar", "data": [{"year": 2019, "value": VALUE}]}
     got = evaluate_ground_truth(state(pulled=wrong, charts=[chart]), expected())
     assert got["ground_truth_match_score"] == 0.0
-    assert "12" in got["actual_ground_truth"]
+    assert "12" in got["agent_ground_truth"]
 
 
 def test_a_pull_missing_the_metric_fails(judge):
@@ -84,7 +84,22 @@ def test_a_pull_missing_the_metric_fails(judge):
     lgms = {"emissions": {"sector": ["forest"], "net_flux": [5.0]}}
     got = evaluate_ground_truth(state(pulled=lgms), expected())
     assert got["ground_truth_match_score"] == 0.0
-    assert "gives nothing" in got["actual_ground_truth"]
+    assert "gives nothing" in got["agent_ground_truth"]
+
+
+def test_a_null_column_in_the_agents_pull_still_scores(judge):
+    """A null column in the agent's own pull (emissions at a low canopy_cover
+    threshold) is ignored, so a selector on another column still scores."""
+    judge()
+    pulled = {"tree_cover_loss_year": [2024, 2025], "area_ha": [198000.0, 241368.24],
+              "carbon_emissions_MgCO2e": None}
+    got = evaluate_ground_truth(
+        state(pulled=pulled),
+        expected(values=(241368.24,),
+                 selector="sum(area_ha) WHERE tree_cover_loss_year=2025"),
+    )
+    assert got["ground_truth_match_score"] == 1.0
+    assert got["agent_ground_truth_values"] == [pytest.approx(241368.24)]
 
 
 def test_sectioned_pull_is_searched_per_section(judge):
@@ -128,23 +143,20 @@ def test_the_agent_figure_is_recorded_only_from_its_own_pull(judge):
     """diff_runs compares this against both runs' values to spot a hidden break."""
     judge()
     got = evaluate_ground_truth(state(pulled=FULL_TABLE), expected())
-    assert got["actual_ground_truth_values"] == [pytest.approx(VALUE)]
+    assert got["agent_ground_truth_values"] == [pytest.approx(VALUE)]
 
     chart = {"type": "bar", "data": [{"year": 2019, "value": VALUE}]}
     lgms = {"emissions": {"sector": ["forest"], "net_flux": [5.0]}}
     for agent_state in (state(charts=[chart]), state(statistics=()), state(pulled=lgms)):
         assert evaluate_ground_truth(agent_state, expected())[
-            "actual_ground_truth_values"] == [None]
+            "agent_ground_truth_values"] == [None]
 
 
 def test_every_value_must_match(judge):
-    """AC 3 is plural: one unmatched value fails the check."""
     judge()
     got = evaluate_ground_truth(state(pulled=FULL_TABLE), expected(values=(VALUE, 999.0)))
     assert got["ground_truth_match_score"] == 0.0
 
-
-# --- AC 4, AC 8 -----------------------------------------------------------
 
 def test_unresolved_selector_is_an_error_not_a_score(judge):
     calls = judge()
@@ -192,7 +204,7 @@ def test_unparseable_extraction_abstains_instead_of_trusting_the_judge(judge):
 
 
 def test_judge_outage_never_errors_the_row(judge):
-    """Info-only (AC 7): an outage stays out of judge_errors."""
+    """Info-only: an outage stays out of judge_errors."""
     judge(raises=RuntimeError("503"))
     got = evaluate_ground_truth(state(pulled=FULL_TABLE, answer="658,500 t"), expected())
     assert got["ground_truth_answer_score"] is None

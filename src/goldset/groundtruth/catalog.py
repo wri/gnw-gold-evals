@@ -5,18 +5,18 @@ Given a dataset_id, this provides:
 - payload shape
 - time window (when start/end isn't specified)
 - how to distinguish between datasets that use the same URL (TCL/TCLF for example)
-
-This temporarily hardcodes info from from the snapshot at ``cases/zeno_catalog.json``
-and ``src/agent/datasets/catalog/*.yml`` in project-zeno. 
 """
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
 
 # How a dataset's payload is shaped beyond the mandatory ``aoi`` block.
 #   none        AOI only
-#   date        start_date/end_date + intersections
+#   date        start_date/end_date only (zeno's Integrated Alerts branch)
 #   year        start_year/end_year
 #   loss        start_year/end_year + forest_filter + intersections + canopy_cover
 #   gain        start_year/end_year snapped to 5-year buckets + forest_filter
@@ -27,6 +27,30 @@ PayloadStyle = str
 
 DEFAULT_CANOPY_COVER = 30
 
+SNAPSHOT_PATH = Path(__file__).resolve().parents[3] / "cases" / "zeno_catalog.json"
+
+# maps dataset_id to payload shape. Not in any YAML: zeno builds these in code.
+PAYLOAD_STYLES: dict[str, PayloadStyle] = {
+    "1": "none",       # land cover
+    "2": "year",       # grasslands
+    "3": "none",       # SBTN natural lands
+    "4": "loss",       # tree cover loss
+    "5": "gain",       # tree cover gain — years snap to 5-year buckets
+    "6": "canopy",     # carbon flux
+    "7": "extent",     # tree cover
+    "8": "loss",       # tree cover loss by dominant driver
+    "9": "unsupported",  # sLUC — needs the 42-crop crop_types list (1-103)
+    "10": "loss",      # tree cover loss from fires
+    "11": "date",      # integrated alerts
+    "12": "none",      # LGMS
+}
+
+# TCL, drivers, and TCLF share an endpoint but have different intersections
+INTERSECTIONS: dict[str, tuple[str, ...]] = {
+    "8": ("driver",),
+    "10": ("fire",),
+}
+
 
 @dataclass(frozen=True)
 class Dataset:
@@ -34,62 +58,63 @@ class Dataset:
 
     dataset_id: str
     name: str
-    endpoint: str
-    style: PayloadStyle
-    start_date: str
-    end_date: str | None = None
-    # content_date_fixed: the window is pinned and never extends, so a
-    # hand-verified answer on this dataset is genuinely stable.
+    endpoint: str                       # from cases/zeno_catalog.json
+    style: PayloadStyle                 # defined above
+    start_date: str                     # from cases/zeno_catalog.json
+    end_date: str | None = None         # from cases/zeno_catalog.json
     fixed: bool = False
-    # Datasets 4, 8 and 10 share one endpoint and are separated only by this.
-    intersections: tuple[str, ...] = ()
+    intersections: tuple[str, ...] = () # defined above
 
 
-# end_date None means "to today" — zeno's revise_date_range substitutes it.
-DATASETS: dict[str, Dataset] = {
-    "0": Dataset("0", "Global all ecosystem disturbance alerts (DIST-ALERT)",
-                 "/v0/land_change/dist_alerts/analytics", "date", "2023-12-01"),
-    "1": Dataset("1", "Global land cover",
-                 "/v0/land_change/land_cover_change/analytics", "none",
-                 "2015-01-01", "2024-12-31"),
-    "2": Dataset("2", "Global natural/semi-natural grassland extent",
-                 "/v0/land_change/grasslands/analytics", "year",
-                 "2000-01-01", "2022-12-31"),
-    "3": Dataset("3", "SBTN Natural Lands Map",
-                 "/v0/land_change/natural_lands/analytics", "none",
-                 "2020-01-01", "2020-12-31", fixed=True),
-    "4": Dataset("4", "Tree cover loss",
-                 "/v0/land_change/tree_cover_loss/analytics", "loss",
-                 "2001-01-01", "2025-12-31"),
-    "5": Dataset("5", "Tree cover gain",
-                 "/v0/land_change/tree_cover_gain/analytics", "gain",
-                 "2000-01-01", "2020-12-31"),
-    "6": Dataset("6", "Forest greenhouse gas net flux",
-                 "/v0/land_change/carbon_flux/analytics", "canopy",
-                 "2001-01-01", "2025-12-31"),
-    "7": Dataset("7", "Tree cover",
-                 "/v0/land_change/tree_cover/analytics", "extent",
-                 "2000-01-01", "2000-12-31", fixed=True),
-    "8": Dataset("8", "Tree cover loss by dominant driver",
-                 "/v0/land_change/tree_cover_loss/analytics", "loss",
-                 "2001-01-01", "2025-12-31", fixed=True,
-                 intersections=("driver",)),
-    "9": Dataset("9", "Deforestation (sLUC) Emission Factors by Agricultural Crop",
-                 "/v0/land_change/deforestation_luc_emissions_factor/analytics",
-                 "unsupported", "2020-01-01", "2024-12-31", fixed=True),
-    "10": Dataset("10", "Tree cover loss due to fires",
-                  "/v0/land_change/tree_cover_loss/analytics", "loss",
-                  "2001-01-01", "2025-12-31", intersections=("fire",)),
-    "11": Dataset("11", "Integrated alerts",
-                  "/v0/land_change/integrated_alerts/analytics", "date",
-                  "2023-12-01"),
-    "12": Dataset("12", "Land GHG Monitoring System (LGMS)",
-                  "/v0/land_change/land_ghg_inventory/analytics", "none",
-                  "2016-01-01"),
-}
+class CatalogError(Exception):
+    """The snapshot is missing or cannot describe a dataset's request."""
 
-# expected.aoi_source -> the analytics API's aoi.type. Lowercased on lookup
-# because the case set spells it both "Landmark" (5 cases) and "landmark" (2).
+
+@lru_cache(maxsize=1)
+def datasets() -> dict[str, Dataset]:
+    """Build the request table from the committed snapshot.
+
+    A function, not a module constant, so the snapshot is read on first use
+    rather than at import: a missing or corrupt snapshot then surfaces as a
+    ``CatalogError`` from the prefetch that needed it, not as an import failure
+    in tooling that never touches the analytics API.
+
+    Cached: the snapshot is a committed file, immutable for a run's lifetime.
+    A dataset the snapshot no longer carries is simply absent, so
+    ``build_request`` fails loudly on it rather than using a stale endpoint
+    """
+    try:
+        raw = json.loads(SNAPSHOT_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise CatalogError(f"cannot read {SNAPSHOT_PATH}: {exc}") from exc
+
+    table: dict[str, Dataset] = {}
+    for entry in raw.get("datasets") or []:
+        dataset_id = str(entry.get("dataset_id", "")).strip()
+        endpoint = entry.get("analytics_api_endpoint")
+        start_date = entry.get("start_date")
+        if not dataset_id or not endpoint or not start_date:
+            # catalog entry with no endpoint or start/end date can't be requested.
+            continue
+        table[dataset_id] = Dataset(
+            dataset_id=dataset_id,
+            name=str(entry.get("dataset_name") or ""),
+            endpoint=str(endpoint),
+            style=PAYLOAD_STYLES.get(dataset_id, "unsupported"),
+            start_date=str(start_date),
+            end_date=str(entry["end_date"]) if entry.get("end_date") else None,
+            fixed=bool(entry.get("content_date_fixed")),
+            intersections=INTERSECTIONS.get(dataset_id, ()),
+        )
+    if not table:
+        raise CatalogError(
+            f"{SNAPSHOT_PATH} carries no usable datasets; "
+            "re-run tools/sync_zeno_catalog.py"
+        )
+    return table
+
+
+# expected.aoi_source -> the analytics API's aoi.type.
 AOI_TYPES: dict[str, str] = {
     "gadm": "admin",
     "kba": "key_biodiversity_area",
@@ -99,4 +124,4 @@ AOI_TYPES: dict[str, str] = {
 
 
 def dataset_for(dataset_id: str) -> Dataset | None:
-    return DATASETS.get(str(dataset_id).strip())
+    return datasets().get(str(dataset_id).strip())

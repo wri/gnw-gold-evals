@@ -13,7 +13,7 @@ and usage fidelity** — did the agent build the right query and use the returne
 numbers correctly — not the quality of the underlying data.
 """
 
-from goldset.groundtruth.catalog import DATASETS, Dataset
+from goldset.groundtruth.catalog import CatalogError, Dataset, datasets
 from goldset.groundtruth.client import AnalyticsClient, AnalyticsError
 from goldset.groundtruth.fetch import (
     GROUND_TRUTH_FIELD,
@@ -25,16 +25,17 @@ from goldset.groundtruth.request import RequestError, build_request
 from goldset.groundtruth.selector import Selector, SelectorError, parse_selector
 
 __all__ = [
-    "DATASETS",
     "GROUND_TRUTH_FIELD",
     "AnalyticsClient",
     "AnalyticsError",
+    "CatalogError",
     "Dataset",
     "GroundTruth",
     "RequestError",
     "Selector",
     "SelectorError",
     "build_request",
+    "datasets",
     "is_ground_truth",
     "parse_selector",
     "prefetch",

@@ -76,34 +76,64 @@ def parse_selector(raw: str) -> Selector:
     return Selector(aggregate, match.group("column"), match.group("key"), value)
 
 
-def _rows(result: dict[str, list[Any]]) -> list[dict[str, Any]]:
+def _split_columns(
+    result: dict[str, Any],
+) -> tuple[dict[str, list[Any]], dict[str, Any]]:
+    """Separate real columns (lists of values) from ones the API left uncomputed.
+
+    The API returns a bare ``null`` in place of a column it did not compute for
+    the request, for example ``carbon_emissions_MgCO2e`` at a low
+    ``canopy_cover`` threshold. That is a valid answer, not a malformed
+    response, so the remaining columns stay readable.
+    """
+    columns = {k: v for k, v in result.items() if isinstance(v, list)}
+    uncomputed = {k: v for k, v in result.items() if not isinstance(v, list)}
+    return columns, uncomputed
+
+
+def _rows(columns: dict[str, list[Any]]) -> list[dict[str, Any]]:
     """The analytics API answers column-oriented; rows are easier to filter."""
-    if not result:
+    if not columns:
         return []
-    return [dict(zip(result, values)) for values in zip(*result.values())]
+    return [dict(zip(columns, values)) for values in zip(*columns.values())]
+
+
+def _require(column: str, role: str, columns: dict, uncomputed: dict) -> None:
+    """A SelectorError for any column the selector needs but cannot read.
+
+    Always a SelectorError, never a TypeError: prefetch turns SelectorError
+    into a row error with this message, and anything else escapes as a
+    traceback that aborts the run.
+    """
+    if column in uncomputed:
+        raise SelectorError(
+            f"{role} {column!r} came back as {uncomputed[column]!r}, not a list of "
+            "values: the API did not compute it for this request"
+        )
+    if column not in columns:
+        raise SelectorError(
+            f"{role} {column!r} not in the response (columns: {sorted(columns)})"
+        )
 
 
 def apply_selector(selector: Selector, result: dict[str, list[Any]]) -> float:
     """Resolve a selector against one analytics response.
 
     Raises ``SelectorError`` when the response lacks the column or the filter
-    matches nothing. That is AC #4: a case whose metric is absent must **error**,
-    never pass vacuously — an empty match summing to 0.0 would silently become a
+    matches nothing. A case whose metric is absent must **error**, never pass 
+    vacuously — an empty match summing to 0.0 would silently become a 
     real-looking expected value.
+
+    A column the API returned as ``null`` is ignored unless the selector needs
+    it, in which case it is the same kind of absence and raises the same way.
     """
-    if selector.column not in result:
-        raise SelectorError(
-            f"column {selector.column!r} not in the response "
-            f"(columns: {sorted(result)})"
-        )
-    rows = _rows(result)
+    columns, uncomputed = _split_columns(result or {})
+    _require(selector.column, "column", columns, uncomputed)
+    if selector.filter_column is not None:
+        _require(selector.filter_column, "filter column", columns, uncomputed)
+    rows = _rows(columns)
 
     if selector.filter_column is not None:
-        if selector.filter_column not in result:
-            raise SelectorError(
-                f"filter column {selector.filter_column!r} not in the response "
-                f"(columns: {sorted(result)})"
-            )
         wanted = selector.filter_value
         rows = [row for row in rows if str(row.get(selector.filter_column)) == wanted]
         if not rows:

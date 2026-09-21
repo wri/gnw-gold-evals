@@ -26,8 +26,7 @@ import httpx
 BASE_URL = "https://analytics.globalnaturewatch.org"
 DEFAULT_TIMEOUT = 120.0
 MAX_POLLS = 10
-# Always production, whatever `--env` the run targets: no run uses the staging
-# analytics API. Deliberately not a parameter, so no caller can send another.
+# Always use production analytics API
 X_ENVIRONMENT = "production"
 DONE = ("success", "saved")
 FAILED = ("failed", "error")
@@ -35,9 +34,6 @@ FAILED = ("failed", "error")
 
 def analytics_headers(token: str) -> dict:
     """Headers every analytics request needs, wherever it is issued from.
-
-    Shared with the runner, which re-reads the agent's own ``source_url`` to see
-    the table it actually pulled — that GET needs the same auth as ours.
     """
     return {
         "Accept": "application/json",
@@ -48,7 +44,7 @@ def analytics_headers(token: str) -> dict:
 
 
 class AnalyticsError(Exception):
-    """The analytics API could not answer. A run must abort loudly (AC #2)."""
+    """The analytics API couldn't answer. A run must abort loudly."""
 
 
 @dataclass(frozen=True)
@@ -56,8 +52,6 @@ class AnalyticsResult:
     """One fetched response, plus what is needed to audit the verdict."""
 
     result: dict[str, list[Any]]
-    # The server's own echo of what it computed — better evidence than our
-    # reconstruction of the request. Carries provider/version for the boundaries.
     metadata: dict[str, Any]
     link: str
 
@@ -67,8 +61,6 @@ class AnalyticsResult:
 
 
 class AnalyticsClient:
-    """Synchronous client. Prefetch runs before any trial, so it is not on the
-    async trial path and does not need to share the runner's event loop."""
 
     def __init__(
         self,
@@ -92,13 +84,18 @@ class AnalyticsClient:
             link = (body.get("data") or {}).get("link")
             if not link:
                 raise AnalyticsError(f"{endpoint}: no data.link in {body!r}")
-            response = client.get(link, headers=self._headers)
-            response.raise_for_status()
-            data = response.json().get("data") or {}
+            try:
+                response = client.get(link, headers=self._headers)
+                response.raise_for_status()
+                data = response.json().get("data") or {}
+            except httpx.HTTPError as exc:
+                raise AnalyticsError(f"{link}: {exc}") from exc
+            except ValueError as exc:      # includes json.JSONDecodeError
+                raise AnalyticsError(f"{link}: malformed JSON ({exc})") from exc
 
         result = data.get("result")
         if not result:
-            # an empty result is a failed fetch, never an empty expectation.
+            # an empty result is a failed fetch
             raise AnalyticsError(f"{endpoint}: empty result at {link}")
         return AnalyticsResult(result, data.get("metadata") or {}, link)
 
@@ -109,9 +106,11 @@ class AnalyticsClient:
             try:
                 response = client.post(url, json=payload, headers=self._headers)
                 response.raise_for_status()
+                body = response.json()
             except httpx.HTTPError as exc:
                 raise AnalyticsError(f"{url}: {exc}") from exc
-            body = response.json()
+            except ValueError as exc:      # includes json.JSONDecodeError
+                raise AnalyticsError(f"{url}: malformed JSON ({exc})") from exc
             status = str(body.get("status") or "").lower()
             if status in DONE:
                 return body

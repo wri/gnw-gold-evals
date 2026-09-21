@@ -99,7 +99,7 @@ def test_fetched_values_are_attached_when_supplied():
 
 
 def test_unresolved_selector_rides_along_for_the_scorer():
-    """AC 4 — the fetch worked but the metric was absent; the row must ERROR at
+    """The fetch worked but the metric was absent; the row must ERROR at
     scoring time, so the reason has to reach the evaluators."""
     expected = case_to_expected(GT_CASE, _ground_truth([], unresolved="no such column"))
     assert expected.ground_truth_values == []
@@ -107,7 +107,7 @@ def test_unresolved_selector_rides_along_for_the_scorer():
 
 
 def test_cases_without_ground_truth_are_built_exactly_as_before():
-    """AC 8 — the isolation property. Every non-ground-truth case must produce a
+    """The isolation property. Every non-ground-truth case must produce a
     byte-identical ExpectedData whether or not the mechanism exists, which is
     what lets 90 of the 120 v2 cases be unaffected by this feature.
 

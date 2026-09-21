@@ -1,15 +1,4 @@
 """Ground-truth checks: the values fetched at run start against the agent's work.
-
-``ground_truth_match`` (gated, retrieval) — does the agent's own pulled table
-yield every fetched value? The case's selector is applied to that table, so a
-``WHERE`` filter narrows it exactly as it narrowed the harness's fetch, and a
-one-row pull (1-046 narrows to 2019) resolves to the same figure as the full one.
-
-``ground_truth_answer`` (info-only) — does the prose state them? The judge only
-extracts the figure; code compares it, and nothing falls back to the judge's own
-score.
-
-Both are ``null`` for a case with no ``ground_truth``, and neither runs the judge.
 """
 
 from __future__ import annotations
@@ -65,11 +54,9 @@ def _match(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, Any
     result: dict[str, Any] = {
         "ground_truth_match_score": None,
         "ground_truth_match_score_reason": None,
-        "actual_ground_truth": None,
-        # The agent's own figure per expected value, as numbers: diff_runs reads
-        # it to spot a real break hiding behind a data change. None wherever the
-        # agent's pull was absent, unreadable, or lacked the metric.
-        "actual_ground_truth_values": [None] * len(values),
+        "agent_ground_truth": None,
+        # The agent's own figure per expected value, as numbers
+        "agent_ground_truth_values": [None] * len(values),
     }
 
     if isinstance(pulled, dict) and pulled:
@@ -100,7 +87,7 @@ def _match(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, Any
         parts.append(f"expected {format_number(value)}, {source} gives {found}")
 
     if source == "the agent's pull":
-        result["actual_ground_truth_values"] = [_closest(figures, v) for v in values]
+        result["agent_ground_truth_values"] = [_closest(figures, v) for v in values]
     if matched:
         score = 1.0
     elif source.startswith("the chart"):
@@ -112,7 +99,7 @@ def _match(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, Any
         f"{expected.expected_ground_truth}: " + "; ".join(parts)
         + f" — {'within' if matched else 'exceeding'} the {NUMERIC_TOLERANCE:.0%} tolerance"
     )
-    result["actual_ground_truth"] = "; ".join(parts)
+    result["agent_ground_truth"] = "; ".join(parts)
     return result
 
 
@@ -120,7 +107,7 @@ def _answer(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, An
     result: dict[str, Any] = {
         "ground_truth_answer_score": None,
         "ground_truth_answer_score_reason": None,
-        "actual_ground_truth_answer": None,
+        "agent_ground_truth_answer": None,
     }
     prose = extract_final_answer_text(agent_state.get("messages", []))
     if not prose:
@@ -134,15 +121,15 @@ def _answer(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, An
             ).extracted_number
         except Exception as error:
             # Info-only: an outage must not reach judge_errors, which would turn
-            # the row into an error and let this check touch a verdict (AC 7).
+            # the row into an error and let this check touch a verdict.
             result["ground_truth_answer_score_reason"] = f"JUDGE ERROR: {error}"
             return result
-        actual = parse_expected_number(extracted)
-        if actual is None or actual.is_percent:
+        agent_figure = parse_expected_number(extracted)
+        if agent_figure is None or agent_figure.is_percent:
             parts.append(f"no comparable figure extracted ({extracted!r})")
             scores.append(None)
             continue
-        difference = _difference(actual.value, value)
+        difference = _difference(agent_figure.value, value)
         scores.append(1.0 if difference <= NUMERIC_TOLERANCE else 0.0)
         parts.append(
             f"expected {format_number(value)}, prose states {extracted!r} ({difference:.2%})"
@@ -151,7 +138,7 @@ def _answer(agent_state: dict[str, Any], expected: ExpectedData) -> dict[str, An
     if None not in scores:
         result["ground_truth_answer_score"] = min(scores)
     result["ground_truth_answer_score_reason"] = "; ".join(parts)
-    result["actual_ground_truth_answer"] = "; ".join(parts)
+    result["agent_ground_truth_answer"] = "; ".join(parts)
     return result
 
 
@@ -165,7 +152,7 @@ def evaluate_ground_truth(
         }
     # Both land on TestResult.error through the runner's kwargs merge.
     if expected.ground_truth_unresolved:
-        # AC 4: the fetch worked but this case's metric is absent from the data.
+        # the fetch worked but this case's metric is absent from the data.
         error = f"ground truth unresolved: {expected.ground_truth_unresolved}"
     elif not expected.ground_truth_values:
         # Never grade against nothing: _match's empty loop would pass vacuously.
