@@ -195,7 +195,13 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
         cases = [c for c in cases if c.id.lower() in wanted]
     if args.group:
         cases = [c for c in cases if args.group.lower() in c.group.lower()]
-    return sorted(cases, key=lambda c: c.id)
+    # With default string sorting, multi-turn cases get started last, since 'mt-'
+    # sorts after '1-'. But they take significant longer than the non-multi-turn
+    # cases, so force them to be started first (longest-processing-time-first
+    # scheduling). This speeds up the whole test run, since then you don't have a
+    # long tail of a few multi-turn cases trying to finish at the end of the test
+    # run.
+    return sorted(cases, key=lambda c: (not c.is_multiturn, c.id))
 
 
 async def run_cases(

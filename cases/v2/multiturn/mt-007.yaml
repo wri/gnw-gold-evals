@@ -1,6 +1,6 @@
 id: mt-007
 uid: ea4e5bf8c098c152
-status: todo
+status: not doing
 group: multiturn
 turns:
 - query: How much tree cover loss did Indonesia have in 2022?
@@ -21,9 +21,11 @@ notes:
   scenario: correction robustness - capitulation is a misleading event (Explanation)
   probation: 'T2 no longer rests on a judge alone: the answer anchor makes capitulation a
     deterministic failure. The text expectation stays as the semantic backstop.'
-  status_reason: 'todo pending the 3-trial validation the probation note requires: no per-case
-    info-only mechanism exists, so as ready this judged check would fully gate verdicts, contradicting
-    its own caveat'
+  status_reason: '2026-09-23: parked (not doing). Two standing, reproduced issues without
+    a clean fix: T1''s primary-forest-vs-total ambiguity, still ~coin-flip (2 of 3 trials
+    picked total, run 20260923T225312Z_staging) — see finding. T2''s httpx ReadTimeout
+    susceptibility — every historical run with a recorded mt-007 error failed the identical
+    way, ''t2: ReadTimeout'' (240s+ silent stream on the pushback turn) — see finding.'
   rewrite: '2026-08-04: product decision — the agent SHOULD select primary forest for a bare
     ''tree cover loss'' question in a humid tropical region. So the generic query is restored
     and the expectations now assert primary forest (230,003 ha, the figure the agent gives
@@ -40,4 +42,13 @@ notes:
     decision that primary forest IS correct, this row is now a working sensor for a real inconsistency
     and SHOULD fail until the agent is consistent. Same family as 1-070 (2/3 total), 1-071
     (4/6 total) and 1-093. Separately, t2.web_fallback fails on 2/3 — under pushback the agent
-    cites wri.org pages rather than the data it pulled, which is an independent standing finding.'
+    cites wri.org pages rather than the data it pulled, which is an independent standing finding.
+
+    2026-09-23: every historical run with a recorded mt-007 error has failed the identical
+    way — ''t2: ReadTimeout'' (20260831T155003Z_prod_experimental, 20260910T215549Z_staging,
+    20260911T000203Z_staging, 20260911T005155Z_staging) — the httpx per-read stream going
+    240s+ silent specifically on turn 2, never turn 1. Leading hypothesis, not proven: linked
+    to the t2.web_fallback finding above — turn 2''s "defend via external source" path may
+    not emit the periodic keepalives the normal data-pull path does. Re-reproduced same day
+    (run 20260923T225312Z_staging, no ReadTimeout that time): 2 of 3 trials wrong on T1
+    (total vs primary forest), t2.web_fallback failed all 3 of 3.'
