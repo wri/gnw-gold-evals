@@ -1,9 +1,9 @@
 id: 1-026
-uid: 00b7bcb79abcc5ed
+uid: 2ca8d841e098e077
 status: done
 group: class-comparison
-query: Whats the second largest natural land class in the Plaine du Villefagnan key biodiversity
-  area in FRA?
+query: Distinguishing natural from non-natural land cover, whats the second largest natural
+  land class in the Plaine du Villefagnan key biodiversity area in FRA?
 expected:
   aoi_source: kba
   dataset_id: '3'
@@ -12,3 +12,13 @@ expected:
   scope: analyse
 notes:
   aoi_type: kba
+  rewrite: '2026-09-17: prefixed "Distinguishing natural from non-natural land cover, " —
+    same technique validated on 1-031 (routes to SBTN via its own natural/non-natural framing
+    instead of naming it, per cases/README.md''s DON''T-name-the-dataset rule). Old wording
+    ("Whats the second largest natural land class...") nudged/misrouted to Global Land Cover
+    at 14/36 dataset_id_match failures (~39%) across historical full runs. New wording: 0/18
+    failures across two independent 9-trial batches (runs 20260917T003645Z_staging and
+    20260917T004435Z_staging) — dataset_id_match, agent_answer, data_pull_exists, scope_match
+    all 1.0 every trial. At the old 39% rate, 0/18 by chance would be <0.1%; this is a real
+    fix, not a lucky streak (contrast 1-062''s reword, which looked clean at 0/6 then reverted
+    to baseline at 2/9 more).'

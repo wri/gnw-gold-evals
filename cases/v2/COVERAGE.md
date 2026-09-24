@@ -5,16 +5,16 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 9fb56facf962a15a` · 133 cases · done 88 · not doing 27 · ready 12 · todo 6 · **106 active** (everything but `not doing` runs by default)
+`caseset_version 84fc7603c7a43ad1` · 133 cases · done 90 · not doing 27 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-16_
+_Last updated: 2026-09-24_
 
 ## Groups
 
 | group | cases | active | statuses |
 |---|---|---|---|
 | class-comparison | 9 | 6 | done 6, not doing 3 |
-| comparative | 14 | 13 | done 10, not doing 1, todo 3 |
+| comparative | 14 | 13 | done 11, not doing 1, todo 2 |
 | context-layer | 2 | 1 | done 1, not doing 1 |
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
@@ -25,7 +25,7 @@ _Last updated: 2026-09-16_
 | multilingual | 5 | 5 | done 5 |
 | multiturn | 12 | 9 | not doing 3, ready 8, todo 1 |
 | nudge | 2 | 2 | ready 2 |
-| parent-child | 14 | 12 | done 10, not doing 2, ready 1, todo 1 |
+| parent-child | 14 | 12 | done 11, not doing 2, ready 1 |
 | ranking | 1 | 1 | done 1 |
 | refusal | 5 | 1 | done 1, not doing 4 |
 | temporal | 16 | 15 | done 14, not doing 1, ready 1 |
@@ -40,9 +40,9 @@ friends) run on top of it whenever their trigger state exists.
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
 | retrieval | 100 | 0 | 100 | 94% |
-| analysis | 0 | 70 | 70 | 66% |
-| explanation | 26 | 59 | 85 | 80% |
-| output | 75 | 3 | 78 | 74% |
+| analysis | 0 | 71 | 71 | 67% |
+| explanation | 26 | 60 | 86 | 81% |
+| output | 76 | 3 | 79 | 75% |
 | scope | 90 | 7 | 97 | 92% |
 
 ## Expected-field census (active cases)
@@ -53,8 +53,8 @@ friends) run on top of it whenever their trigger state exists.
 | scope | 89 | scope_match |
 | aoi_source | 83 | reference only (dashboard AOI source) |
 | dataset_name | 82 | reference only |
-| aoi_ids | 72 | aoi_id_match |
-| answer | 70 | agent_answer, charts_answer, chart_produced |
+| aoi_ids | 73 | aoi_id_match |
+| answer | 71 | agent_answer, charts_answer, chart_produced |
 | text | 26 | expected_text_match |
 | context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
@@ -89,9 +89,9 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
-| 8 | Tree cover loss by dominant driver | 5 | 4 | canopy_cover ×0 ← gap | — |
+| 8 | Tree cover loss by dominant driver | 5 | 5 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
-| 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
+| 10 | Tree cover loss due to fires | 2 | 1 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
 | 11 | Integrated alerts | 7 | 5 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
@@ -130,11 +130,9 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | mt-010 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-011 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-012 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
-| 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
-| 1-053 | todo | comparative | — |
-| 1-062 | todo | comparative | Triage W4 2026-08-01: dataset_id accepts alternatives (8;10 both defensible); the disputed answer and the u... |
+| 1-062 | todo | comparative | 2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a... |
 | mt-007 | todo | multiturn | todo pending the 3-trial validation the probation note requires: no per-case info-only mechanism exists, so... |
 
 ## Known gaps
