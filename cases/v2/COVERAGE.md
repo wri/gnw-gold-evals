@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 0a19904702b11094` · 126 cases · done 90 · not doing 20 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
+`caseset_version 646eb0ca58fdbfe0` · 128 cases · done 90 · not doing 22 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-18_
+_Last updated: 2026-09-24_
 
 ## Groups
 
@@ -19,7 +19,7 @@ _Last updated: 2026-09-18_
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
-| direct | 26 | 21 | done 20, not doing 5, todo 1 |
+| direct | 28 | 21 | done 20, not doing 7, todo 1 |
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
@@ -123,6 +123,8 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-119 | not doing | imagery | — |
 | 1-120 | not doing | imagery | — |
 | 1-121 | not doing | imagery | — |
+| 1-128 | not doing | direct | 2026-09-24: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-129 | not doing | direct | 2026-09-24: not doing, same two counts as 1-128: LGMS is hidden on the default profile, and wri/project-zen... |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
 | 1-062 | todo | comparative | 2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a... |

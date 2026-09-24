@@ -1,6 +1,6 @@
 {
-  "caseset_version": "0a19904702b11094",
-  "case_count": 126,
+  "caseset_version": "646eb0ca58fdbfe0",
+  "case_count": 128,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -704,6 +704,18 @@
       "uid": "439a98af199c5d91",
       "group": "temporal",
       "status": "ready"
+    },
+    {
+      "id": "1-128",
+      "uid": "60bed919dd513c0d",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-129",
+      "uid": "e99ac0c7d7e74b59",
+      "group": "direct",
+      "status": "not doing"
     },
     {
       "id": "mt-001",
