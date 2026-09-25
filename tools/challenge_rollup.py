@@ -21,6 +21,11 @@ interval, compared against ``cases/challenge/TARGETS.yml``. Semantics:
   infrastructure flakiness never contaminates the published rate.
 - ``uncovered`` rows (nothing evaluated) and ``stale`` rows (uid no longer
   in the store) are reported, never counted.
+- **Latency** (median and p90, nearest rank) is reported per set and cohort
+  over every trial of the measured rows (pass or fail); errored rows are
+  excluded, since a timeout measures availability, not speed. It is
+  wall-clock per agent turn as the harness saw it, so it only compares
+  across runs with the same env and workers.
 - Confidence intervals are Wilson 95%; a published "70%" from 12 cases must
   say how soft it is.
 
@@ -76,6 +81,10 @@ def _trial_list(entry: dict[str, Any]) -> list[dict[str, Any]]:
     return [t for t in trials if isinstance(t, dict)]
 
 
+def _secs(value: float | None) -> str:
+    return "-" if value is None else f"{value:.1f}"
+
+
 def strict_clean(entry: dict[str, Any]) -> bool:
     """True when the row passed AND no trial shows a failing non-info check.
 
@@ -91,11 +100,32 @@ def strict_clean(entry: dict[str, Any]) -> bool:
     return True
 
 
-def _new_stat() -> dict[str, int]:
-    return {"n": 0, "passed": 0, "strict_passed": 0}
+def _new_stat() -> dict[str, Any]:
+    return {"n": 0, "passed": 0, "strict_passed": 0, "_latencies": []}
+
+
+def entry_latencies(entry: dict[str, Any]) -> list[float]:
+    """Every trial's wall-clock latency for a row (seconds): per-trial
+    ``latency_s`` on multi-trial entries, else the entry's own."""
+    trials = _trial_list(entry)
+    values = [t.get("latency_s") for t in trials] if trials else [entry.get("latency_s")]
+    return [float(v) for v in values if isinstance(v, (int, float))]
+
+
+def percentile(values: list[float], q: float) -> float | None:
+    """Nearest-rank percentile (q in 0..100); None on no data."""
+    if not values:
+        return None
+    ordered = sorted(values)
+    rank = max(1, math.ceil(q / 100 * len(ordered)))
+    return ordered[rank - 1]
 
 
 def _finish(stat: dict[str, Any]) -> dict[str, Any]:
+    latencies = stat.pop("_latencies", [])
+    stat["latency_n"] = len(latencies)
+    stat["latency_median_s"] = percentile(latencies, 50)
+    stat["latency_p90_s"] = percentile(latencies, 90)
     n, passed = stat["n"], stat["passed"]
     lo, hi = wilson(passed, n)
     stat["rate"] = passed / n if n else None
@@ -140,6 +170,7 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
         difficulty = case.notes.get("difficulty", "unlabelled")
         passed = verdict == "pass"
         strict = strict_clean(entry)
+        latencies = entry_latencies(entry)
         bucket = sets[case_set]
         for stat in (
             overall,
@@ -150,6 +181,7 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
             stat["n"] += 1
             stat["passed"] += passed
             stat["strict_passed"] += strict
+            stat["_latencies"].extend(latencies)
         if not passed:
             failing.append(
                 {
@@ -283,20 +315,27 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
             lines.append(f"## Set: {set_name}")
             lines.append(
                 f"pass rate **{_pct(s['rate'])}** ({s['passed']}/{s['n']}, "
-                f"95% CI {_ci(s)}) | strict {_pct(s['strict_rate'])}"
+                f"95% CI {_ci(s)}) | strict {_pct(s['strict_rate'])} | "
+                f"latency median {_secs(s['latency_median_s'])}, "
+                f"p90 {_secs(s['latency_p90_s'])}"
             )
             if st.get("overall") is not None:
                 lines.append(f"target: {_target_cell(s['rate'], st['overall'])}")
             lines.append("")
             lines.append("### By cohort")
-            lines.append("| cohort | n | passed | rate | 95% CI | strict | target |")
-            lines.append("|---|---|---|---|---|---|---|")
+            lines.append(
+                "| cohort | n | passed | rate | 95% CI | strict | target "
+                "| median s | p90 s |"
+            )
+            lines.append("|---|---|---|---|---|---|---|---|---|")
             group_targets = st.get("targets", {})
             for group, stat in s["by_group"].items():
                 lines.append(
                     f"| {group} | {stat['n']} | {stat['passed']} | "
                     f"{_pct(stat['rate'])} | {_ci(stat)} | {_pct(stat['strict_rate'])} "
-                    f"| {_target_cell(stat['rate'], group_targets.get(group))} |"
+                    f"| {_target_cell(stat['rate'], group_targets.get(group))} "
+                    f"| {_secs(stat['latency_median_s'])} "
+                    f"| {_secs(stat['latency_p90_s'])} |"
                 )
             lines.append("")
             lines.append("### By difficulty")

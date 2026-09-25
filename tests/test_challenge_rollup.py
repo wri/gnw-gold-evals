@@ -237,3 +237,33 @@ def test_strict_clean_reads_ledger_list_shaped_trials():
     assert challenge_rollup.strict_clean(flapping) is False
     clean = dict(flapping, trials=[{"checks": {"aoi_id_match": 1.0}}] * 3)
     assert challenge_rollup.strict_clean(clean) is True
+
+
+def test_latency_percentiles_per_cohort(tmp_path):
+    cases_dir, by_uid = make_store(tmp_path)
+    uids = {case.id: uid for uid, case in by_uid.items()}
+    run = make_run(uids)
+    run["results"][0]["latency_s"] = 2.0          # g1 pass, 1 trial
+    run["results"][1]["latency_s"] = 10.0         # g1 fail, 1 trial
+    run["results"][2]["latency_s"] = 99.0         # errored: excluded
+    run["results"][3]["trials"] = [                # g2, list-shaped trials
+        {"checks": {"aoi_id_match": 1.0}, "latency_s": 3.0},
+        {"checks": {"aoi_id_match": 0.0}, "latency_s": 4.0},
+        {"checks": {"aoi_id_match": 1.0}, "latency_s": 5.0},
+    ]
+    rollup = challenge_rollup.rollup_run(run, by_uid)
+    g1 = rollup["by_set"]["s1"]["by_group"]["g1"]
+    assert g1["latency_n"] == 2
+    assert g1["latency_median_s"] == 2.0 and g1["latency_p90_s"] == 10.0
+    g2 = rollup["by_set"]["unset"]["by_group"]["g2"]
+    assert g2["latency_n"] == 3 and g2["latency_median_s"] == 4.0
+    assert rollup["overall"]["latency_n"] == 5
+    assert "_latencies" not in g1
+    text = challenge_rollup.render_markdown([rollup], {"sets": {}, "overall": None, "meta": {}})
+    assert "| median s | p90 s |" in text
+
+
+def test_percentile_edges():
+    assert challenge_rollup.percentile([], 50) is None
+    assert challenge_rollup.percentile([7.0], 90) == 7.0
+    assert challenge_rollup.percentile([1.0, 2.0, 3.0, 4.0], 50) == 2.0
