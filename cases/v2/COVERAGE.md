@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 84fc7603c7a43ad1` · 133 cases · done 90 · not doing 27 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
+`caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 29 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-24_
+_Last updated: 2026-09-25_
 
 ## Groups
 
@@ -19,7 +19,7 @@ _Last updated: 2026-09-24_
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
-| direct | 27 | 21 | done 20, not doing 6, todo 1 |
+| direct | 29 | 21 | done 20, not doing 8, todo 1 |
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
@@ -127,6 +127,8 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-124 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-125 | not doing | comparative | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-127 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-128 | not doing | direct | 2026-09-24: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-129 | not doing | direct | 2026-09-24: not doing, same two counts as 1-128: LGMS is hidden on the default profile, and wri/project-zen... |
 | mt-010 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-011 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-012 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
