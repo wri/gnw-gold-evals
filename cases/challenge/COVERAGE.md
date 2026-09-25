@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version 291259f13da933e2` · 518 cases · ready 513 · todo 5 · **518 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-15_
+_Last updated: 2026-09-25_
 
 ## Groups
 
@@ -79,7 +79,7 @@ friends) run on top of it whenever their trigger state exists.
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@31a4d1e (origin/main, synced 2026-09-01), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@e2fb83f (origin/main, synced 2026-09-25), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
