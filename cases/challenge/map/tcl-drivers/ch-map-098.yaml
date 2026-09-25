@@ -1,12 +1,12 @@
 id: ch-map-098
-uid: 44b11609ad31db67
+uid: c38c861465be8e82
 status: ready
 set: map
 group: tcl-drivers
 query: Show tree cover loss caused by permanent agriculture and hard commodities
 expected:
   dataset_id: '8'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

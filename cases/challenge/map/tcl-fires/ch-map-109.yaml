@@ -1,12 +1,12 @@
 id: ch-map-109
-uid: f5f474b2bd3b2c1e
+uid: 427f12e029976dc6
 status: ready
 set: map
 group: tcl-fires
 query: Map tree cover loss from fires versus other causes
 expected:
   dataset_id: '10'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

@@ -178,11 +178,14 @@ e2fb83f (`selection_hints`, `context_layers`, `parameters`).
 | ambiguous | 15 | 11 pinned `select` rows with `;` alternatives, 4 pinned `nudge` rows (`dataset_choice` + options) |
 | unmappable (sLUC, climate and other out-of-catalog asks) | 15 | `dataset_id: no_selection` (sLUC `9;no_selection`) + `text` |
 
-Every row also sets `forbidden_tools` (pick_aoi, pull_data,
-generate_insights, create_dashboard, add_to_dashboard, add_map_widget,
-search_blogs, search_insights, show_imagery), which gates
-`forbidden_tools_absent`: the set's scope-isolation assertion. The list is
-hashed; changing it re-mints all 200 uids.
+Every row also sets `forbidden_tools` (pull_data, generate_insights,
+create_dashboard, add_to_dashboard, add_map_widget, search_blogs,
+search_insights, show_imagery), which gates `forbidden_tools_absent`: the
+set's scope-isolation assertion. The list is hashed; changing it re-mints
+all 200 uids. `pick_aoi` is deliberately **not** forbidden (decided
+2026-09-25): the set tests the dataset picker only, and picking a layer
+then asking "where?" via `pick_aoi` (seen on 3 of 31 smoke trials) is
+acceptable behaviour, not a scope leak.
 
 Scoring decisions and gaps:
 

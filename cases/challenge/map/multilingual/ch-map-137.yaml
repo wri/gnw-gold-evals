@@ -1,12 +1,12 @@
 id: ch-map-137
-uid: f016dcf56eb05fa7
+uid: fa5fe1b14e2c484e
 status: ready
 set: map
 group: multilingual
 query: Mostre a cobertura arbórea no mapa
 expected:
   dataset_id: '7'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

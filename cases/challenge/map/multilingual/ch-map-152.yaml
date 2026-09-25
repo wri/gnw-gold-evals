@@ -1,12 +1,12 @@
 id: ch-map-152
-uid: d977fd1eb9550407
+uid: f71c3335f18f9d8f
 status: ready
 set: map
 group: multilingual
 query: Onyesha kifuniko cha ardhi kwenye ramani
 expected:
   dataset_id: '1'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

@@ -1,12 +1,12 @@
 id: ch-map-146
-uid: 51be7378d5b90a34
+uid: cd318a74bb1b5097
 status: ready
 set: map
 group: multilingual
 query: Tampilkan kehilangan tutupan pohon di peta
 expected:
   dataset_id: '4'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

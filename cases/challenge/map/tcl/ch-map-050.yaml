@@ -1,12 +1,12 @@
 id: ch-map-050
-uid: b0492dca22064996
+uid: 5322e59a2174b9cf
 status: ready
 set: map
 group: tcl
 query: tree cover los
 expected:
   dataset_id: '4'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

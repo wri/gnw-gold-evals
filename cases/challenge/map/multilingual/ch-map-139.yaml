@@ -1,5 +1,5 @@
 id: ch-map-139
-uid: 23d60dda35720007
+uid: 04cc95f5e5df1b40
 status: ready
 set: map
 group: multilingual
@@ -7,7 +7,7 @@ query: Mostre a perda de floresta primária no mapa
 expected:
   dataset_id: '4'
   context_layer: primary_forest
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

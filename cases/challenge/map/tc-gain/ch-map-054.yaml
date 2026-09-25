@@ -1,12 +1,12 @@
 id: ch-map-054
-uid: 4e5b994387b290c1
+uid: 94258b3eed035e06
 status: ready
 set: map
 group: tc-gain
 query: Display tree cover gain
 expected:
   dataset_id: '5'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

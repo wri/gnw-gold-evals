@@ -1,5 +1,5 @@
 id: ch-map-168
-uid: 9e951add70b3f039
+uid: ed06e16345d37c29
 status: ready
 set: map
 group: context-layer
@@ -7,7 +7,7 @@ query: Show all tree cover loss on the map, including plantations and secondary 
 expected:
   dataset_id: '4'
   context_layer: no_selection
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

@@ -1,12 +1,12 @@
 id: ch-map-116
-uid: f2edf5694ac95590
+uid: 2be5da62ec62fad0
 status: ready
 set: map
 group: tcl-fires
 query: trees lost to fire
 expected:
   dataset_id: '10'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

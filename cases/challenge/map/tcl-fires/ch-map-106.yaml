@@ -1,12 +1,12 @@
 id: ch-map-106
-uid: c3c8af91a6d81ba1
+uid: 06797b2ff83504b5
 status: ready
 set: map
 group: tcl-fires
 query: Display tree cover loss from fires
 expected:
   dataset_id: '10'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

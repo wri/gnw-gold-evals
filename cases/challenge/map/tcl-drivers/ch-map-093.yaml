@@ -1,12 +1,12 @@
 id: ch-map-093
-uid: 885a6054bd9ccb9a
+uid: 57264399d47b8b61
 status: ready
 set: map
 group: tcl-drivers
 query: Display tree cover loss by dominant driver
 expected:
   dataset_id: '8'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

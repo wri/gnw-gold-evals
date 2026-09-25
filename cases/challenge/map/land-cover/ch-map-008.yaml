@@ -1,12 +1,12 @@
 id: ch-map-008
-uid: b450965b5e240cf8
+uid: 02702274cccac2be
 status: ready
 set: map
 group: land-cover
 query: Show me the bare ground, water and snow classes on the map
 expected:
   dataset_id: '1'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

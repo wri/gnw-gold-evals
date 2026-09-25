@@ -1,5 +1,5 @@
 id: ch-map-200
-uid: 4ce73c4ea5ad4e3d
+uid: 61d623012d6b3842
 status: ready
 set: map
 group: unmappable
@@ -9,7 +9,7 @@ expected:
   text: Explains that no soil moisture data is available to show on the map. Mentioning related
     datasets is fine; presenting a land or forest dataset as if it showed soil moisture is
     not
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: decline

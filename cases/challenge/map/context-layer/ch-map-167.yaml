@@ -1,5 +1,5 @@
 id: ch-map-167
-uid: 517a2ee2b886c9cb
+uid: 2981d2b31e1f2c92
 status: ready
 set: map
 group: context-layer
@@ -7,7 +7,7 @@ query: Where is the primary forest? Put it on the map
 expected:
   dataset_id: 7;4
   context_layer: primary_forest
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

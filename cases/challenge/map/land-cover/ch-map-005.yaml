@@ -1,12 +1,12 @@
 id: ch-map-005
-uid: 612af86f7119c4e8
+uid: 645f377d5f6f92ba
 status: ready
 set: map
 group: land-cover
 query: Show where cropland and built-up land are on the map
 expected:
   dataset_id: '1'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

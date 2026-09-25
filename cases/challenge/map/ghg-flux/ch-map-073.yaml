@@ -1,12 +1,12 @@
 id: ch-map-073
-uid: 775a61d9676af5b0
+uid: f45f90f98c0e778d
 status: ready
 set: map
 group: ghg-flux
 query: Map net forest greenhouse gas emissions and removals
 expected:
   dataset_id: '6'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

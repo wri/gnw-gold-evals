@@ -1,5 +1,5 @@
 id: ch-map-045
-uid: c852acd082f785ed
+uid: 81a9fa1d1d77d1c8
 status: ready
 set: map
 group: tcl
@@ -7,7 +7,7 @@ query: Show tree cover loss at 50% canopy density
 expected:
   dataset_id: '4'
   dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

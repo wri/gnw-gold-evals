@@ -1,12 +1,12 @@
 id: ch-map-132
-uid: 9b44165b644f7ffa
+uid: c9c8ed7822ccfb57
 status: ready
 set: map
 group: multilingual
 query: Muestra la ganancia de cobertura arbórea en el mapa
 expected:
   dataset_id: '5'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

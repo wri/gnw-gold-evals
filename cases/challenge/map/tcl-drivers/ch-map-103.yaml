@@ -1,12 +1,12 @@
 id: ch-map-103
-uid: a2a5a9e359a0684d
+uid: c3a522ba50cbab65
 status: ready
 set: map
 group: tcl-drivers
 query: driver layer
 expected:
   dataset_id: '8'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

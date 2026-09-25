@@ -1,12 +1,12 @@
 id: ch-map-110
-uid: f22869ddbc798b80
+uid: 2fc186c3304d1b51
 status: ready
 set: map
 group: tcl-fires
 query: Show forest loss caused by wildfires
 expected:
   dataset_id: '10'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

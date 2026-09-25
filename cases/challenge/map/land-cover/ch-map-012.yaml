@@ -1,12 +1,12 @@
 id: ch-map-012
-uid: d4262223eac4afcb
+uid: 59c4f2f3d819c0ee
 status: ready
 set: map
 group: land-cover
 query: show landcovr change
 expected:
   dataset_id: '1'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

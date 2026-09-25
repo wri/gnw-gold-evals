@@ -1,12 +1,12 @@
 id: ch-map-033
-uid: 92784a54592f6f8c
+uid: 50ab1d45a2543d1b
 status: ready
 set: map
 group: natural-lands
 query: Show the non-natural tree cover and crop areas on the map
 expected:
   dataset_id: '3'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

@@ -1,5 +1,5 @@
 id: ch-map-160
-uid: 9fcac446a418b29a
+uid: 3017391fdfa098ee
 status: ready
 set: map
 group: context-layer
@@ -7,7 +7,7 @@ query: Map where intact forests are being lost
 expected:
   dataset_id: '4'
   context_layer: intact_forest
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

@@ -1,12 +1,12 @@
 id: ch-map-009
-uid: 31fc31e11e543980
+uid: a3c3df185f3d7b86
 status: ready
 set: map
 group: land-cover
 query: 'Map what the land is covered by: trees, crops, water, built-up'
 expected:
   dataset_id: '1'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

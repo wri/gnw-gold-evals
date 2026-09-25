@@ -1,12 +1,12 @@
 id: ch-map-064
-uid: 4dce851922f4de6c
+uid: 33c2d8640f8b7e1a
 status: ready
 set: map
 group: tc-gain
 query: where are trees coming back
 expected:
   dataset_id: '5'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

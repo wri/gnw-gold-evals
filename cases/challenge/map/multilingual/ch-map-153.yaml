@@ -1,12 +1,12 @@
 id: ch-map-153
-uid: 59158aab509da29b
+uid: 27464b4f9591e4bd
 status: ready
 set: map
 group: multilingual
 query: Nionyeshe nyasi asilia kwenye ramani
 expected:
   dataset_id: '2'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

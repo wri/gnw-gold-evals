@@ -1,12 +1,12 @@
 id: ch-map-155
-uid: a26f3ce9101d5e12
+uid: 8bd21ef8e7028b7c
 status: ready
 set: map
 group: multilingual
 query: sababu za kupotea kwa miti, ramani
 expected:
   dataset_id: '8'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

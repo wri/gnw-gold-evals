@@ -1,12 +1,12 @@
 id: ch-map-018
-uid: bb6f6ebdc454d7ca
+uid: 3a0ef400100b904e
 status: ready
 set: map
 group: grasslands
 query: Map savannas, shrublands and natural grasslands
 expected:
   dataset_id: '2'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

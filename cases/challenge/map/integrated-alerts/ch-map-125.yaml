@@ -1,12 +1,12 @@
 id: ch-map-125
-uid: 392f17ec0897b04b
+uid: 39c85e850f88d2c6
 status: ready
 set: map
 group: integrated-alerts
 query: Map alerts that combine GLAD and RADD
 expected:
   dataset_id: '11'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

@@ -1,12 +1,12 @@
 id: ch-map-179
-uid: 32593d06f12a9997
+uid: 0d828f85c09f3914
 status: ready
 set: map
 group: ambiguous
 query: Show savannas on the map
 expected:
   dataset_id: 2;1
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

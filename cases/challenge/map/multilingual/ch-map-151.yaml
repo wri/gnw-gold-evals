@@ -1,12 +1,12 @@
 id: ch-map-151
-uid: ec5ea50bd282591d
+uid: 1b1ba786e34e4022
 status: ready
 set: map
 group: multilingual
 query: Nionyeshe tahadhari za ukataji miti kwenye ramani
 expected:
   dataset_id: '11'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy
   behaviour: select

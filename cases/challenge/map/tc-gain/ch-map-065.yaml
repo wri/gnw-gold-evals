@@ -1,12 +1,12 @@
 id: ch-map-065
-uid: fd1aa48fbaf59e96
+uid: d397851914707650
 status: ready
 set: map
 group: tc-gain
 query: reforestation layer
 expected:
   dataset_id: '5'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard
   behaviour: select

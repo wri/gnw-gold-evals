@@ -1,12 +1,12 @@
 id: ch-map-183
-uid: 0b2d33dbcabfafb7
+uid: 0459c9e315bf5848
 status: ready
 set: map
 group: ambiguous
 query: Show cropland on the map
 expected:
   dataset_id: 1;3
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

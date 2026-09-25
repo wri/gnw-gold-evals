@@ -1,12 +1,12 @@
 id: ch-map-032
-uid: 4ec0b38c989e6eb4
+uid: 452bcf947a0f7888
 status: ready
 set: map
 group: natural-lands
 query: Show the baseline of natural ecosystems for conversion-free commitments
 expected:
   dataset_id: '3'
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: select

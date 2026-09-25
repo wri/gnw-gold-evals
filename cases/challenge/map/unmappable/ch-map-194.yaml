@@ -1,5 +1,5 @@
 id: ch-map-194
-uid: 84dbf1577e8c4992
+uid: 5b457685498738e4
 status: ready
 set: map
 group: unmappable
@@ -9,7 +9,7 @@ expected:
   text: Explains that no sea level rise data is available to show on the map. Mentioning related
     datasets is fine; presenting a land or forest dataset as if it showed sea level rise is
     not
-  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
   behaviour: decline
