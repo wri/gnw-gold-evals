@@ -74,6 +74,7 @@ friends) run on top of it whenever their trigger state exists.
 | dashboard_created | 0 ← unused | dashboard_created |
 | dashboard_widgets | 0 ← unused | dashboard_widgets_match, dashboard_widgets_valid |
 | dataset_name | 0 ← unused | reference only |
+| forbidden_tools | 0 ← unused | forbidden_tools_absent |
 | scope | 0 ← unused | scope_match |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
@@ -118,7 +119,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, scope, suggested_datasets —
+- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, forbidden_tools, scope, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission

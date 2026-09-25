@@ -272,6 +272,11 @@
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
+      "field": "forbidden_tools",
+      "cases": 0,
+      "switches_on": "forbidden_tools_absent"
+    },
+    {
       "field": "suggested_datasets",
       "cases": 0,
       "switches_on": "suggested_datasets_match"
@@ -617,6 +622,7 @@
     "unused_expected_fields": [
       "chart_type",
       "data_pull",
+      "forbidden_tools",
       "suggested_datasets"
     ],
     "info_only_checks": [

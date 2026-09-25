@@ -310,6 +310,11 @@
       "switches_on": "reference only"
     },
     {
+      "field": "forbidden_tools",
+      "cases": 0,
+      "switches_on": "forbidden_tools_absent"
+    },
+    {
       "field": "scope",
       "cases": 0,
       "switches_on": "scope_match"
@@ -535,6 +540,7 @@
       "dashboard_created",
       "dashboard_widgets",
       "dataset_name",
+      "forbidden_tools",
       "scope",
       "suggested_datasets"
     ],
