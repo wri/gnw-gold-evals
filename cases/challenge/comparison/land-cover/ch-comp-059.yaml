@@ -1,0 +1,18 @@
+id: ch-comp-059
+uid: f718181afb40ed2b
+status: ready
+set: comparison
+group: land-cover
+query: 'In Mexico, which covers more land: cropland or short vegetation?'
+expected:
+  aoi_ids: MEX
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'cropland;short vegetation (unscored: no evaluator surface yet)'
+  judge_instruction: Within Mexico, compare the 2024 area_ha of the cropland class against
+    the short vegetation class; both classes are named explicitly and scored separately.
+  eval_subtype: two_class
+  manifest_id: m-lc-comp-05
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

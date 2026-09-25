@@ -1,0 +1,22 @@
+id: ch-quant-133
+uid: b7dd536d8ce4f51b
+status: ready
+set: quantification
+group: tcl-drivers
+query: I'm curious about Colombia's tree cover loss since 2001 - could you tell me how much
+  of it comes from temporary disturbances, like shifting cultivation, logging, wildfire, and
+  other natural disturbances combined?
+expected:
+  aoi_ids: COL
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Temporary-disturbances grouping = shifting cultivation + logging + wildfire
+    + other natural disturbances, over 2001-2025; whole-record aggregate; avoid 'deforestation'
+    for raw loss.
+  eval_subtype: driver_grouping
+  manifest_id: m-driver-quant-06
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-quant-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

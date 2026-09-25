@@ -1,0 +1,21 @@
+id: ch-quant-042
+uid: 5d389f2fde3e4762
+status: ready
+set: quantification
+group: sluc
+query: Hey, so like how many tonnes of maize did Brazil actually produce in 2024, roughly
+  speaking?
+expected:
+  aoi_ids: BRA
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Maize (unscored: no evaluator surface yet)'
+  judge_instruction: Headline is crop production volume (production_tonnes) in tonnes; tabular;
+    default reporting year 2024.
+  eval_subtype: production
+  manifest_id: m-sluc-quant-08
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

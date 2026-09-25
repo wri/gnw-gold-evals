@@ -1,0 +1,21 @@
+id: ch-quant-132
+uid: 513cc7b29fadd796
+status: ready
+set: quantification
+group: tcl-drivers
+query: What share of Indonesia's tree cover loss since 2001 is attributable to drivers of
+  deforestation, combining permanent agriculture, hard commodities, and settlements and infrastructure?
+expected:
+  aoi_ids: IDN
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Deforestation-drivers grouping = permanent agriculture + hard commodities
+    + settlements and infrastructure, over the whole record 2001-2025; whole-record aggregate;
+    pie/table.
+  eval_subtype: driver_grouping
+  manifest_id: m-driver-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

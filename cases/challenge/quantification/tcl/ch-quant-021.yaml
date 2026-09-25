@@ -1,0 +1,21 @@
+id: ch-quant-021
+uid: 559aebf17d01e03c
+status: ready
+set: quantification
+group: tcl
+query: How many hectares of tree cover loss occurred in Costa Rica across all forest types
+  from 2001 to 2023, using a 25% canopy density threshold?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2023-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[25]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: The window crosses the 2011 methodology break; a caution caveat is acceptable.
+  eval_subtype: canopy_threshold
+  manifest_id: m-tcl-quant-15
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-15a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,15 @@
+id: ch-aoi-115
+uid: ffe60cbc569e2219
+status: ready
+set: aoi
+group: vague
+query: Go to my region
+expected:
+  clarification: 'TRUE'
+  text: Asks the user where they are or which region they mean; does not guess
+notes:
+  difficulty: easy
+  behaviour: clarify
+  lineage: no location context
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

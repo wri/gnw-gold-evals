@@ -1,0 +1,23 @@
+id: ch-comp-135
+uid: df5a7585e68f8771
+status: ready
+set: comparison
+group: tcl-fires
+query: Between Indonesia and the Democratic Republic of the Congo, which country lost more
+  tree cover to fires (across all forest types) from 2020 to 2023?
+expected:
+  aoi_ids: IDN;COD
+  dataset_id: '10'
+  start_date: '2020-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Compare which country had more fire-driven tree cover loss over the window
+    (hectares). NEVER report carbon emissions. 30% default.
+  eval_subtype: two_country
+  manifest_id: m-fires-comp-02
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-comp-02a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,20 @@
+id: ch-trend-043
+uid: 048722f966608f87
+status: ready
+set: trend
+group: grasslands
+query: Between 2001 and 2022, what year saw the greatest loss of natural/semi-natural grassland
+  in Bolivia?
+expected:
+  aoi_ids: BOL
+  dataset_id: '2'
+  start_date: '2001-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Peak year is the year of highest annual grassland loss within the window
+    (annual loss column); exclude zero or missing years.
+  eval_subtype: peak_year
+  manifest_id: m-grass-trend-03
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-03b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

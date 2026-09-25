@@ -1,0 +1,21 @@
+id: ch-trend-005
+uid: 42d0a2d5020fa5e6
+status: ready
+set: trend
+group: tcl
+query: Which year saw the most tree cover loss across all forest types in the Democratic Republic
+  of the Congo between 2011 and 2023?
+expected:
+  aoi_ids: COD
+  dataset_id: '4'
+  start_date: '2011-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: All forest types, so no forest-type filter should be applied.
+  eval_subtype: peak_year
+  manifest_id: m-tcl-trend-05
+  lineage: gnw-evals eval-metrics-slice-1 gt-trend-05
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

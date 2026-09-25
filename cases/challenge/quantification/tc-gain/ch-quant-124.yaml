@@ -1,0 +1,20 @@
+id: ch-quant-124
+uid: f9ae25c1c846f536
+status: ready
+set: quantification
+group: tc-gain
+query: So like, roughly how many hectares of tree cover gain has Ghana racked up cumulatively
+  from 2005 to 2020? Just need a ballpark number.
+expected:
+  aoi_ids: GHA
+  dataset_id: '5'
+  start_date: '2005-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Cumulative gain over the 2005-2020 period (ha). Do not decompose; gain
+    is not restoration.
+  eval_subtype: period_gain
+  manifest_id: m-gain-quant-08
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

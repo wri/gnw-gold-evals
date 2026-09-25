@@ -1,0 +1,22 @@
+id: ch-quant-009
+uid: 01f4547696dba49e
+status: ready
+set: quantification
+group: tcl
+query: How much deforestation occurred in Brazil in 2023?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Per the dataset guidance, general 'deforestation' requests default to
+    the primary forest context layer for AOIs within its pan-tropical extent, so ground truth
+    reflects primary forest loss.
+  eval_subtype: deforestation_default
+  manifest_id: m-tcl-quant-09
+  lineage: gnw-evals eval-metrics-slice-1 gt-quant-09
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

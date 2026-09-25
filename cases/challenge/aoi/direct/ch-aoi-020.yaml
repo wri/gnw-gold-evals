@@ -1,0 +1,15 @@
+id: ch-aoi-020
+uid: 70bf03007532f811
+status: ready
+set: aoi
+group: direct
+query: Zoom to Hokkaido
+expected:
+  aoi_ids: JPN.12
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: baseline
+  verify_query: Hokkaido
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

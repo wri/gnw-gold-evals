@@ -1,0 +1,15 @@
+id: ch-aoi-011
+uid: f6b9de5215de397f
+status: ready
+set: aoi
+group: direct
+query: Show me Broward County in Florida
+expected:
+  aoi_ids: USA.10.6
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: baseline
+  verify_query: Broward
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

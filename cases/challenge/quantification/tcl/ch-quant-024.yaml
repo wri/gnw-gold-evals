@@ -1,0 +1,22 @@
+id: ch-quant-024
+uid: 342ac1311954c2ac
+status: ready
+set: quantification
+group: tcl
+query: So I've been meaning to ask - for Costa Rica in 2021, what's the total tree cover loss
+  if we count all tree types, plantations included?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2021-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked for all tree cover, so no forest-type filter should be
+    applied.
+  eval_subtype: single_year
+  manifest_id: m-tcl-quant-16
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-16b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

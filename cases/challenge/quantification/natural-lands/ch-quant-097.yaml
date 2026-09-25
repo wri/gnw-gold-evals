@@ -1,0 +1,17 @@
+id: ch-quant-097
+uid: b62b130045af35e3
+status: ready
+set: quantification
+group: natural-lands
+query: so like, roughly how much of Indonesia's land isn't really "natural" land at all, area-wise?
+expected:
+  aoi_ids: IDN
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Fixed 2020 baseline; headline is the Non-natural row's area_ha from the
+    two-row is_natural grouping.
+  eval_subtype: non_natural_extent
+  manifest_id: m-nl-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,22 @@
+id: ch-quant-038
+uid: 55389c79f17b67a7
+status: ready
+set: quantification
+group: sluc
+query: Hey, can you tell me the total sLUC emissions in tCO2e from Arabica Coffee production
+  in Colombia for 2022?
+expected:
+  aoi_ids: COL
+  dataset_id: '9'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Arabica Coffee (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Headline is total sLUC emissions (emissions_tCO2e) in tCO2e for reporting
+    year 2022; tabular.
+  eval_subtype: crop_emissions
+  manifest_id: m-sluc-quant-04
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

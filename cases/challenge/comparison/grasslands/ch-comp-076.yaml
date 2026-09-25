@@ -1,0 +1,18 @@
+id: ch-comp-076
+uid: ad36cecdb04bc0d1
+status: ready
+set: comparison
+group: grasslands
+query: So um, for Bolivia, was there more natural/semi-natural grassland lost between 2010
+  and 2015, or in the later stretch 2016 to 2021 - which chunk had it worse?
+expected:
+  aoi_ids: BOL
+  dataset_id: '2'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare grassland loss in the two halves of the window (2010-2015 vs
+    2016-2021, sum of the annual loss column).
+  eval_subtype: two_period
+  manifest_id: m-grass-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

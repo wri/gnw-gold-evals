@@ -1,0 +1,18 @@
+id: ch-comp-089
+uid: 89ae3486136f2c88
+status: ready
+set: comparison
+group: integrated-alerts
+query: In Peru, did deforestation alert area from January to June 2024 exceed that from July
+  to December 2024, or was it the other way around?
+expected:
+  aoi_ids: PER
+  dataset_id: '11'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare the two halves of 2024 (2024-01-01..2024-06-30 vs 2024-07-01..2024-12-31)
+    for total alert area (area_ha).
+  eval_subtype: two_period
+  manifest_id: m-ialert-comp-10
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-comp-10a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

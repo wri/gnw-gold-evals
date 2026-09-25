@@ -1,0 +1,20 @@
+id: ch-quant-031
+uid: 976ac91a0909c36c
+status: ready
+set: quantification
+group: tcl
+query: So um, Indonesia's primary forest - like, how much of that got wiped out in 2022? Just
+  need a rough hectare figure.
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  eval_subtype: primary_forest
+  manifest_id: m-tcl-quant-20
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-20a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

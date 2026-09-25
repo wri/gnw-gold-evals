@@ -1,0 +1,16 @@
+id: ch-aoi-014
+uid: d417f76f0d795e7b
+status: ready
+set: aoi
+group: direct
+query: Zoom to Chamonix-Mont-Blanc
+expected:
+  aoi_ids: FRA.1.7.2.2
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'SPEC-PR8 short-query class: bare ''Chamonix'' search returns zero relevant rows;
+    full name reaches FRA.1.7.2.2 (locality)'
+  verify_query: Chamonix
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

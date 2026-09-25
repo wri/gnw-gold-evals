@@ -1,0 +1,20 @@
+id: ch-quant-118
+uid: 05a6c6adc2167dbf
+status: ready
+set: quantification
+group: tc-gain
+query: How many hectares of cumulative tree cover gain did the Democratic Republic of the
+  Congo record over the 2015-2020 period?
+expected:
+  aoi_ids: COD
+  dataset_id: '5'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Cumulative gain over the 2015-2020 period; headline is that cumulative
+    gain area (ha). Do not decompose the period into sub-intervals; gain is not restoration.
+  eval_subtype: period_gain
+  manifest_id: m-gain-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

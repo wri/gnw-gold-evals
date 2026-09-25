@@ -1,0 +1,17 @@
+id: ch-aoi-126
+uid: 7708fd9ec37b6cf9
+status: ready
+set: aoi
+group: concepts
+query: Show me the Coral Triangle
+expected:
+  clarification: 'TRUE'
+  text: Explains that the Coral Triangle is not a selectable area and asks the user to specify
+    countries instead
+notes:
+  difficulty: hard
+  behaviour: clarify
+  lineage: concept class
+  verify_query: Coral Triangle
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -7,7 +7,7 @@
         dropdown (newest first, human-readable datetime) switches between
         them, and the URL hash deep-links a specific run.
      3. Opened raw (placeholder intact), it shows a drop zone — drop any
-        results/runs/<id>.json onto it to render locally, no server.
+        results/gold/runs/<id>.json onto it to render locally, no server.
         Dropping more files adds them to the dropdown in every mode.
 
      Accessibility notes: every percentage is printed as text (meters are
@@ -501,7 +501,7 @@ if (RUNS.length) {
 } else {
   document.getElementById("app").innerHTML =
     `<h1>GOLD run report</h1>
-     <div id="drop">Drop a <span class="mono">results/runs/&lt;run_id&gt;.json</span>
+     <div id="drop">Drop a <span class="mono">results/gold/runs/&lt;run_id&gt;.json</span>
        file here to render it — drop more to compare via the dropdown.</div>`;
 }
 </script>

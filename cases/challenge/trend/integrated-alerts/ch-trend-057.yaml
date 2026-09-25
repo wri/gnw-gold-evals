@@ -1,0 +1,20 @@
+id: ch-trend-057
+uid: 4e0ad62653c3a160
+status: ready
+set: trend
+group: integrated-alerts
+query: so like, for the UK, from January 1 2024 to December 31 2024, are those deforestation
+  alerts kinda going up or down or just... flat overall? not totally sure what to expect tbh
+expected:
+  aoi_ids: GBR
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Direction of monthly alert area (area_ha) over 2024; magnitudes are small,
+    a weak or noisy trend passes only if the series supports it.
+  eval_subtype: direction
+  manifest_id: m-ialert-trend-07
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

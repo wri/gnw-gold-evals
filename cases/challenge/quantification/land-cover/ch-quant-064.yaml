@@ -1,0 +1,20 @@
+id: ch-quant-064
+uid: a8ca83872928692d
+status: ready
+set: quantification
+group: land-cover
+query: In Brazil, how much land has changed from tree cover to cropland?
+expected:
+  aoi_ids: BRA
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'tree cover;cropland (unscored: no evaluator surface yet)'
+  judge_instruction: 'Change question: transitions between the fixed 2015 and 2024 snapshots;
+    the prompt names no years. Expected figure is the area_ha of the tree cover to cropland
+    transition from the change table (land_cover_class_start, land_cover_class_end, area_ha).
+    This is land cover change, not tree cover loss and not conversion.'
+  eval_subtype: change_area
+  manifest_id: m-lc-quant-07
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

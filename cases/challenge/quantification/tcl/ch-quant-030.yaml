@@ -1,0 +1,22 @@
+id: ch-quant-030
+uid: db92a96dd15e2b9e
+status: ready
+set: quantification
+group: tcl
+query: Trying to get a handle on Indonesia's numbers here - what were the carbon emissions
+  tied to tree cover loss, including plantations, from 2015 to 2020?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The question asks for GHG emissions from tree cover loss; the headline
+    figure is the carbon_emissions_MgCO2e column, in MgCO2e or honest conversions.
+  eval_subtype: emissions
+  manifest_id: m-tcl-quant-19
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-19b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

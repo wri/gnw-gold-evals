@@ -1,7 +1,7 @@
 """Guard semantics (PR-04 G1-G4 + F2), fixtures shaped on real run-6 rows.
 
 The statistics fixture mirrors the live entry shape pinned from 84
-pull-bearing staging artifacts (results/campaigns/20260801-pr08.md, step 4):
+pull-bearing staging artifacts (results/gold/campaigns/20260801-pr08.md, step 4):
 ``source_url`` references the dataset by slug, ``dataset_id`` is int-typed
 and present on most (81/84) but not all entries.
 """

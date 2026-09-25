@@ -1,0 +1,23 @@
+id: ch-comp-028
+uid: 21f0c7c5b248acf6
+status: ready
+set: comparison
+group: tcl
+query: 'Quick question for a piece I''m writing: looking at 2019 to 2023, did Brazil or the
+  Democratic Republic of the Congo see more tree cover loss overall, including plantations
+  and every other forest type?'
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '4'
+  start_date: '2019-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked across all forest types, so no forest-type filter should
+    be applied.
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-17
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-17b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

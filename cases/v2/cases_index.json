@@ -1,0 +1,2743 @@
+{
+  "schema_version": 1,
+  "store": "v2",
+  "caseset_version": "50a0ea07bb4bb90b",
+  "case_count": 124,
+  "cases": [
+    {
+      "id": "1-001",
+      "uid": "6226a0caaf487e4b",
+      "group": "temporal",
+      "status": "done",
+      "query": "True or false: Mount Hakusan biodiversity area had more area with high confidence disturbance alerts in August 2024 than September 2024",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-002",
+      "uid": "33251684549f20a2",
+      "group": "direct",
+      "status": "done",
+      "query": "How much of Sao Paulo was affected by disturbance alerts in the second half of 2024, considering high and highest confidence alerts only?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-003",
+      "uid": "c8c477045d9f6593",
+      "group": "parent-child",
+      "status": "ready",
+      "query": "What was the total area affected by high conf. disturbance alerts between January 2025 to April 2025 in Ucayali, Peru?",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-004",
+      "uid": "989821bd935975d6",
+      "group": "comparative",
+      "status": "done",
+      "query": "Which country had more area affected by high confidence disturbance alerts in November 2025, Australia or Brazil?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-005",
+      "uid": "6c8b9a9d674922d2",
+      "group": "parent-child",
+      "status": "not doing",
+      "query": "In what district in Amazonas, Brazil were natural lands most disturbed in Q1 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "context_layer_match",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-006",
+      "uid": "21207fde86bdc738",
+      "group": "class-comparison",
+      "status": "not doing",
+      "query": "What percentage of disturbances in Occitanie (FRA) were due to Crop management in September 2024?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-007",
+      "uid": "b336cdfe8b3ea20e",
+      "group": "class-comparison",
+      "status": "not doing",
+      "query": "How much peatland was affected by disturbance alerts in Scotland in July 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-008",
+      "uid": "e8b61a62e383f16e",
+      "group": "class-comparison",
+      "status": "not doing",
+      "query": "What type of natural ecosystem in Uganda had the most disturbances in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-009",
+      "uid": "eff330e9e3130aa7",
+      "group": "class-comparison",
+      "status": "done",
+      "query": "What percentage of disturbances in Sara, Bolivia were caught by multiple systems during July 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-010",
+      "uid": "c3d61476d0cc3fa3",
+      "group": "temporal",
+      "status": "done",
+      "query": "How much wetland was there in the Arawe KBA in Papua New Guinea in 2024?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "class_values",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-011",
+      "uid": "8b4135b1aedc2ec5",
+      "group": "parent-child",
+      "status": "not doing",
+      "query": "How much land changed to short vegetation in protected areas in Colorado between 2015 and 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-012",
+      "uid": "b4ac95ef09acbd00",
+      "group": "direct",
+      "status": "done",
+      "query": "How many hectares of cultivated grasslands does Alto Rio Negro Indigenous Territory have?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-013",
+      "uid": "291512b4b3133033",
+      "group": "comparative",
+      "status": "done",
+      "query": "Which had more cropland area in 2024, Nigeria or Ghana?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-014",
+      "uid": "3c4a5827fdf3cab6",
+      "group": "temporal",
+      "status": "done",
+      "query": "True or False, the largest land cover transition between 2015 and 2024 in California, USA was short vegetation to built-up.",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-015",
+      "uid": "d65307f2917a3fcb",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which Welsh county had the most land in the short vegetation land cover class in 2024?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "class_values",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-016",
+      "uid": "563a24c88bb41ff0",
+      "group": "class-comparison",
+      "status": "done",
+      "query": "In Purbalingga, Indonesia what was the largest single land cover transition from 2015 to 2024?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-017",
+      "uid": "36d745d7b2073d9b",
+      "group": "direct",
+      "status": "done",
+      "query": "How much natural grassland is there in the Bulgan Tal key biodiversity area in 2019?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-018",
+      "uid": "7bdad9eaabf10663",
+      "group": "temporal",
+      "status": "done",
+      "query": "Yes or no: did natural grasslands increase from 2017 to 2022 in Hwange national park, botswana?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-019",
+      "uid": "8b2984c432bf7197",
+      "group": "direct",
+      "status": "done",
+      "query": "Which year had the most natural grassland in the Blackfeet Indian reservation in Montana USA: 2015 or 2000?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-020",
+      "uid": "040a04675f98f126",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which of the four countries of the United Kingdom (England, Northern Ireland, Scotland, Wales) had the least natural grassland in 2022?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-021",
+      "uid": "f0a5f23c12a8fea4",
+      "group": "parent-child",
+      "status": "todo",
+      "query": "Which comunidad autónoma of Spain (Iberian peninsula only) had the least natural grassland in 2022?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-022",
+      "uid": "50b52979fd6325df",
+      "group": "temporal",
+      "status": "done",
+      "query": "In which year between 2001 and 2022 did Bolivia have the least natural grasssland coverage?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-023",
+      "uid": "98b824fc7837819f",
+      "group": "comparative",
+      "status": "done",
+      "query": "Which had more natural grassland coverage in 2000: North or South Dakota?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-024",
+      "uid": "e3d6ad96ca778daf",
+      "group": "comparative",
+      "status": "done",
+      "query": "which county in the state of Salto, Uruguay had the least natural grassland in 2001?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-025",
+      "uid": "a1e60287bee28804",
+      "group": "temporal",
+      "status": "done",
+      "query": "True or False: Pocho in Cordoba (ARG) gained natural grasslands from 2020 to 2021",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-026",
+      "uid": "00b7bcb79abcc5ed",
+      "group": "class-comparison",
+      "status": "done",
+      "query": "Whats the second largest natural land class in the Plaine du Villefagnan key biodiversity area in FRA?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-027",
+      "uid": "12fafcc85ace2b62",
+      "group": "direct",
+      "status": "todo",
+      "query": "Break down the natural land classes by area in the Murgia Alta WDPA in Italy — how much natural short vegetation is there?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "class_values",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-028",
+      "uid": "74480949fc017432",
+      "group": "direct",
+      "status": "not doing",
+      "query": "In the Kurtjar People territory in Australia, what percentage of land is non-natural?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-029",
+      "uid": "e373d86ac3bdf70a",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which state in Indonesia has the most natural peat forest?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "class_values",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-030",
+      "uid": "f78daf0baa3a7407",
+      "group": "comparative",
+      "status": "todo",
+      "query": "Which state has the most mangroves in Senegal: Fatick or Ziguinchor?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "class_values",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-031",
+      "uid": "06988e33f4f6f8ea",
+      "group": "class-comparison",
+      "status": "done",
+      "query": "Whats the second largest natural land class by area in Cogo, Eq. Guinea?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "class_values",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-032",
+      "uid": "24654c156e645c81",
+      "group": "temporal",
+      "status": "done",
+      "query": "True or false, tree cover loss has increased from 2020 to 2024 in the Upper Stung Sen catchment KBA.",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-033",
+      "uid": "703163c80e077978",
+      "group": "direct",
+      "status": "done",
+      "query": "How much tree cover loss was there in the Corona Forestal protected area in Tenerife in 2023?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-034",
+      "uid": "e52c28e867147021",
+      "group": "direct",
+      "status": "done",
+      "query": "In total, how much primary forest loss was recorded in Champoton community land in Mexico, between 2001 and 2024?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-035",
+      "uid": "8f62c9e6bb8f8363",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which state in belgium had the least deforestation from 2005 to 2015?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-036",
+      "uid": "303b2af3c3402585",
+      "group": "temporal",
+      "status": "done",
+      "query": "In which year between 2001 and 2024 did Gabon have the most tree cover loss?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-037",
+      "uid": "a0f0a84c4c433913",
+      "group": "comparative",
+      "status": "done",
+      "query": "Of the Canadian provinces+territories beginning with 'N' - which had the most deforestation in 2004?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-038",
+      "uid": "863ba6a140088907",
+      "group": "comparative",
+      "status": "done",
+      "query": "What was the sum total of tree cover loss in Manitoba and Alberta in 2024?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-039",
+      "uid": "15954d1359ba5a73",
+      "group": "comparative",
+      "status": "done",
+      "query": "Which location in England had the most tree cover loss from 2001 to 2024: Sheffield or Wakefield?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-040",
+      "uid": "f5f18132c4662d74",
+      "group": "temporal",
+      "status": "done",
+      "query": "How much gross greenhouse gas emissions from tree cover loss occurred in the North Baikal wetlands KBA in 2024?",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-041",
+      "uid": "2544dd07dab514ae",
+      "group": "direct",
+      "status": "done",
+      "query": "Which year had the most carbon emissions due to tree cover loss in Sebangau National Park between 2002 and 2008?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-042",
+      "uid": "c3fe107faccb7192",
+      "group": "direct",
+      "status": "done",
+      "query": "What was the total carbon emissions due to deforestation in the Vale do Javari indigenous land, Brazil between 2010 and 2018?",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-043",
+      "uid": "be74ef9c8efa1e1d",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which region of New Zealand had the highest total gross greenhouse gas emissions from tree cover loss between 2005 and 2020?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-044",
+      "uid": "e6f2436769d4a94f",
+      "group": "temporal",
+      "status": "done",
+      "query": "In which year between 2001 and 2024 did Indonesia have the lowest emissions due to tree cover loss?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-045",
+      "uid": "9ffb79b5a677c2ba",
+      "group": "comparative",
+      "status": "done",
+      "query": "True or False: In the Rep. of Congo, Bouenza generated more gross greenhouse gas emissions from tree cover loss than Cuvette in 2021?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-046",
+      "uid": "cf98ea5d8d7d7811",
+      "group": "direct",
+      "status": "done",
+      "query": "How many tonnes of CO2 was emitted in Ihorombe, Madagascar in 2019 due to tree cover loss?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-047",
+      "uid": "77093531222f6f06",
+      "group": "direct",
+      "status": "done",
+      "query": "How much tree cover was gained between 2000 and 2020 in the Rio Capim KBA?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-048",
+      "uid": "00bb3895326ac32a",
+      "group": "temporal",
+      "status": "done",
+      "query": "True or false: in Alto Rio Guama, more tree cover was gained in the period between 2000-2010 than 2010-2020",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-049",
+      "uid": "7f73ddd1f9e3c884",
+      "group": "direct",
+      "status": "not doing",
+      "query": "How much tree cover was gained between 2010 and 2015 in the Senanga Reserve, Zambia?",
+      "expected_fields": [
+        "answer",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-050",
+      "uid": "7b6e0b653649793a",
+      "group": "comparative",
+      "status": "done",
+      "query": "Which country gained more tree cover between 2015 and 2020: France or Germany?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-051",
+      "uid": "abb5da3d94e10151",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which province of Galicia (ESP), gained the least tree cover between 2000-2020?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-052",
+      "uid": "91cb2a767c23fc94",
+      "group": "direct",
+      "status": "done",
+      "query": "Which 5-year period betwween 2000 and 2020 saw Huelva, Spain gain the most tree cover?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-053",
+      "uid": "7a45e7b8b2e1d0e1",
+      "group": "comparative",
+      "status": "todo",
+      "query": "True or False: the UK has a lower net forest greenhouse gas flux than the Rep. of Ireland?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-054",
+      "uid": "c53631b7aac17921",
+      "group": "direct",
+      "status": "done",
+      "query": "Based on net forest greenhouse gas flux, are the Canary Islands (Canarias, Spain) a net source or a net sink?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-055",
+      "uid": "b8002a1ddf7b76f9",
+      "group": "direct",
+      "status": "done",
+      "query": "What was the net greenhouse gas flux for Las Palmas, Canarias (ESP)?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-056",
+      "uid": "7a7e8cbd2482b2f4",
+      "group": "dataset-suggestion",
+      "status": "done",
+      "query": "Which Norwegian county (admin level 1) had the most tree cover in 2000?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-057",
+      "uid": "67053564c5717807",
+      "group": "comparative",
+      "status": "done",
+      "query": "In 2000, which state had the most tree cover between Oregon and Washington?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-058",
+      "uid": "3dd92e59c37107a2",
+      "group": "direct",
+      "status": "done",
+      "query": "In 2000, how much tree cover did Dja et Lobo Cameroon have?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-059",
+      "uid": "70be2a6faeef4ef4",
+      "group": "parent-child",
+      "status": "done",
+      "query": "What is the global total tree cover loss in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-060",
+      "uid": "807f6dfcfea8683f",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which state of brazil has lost the most tree cover due to permanent agriculture.",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-061",
+      "uid": "b2d47495ed86ff9a",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which Australian state or territory lost the most forest to settlements and infrastructure?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-062",
+      "uid": "fadcd8afac449e11",
+      "group": "comparative",
+      "status": "todo",
+      "query": "Which US state lost more forest due to wildfires? Washington or Oregon?",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-063",
+      "uid": "e729f151494155b6",
+      "group": "class-comparison",
+      "status": "done",
+      "query": "True or False: Logging causes more more tree cover loss than Wildfire in Aveiro, Portugal?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-064",
+      "uid": "e3b8acd95fe9c6fb",
+      "group": "class-comparison",
+      "status": "done",
+      "query": "What is the largest driver of deforestation in Nannup, Western Australia.",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-065",
+      "uid": "8229668942233037",
+      "group": "metadata",
+      "status": "done",
+      "query": "What's the resolution of the tree cover loss data?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-066",
+      "uid": "baaa1c81665e7cb7",
+      "group": "metadata",
+      "status": "done",
+      "query": "What's the geographic coverage of the tree cover loss data?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-067",
+      "uid": "8c512724d73a8fb4",
+      "group": "metadata",
+      "status": "done",
+      "query": "Tell me about the methodology used to produce the Tree cover loss by dominant driver dataset - how should I use this data? Are they any details I should be aware of?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-068",
+      "uid": "0f3bbfa460906894",
+      "group": "metadata",
+      "status": "done",
+      "query": "How can I cite the Tree cover loss dataset in my research?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-069",
+      "uid": "37ff8ee88ab32434",
+      "group": "parent-child",
+      "status": "done",
+      "query": "Which country in the world had the most natural grassland in 2022?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-070",
+      "uid": "b00b22aa8fe7903b",
+      "group": "direct",
+      "status": "done",
+      "query": "How much tree cover loss was there in Colombia in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-071",
+      "uid": "ea82abbf1cd347c2",
+      "group": "temporal",
+      "status": "done",
+      "query": "Show me trends in Tree cover loss for Brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-072",
+      "uid": "ab97d4aa0671848e",
+      "group": "metadata",
+      "status": "done",
+      "query": "Through which year does the tree cover loss dataset provide data?",
+      "expected_fields": [
+        "dataset_id",
+        "dataset_name",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-073",
+      "uid": "0ab14c56d2159549",
+      "group": "direct",
+      "status": "done",
+      "query": "How much primary forest was lost in the Democratic Republic of Congo since the turn of the century?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "context_layer_match",
+        "dataset_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-074",
+      "uid": "d78f1fc485f498ba",
+      "group": "direct",
+      "status": "done",
+      "query": "Using a 10% canopy density threshold, how much tree cover was lost in Finland in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-075",
+      "uid": "2b4e103df3c17e7e",
+      "group": "direct",
+      "status": "done",
+      "query": "How much tree cover loss occurred within intact forest landscapes in Sweden between 2020 and 2024?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-076",
+      "uid": "3684831b6c373d2d",
+      "group": "direct",
+      "status": "done",
+      "query": "How much deforestation in Russia?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-077",
+      "uid": "1eb80386fe2714ff",
+      "group": "direct",
+      "status": "done",
+      "query": "How much deforestation in intact forests in Russia in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-078",
+      "uid": "16b61f12da5fda45",
+      "group": "ranking",
+      "status": "done",
+      "query": "List the top ten countries with the largest area of tropical primary rainforest loss in 2025",
+      "expected_fields": [
+        "answer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-079",
+      "uid": "bce4877b54b94b65",
+      "group": "temporal",
+      "status": "done",
+      "query": "What was the peak natural grassland extent in Mongolia between 2000 and 2022?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-080",
+      "uid": "9e3ec4c5af5803c7",
+      "group": "temporal",
+      "status": "done",
+      "query": "Show me deforestation in Brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "context_layer_match",
+        "dataset_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-082",
+      "uid": "fcf8804e97e16b19",
+      "group": "dataset-suggestion",
+      "status": "done",
+      "query": "give me urbanization since 2010 in Brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "clarification",
+        "nudge_options",
+        "nudge_type",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "clarification_requested",
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-083",
+      "uid": "9198d265bbfde9e0",
+      "group": "dataset-suggestion",
+      "status": "done",
+      "query": "Brazil deforestation linked to agricultural commodities in 2017",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "nudge_options",
+        "nudge_type",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-084",
+      "uid": "a8f937053af97d9c",
+      "group": "dataset-suggestion",
+      "status": "done",
+      "query": "Show me trends in natural land loss in Gabon",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "clarification",
+        "nudge_options",
+        "nudge_type",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "clarification_requested",
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-085",
+      "uid": "e7dc8c471352d6f5",
+      "group": "dataset-suggestion",
+      "status": "not doing",
+      "query": "What fire datasets do you have available to understand the impact of wilfires in Spain?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "clarification",
+        "scope",
+        "suggested_datasets",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "clarification_requested",
+        "expected_text_match",
+        "scope_match",
+        "suggested_datasets_match"
+      ]
+    },
+    {
+      "id": "1-086",
+      "uid": "ae8e62af3bc353ba",
+      "group": "dataset-suggestion",
+      "status": "done",
+      "query": "How much of Indonesia's 2025 tree cover loss was caused by fire?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-087",
+      "uid": "743a4f6170aad334",
+      "group": "context-layer",
+      "status": "done",
+      "query": "How much tree cover loss in intact forests in Russia in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-088",
+      "uid": "dc1b3d52d49b28b2",
+      "group": "context-layer",
+      "status": "not doing",
+      "query": "What type of natural ecosystem in Uganda had the most disturbances in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-089",
+      "uid": "ffc6b164922dfc42",
+      "group": "refusal",
+      "status": "done",
+      "query": "Show me monthly tree cover loss for Brazil in 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-090",
+      "uid": "98ff258bc3be8557",
+      "group": "multilingual",
+      "status": "done",
+      "query": "Cuánta superficie forestal se perdió en España en 2022?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-091",
+      "uid": "f114e0cca389d316",
+      "group": "multilingual",
+      "status": "done",
+      "query": "Quelle superficie forestière a été perdue au Sénégal en 2022 ?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-092",
+      "uid": "d1c2a4f1b4add263",
+      "group": "multilingual",
+      "status": "done",
+      "query": "Qual foi a área florestal perdida em Portugal em 2022?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-093",
+      "uid": "14d2332465d48c5d",
+      "group": "multilingual",
+      "status": "done",
+      "query": "Berapa luas hutan primer yang hilang di Indonesia pada tahun 2022?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "context_layer",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-094",
+      "uid": "387d2fec71402027",
+      "group": "multilingual",
+      "status": "done",
+      "query": "2022年中国损失了多少森林面积?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-095",
+      "uid": "445b4bb1fae102ed",
+      "group": "dataset-parameters",
+      "status": "done",
+      "query": "Using a 10% canopy threshold, how much tree cover did Finland lose in 2025?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "dataset_parameters",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "dataset_parameter_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-096",
+      "uid": "1478765e0688e778",
+      "group": "dashboard",
+      "status": "done",
+      "query": "Create a dashboard for brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dashboard_created"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dashboard_created"
+      ]
+    },
+    {
+      "id": "1-097",
+      "uid": "94bf6616bb145a3b",
+      "group": "dashboard",
+      "status": "done",
+      "query": "Create a dashboard for Brazil. Give me an insight on tree cover loss there, then add it to the dashboard.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dashboard_created",
+        "dashboard_widgets",
+        "dataset_id",
+        "dataset_name"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ]
+    },
+    {
+      "id": "1-098",
+      "uid": "3e12d2e5d7cd79b7",
+      "group": "dashboard",
+      "status": "done",
+      "query": "Create a dashboard for Brazil and add a map layer of the Tree Cover Loss dataset to it",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dashboard_created",
+        "dashboard_widgets",
+        "dataset_id",
+        "dataset_name"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "dataset_id_match"
+      ]
+    },
+    {
+      "id": "1-099",
+      "uid": "954e901dfc103ec9",
+      "group": "dashboard",
+      "status": "done",
+      "query": "Create a dashboard for the canton of Bern, Switzerland and add a satellite imagery map for the first two weeks of July 2025 to it.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dashboard_created",
+        "dashboard_widgets"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match"
+      ]
+    },
+    {
+      "id": "1-100",
+      "uid": "60b6030c1f1d27a0",
+      "group": "dashboard",
+      "status": "done",
+      "query": "Create a dashboard for Brazil with an insight on annual deforestation trends, an explainer text block, and a satellite imagery map",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dashboard_created",
+        "dashboard_widgets",
+        "dataset_id",
+        "dataset_name"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ]
+    },
+    {
+      "id": "1-101",
+      "uid": "15954ef596fb8fd3",
+      "group": "dashboard",
+      "status": "done",
+      "query": "Create a dashboard for Paraná, Brazil with an insight on annual tree cover loss, a second insight on tree cover loss in primary forests, an explainer text block, and a Tree Cover Loss dataset map layer.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dashboard_created",
+        "dashboard_widgets",
+        "dataset_id",
+        "dataset_name"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "dashboard_created",
+        "dashboard_widgets_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ]
+    },
+    {
+      "id": "1-102",
+      "uid": "e549e69bc1700085",
+      "group": "dashboard",
+      "status": "done",
+      "query": "Add tree cover loss to the map",
+      "expected_fields": [
+        "aoi_source",
+        "dashboard_created",
+        "dataset_id",
+        "dataset_name"
+      ],
+      "implied_checks": [
+        "dashboard_created",
+        "dataset_id_match"
+      ]
+    },
+    {
+      "id": "1-103",
+      "uid": "edf7fc39b6789b92",
+      "group": "dataset-suggestion",
+      "status": "done",
+      "query": "What were Brazil's soy-linked deforestation emissions in 2023?",
+      "expected_fields": [
+        "answer",
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-104",
+      "uid": "ce209c126ebe9ace",
+      "group": "imagery",
+      "status": "done",
+      "query": "Show me satellite imagery for the Comunidad de Madrid, Spain for the first two weeks of January 2021.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-105",
+      "uid": "1aaeeba8c987a8fc",
+      "group": "nudge",
+      "status": "ready",
+      "query": "Select an area named Puri",
+      "expected_fields": [
+        "aoi_source",
+        "nudge_options",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-107",
+      "uid": "a4b115ea2533bb7a",
+      "group": "nudge",
+      "status": "ready",
+      "query": "Pick a dataset showing urban land cover",
+      "expected_fields": [
+        "nudge_options",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "nudge_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-108",
+      "uid": "2113af0ee5d2bd98",
+      "group": "direct",
+      "status": "not doing",
+      "query": "How much tree cover loss was there in the city of Bern, Switzerland between 2001 and 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-112",
+      "uid": "88d8747649779fb8",
+      "group": "direct",
+      "status": "not doing",
+      "query": "How much emissions were there from forests in India?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-113",
+      "uid": "426c2d3acd2083ce",
+      "group": "temporal",
+      "status": "not doing",
+      "query": "How much emissions were there from forests in India in 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "class_values",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-114",
+      "uid": "8bb4a04e1d9f780a",
+      "group": "refusal",
+      "status": "not doing",
+      "query": "What was the carbon density (or stock) in India's forests in 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-115",
+      "uid": "24ca3663de0cb044",
+      "group": "direct",
+      "status": "not doing",
+      "query": "What was the carbon stock change in India's forests in 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-116",
+      "uid": "9eb1c3b8104ae74a",
+      "group": "refusal",
+      "status": "not doing",
+      "query": "How many carbon credits can I generate from REDD+ on my project area?",
+      "expected_fields": [
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-117",
+      "uid": "afc11a22d898e7e3",
+      "group": "dataset-suggestion",
+      "status": "not doing",
+      "query": "What is the climate change mitigation potential of planting new trees?",
+      "expected_fields": [
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
+      ]
+    },
+    {
+      "id": "1-118",
+      "uid": "cc887d4637b0c8cb",
+      "group": "imagery",
+      "status": "not doing",
+      "query": "Show me integrated deforestation alerts and imagery for Mirití-Paraná, Amazonas, Colombia.",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-119",
+      "uid": "bb9037bc4660887e",
+      "group": "imagery",
+      "status": "not doing",
+      "query": "Show me alerts and imagery from {current_month} for Tabatinga, Amazonas, Brazil.",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-120",
+      "uid": "0658d8517285c63a",
+      "group": "imagery",
+      "status": "not doing",
+      "query": "Show me alerts and imagery from June 2026 for Tabatinga, Amazonas, Brazil.",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "1-121",
+      "uid": "49e6011c7b4db2e7",
+      "group": "imagery",
+      "status": "not doing",
+      "query": "Show me alerts and imagery from {last_month} for Zurich, Switzerland.",
+      "expected_fields": [
+        "aoi_source",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ]
+    },
+    {
+      "id": "mt-001",
+      "uid": "39840a3c054ab3bf",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "Show me recent integrated alerts in Puri",
+        "I mean the Puri district in Odisha, India"
+      ],
+      "expected_fields": [
+        "clarification",
+        "scope"
+      ],
+      "implied_checks": [
+        "clarification_requested",
+        "scope_match",
+        "state_delta"
+      ]
+    },
+    {
+      "id": "mt-002",
+      "uid": "38a4baf80d283015",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "Select an area named Puri",
+        "Puri in Odisha, India"
+      ],
+      "expected_fields": [
+        "aoi_source",
+        "nudge_options"
+      ],
+      "implied_checks": [
+        "nudge_match",
+        "state_delta"
+      ]
+    },
+    {
+      "id": "mt-003",
+      "uid": "9bbb055d80fab8dd",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "How much area had high-confidence integrated alerts in Kalimantan, Indonesia in July 2024?",
+        "And for August 2024?"
+      ],
+      "expected_fields": [
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "date_extraction",
+        "scope_match",
+        "state_delta"
+      ]
+    },
+    {
+      "id": "mt-004",
+      "uid": "3b0e419f5583d1ea",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "How much tree cover loss did Indonesia have in 2022?",
+        "How does that compare with 2021?"
+      ],
+      "expected_fields": [
+        "dataset_id",
+        "scope"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
+      ]
+    },
+    {
+      "id": "mt-005",
+      "uid": "086692eda35ba8b0",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "How much tree cover loss did Brazil have in 2022?",
+        "And for Indonesia?"
+      ],
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id",
+        "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
+      ]
+    },
+    {
+      "id": "mt-006",
+      "uid": "2b81a8ae1b9301e4",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "How much tree cover loss occurred in the primary forests of Brazil in 2022?",
+        "How much natural grassland was there in Mongolia in 2022?"
+      ],
+      "expected_fields": [
+        "context_layer",
+        "dataset_id",
+        "scope"
+      ],
+      "implied_checks": [
+        "context_layer_match",
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
+      ]
+    },
+    {
+      "id": "mt-007",
+      "uid": "ea4e5bf8c098c152",
+      "group": "multiturn",
+      "status": "todo",
+      "turns": [
+        "How much tree cover loss did Indonesia have in 2022?",
+        "Are you sure? I read it was more than double that."
+      ],
+      "expected_fields": [
+        "answer",
+        "context_layer",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "chart_produced",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match",
+        "state_delta"
+      ]
+    },
+    {
+      "id": "mt-008",
+      "uid": "fa33ca99a2484307",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "How much tree cover loss did Brazil have in 2022?",
+        "Add that to a dashboard"
+      ],
+      "expected_fields": [
+        "dashboard_created",
+        "dataset_id",
+        "scope"
+      ],
+      "implied_checks": [
+        "dashboard_created",
+        "dataset_id_match",
+        "scope_match",
+        "state_delta"
+      ]
+    }
+  ]
+}

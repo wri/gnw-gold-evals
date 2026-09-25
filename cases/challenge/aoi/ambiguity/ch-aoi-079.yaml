@@ -1,0 +1,16 @@
+id: ch-aoi-079
+uid: 00be169e3d0b8f1f
+status: ready
+set: aoi
+group: ambiguity
+query: Go to Victoria
+expected:
+  aoi_ids: AUS.10
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'negative control: other Victoria rows are landmarks or ''Lake Victoria''/''Villa
+    Victoria'', so duplicate check should not fire'
+  verify_query: Victoria
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

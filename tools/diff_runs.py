@@ -1,6 +1,6 @@
 """Regression diff between two ledger runs.
 
-    uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
+    uv run python tools/diff_runs.py results/gold/runs/A.json results/gold/runs/B.json \
       [--json out.json] [--strict] [--fail-on-regression] [--fail-on-coverage-loss]
 
 Comparison runs over the **intersection of uids** (stale rows excluded), so

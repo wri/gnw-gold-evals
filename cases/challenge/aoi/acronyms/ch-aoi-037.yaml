@@ -1,0 +1,15 @@
+id: ch-aoi-037
+uid: 382c79009511409a
+status: ready
+set: aoi
+group: acronyms
+query: Show me the US on the map
+expected:
+  aoi_ids: USA
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: PZB-1270
+  verify_query: United States
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

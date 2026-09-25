@@ -1,0 +1,19 @@
+id: ch-quant-108
+uid: 9104b973ec973a6b
+status: ready
+set: quantification
+group: tree-cover
+query: How many hectares of tree cover does Peru have at a 50% canopy density threshold?
+expected:
+  aoi_ids: PER
+  dataset_id: '7'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Fixed 2000 snapshot; the stated 50% canopy threshold must be applied.
+    Headline is tree cover area_ha, never a percentage.
+  eval_subtype: canopy_threshold
+  manifest_id: m-tc-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

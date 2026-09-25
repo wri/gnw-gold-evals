@@ -1,0 +1,19 @@
+id: ch-trend-055
+uid: b37fa2df9a38f9fd
+status: ready
+set: trend
+group: integrated-alerts
+query: Have deforestation alerts in Colombia been rising or falling over the course of 2024,
+  from January to December?
+expected:
+  aoi_ids: COL
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Direction of monthly alert area (area_ha) over 2024.
+  eval_subtype: direction
+  manifest_id: m-ialert-trend-05
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

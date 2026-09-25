@@ -1,0 +1,24 @@
+id: ch-comp-136
+uid: 34ca8eb91afaa1ec
+status: ready
+set: comparison
+group: tcl-fires
+query: Hey, quick question - between Brazil and Bolivia, which one lost more tree cover to
+  fires in 2022, across all forest types? I just need the hectares.
+expected:
+  aoi_ids: BRA;BOL
+  dataset_id: '10'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Compare fire-driven tree cover loss between the two countries for the
+    year (hectares). NEVER report carbon emissions. 30% default; use 'tree cover loss', not
+    'deforestation'.
+  eval_subtype: two_country
+  manifest_id: m-fires-comp-03
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-comp-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
