@@ -54,6 +54,8 @@ DEDICATED: dict[str, str] = {
     "chart_well_formed": OUTPUT,
     "chart_type_match": OUTPUT,
     "scope_match": SCOPE,
+    # CHALLENGE map set: opt-in tool-scope isolation
+    "forbidden_tools_absent": SCOPE,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,
 }
@@ -227,6 +229,8 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("chart_type_match")
     if expected.get("scope"):
         implied.add("scope_match")
+    if expected.get("forbidden_tools"):
+        implied.add("forbidden_tools_absent")
     return implied
 
 

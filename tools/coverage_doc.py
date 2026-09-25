@@ -73,6 +73,7 @@ FIELD_CHECKS = {
     "class_values": "class_value_match (info-only)",
     "chart_type": "chart_type_match",
     "scope": "scope_match",
+    "forbidden_tools": "forbidden_tools_absent",
     "aoi_source": "reference only (dashboard AOI source)",
     "dataset_name": "reference only",
 }

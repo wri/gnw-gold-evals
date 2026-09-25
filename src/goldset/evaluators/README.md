@@ -165,6 +165,7 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`suggested_datasets_match`](#suggested_datasets_match) | scope | deterministic | gates | `suggested_datasets` | `suggested_datasets_evaluator.py:6` |
 | [`nudge_match`](#nudge_match) | scope | deterministic | gates | `nudge_type` and/or `nudge_options` | `nudge_evaluator.py:35` |
 | [`scope_match`](#scope_match) | scope | deterministic | gates | `scope` | `scope_checks.py:54` |
+| [`forbidden_tools_absent`](#forbidden_tools_absent) | scope | deterministic | gates | `forbidden_tools` | `tool_checks.py` |
 
 Two expected fields drive **no** check of their own: `aoi_source` is read only by
 `dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
@@ -1154,6 +1155,33 @@ its keep: 1-085 ("How do fires impact nature in Spain?") ran a full analysis
 where the sheet expected dataset suggestions — caught here as expected `suggest`
 vs observed `analyse` (`:17-19`). 0.94 ±0.05 over 88 rows in
 `20260803T201245Z`.
+
+## `forbidden_tools_absent`
+
+**Measures** whether the agent stayed inside the tools the case allows: it fails
+if any tool named in the case's `forbidden_tools` list appears among the tool
+calls in `messages[].tool_calls` (`tool_checks.py`). Added 2026-09-25 for the
+CHALLENGE `map` set, whose premise is that "show X on the map" is served by
+`pick_dataset` alone.
+
+**Why it exists**: nothing else could assert scope isolation. `data_pull:
+'FALSE'` switches the pull checks off rather than asserting no pull;
+`scope_match` classifies a clean pick-and-stop as `none` (the `refuse` class)
+and cannot see `pick_aoi`; an empty `aoi_ids` means "no expectation".
+
+**Fires on** `forbidden_tools`, `;`-separated tool names, case-insensitive. It is
+opt-in, so no GOLD row fires it. The list lives in the case (hashed into the uid)
+so a case says exactly what it forbids.
+
+**`null` vs `0.0`**: `null` when no list is set, and `null` when the state has no
+`messages` key at all (an unreadable signal abstains rather than passing). An
+empty message list is readable and scores `1.0`. `0.0` on any forbidden call.
+
+**Reason**: none; `actuals.forbidden_tools_absent` = the offending tool names.
+The full call list is in the run artifact's `tool_calls`.
+
+**Multi-turn caveat**: thread state accumulates messages, so a later turn sees
+earlier turns' calls. Use it on single-turn rows or turn 1 only.
 
 ---
 
