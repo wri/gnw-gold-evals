@@ -21,11 +21,15 @@ interval, compared against ``cases/challenge/TARGETS.yml``. Semantics:
   infrastructure flakiness never contaminates the published rate.
 - ``uncovered`` rows (nothing evaluated) and ``stale`` rows (uid no longer
   in the store) are reported, never counted.
-- **Latency** (median and p90, nearest rank) is reported per set and cohort
-  over every trial of the measured rows (pass or fail); errored rows are
-  excluded, since a timeout measures availability, not speed. It is
-  wall-clock per agent turn as the harness saw it, so it only compares
-  across runs with the same env and workers.
+- **Latency** (median, p90 nearest rank, mean) is reported overall, per set
+  and per cohort over every trial of the measured rows (pass or fail);
+  errored rows are excluded, since a timeout measures availability, not
+  speed. Basis: ``stream_s`` (POST /api/chat to the last stream line, the
+  agent turn) where the run recorded it, else ``latency_s`` (which also
+  spans the state GET); judge time is in neither. Passing two or more runs
+  adds a side-by-side latency table with median deltas against the first
+  run, flagged as not comparable when env, workers or basis differ. For a
+  latency comparison run both sides with ``--workers 1``.
 - Confidence intervals are Wilson 95%; a published "70%" from 12 cases must
   say how soft it is.
 
@@ -81,6 +85,67 @@ def _trial_list(entry: dict[str, Any]) -> list[dict[str, Any]]:
     return [t for t in trials if isinstance(t, dict)]
 
 
+def _basis(r: dict[str, Any]) -> str:
+    basis = r.get("latency_basis") or {}
+    return ", ".join(f"{k} x{v}" for k, v in basis.items()) or "none"
+
+
+def latency_comparison(rollups: list[dict[str, Any]]) -> list[str]:
+    """Side-by-side latency (median / p90 / mean seconds) per run for the
+    overall row, each set and each cohort, plus the median delta of every
+    later run against the first. Loudly flags pairs that are not comparable:
+    differing env or workers, or a different latency basis."""
+    lines = ["## Cross-run latency (seconds: median / p90 / mean; errors excluded)"]
+    envs = {r["environment"] for r in rollups}
+    workers = {r.get("workers") for r in rollups}
+    bases = {tuple(sorted((r.get("latency_basis") or {}).keys())) for r in rollups}
+    problems = []
+    if len(envs) > 1:
+        problems.append(f"env differs ({', '.join(sorted(map(str, envs)))}): "
+                        "network and infrastructure differ, so the gap is not the agent")
+    if len(workers) > 1:
+        problems.append(f"workers differ ({', '.join(sorted(map(str, workers)))}): "
+                        "concurrency changes contention")
+    if len(bases) > 1:
+        problems.append("latency basis differs (stream_s vs latency_s)")
+    for problem in problems:
+        lines.append(f"WARNING: latency NOT comparable - {problem}.")
+    base = rollups[0]
+    header = "| scope | " + " | ".join(r["run_id"] for r in rollups)
+    header += "".join(f" | d median vs {base['run_id']}" for _ in rollups[1:]) + " |"
+    lines.append(header)
+    lines.append("|---" * (1 + len(rollups) + len(rollups) - 1) + "|")
+
+    def cell(stat):
+        if not stat or stat.get("latency_median_s") is None:
+            return "-"
+        return (f"{_secs(stat['latency_median_s'])} / {_secs(stat['latency_p90_s'])}"
+                f" / {_secs(stat['latency_mean_s'])}")
+
+    def delta(stat, base_stat):
+        if not stat or not base_stat or None in (
+            stat.get("latency_median_s"), base_stat.get("latency_median_s")
+        ):
+            return "-"
+        return f"{stat['latency_median_s'] - base_stat['latency_median_s']:+.1f}"
+
+    scopes: list[tuple[str, Any]] = [("overall", lambda r: r["overall"])]
+    for set_name in sorted({s for r in rollups for s in r["by_set"]}):
+        scopes.append((set_name, lambda r, s=set_name: r["by_set"].get(s)))
+        groups = sorted({g for r in rollups for g in (r["by_set"].get(set_name) or {}).get("by_group", {})})
+        for group in groups:
+            scopes.append((
+                f"{set_name} / {group}",
+                lambda r, s=set_name, g=group: (r["by_set"].get(s) or {}).get("by_group", {}).get(g),
+            ))
+    for label, get in scopes:
+        row = [label] + [cell(get(r)) for r in rollups]
+        row += [delta(get(r), get(base)) for r in rollups[1:]]
+        lines.append("| " + " | ".join(row) + " |")
+    lines.append("")
+    return lines
+
+
 def _secs(value: float | None) -> str:
     return "-" if value is None else f"{value:.1f}"
 
@@ -104,12 +169,27 @@ def _new_stat() -> dict[str, Any]:
     return {"n": 0, "passed": 0, "strict_passed": 0, "_latencies": []}
 
 
-def entry_latencies(entry: dict[str, Any]) -> list[float]:
-    """Every trial's wall-clock latency for a row (seconds): per-trial
-    ``latency_s`` on multi-trial entries, else the entry's own."""
-    trials = _trial_list(entry)
-    values = [t.get("latency_s") for t in trials] if trials else [entry.get("latency_s")]
-    return [float(v) for v in values if isinstance(v, (int, float))]
+def _one_latency(record: dict[str, Any]) -> tuple[float | None, str | None]:
+    """``stream_s`` (POST to end of stream: the agent turn) when recorded,
+    else ``latency_s`` (also spans the harness's state GET); neither ever
+    includes judge time."""
+    for key in ("stream_s", "latency_s"):
+        value = record.get(key)
+        if isinstance(value, (int, float)):
+            return float(value), key
+    return None, None
+
+
+def entry_latencies(entry: dict[str, Any]) -> list[tuple[float, str]]:
+    """Every trial's latency for a row as (seconds, basis): per trial on
+    multi-trial entries, else the entry's own."""
+    records = _trial_list(entry) or [entry]
+    out = []
+    for record in records:
+        value, basis = _one_latency(record)
+        if value is not None:
+            out.append((value, basis))
+    return out
 
 
 def percentile(values: list[float], q: float) -> float | None:
@@ -126,6 +206,7 @@ def _finish(stat: dict[str, Any]) -> dict[str, Any]:
     stat["latency_n"] = len(latencies)
     stat["latency_median_s"] = percentile(latencies, 50)
     stat["latency_p90_s"] = percentile(latencies, 90)
+    stat["latency_mean_s"] = sum(latencies) / len(latencies) if latencies else None
     n, passed = stat["n"], stat["passed"]
     lo, hi = wilson(passed, n)
     stat["rate"] = passed / n if n else None
@@ -149,6 +230,7 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
         }
     )
     failing: list[dict[str, str]] = []
+    latency_basis: Counter = Counter()
 
     measured_uids: set[str] = set()
     for entry in run.get("results", []):
@@ -181,7 +263,8 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
             stat["n"] += 1
             stat["passed"] += passed
             stat["strict_passed"] += strict
-            stat["_latencies"].extend(latencies)
+            stat["_latencies"].extend(value for value, _basis in latencies)
+        latency_basis.update(basis for _value, basis in latencies)
         if not passed:
             failing.append(
                 {
@@ -212,6 +295,8 @@ def rollup_run(run: dict[str, Any], cases_by_uid: dict[str, Any]) -> dict[str, A
         "environment": run.get("environment"),
         "ff": run.get("ff") or "default",
         "num_trials": run.get("num_trials"),
+        "workers": run.get("workers"),
+        "latency_basis": dict(sorted(latency_basis.items())),
         "caseset": run.get("caseset"),
         "caseset_version": run.get("caseset_version"),
         "rows_total": total,
@@ -305,6 +390,11 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
             f"95% CI {_ci(o)}) | strict (all trials clean) "
             f"{_pct(o['strict_rate'])}"
         )
+        lines.append(
+            f"latency (s, excl. errors): median {_secs(o['latency_median_s'])} | "
+            f"p90 {_secs(o['latency_p90_s'])} | mean {_secs(o['latency_mean_s'])} | "
+            f"n {o['latency_n']} trials | basis {_basis(r)} | workers {r.get('workers')}"
+        )
         overall_target = targets.get("overall")
         if overall_target is not None:
             lines.append(f"target: {_target_cell(o['rate'], overall_target)}")
@@ -317,7 +407,7 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
                 f"pass rate **{_pct(s['rate'])}** ({s['passed']}/{s['n']}, "
                 f"95% CI {_ci(s)}) | strict {_pct(s['strict_rate'])} | "
                 f"latency median {_secs(s['latency_median_s'])}, "
-                f"p90 {_secs(s['latency_p90_s'])}"
+                f"p90 {_secs(s['latency_p90_s'])}, mean {_secs(s['latency_mean_s'])}"
             )
             if st.get("overall") is not None:
                 lines.append(f"target: {_target_cell(s['rate'], st['overall'])}")
@@ -325,9 +415,9 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
             lines.append("### By cohort")
             lines.append(
                 "| cohort | n | passed | rate | 95% CI | strict | target "
-                "| median s | p90 s |"
+                "| median s | p90 s | mean s |"
             )
-            lines.append("|---|---|---|---|---|---|---|---|---|")
+            lines.append("|---|---|---|---|---|---|---|---|---|---|")
             group_targets = st.get("targets", {})
             for group, stat in s["by_group"].items():
                 lines.append(
@@ -335,7 +425,8 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
                     f"{_pct(stat['rate'])} | {_ci(stat)} | {_pct(stat['strict_rate'])} "
                     f"| {_target_cell(stat['rate'], group_targets.get(group))} "
                     f"| {_secs(stat['latency_median_s'])} "
-                    f"| {_secs(stat['latency_p90_s'])} |"
+                    f"| {_secs(stat['latency_p90_s'])} "
+                    f"| {_secs(stat['latency_mean_s'])} |"
                 )
             lines.append("")
             lines.append("### By difficulty")
@@ -404,6 +495,7 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
                 cells.append(_pct(stat["rate"]) if stat else "-")
             lines.append(f"| {r['run_id']} | " + " | ".join(cells) + " |")
         lines.append("")
+        lines.extend(latency_comparison(rollups))
     return "\n".join(lines)
 
 
