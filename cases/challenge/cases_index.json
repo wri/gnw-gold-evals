@@ -18,7 +18,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-002",
@@ -34,7 +37,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-003",
@@ -50,7 +56,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-004",
@@ -66,7 +75,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-005",
@@ -82,7 +94,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-006",
@@ -98,7 +113,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-007",
@@ -114,7 +132,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-008",
@@ -130,7 +151,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-009",
@@ -146,7 +170,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-010",
@@ -162,7 +189,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-011",
@@ -178,7 +208,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-012",
@@ -194,7 +227,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-013",
@@ -210,7 +246,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-014",
@@ -226,7 +265,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-015",
@@ -242,7 +284,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-016",
@@ -258,7 +303,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-017",
@@ -274,7 +322,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-018",
@@ -290,7 +341,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-019",
@@ -306,7 +360,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-020",
@@ -322,7 +379,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "direct"
     },
     {
       "id": "ch-aoi-021",
@@ -338,7 +398,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-022",
@@ -354,7 +417,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-023",
@@ -370,7 +436,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-024",
@@ -386,7 +455,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-025",
@@ -402,7 +474,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-026",
@@ -418,7 +493,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-027",
@@ -434,7 +512,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-028",
@@ -452,7 +533,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-029",
@@ -468,7 +552,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-030",
@@ -484,7 +571,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-031",
@@ -500,7 +590,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-032",
@@ -516,7 +609,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-033",
@@ -532,7 +628,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-034",
@@ -548,7 +647,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-035",
@@ -564,7 +666,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "sources"
     },
     {
       "id": "ch-aoi-036",
@@ -580,7 +685,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-037",
@@ -596,7 +704,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-038",
@@ -612,7 +723,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-039",
@@ -628,7 +742,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-040",
@@ -644,7 +761,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-041",
@@ -660,7 +780,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-042",
@@ -676,7 +799,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-043",
@@ -692,7 +818,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-044",
@@ -708,7 +837,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-045",
@@ -724,7 +856,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-046",
@@ -740,7 +875,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-047",
@@ -756,7 +894,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-048",
@@ -772,7 +913,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "acronyms"
     },
     {
       "id": "ch-aoi-049",
@@ -788,7 +932,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-050",
@@ -804,7 +951,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-051",
@@ -820,7 +970,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-052",
@@ -836,7 +989,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-053",
@@ -852,7 +1008,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-054",
@@ -868,7 +1027,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-055",
@@ -884,7 +1046,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-056",
@@ -900,7 +1065,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-057",
@@ -916,7 +1084,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-058",
@@ -932,7 +1103,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-059",
@@ -948,7 +1122,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-060",
@@ -964,7 +1141,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-061",
@@ -980,7 +1160,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-062",
@@ -996,7 +1179,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-063",
@@ -1012,7 +1198,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multilingual"
     },
     {
       "id": "ch-aoi-064",
@@ -1028,7 +1217,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-065",
@@ -1044,7 +1236,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-066",
@@ -1060,7 +1255,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-067",
@@ -1076,7 +1274,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-068",
@@ -1092,7 +1293,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-069",
@@ -1108,7 +1312,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-070",
@@ -1124,7 +1331,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-071",
@@ -1140,7 +1350,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "data-quality"
     },
     {
       "id": "ch-aoi-072",
@@ -1157,7 +1370,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-073",
@@ -1173,7 +1389,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-074",
@@ -1189,7 +1408,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-075",
@@ -1205,7 +1427,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-076",
@@ -1221,7 +1446,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-077",
@@ -1237,7 +1465,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-078",
@@ -1253,7 +1484,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-079",
@@ -1269,7 +1503,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-080",
@@ -1286,7 +1523,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-081",
@@ -1302,7 +1542,10 @@
       ],
       "implied_checks": [
         "nudge_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
     },
     {
       "id": "ch-aoi-082",
@@ -1318,7 +1561,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-083",
@@ -1334,7 +1580,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-084",
@@ -1350,7 +1599,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-085",
@@ -1366,7 +1618,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-086",
@@ -1382,7 +1637,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-087",
@@ -1398,7 +1656,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-088",
@@ -1414,7 +1675,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-089",
@@ -1430,7 +1694,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-090",
@@ -1446,7 +1713,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-091",
@@ -1464,7 +1734,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
     },
     {
       "id": "ch-aoi-092",
@@ -1480,7 +1753,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-093",
@@ -1496,7 +1772,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-094",
@@ -1512,7 +1791,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-095",
@@ -1524,7 +1806,10 @@
       "behaviour": "select",
       "query": "Show me every district in Wales",
       "expected_fields": [],
-      "implied_checks": []
+      "implied_checks": [],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-096",
@@ -1540,7 +1825,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-097",
@@ -1556,7 +1844,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-098",
@@ -1568,7 +1859,10 @@
       "behaviour": "select",
       "query": "Show me all the KBAs in Rwanda",
       "expected_fields": [],
-      "implied_checks": []
+      "implied_checks": [],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-099",
@@ -1580,7 +1874,10 @@
       "behaviour": "select",
       "query": "Show me the protected areas of Bhutan",
       "expected_fields": [],
-      "implied_checks": []
+      "implied_checks": [],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-100",
@@ -1596,7 +1893,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-101",
@@ -1608,7 +1908,10 @@
       "behaviour": "select",
       "query": "Show me the regions of New Zealand",
       "expected_fields": [],
-      "implied_checks": []
+      "implied_checks": [],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "expansion"
     },
     {
       "id": "ch-aoi-102",
@@ -1624,7 +1927,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "global"
     },
     {
       "id": "ch-aoi-103",
@@ -1640,7 +1946,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "global"
     },
     {
       "id": "ch-aoi-104",
@@ -1656,7 +1965,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "global"
     },
     {
       "id": "ch-aoi-105",
@@ -1672,7 +1984,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "global"
     },
     {
       "id": "ch-aoi-106",
@@ -1688,7 +2003,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "global"
     },
     {
       "id": "ch-aoi-107",
@@ -1704,7 +2022,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "global"
     },
     {
       "id": "ch-aoi-108",
@@ -1716,7 +2037,10 @@
       "behaviour": "select",
       "query": "Go to Lahti city in Finland",
       "expected_fields": [],
-      "implied_checks": []
+      "implied_checks": [],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-109",
@@ -1734,7 +2058,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-110",
@@ -1750,7 +2077,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-111",
@@ -1768,7 +2098,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-112",
@@ -1786,7 +2119,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-113",
@@ -1802,7 +2138,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-114",
@@ -1818,7 +2157,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-115",
@@ -1836,7 +2178,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "vague"
     },
     {
       "id": "ch-aoi-116",
@@ -1854,7 +2199,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-117",
@@ -1872,7 +2220,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-118",
@@ -1890,7 +2241,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-119",
@@ -1908,7 +2262,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-120",
@@ -1926,7 +2283,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-121",
@@ -1944,7 +2304,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-122",
@@ -1962,7 +2325,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-123",
@@ -1980,7 +2346,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-124",
@@ -1998,7 +2367,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-125",
@@ -2016,7 +2388,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-126",
@@ -2034,7 +2409,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-127",
@@ -2052,7 +2430,10 @@
       "implied_checks": [
         "clarification_requested",
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-128",
@@ -2068,7 +2449,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-129",
@@ -2084,7 +2468,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-130",
@@ -2100,7 +2487,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-131",
@@ -2116,7 +2506,10 @@
       ],
       "implied_checks": [
         "expected_text_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
     },
     {
       "id": "ch-aoi-132",
@@ -2132,7 +2525,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-133",
@@ -2148,7 +2544,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-134",
@@ -2164,7 +2563,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-135",
@@ -2180,7 +2582,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-136",
@@ -2196,7 +2601,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-137",
@@ -2212,7 +2620,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-138",
@@ -2228,7 +2639,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-139",
@@ -2244,7 +2658,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-140",
@@ -2260,7 +2677,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-141",
@@ -2276,7 +2696,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-142",
@@ -2292,7 +2715,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-143",
@@ -2308,7 +2734,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-144",
@@ -2324,7 +2753,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-145",
@@ -2340,7 +2772,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-146",
@@ -2356,7 +2791,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-147",
@@ -2372,7 +2810,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-149",
@@ -2388,7 +2829,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-150",
@@ -2404,7 +2848,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-151",
@@ -2420,7 +2867,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-152",
@@ -2436,7 +2886,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-153",
@@ -2452,7 +2905,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-aoi-154",
@@ -2468,7 +2924,10 @@
       ],
       "implied_checks": [
         "aoi_id_match"
-      ]
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
     },
     {
       "id": "ch-comp-001",
@@ -2492,7 +2951,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-002",
@@ -2516,7 +2980,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-003",
@@ -2540,7 +3009,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-004",
@@ -2564,7 +3038,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-005",
@@ -2585,7 +3064,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-006",
@@ -2606,7 +3090,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-007",
@@ -2627,7 +3116,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-008",
@@ -2651,7 +3145,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-009",
@@ -2675,7 +3174,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-010",
@@ -2699,7 +3203,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-011",
@@ -2720,7 +3229,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-012",
@@ -2744,7 +3258,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-013",
@@ -2768,7 +3287,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-014",
@@ -2792,7 +3316,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-015",
@@ -2818,7 +3347,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-016",
@@ -2844,7 +3378,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-017",
@@ -2868,7 +3407,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-018",
@@ -2892,7 +3436,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-019",
@@ -2916,7 +3465,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-020",
@@ -2940,7 +3494,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-021",
@@ -2961,7 +3520,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-022",
@@ -2982,7 +3546,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-023",
@@ -3003,7 +3572,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-024",
@@ -3024,7 +3598,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-025",
@@ -3045,7 +3624,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-026",
@@ -3066,7 +3650,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-027",
@@ -3090,7 +3679,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-028",
@@ -3114,7 +3708,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-029",
@@ -3135,7 +3734,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-030",
@@ -3156,7 +3760,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-031",
@@ -3178,7 +3787,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-032",
@@ -3200,7 +3814,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-033",
@@ -3222,7 +3841,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-034",
@@ -3244,7 +3868,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_crop"
     },
     {
       "id": "ch-comp-035",
@@ -3266,7 +3895,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_crop"
     },
     {
       "id": "ch-comp-036",
@@ -3288,7 +3922,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_crop"
     },
     {
       "id": "ch-comp-037",
@@ -3310,7 +3949,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-038",
@@ -3329,7 +3973,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-039",
@@ -3351,7 +4000,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_crop"
     },
     {
       "id": "ch-comp-040",
@@ -3373,7 +4027,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-041",
@@ -3395,7 +4054,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-042",
@@ -3414,7 +4078,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-043",
@@ -3433,7 +4102,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-044",
@@ -3452,7 +4126,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-045",
@@ -3471,7 +4150,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-046",
@@ -3490,7 +4174,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-047",
@@ -3509,7 +4198,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-048",
@@ -3528,7 +4222,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-049",
@@ -3547,7 +4246,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-050",
@@ -3568,7 +4272,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-051",
@@ -3589,7 +4298,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-052",
@@ -3608,7 +4322,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-053",
@@ -3627,7 +4346,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-054",
@@ -3646,7 +4370,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-055",
@@ -3665,7 +4394,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-056",
@@ -3684,7 +4418,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-057",
@@ -3703,7 +4442,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-058",
@@ -3722,7 +4466,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-059",
@@ -3741,7 +4490,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_class"
     },
     {
       "id": "ch-comp-060",
@@ -3760,7 +4514,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_class"
     },
     {
       "id": "ch-comp-061",
@@ -3779,7 +4538,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_class"
     },
     {
       "id": "ch-comp-062",
@@ -3798,7 +4562,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_class"
     },
     {
       "id": "ch-comp-063",
@@ -3817,7 +4586,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-064",
@@ -3836,7 +4610,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-065",
@@ -3855,7 +4634,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-066",
@@ -3877,7 +4661,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-067",
@@ -3899,7 +4688,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-068",
@@ -3921,7 +4715,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-069",
@@ -3943,7 +4742,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-070",
@@ -3965,7 +4769,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-071",
@@ -3987,7 +4796,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-072",
@@ -4006,7 +4820,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-073",
@@ -4025,7 +4844,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-074",
@@ -4044,7 +4868,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-075",
@@ -4066,7 +4895,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-076",
@@ -4085,7 +4919,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-077",
@@ -4107,7 +4946,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-078",
@@ -4129,7 +4973,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-079",
@@ -4151,7 +5000,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-080",
@@ -4173,7 +5027,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-081",
@@ -4195,7 +5054,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-082",
@@ -4217,7 +5081,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-083",
@@ -4236,7 +5105,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-084",
@@ -4255,7 +5129,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-085",
@@ -4274,7 +5153,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-086",
@@ -4296,7 +5180,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-087",
@@ -4318,7 +5207,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-088",
@@ -4340,7 +5234,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-089",
@@ -4359,7 +5258,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-090",
@@ -4378,7 +5282,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-091",
@@ -4397,7 +5306,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-092",
@@ -4416,7 +5330,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-093",
@@ -4435,7 +5354,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-094",
@@ -4454,7 +5378,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-095",
@@ -4473,7 +5402,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-096",
@@ -4492,7 +5426,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-097",
@@ -4511,7 +5450,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-098",
@@ -4530,7 +5474,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-099",
@@ -4549,7 +5498,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-100",
@@ -4570,7 +5524,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-101",
@@ -4591,7 +5550,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-102",
@@ -4612,7 +5576,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-103",
@@ -4633,7 +5602,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-104",
@@ -4656,7 +5630,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-105",
@@ -4679,7 +5658,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-106",
@@ -4700,7 +5684,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-107",
@@ -4721,7 +5710,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-108",
@@ -4744,7 +5738,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-109",
@@ -4765,7 +5764,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-110",
@@ -4787,7 +5791,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-111",
@@ -4809,7 +5818,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-112",
@@ -4831,7 +5845,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-113",
@@ -4853,7 +5872,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-114",
@@ -4875,7 +5899,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-115",
@@ -4897,7 +5926,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-116",
@@ -4919,7 +5953,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-117",
@@ -4941,7 +5980,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-118",
@@ -4963,7 +6007,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-119",
@@ -4985,7 +6034,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-120",
@@ -5007,7 +6061,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-121",
@@ -5029,7 +6088,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-122",
@@ -5048,7 +6112,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-123",
@@ -5067,7 +6136,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-124",
@@ -5086,7 +6160,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-125",
@@ -5105,7 +6184,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-126",
@@ -5124,7 +6208,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-127",
@@ -5143,7 +6232,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-128",
@@ -5162,7 +6256,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-129",
@@ -5183,7 +6282,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-130",
@@ -5204,7 +6308,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-131",
@@ -5223,7 +6332,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-132",
@@ -5242,7 +6356,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-133",
@@ -5266,7 +6385,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-134",
@@ -5290,7 +6414,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-135",
@@ -5314,7 +6443,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-136",
@@ -5338,7 +6472,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-137",
@@ -5362,7 +6501,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-138",
@@ -5386,7 +6530,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-139",
@@ -5410,7 +6559,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-140",
@@ -5431,7 +6585,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-141",
@@ -5452,7 +6611,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-142",
@@ -5473,7 +6637,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-comp-143",
@@ -5499,7 +6668,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-comp-144",
@@ -5520,7 +6694,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "two_period"
     },
     {
       "id": "ch-quant-001",
@@ -5544,7 +6723,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-002",
@@ -5568,7 +6752,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-003",
@@ -5592,7 +6781,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-004",
@@ -5616,7 +6810,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-005",
@@ -5642,7 +6841,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-006",
@@ -5668,7 +6872,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-007",
@@ -5692,7 +6901,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "primary_forest"
     },
     {
       "id": "ch-quant-008",
@@ -5714,7 +6928,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "driver_share"
     },
     {
       "id": "ch-quant-009",
@@ -5738,7 +6957,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "deforestation_default"
     },
     {
       "id": "ch-quant-010",
@@ -5762,7 +6986,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "intact_forest"
     },
     {
       "id": "ch-quant-011",
@@ -5786,7 +7015,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "fires_split"
     },
     {
       "id": "ch-quant-012",
@@ -5810,7 +7044,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-013",
@@ -5834,7 +7073,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-014",
@@ -5858,7 +7102,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "primary_forest"
     },
     {
       "id": "ch-quant-015",
@@ -5884,7 +7133,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-016",
@@ -5910,7 +7164,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-017",
@@ -5936,7 +7195,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-018",
@@ -5962,7 +7226,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-019",
@@ -5988,7 +7257,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-020",
@@ -6014,7 +7288,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-021",
@@ -6040,7 +7319,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-022",
@@ -6066,7 +7350,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-023",
@@ -6090,7 +7379,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-024",
@@ -6114,7 +7408,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-025",
@@ -6138,7 +7437,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-026",
@@ -6162,7 +7466,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-027",
@@ -6186,7 +7495,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "emissions"
     },
     {
       "id": "ch-quant-028",
@@ -6210,7 +7524,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "emissions"
     },
     {
       "id": "ch-quant-029",
@@ -6234,7 +7553,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "emissions"
     },
     {
       "id": "ch-quant-030",
@@ -6258,7 +7582,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "emissions"
     },
     {
       "id": "ch-quant-031",
@@ -6282,7 +7611,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "primary_forest"
     },
     {
       "id": "ch-quant-032",
@@ -6306,7 +7640,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "primary_forest"
     },
     {
       "id": "ch-quant-033",
@@ -6328,7 +7667,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "emission_factor"
     },
     {
       "id": "ch-quant-034",
@@ -6350,7 +7694,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "emission_factor"
     },
     {
       "id": "ch-quant-035",
@@ -6372,7 +7721,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "emission_factor"
     },
     {
       "id": "ch-quant-036",
@@ -6394,7 +7748,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "crop_emissions"
     },
     {
       "id": "ch-quant-037",
@@ -6416,7 +7775,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "crop_emissions"
     },
     {
       "id": "ch-quant-038",
@@ -6438,7 +7802,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "crop_emissions"
     },
     {
       "id": "ch-quant-039",
@@ -6460,7 +7829,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "production"
     },
     {
       "id": "ch-quant-040",
@@ -6482,7 +7856,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "crop_emissions"
     },
     {
       "id": "ch-quant-041",
@@ -6504,7 +7883,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "emission_factor"
     },
     {
       "id": "ch-quant-042",
@@ -6526,7 +7910,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "production"
     },
     {
       "id": "ch-quant-043",
@@ -6548,7 +7937,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "crop_emissions"
     },
     {
       "id": "ch-quant-044",
@@ -6567,7 +7961,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_flux"
     },
     {
       "id": "ch-quant-045",
@@ -6586,7 +7985,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_flux"
     },
     {
       "id": "ch-quant-046",
@@ -6605,7 +8009,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_flux"
     },
     {
       "id": "ch-quant-047",
@@ -6624,7 +8033,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_sink_source"
     },
     {
       "id": "ch-quant-048",
@@ -6643,7 +8057,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_sink_source"
     },
     {
       "id": "ch-quant-049",
@@ -6662,7 +8081,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_sink_source"
     },
     {
       "id": "ch-quant-050",
@@ -6681,7 +8105,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_sink_source"
     },
     {
       "id": "ch-quant-051",
@@ -6702,7 +8131,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-052",
@@ -6723,7 +8157,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-053",
@@ -6744,7 +8183,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-054",
@@ -6763,7 +8207,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_flux"
     },
     {
       "id": "ch-quant-055",
@@ -6782,7 +8231,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ],
+      "subtype": "net_flux"
     },
     {
       "id": "ch-quant-056",
@@ -6801,7 +8255,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "class_area"
     },
     {
       "id": "ch-quant-057",
@@ -6820,7 +8279,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "class_area"
     },
     {
       "id": "ch-quant-058",
@@ -6839,7 +8303,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "class_area"
     },
     {
       "id": "ch-quant-059",
@@ -6858,7 +8327,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "class_area"
     },
     {
       "id": "ch-quant-060",
@@ -6877,7 +8351,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "class_area"
     },
     {
       "id": "ch-quant-061",
@@ -6896,7 +8375,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "agriculture_combined"
     },
     {
       "id": "ch-quant-062",
@@ -6915,7 +8399,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "agriculture_combined"
     },
     {
       "id": "ch-quant-063",
@@ -6934,7 +8423,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "agriculture_combined"
     },
     {
       "id": "ch-quant-064",
@@ -6953,7 +8447,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "change_area"
     },
     {
       "id": "ch-quant-065",
@@ -6972,7 +8471,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "change_area"
     },
     {
       "id": "ch-quant-066",
@@ -6991,7 +8495,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "change_area"
     },
     {
       "id": "ch-quant-067",
@@ -7010,7 +8519,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ],
+      "subtype": "change_area"
     },
     {
       "id": "ch-quant-068",
@@ -7032,7 +8546,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-069",
@@ -7054,7 +8573,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-070",
@@ -7076,7 +8600,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-071",
@@ -7098,7 +8627,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-072",
@@ -7120,7 +8654,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-073",
@@ -7142,7 +8681,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-074",
@@ -7164,7 +8708,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-075",
@@ -7186,7 +8735,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "gain_loss"
     },
     {
       "id": "ch-quant-076",
@@ -7208,7 +8762,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "gain_loss"
     },
     {
       "id": "ch-quant-077",
@@ -7230,7 +8789,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "gain_loss"
     },
     {
       "id": "ch-quant-078",
@@ -7252,7 +8816,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-079",
@@ -7274,7 +8843,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-080",
@@ -7296,7 +8870,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "disturbed_area"
     },
     {
       "id": "ch-quant-081",
@@ -7318,7 +8897,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "disturbed_area"
     },
     {
       "id": "ch-quant-082",
@@ -7340,7 +8924,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "disturbed_area"
     },
     {
       "id": "ch-quant-083",
@@ -7362,7 +8951,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "by_confidence"
     },
     {
       "id": "ch-quant-084",
@@ -7384,7 +8978,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "by_confidence"
     },
     {
       "id": "ch-quant-085",
@@ -7406,7 +9005,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "disturbed_area"
     },
     {
       "id": "ch-quant-086",
@@ -7428,7 +9032,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "by_confidence"
     },
     {
       "id": "ch-quant-087",
@@ -7450,7 +9059,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "disturbed_area"
     },
     {
       "id": "ch-quant-088",
@@ -7472,7 +9086,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "by_confidence"
     },
     {
       "id": "ch-quant-089",
@@ -7494,7 +9113,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "disturbed_area"
     },
     {
       "id": "ch-quant-090",
@@ -7516,7 +9140,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "disturbed_area"
     },
     {
       "id": "ch-quant-091",
@@ -7538,7 +9167,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "by_confidence"
     },
     {
       "id": "ch-quant-092",
@@ -7557,7 +9191,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_extent"
     },
     {
       "id": "ch-quant-093",
@@ -7576,7 +9215,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_extent"
     },
     {
       "id": "ch-quant-094",
@@ -7595,7 +9239,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_extent"
     },
     {
       "id": "ch-quant-095",
@@ -7614,7 +9263,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_extent"
     },
     {
       "id": "ch-quant-096",
@@ -7633,7 +9287,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "non_natural_extent"
     },
     {
       "id": "ch-quant-097",
@@ -7652,7 +9311,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "non_natural_extent"
     },
     {
       "id": "ch-quant-098",
@@ -7671,7 +9335,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_share"
     },
     {
       "id": "ch-quant-099",
@@ -7690,7 +9359,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_share"
     },
     {
       "id": "ch-quant-100",
@@ -7709,7 +9383,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_share"
     },
     {
       "id": "ch-quant-101",
@@ -7728,7 +9407,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_extent"
     },
     {
       "id": "ch-quant-102",
@@ -7747,7 +9431,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "natural_share"
     },
     {
       "id": "ch-quant-103",
@@ -7768,7 +9457,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "cover_area"
     },
     {
       "id": "ch-quant-104",
@@ -7789,7 +9483,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "cover_area"
     },
     {
       "id": "ch-quant-105",
@@ -7810,7 +9509,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "cover_area"
     },
     {
       "id": "ch-quant-106",
@@ -7831,7 +9535,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "cover_area"
     },
     {
       "id": "ch-quant-107",
@@ -7854,7 +9563,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-108",
@@ -7877,7 +9591,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-109",
@@ -7900,7 +9619,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-110",
@@ -7921,7 +9645,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "primary_forest_area"
     },
     {
       "id": "ch-quant-111",
@@ -7942,7 +9671,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "primary_forest_area"
     },
     {
       "id": "ch-quant-112",
@@ -7963,7 +9697,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "primary_forest_area"
     },
     {
       "id": "ch-quant-113",
@@ -7984,7 +9723,12 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "cover_area"
     },
     {
       "id": "ch-quant-114",
@@ -8007,7 +9751,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-115",
@@ -8029,7 +9778,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "gain_total"
     },
     {
       "id": "ch-quant-116",
@@ -8051,7 +9805,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "gain_total"
     },
     {
       "id": "ch-quant-117",
@@ -8073,7 +9832,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "gain_total"
     },
     {
       "id": "ch-quant-118",
@@ -8095,7 +9859,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "period_gain"
     },
     {
       "id": "ch-quant-119",
@@ -8117,7 +9886,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "period_gain"
     },
     {
       "id": "ch-quant-120",
@@ -8139,7 +9913,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "period_gain"
     },
     {
       "id": "ch-quant-121",
@@ -8161,7 +9940,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "gain_total"
     },
     {
       "id": "ch-quant-122",
@@ -8183,7 +9967,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "gain_total"
     },
     {
       "id": "ch-quant-123",
@@ -8205,7 +9994,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "period_gain"
     },
     {
       "id": "ch-quant-124",
@@ -8227,7 +10021,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "period_gain"
     },
     {
       "id": "ch-quant-125",
@@ -8249,7 +10048,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "gain_total"
     },
     {
       "id": "ch-quant-126",
@@ -8271,7 +10075,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ],
+      "subtype": "period_gain"
     },
     {
       "id": "ch-quant-127",
@@ -8290,7 +10099,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "dominant_driver"
     },
     {
       "id": "ch-quant-128",
@@ -8309,7 +10123,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "dominant_driver"
     },
     {
       "id": "ch-quant-129",
@@ -8328,7 +10147,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "dominant_driver"
     },
     {
       "id": "ch-quant-130",
@@ -8347,7 +10171,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "driver_share"
     },
     {
       "id": "ch-quant-131",
@@ -8366,7 +10195,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "driver_share"
     },
     {
       "id": "ch-quant-132",
@@ -8385,7 +10219,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "driver_grouping"
     },
     {
       "id": "ch-quant-133",
@@ -8404,7 +10243,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "driver_grouping"
     },
     {
       "id": "ch-quant-134",
@@ -8423,7 +10267,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "driver_grouping"
     },
     {
       "id": "ch-quant-135",
@@ -8444,7 +10293,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-136",
@@ -8465,7 +10319,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "dataset_parameter_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-137",
@@ -8484,7 +10343,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "dominant_driver"
     },
     {
       "id": "ch-quant-138",
@@ -8503,7 +10367,12 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ],
+      "subtype": "driver_share"
     },
     {
       "id": "ch-quant-139",
@@ -8527,7 +10396,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-140",
@@ -8551,7 +10425,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-141",
@@ -8575,7 +10454,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-142",
@@ -8599,7 +10483,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-143",
@@ -8623,7 +10512,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-quant-144",
@@ -8649,7 +10543,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-145",
@@ -8675,7 +10574,12 @@
         "dataset_id_match",
         "dataset_parameter_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "canopy_threshold"
     },
     {
       "id": "ch-quant-146",
@@ -8699,7 +10603,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "primary_forest"
     },
     {
       "id": "ch-quant-147",
@@ -8723,7 +10632,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "primary_forest"
     },
     {
       "id": "ch-quant-148",
@@ -8747,7 +10661,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "primary_forest"
     },
     {
       "id": "ch-quant-149",
@@ -8771,7 +10690,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "single_year"
     },
     {
       "id": "ch-quant-150",
@@ -8795,7 +10719,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "multi_year_total"
     },
     {
       "id": "ch-trend-001",
@@ -8819,7 +10748,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-002",
@@ -8843,7 +10777,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-003",
@@ -8867,7 +10806,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-004",
@@ -8891,7 +10835,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-005",
@@ -8915,7 +10864,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-006",
@@ -8939,7 +10893,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-007",
@@ -8963,7 +10922,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-008",
@@ -8987,7 +10951,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-009",
@@ -9011,7 +10980,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-010",
@@ -9035,7 +11009,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-011",
@@ -9059,7 +11038,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-012",
@@ -9083,7 +11067,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-013",
@@ -9107,7 +11096,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-014",
@@ -9131,7 +11125,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-015",
@@ -9155,7 +11154,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-016",
@@ -9179,7 +11183,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-017",
@@ -9203,7 +11212,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-018",
@@ -9227,7 +11241,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-019",
@@ -9251,7 +11270,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-020",
@@ -9275,7 +11299,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-021",
@@ -9299,7 +11328,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-022",
@@ -9323,7 +11357,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-023",
@@ -9347,7 +11386,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-024",
@@ -9371,7 +11415,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-025",
@@ -9395,7 +11444,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-026",
@@ -9419,7 +11473,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-027",
@@ -9443,7 +11502,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-028",
@@ -9467,7 +11531,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-029",
@@ -9489,7 +11558,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-030",
@@ -9511,7 +11585,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-031",
@@ -9533,7 +11612,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-032",
@@ -9555,7 +11639,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-033",
@@ -9577,7 +11666,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-034",
@@ -9599,7 +11693,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-035",
@@ -9621,7 +11720,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-036",
@@ -9643,7 +11747,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-037",
@@ -9665,7 +11774,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-038",
@@ -9687,7 +11801,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "9"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-039",
@@ -9709,7 +11828,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-040",
@@ -9731,7 +11855,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-041",
@@ -9753,7 +11882,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-042",
@@ -9775,7 +11909,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-043",
@@ -9797,7 +11936,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-044",
@@ -9819,7 +11963,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-045",
@@ -9841,7 +11990,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-046",
@@ -9863,7 +12017,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-047",
@@ -9885,7 +12044,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-048",
@@ -9907,7 +12071,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-049",
@@ -9929,7 +12098,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-050",
@@ -9951,7 +12125,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-051",
@@ -9973,7 +12152,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-052",
@@ -9995,7 +12179,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "monthly_trend"
     },
     {
       "id": "ch-trend-053",
@@ -10017,7 +12206,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-054",
@@ -10039,7 +12233,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "monthly_trend"
     },
     {
       "id": "ch-trend-055",
@@ -10061,7 +12260,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-056",
@@ -10083,7 +12287,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "monthly_trend"
     },
     {
       "id": "ch-trend-057",
@@ -10105,7 +12314,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-058",
@@ -10127,7 +12341,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "monthly_trend"
     },
     {
       "id": "ch-trend-059",
@@ -10149,7 +12368,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-060",
@@ -10171,7 +12395,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "monthly_trend"
     },
     {
       "id": "ch-trend-061",
@@ -10195,7 +12424,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-062",
@@ -10219,7 +12453,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-063",
@@ -10243,7 +12482,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-064",
@@ -10267,7 +12511,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-065",
@@ -10291,7 +12540,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-066",
@@ -10315,7 +12569,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-067",
@@ -10339,7 +12598,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-068",
@@ -10363,7 +12627,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "change_over_period"
     },
     {
       "id": "ch-trend-069",
@@ -10387,7 +12656,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "direction"
     },
     {
       "id": "ch-trend-070",
@@ -10411,7 +12685,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "peak_year"
     },
     {
       "id": "ch-trend-071",
@@ -10435,7 +12714,12 @@
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
-      ]
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ],
+      "subtype": "direction"
     }
   ]
 }
