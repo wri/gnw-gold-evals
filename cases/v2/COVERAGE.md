@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 29 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
+`caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-25_
 
@@ -23,7 +23,7 @@ _Last updated: 2026-09-25_
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
-| multiturn | 12 | 9 | not doing 3, ready 8, todo 1 |
+| multiturn | 12 | 8 | not doing 4, ready 8 |
 | nudge | 2 | 2 | ready 2 |
 | parent-child | 14 | 12 | done 11, not doing 2, ready 1 |
 | ranking | 1 | 1 | done 1 |
@@ -39,24 +39,24 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 100 | 0 | 100 | 94% |
-| analysis | 0 | 71 | 71 | 67% |
-| explanation | 26 | 60 | 86 | 81% |
-| output | 76 | 3 | 79 | 75% |
-| scope | 90 | 7 | 97 | 92% |
+| retrieval | 99 | 0 | 99 | 94% |
+| analysis | 0 | 70 | 70 | 67% |
+| explanation | 25 | 60 | 85 | 81% |
+| output | 75 | 3 | 78 | 74% |
+| scope | 89 | 7 | 96 | 91% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 90 | dataset_id_match |
-| scope | 89 | scope_match |
+| dataset_id | 89 | dataset_id_match |
+| scope | 88 | scope_match |
 | aoi_source | 83 | reference only (dashboard AOI source) |
 | dataset_name | 82 | reference only |
 | aoi_ids | 73 | aoi_id_match |
-| answer | 71 | agent_answer, charts_answer, chart_produced |
-| text | 26 | expected_text_match |
-| context_layer | 10 | context_layer_match |
+| answer | 70 | agent_answer, charts_answer, chart_produced |
+| text | 25 | expected_text_match |
+| context_layer | 9 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | class_values | 6 | class_value_match (info-only) |
 | nudge_options | 6 | nudge_match |
@@ -85,7 +85,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 43 | 31 | canopy_cover ×1 | primary_forest ×6, intact_forest ×4 |
+| 4 | Tree cover loss | 42 | 30 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
@@ -97,7 +97,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Multi-turn
 
-9 active conversations (18 turns). Delta assertions: absent ×1, changed ×8, retain ×8
+8 active conversations (16 turns). Delta assertions: absent ×1, changed ×8, retain ×7
 
 ## Parked and held cases
 
@@ -129,13 +129,13 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-127 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-128 | not doing | direct | 2026-09-24: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-129 | not doing | direct | 2026-09-24: not doing, same two counts as 1-128: LGMS is hidden on the default profile, and wri/project-zen... |
+| mt-007 | not doing | multiturn | 2026-09-23: parked (not doing). Two standing, reproduced issues without a clean fix: T1's primary-forest-vs... |
 | mt-010 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-011 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | mt-012 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
 | 1-062 | todo | comparative | 2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a... |
-| mt-007 | todo | multiturn | todo pending the 3-trial validation the probation note requires: no per-case info-only mechanism exists, so... |
 
 ## Known gaps
 
