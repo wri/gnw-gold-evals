@@ -1,0 +1,17 @@
+id: ch-map-194
+uid: 15237242ca0cebbc
+status: ready
+set: map
+group: unmappable
+query: Show sea level rise on the map
+expected:
+  dataset_id: no_selection
+  text: Says it has no sea level rise data to show on the map and does not present a land
+    or forest dataset as sea level rise
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: decline
+  lineage: climate gap
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

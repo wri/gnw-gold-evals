@@ -1,0 +1,14 @@
+id: ch-map-072
+uid: 0adfc5c6c57c9bf9
+status: ready
+set: map
+group: ghg-flux
+query: Show where forests absorb more carbon than they emit
+expected:
+  dataset_id: '6'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

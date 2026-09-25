@@ -1,0 +1,15 @@
+id: ch-map-127
+uid: 40e88e7de345f486
+status: ready
+set: map
+group: integrated-alerts
+query: GLAD alerts
+expected:
+  dataset_id: '11'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'jargon: component system'
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

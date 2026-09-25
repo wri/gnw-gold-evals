@@ -1,0 +1,17 @@
+id: ch-map-197
+uid: eb10fe0eddddc23a
+status: ready
+set: map
+group: unmappable
+query: Put precipitation anomalies on the map
+expected:
+  dataset_id: no_selection
+  text: Says it has no precipitation data to show on the map and does not present a land or
+    forest dataset as precipitation
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: climate jargon
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

@@ -1,0 +1,17 @@
+id: ch-map-200
+uid: a7848d5503da531c
+status: ready
+set: map
+group: unmappable
+query: soil moisture map
+expected:
+  dataset_id: no_selection
+  text: Says it has no soil moisture data to show on the map and does not present a land or
+    forest dataset as soil moisture
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: out of domain, short
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

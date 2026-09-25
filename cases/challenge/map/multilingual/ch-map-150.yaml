@@ -1,0 +1,15 @@
+id: ch-map-150
+uid: 65b20d1a43244c73
+status: ready
+set: map
+group: multilingual
+query: peta lahan alami vs non alami
+expected:
+  dataset_id: '3'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: lang=id
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

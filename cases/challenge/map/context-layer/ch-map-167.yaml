@@ -1,0 +1,17 @@
+id: ch-map-167
+uid: 517a2ee2b886c9cb
+status: ready
+set: map
+group: context-layer
+query: Where is the primary forest? Put it on the map
+expected:
+  dataset_id: 7;4
+  context_layer: primary_forest
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: extent ask; TCL with the primary layer also draws primary forest; catalog defect
+    as above
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

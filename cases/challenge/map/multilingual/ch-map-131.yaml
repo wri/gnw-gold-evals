@@ -1,0 +1,15 @@
+id: ch-map-131
+uid: 7ddcf611c5b86d7f
+status: ready
+set: map
+group: multilingual
+query: Muéstrame las alertas de deforestación en el mapa
+expected:
+  dataset_id: '11'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: lang=es
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

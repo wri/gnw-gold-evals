@@ -1,0 +1,16 @@
+id: ch-map-185
+uid: 49aa3c1db9083b41
+status: ready
+set: map
+group: ambiguous
+query: Show grass on the map
+expected:
+  nudge_type: dataset_choice
+  nudge_options: Global natural/semi-natural grassland extent;Global land cover
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: nudge
+  lineage: natural grassland vs cultivated grassland class (GOLD loose-grassland rule)
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

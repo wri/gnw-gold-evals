@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 291259f13da933e2` · 518 cases · ready 513 · todo 5 · **518 active** (everything but `not doing` runs by default)
+`caseset_version ec456e561b907b77` · 718 cases · ready 713 · todo 5 · **718 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-25_
 
@@ -15,26 +15,29 @@ _Last updated: 2026-09-25_
 |---|---|---|---|
 | acronyms | 13 | 13 | ready 13 |
 | ambiguity | 10 | 10 | ready 10 |
+| ambiguous | 15 | 15 | ready 15 |
 | concepts | 16 | 16 | ready 16 |
+| context-layer | 15 | 15 | ready 15 |
 | data-quality | 8 | 8 | ready 8 |
 | designations | 22 | 22 | ready 22 |
 | direct | 20 | 20 | ready 20 |
 | expansion | 10 | 10 | ready 6, todo 4 |
-| ghg-flux | 23 | 23 | ready 23 |
+| ghg-flux | 36 | 36 | ready 36 |
 | global | 6 | 6 | ready 6 |
-| grasslands | 35 | 35 | ready 35 |
-| integrated-alerts | 35 | 35 | ready 35 |
-| land-cover | 24 | 24 | ready 24 |
+| grasslands | 48 | 48 | ready 48 |
+| integrated-alerts | 48 | 48 | ready 48 |
+| land-cover | 37 | 37 | ready 37 |
 | multi | 10 | 10 | ready 10 |
-| multilingual | 15 | 15 | ready 15 |
-| natural-lands | 21 | 21 | ready 21 |
+| multilingual | 40 | 40 | ready 40 |
+| natural-lands | 34 | 34 | ready 34 |
 | sluc | 33 | 33 | ready 33 |
 | sources | 15 | 15 | ready 15 |
-| tc-gain | 24 | 24 | ready 24 |
-| tcl | 88 | 88 | ready 88 |
-| tcl-drivers | 24 | 24 | ready 24 |
-| tcl-fires | 36 | 36 | ready 36 |
-| tree-cover | 22 | 22 | ready 22 |
+| tc-gain | 37 | 37 | ready 37 |
+| tcl | 101 | 101 | ready 101 |
+| tcl-drivers | 37 | 37 | ready 37 |
+| tcl-fires | 49 | 49 | ready 49 |
+| tree-cover | 35 | 35 | ready 35 |
+| unmappable | 15 | 15 | ready 15 |
 | vague | 8 | 8 | ready 7, todo 1 |
 
 ## Bucket coverage (active cases)
@@ -46,27 +49,28 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 475 | 0 | 475 | 92% |
+| retrieval | 671 | 0 | 671 | 93% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 30 | 0 | 30 | 6% |
+| explanation | 45 | 0 | 45 | 6% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 26 | 0 | 26 | 5% |
+| scope | 226 | 0 | 226 | 31% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
+| dataset_id | 561 | dataset_id_match |
 | aoi_ids | 475 | aoi_id_match |
 | data_pull | 365 | data_pull_exists, answered_without_data |
-| dataset_id | 365 | dataset_id_match |
 | end_date | 226 | date_extraction (with start_date) |
 | start_date | 226 | date_extraction (with end_date) |
-| context_layer | 146 | context_layer_match |
-| dataset_parameters | 31 | dataset_parameter_match |
-| text | 30 | expected_text_match |
+| forbidden_tools | 200 | forbidden_tools_absent |
+| context_layer | 163 | context_layer_match |
+| text | 45 | expected_text_match |
+| dataset_parameters | 36 | dataset_parameter_match |
 | clarification | 18 | clarification_requested |
-| nudge_type | 8 | nudge_match |
-| nudge_options | 2 | nudge_match |
+| nudge_type | 12 | nudge_match |
+| nudge_options | 6 | nudge_match |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
 | aoi_source | 0 ← unused | reference only (dashboard AOI source) |
 | chart_type | 0 ← unused | chart_type_match |
@@ -74,7 +78,6 @@ friends) run on top of it whenever their trigger state exists.
 | dashboard_created | 0 ← unused | dashboard_created |
 | dashboard_widgets | 0 ← unused | dashboard_widgets_match, dashboard_widgets_valid |
 | dataset_name | 0 ← unused | reference only |
-| forbidden_tools | 0 ← unused | forbidden_tools_absent |
 | scope | 0 ← unused | scope_match |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
@@ -90,17 +93,17 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 1 | Global land cover | 24 | 0 | — | — |
-| 2 | Global natural/semi-natural grassland extent | 35 | 0 | — | — |
-| 3 | SBTN Natural Lands Map | 21 | 0 | — | — |
-| 4 | Tree cover loss | 88 | 0 | canopy_cover ×12 | primary_forest ×14, intact_forest ×1 |
-| 5 | Tree cover gain | 24 | 0 | — | — |
-| 6 | Forest greenhouse gas net flux | 23 | 0 | canopy_cover ×5 | — |
-| 7 | Tree cover | 22 | 0 | canopy_cover ×7 | primary_forest ×4 |
-| 8 | Tree cover loss by dominant driver | 24 | 0 | canopy_cover ×4 | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 33 | 0 | — | — |
-| 10 | Tree cover loss due to fires | 36 | 0 | canopy_cover ×3 | primary_forest ×4, intact_forest ×1 |
-| 11 | Integrated alerts | 35 | 0 | — | — |
+| 1 | Global land cover | 45 | 0 | — | — |
+| 2 | Global natural/semi-natural grassland extent | 51 | 0 | — | — |
+| 3 | SBTN Natural Lands Map | 42 | 0 | — | — |
+| 4 | Tree cover loss | 117 | 0 | canopy_cover ×14 | primary_forest ×20, intact_forest ×4 |
+| 5 | Tree cover gain | 39 | 0 | — | — |
+| 6 | Forest greenhouse gas net flux | 39 | 0 | canopy_cover ×5 | — |
+| 7 | Tree cover | 41 | 0 | canopy_cover ×9 | primary_forest ×6 |
+| 8 | Tree cover loss by dominant driver | 40 | 0 | canopy_cover ×4 | — |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 37 | 4 | — | — |
+| 10 | Tree cover loss due to fires | 57 | 0 | canopy_cover ×4 | primary_forest ×6, intact_forest ×3 |
+| 11 | Integrated alerts | 53 | 0 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
@@ -119,7 +122,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, forbidden_tools, scope, suggested_datasets —
+- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, scope, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission

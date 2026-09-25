@@ -1,0 +1,15 @@
+id: ch-map-178
+uid: 95982c354874a976
+status: ready
+set: map
+group: ambiguous
+query: Show plantations on the map
+expected:
+  dataset_id: '3'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: only SBTN separates non-natural tree cover; tree cover includes plantations undistinguished
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

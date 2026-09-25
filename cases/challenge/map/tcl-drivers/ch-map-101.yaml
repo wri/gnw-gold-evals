@@ -1,0 +1,15 @@
+id: ch-map-101
+uid: 3c27e5a1073de531
+status: ready
+set: map
+group: tcl-drivers
+query: deforestation drivers map
+expected:
+  dataset_id: '8'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: loose 'deforestation' plus driver
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

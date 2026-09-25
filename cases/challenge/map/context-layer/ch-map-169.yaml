@@ -1,0 +1,16 @@
+id: ch-map-169
+uid: a8f3c79d414992a0
+status: ready
+set: map
+group: context-layer
+query: Map tree cover loss from fires across all tree cover, not just primary forest
+expected:
+  dataset_id: '10'
+  context_layer: no_selection
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: explicit opt-out
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

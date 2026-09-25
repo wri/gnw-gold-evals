@@ -1,0 +1,17 @@
+id: ch-map-189
+uid: be9ff6ed49394bb0
+status: ready
+set: map
+group: unmappable
+query: sLUC EFs map
+expected:
+  dataset_id: 9;no_selection
+  text: Says the crop deforestation emission factors cannot be shown as a map layer (they
+    are tabular data) and does not show a different dataset in their place
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: 'sLUC: jargon'
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

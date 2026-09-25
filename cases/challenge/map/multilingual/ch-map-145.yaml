@@ -1,0 +1,15 @@
+id: ch-map-145
+uid: d4082e1e1644c78c
+status: ready
+set: map
+group: multilingual
+query: prairies naturelles sur la carte stp
+expected:
+  dataset_id: '2'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: lang=fr
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

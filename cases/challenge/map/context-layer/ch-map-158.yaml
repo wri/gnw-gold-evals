@@ -1,0 +1,16 @@
+id: ch-map-158
+uid: a884e7e24a1ffc5b
+status: ready
+set: map
+group: context-layer
+query: old-growth rainforest loss on the map
+expected:
+  dataset_id: '4'
+  context_layer: primary_forest
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: old-growth as a synonym for primary
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

@@ -1,0 +1,14 @@
+id: ch-map-003
+uid: deaebd48a5fdcc5f
+status: ready
+set: map
+group: land-cover
+query: Show me a map of land cover classes
+expected:
+  dataset_id: '1'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: easy
+  behaviour: select
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

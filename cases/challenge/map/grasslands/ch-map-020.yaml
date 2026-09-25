@@ -1,0 +1,14 @@
+id: ch-map-020
+uid: 6558685c1c8c44bd
+status: ready
+set: map
+group: grasslands
+query: Show the extent of semi-natural grasslands
+expected:
+  dataset_id: '2'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

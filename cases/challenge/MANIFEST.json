@@ -1,7 +1,7 @@
 {
-  "caseset_version": "291259f13da933e2",
-  "case_count": 518,
-  "source": "challenge-aoi-v1.csv",
+  "caseset_version": "ec456e561b907b77",
+  "case_count": 718,
+  "source": "challenge-map-v1.csv",
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -2080,6 +2080,1406 @@
       "uid": "ac8da816fb8dd16f",
       "set": "comparison",
       "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-001",
+      "uid": "78e70c496c50d128",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-002",
+      "uid": "22024ed25351e48c",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-003",
+      "uid": "deaebd48a5fdcc5f",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-004",
+      "uid": "63b3fc31be8334f1",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-005",
+      "uid": "612af86f7119c4e8",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-006",
+      "uid": "1dc258343dcdb12b",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-007",
+      "uid": "bd44088f54eb5307",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-008",
+      "uid": "b450965b5e240cf8",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-009",
+      "uid": "31fc31e11e543980",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-010",
+      "uid": "05e6c7707de6058e",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-011",
+      "uid": "2f6d65a133197867",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-012",
+      "uid": "d4262223eac4afcb",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-013",
+      "uid": "deed8be25f0b8974",
+      "set": "map",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-014",
+      "uid": "8b53968f7cd2d1ad",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-015",
+      "uid": "9056338a03c77de6",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-016",
+      "uid": "9ee3f90a41995964",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-017",
+      "uid": "2e31da16f9331bd9",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-018",
+      "uid": "bb6f6ebdc454d7ca",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-019",
+      "uid": "2ccf3e8d13a83b57",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-020",
+      "uid": "6558685c1c8c44bd",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-021",
+      "uid": "ab9fa2e6c8e3f7e1",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-022",
+      "uid": "97e96c79add177bb",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-023",
+      "uid": "020e3e7e4db1024d",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-024",
+      "uid": "109c9daa569e2b95",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-025",
+      "uid": "e4635ea1bc37a5c7",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-026",
+      "uid": "0e685f7e7869e64e",
+      "set": "map",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-027",
+      "uid": "16080cd0455a7c41",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-028",
+      "uid": "1013d439ad166bc0",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-029",
+      "uid": "f29ed48aa4bb6ce8",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-030",
+      "uid": "e40fa7117e5a5ca2",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-031",
+      "uid": "6bc56bf1c140ac45",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-032",
+      "uid": "4ec0b38c989e6eb4",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-033",
+      "uid": "92784a54592f6f8c",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-034",
+      "uid": "6d789a52150fdb31",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-035",
+      "uid": "de0aa0f2890409ba",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-036",
+      "uid": "89aa6c215429a18b",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-037",
+      "uid": "4efc7fab5683ef4d",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-038",
+      "uid": "90ac66e585bf1277",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-039",
+      "uid": "1ddbac94919ff069",
+      "set": "map",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-040",
+      "uid": "6e046bef6b60b735",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-041",
+      "uid": "e2dd15c4abdeb9d8",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-042",
+      "uid": "93bb2e6f7624977b",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-043",
+      "uid": "efd8014e678c3168",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-044",
+      "uid": "2ad1c71e918c92e7",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-045",
+      "uid": "c852acd082f785ed",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-046",
+      "uid": "83dc1d86fd00da0d",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-047",
+      "uid": "1f8fc90b0f194897",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-048",
+      "uid": "2e35fafb28fafeea",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-049",
+      "uid": "f812970af3846411",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-050",
+      "uid": "b0492dca22064996",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-051",
+      "uid": "325dcf8e189d3145",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-052",
+      "uid": "b84285bbff09467a",
+      "set": "map",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-053",
+      "uid": "40cce17daf613884",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-054",
+      "uid": "4e5b994387b290c1",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-055",
+      "uid": "bf65ccab4ef46f9d",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-056",
+      "uid": "1ba7980dae3dfa95",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-057",
+      "uid": "eb7881104ce2c098",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-058",
+      "uid": "11b755353cadaef5",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-059",
+      "uid": "355ed9d0648a68b9",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-060",
+      "uid": "8c6616c5466dea76",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-061",
+      "uid": "a0b87214bc9c5232",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-062",
+      "uid": "74529d77dc712002",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-063",
+      "uid": "45058e952b43dbb3",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-064",
+      "uid": "4dce851922f4de6c",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-065",
+      "uid": "fd1aa48fbaf59e96",
+      "set": "map",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-066",
+      "uid": "e0c5461779da2bcf",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-067",
+      "uid": "9a658ecb39a41563",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-068",
+      "uid": "19c202b88fd1d825",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-069",
+      "uid": "686fc56fa188f503",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-070",
+      "uid": "41bf1eb67f7985f5",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-071",
+      "uid": "c54f28084850c9d8",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-072",
+      "uid": "0adfc5c6c57c9bf9",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-073",
+      "uid": "775a61d9676af5b0",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-074",
+      "uid": "32ec2af7357336e6",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-075",
+      "uid": "62ac89354cecb68e",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-076",
+      "uid": "9d80bc56593f3b14",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-077",
+      "uid": "db7bbc07b6955259",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-078",
+      "uid": "01f5a32ce3578104",
+      "set": "map",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-079",
+      "uid": "c4852628cb35a2f9",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-080",
+      "uid": "0c9132d907792454",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-081",
+      "uid": "d09f00c0cf95a709",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-082",
+      "uid": "7d64b80e97f93b45",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-083",
+      "uid": "a447177335aee782",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-084",
+      "uid": "2c36e7c88e04f185",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-085",
+      "uid": "08b13798bff465e8",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-086",
+      "uid": "fd957629aa1c853c",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-087",
+      "uid": "e8e1365ba71f814b",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-088",
+      "uid": "746555f45e86cd0c",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-089",
+      "uid": "38b28aeb22690a9f",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-090",
+      "uid": "34a55c4327ebc414",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-091",
+      "uid": "afb6ae0127a8e932",
+      "set": "map",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-092",
+      "uid": "e0668cc4c7d1cfe3",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-093",
+      "uid": "885a6054bd9ccb9a",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-094",
+      "uid": "d04d0f9a009669b6",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-095",
+      "uid": "8a464b6908ef9441",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-096",
+      "uid": "1fc88f85d0524e85",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-097",
+      "uid": "390fa820dd2d688b",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-098",
+      "uid": "44b11609ad31db67",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-099",
+      "uid": "6db60d7194d11cad",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-100",
+      "uid": "06e5ef4761cde479",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-101",
+      "uid": "3c27e5a1073de531",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-102",
+      "uid": "fd1ed7370c2e6f2d",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-103",
+      "uid": "a2a5a9e359a0684d",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-104",
+      "uid": "decf9f87c5b0acff",
+      "set": "map",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-105",
+      "uid": "cded0990b90a51e0",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-106",
+      "uid": "c3c8af91a6d81ba1",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-107",
+      "uid": "d0e6102e843c9a71",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-108",
+      "uid": "b32f741cd1e7fc27",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-109",
+      "uid": "f5f474b2bd3b2c1e",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-110",
+      "uid": "f22869ddbc798b80",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-111",
+      "uid": "5b77a9d0361e8ee0",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-112",
+      "uid": "b18b76e93117c9b7",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-113",
+      "uid": "33e6fbb5bd9c51dd",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-114",
+      "uid": "953a507cdefdfcc0",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-115",
+      "uid": "5d0a016fe476021f",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-116",
+      "uid": "f2edf5694ac95590",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-117",
+      "uid": "533078a5138b0347",
+      "set": "map",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-118",
+      "uid": "646a5afa49c3b552",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-119",
+      "uid": "68dea6b58b541290",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-120",
+      "uid": "7cb2c2cba9f897e7",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-121",
+      "uid": "d7c27025124fc2ac",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-122",
+      "uid": "708fad3dc30f9031",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-123",
+      "uid": "94e8687a5c15b9fe",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-124",
+      "uid": "1521f2aeb8100918",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-125",
+      "uid": "392f17ec0897b04b",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-126",
+      "uid": "33c27b419963c43e",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-127",
+      "uid": "40e88e7de345f486",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-128",
+      "uid": "43b6c3abf78e49fe",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-129",
+      "uid": "6ed435926640cded",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-130",
+      "uid": "d4d6261f2e8c34b5",
+      "set": "map",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-131",
+      "uid": "7ddcf611c5b86d7f",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-132",
+      "uid": "9b44165b644f7ffa",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-133",
+      "uid": "3069218e1854575a",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-134",
+      "uid": "758d8529faadf842",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-135",
+      "uid": "ce8cd46e15c2f5ce",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-136",
+      "uid": "4cae070ff5dd1c1b",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-137",
+      "uid": "f016dcf56eb05fa7",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-138",
+      "uid": "391104391425abe0",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-139",
+      "uid": "23d60dda35720007",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-140",
+      "uid": "e04ca1ad03dc7847",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-141",
+      "uid": "d96873761416639a",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-142",
+      "uid": "4c27538e6360bcdb",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-143",
+      "uid": "c1da865baa87cf7d",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-144",
+      "uid": "24063fcbca8ed653",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-145",
+      "uid": "d4082e1e1644c78c",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-146",
+      "uid": "51be7378d5b90a34",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-147",
+      "uid": "8115c55693ac0853",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-148",
+      "uid": "c4fdb25c8f1cabc7",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-149",
+      "uid": "0335dcd5076f586e",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-150",
+      "uid": "65b20d1a43244c73",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-151",
+      "uid": "ec5ea50bd282591d",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-152",
+      "uid": "d977fd1eb9550407",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-153",
+      "uid": "59158aab509da29b",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-154",
+      "uid": "d75ba7570b06f7c0",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-155",
+      "uid": "a26f3ce9101d5e12",
+      "set": "map",
+      "group": "multilingual",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-156",
+      "uid": "14080f7ce9cc8ecb",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-157",
+      "uid": "9deef0ebc1339d2f",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-158",
+      "uid": "a884e7e24a1ffc5b",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-159",
+      "uid": "aa568c3ccfc9cd19",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-160",
+      "uid": "9fcac446a418b29a",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-161",
+      "uid": "d8d17fd8b7476861",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-162",
+      "uid": "57ec3cfc2dd60e6a",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-163",
+      "uid": "58253ef2f3d52901",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-164",
+      "uid": "303fa0d54aad78ba",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-165",
+      "uid": "687fe3bb6a575fe3",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-166",
+      "uid": "fcfeffbd00442b74",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-167",
+      "uid": "517a2ee2b886c9cb",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-168",
+      "uid": "9e951add70b3f039",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-169",
+      "uid": "a8f3c79d414992a0",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-170",
+      "uid": "fc9b6f26e80be41b",
+      "set": "map",
+      "group": "context-layer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-171",
+      "uid": "20dd3c1bc50b2e60",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-172",
+      "uid": "e0aa669e96e3ad37",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-173",
+      "uid": "380db312b60204e2",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-174",
+      "uid": "2d148c57c5c3662c",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-175",
+      "uid": "33b1e4f2d1243072",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-176",
+      "uid": "62f812bf69f482f4",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-177",
+      "uid": "3b075d0d0cd56c83",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-178",
+      "uid": "95982c354874a976",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-179",
+      "uid": "32593d06f12a9997",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-180",
+      "uid": "43fac63f0218a561",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-181",
+      "uid": "e0a0b5fe07a24a3c",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-182",
+      "uid": "cfcb6faf57621807",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-183",
+      "uid": "0b2d33dbcabfafb7",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-184",
+      "uid": "0c66dc1278817174",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-185",
+      "uid": "49aa3c1db9083b41",
+      "set": "map",
+      "group": "ambiguous",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-186",
+      "uid": "9865744ed3601d04",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-187",
+      "uid": "ac7132fef9b02d12",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-188",
+      "uid": "5185c3d25a42e413",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-189",
+      "uid": "be9ff6ed49394bb0",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-190",
+      "uid": "9cac4c9454449c9d",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-191",
+      "uid": "859d54ee3e8cd7f3",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-192",
+      "uid": "5180f393221945c5",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-193",
+      "uid": "7d43501a259d13ba",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-194",
+      "uid": "15237242ca0cebbc",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-195",
+      "uid": "34f658b2136818ab",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-196",
+      "uid": "4935057e89108c35",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-197",
+      "uid": "eb10fe0eddddc23a",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-198",
+      "uid": "45d960986ff92eb3",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-199",
+      "uid": "31e070f8ae18ff29",
+      "set": "map",
+      "group": "unmappable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-map-200",
+      "uid": "a7848d5503da531c",
+      "set": "map",
+      "group": "unmappable",
       "status": "ready"
     },
     {

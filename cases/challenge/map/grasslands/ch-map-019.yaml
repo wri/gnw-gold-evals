@@ -1,0 +1,14 @@
+id: ch-map-019
+uid: 2ccf3e8d13a83b57
+status: ready
+set: map
+group: grasslands
+query: Show where natural grassland has been gained or lost
+expected:
+  dataset_id: '2'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

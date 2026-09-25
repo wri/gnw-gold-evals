@@ -1,0 +1,14 @@
+id: ch-map-105
+uid: cded0990b90a51e0
+status: ready
+set: map
+group: tcl-fires
+query: Show tree cover loss due to fires on the map
+expected:
+  dataset_id: '10'
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: easy
+  behaviour: select
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

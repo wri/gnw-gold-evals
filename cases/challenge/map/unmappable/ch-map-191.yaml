@@ -1,0 +1,17 @@
+id: ch-map-191
+uid: 859d54ee3e8cd7f3
+status: ready
+set: map
+group: unmappable
+query: Show me a temperature map
+expected:
+  dataset_id: no_selection
+  text: Says it has no temperature data to show on the map and does not present a land or
+    forest dataset as temperature
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: easy
+  behaviour: decline
+  lineage: climate gap
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

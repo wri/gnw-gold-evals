@@ -1,0 +1,17 @@
+id: ch-map-198
+uid: 45d960986ff92eb3
+status: ready
+set: map
+group: unmappable
+query: Show jaguar range on the map
+expected:
+  dataset_id: no_selection
+  text: Says it has no species range data to show on the map and does not present a land or
+    forest dataset as species range
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: decline
+  lineage: biodiversity gap
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

@@ -1,0 +1,15 @@
+id: ch-map-176
+uid: 62f812bf69f482f4
+status: ready
+set: map
+group: ambiguous
+query: Show wetlands on the map
+expected:
+  dataset_id: 1;3
+  forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: land cover wetland class or SBTN wetland natural forest
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1
