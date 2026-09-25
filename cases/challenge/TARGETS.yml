@@ -33,3 +33,9 @@ sets:
     targets: {}
   comparison:
     targets: {}
+  # map (added 2026-09-25): "show X on the map" prompts that should run
+  # pick_dataset alone; built for the jev dataset-picker comparison.
+  # Provisional overall only; cohort targets from the first canonical baseline.
+  map:
+    overall: 0.80
+    targets: {}

@@ -602,6 +602,10 @@
       "comparison": {
         "overall": null,
         "targets": {}
+      },
+      "map": {
+        "overall": 0.8,
+        "targets": {}
       }
     },
     "overall": 0.7,

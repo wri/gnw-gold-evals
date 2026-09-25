@@ -23,7 +23,8 @@ set. The short version:
   `aoi` (cohorts = prompt classes) and the numeric intents
   `quantification`/`trend`/`comparison` (cohorts = datasets; ported from
   gnw-evals eval-metrics-slice-1, authored via `generation/` — see
-  `generation/README.md`). Run one set with `gold run --set <name>`. Like
+  `generation/README.md`), and `map` (show-on-the-map prompts that should
+  run `pick_dataset` alone; hand-authored in `seeds/challenge-map-v1.csv`). Run one set with `gold run --set <name>`. Like
   `group`, `set` is never hashed into the uid.
 - Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
   never regression counts. Many cases are *expected to fail*: do not triage
