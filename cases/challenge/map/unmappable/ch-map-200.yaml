@@ -1,13 +1,14 @@
 id: ch-map-200
-uid: a7848d5503da531c
+uid: 4ce73c4ea5ad4e3d
 status: ready
 set: map
 group: unmappable
 query: soil moisture map
 expected:
   dataset_id: no_selection
-  text: Says it has no soil moisture data to show on the map and does not present a land or
-    forest dataset as soil moisture
+  text: Explains that no soil moisture data is available to show on the map. Mentioning related
+    datasets is fine; presenting a land or forest dataset as if it showed soil moisture is
+    not
   forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: hard

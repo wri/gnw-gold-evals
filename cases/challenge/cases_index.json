@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "ec456e561b907b77",
+  "caseset_version": "77d0f5a7eb012494",
   "case_count": 718,
   "cases": [
     {
@@ -8902,7 +8902,7 @@
     },
     {
       "id": "ch-map-186",
-      "uid": "9865744ed3601d04",
+      "uid": "39673329cc1e06f1",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -8922,7 +8922,7 @@
     },
     {
       "id": "ch-map-187",
-      "uid": "ac7132fef9b02d12",
+      "uid": "2d10bda9f8b0e3ef",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -8942,7 +8942,7 @@
     },
     {
       "id": "ch-map-188",
-      "uid": "5185c3d25a42e413",
+      "uid": "f331b3402f7fa8f9",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -8962,7 +8962,7 @@
     },
     {
       "id": "ch-map-189",
-      "uid": "be9ff6ed49394bb0",
+      "uid": "ccb83f15994c8a9c",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -8982,7 +8982,7 @@
     },
     {
       "id": "ch-map-190",
-      "uid": "9cac4c9454449c9d",
+      "uid": "8365bd76469a1322",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9002,7 +9002,7 @@
     },
     {
       "id": "ch-map-191",
-      "uid": "859d54ee3e8cd7f3",
+      "uid": "ccca09fe3d2b3ecd",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9022,7 +9022,7 @@
     },
     {
       "id": "ch-map-192",
-      "uid": "5180f393221945c5",
+      "uid": "915b241867f59ec7",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9042,7 +9042,7 @@
     },
     {
       "id": "ch-map-193",
-      "uid": "7d43501a259d13ba",
+      "uid": "349318a59dfdef30",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9062,7 +9062,7 @@
     },
     {
       "id": "ch-map-194",
-      "uid": "15237242ca0cebbc",
+      "uid": "84dbf1577e8c4992",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9082,7 +9082,7 @@
     },
     {
       "id": "ch-map-195",
-      "uid": "34f658b2136818ab",
+      "uid": "cf700bc14553ba3e",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9102,7 +9102,7 @@
     },
     {
       "id": "ch-map-196",
-      "uid": "4935057e89108c35",
+      "uid": "33649c053f73fa9f",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9122,7 +9122,7 @@
     },
     {
       "id": "ch-map-197",
-      "uid": "eb10fe0eddddc23a",
+      "uid": "4c60d98406388712",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9142,7 +9142,7 @@
     },
     {
       "id": "ch-map-198",
-      "uid": "45d960986ff92eb3",
+      "uid": "6a2b99c03b7851a1",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9162,7 +9162,7 @@
     },
     {
       "id": "ch-map-199",
-      "uid": "31e070f8ae18ff29",
+      "uid": "821f50b0accf9529",
       "set": "map",
       "group": "unmappable",
       "status": "ready",
@@ -9182,7 +9182,7 @@
     },
     {
       "id": "ch-map-200",
-      "uid": "a7848d5503da531c",
+      "uid": "4ce73c4ea5ad4e3d",
       "set": "map",
       "group": "unmappable",
       "status": "ready",

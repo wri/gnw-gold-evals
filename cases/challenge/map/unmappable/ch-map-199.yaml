@@ -1,13 +1,14 @@
 id: ch-map-199
-uid: 31e070f8ae18ff29
+uid: 821f50b0accf9529
 status: ready
 set: map
 group: unmappable
 query: Show population density on the map
 expected:
   dataset_id: no_selection
-  text: Says it has no population density data to show on the map and does not present a land
-    or forest dataset as population density
+  text: Explains that no population density data is available to show on the map. Mentioning
+    related datasets is fine; presenting a land or forest dataset as if it showed population
+    density is not
   forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium

@@ -1,13 +1,13 @@
 id: ch-map-196
-uid: 4935057e89108c35
+uid: 33649c053f73fa9f
 status: ready
 set: map
 group: unmappable
 query: Show wind speeds on the map
 expected:
   dataset_id: no_selection
-  text: Says it has no wind speed data to show on the map and does not present a land or forest
-    dataset as wind speed
+  text: Explains that no wind speed data is available to show on the map. Mentioning related
+    datasets is fine; presenting a land or forest dataset as if it showed wind speed is not
   forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium

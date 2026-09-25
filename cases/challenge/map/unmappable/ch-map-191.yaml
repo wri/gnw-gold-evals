@@ -1,13 +1,13 @@
 id: ch-map-191
-uid: 859d54ee3e8cd7f3
+uid: ccca09fe3d2b3ecd
 status: ready
 set: map
 group: unmappable
 query: Show me a temperature map
 expected:
   dataset_id: no_selection
-  text: Says it has no temperature data to show on the map and does not present a land or
-    forest dataset as temperature
+  text: Explains that no temperature data is available to show on the map. Mentioning related
+    datasets is fine; presenting a land or forest dataset as if it showed temperature is not
   forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy

@@ -1,13 +1,13 @@
 id: ch-map-190
-uid: 9cac4c9454449c9d
+uid: 8365bd76469a1322
 status: ready
 set: map
 group: unmappable
 query: Show rainfall on the map
 expected:
   dataset_id: no_selection
-  text: Says it has no rainfall data to show on the map and does not present a land or forest
-    dataset as rainfall
+  text: Explains that no rainfall data is available to show on the map. Mentioning related
+    datasets is fine; presenting a land or forest dataset as if it showed rainfall is not
   forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: easy

@@ -1,13 +1,14 @@
 id: ch-map-188
-uid: 5185c3d25a42e413
+uid: f331b3402f7fa8f9
 status: ready
 set: map
 group: unmappable
 query: Put the deforestation emissions per tonne of beef on the map
 expected:
   dataset_id: 9;no_selection
-  text: Says the crop deforestation emission factors cannot be shown as a map layer (they
-    are tabular data) and does not show a different dataset in their place
+  text: Explains that the crop deforestation emission factors are tabular data that cannot
+    be displayed as a map layer. Offering a chart or table of the same data is fine; presenting
+    a different dataset as if it showed these emission factors is not
   forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium

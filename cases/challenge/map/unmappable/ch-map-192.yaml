@@ -1,13 +1,13 @@
 id: ch-map-192
-uid: 5180f393221945c5
+uid: 915b241867f59ec7
 status: ready
 set: map
 group: unmappable
 query: Map drought conditions
 expected:
   dataset_id: no_selection
-  text: Says it has no drought data to show on the map and does not present a land or forest
-    dataset as drought
+  text: Explains that no drought data is available to show on the map. Mentioning related
+    datasets is fine; presenting a land or forest dataset as if it showed drought is not
   forbidden_tools: pick_aoi;pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
 notes:
   difficulty: medium
