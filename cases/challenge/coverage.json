@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "291259f13da933e2",
-  "case_count": 518,
+  "caseset_version": "72fafbb2ec30afd2",
+  "case_count": 718,
   "statuses": {
-    "ready": 513,
+    "ready": 713,
     "todo": 5
   },
-  "active_count": 518,
+  "active_count": 718,
   "groups": [
     {
       "group": "acronyms",
@@ -26,11 +26,27 @@
       }
     },
     {
+      "group": "ambiguous",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
+      }
+    },
+    {
       "group": "concepts",
       "cases": 16,
       "active": 16,
       "statuses": {
         "ready": 16
+      }
+    },
+    {
+      "group": "context-layer",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
       }
     },
     {
@@ -68,10 +84,10 @@
     },
     {
       "group": "ghg-flux",
-      "cases": 23,
-      "active": 23,
+      "cases": 36,
+      "active": 36,
       "statuses": {
-        "ready": 23
+        "ready": 36
       }
     },
     {
@@ -84,26 +100,26 @@
     },
     {
       "group": "grasslands",
-      "cases": 35,
-      "active": 35,
+      "cases": 48,
+      "active": 48,
       "statuses": {
-        "ready": 35
+        "ready": 48
       }
     },
     {
       "group": "integrated-alerts",
-      "cases": 35,
-      "active": 35,
+      "cases": 48,
+      "active": 48,
       "statuses": {
-        "ready": 35
+        "ready": 48
       }
     },
     {
       "group": "land-cover",
-      "cases": 24,
-      "active": 24,
+      "cases": 37,
+      "active": 37,
       "statuses": {
-        "ready": 24
+        "ready": 37
       }
     },
     {
@@ -116,18 +132,18 @@
     },
     {
       "group": "multilingual",
-      "cases": 15,
-      "active": 15,
+      "cases": 40,
+      "active": 40,
       "statuses": {
-        "ready": 15
+        "ready": 40
       }
     },
     {
       "group": "natural-lands",
-      "cases": 21,
-      "active": 21,
+      "cases": 34,
+      "active": 34,
       "statuses": {
-        "ready": 21
+        "ready": 34
       }
     },
     {
@@ -148,42 +164,50 @@
     },
     {
       "group": "tc-gain",
-      "cases": 24,
-      "active": 24,
+      "cases": 37,
+      "active": 37,
       "statuses": {
-        "ready": 24
+        "ready": 37
       }
     },
     {
       "group": "tcl",
-      "cases": 88,
-      "active": 88,
+      "cases": 101,
+      "active": 101,
       "statuses": {
-        "ready": 88
+        "ready": 101
       }
     },
     {
       "group": "tcl-drivers",
-      "cases": 24,
-      "active": 24,
+      "cases": 37,
+      "active": 37,
       "statuses": {
-        "ready": 24
+        "ready": 37
       }
     },
     {
       "group": "tcl-fires",
-      "cases": 36,
-      "active": 36,
+      "cases": 49,
+      "active": 49,
       "statuses": {
-        "ready": 36
+        "ready": 49
       }
     },
     {
       "group": "tree-cover",
-      "cases": 22,
-      "active": 22,
+      "cases": 35,
+      "active": 35,
       "statuses": {
-        "ready": 22
+        "ready": 35
+      }
+    },
+    {
+      "group": "unmappable",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
       }
     },
     {
@@ -198,7 +222,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 475,
+      "dedicated": 671,
       "shared_only": 0
     },
     "analysis": {
@@ -206,7 +230,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 30,
+      "dedicated": 45,
       "shared_only": 0
     },
     "output": {
@@ -214,11 +238,16 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 26,
+      "dedicated": 226,
       "shared_only": 0
     }
   },
   "expected_fields": [
+    {
+      "field": "dataset_id",
+      "cases": 561,
+      "switches_on": "dataset_id_match"
+    },
     {
       "field": "aoi_ids",
       "cases": 475,
@@ -228,11 +257,6 @@
       "field": "data_pull",
       "cases": 365,
       "switches_on": "data_pull_exists, answered_without_data"
-    },
-    {
-      "field": "dataset_id",
-      "cases": 365,
-      "switches_on": "dataset_id_match"
     },
     {
       "field": "end_date",
@@ -245,19 +269,24 @@
       "switches_on": "date_extraction (with end_date)"
     },
     {
+      "field": "forbidden_tools",
+      "cases": 200,
+      "switches_on": "forbidden_tools_absent"
+    },
+    {
       "field": "context_layer",
-      "cases": 146,
+      "cases": 163,
       "switches_on": "context_layer_match"
     },
     {
-      "field": "dataset_parameters",
-      "cases": 31,
-      "switches_on": "dataset_parameter_match"
+      "field": "text",
+      "cases": 45,
+      "switches_on": "expected_text_match"
     },
     {
-      "field": "text",
-      "cases": 30,
-      "switches_on": "expected_text_match"
+      "field": "dataset_parameters",
+      "cases": 36,
+      "switches_on": "dataset_parameter_match"
     },
     {
       "field": "clarification",
@@ -266,12 +295,12 @@
     },
     {
       "field": "nudge_type",
-      "cases": 8,
+      "cases": 12,
       "switches_on": "nudge_match"
     },
     {
       "field": "nudge_options",
-      "cases": 2,
+      "cases": 6,
       "switches_on": "nudge_match"
     },
     {
@@ -325,16 +354,16 @@
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",
       "ref": "origin/main",
-      "sha": "31a4d1e87f9c0c3f2541ae8f06d5f81b499e32e3",
+      "sha": "e2fb83f89469eda483830257f9b40c7ef21a6ebd",
       "path": "src/agent/datasets/catalog",
-      "synced": "2026-09-01"
+      "synced": "2026-09-25"
     },
     "datasets": [
       {
         "dataset_id": "1",
         "dataset_name": "Global land cover",
         "missing_instructions": [],
-        "cases": 24,
+        "cases": 45,
         "answer_graded": 0,
         "parameters": [],
         "context_layers": []
@@ -343,7 +372,7 @@
         "dataset_id": "2",
         "dataset_name": "Global natural/semi-natural grassland extent",
         "missing_instructions": [],
-        "cases": 35,
+        "cases": 51,
         "answer_graded": 0,
         "parameters": [],
         "context_layers": []
@@ -352,7 +381,7 @@
         "dataset_id": "3",
         "dataset_name": "SBTN Natural Lands Map",
         "missing_instructions": [],
-        "cases": 21,
+        "cases": 42,
         "answer_graded": 0,
         "parameters": [],
         "context_layers": []
@@ -361,22 +390,22 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 88,
+        "cases": 117,
         "answer_graded": 0,
         "parameters": [
           {
             "name": "canopy_cover",
-            "cases": 12
+            "cases": 14
           }
         ],
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 14
+            "cases": 20
           },
           {
             "name": "intact_forest",
-            "cases": 1
+            "cases": 4
           }
         ]
       },
@@ -384,7 +413,7 @@
         "dataset_id": "5",
         "dataset_name": "Tree cover gain",
         "missing_instructions": [],
-        "cases": 24,
+        "cases": 39,
         "answer_graded": 0,
         "parameters": [],
         "context_layers": []
@@ -393,7 +422,7 @@
         "dataset_id": "6",
         "dataset_name": "Forest greenhouse gas net flux",
         "missing_instructions": [],
-        "cases": 23,
+        "cases": 39,
         "answer_graded": 0,
         "parameters": [
           {
@@ -407,18 +436,18 @@
         "dataset_id": "7",
         "dataset_name": "Tree cover",
         "missing_instructions": [],
-        "cases": 22,
+        "cases": 41,
         "answer_graded": 0,
         "parameters": [
           {
             "name": "canopy_cover",
-            "cases": 7
+            "cases": 9
           }
         ],
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 4
+            "cases": 6
           }
         ]
       },
@@ -426,7 +455,7 @@
         "dataset_id": "8",
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
-        "cases": 24,
+        "cases": 40,
         "answer_graded": 0,
         "parameters": [
           {
@@ -440,8 +469,8 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 33,
-        "answer_graded": 0,
+        "cases": 37,
+        "answer_graded": 4,
         "parameters": [],
         "context_layers": []
       },
@@ -449,22 +478,22 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 36,
+        "cases": 57,
         "answer_graded": 0,
         "parameters": [
           {
             "name": "canopy_cover",
-            "cases": 3
+            "cases": 4
           }
         ],
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 4
+            "cases": 6
           },
           {
             "name": "intact_forest",
-            "cases": 1
+            "cases": 3
           }
         ]
       },
@@ -472,7 +501,7 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 35,
+        "cases": 53,
         "answer_graded": 0,
         "parameters": [],
         "context_layers": []
@@ -572,6 +601,10 @@
       },
       "comparison": {
         "overall": null,
+        "targets": {}
+      },
+      "map": {
+        "overall": 0.8,
         "targets": {}
       }
     },

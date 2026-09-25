@@ -73,6 +73,7 @@ FIELD_CHECKS = {
     "class_values": "class_value_match (info-only)",
     "chart_type": "chart_type_match",
     "scope": "scope_match",
+    "forbidden_tools": "forbidden_tools_absent",
     "aoi_source": "reference only (dashboard AOI source)",
     "dataset_name": "reference only",
 }
@@ -95,8 +96,13 @@ def expected_records(case) -> list[dict]:
 
 
 def split_dataset_ids(value: object) -> set[str]:
-    """Expected dataset_id values accept alternatives: '0;11' means either."""
-    return {part.strip() for part in str(value or "").split(";") if part.strip()}
+    """Expected dataset_id values accept alternatives: '0;11' means either.
+    The ``no_selection`` sentinel (no dataset is correct) is not a dataset."""
+    return {
+        part.strip()
+        for part in str(value or "").split(";")
+        if part.strip() and part.strip().lower() != "no_selection"
+    }
 
 
 def expected_parameter_names(expected: dict, case_id: str) -> set[str]:

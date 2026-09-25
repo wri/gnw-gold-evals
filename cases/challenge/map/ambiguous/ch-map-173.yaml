@@ -1,0 +1,15 @@
+id: ch-map-173
+uid: 9449ffe08e89c4d1
+status: ready
+set: map
+group: ambiguous
+query: Show carbon on the map
+expected:
+  dataset_id: 6;4
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: flux or TCL emissions
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

@@ -47,6 +47,8 @@ class TestResult(BaseModel):
     overall_score: float
     execution_time: str
     duration_seconds: float | None = None
+    # POST /api/chat to end of stream only (no state/dashboard GETs, no judge).
+    stream_duration_seconds: float | None = None
 
     # AOI evaluation fields - separate binary scores (0/1/None)
     aoi_id_match_score: float | None = None
@@ -197,6 +199,9 @@ class ExpectedData(BaseModel):
     # carry no expected_answer (ground truth is computed at run time, never
     # stored), so without this the Analysis bucket would never evaluate.
     expected_data_pull: bool | None = None
+    # Tools the agent must not call (;-separated; CHALLENGE map set). Opt-in:
+    # empty means no check (tool_checks.evaluate_forbidden_tools).
+    expected_forbidden_tools: str = ""
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""

@@ -1,0 +1,15 @@
+id: ch-map-010
+uid: e2c1315ecdc651a0
+status: ready
+set: map
+group: land-cover
+query: landcover
+expected:
+  dataset_id: '1'
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: one word, no space
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

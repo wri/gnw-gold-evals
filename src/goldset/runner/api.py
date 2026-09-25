@@ -79,6 +79,14 @@ class APITestRunner(BaseTestRunner):
         trace_url = None
         app_thread_url = self._build_app_thread_url(self.api_base_url, thread_id)
         start_time = time.time()
+        # stream_seconds: the agent turn as a user sees it — POST /api/chat
+        # sent to the last NDJSON line received (monotonic clock). Excludes
+        # the harness's own follow-up GETs (thread state, dashboard) and all
+        # scoring/judge time, so it is the latency to compare across
+        # selectors. duration_seconds (ledger latency_s) additionally spans
+        # those GETs; neither includes judge time.
+        stream_seconds: float | None = None
+        stream_start = time.monotonic()
 
         try:
             # Collect all streaming responses to ensure conversation completes
@@ -128,6 +136,8 @@ class APITestRunner(BaseTestRunner):
                                     )
                                     trace_id = update_data.get("trace_id")
                                     trace_url = update_data.get("trace_url")
+
+                    stream_seconds = time.monotonic() - stream_start
 
                     # Get final agent state using the state endpoint
                     state_response = await client.get(
@@ -222,6 +232,7 @@ class APITestRunner(BaseTestRunner):
                 overall_score=overall_score,
                 execution_time=datetime.now().isoformat(),
                 duration_seconds=api_duration_seconds,
+                stream_duration_seconds=stream_seconds,
                 **kwargs,
             )
 

@@ -158,3 +158,71 @@ unreachable via name search): run each once with
 `--id <id> --status-exclude "not doing"`, read the selected ids from the run
 artifact (`results/challenge/artifacts/<run_id>/<uid>.json.gz`), verify them,
 move the expectation into the case, and flip the status to `ready`.
+
+## Batch 3: the `map` set
+
+200 prompts (`cases/challenge/map/<cohort>/`, ids `ch-map-001..200`), each
+asking only to see a layer on the map, with no place, no quantity and no
+date, so the one tool that should run is `pick_dataset` (the FE draws the
+tile layer from `state.dataset`; there is no separate add-to-map tool).
+Built to compare project-zeno's RAG + LLM selector with the jev decision
+model (project-zeno PR #841). Seed and per-row lineage:
+`seeds/challenge-map-v1.csv`; expectations from the zeno catalog at
+e2fb83f (`selection_hints`, `context_layers`, `parameters`).
+
+| cohort | n | scored |
+|---|---|---|
+| 10 dataset cohorts (land-cover, grasslands, natural-lands, tcl, tc-gain, ghg-flux, tree-cover, tcl-drivers, tcl-fires, integrated-alerts; ids 1-8, 10, 11) | 13 each (easy/medium/hard 4/5/4) | `dataset_id` (five rows add an explicit non-default `dataset_parameters` canopy) |
+| multilingual (es, pt, fr, id, sw) | 25 | `dataset_id` (two rows add `context_layer`) |
+| context-layer | 15 | `dataset_id` + `context_layer` (primary/intact asks, and `no_selection` opt-outs) |
+| ambiguous | 15 | 11 pinned `select` rows with `;` alternatives, 4 pinned `nudge` rows (`dataset_choice` + options) |
+| unmappable (sLUC, climate and other out-of-catalog asks) | 15 | `dataset_id: no_selection` (sLUC `9;no_selection`) + `text` |
+
+Every row also sets `forbidden_tools` (pull_data, generate_insights,
+create_dashboard, add_to_dashboard, add_map_widget, search_blogs,
+search_insights, show_imagery), which gates `forbidden_tools_absent`: the
+set's scope-isolation assertion. The list is hashed; changing it re-mints
+all 200 uids. `pick_aoi` is deliberately **not** forbidden (decided
+2026-09-25): the set tests the dataset picker only, and picking a layer
+then asking "where?" via `pick_aoi` (seen on 3 of 31 smoke trials) is
+acceptable behaviour, not a scope leak.
+
+Scoring decisions and gaps:
+
+- Plain dataset cohorts do **not** score `context_layer`. With no AOI the
+  selector sees every layer unfiltered, and the TCL and fires primary-forest
+  descriptions say to default to that layer for general forest loss, so a
+  primary pick on "show tree cover loss" is policy, not error. Only the
+  context-layer cohort scores it.
+- The ambiguous cohort cannot say "select X **or** nudge": each row pins one
+  behaviour (`notes.behaviour`), with the alternative in `notes.lineage`.
+- **The four nudge rows are structurally unwinnable for jev v1**: jev
+  returns one choice plus a confidence, and `none` goes down the no-match
+  path with no suggestions, so it never emits a `dataset_choice` nudge.
+  They stay in: the ambiguous cohort failing under jev is a finding. Read
+  them separately when comparing selectors.
+- Unmappable rows pass on "no dataset selected + honest text"; a nudge is
+  neither required nor penalised.
+- `text` is the only judged check (15 rows, one Haiku call each per trial).
+- Dates are deliberately unscored (the set is date-free).
+
+Comparison protocol: prod, default profile, 3 trials is the published
+reference series. The jev verdict is read from a **local-main vs local-jev**
+pair (same commit, same stack, same trials, same `--workers`), never prod
+vs local.
+
+Latency is half of that verdict, so:
+
+- The rollup reports median, p90 and mean per set and cohort from
+  `stream_s` (POST /api/chat to the last stream line: the agent turn; no
+  state GET, no judge time). Older runs only carry `latency_s`, which also
+  spans the state GET; the rollup says which basis it used.
+- Run both local sides with `--workers 1` (the CLI's concurrency knob,
+  recorded on the run as `workers`): concurrent turns contend for one local
+  API and inflate each other's latency.
+- Compare with `tools/challenge_rollup.py <local-main>.json <local-jev>.json`:
+  the cross-run latency table gives both runs side by side with median
+  deltas and flags any env, workers or basis mismatch.
+- **Prod latency is reference only.** It includes internet round-trips and
+  prod infrastructure (autoscaling, other users' load), so a prod vs local
+  gap says nothing about the selector.

@@ -1138,6 +1138,171 @@
             "uncovered": 0
           }
         }
+      },
+      {
+        "run_id": "20260925T113115Z_local",
+        "path": "results/challenge/runs/20260925T113115Z_local.json",
+        "started": "2026-09-25T11:31:15Z",
+        "environment": "local",
+        "build": "local main e2fb83f8 + jev-dataset-picker DATASET_PICKER=rag gemini-flash idx-v10",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "8d2660c"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 1,
+        "trial_timeout": 900.0,
+        "resumed": true,
+        "caseset": "challenge",
+        "caseset_version": "72fafbb2ec30afd2",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 203,
+              "evaluated": 222
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 196
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 4
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 4
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 15,
+              "evaluated": 19
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 19
+          },
+          "output": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 4
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 4
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 197,
+              "evaluated": 204
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 200
+          },
+          "rows_total": 200,
+          "verdicts": {
+            "pass": 175,
+            "fail": 25,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
+      },
+      {
+        "run_id": "20260925T121040Z_local",
+        "path": "results/challenge/runs/20260925T121040Z_local.json",
+        "started": "2026-09-25T12:10:40Z",
+        "environment": "local",
+        "build": "local main e2fb83f8 + jev-dataset-picker@af1d6354 DATASET_PICKER=jev JEV_VARIANT=cards_neutral openrouter jev-1.13 gemini-flash idx-v10",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "8d2660c"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 1,
+        "trial_timeout": 900.0,
+        "caseset": "challenge",
+        "caseset_version": "72fafbb2ec30afd2",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 212,
+              "evaluated": 222
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 196
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 4
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 4
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 18,
+              "evaluated": 18
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 18
+          },
+          "output": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 4
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 4
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 195,
+              "evaluated": 204
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 200
+          },
+          "rows_total": 200,
+          "verdicts": {
+            "pass": 184,
+            "fail": 16,
+            "error": 0,
+            "uncovered": 0
+          }
+        }
       }
     ]
   }

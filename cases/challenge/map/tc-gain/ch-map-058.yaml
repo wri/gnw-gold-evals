@@ -1,0 +1,14 @@
+id: ch-map-058
+uid: e9bf206cbbc5a332
+status: ready
+set: map
+group: tc-gain
+query: Show areas where new tree cover has grown
+expected:
+  dataset_id: '5'
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

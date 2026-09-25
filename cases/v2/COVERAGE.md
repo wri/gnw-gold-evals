@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 20 · ready 10 · todo 6 · **104 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-02_
+_Last updated: 2026-09-25_
 
 ## Groups
 
@@ -68,11 +68,12 @@ friends) run on top of it whenever their trigger state exists.
 | dataset_parameters | 1 | dataset_parameter_match |
 | chart_type | 0 ← unused | chart_type_match |
 | data_pull | 0 ← unused | data_pull_exists, answered_without_data |
+| forbidden_tools | 0 ← unused | forbidden_tools_absent |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@31a4d1e (origin/main, synced 2026-09-01), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@e2fb83f (origin/main, synced 2026-09-25), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -132,7 +133,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: chart_type, data_pull, suggested_datasets —
+- Expected fields no active case uses: chart_type, data_pull, forbidden_tools, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission

@@ -1,0 +1,16 @@
+id: ch-map-162
+uid: 55163127c4ca5d38
+status: ready
+set: map
+group: context-layer
+query: Show fire-driven tree cover loss in primary forests on the map
+expected:
+  dataset_id: '10'
+  context_layer: primary_forest
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: fires x primary
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1
