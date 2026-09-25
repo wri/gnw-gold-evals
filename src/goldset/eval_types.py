@@ -47,6 +47,8 @@ class TestResult(BaseModel):
     overall_score: float
     execution_time: str
     duration_seconds: float | None = None
+    # POST /api/chat to end of stream only (no state/dashboard GETs, no judge).
+    stream_duration_seconds: float | None = None
 
     # AOI evaluation fields - separate binary scores (0/1/None)
     aoi_id_match_score: float | None = None

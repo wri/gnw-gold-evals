@@ -208,3 +208,43 @@ async def test_wall_clock_limit_bounds_a_keepalive_stream(monkeypatch):
     assert time.monotonic() - start < 5.0
     assert "wall-clock" in (result.error or "")
     assert result.aoi_id_match_score is None
+
+
+@pytest.mark.anyio
+async def test_latency_excludes_judging_and_stream_excludes_state_fetch(monkeypatch):
+    """stream_s = POST to end of stream only; latency_s adds the state GET;
+    neither may include scoring/judge time (the jev latency comparison)."""
+    real_client = httpx.AsyncClient
+    base = transport()
+
+    def slow_state(request: httpx.Request) -> httpx.Response:
+        if request.url.path.startswith("/api/threads/"):
+            time.sleep(0.3)
+        return base.handle_request(request)
+
+    monkeypatch.setattr(
+        httpx, "AsyncClient",
+        lambda **kw: real_client(transport=httpx.MockTransport(slow_state)),
+    )
+    runner = APITestRunner(api_base_url="https://api.example", api_token="tok")
+    real_eval = runner._run_evaluations
+
+    def slow_eval(*args, **kwargs):
+        time.sleep(0.5)
+        return real_eval(*args, **kwargs)
+
+    monkeypatch.setattr(runner, "_run_evaluations", slow_eval)
+    result = await runner.run_test(CASE.query, case_to_expected(CASE))
+    assert result.stream_duration_seconds is not None
+    assert result.stream_duration_seconds < 0.25
+    assert 0.3 <= result.duration_seconds < 0.5 + 0.3
+    entry = result_to_entry(result, CASE.uid)
+    assert entry["stream_s"] < entry["latency_s"]
+
+
+def test_merge_trials_keeps_per_trial_stream_s():
+    trials = [
+        {"uid": "u", "id": "x", "checks": {}, "latency_s": 2.0, "stream_s": 1.5},
+        {"uid": "u", "id": "x", "checks": {}, "latency_s": 3.0, "stream_s": 2.5},
+    ]
+    assert [t["stream_s"] for t in merge_trials(trials)["trials"]] == [1.5, 2.5]

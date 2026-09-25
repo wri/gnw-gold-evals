@@ -130,6 +130,8 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
         entry["judge_errors"] = judge_errors
     if result.duration_seconds is not None:
         entry["latency_s"] = round(result.duration_seconds, 1)
+    if result.stream_duration_seconds is not None:
+        entry["stream_s"] = round(result.stream_duration_seconds, 2)
     if result.trace_url:
         entry["trace_url"] = result.trace_url
     if result.error:
@@ -159,7 +161,12 @@ def merge_trials(entries: list[dict]) -> dict:
         for name in check_names
     }
     merged["trials"] = [
-        {"checks": e["checks"], "latency_s": e.get("latency_s")} for e in entries
+        {
+            "checks": e["checks"],
+            "latency_s": e.get("latency_s"),
+            **({"stream_s": e["stream_s"]} if e.get("stream_s") is not None else {}),
+        }
+        for e in entries
     ]
     # Errors from ANY trial must survive the merge (PR-09 H3) — the base
     # copy above only carries the final trial's metadata.
