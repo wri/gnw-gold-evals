@@ -221,3 +221,19 @@ def test_load_targets_nested_shape(tmp_path):
     assert targets["overall"] == 0.7
     assert targets["sets"]["aoi"]["overall"] == 0.7
     assert targets["sets"]["aoi"]["targets"] == {"acronyms": 0.8}
+
+
+def test_strict_clean_reads_ledger_list_shaped_trials():
+    """The ledger writes trials as a list (cli.merge_trials); a dict-only
+    reader crashed on every real 3-trial run with a passing row."""
+    flapping = {
+        "checks": {"aoi_id_match": 1.0},
+        "trials": [
+            {"checks": {"aoi_id_match": 1.0}, "latency_s": 3.0},
+            {"checks": {"aoi_id_match": 0.0}, "latency_s": 4.0},
+            {"checks": {"aoi_id_match": 1.0}, "latency_s": 5.0},
+        ],
+    }
+    assert challenge_rollup.strict_clean(flapping) is False
+    clean = dict(flapping, trials=[{"checks": {"aoi_id_match": 1.0}}] * 3)
+    assert challenge_rollup.strict_clean(clean) is True

@@ -66,6 +66,16 @@ def wilson(passed: int, n: int, z: float = Z_95) -> tuple[float, float]:
     return (max(0.0, centre - half), min(1.0, centre + half))
 
 
+def _trial_list(entry: dict[str, Any]) -> list[dict[str, Any]]:
+    """Per-trial detail as a list. The ledger writes ``trials`` as a list
+    (``cli.merge_trials``); older fixtures used a dict keyed by trial, so
+    both shapes are accepted."""
+    trials = entry.get("trials") or []
+    if isinstance(trials, dict):
+        trials = list(trials.values())
+    return [t for t in trials if isinstance(t, dict)]
+
+
 def strict_clean(entry: dict[str, Any]) -> bool:
     """True when the row passed AND no trial shows a failing non-info check.
 
@@ -74,8 +84,7 @@ def strict_clean(entry: dict[str, Any]) -> bool:
     """
     if row_verdict(entry) != "pass":
         return False
-    trials = entry.get("trials") or {}
-    for trial in trials.values():
+    for trial in _trial_list(entry):
         for name, value in (trial.get("checks") or {}).items():
             if not is_info_only(name) and value == 0.0:
                 return False
