@@ -31,3 +31,9 @@ notes:
     every gating check passed at this uid before the text expectation was added (aoi, dataset
     12, pull_source, scope analyse; answer_traceability 0.0 is info-only and structural, see
     no_answer_rationale). Needs a 3-trial ff=experimental pass at the final uid for done.'
+  curated_only_conflict: '2026-09-16: wri/project-zeno#827 (open at writing) makes LGMS a
+    curated-charts-only dataset: the agent shows the four standard charts and is instructed
+    to state no figures from them. This row''s text expectation ("Reports emissions figures
+    in MgCO2e") is then unsatisfiable by design, not broken. If #827 ships as written, retire
+    or rewrite this expectation in the same cycle - see 1-123, which encodes the new behaviour
+    for a single GADM area.'

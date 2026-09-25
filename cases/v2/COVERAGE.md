@@ -5,29 +5,29 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 646eb0ca58fdbfe0` · 128 cases · done 90 · not doing 22 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
+`caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 29 · ready 12 · todo 4 · **106 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-24_
+_Last updated: 2026-09-25_
 
 ## Groups
 
 | group | cases | active | statuses |
 |---|---|---|---|
 | class-comparison | 9 | 6 | done 6, not doing 3 |
-| comparative | 13 | 13 | done 11, todo 2 |
+| comparative | 14 | 13 | done 11, not doing 1, todo 2 |
 | context-layer | 2 | 1 | done 1, not doing 1 |
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
-| direct | 28 | 21 | done 20, not doing 7, todo 1 |
+| direct | 29 | 21 | done 20, not doing 8, todo 1 |
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
-| multiturn | 9 | 9 | ready 8, todo 1 |
+| multiturn | 12 | 9 | not doing 3, ready 8, todo 1 |
 | nudge | 2 | 2 | ready 2 |
 | parent-child | 14 | 12 | done 11, not doing 2, ready 1 |
 | ranking | 1 | 1 | done 1 |
-| refusal | 3 | 1 | done 1, not doing 2 |
+| refusal | 5 | 1 | done 1, not doing 4 |
 | temporal | 16 | 15 | done 14, not doing 1, ready 1 |
 
 ## Bucket coverage (active cases)
@@ -123,8 +123,15 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-119 | not doing | imagery | — |
 | 1-120 | not doing | imagery | — |
 | 1-121 | not doing | imagery | — |
+| 1-123 | not doing | direct | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-124 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-125 | not doing | comparative | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-127 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-128 | not doing | direct | 2026-09-24: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-129 | not doing | direct | 2026-09-24: not doing, same two counts as 1-128: LGMS is hidden on the default profile, and wri/project-zen... |
+| mt-010 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| mt-011 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| mt-012 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
 | 1-062 | todo | comparative | 2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a... |
