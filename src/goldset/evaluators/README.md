@@ -229,7 +229,12 @@ matching passes (PR-09 H7). This exists because some rows are defensible either
 way: 1-003's `dataset_id: "0;11"` covers DIST-ALERT vs integrated alerts.
 
 **`null` vs `0.0`**: `null` with no expectation; `0.0` when an expectation exists
-and no dataset was selected at all (`dataset_evaluator.py:85-94`).
+and no dataset was selected at all, **unless** the expectation includes the
+`no_selection` sentinel (added 2026-09-25 for the CHALLENGE `map` set's
+unmappable cohort). `no_selection` means "selecting nothing is correct": alone it
+passes only when no dataset was selected, and as an alternative
+(`9;no_selection`) it passes on either. A dataset dict whose id is empty counts
+as no selection. `coverage_doc.py` drops the sentinel from dataset coverage.
 
 **Reason**: none; `actuals.dataset_id_match` = `actual_dataset_id`.
 
