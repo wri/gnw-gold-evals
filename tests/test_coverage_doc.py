@@ -210,6 +210,51 @@ def test_cases_index_set_and_difficulty_notes(tmp_path):
     assert row["difficulty"] == "hard" and row["behaviour"] == "select"
 
 
+def _index_row(tmp_path, case: Case) -> dict:
+    cases_dir = tmp_path / "challenge"
+    write_case(cases_dir, case)
+    write_manifest(cases_dir, build_manifest([case], "test"))
+    return collect_cases_index(cases_dir)["cases"][0]
+
+
+def test_cases_index_facets_numeric_set(tmp_path):
+    # numeric sets: intent is the set, dataset from expected, subtype from notes
+    row = _index_row(tmp_path, Case(
+        id="ch-quant-044", status="ready", set="quantification",
+        group="ghg-flux", query="Net flux in Brazil?",
+        expected={"aoi_ids": "BRA", "dataset_id": "6", "data_pull": "TRUE"},
+        notes={"eval_subtype": "net_flux"}))
+    assert row["intent"] == "quantification"
+    assert row["dataset_ids"] == ["6"]
+    assert row["subtype"] == "net_flux"
+
+
+def test_cases_index_facets_aoi_set(tmp_path):
+    # aoi: intent is the taxonomy's "spatial"; its groups are place-query
+    # subtypes, not datasets; no dataset expected -> empty list, not absent
+    row = _index_row(tmp_path, Case(
+        id="ch-aoi-036", status="ready", set="aoi", group="acronyms",
+        query="Go to the USA", expected={"aoi_ids": "USA"}))
+    assert row["intent"] == "spatial"
+    assert row["dataset_ids"] == []
+    assert row["subtype"] == "acronyms"
+
+
+def test_cases_index_facets_multi_dataset_and_multiturn(tmp_path):
+    row = _index_row(tmp_path, Case(
+        id="x-001", status="ready", group="comparative", query="compare",
+        expected={"dataset_id": "4; 1", "aoi_ids": "BRA"}))
+    assert row["dataset_ids"] == ["1", "4"]
+    # GOLD cases carry no set -> no intent, no subtype
+    assert "intent" not in row and "subtype" not in row
+    mt = _index_row(tmp_path / "mt", Case(
+        id="mt-009", status="ready", group="multiturn",
+        turns=({"query": "loss in Para", "expected": {"dataset_id": "4"}},
+               {"query": "and fires", "expected": {"dataset_id": "7"}},
+               {"query": "same again", "expected": {"dataset_id": "4"}})))
+    assert mt["dataset_ids"] == ["4", "7"]
+
+
 def test_check_gates_stale_json_siblings(tmp_path):
     cases_dir = make_store(tmp_path)
     tool = Path(__file__).resolve().parents[1] / "tools" / "coverage_doc.py"
