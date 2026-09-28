@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version 72fafbb2ec30afd2` · 718 cases · ready 713 · todo 5 · **718 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-25_
+_Last updated: 2026-09-28_
 
 ## Groups
 
