@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 50a0ea07bb4bb90b` · 124 cases · done 88 · not doing 20 · ready 10 · todo 6 · **104 active** (everything but `not doing` runs by default)
+`caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-09-28_
 
@@ -14,21 +14,21 @@ _Last updated: 2026-09-28_
 | group | cases | active | statuses |
 |---|---|---|---|
 | class-comparison | 9 | 6 | done 6, not doing 3 |
-| comparative | 13 | 13 | done 10, todo 3 |
+| comparative | 14 | 13 | done 11, not doing 1, todo 2 |
 | context-layer | 2 | 1 | done 1, not doing 1 |
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
-| direct | 26 | 21 | done 20, not doing 5, todo 1 |
+| direct | 29 | 21 | done 20, not doing 8, todo 1 |
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
-| multiturn | 8 | 8 | ready 7, todo 1 |
+| multiturn | 12 | 8 | not doing 4, ready 8 |
 | nudge | 2 | 2 | ready 2 |
-| parent-child | 14 | 12 | done 10, not doing 2, ready 1, todo 1 |
+| parent-child | 14 | 12 | done 11, not doing 2, ready 1 |
 | ranking | 1 | 1 | done 1 |
-| refusal | 3 | 1 | done 1, not doing 2 |
-| temporal | 15 | 14 | done 14, not doing 1 |
+| refusal | 5 | 1 | done 1, not doing 4 |
+| temporal | 16 | 15 | done 14, not doing 1, ready 1 |
 
 ## Bucket coverage (active cases)
 
@@ -39,24 +39,24 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 98 | 0 | 98 | 94% |
+| retrieval | 99 | 0 | 99 | 94% |
 | analysis | 0 | 70 | 70 | 67% |
-| explanation | 25 | 59 | 84 | 81% |
-| output | 75 | 3 | 78 | 75% |
-| scope | 89 | 7 | 96 | 92% |
+| explanation | 25 | 60 | 85 | 81% |
+| output | 75 | 3 | 78 | 74% |
+| scope | 89 | 7 | 96 | 91% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 88 | dataset_id_match |
+| dataset_id | 89 | dataset_id_match |
 | scope | 88 | scope_match |
-| aoi_source | 82 | reference only (dashboard AOI source) |
-| dataset_name | 81 | reference only |
+| aoi_source | 83 | reference only (dashboard AOI source) |
+| dataset_name | 82 | reference only |
+| aoi_ids | 73 | aoi_id_match |
 | answer | 70 | agent_answer, charts_answer, chart_produced |
-| aoi_ids | 70 | aoi_id_match |
 | text | 25 | expected_text_match |
-| context_layer | 10 | context_layer_match |
+| context_layer | 9 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | class_values | 6 | class_value_match (info-only) |
 | nudge_options | 6 | nudge_match |
@@ -86,19 +86,19 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 43 | 31 | canopy_cover ×1 | primary_forest ×6, intact_forest ×4 |
+| 4 | Tree cover loss | 42 | 30 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
-| 8 | Tree cover loss by dominant driver | 5 | 4 | canopy_cover ×0 ← gap | — |
+| 8 | Tree cover loss by dominant driver | 5 | 5 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
-| 10 | Tree cover loss due to fires | 2 | 0 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
-| 11 | Integrated alerts | 5 | 4 | — | — |
+| 10 | Tree cover loss due to fires | 2 | 1 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
+| 11 | Integrated alerts | 7 | 5 | — | — |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
 
-8 active conversations (16 turns). Delta assertions: absent ×1, changed ×7, retain ×7
+8 active conversations (16 turns). Delta assertions: absent ×1, changed ×8, retain ×7
 
 ## Parked and held cases
 
@@ -124,12 +124,19 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-119 | not doing | imagery | — |
 | 1-120 | not doing | imagery | — |
 | 1-121 | not doing | imagery | — |
-| 1-021 | todo | parent-child | Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo. Added (Iberian peninsula only) |
+| 1-123 | not doing | direct | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-124 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-125 | not doing | comparative | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-127 | not doing | refusal | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-128 | not doing | direct | 2026-09-24: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| 1-129 | not doing | direct | 2026-09-24: not doing, same two counts as 1-128: LGMS is hidden on the default profile, and wri/project-zen... |
+| mt-007 | not doing | multiturn | 2026-09-23: parked (not doing). Two standing, reproduced issues without a clean fix: T1's primary-forest-vs... |
+| mt-010 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| mt-011 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
+| mt-012 | not doing | multiturn | 2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while ... |
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
-| 1-053 | todo | comparative | — |
-| 1-062 | todo | comparative | Triage W4 2026-08-01: dataset_id accepts alternatives (8;10 both defensible); the disputed answer and the u... |
-| mt-007 | todo | multiturn | todo pending the 3-trial validation the probation note requires: no per-case info-only mechanism exists, so... |
+| 1-062 | todo | comparative | 2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a... |
 
 ## Known gaps
 

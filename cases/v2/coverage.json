@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "store": "v2",
-  "caseset_version": "50a0ea07bb4bb90b",
-  "case_count": 124,
+  "caseset_version": "aec8d9e5bf8512ca",
+  "case_count": 135,
   "statuses": {
-    "done": 88,
-    "not doing": 20,
-    "ready": 10,
-    "todo": 6
+    "done": 90,
+    "not doing": 30,
+    "ready": 12,
+    "todo": 3
   },
-  "active_count": 104,
+  "active_count": 105,
   "groups": [
     {
       "group": "class-comparison",
@@ -22,11 +22,12 @@
     },
     {
       "group": "comparative",
-      "cases": 13,
+      "cases": 14,
       "active": 13,
       "statuses": {
-        "done": 10,
-        "todo": 3
+        "done": 11,
+        "not doing": 1,
+        "todo": 2
       }
     },
     {
@@ -65,11 +66,11 @@
     },
     {
       "group": "direct",
-      "cases": 26,
+      "cases": 29,
       "active": 21,
       "statuses": {
         "done": 20,
-        "not doing": 5,
+        "not doing": 8,
         "todo": 1
       }
     },
@@ -100,11 +101,11 @@
     },
     {
       "group": "multiturn",
-      "cases": 8,
+      "cases": 12,
       "active": 8,
       "statuses": {
-        "ready": 7,
-        "todo": 1
+        "not doing": 4,
+        "ready": 8
       }
     },
     {
@@ -120,10 +121,9 @@
       "cases": 14,
       "active": 12,
       "statuses": {
-        "done": 10,
+        "done": 11,
         "not doing": 2,
-        "ready": 1,
-        "todo": 1
+        "ready": 1
       }
     },
     {
@@ -136,26 +136,27 @@
     },
     {
       "group": "refusal",
-      "cases": 3,
+      "cases": 5,
       "active": 1,
       "statuses": {
         "done": 1,
-        "not doing": 2
+        "not doing": 4
       }
     },
     {
       "group": "temporal",
-      "cases": 15,
-      "active": 14,
+      "cases": 16,
+      "active": 15,
       "statuses": {
         "done": 14,
-        "not doing": 1
+        "not doing": 1,
+        "ready": 1
       }
     }
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 98,
+      "dedicated": 99,
       "shared_only": 0
     },
     "analysis": {
@@ -164,7 +165,7 @@
     },
     "explanation": {
       "dedicated": 25,
-      "shared_only": 59
+      "shared_only": 60
     },
     "output": {
       "dedicated": 75,
@@ -178,7 +179,7 @@
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 88,
+      "cases": 89,
       "switches_on": "dataset_id_match"
     },
     {
@@ -188,23 +189,23 @@
     },
     {
       "field": "aoi_source",
-      "cases": 82,
+      "cases": 83,
       "switches_on": "reference only (dashboard AOI source)"
     },
     {
       "field": "dataset_name",
-      "cases": 81,
+      "cases": 82,
       "switches_on": "reference only"
+    },
+    {
+      "field": "aoi_ids",
+      "cases": 73,
+      "switches_on": "aoi_id_match"
     },
     {
       "field": "answer",
       "cases": 70,
       "switches_on": "agent_answer, charts_answer, chart_produced"
-    },
-    {
-      "field": "aoi_ids",
-      "cases": 70,
-      "switches_on": "aoi_id_match"
     },
     {
       "field": "text",
@@ -213,7 +214,7 @@
     },
     {
       "field": "context_layer",
-      "cases": 10,
+      "cases": 9,
       "switches_on": "context_layer_match"
     },
     {
@@ -323,8 +324,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 43,
-        "answer_graded": 31,
+        "cases": 42,
+        "answer_graded": 30,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -334,7 +335,7 @@
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 6
+            "cases": 5
           },
           {
             "name": "intact_forest",
@@ -389,7 +390,7 @@
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
         "cases": 5,
-        "answer_graded": 4,
+        "answer_graded": 5,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -412,7 +413,7 @@
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
         "cases": 2,
-        "answer_graded": 0,
+        "answer_graded": 1,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -434,8 +435,8 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 5,
-        "answer_graded": 4,
+        "cases": 7,
+        "answer_graded": 5,
         "parameters": [],
         "context_layers": []
       },
@@ -456,7 +457,7 @@
     "turns": 16,
     "delta_assertions": {
       "absent": 1,
-      "changed": 7,
+      "changed": 8,
       "retain": 7
     }
   },
@@ -582,10 +583,64 @@
       "reason": null
     },
     {
-      "id": "1-021",
-      "status": "todo",
-      "group": "parent-child",
-      "reason": "Sometimes doesnt count Ceuta y Melilla as an comunidad autonomo.\nAdded (Iberian peninsula only)"
+      "id": "1-123",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and before it merges the agent interprets LGMS data freely, so the text expectation fails by design. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-124",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent answers this question with a year and a figure. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-125",
+      "status": "not doing",
+      "group": "comparative",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent pulls both areas and compares them. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-127",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time. Note this row is the least dependent on #827 of the six: the one-area guard is what refuses the pull, so a 3-trial ff=experimental pass is achievable as soon as LGMS is on the default profile. Re-admit with the other LGMS rows; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-128",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-09-24: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased: wri/project-zeno#830 was open at authoring time. Re-admit with the other LGMS rows once #830 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-129",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-09-24: not doing, same two counts as 1-128: LGMS is hidden on the default profile, and wri/project-zeno#830 was unreleased at authoring time. Re-admit with the other LGMS rows once #830 is deployed; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "mt-007",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-23: parked (not doing). Two standing, reproduced issues without a clean fix: T1's primary-forest-vs-total ambiguity, still ~coin-flip (2 of 3 trials picked total, run 20260923T225312Z_staging) — see finding. T2's httpx ReadTimeout susceptibility — every historical run with a recorded mt-007 error failed the identical way, 't2: ReadTimeout' (240s+ silent stream on the pushback turn) — see finding."
+    },
+    {
+      "id": "mt-010",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile, and update_insight_display is itself an experimental-profile tool. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the reviser restyles LGMS insights on request. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "mt-011",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent compares the two areas on request. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "mt-012",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent answers with a causal narrative. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
     },
     {
       "id": "1-027",
@@ -600,22 +655,10 @@
       "reason": "Expecting SBTN analysis but using the Blog skill"
     },
     {
-      "id": "1-053",
-      "status": "todo",
-      "group": "comparative",
-      "reason": null
-    },
-    {
       "id": "1-062",
       "status": "todo",
       "group": "comparative",
-      "reason": "Triage W4 2026-08-01: dataset_id accepts alternatives (8;10 both defensible); the disputed answer and the unexpressable AOI multiplicity expectation dropped pending review. Held at todo rather than ready: with aoi_ids and answer gone this row no longer verifies the WA-vs-OR comparison its group promises — reinstate an answer (with ;-alternatives if genuinely dataset-dependent) before activating."
-    },
-    {
-      "id": "mt-007",
-      "status": "todo",
-      "group": "multiturn",
-      "reason": "todo pending the 3-trial validation the probation note requires: no per-case info-only mechanism exists, so as ready this judged check would fully gate verdicts, contradicting its own caveat"
+      "reason": "2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a fresh 3-trial verification run at this uid — the finding's ~12% nudge rate means data_pull_exists/chart_produced/answered_without_data (dormant until now, since they require answer to be set) will start gating on this row, and that residual flakiness hasn't been measured against the new expectations yet."
     }
   ],
   "known_gaps": {

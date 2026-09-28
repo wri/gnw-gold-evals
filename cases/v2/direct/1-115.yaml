@@ -30,3 +30,8 @@ notes:
     One trial cannot separate an always-nudge from the known ~1-in-3 routing nudge: needs
     a 3-trial ff=experimental run before promoting to ready, or an upstream fix if the nudge
     is systematic.'
+  curated_only_conflict: '2026-09-16: wri/project-zeno#827 partially contradicts this row.
+    The redirect half (stock changes are not calculated) survives, but the second half - "instead
+    reports gross emissions, gross removals and net flux" - asks for exactly the reporting
+    the curated-only instruction forbids. Split or rewrite the expectation in the same cycle
+    as #827 rather than reading its failure as a regression.'

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "v2",
-  "caseset_version": "50a0ea07bb4bb90b",
-  "case_count": 124,
+  "caseset_version": "aec8d9e5bf8512ca",
+  "case_count": 135,
   "cases": [
     {
       "id": "1-001",
@@ -328,10 +328,10 @@
     },
     {
       "id": "1-013",
-      "uid": "291512b4b3133033",
+      "uid": "4c71ccd0b95bcbe3",
       "group": "comparative",
       "status": "done",
-      "query": "Which had more cropland area in 2024, Nigeria or Ghana?",
+      "query": "Looking at land cover composition, which had more cropland area in 2024, Nigeria or Ghana?",
       "expected_fields": [
         "answer",
         "aoi_ids",
@@ -382,10 +382,10 @@
     },
     {
       "id": "1-015",
-      "uid": "d65307f2917a3fcb",
+      "uid": "2c40cfd206ff2757",
       "group": "parent-child",
       "status": "done",
-      "query": "Which Welsh county had the most land in the short vegetation land cover class in 2024?",
+      "query": "Looking at general land cover composition across all vegetation types, which Welsh county had the most land in the short vegetation land cover class in 2024?",
       "expected_fields": [
         "answer",
         "aoi_ids",
@@ -539,7 +539,7 @@
       "id": "1-021",
       "uid": "f0a5f23c12a8fea4",
       "group": "parent-child",
-      "status": "todo",
+      "status": "done",
       "query": "Which comunidad autónoma of Spain (Iberian peninsula only) had the least natural grassland in 2022?",
       "expected_fields": [
         "answer",
@@ -672,10 +672,10 @@
     },
     {
       "id": "1-026",
-      "uid": "00b7bcb79abcc5ed",
+      "uid": "2ca8d841e098e077",
       "group": "class-comparison",
       "status": "done",
-      "query": "Whats the second largest natural land class in the Plaine du Villefagnan key biodiversity area in FRA?",
+      "query": "Distinguishing natural from non-natural land cover, whats the second largest natural land class in the Plaine du Villefagnan key biodiversity area in FRA?",
       "expected_fields": [
         "answer",
         "aoi_source",
@@ -804,10 +804,10 @@
     },
     {
       "id": "1-031",
-      "uid": "06988e33f4f6f8ea",
+      "uid": "43c1fe0c65332041",
       "group": "class-comparison",
       "status": "done",
-      "query": "Whats the second largest natural land class by area in Cogo, Eq. Guinea?",
+      "query": "Distinguishing natural from non-natural land cover, and keeping mangroves as a class separate from natural forest, whats the second largest natural land class by area in Cogo, Eq. Guinea?",
       "expected_fields": [
         "answer",
         "aoi_ids",
@@ -965,10 +965,10 @@
     },
     {
       "id": "1-037",
-      "uid": "a0f0a84c4c433913",
+      "uid": "ea93ce88e6587f89",
       "group": "comparative",
       "status": "done",
-      "query": "Of the Canadian provinces+territories beginning with 'N' - which had the most deforestation in 2004?",
+      "query": "For exactly the 5 Canadian provinces and territories whose names begin with the letter 'N', which had the most deforestation in 2004?",
       "expected_fields": [
         "answer",
         "aoi_ids",
@@ -1091,10 +1091,10 @@
     },
     {
       "id": "1-042",
-      "uid": "c3fe107faccb7192",
+      "uid": "98a07007f57e6829",
       "group": "direct",
       "status": "done",
-      "query": "What was the total carbon emissions due to deforestation in the Vale do Javari indigenous land, Brazil between 2010 and 2018?",
+      "query": "For the Vale do Javari indigenous land, Brazil, what was the total of the annual carbon emissions due to deforestation for each year from 2010 through 2018.",
       "expected_fields": [
         "aoi_source",
         "dataset_id",
@@ -1379,7 +1379,7 @@
       "id": "1-053",
       "uid": "7a45e7b8b2e1d0e1",
       "group": "comparative",
-      "status": "todo",
+      "status": "done",
       "query": "True or False: the UK has a lower net forest greenhouse gas flux than the Rep. of Ireland?",
       "expected_fields": [
         "answer",
@@ -1624,16 +1624,23 @@
     },
     {
       "id": "1-062",
-      "uid": "fadcd8afac449e11",
+      "uid": "6bc5b10a4a3f4284",
       "group": "comparative",
       "status": "todo",
       "query": "Which US state lost more forest due to wildfires? Washington or Oregon?",
       "expected_fields": [
+        "answer",
+        "aoi_ids",
         "aoi_source",
         "dataset_id",
         "scope"
       ],
       "implied_checks": [
+        "agent_answer",
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_produced",
+        "data_pull_exists",
         "dataset_id_match",
         "scope_match"
       ],
@@ -1644,10 +1651,10 @@
     },
     {
       "id": "1-063",
-      "uid": "e729f151494155b6",
+      "uid": "b67ce54fbd0a6641",
       "group": "class-comparison",
       "status": "done",
-      "query": "True or False: Logging causes more more tree cover loss than Wildfire in Aveiro, Portugal?",
+      "query": "Overall between 2001 and 2025, true or false: logging causes more total tree cover loss than Wildfire in Aveiro, Portugal?",
       "expected_fields": [
         "answer",
         "aoi_ids",
@@ -2892,6 +2899,173 @@
       ]
     },
     {
+      "id": "1-122",
+      "uid": "439a98af199c5d91",
+      "group": "temporal",
+      "status": "ready",
+      "query": "How much area had high-confidence disturbance alerts in Tabatinga municipality, Amazonas, Brazil in 2026?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "scope_match"
+      ],
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "1-123",
+      "uid": "3d2132cebbe36916",
+      "group": "direct",
+      "status": "not doing",
+      "query": "Break down greenhouse gas emissions and removals in Pará, Brazil by vegetation, soil and agriculture.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "chart_type",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "chart_type_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
+      "id": "1-124",
+      "uid": "f9431156b1b59300",
+      "group": "refusal",
+      "status": "not doing",
+      "query": "Which year had the highest organic soil emissions in Pará, Brazil?",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "chart_type",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "chart_type_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
+      "id": "1-125",
+      "uid": "ab11c24d6b51cc52",
+      "group": "comparative",
+      "status": "not doing",
+      "query": "Compare greenhouse gas emissions from soils in Pará and Amazonas, Brazil.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
+      "id": "1-127",
+      "uid": "4caeed10d6effd61",
+      "group": "refusal",
+      "status": "not doing",
+      "query": "What were global emissions from organic and mineral soils in 2024?",
+      "expected_fields": [
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
+      "id": "1-128",
+      "uid": "60bed919dd513c0d",
+      "group": "direct",
+      "status": "not doing",
+      "query": "Show me greenhouse gas emissions from agriculture in Pará, Brazil.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
+      "id": "1-129",
+      "uid": "e99ac0c7d7e74b59",
+      "group": "direct",
+      "status": "not doing",
+      "query": "Show me greenhouse gas emissions from livestock in Pará, Brazil.",
+      "expected_fields": [
+        "aoi_ids",
+        "aoi_source",
+        "dataset_id",
+        "dataset_name",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
       "id": "mt-001",
       "uid": "39840a3c054ab3bf",
       "group": "multiturn",
@@ -3026,7 +3200,7 @@
       "id": "mt-007",
       "uid": "ea4e5bf8c098c152",
       "group": "multiturn",
-      "status": "todo",
+      "status": "not doing",
       "turns": [
         "How much tree cover loss did Indonesia have in 2022?",
         "Are you sure? I read it was more than double that."
@@ -3075,6 +3249,114 @@
       ],
       "dataset_ids": [
         "4"
+      ]
+    },
+    {
+      "id": "mt-009",
+      "uid": "af8932d33bb444c5",
+      "group": "multiturn",
+      "status": "ready",
+      "turns": [
+        "Show me Tabatinga municipality in Amazonas, Brazil on the map",
+        "Now add disturbance alerts to the map for 2026"
+      ],
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "state_delta"
+      ],
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "mt-010",
+      "uid": "97a3b2c323800fbb",
+      "group": "multiturn",
+      "status": "not doing",
+      "turns": [
+        "Break down greenhouse gas emissions and removals in Pará, Brazil by vegetation, soil and agriculture.",
+        "Redraw that as a pie chart."
+      ],
+      "expected_fields": [
+        "aoi_ids",
+        "chart_type",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "chart_type_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match",
+        "state_delta"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
+      "id": "mt-011",
+      "uid": "5910b7e35b413544",
+      "group": "multiturn",
+      "status": "not doing",
+      "turns": [
+        "Break down greenhouse gas emissions and removals in Pará, Brazil by vegetation, soil and agriculture.",
+        "How does that compare with Amazonas, Brazil?"
+      ],
+      "expected_fields": [
+        "aoi_ids",
+        "chart_type",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "chart_type_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match",
+        "state_delta"
+      ],
+      "dataset_ids": [
+        "12"
+      ]
+    },
+    {
+      "id": "mt-012",
+      "uid": "edab678e96435330",
+      "group": "multiturn",
+      "status": "not doing",
+      "turns": [
+        "Break down greenhouse gas emissions and removals in Pará, Brazil by vegetation, soil and agriculture.",
+        "Why did soil emissions change between 2016 and 2024?"
+      ],
+      "expected_fields": [
+        "aoi_ids",
+        "chart_type",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "chart_type_match",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match",
+        "state_delta"
+      ],
+      "dataset_ids": [
+        "12"
       ]
     }
   ]

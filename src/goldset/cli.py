@@ -21,7 +21,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from goldset.adapter import case_to_expected
-from goldset.buckets import summarize_buckets
+from goldset.buckets import row_verdict, summarize_buckets
 from goldset.eval_types import TestResult
 from goldset.ledger import (
     RUNS_DIRNAME,
@@ -205,7 +205,13 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
         cases = [c for c in cases if args.group.lower() in c.group.lower()]
     if args.set:
         cases = [c for c in cases if c.set.lower() == args.set.lower()]
-    return sorted(cases, key=lambda c: c.id)
+    # With default string sorting, multi-turn cases get started last, since 'mt-'
+    # sorts after '1-'. But they take significant longer than the non-multi-turn
+    # cases, so force them to be started first (longest-processing-time-first
+    # scheduling). This speeds up the whole test run, since then you don't have a
+    # long tail of a few multi-turn cases trying to finish at the end of the test
+    # run.
+    return sorted(cases, key=lambda c: (not c.is_multiturn, c.id))
 
 
 async def run_cases(
@@ -230,6 +236,8 @@ async def run_cases(
     semaphore = asyncio.Semaphore(max(1, min(args.workers, 20)))
 
     run_started = datetime.now()
+    total_cases = len(cases)
+    completed_cases = 0
 
     def _resolve_case(case: Case) -> Case:
         """Expand template variables in queries, preserving the original uid."""
@@ -249,6 +257,7 @@ async def run_cases(
         )
 
     async def run_one(case: Case) -> dict:
+        nonlocal completed_cases
         async with semaphore:
             original_uid = case.uid
             resolved = _resolve_case(case)
@@ -279,14 +288,21 @@ async def run_cases(
                 entry["info"] = info
             if entry_sink is not None:
                 entry_sink(entry)
-            clean = (
-                all(v != 0.0 for v in entry["checks"].values())
-                and not entry.get("error")
-                and not entry.get("judge_errors")
-            )
+            # Same verdict the ledger and reports use (buckets.row_verdict): an
+            # info-only check (e.g. charts_answer_judge) scoring 0.0 must not
+            # print FAIL here when nothing gating actually failed.
+            verdict = row_verdict(entry)
+            label = {"fail": "FAIL", "error": "ERROR"}.get(verdict, "ok")
+            # status rides along so a FAIL on an unverified (ready/todo) case
+            # reads differently from a FAIL on a verified (done) one.
+            completed_cases += 1
             # flush: through a pipe, block buffering can hold every progress
             # line until exit — exactly when a killed run needs them visible.
-            print(f"  {case.id} [{'ok' if clean else 'FAIL'}]", flush=True)
+            print(
+                f"  {case.id} [{label}] status={case.status} "
+                f"({completed_cases}/{total_cases})",
+                flush=True,
+            )
             return entry
 
     return list(await asyncio.gather(*(run_one(case) for case in cases)))
@@ -331,14 +347,14 @@ def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
         run_record["resumed"] = True
     path = write_run(args.results_dir, run_record)
     partial.unlink()
-    failed = sum(
-        1 for e in entries
-        if any(v == 0.0 for v in e["checks"].values()) or e.get("error")
-    )
-    judge_failures = sum(1 for e in entries if e.get("judge_errors"))
+    # Gating verdict only (buckets.row_verdict) — an info-only check scoring
+    # 0.0 (e.g. charts_answer_judge) must not count as a failing case here,
+    # or this line lies about how many rows actually need attention.
+    failed = sum(1 for e in entries if row_verdict(e) == "fail")
+    errored = sum(1 for e in entries if row_verdict(e) == "error")
     line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
-    if judge_failures:
-        line += f", {judge_failures} with JUDGE ERRORS (rerun before trusting)"
+    if errored:
+        line += f", {errored} with ERRORS (rerun before trusting)"
     print(line)
     return 0
 

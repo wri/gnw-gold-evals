@@ -19,6 +19,7 @@ from goldset.buckets import (
     BUCKETS,
     INFO_ONLY,
     implied_checks_for_case,
+    is_info_only,
     reconcile,
     row_verdict,
     summarize_buckets,
@@ -43,7 +44,11 @@ def _bucket_line(name: str, block: dict) -> str:
     return f"| {name} | {score} | {block['rows_covered']} |"
 
 
-def render(run: dict, expected_by_uid: dict[str, dict[str, str]]) -> str:
+def render(
+    run: dict,
+    expected_by_uid: dict[str, dict[str, str]],
+    status_by_uid: dict[str, str] | None = None,
+) -> str:
     entries = run["results"]
     buckets = run.get("buckets") or summarize_buckets(entries)
     verdicts = buckets["verdicts"]
@@ -95,8 +100,11 @@ def render(run: dict, expected_by_uid: dict[str, dict[str, str]]) -> str:
         lines += ["", "## Failing rows", ""]
         for entry in failing:
             failed = [n for n, v in entry["checks"].items()
-                      if v == 0.0 and n not in INFO_ONLY]
-            lines.append(f"- {entry['id']}: {', '.join(sorted(failed))}")
+                      if v == 0.0 and not is_info_only(n)]
+            status = (status_by_uid or {}).get(entry.get("uid") or "", "stale_case")
+            lines.append(
+                f"- {entry['id']} (status: {status}): {', '.join(sorted(failed))}"
+            )
             # multiturn detail (PR-09 H5): which turn sent what
             for number, turn in enumerate(entry.get("turns_detail") or [], start=1):
                 turn_failed = [n for n in failed if n.startswith(f"t{number}.")]
@@ -126,11 +134,10 @@ def main() -> int:
     args = parser.parse_args()
 
     run = read_run(args.run)
-    expected_by_uid = {
-        case.uid: implied_checks_for_case(case)
-        for _p, case, _u in load_store(args.cases_dir)
-    }
-    print(render(run, expected_by_uid))
+    store = list(load_store(args.cases_dir))
+    expected_by_uid = {case.uid: implied_checks_for_case(case) for _p, case, _u in store}
+    status_by_uid = {case.uid: case.status for _p, case, _u in store}
+    print(render(run, expected_by_uid, status_by_uid))
     return 0
 
 

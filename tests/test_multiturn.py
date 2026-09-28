@@ -308,3 +308,49 @@ async def test_cli_dispatches_conversations_to_run_conversation(
     entries = await run_cases(args, [CASE])
     assert calls == [("mt-x", "result_to_entry")]
     assert entries[0]["checks"] == {"t1.aoi_id_match": 1.0}
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize("anyio_backend", ["asyncio"])  # run_cases is asyncio-only
+async def test_progress_counter_reaches_total_regardless_of_completion_order(
+    anyio_backend, monkeypatch, tmp_path, capsys
+):
+    """Each stdout progress line ends with (completed/total); concurrent
+    cases can finish out of input order, so the count must track completion
+    order, not case order, and must land on N/N exactly once."""
+    import argparse
+    import asyncio
+
+    from goldset.cli import run_cases
+    from goldset.store import Case
+
+    cases = [
+        Case(id=f"mt-{n}", status="ready", group="multiturn", turns=TURNS)
+        for n in range(3)
+    ]
+
+    async def fake_run_conversation(
+        runner, case, result_to_entry, artifact_sink_factory=None
+    ):
+        # reverse-order delay: mt-2 finishes first, mt-0 finishes last —
+        # the opposite of input order, to prove the counter isn't just
+        # echoing each case's position in `cases`.
+        await asyncio.sleep(0.03 * (2 - int(case.id.split("-")[1])))
+        return {"uid": case.uid, "id": case.id, "checks": {"t1.aoi_id_match": 1.0}}
+
+    monkeypatch.setattr(
+        "goldset.runner.multiturn.run_conversation", fake_run_conversation
+    )
+    args = argparse.Namespace(
+        resolved_url="https://api.example", api_token="tok", ff=None, verbose=False,
+        results_dir=tmp_path, run_id="r1", workers=3, trials=1,
+        slow_threshold=180.0, trial_timeout=900.0,
+    )
+    await run_cases(args, cases)
+    lines = [line for line in capsys.readouterr().out.splitlines() if line.strip()]
+    assert len(lines) == 3
+    counts = [line.rsplit("(", 1)[1].rstrip(")") for line in lines]
+    assert sorted(counts) == ["1/3", "2/3", "3/3"]
+    # mt-2 was scheduled to finish first
+    assert lines[0].startswith("  mt-2 ") and lines[0].endswith("(1/3)")
+    assert lines[-1].endswith("(3/3)")

@@ -22,6 +22,14 @@ from goldset.models import HAIKU
 # was actually inside). So for both, the model only extracts — which figure in the chart
 # data or the prose answers the question — and `resolve_chart_verdict`/
 # `resolve_answer_verdict` apply this constant in code against that extraction.
+#
+# `resolve_answer_verdict`'s parser is locale-blind, though (English scale words, `.` as
+# the decimal separator), which `chart_numeric`'s candidates never had to be — they come
+# pre-parsed out of JSON, not prose in whatever language the agent answered in. Two live
+# rows caught it misreading a correct answer as a huge miss: 1-094 ("61.19万公顷", the
+# Chinese scale word for 10,000, read as bare 61.19) and 1-091 ("289,11 hectares", French
+# decimal comma, read as 28,911). So the deterministic check's FAIL is not final the way
+# the chart's is — see `resolve_answer_verdict`'s docstring for the asymmetric fallback.
 NUMERIC_TOLERANCE = 0.02
 _TOLERANCE_PCT = f"{NUMERIC_TOLERANCE:.0%}"
 
@@ -33,8 +41,8 @@ _NUMERIC_RULES = f"""
                 - Expected answer contains numbers: "198.4 hectares", "0.20%", "211 kha", "924,000 km²"
                 - **Extraction rule**: Identify THE main answer number (usually stated as "total", "X hectares were", or the first/most prominent number directly answering the question) — not a breakdown/detail number.
                   - Example: "A total of 231.97 hectares were affected. Short vegetation had 176.36 ha..." → the main number is 231.97, not 176.36
-                - Copy that number into `extracted_number` **exactly as written** in the actual answer, including its unit and sign (e.g. "200 hectares", "-286,994 Mg CO2e", "0.19%"). Do not convert units, round it, or compare it to the expected value yourself — a deterministic check applies the {_TOLERANCE_PCT} tolerance to `extracted_number` afterward, because that comparison is not reliable coming from you.
-                - Still set `score` to your own best guess for this row. It is a fallback used only on the rare row where `extracted_number` cannot be parsed automatically, so it is normally overridden.
+                - Copy that number into `extracted_number` **exactly as written** in the actual answer, including its unit and sign (e.g. "200 hectares", "-286,994 Mg CO2e", "0.19%"). Do not convert units or round it — a deterministic check normally applies the {_TOLERANCE_PCT} tolerance to `extracted_number` in code instead of you computing it.
+                - Still give `score` your own careful best judgement of whether the actual value matches the expected value (roughly {_TOLERANCE_PCT} or closer counts as a match) — use your understanding of the actual answer's language and numeric conventions (a decimal comma in French/German/Indonesian text, a non-English scale word, etc.). The deterministic check above cannot read those conventions, so when it disagrees with a PASS from you, your score is trusted instead — a mismatch there is usually the parser misreading the number, not the agent being wrong. A FAIL from you never overrides a deterministic PASS.
                 - Leave `extracted_number` as an empty string for every answer type other than NUMERIC.
 """
 
@@ -207,20 +215,30 @@ def resolve_answer_verdict(
     judge_reason: str,
     judge_score: int,
 ) -> dict[str, Any]:
-    """Override the judge's numeric score with a deterministic tolerance check.
+    """Combine the deterministic numeric check and the judge's own score.
 
-    Mirrors ``resolve_chart_verdict``: the judge only extracts which number in the
-    prose answers the question; the match/no-match decision is computed here against
-    ``NUMERIC_TOLERANCE``, the same constant and the same parser (``parse_expected_number``)
-    the chart comparator uses, so an answer and its chart cannot disagree about what
-    "within tolerance" means. This exists because the judge was not applying its own
-    stated rule consistently (see the module comment on ``NUMERIC_TOLERANCE``).
+    The deterministic check — the same ``NUMERIC_TOLERANCE`` and
+    ``parse_expected_number`` the chart comparator uses — decides first, so an
+    answer and its chart cannot disagree about what "within tolerance" means.
+    This exists because the judge was not applying its own stated tolerance
+    rule consistently (1-009: see the module comment on ``NUMERIC_TOLERANCE``).
 
-    Falls back to the judge's own score/reason whenever the deterministic check cannot
-    run at all: a non-numeric row, an empty extraction, either side failing to parse
-    (an ambiguous decimal, no number found), or expected/actual disagreeing on whether
-    the figure is a percentage. That population is left exactly as reliable as it was
-    before this change — no worse, and no new ``null``s introduced.
+    Unlike ``resolve_chart_verdict``, a deterministic FAIL here is not final.
+    The parser only understands English scale words and a period decimal
+    separator, because that is all the chart comparator's JSON-native
+    candidates ever needed — but this check parses free-form prose, which can
+    be written in any language. Two live rows caught it silently misreading a
+    correct answer as a huge miss: 1-094 ("61.19万公顷", the Chinese scale word
+    for 10,000, read as bare 61.19) and 1-091 ("289,11 hectares", a French
+    decimal comma, read as 28,911). So on a deterministic FAIL, the judge's own
+    score is consulted as a second opinion — it saw the actual prose and can
+    read the language/numeric convention the parser can't — and a judge PASS
+    there overrides to a pass.
+
+    Falls back to the judge's own score/reason outright when the deterministic
+    check cannot run at all: a non-numeric row, an empty extraction, either
+    side failing to parse (an ambiguous decimal, no number found), or
+    expected/actual disagreeing on whether the figure is a percentage.
     """
     if answer_eval_type != "numeric" or not extracted_number:
         return {"score": judge_score, "reason": judge_reason}
@@ -233,13 +251,25 @@ def resolve_answer_verdict(
     difference = abs(actual.value - expected.value) / abs(expected.value)
     within = difference <= NUMERIC_TOLERANCE
     unit = "%" if expected.is_percent else ""
-    reason = (
+    deterministic_reason = (
         f"deterministic check: expected {format_number(expected.value)}{unit}, "
         f"extracted {format_number(actual.value)}{unit} from \"{extracted_number}\", "
         f"a {difference:.2%} difference, "
         f"{'within' if within else 'exceeding'} the {_TOLERANCE_PCT} tolerance"
     )
-    return {"score": 1 if within else 0, "reason": reason}
+    if within:
+        return {"score": 1, "reason": deterministic_reason}
+
+    if judge_score == 1:
+        return {
+            "score": 1,
+            "reason": (
+                f"{deterministic_reason} — overriding the deterministic check "
+                f"(locale-blind number parsing): the judge read the actual "
+                f"answer and says it matches: {judge_reason}"
+            ),
+        }
+    return {"score": 0, "reason": f"{deterministic_reason}. {judge_reason}"}
 
 
 def llm_judge(
