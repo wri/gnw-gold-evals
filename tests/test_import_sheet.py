@@ -227,3 +227,14 @@ def test_fetch_decodes_bom(monkeypatch):
         lambda url, timeout: FakeResponse(),
     )
     assert fetch("https://example.test/export") == "test_id,query\n1-001,héllo\n"
+
+
+def test_set_flag_stamps_set_without_changing_uid(tmp_path):
+    plain, _, _ = parse_cases(SHEET)
+    stamped, _, _ = parse_cases(SHEET, case_set="map")
+    assert all(c.set == "map" for c in stamped)
+    assert [c.uid for c in plain] == [c.uid for c in stamped]
+    assert run_import(SHEET, tmp_path, "test", prune=False,
+                      source_tab="seed", case_set="map") == 0
+    paths = sorted(p.relative_to(tmp_path).parts[0] for p, _c, _u in load_store(tmp_path))
+    assert set(paths) == {"map"}

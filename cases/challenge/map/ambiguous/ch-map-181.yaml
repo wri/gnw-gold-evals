@@ -1,0 +1,16 @@
+id: ch-map-181
+uid: 7c5411a47ba50f62
+status: ready
+set: map
+group: ambiguous
+query: Show forest change on the map
+expected:
+  nudge_type: dataset_choice
+  nudge_options: Tree cover loss;Tree cover gain;Global land cover
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: nudge
+  lineage: loss, gain or land cover change; genuinely open
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

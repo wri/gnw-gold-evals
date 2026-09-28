@@ -1,0 +1,14 @@
+id: ch-map-005
+uid: 645f377d5f6f92ba
+status: ready
+set: map
+group: land-cover
+query: Show where cropland and built-up land are on the map
+expected:
+  dataset_id: '1'
+  forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+notes:
+  difficulty: medium
+  behaviour: select
+  verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
+  source_tab: challenge-map-v1

@@ -49,7 +49,12 @@ results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | ch
       "actuals": {                      // failed checks only: the measured
         "agent_answer": "1,299,278 ha"  // values, so reports can show
       },                                // expected vs measured (PR-13 on)
-      "latency_s": 49.9,
+      "latency_s": 49.9,                // POST /api/chat -> final state (and
+                                        // dashboard) fetched; excludes scoring
+                                        // and judge time
+      "stream_s": 47.12,                // POST /api/chat -> last stream line
+                                        // only: the agent turn. The latency
+                                        // to compare (2026-09-25 on)
       "trace_url": "https://langfuse...."
     }
   ]

@@ -176,7 +176,7 @@ const GROUPS = [
   ["explanation", ["expected_text_match","web_fallback"]],
   ["output", ["chart_produced","chart_well_formed","chart_type_match",
     "dashboard_aoi_match","dashboard_widgets_match","dashboard_widgets_valid"]],
-  ["scope", ["scope_match","clarification_requested","suggested_datasets_match","nudge_match"]],
+  ["scope", ["scope_match","clarification_requested","suggested_datasets_match","nudge_match","forbidden_tools_absent"]],
   ["shared", ["charts_answer","agent_answer","dashboard_created"]],
   ["info", ["date_coverage","answer_traceability","class_value_match"]],
 ];
@@ -190,6 +190,7 @@ const EXPECTED_FIELD = {
   dashboard_widgets_match:["dashboard_widgets"], dashboard_widgets_valid:["dashboard_widgets"],
   dashboard_aoi_match:["aoi_ids"], class_value_match:["class_values"],
   chart_type_match:["chart_type"], scope_match:["scope"],
+  forbidden_tools_absent:["forbidden_tools"],
 };
 const GUARD_NOTE = {
   chart_produced:"implied by expected.answer", data_pull_exists:"implied by the expectations",

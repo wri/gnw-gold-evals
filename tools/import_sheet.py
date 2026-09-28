@@ -71,7 +71,9 @@ def note_key(column: str) -> str:
 SYNC_COLUMNS = {"uid", "last_changed"}
 
 
-def parse_cases(text: str, source_tab: str = "") -> tuple[list[Case], int, list[str]]:
+def parse_cases(
+    text: str, source_tab: str = "", case_set: str = ""
+) -> tuple[list[Case], int, list[str]]:
     """Parse the sheet CSV into cases.
 
     Returns (cases, skipped_empty_query, sheet_edited_ids) — the last being
@@ -111,6 +113,7 @@ def parse_cases(text: str, source_tab: str = "") -> tuple[list[Case], int, list[
         case = Case(
             id=normalize_text(record["test_id"]),
             status=normalize_text(record["status"]).lower(),
+            set=case_set,
             group=normalize_text(record["test_group"]),
             query=normalize_text(record["query"]),
             expected=expected,
@@ -141,8 +144,11 @@ def run_import(
     prune: bool,
     source_tab: str = "",
     update: bool = False,
+    case_set: str = "",
 ) -> int:
-    cases, skipped, sheet_edited = parse_cases(text, source_tab=source_tab)
+    cases, skipped, sheet_edited = parse_cases(
+        text, source_tab=source_tab, case_set=case_set
+    )
     problems = [p for case in cases for p in case.validate()]
     if problems:
         print("invalid cases, aborting:", *problems, sep="\n  ")
@@ -229,6 +235,9 @@ def main() -> int:
     parser.add_argument("--source-tab", default=None,
                         help="override the source_tab label (defaults to gid:<gid> "
                              "or the file/url name)")
+    parser.add_argument("--set", dest="case_set", default="",
+                        help="CHALLENGE set to stamp on every imported case "
+                             "(adds the <set>/ directory level; never hashed)")
     args = parser.parse_args()
 
     if args.source_tab is not None and not args.source_tab.strip():
@@ -258,7 +267,7 @@ def main() -> int:
         source_tab = args.source_tab
     return run_import(
         text, args.cases_dir, source, args.prune,
-        source_tab=source_tab, update=args.update,
+        source_tab=source_tab, update=args.update, case_set=args.case_set.strip(),
     )
 
 

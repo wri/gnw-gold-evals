@@ -49,6 +49,7 @@ from goldset.buckets import (
     base_check_name,
     implied_checks_for_case,
 )
+from goldset.evaluators.dataset_evaluator import NO_SELECTION
 from goldset.store import load_store, read_manifest
 
 ACTIVE_EXCLUDED = {"not doing"}
@@ -74,6 +75,7 @@ FIELD_CHECKS = {
     "class_values": "class_value_match (info-only)",
     "chart_type": "chart_type_match",
     "scope": "scope_match",
+    "forbidden_tools": "forbidden_tools_absent",
     "aoi_source": "reference only (dashboard AOI source)",
     "dataset_name": "reference only",
 }
@@ -96,8 +98,13 @@ def expected_records(case) -> list[dict]:
 
 
 def split_dataset_ids(value: object) -> set[str]:
-    """Expected dataset_id values accept alternatives: '0;11' means either."""
-    return {part.strip() for part in str(value or "").split(";") if part.strip()}
+    """Expected dataset_id values accept alternatives: '0;11' means either.
+    The ``no_selection`` sentinel (no dataset is correct) is not a dataset."""
+    return {
+        part.strip()
+        for part in str(value or "").split(";")
+        if part.strip() and part.strip().lower() != "no_selection"
+    }
 
 
 def expected_parameter_names(expected: dict, case_id: str) -> set[str]:
@@ -405,10 +412,16 @@ def collect(cases_dir: Path, catalog_path: Path | None = None) -> dict:
 # Interim set -> taxonomy-intent map, until cases/taxonomy.yml owns it: the
 # store names the Spatial intent after its tool ("aoi"); the other sets are
 # already named after their intent.
-INTENT_BY_SET = {"aoi": "spatial"}
+# map is spatial too: the trace taxonomy's view-only intent (show on a map,
+# no metric). The two stay apart on the matrix via dataset_ids.
+INTENT_BY_SET = {"aoi": "spatial", "map": "spatial"}
 
-# Sets whose groups are prompt subtypes rather than datasets.
-SUBTYPE_GROUP_SETS = {"aoi"}
+# Groups that are prompt subtypes rather than datasets, per set. None means
+# every group in the set; the map set mixes dataset cohorts with these.
+SUBTYPE_GROUPS: dict[str, set[str] | None] = {
+    "aoi": None,
+    "map": {"multilingual", "context-layer", "ambiguous", "unmappable"},
+}
 
 
 def case_dataset_ids(case) -> list[str]:
@@ -423,7 +436,16 @@ def case_dataset_ids(case) -> list[str]:
         for part in (expected.get("dataset_id") or "").split(";")
         if part.strip()
     }
+    # no_selection is a scoring sentinel, not a dataset.
+    ids.discard(NO_SELECTION)
     return sorted(ids)
+
+
+def is_subtype_group(case) -> bool:
+    if case.set not in SUBTYPE_GROUPS:
+        return False
+    groups = SUBTYPE_GROUPS[case.set]
+    return groups is None or case.group in groups
 
 
 def case_facets(case) -> dict:
@@ -436,7 +458,7 @@ def case_facets(case) -> dict:
         facets["intent"] = INTENT_BY_SET.get(case.set, case.set)
     facets["dataset_ids"] = case_dataset_ids(case)
     subtype = case.notes.get("eval_subtype") or (
-        case.group if case.set in SUBTYPE_GROUP_SETS else None)
+        case.group if is_subtype_group(case) else None)
     if subtype:
         facets["subtype"] = subtype
     return facets

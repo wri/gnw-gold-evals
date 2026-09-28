@@ -148,6 +148,7 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
                 "query": turn["query"],
                 "reasons": e.get("reasons"),
                 "latency_s": e.get("latency_s"),
+                "stream_s": e.get("stream_s"),
                 "trace_url": e.get("trace_url"),
             }
             for turn, e in zip(case.turns, turn_entries)
@@ -170,6 +171,9 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
     latencies = [e.get("latency_s") for e in turn_entries if e.get("latency_s")]
     if latencies:
         entry["latency_s"] = round(sum(latencies), 1)
+    streams = [e.get("stream_s") for e in turn_entries]
+    if streams and all(s is not None for s in streams):
+        entry["stream_s"] = round(sum(streams), 2)
     return entry
 
 

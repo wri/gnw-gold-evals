@@ -221,3 +221,84 @@ def test_load_targets_nested_shape(tmp_path):
     assert targets["overall"] == 0.7
     assert targets["sets"]["aoi"]["overall"] == 0.7
     assert targets["sets"]["aoi"]["targets"] == {"acronyms": 0.8}
+
+
+def test_strict_clean_reads_ledger_list_shaped_trials():
+    """The ledger writes trials as a list (cli.merge_trials); a dict-only
+    reader crashed on every real 3-trial run with a passing row."""
+    flapping = {
+        "checks": {"aoi_id_match": 1.0},
+        "trials": [
+            {"checks": {"aoi_id_match": 1.0}, "latency_s": 3.0},
+            {"checks": {"aoi_id_match": 0.0}, "latency_s": 4.0},
+            {"checks": {"aoi_id_match": 1.0}, "latency_s": 5.0},
+        ],
+    }
+    assert challenge_rollup.strict_clean(flapping) is False
+    clean = dict(flapping, trials=[{"checks": {"aoi_id_match": 1.0}}] * 3)
+    assert challenge_rollup.strict_clean(clean) is True
+
+
+def test_latency_percentiles_per_cohort(tmp_path):
+    cases_dir, by_uid = make_store(tmp_path)
+    uids = {case.id: uid for uid, case in by_uid.items()}
+    run = make_run(uids)
+    run["results"][0]["latency_s"] = 2.0          # g1 pass, 1 trial
+    run["results"][1]["latency_s"] = 10.0         # g1 fail, 1 trial
+    run["results"][2]["latency_s"] = 99.0         # errored: excluded
+    run["results"][3]["trials"] = [                # g2, list-shaped trials
+        {"checks": {"aoi_id_match": 1.0}, "latency_s": 3.0},
+        {"checks": {"aoi_id_match": 0.0}, "latency_s": 4.0},
+        {"checks": {"aoi_id_match": 1.0}, "latency_s": 5.0},
+    ]
+    rollup = challenge_rollup.rollup_run(run, by_uid)
+    g1 = rollup["by_set"]["s1"]["by_group"]["g1"]
+    assert g1["latency_n"] == 2
+    assert g1["latency_median_s"] == 2.0 and g1["latency_p90_s"] == 10.0
+    g2 = rollup["by_set"]["unset"]["by_group"]["g2"]
+    assert g2["latency_n"] == 3 and g2["latency_median_s"] == 4.0
+    assert rollup["overall"]["latency_n"] == 5
+    assert "_latencies" not in g1
+    text = challenge_rollup.render_markdown([rollup], {"sets": {}, "overall": None, "meta": {}})
+    assert "| median s | p90 s |" in text
+
+
+def test_percentile_edges():
+    assert challenge_rollup.percentile([], 50) is None
+    assert challenge_rollup.percentile([7.0], 90) == 7.0
+    assert challenge_rollup.percentile([1.0, 2.0, 3.0, 4.0], 50) == 2.0
+
+
+def test_latency_prefers_stream_s_and_reports_mean_and_basis(tmp_path):
+    cases_dir, by_uid = make_store(tmp_path)
+    uids = {case.id: uid for uid, case in by_uid.items()}
+    run = make_run(uids)
+    run["workers"] = 1
+    run["results"][0].update(latency_s=9.0, stream_s=2.0)
+    run["results"][1].update(latency_s=9.0, stream_s=4.0)
+    rollup = challenge_rollup.rollup_run(run, by_uid)
+    g1 = rollup["by_set"]["s1"]["by_group"]["g1"]
+    assert g1["latency_median_s"] == 2.0 and g1["latency_mean_s"] == 3.0
+    assert rollup["latency_basis"] == {"stream_s": 2}
+    assert rollup["workers"] == 1
+
+
+def test_cross_run_latency_table_and_comparability_warning(tmp_path):
+    cases_dir, by_uid = make_store(tmp_path)
+    uids = {case.id: uid for uid, case in by_uid.items()}
+    a, b = make_run(uids), make_run(uids)
+    for run, workers, stream in ((a, 1, 2.0), (b, 1, 3.0)):
+        run["workers"] = workers
+        for entry in run["results"]:
+            entry["stream_s"] = stream
+    b["run_id"] = "20260902T000000Z_local"
+    ra = challenge_rollup.rollup_run(a, by_uid)
+    rb = challenge_rollup.rollup_run(b, by_uid)
+    text = challenge_rollup.render_markdown([ra, rb], {"sets": {}, "overall": None, "meta": {}})
+    assert "## Cross-run latency" in text
+    assert "| s1 / g1 | 2.0 / 2.0 / 2.0 | 3.0 / 3.0 / 3.0 | +1.0 |" in text
+    assert "latency NOT comparable" not in text
+    rb["workers"] = 10
+    rb["environment"] = "local"
+    text = challenge_rollup.render_markdown([ra, rb], {"sets": {}, "overall": None, "meta": {}})
+    assert "workers differ" in text and "env differs" in text
