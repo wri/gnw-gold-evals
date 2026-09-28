@@ -18,8 +18,9 @@ parse Markdown tables or 600 case YAMLs):
 - ``<cases-dir>/coverage.json`` — the COVERAGE.md sections as data, plus
   the store's TARGETS.yml embedded when present.
 - ``<cases-dir>/cases_index.json`` — one row per case (uid, id, set,
-  group, status, difficulty/behaviour notes, query text, expected fields)
-  so run results can be joined back to their prompts by uid.
+  group, status, difficulty/behaviour notes, query text, expected fields,
+  implied checks, and the facets intent / dataset_ids / subtype) so run
+  results can be joined back to their prompts by uid.
 
 ``--check`` verifies all three; the JSONs carry no date stamp, so their
 freshness check is a plain byte compare.
@@ -401,12 +402,54 @@ def collect(cases_dir: Path, catalog_path: Path | None = None) -> dict:
     }
 
 
+# Interim set -> taxonomy-intent map, until cases/taxonomy.yml owns it: the
+# store names the Spatial intent after its tool ("aoi"); the other sets are
+# already named after their intent.
+INTENT_BY_SET = {"aoi": "spatial"}
+
+# Sets whose groups are prompt subtypes rather than datasets.
+SUBTYPE_GROUP_SETS = {"aoi"}
+
+
+def case_dataset_ids(case) -> list[str]:
+    """Every dataset the case expects, across turns, sorted and unique.
+    ``dataset_id`` is ';'-separated like ``aoi_ids`` when a case spans
+    several. Empty for dataset-agnostic cases (e.g. place finding)."""
+    expectations = ([turn.get("expected") or {} for turn in case.turns]
+                    if case.is_multiturn else [case.expected])
+    ids = {
+        part.strip()
+        for expected in expectations
+        for part in (expected.get("dataset_id") or "").split(";")
+        if part.strip()
+    }
+    return sorted(ids)
+
+
+def case_facets(case) -> dict:
+    """Explicit facets for consumers that must not infer meaning from
+    ``group`` (a dataset in the numeric sets, a prompt class in aoi):
+    ``intent`` (CHALLENGE only), ``dataset_ids`` (always) and ``subtype``
+    (from ``notes.eval_subtype``, else the group for subtype-grouped sets)."""
+    facets: dict = {}
+    if case.set:
+        facets["intent"] = INTENT_BY_SET.get(case.set, case.set)
+    facets["dataset_ids"] = case_dataset_ids(case)
+    subtype = case.notes.get("eval_subtype") or (
+        case.group if case.set in SUBTYPE_GROUP_SETS else None)
+    if subtype:
+        facets["subtype"] = subtype
+    return facets
+
+
 def collect_cases_index(cases_dir: Path) -> dict:
     """cases_index.json content: the FE's uid join table — id, uid, set,
     group, status, difficulty/behaviour notes, query text, expected fields,
-    and the case's implied gating checks (base names, info-only stripped,
+    the case's implied gating checks (base names, info-only stripped,
     same recipe as bucket_case_coverage) so consumers can compute bucket
-    coverage exactly as the harness reconciles it. Queries are already
+    coverage exactly as the harness reconciles it, and the case facets
+    (intent, dataset_ids, subtype) so the dashboard's intent x dataset
+    matrix never has to infer meaning from ``group``. Queries are already
     public in the case YAMLs, so nothing new leaks."""
     manifest = read_manifest(cases_dir)
     if manifest is None:
@@ -431,6 +474,7 @@ def collect_cases_index(cases_dir: Path) -> dict:
             base_check_name(c) for c in implied_checks_for_case(case)
         } - INFO_ONLY
         row["implied_checks"] = sorted(implied)
+        row.update(case_facets(case))
         rows.append(row)
     return {
         "schema_version": 1,
