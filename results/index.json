@@ -1304,6 +1304,18 @@
           }
         }
       }
-    ]
+    ],
+    "benchmark": []
+  },
+  "benchmarks": {
+    "2026-draft": {
+      "path": "benchmarks/2026-draft.json",
+      "status": "draft",
+      "frozen": null,
+      "members": 100,
+      "voided": 0,
+      "runs": [],
+      "canonical_runs": []
+    }
   }
 }
