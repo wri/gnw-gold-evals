@@ -1,0 +1,19 @@
+id: ch-trend-047
+uid: 2b8e79586399d16a
+status: ready
+set: trend
+group: grasslands
+query: In Ghana, how does the natural/semi-natural grassland extent in 2015 compare to what
+  it was in 2000?
+expected:
+  aoi_ids: GHA
+  dataset_id: '2'
+  start_date: '2000-01-01'
+  end_date: '2015-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare grassland extent (area_ha) at the start and end of the window.
+  eval_subtype: change_over_period
+  manifest_id: m-grass-trend-06
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

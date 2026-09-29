@@ -1,0 +1,23 @@
+id: ch-aoi-154
+uid: 88e7350d3b3bd94e
+status: ready
+set: aoi
+group: designations
+query: Zoom to Tumucumaque Mountains National Park
+expected:
+  aoi_ids: '351784'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch, breadth added after the scorer review:
+    designation-in-leaf, translated: the stored leaf is the Portuguese official name and the
+    designation column is just ''Parque''; WDPA 10801 ''Parque do Tumucumaque, Terra Indígena,
+    BRA'' is the near-miss. Stored row "Parque Nacional Montanhas Do Tumucumaque, Parque,
+    BRA" (wdpa).'
+  verify_query: Tumucumaque
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 scorer-fix review asked for untested classes (Landmark source, designation-in-leaf)
+  observed: 'prod 2026-09-15: 1-trial smoke pass, then 3/3 pass on re-verification. On the deterministic
+    two-term frames recorded for the scorer fix (project-zeno tests/fixtures/aoi_designation_candidates_v1.json,
+    terms = place + canonical only) the shipped scorer loses to three rows tied on the '' Mountains, National Park, '' substring (Blue / Bale / Loma Mountains); the live geocoder''s extra
+    alternatives are what carry it on prod, so this row is a margin case, not a solid pass; regression guard for the scorer change rather than a failure to flip'

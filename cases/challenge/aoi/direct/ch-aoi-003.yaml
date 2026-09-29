@@ -1,0 +1,15 @@
+id: ch-aoi-003
+uid: 504c61ab6dae208f
+status: ready
+set: aoi
+group: direct
+query: Zoom to Kenya
+expected:
+  aoi_ids: KEN
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: baseline
+  verify_query: Kenya
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

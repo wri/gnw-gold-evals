@@ -1,29 +1,12 @@
 {
   "source": {
-    "repo": "git@github.com:wri/project-zeno.git",
+    "repo": "https://github.com/wri/project-zeno.git",
     "ref": "origin/main",
-    "sha": "f9cf409cccf0a7ba2a985e8d0945db1c6fd44cc9",
+    "sha": "e2fb83f89469eda483830257f9b40c7ef21a6ebd",
     "path": "src/agent/datasets/catalog",
-    "synced": "2026-08-07"
+    "synced": "2026-09-25"
   },
   "datasets": [
-    {
-      "dataset_id": "0",
-      "dataset_name": "Global all ecosystem disturbance alerts (DIST-ALERT)",
-      "parameters": [],
-      "context_layers": [
-        "driver",
-        "natural_lands",
-        "grasslands",
-        "land_cover"
-      ],
-      "instructions": [
-        "prompt_instructions",
-        "selection_hints",
-        "code_instructions",
-        "presentation_instructions"
-      ]
-    },
     {
       "dataset_id": "1",
       "dataset_name": "Global land cover",

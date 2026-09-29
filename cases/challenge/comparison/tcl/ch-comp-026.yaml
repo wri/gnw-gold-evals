@@ -1,0 +1,19 @@
+id: ch-comp-026
+uid: 96a3730c61f3065b
+status: ready
+set: comparison
+group: tcl
+query: Comparing 2012-2017 with 2018-2023, which period saw greater tree cover loss in Costa
+  Rica, counting all forest types?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare the two halves of the window (2012-2017 vs 2018-2023).
+  eval_subtype: two_period
+  manifest_id: m-tcl-comp-15
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-15b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

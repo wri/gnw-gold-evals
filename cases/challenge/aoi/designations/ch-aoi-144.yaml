@@ -1,0 +1,18 @@
+id: ch-aoi-144
+uid: 14d00b8789e525ab
+status: ready
+set: aoi
+group: designations
+query: Show me Cordillera Azul National Park
+expected:
+  aoi_ids: '303320'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch: the user names the area with an English
+    designation while the WDPA row stores it as "Cordillera Azul, Parque Nacional, PER". Spanish
+    designation, two-word leaf shared as a prefix by other ''Cordillera …'' reserves.'
+  verify_query: Cordillera Azul
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
+  observed: 'prod smoke 2026-09-15 (1 trial): pass'

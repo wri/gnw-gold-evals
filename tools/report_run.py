@@ -1,6 +1,6 @@
 """Render the four-layer GOLD report for a ledger run (PR-05).
 
-    uv run python tools/report_run.py results/runs/<run_id>.json
+    uv run python tools/report_run.py results/gold/runs/<run_id>.json
 
 Layers: row verdicts -> bucket table (scores beside coverage denominators)
 -> reconciliation (implied vs evaluated, misses itemised) -> diagnostics

@@ -1,0 +1,19 @@
+id: ch-comp-088
+uid: 956ea0dc85b591dd
+status: ready
+set: comparison
+group: integrated-alerts
+query: so like between Ghana and Côte d'Ivoire, which one had more of them deforestation alert
+  type clearing going on from January 1 to June 30 2024, ballpark?
+expected:
+  aoi_ids: GHA;CIV
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-06-30'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare total alert area (area_ha) for 1 Jan to 30 Jun 2024.
+  eval_subtype: two_country
+  manifest_id: m-ialert-comp-09
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-comp-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

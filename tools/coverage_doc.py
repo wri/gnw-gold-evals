@@ -1,7 +1,7 @@
-"""Generate the case-set coverage document (COVERAGE.md).
+"""Generate the case-set coverage artefacts (COVERAGE.md + JSON siblings).
 
-Like MANIFEST.json, the output is derived from the case store and never
-hand-edited: it outlines what the set contains (groups, statuses, fields,
+Like MANIFEST.json, the outputs are derived from the case store and never
+hand-edited: they outline what the set contains (groups, statuses, fields,
 multi-turn shapes) and what it covers (which buckets the active cases'
 implied checks reach), plus the gaps. Regenerate after any case edit:
 
@@ -10,6 +10,20 @@ implied checks reach), plus the gaps. Regenerate after any case edit:
 
 Coverage counts use gating checks only; info-only checks are reported
 separately because they never enter a verdict.
+
+Alongside the Markdown, the same run emits two machine-readable siblings
+for the evals dashboard (which fetches them from GitHub raw and cannot
+parse Markdown tables or 600 case YAMLs):
+
+- ``<cases-dir>/coverage.json`` — the COVERAGE.md sections as data, plus
+  the store's TARGETS.yml embedded when present.
+- ``<cases-dir>/cases_index.json`` — one row per case (uid, id, set,
+  group, status, difficulty/behaviour notes, query text, expected fields,
+  implied checks, and the facets intent / dataset_ids / subtype) so run
+  results can be joined back to their prompts by uid.
+
+``--check`` verifies all three; the JSONs carry no date stamp, so their
+freshness check is a plain byte compare.
 """
 
 from __future__ import annotations
@@ -24,6 +38,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from challenge_rollup import load_targets
 from sync_zeno_catalog import INSTRUCTION_FIELDS
 
 from goldset.buckets import (
@@ -34,6 +49,7 @@ from goldset.buckets import (
     base_check_name,
     implied_checks_for_case,
 )
+from goldset.evaluators.dataset_evaluator import NO_SELECTION
 from goldset.store import load_store, read_manifest
 
 ACTIVE_EXCLUDED = {"not doing"}
@@ -48,6 +64,7 @@ FIELD_CHECKS = {
     "start_date": "date_extraction (with end_date)",
     "end_date": "date_extraction (with start_date)",
     "answer": "agent_answer, charts_answer, chart_produced",
+    "data_pull": "data_pull_exists, answered_without_data",
     "text": "expected_text_match",
     "clarification": "clarification_requested",
     "suggested_datasets": "suggested_datasets_match",
@@ -58,6 +75,7 @@ FIELD_CHECKS = {
     "class_values": "class_value_match (info-only)",
     "chart_type": "chart_type_match",
     "scope": "scope_match",
+    "forbidden_tools": "forbidden_tools_absent",
     "aoi_source": "reference only (dashboard AOI source)",
     "dataset_name": "reference only",
 }
@@ -80,8 +98,13 @@ def expected_records(case) -> list[dict]:
 
 
 def split_dataset_ids(value: object) -> set[str]:
-    """Expected dataset_id values accept alternatives: '0;11' means either."""
-    return {part.strip() for part in str(value or "").split(";") if part.strip()}
+    """Expected dataset_id values accept alternatives: '0;11' means either.
+    The ``no_selection`` sentinel (no dataset is correct) is not a dataset."""
+    return {
+        part.strip()
+        for part in str(value or "").split(";")
+        if part.strip() and part.strip().lower() != "no_selection"
+    }
 
 
 def expected_parameter_names(expected: dict, case_id: str) -> set[str]:
@@ -237,6 +260,258 @@ def bucket_case_coverage(cases) -> dict[str, dict[str, int]]:
     return out
 
 
+TARGETS_NAME = "TARGETS.yml"
+
+
+def collect_dataset_coverage(catalog: dict | None, active) -> dict | None:
+    """The Dataset-coverage section as data (None when no catalog snapshot).
+    Mirrors render_dataset_section; a unit test cross-checks the numbers."""
+    if catalog is None:
+        return None
+    datasets = catalog["datasets"]
+    stats = dataset_stats(active)
+    rows = []
+    for ds in datasets:
+        ds_id = ds["dataset_id"]
+        st = stats.get(ds_id, {"cases": 0, "answered": 0,
+                               "layers": Counter(), "params": Counter()})
+        missing = sorted(f for f in INSTRUCTION_FIELDS
+                         if f not in ds.get("instructions", []))
+        rows.append({
+            "dataset_id": ds_id,
+            "dataset_name": ds["dataset_name"],
+            "missing_instructions": missing,
+            "cases": st["cases"],
+            "answer_graded": st["answered"],
+            "parameters": [
+                {"name": p["name"], "cases": st["params"].get(p["name"], 0)}
+                for p in ds["parameters"]
+            ],
+            "context_layers": [
+                {"name": layer, "cases": st["layers"].get(layer, 0)}
+                for layer in ds["context_layers"]
+            ],
+        })
+    unknown = sorted(set(stats) - {d["dataset_id"] for d in datasets})
+    return {
+        "source": catalog["source"],
+        "datasets": rows,
+        "unknown_dataset_ids": [
+            {"dataset_id": u, "cases": stats[u]["cases"]} for u in unknown
+        ],
+    }
+
+
+def collect(cases_dir: Path, catalog_path: Path | None = None) -> dict:
+    """coverage.json content: the COVERAGE.md sections as data, plus the
+    store's TARGETS.yml when present. Deterministic (no date stamp)."""
+    manifest = read_manifest(cases_dir)
+    if manifest is None:
+        raise SystemExit(f"no manifest under {cases_dir} — import cases first")
+    catalog_path = catalog_path or (cases_dir.parent / "zeno_catalog.json")
+    catalog = (json.loads(catalog_path.read_text(encoding="utf-8"))
+               if catalog_path.exists() else None)
+    cases = [case for _path, case, _uid in load_store(cases_dir)]
+    active = [c for c in cases if c.status.lower() not in ACTIVE_EXCLUDED]
+
+    statuses = Counter(c.status.lower() for c in cases)
+    by_group: dict[str, list] = {}
+    for case in cases:
+        by_group.setdefault(case.group, []).append(case)
+    groups = []
+    for group in sorted(by_group):
+        members = by_group[group]
+        live = [c for c in members if c.status.lower() not in ACTIVE_EXCLUDED]
+        groups.append({
+            "group": group,
+            "cases": len(members),
+            "active": len(live),
+            "statuses": dict(sorted(
+                Counter(c.status.lower() for c in members).items())),
+        })
+
+    field_counts: Counter = Counter()
+    for case in active:
+        field_counts.update(case_expected_fields(case))
+    expected_fields = [
+        {"field": field, "cases": field_counts.get(field, 0),
+         "switches_on": FIELD_CHECKS[field]}
+        for field in sorted(FIELD_CHECKS, key=lambda f: (-field_counts[f], f))
+    ]
+
+    dataset_coverage = collect_dataset_coverage(catalog, active)
+
+    multiturn = [c for c in active if c.is_multiturn]
+    delta_kinds: Counter = Counter()
+    for case in multiturn:
+        for turn in case.turns:
+            for kind, fields in (turn.get("deltas") or {}).items():
+                delta_kinds[kind] += len(fields)
+
+    held = [c for c in cases if c.status.lower() in {"todo"} | ACTIVE_EXCLUDED]
+    parked = [
+        {"id": c.id, "status": c.status, "group": c.group,
+         "reason": c.notes.get("status_reason") or None}
+        for c in sorted(held, key=lambda c: (c.status, c.id))
+    ]
+
+    known_gaps: dict = {
+        "unused_expected_fields": sorted(
+            f for f in FIELD_CHECKS if field_counts.get(f, 0) == 0),
+        "info_only_checks": sorted(INFO_ONLY),
+    }
+    if dataset_coverage is not None:
+        known_gaps["catalog_datasets_no_case"] = [
+            row["dataset_id"] for row in dataset_coverage["datasets"]
+            if row["cases"] == 0
+        ]
+        known_gaps["uncovered_parameters"] = {
+            p["name"]: [] for row in dataset_coverage["datasets"]
+            for p in row["parameters"] if p["cases"] == 0
+        }
+        known_gaps["uncovered_context_layers"] = {
+            layer["name"]: [] for row in dataset_coverage["datasets"]
+            for layer in row["context_layers"] if layer["cases"] == 0
+        }
+        for row in dataset_coverage["datasets"]:
+            for p in row["parameters"]:
+                if p["cases"] == 0:
+                    known_gaps["uncovered_parameters"][p["name"]].append(
+                        row["dataset_id"])
+            for layer in row["context_layers"]:
+                if layer["cases"] == 0:
+                    known_gaps["uncovered_context_layers"][layer["name"]].append(
+                        row["dataset_id"])
+
+    targets_path = cases_dir / TARGETS_NAME
+    targets = load_targets(targets_path) if targets_path.exists() else None
+
+    return {
+        "schema_version": 1,
+        "store": cases_dir.name,
+        "caseset_version": manifest["caseset_version"],
+        "case_count": len(cases),
+        "statuses": dict(sorted(statuses.items())),
+        "active_count": len(active),
+        "groups": groups,
+        "bucket_coverage": bucket_case_coverage(active),
+        "expected_fields": expected_fields,
+        "unknown_expected_fields": sorted(set(field_counts) - set(FIELD_CHECKS)),
+        "dataset_coverage": dataset_coverage,
+        "multi_turn": {
+            "conversations": len(multiturn),
+            "turns": sum(len(c.turns) for c in multiturn),
+            "delta_assertions": dict(sorted(delta_kinds.items())),
+        },
+        "parked": parked,
+        "known_gaps": known_gaps,
+        "targets": targets,
+    }
+
+
+# Interim set -> taxonomy-intent map, until cases/taxonomy.yml owns it: the
+# store names the Spatial intent after its tool ("aoi"); the other sets are
+# already named after their intent.
+# dataset is spatial too: its prompts carry the trace taxonomy's view-only
+# intent (show on a map, no metric). The two stay apart on the matrix via
+# dataset_ids.
+INTENT_BY_SET = {"aoi": "spatial", "dataset": "spatial"}
+
+# Groups that are prompt subtypes rather than datasets, per set. None means
+# every group in the set; the dataset set mixes dataset cohorts with these.
+SUBTYPE_GROUPS: dict[str, set[str] | None] = {
+    "aoi": None,
+    "dataset": {"multilingual", "context-layer", "ambiguous", "unmappable"},
+}
+
+
+def case_dataset_ids(case) -> list[str]:
+    """Every dataset the case expects, across turns, sorted and unique.
+    ``dataset_id`` is ';'-separated like ``aoi_ids`` when a case spans
+    several. Empty for dataset-agnostic cases (e.g. place finding)."""
+    expectations = ([turn.get("expected") or {} for turn in case.turns]
+                    if case.is_multiturn else [case.expected])
+    ids = {
+        part.strip()
+        for expected in expectations
+        for part in (expected.get("dataset_id") or "").split(";")
+        if part.strip()
+    }
+    # no_selection is a scoring sentinel, not a dataset.
+    ids.discard(NO_SELECTION)
+    return sorted(ids)
+
+
+def is_subtype_group(case) -> bool:
+    if case.set not in SUBTYPE_GROUPS:
+        return False
+    groups = SUBTYPE_GROUPS[case.set]
+    return groups is None or case.group in groups
+
+
+def case_facets(case) -> dict:
+    """Explicit facets for consumers that must not infer meaning from
+    ``group`` (a dataset in the numeric sets, a prompt class in aoi):
+    ``intent`` (CHALLENGE only), ``dataset_ids`` (always) and ``subtype``
+    (from ``notes.eval_subtype``, else the group for subtype-grouped sets)."""
+    facets: dict = {}
+    if case.set:
+        facets["intent"] = INTENT_BY_SET.get(case.set, case.set)
+    facets["dataset_ids"] = case_dataset_ids(case)
+    subtype = case.notes.get("eval_subtype") or (
+        case.group if is_subtype_group(case) else None)
+    if subtype:
+        facets["subtype"] = subtype
+    return facets
+
+
+def collect_cases_index(cases_dir: Path) -> dict:
+    """cases_index.json content: the FE's uid join table — id, uid, set,
+    group, status, difficulty/behaviour notes, query text, expected fields,
+    the case's implied gating checks (base names, info-only stripped,
+    same recipe as bucket_case_coverage) so consumers can compute bucket
+    coverage exactly as the harness reconciles it, and the case facets
+    (intent, dataset_ids, subtype) so the dashboard's intent x dataset
+    matrix never has to infer meaning from ``group``. Queries are already
+    public in the case YAMLs, so nothing new leaks."""
+    manifest = read_manifest(cases_dir)
+    if manifest is None:
+        raise SystemExit(f"no manifest under {cases_dir} — import cases first")
+    cases = [case for _path, case, _uid in load_store(cases_dir)]
+    rows = []
+    for case in sorted(cases, key=lambda c: c.id):
+        row: dict = {"id": case.id, "uid": case.uid}
+        if case.set:
+            row["set"] = case.set
+        row["group"] = case.group
+        row["status"] = case.status
+        for note in ("difficulty", "behaviour"):
+            if case.notes.get(note):
+                row[note] = case.notes[note]
+        if case.is_multiturn:
+            row["turns"] = [turn.get("query", "") for turn in case.turns]
+        else:
+            row["query"] = case.query
+        row["expected_fields"] = sorted(case_expected_fields(case))
+        implied = {
+            base_check_name(c) for c in implied_checks_for_case(case)
+        } - INFO_ONLY
+        row["implied_checks"] = sorted(implied)
+        row.update(case_facets(case))
+        rows.append(row)
+    return {
+        "schema_version": 1,
+        "store": cases_dir.name,
+        "caseset_version": manifest["caseset_version"],
+        "case_count": len(rows),
+        "cases": rows,
+    }
+
+
+def dump_json(data: dict) -> str:
+    return json.dumps(data, indent=2, ensure_ascii=False) + "\n"
+
+
 def render(cases_dir: Path, catalog_path: Path | None = None) -> str:
     manifest = read_manifest(cases_dir)
     if manifest is None:
@@ -382,20 +657,38 @@ def main() -> int:
 
     out = args.out or (args.cases_dir / "COVERAGE.md")
     text = render(args.cases_dir, args.catalog)
+    artefacts = [
+        (args.cases_dir / "coverage.json",
+         dump_json(collect(args.cases_dir, args.catalog))),
+        (args.cases_dir / "cases_index.json",
+         dump_json(collect_cases_index(args.cases_dir))),
+    ]
     if args.check:
         # the Last-updated stamp records when the doc was regenerated; a
         # date-only difference is not drift, so normalise it on both sides
         stamp = re.compile(r"^_Last updated: \d{4}-\d{2}-\d{2}_$", re.MULTILINE)
         current = out.read_text(encoding="utf-8") if out.exists() else ""
+        stale = []
         if stamp.sub("_Last updated: <date>_", current) != stamp.sub(
                 "_Last updated: <date>_", text):
-            print(f"{out} is stale — regenerate with: "
-                  f"uv run python tools/coverage_doc.py --cases-dir {args.cases_dir}")
+            stale.append(out)
+        for path, fresh in artefacts:
+            existing = path.read_text(encoding="utf-8") if path.exists() else ""
+            if existing != fresh:
+                stale.append(path)
+        if stale:
+            for path in stale:
+                print(f"{path} is stale")
+            print(f"regenerate with: uv run python tools/coverage_doc.py "
+                  f"--cases-dir {args.cases_dir}")
             return 1
-        print(f"{out} is fresh")
+        print(f"{out} and JSON siblings are fresh")
         return 0
     out.write_text(text, encoding="utf-8")
     print(f"wrote {out}")
+    for path, fresh in artefacts:
+        path.write_text(fresh, encoding="utf-8")
+        print(f"wrote {path}")
     return 0
 
 

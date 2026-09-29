@@ -1,0 +1,15 @@
+id: ch-aoi-073
+uid: 79829a99ecff7729
+status: ready
+set: aoi
+group: ambiguity
+query: Go to Santiago
+expected:
+  nudge_type: aoi_choice
+notes:
+  difficulty: hard
+  behaviour: nudge
+  lineage: SPEC-PR5 B
+  verify_query: Santiago
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

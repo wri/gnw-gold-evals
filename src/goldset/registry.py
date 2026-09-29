@@ -39,6 +39,7 @@ from goldset.evaluators.output_checks import (
     evaluate_chart_well_formed,
 )
 from goldset.evaluators.scope_checks import evaluate_scope
+from goldset.evaluators.tool_checks import evaluate_forbidden_tools
 
 EvaluatorFn = Callable[
     [dict[str, Any], ExpectedData, str, dict[str, Any] | None],
@@ -219,6 +220,14 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         score_fields=("scope_match_score",),
         run=lambda state, expected, query, dashboard: evaluate_scope(
             state, expected.expected_scope
+        ),
+    ),
+    EvaluatorSpec(
+        name="tool_scope",
+        kind="deterministic",
+        score_fields=("forbidden_tools_absent_score",),
+        run=lambda state, expected, query, dashboard: evaluate_forbidden_tools(
+            state, expected.expected_forbidden_tools
         ),
     ),
 )

@@ -1,0 +1,20 @@
+id: ch-aoi-152
+uid: db4264643c069768
+status: ready
+set: aoi
+group: designations
+query: Go to the Kayapó Indigenous Territory
+expected:
+  aoi_ids: BRA1507
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch, breadth added after the scorer review:
+    Landmark stores ''Tierra Indígena'' even for Brazil; the geocoder infers the indigenous
+    source from ''Indigenous Territory''. WDPA search for ''Kayapó'': 34004 Kayapó, Terra
+    Indígena, BRA (a WDPA copy, if present, is a defensible alternative and is recorded here
+    rather than expected). Stored row "Kayapó, Tierra Indígena, BRA" (landmark).'
+  verify_query: Kayapó
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=landmark)
+  origin: 2026-09-15 scorer-fix review asked for untested classes (Landmark source, designation-in-leaf)
+  observed: 'prod smoke 2026-09-15 (1 trial): pass; regression guard for the scorer change rather than a failure to flip'

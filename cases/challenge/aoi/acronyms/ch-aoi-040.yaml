@@ -1,0 +1,15 @@
+id: ch-aoi-040
+uid: 626f32490476a26c
+status: ready
+set: aoi
+group: acronyms
+query: Show me the UAE
+expected:
+  aoi_ids: ARE
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: SPEC-PR6 acronym class
+  verify_query: United Arab Emirates
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

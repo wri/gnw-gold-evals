@@ -1,0 +1,21 @@
+id: ch-quant-022
+uid: beaa731779f15389
+status: ready
+set: quantification
+group: tcl
+query: Using a 25% canopy cover threshold, what was the total tree cover loss in Costa Rica,
+  including plantations, between 2001 and 2023?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2023-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[25]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: The window crosses the 2011 methodology break; a caution caveat is acceptable.
+  eval_subtype: canopy_threshold
+  manifest_id: m-tcl-quant-15
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-15b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

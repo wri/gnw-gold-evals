@@ -1,0 +1,15 @@
+id: ch-aoi-061
+uid: 4926e9ace2350c60
+status: ready
+set: aoi
+group: multilingual
+query: 青森県を表示して
+expected:
+  aoi_ids: JPN.3
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: Japanese prompt (Aomori)
+  verify_query: Aomori
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

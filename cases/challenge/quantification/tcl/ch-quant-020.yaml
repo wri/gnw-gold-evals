@@ -1,0 +1,20 @@
+id: ch-quant-020
+uid: 2e1a934de6405645
+status: ready
+set: quantification
+group: tcl
+query: Using a 20% canopy density threshold, what was the total tree cover loss area in the
+  Democratic Republic of the Congo for 2021, including plantations and all other forest types?
+expected:
+  aoi_ids: COD
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2021-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[20]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  eval_subtype: canopy_threshold
+  manifest_id: m-tcl-quant-14
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-14b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

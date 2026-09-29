@@ -1,0 +1,20 @@
+id: ch-trend-052
+uid: 2fbce8db0984c0a3
+status: ready
+set: trend
+group: integrated-alerts
+query: What was the month-by-month pattern of deforestation alert area in Indonesia from January
+  to December 2024?
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Month-by-month alert area (area_ha) over 2024; verify the shape and direction
+    of the series; line chart.
+  eval_subtype: monthly_trend
+  manifest_id: m-ialert-trend-02
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-02a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

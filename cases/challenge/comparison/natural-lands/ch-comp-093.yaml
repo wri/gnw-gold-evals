@@ -1,0 +1,19 @@
+id: ch-comp-093
+uid: 26262d065c49f7f2
+status: ready
+set: comparison
+group: natural-lands
+query: I'm comparing land-use profiles for a report - proportionally speaking, does Costa
+  Rica or the United Kingdom have a bigger share of its land that's natural?
+expected:
+  aoi_ids: GBR;CRI
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: 'Proportional comparison: for each country compute Natural / (Natural
+    + Non-natural) area_ha from the fixed 2020 two-row is_natural grouping and compare the
+    shares; the direction must be correct.'
+  eval_subtype: two_country
+  manifest_id: m-nl-comp-03
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-comp-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

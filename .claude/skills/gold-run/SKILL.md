@@ -48,27 +48,30 @@ Run all four, in order:
 
 1. **Reports:**
    ```bash
-   uv run python tools/render_html.py results/runs/<run_id>.json
+   uv run python tools/render_html.py results/gold/runs/<run_id>.json
    uv run python tools/render_html.py --all
    uv run python tools/render_inspector.py --all
    uv run python tools/render_trends.py
    ```
 2. **Flakiness + diff:**
    ```bash
-   uv run python tools/flakiness.py results/runs/<run_id>.json --per-case
-   uv run python tools/diff_runs.py results/runs/<prev>.json results/runs/<run_id>.json
+   uv run python tools/flakiness.py results/gold/runs/<run_id>.json --per-case
+   uv run python tools/diff_runs.py results/gold/runs/<prev>.json results/gold/runs/<run_id>.json
    ```
    *Comparable means:* same trial count, same `ff` (check the run_id suffix:
    `…_staging_experimental` vs bare `…_staging`), overlapping caseset. If no
    comparable run exists, say so — do not diff against something else.
-3. **Recommendations doc** at `results/recommendations/<run_id>.md`, four
+3. **Recommendations doc** at `results/gold/recommendations/<run_id>.md`, four
    sections: what to file upstream (agent behaviour, with row lists as
    evidence); what the run says about the case set (stale expectations,
    coverage holes, probation re-admissions); what it says about the harness;
-   a next-run watchlist. `results/recommendations/20260801T093002Z.md` is the
+   a next-run watchlist. `results/gold/recommendations/20260801T093002Z.md` is the
    model.
 4. **Commit** — but **stop and show the user what will be committed first**
-   (run JSON + reports + recommendations in one commit). Never hand-edit a
+   (run JSON + reports + recommendations in one commit). After `git add`-ing
+   the run JSON, regenerate the run index (`uv run python
+   tools/build_run_index.py`) and include `results/index.json` in the same
+   commit — CI gates its freshness. Never hand-edit a
    run file; a re-ingest after a tooling fix means visibly deleting the file
    in a reviewable commit.
 

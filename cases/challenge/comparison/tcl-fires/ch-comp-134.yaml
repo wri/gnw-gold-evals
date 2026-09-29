@@ -1,0 +1,24 @@
+id: ch-comp-134
+uid: 19da1b3fbde4e4e4
+status: ready
+set: comparison
+group: tcl-fires
+query: In 2023, did Brazil or Indonesia see greater fire-driven tree cover loss, counting
+  all tree cover?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '10'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Compare fire-driven tree cover loss (tree_cover_loss_from_fires_area_ha,
+    hectares) between the two countries for the year; direction must be correct. NEVER report
+    carbon emissions. Plain tree cover, 30% default; use 'tree cover loss', not 'deforestation'.
+  eval_subtype: two_country
+  manifest_id: m-fires-comp-01
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-comp-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

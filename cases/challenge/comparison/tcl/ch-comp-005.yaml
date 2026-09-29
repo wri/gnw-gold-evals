@@ -1,0 +1,20 @@
+id: ch-comp-005
+uid: 8b80ead730a494d1
+status: ready
+set: comparison
+group: tcl
+query: Did Brazil lose more tree cover, across all forest types, in the period 2011 to 2015
+  or 2016 to 2020?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare the all-forest-types totals for 2011-2015 vs 2016-2020; no forest-type
+    filter should be applied.
+  eval_subtype: two_period
+  manifest_id: m-tcl-comp-05
+  lineage: gnw-evals eval-metrics-slice-1 gt-comp-05
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

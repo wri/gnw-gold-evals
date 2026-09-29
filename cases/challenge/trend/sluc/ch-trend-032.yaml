@@ -1,0 +1,22 @@
+id: ch-trend-032
+uid: 2d1d3edefdf829a4
+status: ready
+set: trend
+group: sluc
+query: For Arabica Coffee grown in Colombia, how does the emission factor (tCO2e per tonne
+  of production) in 2024 compare with 2020?
+expected:
+  aoi_ids: COL
+  dataset_id: '9'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Arabica Coffee (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the emission factor (emission_factor_tCO2e_per_tonne_production)
+    between reporting years 2020 and 2024; tabular.
+  eval_subtype: change_over_period
+  manifest_id: m-sluc-trend-03
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-trend-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

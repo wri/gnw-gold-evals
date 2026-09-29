@@ -1,0 +1,15 @@
+id: ch-aoi-128
+uid: 26e69e27bed0e9c7
+status: ready
+set: aoi
+group: concepts
+query: Go to 9.5N, 79.5W
+expected:
+  text: Explains that it cannot select an area from raw coordinates and asks for a place name
+    instead; does not substitute an unrelated area
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: coordinates unsupported
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

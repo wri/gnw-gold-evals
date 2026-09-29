@@ -1,0 +1,19 @@
+id: ch-quant-086
+uid: 1d0b540fb8556ca0
+status: ready
+set: quantification
+group: integrated-alerts
+query: For Brazil, how does the disturbance alert area from April 1 to September 30, 2024
+  break down by confidence level (low, high, highest), in hectares?
+expected:
+  aoi_ids: BRA
+  dataset_id: '11'
+  start_date: '2024-04-01'
+  end_date: '2024-09-30'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Split alert area (area_ha) by confidence tier for 1 Apr to 30 Sep 2024.
+  eval_subtype: by_confidence
+  manifest_id: m-ialert-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

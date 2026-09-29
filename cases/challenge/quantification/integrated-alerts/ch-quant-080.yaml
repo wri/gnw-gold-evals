@@ -1,0 +1,20 @@
+id: ch-quant-080
+uid: 2a62d1a67c1bf3b1
+status: ready
+set: quantification
+group: integrated-alerts
+query: How many hectares of disturbance alerts were flagged across Brazil from January 1 to
+  December 31, 2024?
+expected:
+  aoi_ids: BRA
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Headline is total disturbed/alert area (area_ha) summed over 2024 for
+    the whole country; no ecosystem or driver breakdown.
+  eval_subtype: disturbed_area
+  manifest_id: m-ialert-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

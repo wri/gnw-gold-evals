@@ -54,3 +54,24 @@ def test_expects_data_pull_gating():
         expected={"answer": "42 ha", "clarification": "TRUE"},
     )
     assert case_to_expected(clarify).expects_data_pull() is False
+
+
+def test_explicit_data_pull_expectation():
+    # CHALLENGE numeric cases: no stored answer, explicit data_pull TRUE
+    explicit = Case(
+        id="z", status="ready", group="g", query="q",
+        expected={"dataset_id": "4", "data_pull": "TRUE"},
+    )
+    assert case_to_expected(explicit).expects_data_pull() is True
+    # explicit FALSE beats an answer-driven implication
+    opted_out = Case(
+        id="z2", status="ready", group="g", query="q",
+        expected={"answer": "42 ha", "data_pull": "FALSE"},
+    )
+    assert case_to_expected(opted_out).expects_data_pull() is False
+    # clarification still wins over an explicit TRUE
+    clarify = Case(
+        id="z3", status="ready", group="g", query="q",
+        expected={"data_pull": "TRUE", "clarification": "TRUE"},
+    )
+    assert case_to_expected(clarify).expects_data_pull() is False

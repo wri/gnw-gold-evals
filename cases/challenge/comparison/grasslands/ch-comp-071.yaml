@@ -1,0 +1,20 @@
+id: ch-comp-071
+uid: 0be12a8ab2b5d1ad
+status: ready
+set: comparison
+group: grasslands
+query: In 2022, which country had a greater extent of natural/semi-natural grassland, Brazil
+  or Costa Rica?
+expected:
+  aoi_ids: BRA;CRI
+  dataset_id: '2'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare grassland extent between the two countries; Costa Rica's value
+    is small but the comparative direction must still be correct.
+  eval_subtype: two_country
+  manifest_id: m-grass-comp-04
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

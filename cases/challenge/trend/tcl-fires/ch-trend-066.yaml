@@ -1,0 +1,24 @@
+id: ch-trend-066
+uid: 0599cda134ea650b
+status: ready
+set: trend
+group: tcl-fires
+query: Which year between 2001 and 2010 had the highest tree cover loss due to fires in Brazil,
+  across all forest types?
+expected:
+  aoi_ids: BRA
+  dataset_id: '10'
+  start_date: '2001-01-01'
+  end_date: '2010-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Peak year is the year of highest fire-driven tree cover loss within the
+    window (first methodology period, 2001-2010, no break crossed). NEVER report carbon emissions.
+    30% default.
+  eval_subtype: peak_year
+  manifest_id: m-fires-trend-04
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-trend-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

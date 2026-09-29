@@ -1,0 +1,21 @@
+id: ch-comp-037
+uid: 29b7aad962c47172
+status: ready
+set: comparison
+group: sluc
+query: Which country has a higher sLUC emission factor for Arabica Coffee, Colombia or Peru?
+expected:
+  aoi_ids: COL;PER
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Arabica Coffee (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the emission factor for the crop between the two countries; tabular;
+    default reporting year 2024.
+  eval_subtype: two_country
+  manifest_id: m-sluc-comp-05
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-comp-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

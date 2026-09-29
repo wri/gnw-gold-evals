@@ -1,0 +1,20 @@
+id: ch-comp-038
+uid: 305f50bd72eb6f7b
+status: ready
+set: comparison
+group: sluc
+query: For Soybean in Brazil, were total sLUC emissions (tCO2e) higher during 2020-2022 or
+  during 2023-2024?
+expected:
+  aoi_ids: BRA
+  dataset_id: '9'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Soybean (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare total sLUC emissions (emissions_tCO2e) for the crop between reporting
+    sub-periods 2020-2022 and 2023-2024; tabular.
+  eval_subtype: two_period
+  manifest_id: m-sluc-comp-06
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-comp-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

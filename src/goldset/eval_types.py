@@ -47,6 +47,8 @@ class TestResult(BaseModel):
     overall_score: float
     execution_time: str
     duration_seconds: float | None = None
+    # POST /api/chat to end of stream only (no state/dashboard GETs, no judge).
+    stream_duration_seconds: float | None = None
 
     # AOI evaluation fields - separate binary scores (0/1/None)
     aoi_id_match_score: float | None = None
@@ -193,6 +195,13 @@ class ExpectedData(BaseModel):
     expected_dashboard_widgets: list[str] | None = None
     expected_nudge_type: str = ""
     expected_nudge_options: list[str] = []
+    # Explicit data-pull expectation (tri-state). CHALLENGE numeric cases
+    # carry no expected_answer (ground truth is computed at run time, never
+    # stored), so without this the Analysis bucket would never evaluate.
+    expected_data_pull: bool | None = None
+    # Tools the agent must not call (;-separated; CHALLENGE dataset set). Opt-in:
+    # empty means no check (tool_checks.evaluate_forbidden_tools).
+    expected_forbidden_tools: str = ""
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""
@@ -261,16 +270,26 @@ class ExpectedData(BaseModel):
         """Convert string input to boolean or None (tri-state: True/False/no-expectation)."""
         return _parse_tri_state_bool(v)
 
+    @field_validator("expected_data_pull", mode="before")
+    @classmethod
+    def parse_data_pull(cls, v: str | bool | None) -> bool | None:
+        """Convert string input to boolean or None (tri-state: True/False/no-expectation)."""
+        return _parse_tri_state_bool(v)
+
     def expects_data_pull(self) -> bool:
         """Return whether the agent should pull analytics data for this test.
 
-        Gold-set rows require a data pull when ``expected_answer`` is set
-        (chart/insight answers depend on pulled statistics). Dashboard rows
-        require a data pull when ``expected_dashboard_widgets`` includes
-        ``insight``; map-only dashboard rows do not.
+        An explicit ``expected_data_pull`` wins (CHALLENGE numeric cases set
+        it because their ground truth is never stored, so ``expected_answer``
+        is empty). Otherwise gold-set rows require a data pull when
+        ``expected_answer`` is set (chart/insight answers depend on pulled
+        statistics), and dashboard rows when ``expected_dashboard_widgets``
+        includes ``insight``; map-only dashboard rows do not.
         """
         if self.expected_clarification is True:
             return False
+        if self.expected_data_pull is not None:
+            return self.expected_data_pull
         if self.expected_answer:
             return True
         widgets = self.expected_dashboard_widgets or []

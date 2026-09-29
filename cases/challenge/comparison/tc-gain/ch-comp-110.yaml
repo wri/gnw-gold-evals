@@ -1,0 +1,21 @@
+id: ch-comp-110
+uid: f292fbd71589af61
+status: ready
+set: comparison
+group: tc-gain
+query: Between Brazil and Indonesia, which country had greater cumulative tree cover gain
+  from 2000 to 2020?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare cumulative tree cover gain over the full 2000-2020 period; the
+    comparative direction must be correct and any cited figures (ha) must match ground truth.
+    Gain is not restoration; do not compute net change.
+  eval_subtype: two_country
+  manifest_id: m-gain-comp-01
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

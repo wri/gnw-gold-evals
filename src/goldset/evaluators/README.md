@@ -7,13 +7,13 @@ Where the code and an older spec disagree, the code wins and the difference is
 called out.
 
 Every mean/std quoted below comes from the 3-trial validation run
-`results/runs/20260803T201245Z_staging.json` (reproduce with
-`uv run python tools/flakiness.py results/runs/20260803T201245Z_staging.json`),
+`results/gold/runs/20260803T201245Z_staging.json` (reproduce with
+`uv run python tools/flakiness.py results/gold/runs/20260803T201245Z_staging.json`),
 which is the most complete run on the current case set. **That run omitted
 `--ff experimental`**, so the four dashboard checks and the imagery rows were not
 exercised in it; where a dashboard figure is quoted it comes from the
 flag-bearing partial run `20260803T215155Z_staging_experimental` and its small n
-is stated. `results/recommendations/20260803T201245Z.md` explains the flag and
+is stated. `results/gold/recommendations/20260803T201245Z.md` explains the flag and
 why the run_id suffix is the tell.
 
 ## What an evaluator is here
@@ -66,7 +66,7 @@ numbers (`llm_judges.py:366-372`).
 tolerance arithmetic from prose, and a live run caught it disagreeing with its
 own stated rule on identical input (1-009: accepted a 0.51% delta in one
 trial, rejected the same delta in another, citing a tolerance the delta was
-actually inside — `results/recommendations/20260804T104634Z.md` §3). It now
+actually inside — `results/gold/recommendations/20260804T104634Z.md` §3). It now
 follows the same split as the chart check: the judge only extracts which
 number in the prose answers the question (`extracted_number`), and
 `resolve_answer_verdict` applies `NUMERIC_TOLERANCE` in code, against the same
@@ -121,7 +121,7 @@ Judge **outages** are a third state: they raise rather than guessing
   A third gap: the clarification judge's prose lands in
   `clarification_explanation`, which matches neither reason pattern, so it is
   dropped too.
-- `results/artifacts/<run_id>/<uid>[_t<trial>].json.gz` — raw state (final answer,
+- `results/gold/artifacts/<run_id>/<uid>[_t<trial>].json.gz` — raw state (final answer,
   codeact, tool calls, last statistics, charts, aoi_selection, dataset, nudge,
   dashboard widgets: `runner/artifacts.py:76-98`; one file per trial,
   `:105-112`). Evaluator diagnostics are *not* in there, so when a reason string
@@ -176,6 +176,7 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`suggested_datasets_match`](#suggested_datasets_match) | scope | deterministic | gates | `suggested_datasets` | `suggested_datasets_evaluator.py:6` |
 | [`nudge_match`](#nudge_match) | scope | deterministic | gates | `nudge_type` and/or `nudge_options` | `nudge_evaluator.py:35` |
 | [`scope_match`](#scope_match) | scope | deterministic | gates | `scope` | `scope_checks.py:54` |
+| [`forbidden_tools_absent`](#forbidden_tools_absent) | scope | deterministic | gates | `forbidden_tools` | `tool_checks.py` |
 
 Two expected fields drive **no** check of their own: `aoi_source` is read only by
 `dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
@@ -239,7 +240,12 @@ matching passes (PR-09 H7). This exists because some rows are defensible either
 way: 1-003's `dataset_id: "0;11"` covers DIST-ALERT vs integrated alerts.
 
 **`null` vs `0.0`**: `null` with no expectation; `0.0` when an expectation exists
-and no dataset was selected at all (`dataset_evaluator.py:85-94`).
+and no dataset was selected at all, **unless** the expectation includes the
+`no_selection` sentinel (added 2026-09-25 for the CHALLENGE `dataset` set's
+unmappable cohort). `no_selection` means "selecting nothing is correct": alone it
+passes only when no dataset was selected, and as an alternative
+(`9;no_selection`) it passes on either. A dataset dict whose id is empty counts
+as no selection. `coverage_doc.py` drops the sentinel from dataset coverage.
 
 **Reason**: none; `actuals.dataset_id_match` = `actual_dataset_id`.
 
@@ -515,7 +521,7 @@ does not reach the ledger.
 - Class matching is **substring containment on any string field of the record**
   (`:98-104`), so a short class name can match the wrong record and a class name
   absent from the chart's own vocabulary reports `"no matching record"`. That is
-  exactly the 1-015 finding in `results/recommendations/20260803T201245Z.md`
+  exactly the 1-015 finding in `results/gold/recommendations/20260803T201245Z.md`
   item 8: after a prompt rewrite the chart became per-county rather than
   per-class, so the expectation is now unsatisfiable by construction.
 - Records are drawn from both `charts_data[*].data` and the last statistics
@@ -552,7 +558,7 @@ axis, the field, and the padding ratio.
   (`output_checks.py:5-8`). The two reason strings read differently on purpose.
 - **The most stable check in the suite**: 0.99, ±0.01 over 94 rows in
   `20260803T201245Z`, which is why
-  `results/recommendations/20260803T201245Z.md` item 4 treats its verdict on
+  `results/gold/recommendations/20260803T201245Z.md` item 4 treats its verdict on
   1-043/1-060 as trustworthy enough to file upstream as the single
   highest-value fix.
 
@@ -645,7 +651,7 @@ you which branch fired (`llm_judges.py:265-292`):
   numeric failure (PR-04 F5).
 - Post-H5 it evaluates on far fewer rows (26 vs 60) at 0.96 ±0.04, 2 flapping —
   the shrinkage is the `null` rule working as designed
-  (`results/recommendations/20260803T201245Z.md` item 13). `tools/flakiness.py`
+  (`results/gold/recommendations/20260803T201245Z.md` item 13). `tools/flakiness.py`
   still classifies it as **judged** because the registry marks the evaluator
   `kind="mixed"` (`registry.py:120`, `tools/flakiness.py:31-35`), so it is held
   to the 0.10 judged gate.
@@ -703,7 +709,7 @@ be the one place a judge was trusted with arithmetic, until a live run caught it
 disagreeing with its own stated rule on identical input: 1-009 accepted a 0.51%
 delta as a match in one trial and rejected the same delta in another, citing a
 tolerance the delta was actually inside
-(`results/recommendations/20260804T104634Z.md` §3). The judge's own score survives
+(`results/gold/recommendations/20260804T104634Z.md` §3). The judge's own score survives
 only as a fallback for the row where `extracted_number` can't be parsed
 deterministically (empty, an ambiguous decimal, or a percent/non-percent
 mismatch) — exactly as reliable on that population as before.
@@ -780,7 +786,7 @@ expectations in one `text` cell can disagree with each other. mt-007 is the
 worked example — its `text` said the agent "maintains and re-confirms its
 **original** figure" while its `answer` anchored a specific number that turn 1
 did not reliably produce, so the two expectations passed on mutually exclusive
-trials (`results/recommendations/20260803T201245Z.md` item 9). 0.92 ±0.04 over
+trials (`results/gold/recommendations/20260803T201245Z.md` item 9). 0.92 ±0.04 over
 25 rows.
 
 ## `answer_traceability`
@@ -841,7 +847,7 @@ deduplicated sorted links.
 - **`wri.org` deliberately still fires.** A `wri.org` citation is the blog-skill
   tell that 1-030 exists to catch, and it is a live finding: mt-007's turn 2
   fails `t2.web_fallback` on all three trials by citing WRI insight pages under
-  pushback (`results/recommendations/20260803T201245Z.md` item 2).
+  pushback (`results/gold/recommendations/20260803T201245Z.md` item 2).
 - The check is link-shaped, not provenance-shaped. An answer that came entirely
   from web knowledge but cites nothing passes here; that is
   `answered_without_data`'s job. 0.97 ±0.01 over 69 rows.
@@ -879,7 +885,7 @@ engine"): cascade-driven rows (no pull → no chart), and ~6 standalone rows whe
 the agent pulls, answers correctly, and simply omits the chart (1-008, 1-012,
 1-035, 1-048, 1-050, 1-069). No case edit fixes the second population — it needs
 a product stance on whether data answers must always chart. **Both the plan §5
-and `results/recommendations/20260803T201245Z.md` item 14 recommend demoting it
+and `results/gold/recommendations/20260803T201245Z.md` item 14 recommend demoting it
 to info-only until that stance exists; the code has not done so.** It is in
 `DEDICATED` and not in `INFO_ONLY` (`buckets.py:43`, `83-90`), so today it gates.
 Treat a lone `chart_produced` flip as weak evidence.
@@ -948,7 +954,7 @@ set no dashboard expectation at all.
 **Gotchas.** Shared-tagged (output + scope). Dashboards live behind the agent's
 `experimental` tool profile: a run launched without `--ff experimental` scores
 these rows 0.0 for the *run configuration*, not the agent
-(`results/recommendations/20260803T201245Z.md` item 1 — the whole retraction is
+(`results/gold/recommendations/20260803T201245Z.md` item 1 — the whole retraction is
 worth reading, and the run_id suffix is the tell). In the flag-bearing partial
 run `20260803T215155Z_staging_experimental` it was 1.00 ±0.00 over 9 rows; in
 the flagless run, 0.22 ±0.00 over 9.
@@ -1075,7 +1081,7 @@ it emits and argues with itself otherwise (PR-04 F6,
 ±0.16 it was flagged over-gate in `20260803T201245Z`; with 3 rows that is a
 small-n artifact, but the recommendation is explicit that it is below the
 coverage floor and should either gain rows or be read as advisory
-(`results/recommendations/20260803T201245Z.md` item 15).
+(`results/gold/recommendations/20260803T201245Z.md` item 15).
 
 ## `suggested_datasets_match`
 
@@ -1181,6 +1187,33 @@ where the sheet expected dataset suggestions — caught here as expected `sugges
 vs observed `analyse` (`:17-19`). 0.94 ±0.05 over 88 rows in
 `20260803T201245Z`.
 
+## `forbidden_tools_absent`
+
+**Measures** whether the agent stayed inside the tools the case allows: it fails
+if any tool named in the case's `forbidden_tools` list appears among the tool
+calls in `messages[].tool_calls` (`tool_checks.py`). Added 2026-09-25 for the
+CHALLENGE `dataset` set, whose premise is that "show X on the map" is served by
+`pick_dataset` alone.
+
+**Why it exists**: nothing else could assert scope isolation. `data_pull:
+'FALSE'` switches the pull checks off rather than asserting no pull;
+`scope_match` classifies a clean pick-and-stop as `none` (the `refuse` class)
+and cannot see `pick_aoi`; an empty `aoi_ids` means "no expectation".
+
+**Fires on** `forbidden_tools`, `;`-separated tool names, case-insensitive. It is
+opt-in, so no GOLD row fires it. The list lives in the case (hashed into the uid)
+so a case says exactly what it forbids.
+
+**`null` vs `0.0`**: `null` when no list is set, and `null` when the state has no
+`messages` key at all (an unreadable signal abstains rather than passing). An
+empty message list is readable and scores `1.0`. `0.0` on any forbidden call.
+
+**Reason**: none; `actuals.forbidden_tools_absent` = the offending tool names.
+The full call list is in the run artifact's `tool_calls`.
+
+**Multi-turn caveat**: thread state accumulates messages, so a later turn sees
+earlier turns' calls. Use it on single-turn rows or turn 1 only.
+
 ---
 
 # Info-only checks, and what re-admission requires
@@ -1194,7 +1227,7 @@ holding them to a gate.
 |---|---|---|---|
 | `date_coverage` | at design time | The state field it reads (`agent_state["start_date"]`) is inconsistent about what it records — the requested window, the dataset's full extent, or a rolling window ending today, for the same query (`data_pull_evaluator.py:1-17`). `date_extraction` is the scored date check. | Not stated in code. The blocker is a product-side change to what state records, not a threshold. |
 | `answer_traceability` | 2026-08-01, after its first live run | Claim extraction misfired on unitless bold counts and ranks on ~5 of 9 failures. The unit-required rule (`explanation_checks.py:40-44`) now applies. | A 3-trial run with **zero** extraction false positives (PR-08 step 5). It ran 0.90 ±0.05 over 86 rows in `20260803T201245Z`. |
-| `class_value_match` | 2026-08-01, after the first 3-trial run | Mean 0.25 over its 4 rows, whose expected values came from unverified sheet scratchpads — i.e. the check was reporting bad expectations, not bad behaviour. | W3's population review verifying the figures. Now 0.44 over 6 rows; two new figures came in verified (1-010's 110.10 ha, 1-027's 679.17 ha) and 1-015's is unsatisfiable against its rewritten chart shape (`results/recommendations/20260803T201245Z.md` item 8). |
+| `class_value_match` | 2026-08-01, after the first 3-trial run | Mean 0.25 over its 4 rows, whose expected values came from unverified sheet scratchpads — i.e. the check was reporting bad expectations, not bad behaviour. | W3's population review verifying the figures. Now 0.44 over 6 rows; two new figures came in verified (1-010's 110.10 ha, 1-027's 679.17 ha) and 1-015's is unsatisfiable against its rewritten chart shape (`results/gold/recommendations/20260803T201245Z.md` item 8). |
 | `charts_answer_judge` | born info-only 2026-08-03 (H5) | `charts_answer` is now gated on the deterministic comparator alone. Five of the six rows where `charts_answer` flapped over two 3-trial runs were rows the comparator had already passed or abstained on — all the movement was the judge's framing opinion — and `cases/README.md` forbids staking a verdict on chart choice. | std ≤ 0.10 over 3 trials. It ran **0.90 ±0.07 with 10 flapping rows** over 64 in `20260803T201245Z`, which is the direct measurement of what used to be gated. Item 13 of that run's recommendations says keep it info-only. |
 
 Two notes on how info-only interacts with the rest of the machinery, both worth

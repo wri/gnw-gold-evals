@@ -1,0 +1,20 @@
+id: ch-comp-132
+uid: 7f4c928e7af85a72
+status: ready
+set: comparison
+group: tcl-drivers
+query: so like between Costa Rica and the UK, whats the main reason each one lost tree cover
+  overall, even tho the numbers are probably tiny for both?
+expected:
+  aoi_ids: CRI;GBR
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the dominant driver of tree cover loss over 2001-2025; magnitudes
+    are small but the dominant class identification must be correct; whole-record aggregate.
+  eval_subtype: two_country
+  manifest_id: m-driver-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

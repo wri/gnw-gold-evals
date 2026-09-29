@@ -1,0 +1,20 @@
+id: ch-quant-137
+uid: e8bbe3bccf19d8f4
+status: ready
+set: quantification
+group: tcl-drivers
+query: so like whats the biggest reason for tree cover loss in Ghana overall, not for any
+  one year just like in general
+expected:
+  aoi_ids: GHA
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Dominant driver of tree cover loss over 2001-2025 (whole-record aggregate).
+    Exclude Unknown; pie/table; avoid 'deforestation' for raw loss.
+  eval_subtype: dominant_driver
+  manifest_id: m-driver-quant-10
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-quant-10a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

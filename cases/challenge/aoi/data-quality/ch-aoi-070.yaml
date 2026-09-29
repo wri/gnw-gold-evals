@@ -1,0 +1,15 @@
+id: ch-aoi-070
+uid: 83a5b049b1d55aec
+status: ready
+set: aoi
+group: data-quality
+query: Show me South Holland
+expected:
+  aoi_ids: NLD.14
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: exonym + NA name
+  verify_query: South Holland
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

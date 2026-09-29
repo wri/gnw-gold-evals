@@ -1,0 +1,19 @@
+id: ch-aoi-145
+uid: 5a4378ca4afe5e1f
+status: ready
+set: aoi
+group: designations
+query: Go to Corcovado National Park in Costa Rica
+expected:
+  aoi_ids: '164'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch: the user names the area with an English
+    designation while the WDPA row stores it as "Corcovado, Parque Nacional, CRI". Spanish
+    designation; Chile has a Corcovado Parque Nacional too (555543713), so the country must
+    carry.'
+  verify_query: Corcovado
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
+  observed: 'prod smoke 2026-09-15 (1 trial): pass'

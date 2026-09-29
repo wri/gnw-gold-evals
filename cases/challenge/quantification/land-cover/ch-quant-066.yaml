@@ -1,0 +1,19 @@
+id: ch-quant-066
+uid: 79302bef0f594269
+status: ready
+set: quantification
+group: land-cover
+query: In Colombia, how much land has changed from short vegetation to built-up land?
+expected:
+  aoi_ids: COL
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'short vegetation;built-up land (unscored: no evaluator surface yet)'
+  judge_instruction: 'Change question: area_ha of the short vegetation to built-up land transition
+    between the fixed 2015 and 2024 snapshots; only start- and end-states are represented,
+    not intra-annual changes.'
+  eval_subtype: change_area
+  manifest_id: m-lc-quant-08
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

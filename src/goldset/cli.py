@@ -78,6 +78,7 @@ ACTUALS_FOR_CHECK = {
     "nudge_match": ("actual_nudge_type", "actual_nudge_options"),
     "chart_type_match": ("actual_chart_type",),
     "scope_match": ("actual_scope",),
+    "forbidden_tools_absent": ("actual_forbidden_tools_called",),
     "class_value_match": ("actual_class_values",),
     "answer_traceability": ("actual_traceability_claim",),
     "dashboard_created": ("actual_dashboard_created",),
@@ -129,6 +130,8 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
         entry["judge_errors"] = judge_errors
     if result.duration_seconds is not None:
         entry["latency_s"] = round(result.duration_seconds, 1)
+    if result.stream_duration_seconds is not None:
+        entry["stream_s"] = round(result.stream_duration_seconds, 2)
     if result.trace_url:
         entry["trace_url"] = result.trace_url
     if result.error:
@@ -158,7 +161,12 @@ def merge_trials(entries: list[dict]) -> dict:
         for name in check_names
     }
     merged["trials"] = [
-        {"checks": e["checks"], "latency_s": e.get("latency_s")} for e in entries
+        {
+            "checks": e["checks"],
+            "latency_s": e.get("latency_s"),
+            **({"stream_s": e["stream_s"]} if e.get("stream_s") is not None else {}),
+        }
+        for e in entries
     ]
     # Errors from ANY trial must survive the merge (PR-09 H3) — the base
     # copy above only carries the final trial's metadata.
@@ -195,6 +203,8 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
         cases = [c for c in cases if c.id.lower() in wanted]
     if args.group:
         cases = [c for c in cases if args.group.lower() in c.group.lower()]
+    if args.set:
+        cases = [c for c in cases if c.set.lower() == args.set.lower()]
     # With default string sorting, multi-turn cases get started last, since 'mt-'
     # sorts after '1-'. But they take significant longer than the non-multi-turn
     # cases, so force them to be started first (longest-processing-time-first
@@ -385,6 +395,8 @@ def resume_run(args: argparse.Namespace) -> int:
     for field in ("ff", "build", "trials", "workers", "trial_timeout",
                   "slow_threshold", "status_exclude", "id", "group", "note"):
         setattr(args, field, header[field])
+    # Partials written before the --set selector existed have no "set" key.
+    args.set = header.get("set")
     args.run_id = header["run_id"]
     args.resolved_url = header["resolved_url"]
 
@@ -450,8 +462,11 @@ def main() -> int:
     run.add_argument("--id", action="append", default=None,
                      help="run only this case id (repeatable)")
     run.add_argument("--group", default=None, help="substring match on group")
+    run.add_argument("--set", default=None,
+                     help="exact match on the case's set, the hierarchy level "
+                          "above group (e.g. aoi; CHALLENGE stores only)")
     run.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
-    run.add_argument("--results-dir", type=Path, default=Path("results"))
+    run.add_argument("--results-dir", type=Path, default=Path("results/gold"))
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")
     run.add_argument("--trial-timeout", type=float, default=900.0,
@@ -474,7 +489,7 @@ def main() -> int:
         "prune-artifacts",
         help="delete raw artifact dirs beyond the newest N runs (ledger is untouched)",
     )
-    prune.add_argument("--results-dir", type=Path, default=Path("results"))
+    prune.add_argument("--results-dir", type=Path, default=Path("results/gold"))
     prune.add_argument("--keep-runs", type=int, default=5)
     args = parser.parse_args()
 
@@ -537,6 +552,7 @@ def main() -> int:
         "status_exclude": args.status_exclude,
         "id": args.id,
         "group": args.group,
+        "set": args.set,
         "note": args.note,
     })
 

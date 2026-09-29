@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
-from coverage_doc import render
+from coverage_doc import collect, collect_cases_index, render
 
 from goldset.store import Case, build_manifest, write_case, write_manifest
 
@@ -127,6 +127,161 @@ def test_render_derives_content_and_coverage(tmp_path):
     # multiturn census
     assert "1 active conversations (2 turns)" in text
     assert "changed ×1" in text
+
+
+def test_collect_matches_render(tmp_path):
+    cases_dir = make_dataset_store(tmp_path)
+    text = render(cases_dir)
+    data = collect(cases_dir)
+    # headline counts match the rendered doc
+    assert f"{data['case_count']} cases" in text
+    assert f"**{data['active_count']} active**" in text
+    assert data["caseset_version"] in text
+    # bucket rows equal the MD table cells
+    for bucket, cov in data["bucket_coverage"].items():
+        total = cov["dedicated"] + cov["shared_only"]
+        assert (f"| {bucket} | {cov['dedicated']} | {cov['shared_only']} "
+                f"| {total} |") in text
+    # dataset section as data mirrors the rendered table
+    ds = {row["dataset_id"]: row for row in data["dataset_coverage"]["datasets"]}
+    assert ds["4"]["cases"] == 2 and ds["4"]["answer_graded"] == 1
+    assert ds["4"]["parameters"] == [{"name": "canopy_cover", "cases": 1}]
+    assert ds["11"]["missing_instructions"] == [
+        "code_instructions", "presentation_instructions", "prompt_instructions"]
+    assert data["dataset_coverage"]["unknown_dataset_ids"] == [
+        {"dataset_id": "99", "cases": 1}]
+    assert data["known_gaps"]["catalog_datasets_no_case"] == ["11"]
+    assert data["known_gaps"]["uncovered_context_layers"] == {
+        "driver": ["0"], "natural_lands": ["0"], "intact_forest": ["4"]}
+    # no TARGETS.yml next to this store
+    assert data["targets"] is None
+
+
+def test_collect_embeds_targets(tmp_path):
+    cases_dir = make_store(tmp_path)
+    (cases_dir / "TARGETS.yml").write_text(
+        "meta: {status: provisional}\n"
+        "overall: 0.7\n"
+        "sets:\n  aoi:\n    overall: 0.7\n    targets: {acronyms: 0.8}\n",
+        encoding="utf-8")
+    data = collect(cases_dir)
+    assert data["targets"]["overall"] == 0.7
+    assert data["targets"]["meta"] == {"status": "provisional"}
+    assert data["targets"]["sets"]["aoi"]["targets"] == {"acronyms": 0.8}
+
+
+def test_cases_index_rows(tmp_path):
+    cases_dir = make_store(tmp_path)
+    data = collect_cases_index(cases_dir)
+    assert data["case_count"] == 3
+    rows = {row["id"]: row for row in data["cases"]}
+    one = rows["1-001"]
+    assert one["query"] == "How much loss in X in 2022?"
+    assert one["expected_fields"] == ["answer", "aoi_ids", "dataset_id", "scope"]
+    # implied gating checks: base names, info-only stripped, harness recipe
+    assert one["implied_checks"] == [
+        "agent_answer", "answered_without_data", "aoi_id_match",
+        "chart_produced", "data_pull_exists", "dataset_id_match",
+        "scope_match",
+    ]
+    mt = rows["mt-001"]
+    assert mt["turns"] == ["alerts in Puri", "Odisha one"]
+    assert "query" not in mt
+    assert mt["expected_fields"] == ["clarification", "scope"]
+    assert mt["implied_checks"] == [
+        "clarification_requested", "scope_match", "state_delta",
+    ]
+    assert rows["1-002"]["status"] == "not doing"
+    # uids agree with the manifest, so run rows join by uid
+    manifest = json.loads((cases_dir / "MANIFEST.json").read_text(encoding="utf-8"))
+    by_id = {c["id"]: c["uid"] for c in manifest["cases"]}
+    assert all(row["uid"] == by_id[row["id"]] for row in data["cases"])
+
+
+def test_cases_index_set_and_difficulty_notes(tmp_path):
+    cases_dir = tmp_path / "challenge"
+    case = Case(id="ch-aoi-001", status="ready", set="aoi", group="direct",
+                query="Go to X", expected={"aoi_ids": "X"},
+                notes={"difficulty": "hard", "behaviour": "select"})
+    write_case(cases_dir, case)
+    write_manifest(cases_dir, build_manifest([case], "test"))
+    row = collect_cases_index(cases_dir)["cases"][0]
+    assert row["set"] == "aoi"
+    assert row["difficulty"] == "hard" and row["behaviour"] == "select"
+
+
+def _index_row(tmp_path, case: Case) -> dict:
+    cases_dir = tmp_path / "challenge"
+    write_case(cases_dir, case)
+    write_manifest(cases_dir, build_manifest([case], "test"))
+    return collect_cases_index(cases_dir)["cases"][0]
+
+
+def test_cases_index_facets_numeric_set(tmp_path):
+    # numeric sets: intent is the set, dataset from expected, subtype from notes
+    row = _index_row(tmp_path, Case(
+        id="ch-quant-044", status="ready", set="quantification",
+        group="ghg-flux", query="Net flux in Brazil?",
+        expected={"aoi_ids": "BRA", "dataset_id": "6", "data_pull": "TRUE"},
+        notes={"eval_subtype": "net_flux"}))
+    assert row["intent"] == "quantification"
+    assert row["dataset_ids"] == ["6"]
+    assert row["subtype"] == "net_flux"
+
+
+def test_cases_index_facets_aoi_set(tmp_path):
+    # aoi: intent is the taxonomy's "spatial"; its groups are place-query
+    # subtypes, not datasets; no dataset expected -> empty list, not absent
+    row = _index_row(tmp_path, Case(
+        id="ch-aoi-036", status="ready", set="aoi", group="acronyms",
+        query="Go to the USA", expected={"aoi_ids": "USA"}))
+    assert row["intent"] == "spatial"
+    assert row["dataset_ids"] == []
+    assert row["subtype"] == "acronyms"
+
+
+def test_cases_index_facets_dataset_set(tmp_path):
+    # dataset: spatial intent; dataset cohorts carry no subtype, the cross-cutting
+    # cohorts do; the no_selection sentinel is not a dataset
+    row = _index_row(tmp_path, Case(
+        id="ch-dataset-010", status="ready", set="dataset", group="land-cover",
+        query="landcover", expected={"dataset_id": "1"}))
+    assert row["intent"] == "spatial"
+    assert row["dataset_ids"] == ["1"]
+    assert "subtype" not in row
+    un = _index_row(tmp_path / "un", Case(
+        id="ch-dataset-190", status="ready", set="dataset", group="unmappable",
+        query="map rainfall", expected={"dataset_id": "9;no_selection"}))
+    assert un["dataset_ids"] == ["9"]
+    assert un["subtype"] == "unmappable"
+
+
+def test_cases_index_facets_multi_dataset_and_multiturn(tmp_path):
+    row = _index_row(tmp_path, Case(
+        id="x-001", status="ready", group="comparative", query="compare",
+        expected={"dataset_id": "4; 1", "aoi_ids": "BRA"}))
+    assert row["dataset_ids"] == ["1", "4"]
+    # GOLD cases carry no set -> no intent, no subtype
+    assert "intent" not in row and "subtype" not in row
+    mt = _index_row(tmp_path / "mt", Case(
+        id="mt-009", status="ready", group="multiturn",
+        turns=({"query": "loss in Para", "expected": {"dataset_id": "4"}},
+               {"query": "and fires", "expected": {"dataset_id": "7"}},
+               {"query": "same again", "expected": {"dataset_id": "4"}})))
+    assert mt["dataset_ids"] == ["4", "7"]
+
+
+def test_check_gates_stale_json_siblings(tmp_path):
+    cases_dir = make_store(tmp_path)
+    tool = Path(__file__).resolve().parents[1] / "tools" / "coverage_doc.py"
+    base = [sys.executable, str(tool), "--cases-dir", str(cases_dir)]
+    assert subprocess.run(base, check=False).returncode == 0
+    assert subprocess.run([*base, "--check"], check=False).returncode == 0
+    cov = cases_dir / "coverage.json"
+    cov.write_text(cov.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    proc = subprocess.run([*base, "--check"], check=False, capture_output=True,
+                          text=True)
+    assert proc.returncode == 1 and "coverage.json is stale" in proc.stdout
 
 
 def test_check_mode_gates_freshness(tmp_path):

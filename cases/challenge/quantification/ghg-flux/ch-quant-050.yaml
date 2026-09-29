@@ -1,0 +1,20 @@
+id: ch-quant-050
+uid: 8bab87862df62af1
+status: ready
+set: quantification
+group: ghg-flux
+query: so like are Costa Rica's forests basically more of a carbon sink or are they actually
+  pumping out more than they soak up overall, over the whole record?
+expected:
+  aoi_ids: CRI
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Net source vs net sink over 2001-2025 per the sign of net flux; whole-period
+    total in MgCO2e; do not annualise.
+  eval_subtype: net_sink_source
+  manifest_id: m-flux-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

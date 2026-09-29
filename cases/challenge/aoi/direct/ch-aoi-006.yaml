@@ -1,0 +1,16 @@
+id: ch-aoi-006
+uid: 3eca84c8d211222b
+status: ready
+set: aoi
+group: direct
+query: Go to California
+expected:
+  aoi_ids: USA.5
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'exact-name crowding: MEX ''California'' ejido landmarks fill top candidates, state
+    row absent from top 8'
+  verify_query: California
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

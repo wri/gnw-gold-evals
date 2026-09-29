@@ -1,0 +1,20 @@
+id: ch-comp-024
+uid: 13192d5d5f4038f9
+status: ready
+set: comparison
+group: tcl
+query: Quick question about Indonesia - comparing primary forest loss from 2016 to 2019 against
+  2020 to 2023, which stretch had it worse?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare the two halves of the window (2016-2019 vs 2020-2023) for primary
+    forest loss.
+  eval_subtype: two_period
+  manifest_id: m-tcl-comp-14
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-14b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

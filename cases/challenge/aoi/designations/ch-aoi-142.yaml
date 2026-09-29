@@ -1,0 +1,21 @@
+id: ch-aoi-142
+uid: 36866fcb0ed34020
+status: ready
+set: aoi
+group: designations
+query: Show me Madidi National Park
+expected:
+  aoi_ids: '98183'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch: the user names the area with an English
+    designation while the WDPA row stores it as "Madidi, Parque Nacional, BOL". Spanish designation,
+    distinctive leaf.'
+  verify_query: Madidi
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
+  observed: 'prod 2026-09-15: 1-trial smoke pass, then 3/3 pass on re-verification. On the deterministic
+    two-term frames recorded for the scorer fix (project-zeno tests/fixtures/aoi_designation_candidates_v1.json,
+    terms = place + canonical only) the shipped scorer loses by 0.0013 to ''Maria, National Park, AUS'' (311947); the live geocoder''s extra
+    alternatives are what carry it on prod, so this row is a margin case, not a solid pass'

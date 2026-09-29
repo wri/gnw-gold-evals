@@ -1,0 +1,24 @@
+id: ch-quant-142
+uid: 64fb1908b38a4417
+status: ready
+set: quantification
+group: tcl-fires
+query: What was the total tree cover loss due to fires in Bolivia across all forest types
+  between 2015 and 2020, in hectares?
+expected:
+  aoi_ids: BOL
+  dataset_id: '10'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Report total fire-driven tree cover loss over the range (sum of tree_cover_loss_from_fires_area_ha,
+    hectares); fire and non-fire components sum to total area_ha. NEVER report carbon emissions.
+    30% default.
+  eval_subtype: multi_year_total
+  manifest_id: m-fires-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

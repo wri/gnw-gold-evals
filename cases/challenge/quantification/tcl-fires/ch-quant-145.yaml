@@ -1,0 +1,24 @@
+id: ch-quant-145
+uid: a902daaf2dc8304a
+status: ready
+set: quantification
+group: tcl-fires
+query: Hey, I'm trying to figure out how much tree cover loss in Indonesia during 2020 was
+  actually caused by fires versus other causes, looking at all tree cover types at a 50% canopy
+  density threshold - can you break down the hectares for me?
+expected:
+  aoi_ids: IDN
+  dataset_id: '10'
+  start_date: '2020-01-01'
+  end_date: '2020-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Report fire vs non-fire tree cover loss for the year at a 50% canopy
+    threshold (hectares). NEVER report carbon emissions.
+  eval_subtype: canopy_threshold
+  manifest_id: m-fires-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

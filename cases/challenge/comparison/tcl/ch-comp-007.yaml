@@ -1,0 +1,20 @@
+id: ch-comp-007
+uid: daa64b323f2abb70
+status: ready
+set: comparison
+group: tcl
+query: Compare tree cover loss, across all forest types, in the Democratic Republic of the
+  Congo between 2012-2015 and 2020-2023. Which period was worse?
+expected:
+  aoi_ids: COD
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare the four-year all-forest-types totals 2012-2015 vs 2020-2023;
+    no forest-type filter should be applied.
+  eval_subtype: two_period
+  manifest_id: m-tcl-comp-07
+  lineage: gnw-evals eval-metrics-slice-1 gt-comp-07
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

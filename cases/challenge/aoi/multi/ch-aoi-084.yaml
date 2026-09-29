@@ -1,0 +1,15 @@
+id: ch-aoi-084
+uid: 2dd9fdc9528e64e3
+status: ready
+set: aoi
+group: multi
+query: Show me California and Oregon together
+expected:
+  aoi_ids: USA.5;USA.38
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: baseline
+  verify_query: Oregon
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,21 @@
+id: ch-trend-008
+uid: 5ebf21749672bfef
+status: ready
+set: trend
+group: tcl
+query: How much higher or lower was Costa Rica's tree cover loss across all forest types in
+  2023 compared with 2013?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2013-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: All forest types, so no forest-type filter should be applied.
+  eval_subtype: change_over_period
+  manifest_id: m-tcl-trend-08
+  lineage: gnw-evals eval-metrics-slice-1 gt-trend-08
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

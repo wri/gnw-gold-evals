@@ -1,0 +1,20 @@
+id: ch-quant-115
+uid: ddbe4aac1ca1be55
+status: ready
+set: quantification
+group: tc-gain
+query: How many hectares of tree cover gain did Brazil see cumulatively from 2000 to 2020?
+expected:
+  aoi_ids: BRA
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Cumulative tree cover gain over the full 2000-2020 period; the headline
+    is the cumulative gain area in hectares. Gain is not restoration; the answer must avoid
+    the term 'restoration'. Do not combine gain with tree cover loss to compute net change.
+  eval_subtype: gain_total
+  manifest_id: m-gain-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

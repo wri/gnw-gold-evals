@@ -13,8 +13,9 @@ scratch/
 # Secrets
 .env
 
-# Per-run raw artifacts (large, regenerable) — the committed ledger lives in results/runs/
-results/artifacts/
+# Per-run raw artifacts (large, regenerable) — the committed ledgers live in
+# results/<set>/runs/ (gold, challenge)
+results/*/artifacts/
 
 # In-flight run state (finalised into the immutable run JSON, then deleted;
 # survives only when a run was killed — resume with `gold run --resume <run_id>`)

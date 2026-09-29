@@ -1,0 +1,21 @@
+id: ch-comp-108
+uid: d8dce80995fd3990
+status: ready
+set: comparison
+group: tree-cover
+query: I'm putting together some baseline comparisons for a piece I'm writing - between Bolivia
+  and Peru, which one actually has more tree cover once you use a 50% canopy density threshold?
+expected:
+  aoi_ids: BOL;PER
+  dataset_id: '7'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare tree cover area_ha in the fixed 2000 snapshot; the stated 50%
+    canopy threshold must be applied to both countries. Direction must be correct; figures
+    in hectares, never percentages.
+  eval_subtype: two_country
+  manifest_id: m-tc-comp-07
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-comp-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

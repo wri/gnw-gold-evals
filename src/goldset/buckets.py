@@ -54,6 +54,8 @@ DEDICATED: dict[str, str] = {
     "chart_well_formed": OUTPUT,
     "chart_type_match": OUTPUT,
     "scope_match": SCOPE,
+    # CHALLENGE dataset set: opt-in tool-scope isolation
+    "forbidden_tools_absent": SCOPE,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,
 }
@@ -181,6 +183,9 @@ def _tri(value: str | None) -> bool | None:
 def _case_expects_data_pull(expected: dict[str, str]) -> bool:
     if _tri(expected.get("clarification")) is True:
         return False
+    explicit = _tri(expected.get("data_pull"))
+    if explicit is not None:
+        return explicit
     if expected.get("answer"):
         return True
     return "insight" in (expected.get("dashboard_widgets") or "")
@@ -224,6 +229,8 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("chart_type_match")
     if expected.get("scope"):
         implied.add("scope_match")
+    if expected.get("forbidden_tools"):
+        implied.add("forbidden_tools_absent")
     return implied
 
 

@@ -1,0 +1,15 @@
+id: ch-aoi-083
+uid: 6f744f4b08dab999
+status: ready
+set: aoi
+group: multi
+query: Show me Kenya, Uganda and Tanzania
+expected:
+  aoi_ids: KEN;UGA;TZA
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: baseline
+  verify_query: Uganda|Tanzania
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

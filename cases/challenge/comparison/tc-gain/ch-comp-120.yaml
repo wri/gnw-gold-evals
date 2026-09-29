@@ -1,0 +1,20 @@
+id: ch-comp-120
+uid: d908a1d311f73a03
+status: ready
+set: comparison
+group: tc-gain
+query: Comparing Brazil and Colombia, which one gained more tree cover over the 2010-2020
+  cumulative period?
+expected:
+  aoi_ids: BRA;COL
+  dataset_id: '5'
+  start_date: '2010-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare cumulative gain over the 2010-2020 period; direction correct;
+    cited figures (ha) within tolerance. Gain is not restoration.
+  eval_subtype: two_country
+  manifest_id: m-gain-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-08b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

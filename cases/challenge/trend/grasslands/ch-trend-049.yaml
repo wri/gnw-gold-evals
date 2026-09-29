@@ -1,0 +1,20 @@
+id: ch-trend-049
+uid: 95f823af73dc1a45
+status: ready
+set: trend
+group: grasslands
+query: Did the natural/semi-natural grassland extent in Brazil rise or fall between 2008 and
+  2018?
+expected:
+  aoi_ids: BRA
+  dataset_id: '2'
+  start_date: '2008-01-01'
+  end_date: '2018-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Direction of grassland extent over the window; exclude zero or missing
+    years.
+  eval_subtype: direction
+  manifest_id: m-grass-trend-08
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

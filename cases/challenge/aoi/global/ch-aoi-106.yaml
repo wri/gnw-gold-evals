@@ -1,0 +1,17 @@
+id: ch-aoi-106
+uid: 5eff2900bbc14539
+status: ready
+set: aoi
+group: global
+query: Show me the Great Barrier Reef World Heritage Area
+expected:
+  text: Selects the Great Barrier Reef Marine Park (any section) and must not return a global-selection
+    error or a worldwide selection
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: substring hijack probe ('world'); WDPA rows are section-suffixed (2628_A..E) so
+    aoi_ids needs the future aoi_ids_any check
+  verify_query: Great Barrier Reef
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

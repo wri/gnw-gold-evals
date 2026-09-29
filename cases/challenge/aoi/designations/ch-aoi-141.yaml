@@ -1,0 +1,18 @@
+id: ch-aoi-141
+uid: 3e7c94d3090ca3f3
+status: ready
+set: aoi
+group: designations
+query: Go to Odzala-Kokoua National Park
+expected:
+  aoi_ids: '643'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch: the user names the area with an English
+    designation while the WDPA row stores it as "Odzala Kokoua, Parc National, COG". French
+    designation, hyphen vs space in the leaf.'
+  verify_query: Odzala
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
+  observed: 'prod smoke 2026-09-15 (1 trial): pass'

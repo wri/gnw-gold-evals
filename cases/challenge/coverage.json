@@ -1,0 +1,618 @@
+{
+  "schema_version": 1,
+  "store": "challenge",
+  "caseset_version": "72fafbb2ec30afd2",
+  "case_count": 718,
+  "statuses": {
+    "ready": 713,
+    "todo": 5
+  },
+  "active_count": 718,
+  "groups": [
+    {
+      "group": "acronyms",
+      "cases": 13,
+      "active": 13,
+      "statuses": {
+        "ready": 13
+      }
+    },
+    {
+      "group": "ambiguity",
+      "cases": 10,
+      "active": 10,
+      "statuses": {
+        "ready": 10
+      }
+    },
+    {
+      "group": "ambiguous",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
+      }
+    },
+    {
+      "group": "concepts",
+      "cases": 16,
+      "active": 16,
+      "statuses": {
+        "ready": 16
+      }
+    },
+    {
+      "group": "context-layer",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
+      }
+    },
+    {
+      "group": "data-quality",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "ready": 8
+      }
+    },
+    {
+      "group": "designations",
+      "cases": 22,
+      "active": 22,
+      "statuses": {
+        "ready": 22
+      }
+    },
+    {
+      "group": "direct",
+      "cases": 20,
+      "active": 20,
+      "statuses": {
+        "ready": 20
+      }
+    },
+    {
+      "group": "expansion",
+      "cases": 10,
+      "active": 10,
+      "statuses": {
+        "ready": 6,
+        "todo": 4
+      }
+    },
+    {
+      "group": "ghg-flux",
+      "cases": 36,
+      "active": 36,
+      "statuses": {
+        "ready": 36
+      }
+    },
+    {
+      "group": "global",
+      "cases": 6,
+      "active": 6,
+      "statuses": {
+        "ready": 6
+      }
+    },
+    {
+      "group": "grasslands",
+      "cases": 48,
+      "active": 48,
+      "statuses": {
+        "ready": 48
+      }
+    },
+    {
+      "group": "integrated-alerts",
+      "cases": 48,
+      "active": 48,
+      "statuses": {
+        "ready": 48
+      }
+    },
+    {
+      "group": "land-cover",
+      "cases": 37,
+      "active": 37,
+      "statuses": {
+        "ready": 37
+      }
+    },
+    {
+      "group": "multi",
+      "cases": 10,
+      "active": 10,
+      "statuses": {
+        "ready": 10
+      }
+    },
+    {
+      "group": "multilingual",
+      "cases": 40,
+      "active": 40,
+      "statuses": {
+        "ready": 40
+      }
+    },
+    {
+      "group": "natural-lands",
+      "cases": 34,
+      "active": 34,
+      "statuses": {
+        "ready": 34
+      }
+    },
+    {
+      "group": "sluc",
+      "cases": 33,
+      "active": 33,
+      "statuses": {
+        "ready": 33
+      }
+    },
+    {
+      "group": "sources",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
+      }
+    },
+    {
+      "group": "tc-gain",
+      "cases": 37,
+      "active": 37,
+      "statuses": {
+        "ready": 37
+      }
+    },
+    {
+      "group": "tcl",
+      "cases": 101,
+      "active": 101,
+      "statuses": {
+        "ready": 101
+      }
+    },
+    {
+      "group": "tcl-drivers",
+      "cases": 37,
+      "active": 37,
+      "statuses": {
+        "ready": 37
+      }
+    },
+    {
+      "group": "tcl-fires",
+      "cases": 49,
+      "active": 49,
+      "statuses": {
+        "ready": 49
+      }
+    },
+    {
+      "group": "tree-cover",
+      "cases": 35,
+      "active": 35,
+      "statuses": {
+        "ready": 35
+      }
+    },
+    {
+      "group": "unmappable",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
+      }
+    },
+    {
+      "group": "vague",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "ready": 7,
+        "todo": 1
+      }
+    }
+  ],
+  "bucket_coverage": {
+    "retrieval": {
+      "dedicated": 671,
+      "shared_only": 0
+    },
+    "analysis": {
+      "dedicated": 0,
+      "shared_only": 0
+    },
+    "explanation": {
+      "dedicated": 45,
+      "shared_only": 0
+    },
+    "output": {
+      "dedicated": 0,
+      "shared_only": 0
+    },
+    "scope": {
+      "dedicated": 226,
+      "shared_only": 0
+    }
+  },
+  "expected_fields": [
+    {
+      "field": "dataset_id",
+      "cases": 561,
+      "switches_on": "dataset_id_match"
+    },
+    {
+      "field": "aoi_ids",
+      "cases": 475,
+      "switches_on": "aoi_id_match"
+    },
+    {
+      "field": "data_pull",
+      "cases": 365,
+      "switches_on": "data_pull_exists, answered_without_data"
+    },
+    {
+      "field": "end_date",
+      "cases": 226,
+      "switches_on": "date_extraction (with start_date)"
+    },
+    {
+      "field": "start_date",
+      "cases": 226,
+      "switches_on": "date_extraction (with end_date)"
+    },
+    {
+      "field": "forbidden_tools",
+      "cases": 200,
+      "switches_on": "forbidden_tools_absent"
+    },
+    {
+      "field": "context_layer",
+      "cases": 163,
+      "switches_on": "context_layer_match"
+    },
+    {
+      "field": "text",
+      "cases": 45,
+      "switches_on": "expected_text_match"
+    },
+    {
+      "field": "dataset_parameters",
+      "cases": 36,
+      "switches_on": "dataset_parameter_match"
+    },
+    {
+      "field": "clarification",
+      "cases": 18,
+      "switches_on": "clarification_requested"
+    },
+    {
+      "field": "nudge_type",
+      "cases": 12,
+      "switches_on": "nudge_match"
+    },
+    {
+      "field": "nudge_options",
+      "cases": 6,
+      "switches_on": "nudge_match"
+    },
+    {
+      "field": "answer",
+      "cases": 0,
+      "switches_on": "agent_answer, charts_answer, chart_produced"
+    },
+    {
+      "field": "aoi_source",
+      "cases": 0,
+      "switches_on": "reference only (dashboard AOI source)"
+    },
+    {
+      "field": "chart_type",
+      "cases": 0,
+      "switches_on": "chart_type_match"
+    },
+    {
+      "field": "class_values",
+      "cases": 0,
+      "switches_on": "class_value_match (info-only)"
+    },
+    {
+      "field": "dashboard_created",
+      "cases": 0,
+      "switches_on": "dashboard_created"
+    },
+    {
+      "field": "dashboard_widgets",
+      "cases": 0,
+      "switches_on": "dashboard_widgets_match, dashboard_widgets_valid"
+    },
+    {
+      "field": "dataset_name",
+      "cases": 0,
+      "switches_on": "reference only"
+    },
+    {
+      "field": "scope",
+      "cases": 0,
+      "switches_on": "scope_match"
+    },
+    {
+      "field": "suggested_datasets",
+      "cases": 0,
+      "switches_on": "suggested_datasets_match"
+    }
+  ],
+  "unknown_expected_fields": [],
+  "dataset_coverage": {
+    "source": {
+      "repo": "https://github.com/wri/project-zeno.git",
+      "ref": "origin/main",
+      "sha": "e2fb83f89469eda483830257f9b40c7ef21a6ebd",
+      "path": "src/agent/datasets/catalog",
+      "synced": "2026-09-25"
+    },
+    "datasets": [
+      {
+        "dataset_id": "1",
+        "dataset_name": "Global land cover",
+        "missing_instructions": [],
+        "cases": 45,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "2",
+        "dataset_name": "Global natural/semi-natural grassland extent",
+        "missing_instructions": [],
+        "cases": 51,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "3",
+        "dataset_name": "SBTN Natural Lands Map",
+        "missing_instructions": [],
+        "cases": 42,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "4",
+        "dataset_name": "Tree cover loss",
+        "missing_instructions": [],
+        "cases": 117,
+        "answer_graded": 0,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 14
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 20
+          },
+          {
+            "name": "intact_forest",
+            "cases": 4
+          }
+        ]
+      },
+      {
+        "dataset_id": "5",
+        "dataset_name": "Tree cover gain",
+        "missing_instructions": [],
+        "cases": 39,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "6",
+        "dataset_name": "Forest greenhouse gas net flux",
+        "missing_instructions": [],
+        "cases": 39,
+        "answer_graded": 0,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 5
+          }
+        ],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "7",
+        "dataset_name": "Tree cover",
+        "missing_instructions": [],
+        "cases": 41,
+        "answer_graded": 0,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 9
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 6
+          }
+        ]
+      },
+      {
+        "dataset_id": "8",
+        "dataset_name": "Tree cover loss by dominant driver",
+        "missing_instructions": [],
+        "cases": 40,
+        "answer_graded": 0,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 4
+          }
+        ],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "9",
+        "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
+        "missing_instructions": [],
+        "cases": 37,
+        "answer_graded": 4,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "10",
+        "dataset_name": "Tree cover loss due to fires",
+        "missing_instructions": [],
+        "cases": 57,
+        "answer_graded": 0,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 4
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 6
+          },
+          {
+            "name": "intact_forest",
+            "cases": 3
+          }
+        ]
+      },
+      {
+        "dataset_id": "11",
+        "dataset_name": "Integrated alerts",
+        "missing_instructions": [],
+        "cases": 53,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "12",
+        "dataset_name": "Land GHG Monitoring System (LGMS)",
+        "missing_instructions": [],
+        "cases": 0,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      }
+    ],
+    "unknown_dataset_ids": []
+  },
+  "multi_turn": {
+    "conversations": 0,
+    "turns": 0,
+    "delta_assertions": {}
+  },
+  "parked": [
+    {
+      "id": "ch-aoi-095",
+      "status": "todo",
+      "group": "expansion",
+      "reason": null
+    },
+    {
+      "id": "ch-aoi-098",
+      "status": "todo",
+      "group": "expansion",
+      "reason": null
+    },
+    {
+      "id": "ch-aoi-099",
+      "status": "todo",
+      "group": "expansion",
+      "reason": null
+    },
+    {
+      "id": "ch-aoi-101",
+      "status": "todo",
+      "group": "expansion",
+      "reason": null
+    },
+    {
+      "id": "ch-aoi-108",
+      "status": "todo",
+      "group": "vague",
+      "reason": null
+    }
+  ],
+  "known_gaps": {
+    "unused_expected_fields": [
+      "answer",
+      "aoi_source",
+      "chart_type",
+      "class_values",
+      "dashboard_created",
+      "dashboard_widgets",
+      "dataset_name",
+      "scope",
+      "suggested_datasets"
+    ],
+    "info_only_checks": [
+      "answer_traceability",
+      "charts_answer_judge",
+      "class_value_match",
+      "date_coverage"
+    ],
+    "catalog_datasets_no_case": [
+      "12"
+    ],
+    "uncovered_parameters": {},
+    "uncovered_context_layers": {}
+  },
+  "targets": {
+    "sets": {
+      "aoi": {
+        "overall": 0.7,
+        "targets": {
+          "acronyms": 0.8,
+          "data-quality": 0.8,
+          "sources": 0.7,
+          "concepts": 0.7,
+          "designations": 0.8
+        }
+      },
+      "quantification": {
+        "overall": null,
+        "targets": {}
+      },
+      "trend": {
+        "overall": null,
+        "targets": {}
+      },
+      "comparison": {
+        "overall": null,
+        "targets": {}
+      },
+      "dataset": {
+        "overall": 0.8,
+        "targets": {}
+      }
+    },
+    "overall": 0.7,
+    "meta": {
+      "set": "2026-09-01",
+      "status": "provisional",
+      "note": "initial targets cover the cohorts tracking live bugs; others get targets once the baseline establishes where they stand"
+    }
+  }
+}

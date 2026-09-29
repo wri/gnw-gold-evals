@@ -1,0 +1,22 @@
+id: ch-quant-006
+uid: 82141bbd9ace397c
+status: ready
+set: quantification
+group: tcl
+query: How much tree cover did Indonesia lose in 2021, counting only areas with at least 50%
+  canopy density?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2021-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: The user explicitly set a 50% canopy density threshold, which must be
+    used instead of the 30% default.
+  eval_subtype: canopy_threshold
+  manifest_id: m-tcl-quant-06
+  lineage: gnw-evals eval-metrics-slice-1 gt-quant-06
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

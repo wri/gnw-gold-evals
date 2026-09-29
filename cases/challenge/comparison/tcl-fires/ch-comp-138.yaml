@@ -1,0 +1,24 @@
+id: ch-comp-138
+uid: 803c60e175c46bdb
+status: ready
+set: comparison
+group: tcl-fires
+query: so like in 2023, who lost more tree cover to fires, the United Kingdom or Costa Rica,
+  across all forest types? just curious which one had more hectares burned-ish, not looking
+  for carbon numbers or anything
+expected:
+  aoi_ids: GBR;CRI
+  dataset_id: '10'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Compare fire-driven tree cover loss between the two countries; both values
+    are small but the comparative direction must be correct. NEVER report carbon emissions.
+  eval_subtype: two_country
+  manifest_id: m-fires-comp-04
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-comp-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

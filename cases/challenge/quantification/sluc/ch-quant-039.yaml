@@ -1,0 +1,20 @@
+id: ch-quant-039
+uid: 762c1af13b6f7d1d
+status: ready
+set: quantification
+group: sluc
+query: What was the total rice production volume, in tonnes, for India in 2024?
+expected:
+  aoi_ids: IND
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Rice (unscored: no evaluator surface yet)'
+  judge_instruction: Headline is crop production volume (production_tonnes) in tonnes; tabular;
+    default reporting year 2024.
+  eval_subtype: production
+  manifest_id: m-sluc-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

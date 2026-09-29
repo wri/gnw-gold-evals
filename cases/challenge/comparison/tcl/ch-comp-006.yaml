@@ -1,0 +1,20 @@
+id: ch-comp-006
+uid: e19508a08b37ef52
+status: ready
+set: comparison
+group: tcl
+query: How did Indonesia's tree cover loss across all forest types in 2020 compare with 2015,
+  and how big was the difference?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Only 2015 and 2020 need to be compared; intermediate years are context.
+    All forest types, so no forest-type filter should be applied.
+  eval_subtype: two_period
+  manifest_id: m-tcl-comp-06
+  lineage: gnw-evals eval-metrics-slice-1 gt-comp-06
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

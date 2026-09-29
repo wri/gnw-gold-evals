@@ -1,0 +1,22 @@
+id: ch-comp-041
+uid: 245cc4e7e26c9976
+status: ready
+set: comparison
+group: sluc
+query: I'm trying to get a sense of soybean's sLUC impact - between Brazil and Bolivia, whose
+  emission factor per tonne comes out bigger?
+expected:
+  aoi_ids: BRA;BOL
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Soybean (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the emission factor for the crop between the two countries; tabular;
+    default reporting year 2024.
+  eval_subtype: two_country
+  manifest_id: m-sluc-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-comp-08b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,20 @@
+id: ch-comp-106
+uid: f44b7c1b086021e8
+status: ready
+set: comparison
+group: tree-cover
+query: Which country has more primary forest, the Democratic Republic of the Congo or Indonesia?
+expected:
+  aoi_ids: COD;IDN
+  dataset_id: '7'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare primary forest area_ha in the fixed 2000 snapshot (primary forest
+    context layer, default 30% threshold); the prompt legitimately says primary forest. Direction
+    must be correct; figures in hectares, never percentages.
+  eval_subtype: two_country
+  manifest_id: m-tc-comp-05
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-comp-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

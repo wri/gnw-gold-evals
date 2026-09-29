@@ -1,0 +1,15 @@
+id: ch-aoi-048
+uid: 8ef13ba5753b3b4d
+status: ready
+set: aoi
+group: acronyms
+query: Show me Holland
+expected:
+  aoi_ids: NLD
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: colloquial name
+  verify_query: Netherlands
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

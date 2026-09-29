@@ -88,6 +88,11 @@ def test_implied_checks_from_expectations():
     # a map-only dashboard implies no pull; an insight widget does
     assert "data_pull_exists" not in implied_checks({"dashboard_widgets": "map"})
     assert "data_pull_exists" in implied_checks({"dashboard_widgets": "insight;map"})
+    # an explicit data_pull expectation implies the pull checks without an answer
+    assert {"data_pull_exists", "answered_without_data"} <= implied_checks(
+        {"dataset_id": "4", "data_pull": "TRUE"}
+    )
+    assert "data_pull_exists" not in implied_checks({"answer": "x", "data_pull": "FALSE"})
     # each PR-06 expected field implies exactly its dedicated check —
     # equality, so a typo'd field-name lookup in implied_checks fails here
     assert implied_checks({"class_values": "Natural=2,124 ha"}) == {

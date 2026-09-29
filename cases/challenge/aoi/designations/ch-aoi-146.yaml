@@ -1,0 +1,18 @@
+id: ch-aoi-146
+uid: e700e16b5058e15c
+status: ready
+set: aoi
+group: designations
+query: Show me Chiribiquete National Park
+expected:
+  aoi_ids: '19984'
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: 'PZB-1392 designation-language mismatch: the user names the area with an English
+    designation while the WDPA row stores it as "La Serranía de Chiribiquete, Parque Nacional
+    Natural, COL". Spanish designation and the stored leaf is the long official name.'
+  verify_query: Chiribiquete
+  verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
+  origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
+  observed: 'prod smoke 2026-09-15 (1 trial): resolved to Chiquibul, National Park, BLZ (20230)'

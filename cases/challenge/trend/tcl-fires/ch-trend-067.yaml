@@ -1,0 +1,23 @@
+id: ch-trend-067
+uid: 3cd15590e93cce9d
+status: ready
+set: trend
+group: tcl-fires
+query: Counting all tree cover types in Indonesia, how does fire-driven tree cover loss in
+  2024 compare to what it was in 2015?
+expected:
+  aoi_ids: IDN
+  dataset_id: '10'
+  start_date: '2015-01-01'
+  end_date: '2024-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Compare fire-driven tree cover loss at the start and end of the window
+    (hectares). NEVER report carbon emissions. 30% default.
+  eval_subtype: change_over_period
+  manifest_id: m-fires-trend-05
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-trend-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

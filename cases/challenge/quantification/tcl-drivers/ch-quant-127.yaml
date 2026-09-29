@@ -1,0 +1,21 @@
+id: ch-quant-127
+uid: 34d2239d87854110
+status: ready
+set: quantification
+group: tcl-drivers
+query: What is the leading driver of tree cover loss in Brazil since 2001?
+expected:
+  aoi_ids: BRA
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Dominant driver of tree cover loss over the whole record 2001-2025 (single
+    aggregate, not a year, range, or trend). Seven driver classes, exclude Unknown; present
+    as pie chart or table; avoid the term 'deforestation' for the raw loss. Model accuracy
+    90.5%.
+  eval_subtype: dominant_driver
+  manifest_id: m-driver-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-quant-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

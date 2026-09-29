@@ -1,0 +1,19 @@
+id: ch-quant-107
+uid: c061c972dec04129
+status: ready
+set: quantification
+group: tree-cover
+query: How much tree cover does Indonesia have at a 75% canopy density threshold?
+expected:
+  aoi_ids: IDN
+  dataset_id: '7'
+  dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Fixed 2000 snapshot; the stated 75% canopy threshold must be applied.
+    Headline is tree cover area_ha, never a percentage.
+  eval_subtype: canopy_threshold
+  manifest_id: m-tc-quant-04
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-quant-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

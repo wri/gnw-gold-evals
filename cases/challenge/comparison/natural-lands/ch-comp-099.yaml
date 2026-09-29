@@ -1,0 +1,17 @@
+id: ch-comp-099
+uid: ed2f871bfc201201
+status: ready
+set: comparison
+group: natural-lands
+query: Which country has more natural land in absolute terms, Malaysia or Indonesia?
+expected:
+  aoi_ids: MYS;IDN
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare the Natural row's area_ha (fixed 2020 baseline, two-row is_natural
+    grouping) between Malaysia and Indonesia; the direction must be correct.
+  eval_subtype: two_country
+  manifest_id: m-nl-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-comp-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -22,9 +22,14 @@
       "minLength": 1,
       "description": "Lifecycle: ready | todo | done | not doing (lowercased on import)."
     },
+    "set": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional hierarchy level above group (CHALLENGE: 'aoi', ...). Adds one directory level (<set>/<group>/); organisational like group and status, never hashed into the uid."
+    },
     "group": {
       "type": "string",
-      "description": "Capability grouping (test_group); also the case's directory."
+      "description": "Capability grouping (test_group); also the case's directory (nested under the set directory when set is present)."
     },
     "query": {
       "type": "string",

@@ -1,0 +1,16 @@
+id: ch-aoi-043
+uid: a320e5a73667e88d
+status: ready
+set: aoi
+group: acronyms
+query: Show me DR Congo
+expected:
+  aoi_ids: COD
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: ADR-001; 'Congo' search surfaces COG (Republic of the Congo) before COD - wrong-Congo
+    risk
+  verify_query: Congo
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,15 @@
+id: ch-aoi-062
+uid: 871b13b9497ff70a
+status: ready
+set: aoi
+group: multilingual
+query: Go to Deutschland
+expected:
+  aoi_ids: DEU
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: endonym
+  verify_query: Germany
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

@@ -1,0 +1,21 @@
+id: ch-quant-111
+uid: e33ec3acf4b5bad2
+status: ready
+set: quantification
+group: tree-cover
+query: What is the total area of primary forest, in hectares, in the Democratic Republic of
+  the Congo?
+expected:
+  aoi_ids: COD
+  dataset_id: '7'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Fixed 2000 snapshot at the default 30% threshold with the primary forest
+    context layer; the prompt legitimately says primary forest. Headline is area_ha, never
+    a percentage.
+  eval_subtype: primary_forest_area
+  manifest_id: m-tc-quant-07
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-quant-07b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

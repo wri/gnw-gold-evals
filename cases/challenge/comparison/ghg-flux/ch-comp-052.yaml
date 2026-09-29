@@ -1,0 +1,21 @@
+id: ch-comp-052
+uid: 78b7823f442da7da
+status: ready
+set: comparison
+group: ghg-flux
+query: I'm trying to get a feel for forest carbon in West Africa - between Ghana and Côte
+  d'Ivoire, whose forests end up being the bigger net source of CO2e over the whole record,
+  or is one actually acting as a net sink?
+expected:
+  aoi_ids: GHA;CIV
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare whole-period net flux totals (2001-2025) in MgCO2e; direction
+    correct; net source/sink per sign.
+  eval_subtype: two_country
+  manifest_id: m-flux-comp-07
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

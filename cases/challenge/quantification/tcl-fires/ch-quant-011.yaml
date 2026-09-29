@@ -1,0 +1,23 @@
+id: ch-quant-011
+uid: 690b48011d1721ce
+status: ready
+set: quantification
+group: tcl-fires
+query: How much of Indonesia's 2020 tree cover loss was caused by fires, and how much by other
+  causes?
+expected:
+  aoi_ids: IDN
+  dataset_id: '10'
+  start_date: '2020-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Loss is split into fire-driven and non-fire area, and the two sum to
+    the total tree cover loss. Carbon emissions are not reported for this dataset and their
+    absence must not be penalised.
+  eval_subtype: fires_split
+  manifest_id: m-tcl-quant-11
+  lineage: gnw-evals eval-metrics-slice-1 gt-quant-11
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

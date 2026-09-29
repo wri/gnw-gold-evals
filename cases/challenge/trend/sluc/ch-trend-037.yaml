@@ -1,0 +1,22 @@
+id: ch-trend-037
+uid: e41084774d3e510f
+status: ready
+set: trend
+group: sluc
+query: Between 2020 and 2024, which reporting year had the highest sLUC emission factor (tCO2e
+  per tonne of production) for Oil Palm in Malaysia?
+expected:
+  aoi_ids: MYS
+  dataset_id: '9'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Oil Palm (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Peak year is the reporting year (2020-2024) with the highest emission
+    factor (emission_factor_tCO2e_per_tonne_production); tabular.
+  eval_subtype: peak_year
+  manifest_id: m-sluc-trend-07
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-trend-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

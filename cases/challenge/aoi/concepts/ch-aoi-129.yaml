@@ -1,0 +1,15 @@
+id: ch-aoi-129
+uid: 0a9120e6489898b5
+status: ready
+set: aoi
+group: concepts
+query: Show me the area at latitude 51.5, longitude -0.13
+expected:
+  text: Explains that it cannot select an area from coordinates and asks for a place name
+    instead
+notes:
+  difficulty: hard
+  behaviour: decline
+  lineage: coordinates unsupported
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

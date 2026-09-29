@@ -1,0 +1,21 @@
+id: ch-quant-084
+uid: 90bfd898af6662d4
+status: ready
+set: quantification
+group: integrated-alerts
+query: What is the deforestation alert area in Indonesia between January 1, 2024 and December
+  31, 2024, broken down by confidence tier, in hectares?
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Split total alert area (area_ha) by confidence tier (low/high/highest)
+    over 2024; 'highest' may be absent where only one system covered the area, which is not
+    an error; expected as a pie chart.
+  eval_subtype: by_confidence
+  manifest_id: m-ialert-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-03b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
