@@ -5,10 +5,17 @@ keep. (The gnw-evals `outputs/` directory is gitignored scratch; this is the
 opposite — small, stable, committed.) The ingester that writes these lands
 in **PR-02**; this contract is fixed now so nothing has to be re-scored.
 
-The contract applies to both ledgers, which never mix: `results/gold/` (GOLD,
-regression counts) and `results/challenge/` (CHALLENGE, pass rates — see
-`cases/challenge/README.md`). Each holds its own `runs/`, `recommendations/`,
-and gitignored `artifacts/`; report pages and campaigns are GOLD-only today.
+The contract applies to all three ledgers, which never mix: `results/gold/`
+(GOLD, regression counts), `results/challenge/` (CHALLENGE, pass rates — see
+`cases/challenge/README.md`) and `results/benchmark/` (BENCHMARK runs, made by
+`gold run --benchmark` over a manifest's members — see `benchmarks/README.md`).
+Each holds its own `runs/`, `recommendations/`, and gitignored `artifacts/`;
+report pages and campaigns are GOLD-only today.
+
+A benchmark run record additionally carries `benchmark: {path, version,
+status, manifest_sha, members}`, naming the manifest (by content hash,
+errata included) that chose its cases; its `caseset`/`caseset_version` are
+the source store's (CHALLENGE).
 
 ## File naming
 
@@ -105,6 +112,13 @@ raw.githubusercontent.com cannot list directories. Regenerate with
 (enumeration is `git ls-files`, so untracked local runs never leak in), and
 commit it with the run; CI gates freshness via `--check`. Like every other
 derived artefact here, it is never hand-edited.
+
+Benchmark entries (`sets.benchmark[]`) also carry the run's `benchmark`
+block, `canonical` (a North Star trend point: prod, no ff, 3 trials, every
+currently active member present) and `canonical_reasons`. The top-level
+`benchmarks` object maps each version to `{path, status, frozen, members,
+voided, runs, canonical_runs}`. Because it reads `benchmarks/*.json`, adding
+an erratum or freezing a version also requires regenerating the index.
 
 ## Composing a current picture across runs
 
