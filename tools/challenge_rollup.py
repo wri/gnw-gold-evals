@@ -58,7 +58,13 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from goldset.buckets import is_info_only, row_verdict  # noqa: E402
+from goldset.benchmark import STAGE_ORDER, Benchmark, load_benchmark  # noqa: E402
+from goldset.buckets import (  # noqa: E402
+    DEDICATED,
+    base_check_name,
+    is_info_only,
+    row_verdict,
+)
 from goldset.store import load_store  # noqa: E402
 
 Z_95 = 1.96
@@ -499,6 +505,116 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
     return "\n".join(lines)
 
 
+# ---------------------------------------------------------------------------
+# BENCHMARK rollup (--benchmark). Grouping comes from the manifest's frozen
+# member facets, never the live case, so it needs no store. Semantics match
+# the FE (project-zeno-next src/features/evals/lib/attribution.ts).
+
+ATTRIBUTION = (*STAGE_ORDER, "unattributed")
+
+
+def primary_failure(entry: dict[str, Any]) -> str:
+    """Earliest failing dedicated stage in STAGE_ORDER; ``unattributed`` when
+    only shared (or unbucketed) checks failed."""
+    stages = {
+        DEDICATED[base_check_name(name)]
+        for name, value in (entry.get("checks") or {}).items()
+        if value == 0.0 and not is_info_only(name) and base_check_name(name) in DEDICATED
+    }
+    return next((s for s in STAGE_ORDER if s in stages), "unattributed")
+
+
+def _rate(passed: int, n: int) -> dict[str, Any]:
+    lo, hi = wilson(passed, n)
+    return {"n": n, "passed": passed, "rate": passed / n if n else None,
+            "ci_low": lo, "ci_high": hi}
+
+
+def _block(entries: list[dict[str, Any]]) -> dict[str, Any]:
+    verdicts = Counter(row_verdict(e) for e in entries)
+    scored = [e for e in entries if row_verdict(e) in ("pass", "fail")]
+    passed = [e for e in scored if row_verdict(e) == "pass"]
+    consistent = sum(strict_clean(e) for e in passed)
+    failures = Counter(primary_failure(e) for e in scored if row_verdict(e) == "fail")
+    return {
+        **_rate(len(passed), len(scored)),
+        # of complete answers, the share clean on every trial
+        "consistency": _rate(consistent, len(passed)),
+        "errors": verdicts["error"],
+        "uncovered": verdicts["uncovered"],
+        "availability": (len(entries) - verdicts["error"]) / len(entries) if entries else None,
+        "failure_modes": {
+            "pass": len(passed),
+            **{stage: failures[stage] for stage in ATTRIBUTION},
+        },
+    }
+
+
+def rollup_benchmark(run: dict[str, Any], bench: Benchmark) -> dict[str, Any]:
+    members = {m.uid: m for m in bench.active_members}
+    by_uid = {e.get("uid"): e for e in run.get("results", [])}
+    in_run = [by_uid[uid] for uid in members if uid in by_uid]
+    types = []
+    for qtype in bench.types:
+        mine = [m for m in members.values() if m.type == qtype["key"]]
+        entries = [by_uid[m.uid] for m in mine if m.uid in by_uid]
+        types.append({
+            "key": qtype["key"],
+            "label": qtype["label"],
+            "measured": bool(mine),
+            "members": len(mine),
+            **(_block(entries) if mine else {}),
+            # coverage matrix row: members exercising each stage
+            "stages": {s: sum(s in m.stages for m in mine) for s in STAGE_ORDER},
+        })
+    return {
+        "run_id": run.get("run_id"),
+        "version": bench.version,
+        "status": bench.status,
+        "members": len(members),
+        "voided": len(bench.errata),
+        "missing": sorted(members[u].id for u in members if u not in by_uid),
+        "north_star": _block(in_run),
+        "types": types,
+    }
+
+
+def render_benchmark_markdown(rollups: list[dict[str, Any]]) -> str:
+    lines = []
+    for r in rollups:
+        ns = r["north_star"]
+        lines += [
+            f"## BENCHMARK {r['version']} ({r['status']}) — {r['run_id']}",
+            "",
+            f"North Star: **{_pct(ns['rate'])}** complete ({ns['passed']}/{ns['n']}, "
+            f"CI {_pct(ns['ci_low'])}-{_pct(ns['ci_high'])}); consistency "
+            f"{_pct(ns['consistency']['rate'])}; {ns['errors']} errored, "
+            f"{len(r['missing'])} missing, {r['voided']} voided.",
+            "",
+            "| type | n | complete | CI | " + " | ".join(ATTRIBUTION) + " |",
+            "|---|---|---|---|" + "---|" * len(ATTRIBUTION),
+        ]
+        for t in r["types"]:
+            if not t["measured"]:
+                lines.append(f"| {t['label']} | — | not yet measured | |" + " |" * len(ATTRIBUTION))
+                continue
+            fm = t["failure_modes"]
+            lines.append(
+                f"| {t['label']} | {t['n']} | {_pct(t['rate'])} | "
+                f"{_pct(t['ci_low'])}-{_pct(t['ci_high'])} | "
+                + " | ".join(str(fm[s]) for s in ATTRIBUTION) + " |"
+            )
+        lines += ["", "Coverage (members exercising each stage):", "",
+                  "| type | " + " | ".join(STAGE_ORDER) + " |",
+                  "|---|" + "---|" * len(STAGE_ORDER)]
+        for t in r["types"]:
+            if t["measured"]:
+                lines.append(f"| {t['label']} | "
+                             + " | ".join(str(t["stages"][s]) for s in STAGE_ORDER) + " |")
+        lines.append("")
+    return "\n".join(lines)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("runs", nargs="+", type=Path, help="run JSON file(s)")
@@ -510,7 +626,22 @@ def main() -> int:
         help="targets YAML (default: <cases-dir>/TARGETS.yml)",
     )
     parser.add_argument("--json", type=Path, default=None, help="also write JSON here")
+    parser.add_argument("--benchmark", type=Path, default=None, metavar="MANIFEST",
+                        help="roll up as a BENCHMARK: North Star, consistency, "
+                             "per-type failure modes and the type x stage matrix "
+                             "over the manifest's active members")
     args = parser.parse_args()
+
+    if args.benchmark:
+        bench = load_benchmark(args.benchmark)
+        rollups = [rollup_benchmark(json.loads(p.read_text(encoding="utf-8")), bench)
+                   for p in args.runs]
+        print(render_benchmark_markdown(rollups))
+        if args.json:
+            args.json.parent.mkdir(parents=True, exist_ok=True)
+            args.json.write_text(json.dumps({"benchmark": rollups}, indent=2) + "\n",
+                                 encoding="utf-8")
+        return 0
 
     cases_by_uid = {uid: case for _p, case, uid in load_store(args.cases_dir)}
     targets = load_targets(args.targets or args.cases_dir / "TARGETS.yml")
