@@ -21,6 +21,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from goldset.adapter import case_to_expected
+from goldset.benchmark import load_benchmark, manifest_sha
 from goldset.buckets import row_verdict, summarize_buckets
 from goldset.eval_types import TestResult
 from goldset.ledger import (
@@ -194,7 +195,37 @@ def _harness_sha() -> str:
         return "unknown"
 
 
+def benchmark_meta(path: Path) -> dict:
+    """The ``benchmark`` block a run records: which manifest (by content
+    hash, errata included) chose its cases."""
+    bench = load_benchmark(path)
+    return {
+        "path": Path(path).as_posix(),
+        "version": bench.version,
+        "status": bench.status,
+        "manifest_sha": manifest_sha(path),
+        "members": len(bench.active_members),
+    }
+
+
+def select_benchmark_cases(args: argparse.Namespace) -> list[Case]:
+    """A benchmark run's cases are exactly the manifest's active members,
+    whatever their status (the integrity check owns readiness). Members
+    missing from the store are reported, never silently dropped."""
+    bench = load_benchmark(Path(args.benchmark["path"]))
+    wanted = bench.member_uids
+    cases = [case for _path, case, uid in load_store(args.cases_dir) if uid in wanted]
+    missing = wanted - {c.uid for c in cases}
+    if missing:
+        print(f"warning: {len(missing)} benchmark member(s) not in {args.cases_dir} "
+              "(edited or deleted since sampling); run tools/check_benchmark.py",
+              flush=True)
+    return sorted(cases, key=lambda c: (not c.is_multiturn, c.id))
+
+
 def select_cases(args: argparse.Namespace) -> list[Case]:
+    if getattr(args, "benchmark", None):
+        return select_benchmark_cases(args)
     excluded = {s.strip().lower() for s in args.status_exclude.split(",") if s.strip()}
     cases = [case for _path, case, _uid in load_store(args.cases_dir)]
     cases = [c for c in cases if c.status.lower() not in excluded]
@@ -332,6 +363,8 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
         "results": entries,
         "buckets": summarize_buckets(entries),
     }
+    if getattr(args, "benchmark", None):
+        record["benchmark"] = args.benchmark
     if args.note:
         return {**record, "methodology_note": args.note}
     return record
@@ -397,6 +430,15 @@ def resume_run(args: argparse.Namespace) -> int:
         setattr(args, field, header[field])
     # Partials written before the --set selector existed have no "set" key.
     args.set = header.get("set")
+    args.benchmark = header.get("benchmark")
+    if args.benchmark:
+        path = Path(args.benchmark["path"])
+        current = manifest_sha(path) if path.exists() else None
+        if current != args.benchmark["manifest_sha"]:
+            print(f"benchmark manifest {path} has changed since the run started "
+                  f"({args.benchmark['manifest_sha']} -> {current}); "
+                  "start a fresh run instead")
+            return 1
     args.run_id = header["run_id"]
     args.resolved_url = header["resolved_url"]
 
@@ -465,8 +507,14 @@ def main() -> int:
     run.add_argument("--set", default=None,
                      help="exact match on the case's set, the hierarchy level "
                           "above group (e.g. aoi; CHALLENGE stores only)")
+    run.add_argument("--benchmark", type=Path, default=None, metavar="MANIFEST",
+                     help="run exactly a BENCHMARK manifest's active members "
+                          "(benchmarks/<version>.json); implies its source "
+                          "--cases-dir and --results-dir results/benchmark, and "
+                          "cannot be combined with --id/--group/--set")
     run.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
-    run.add_argument("--results-dir", type=Path, default=Path("results/gold"))
+    run.add_argument("--results-dir", type=Path, default=None,
+                     help="default results/gold (results/benchmark with --benchmark)")
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")
     run.add_argument("--trial-timeout", type=float, default=900.0,
@@ -495,6 +543,20 @@ def main() -> int:
 
     if args.command == "prune-artifacts":
         return prune_artifacts(args.results_dir, args.keep_runs)
+
+    if args.benchmark:
+        if args.id or args.group or args.set:
+            print("--benchmark selects its own cases; drop --id/--group/--set")
+            return 1
+        try:
+            args.benchmark = benchmark_meta(args.benchmark)
+        except (OSError, ValueError) as exc:
+            print(f"cannot load benchmark: {exc}")
+            return 1
+        args.cases_dir = Path(load_benchmark(Path(args.benchmark["path"]))
+                              .source.get("cases_dir", "cases/challenge"))
+    if args.results_dir is None:
+        args.results_dir = Path("results/benchmark" if args.benchmark else "results/gold")
 
     if args.resume:
         return resume_run(args)
@@ -553,6 +615,7 @@ def main() -> int:
         "id": args.id,
         "group": args.group,
         "set": args.set,
+        "benchmark": args.benchmark,
         "note": args.note,
     })
 

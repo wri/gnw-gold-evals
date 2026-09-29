@@ -11,6 +11,15 @@ here: scoring semantics stay in ``goldset.buckets`` / the consumers.
     uv run python tools/build_run_index.py            # writes results/index.json
     uv run python tools/build_run_index.py --check    # CI freshness gate
 
+Benchmark runs (``results/benchmark/``) additionally carry their
+``benchmark`` block and a ``canonical`` flag with ``canonical_reasons``: a
+run is a North Star trend point only when it is prod, default profile (no
+ff), 3 trials, and covers every active member of its manifest *as the
+manifest stands now* (a member voided by a later erratum is not required).
+The top-level ``benchmarks`` section lists each manifest under
+``benchmarks/`` with its status and its runs, so the FE can draw the trend
+from one fetch.
+
 Output is deterministic (runs sorted by run_id, no timestamp), so the
 freshness check is a plain byte compare. Regenerate and commit the index
 together with every new run (see the after-run ritual in CLAUDE.md).
@@ -21,9 +30,15 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+import sys
 from pathlib import Path
 
-SETS = ("gold", "challenge")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+
+from goldset.benchmark import load_benchmark  # noqa: E402
+
+SETS = ("gold", "challenge", "benchmark")
+CANONICAL = {"environment": "prod", "ff": None, "num_trials": 3}
 
 # Header fields projected verbatim when present; the optional ones
 # (workers, trial_timeout, resumed, methodology_note) appear only on the
@@ -72,7 +87,47 @@ def run_entry(path: Path, results_dir: Path) -> dict:
     entry: dict = {"run_id": run_id, "path": rel.as_posix()}
     entry.update({k: run[k] for k in HEADER_FIELDS if k in run})
     entry["buckets"] = run.get("buckets")
+    if "benchmark" in run:
+        entry["benchmark"] = run["benchmark"]
+        reasons = canonical_reasons(run, results_dir.resolve().parent)
+        entry["canonical"] = not reasons
+        entry["canonical_reasons"] = reasons
     return entry
+
+
+def canonical_reasons(run: dict, repo_root: Path) -> list[str]:
+    """Why a benchmark run is not a trend point; empty means canonical."""
+    reasons = [
+        f"{field} is {run.get(field)!r}, canonical is {want!r}"
+        for field, want in CANONICAL.items()
+        if run.get(field) != want
+    ]
+    manifest = repo_root / run["benchmark"]["path"]
+    if not manifest.exists():
+        return reasons + [f"manifest {run['benchmark']['path']} not found"]
+    active = load_benchmark(manifest).member_uids
+    missing = active - {e.get("uid") for e in run.get("results", [])}
+    if missing:
+        reasons.append(f"{len(missing)} active member(s) not in the run")
+    return reasons
+
+
+def benchmark_versions(repo_root: Path, runs: list[dict]) -> dict:
+    versions = {}
+    for path in sorted((repo_root / "benchmarks").glob("*.json")):
+        bench = load_benchmark(path)
+        rel = path.relative_to(repo_root).as_posix()
+        mine = [r for r in runs if r["benchmark"]["path"] == rel]
+        versions[bench.version] = {
+            "path": rel,
+            "status": bench.status,
+            "frozen": bench.frozen,
+            "members": len(bench.active_members),
+            "voided": len(bench.errata),
+            "runs": [r["run_id"] for r in mine],
+            "canonical_runs": [r["run_id"] for r in mine if r["canonical"]],
+        }
+    return versions
 
 
 def build_index(results_dir: Path, use_glob: bool = False) -> dict:
@@ -88,6 +143,8 @@ def build_index(results_dir: Path, use_glob: bool = False) -> dict:
         "schema_version": 1,
         "generated_by": "tools/build_run_index.py",
         "sets": sets,
+        "benchmarks": benchmark_versions(results_dir.resolve().parent,
+                                         sets["benchmark"]),
     }
 
 

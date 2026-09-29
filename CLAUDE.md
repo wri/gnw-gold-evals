@@ -45,6 +45,24 @@ set. The short version:
   `tools/coverage_doc.py --cases-dir cases/challenge`, and commit both with
   the edit (CI gates both).
 
+## BENCHMARK (frozen subset of CHALLENGE — the North Star exam)
+
+`benchmarks/<version>.json` is a **uid manifest** over `cases/challenge`, not
+a case store: read `benchmarks/README.md` first. Key rules:
+
+- Membership is by uid, and type/cohort/difficulty/stages are frozen per
+  member. Editing a member case drops it (new uid); `tools/check_benchmark.py`
+  (CI) errors on frozen versions and warns on drafts. Never edit a member
+  of a frozen version: void it with an erratum and add new CHALLENGE cases.
+- Sample with `tools/benchmark_sample.py --version <v>` (20 per measured
+  type; aoi and dataset easy+medium only); regeneration is deliberate,
+  never CI's. Frozen manifests are never regenerated.
+- Run with `gold run --benchmark benchmarks/<v>.json --env prod --trials 3`
+  (no ff); results go to `results/benchmark/`. Only canonical runs are trend
+  points (`results/index.json` flags them). Roll up with
+  `tools/challenge_rollup.py --benchmark benchmarks/<v>.json <run>.json`.
+- After an erratum or a freeze, regenerate `results/index.json`.
+
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR
 per spec (case store → results ledger → harness port → fixes → bucket scoring →
 new validators → multiturn). All planning docs — the design plan, PR specs, and
