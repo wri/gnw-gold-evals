@@ -1,7 +1,7 @@
-id: ch-map-157
+id: ch-dataset-157
 uid: 0bb8c8d53882a68d
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: Map tree cover loss inside primary forests
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit primary forest
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

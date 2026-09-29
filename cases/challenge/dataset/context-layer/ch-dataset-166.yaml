@@ -1,7 +1,7 @@
-id: ch-map-166
+id: ch-dataset-166
 uid: 17a6e3d69804bfb1
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: Show tree cover within primary forests on the map
 expected:
@@ -14,4 +14,4 @@ notes:
   lineage: extent x primary; note tree_cover.yml primary_forest description says 'Shows loss
     within' (catalog defect)
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

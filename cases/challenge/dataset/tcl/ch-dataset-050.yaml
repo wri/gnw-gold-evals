@@ -1,7 +1,7 @@
-id: ch-map-050
+id: ch-dataset-050
 uid: 5322e59a2174b9cf
 status: ready
-set: map
+set: dataset
 group: tcl
 query: tree cover los
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: typo
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

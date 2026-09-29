@@ -1,7 +1,7 @@
-id: ch-map-061
+id: ch-dataset-061
 uid: e6a7327f5ed307e8
 status: ready
-set: map
+set: dataset
 group: tc-gain
 query: Show tree cover gain from plantations and natural regrowth
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

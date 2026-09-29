@@ -1,7 +1,7 @@
-id: ch-map-003
+id: ch-dataset-003
 uid: 0d2dd44950ad1ed9
 status: ready
-set: map
+set: dataset
 group: land-cover
 query: Show me a map of land cover classes
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

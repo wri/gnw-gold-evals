@@ -1,7 +1,7 @@
-id: ch-map-175
+id: ch-dataset-175
 uid: cca5a6a3fadabae0
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show urban areas on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: nudge
   lineage: 'GOLD nudge precedent (urban land cover: land cover vs SBTN)'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

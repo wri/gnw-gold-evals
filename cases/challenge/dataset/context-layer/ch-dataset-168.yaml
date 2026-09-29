@@ -1,7 +1,7 @@
-id: ch-map-168
+id: ch-dataset-168
 uid: ed06e16345d37c29
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: Show all tree cover loss on the map, including plantations and secondary forest
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit opt-out of the primary default
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

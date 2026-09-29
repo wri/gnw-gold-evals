@@ -1,7 +1,7 @@
-id: ch-map-068
+id: ch-dataset-068
 uid: a34bfe63b2ea8fa9
 status: ready
-set: map
+set: dataset
 group: ghg-flux
 query: Show me the net GHG flux from forests
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

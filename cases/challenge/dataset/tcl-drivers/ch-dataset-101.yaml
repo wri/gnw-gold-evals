@@ -1,7 +1,7 @@
-id: ch-map-101
+id: ch-dataset-101
 uid: c2a5bd492ca54545
 status: ready
-set: map
+set: dataset
 group: tcl-drivers
 query: deforestation drivers map
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: loose 'deforestation' plus driver
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

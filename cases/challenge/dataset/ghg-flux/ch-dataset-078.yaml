@@ -1,7 +1,7 @@
-id: ch-map-078
+id: ch-dataset-078
 uid: 5b12b54a4c9a4af6
 status: ready
-set: map
+set: dataset
 group: ghg-flux
 query: sinks vs sources
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: very short, indirect
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

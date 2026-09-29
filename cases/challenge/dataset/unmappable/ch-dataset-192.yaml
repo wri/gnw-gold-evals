@@ -1,7 +1,7 @@
-id: ch-map-192
+id: ch-dataset-192
 uid: 0e58282e60e1e90d
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: Map drought conditions
 expected:
@@ -14,4 +14,4 @@ notes:
   behaviour: decline
   lineage: climate gap
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

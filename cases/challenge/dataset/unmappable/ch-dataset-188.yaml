@@ -1,7 +1,7 @@
-id: ch-map-188
+id: ch-dataset-188
 uid: 89ee01c7c96d318f
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: Put the deforestation emissions per tonne of beef on the map
 expected:
@@ -15,4 +15,4 @@ notes:
   behaviour: decline
   lineage: 'sLUC: indirect'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

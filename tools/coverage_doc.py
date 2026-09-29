@@ -412,15 +412,16 @@ def collect(cases_dir: Path, catalog_path: Path | None = None) -> dict:
 # Interim set -> taxonomy-intent map, until cases/taxonomy.yml owns it: the
 # store names the Spatial intent after its tool ("aoi"); the other sets are
 # already named after their intent.
-# map is spatial too: the trace taxonomy's view-only intent (show on a map,
-# no metric). The two stay apart on the matrix via dataset_ids.
-INTENT_BY_SET = {"aoi": "spatial", "map": "spatial"}
+# dataset is spatial too: its prompts carry the trace taxonomy's view-only
+# intent (show on a map, no metric). The two stay apart on the matrix via
+# dataset_ids.
+INTENT_BY_SET = {"aoi": "spatial", "dataset": "spatial"}
 
 # Groups that are prompt subtypes rather than datasets, per set. None means
-# every group in the set; the map set mixes dataset cohorts with these.
+# every group in the set; the dataset set mixes dataset cohorts with these.
 SUBTYPE_GROUPS: dict[str, set[str] | None] = {
     "aoi": None,
-    "map": {"multilingual", "context-layer", "ambiguous", "unmappable"},
+    "dataset": {"multilingual", "context-layer", "ambiguous", "unmappable"},
 }
 
 

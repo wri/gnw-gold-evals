@@ -1,7 +1,7 @@
-id: ch-map-163
+id: ch-dataset-163
 uid: 7c8b4496170f2493
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: burnt primary forest map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: fires x primary, short
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

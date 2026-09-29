@@ -1,7 +1,7 @@
-id: ch-map-045
+id: ch-dataset-045
 uid: 81a9fa1d1d77d1c8
 status: ready
-set: map
+set: dataset
 group: tcl
 query: Show tree cover loss at 50% canopy density
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit canopy (jev canopy question)
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

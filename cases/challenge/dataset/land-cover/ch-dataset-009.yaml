@@ -1,7 +1,7 @@
-id: ch-map-009
+id: ch-dataset-009
 uid: a3c3df185f3d7b86
 status: ready
-set: map
+set: dataset
 group: land-cover
 query: 'Map what the land is covered by: trees, crops, water, built-up'
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

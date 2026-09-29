@@ -1,7 +1,7 @@
-id: ch-map-031
+id: ch-dataset-031
 uid: 6907e450f48bc09c
 status: ready
-set: map
+set: dataset
 group: natural-lands
 query: Map natural forests, natural short vegetation and natural water
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

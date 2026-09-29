@@ -1,7 +1,7 @@
-id: ch-map-185
+id: ch-dataset-185
 uid: e95bdf5e80ee142c
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show grass on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: nudge
   lineage: natural grassland vs cultivated grassland class (GOLD loose-grassland rule)
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

@@ -1,7 +1,7 @@
-id: ch-map-082
+id: ch-dataset-082
 uid: 8f28076b336e54ac
 status: ready
-set: map
+set: dataset
 group: tree-cover
 query: Put tree cover on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

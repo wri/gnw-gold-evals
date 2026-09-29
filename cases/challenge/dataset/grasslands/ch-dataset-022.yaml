@@ -1,7 +1,7 @@
-id: ch-map-022
+id: ch-dataset-022
 uid: 60ba74271be7060d
 status: ready
-set: map
+set: dataset
 group: grasslands
 query: Map natural grassland change over time
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

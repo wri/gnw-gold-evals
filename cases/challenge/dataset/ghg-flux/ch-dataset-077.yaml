@@ -1,7 +1,7 @@
-id: ch-map-077
+id: ch-dataset-077
 uid: 3805cbb4a7f4d5ac
 status: ready
-set: map
+set: dataset
 group: ghg-flux
 query: net ghg forests
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: very short
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

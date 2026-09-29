@@ -1,7 +1,7 @@
-id: ch-map-161
+id: ch-dataset-161
 uid: bc5d6f0037fe1289
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: IFL loss layer pls
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: acronym
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

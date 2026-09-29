@@ -1,7 +1,7 @@
-id: ch-map-012
+id: ch-dataset-012
 uid: 59c4f2f3d819c0ee
 status: ready
-set: map
+set: dataset
 group: land-cover
 query: show landcovr change
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: typo
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

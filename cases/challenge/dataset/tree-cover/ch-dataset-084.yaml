@@ -1,7 +1,7 @@
-id: ch-map-084
+id: ch-dataset-084
 uid: 1cd4aa5bd9fa02de
 status: ready
-set: map
+set: dataset
 group: tree-cover
 query: Show tree cover with at least 50% canopy density
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit canopy (jev canopy question)
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

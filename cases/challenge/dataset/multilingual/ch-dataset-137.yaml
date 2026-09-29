@@ -1,7 +1,7 @@
-id: ch-map-137
+id: ch-dataset-137
 uid: fa5fe1b14e2c484e
 status: ready
-set: map
+set: dataset
 group: multilingual
 query: Mostre a cobertura arbórea no mapa
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: lang=pt
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

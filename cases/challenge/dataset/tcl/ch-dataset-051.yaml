@@ -1,7 +1,7 @@
-id: ch-map-051
+id: ch-dataset-051
 uid: 5c178bec0b3b8f16
 status: ready
-set: map
+set: dataset
 group: tcl
 query: where'd the trees go, map it
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: colloquial
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

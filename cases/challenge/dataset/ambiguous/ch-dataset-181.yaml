@@ -1,7 +1,7 @@
-id: ch-map-181
+id: ch-dataset-181
 uid: 7c5411a47ba50f62
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show forest change on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: nudge
   lineage: loss, gain or land cover change; genuinely open
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

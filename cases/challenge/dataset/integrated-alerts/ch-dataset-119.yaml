@@ -1,7 +1,7 @@
-id: ch-map-119
+id: ch-dataset-119
 uid: c6b0c97f65c83d9f
 status: ready
-set: map
+set: dataset
 group: integrated-alerts
 query: Display deforestation alerts on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

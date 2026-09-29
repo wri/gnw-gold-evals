@@ -1,7 +1,7 @@
-id: ch-map-183
+id: ch-dataset-183
 uid: 0459c9e315bf5848
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show cropland on the map
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: both carry a crop class
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

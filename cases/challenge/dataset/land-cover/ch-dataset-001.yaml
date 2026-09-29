@@ -1,7 +1,7 @@
-id: ch-map-001
+id: ch-dataset-001
 uid: 998c913fca9d3a91
 status: ready
-set: map
+set: dataset
 group: land-cover
 query: Show land cover on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

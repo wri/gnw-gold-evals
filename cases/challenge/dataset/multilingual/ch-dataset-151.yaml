@@ -1,7 +1,7 @@
-id: ch-map-151
+id: ch-dataset-151
 uid: 1b1ba786e34e4022
 status: ready
-set: map
+set: dataset
 group: multilingual
 query: Nionyeshe tahadhari za ukataji miti kwenye ramani
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: lang=sw
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

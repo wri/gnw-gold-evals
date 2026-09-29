@@ -1,7 +1,7 @@
-id: ch-map-095
+id: ch-dataset-095
 uid: 5a6810c7d61d8dfa
 status: ready
-set: map
+set: dataset
 group: tcl-drivers
 query: Put the drivers of tree cover loss on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

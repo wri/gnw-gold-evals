@@ -1,4 +1,4 @@
-"""forbidden_tools_absent: opt-in tool-scope isolation (CHALLENGE map set)."""
+"""forbidden_tools_absent: opt-in tool-scope isolation (CHALLENGE dataset set)."""
 
 from types import SimpleNamespace
 

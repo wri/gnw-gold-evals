@@ -159,15 +159,16 @@ unreachable via name search): run each once with
 artifact (`results/challenge/artifacts/<run_id>/<uid>.json.gz`), verify them,
 move the expectation into the case, and flip the status to `ready`.
 
-## Batch 3: the `map` set
+## Batch 3: the `dataset` set
 
-200 prompts (`cases/challenge/map/<cohort>/`, ids `ch-map-001..200`), each
-asking only to see a layer on the map, with no place, no quantity and no
+200 dataset-selection prompts (`cases/challenge/dataset/<cohort>/`, ids
+`ch-dataset-001..200`; named `map` until 2026-09-29, ids `ch-map-NNN`), each
+phrased as asking only to see a layer on the map, with no place, no quantity and no
 date, so the one tool that should run is `pick_dataset` (the FE draws the
 tile layer from `state.dataset`; there is no separate add-to-map tool).
 Built to compare project-zeno's RAG + LLM selector with the jev decision
 model (project-zeno PR #841). Seed and per-row lineage:
-`seeds/challenge-map-v1.csv`; expectations from the zeno catalog at
+`seeds/challenge-dataset-v1.csv`; expectations from the zeno catalog at
 e2fb83f (`selection_hints`, `context_layers`, `parameters`).
 
 | cohort | n | scored |

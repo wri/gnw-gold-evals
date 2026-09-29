@@ -1,7 +1,7 @@
-id: ch-map-002
+id: ch-dataset-002
 uid: 254071b9adfbf0e2
 status: ready
-set: map
+set: dataset
 group: land-cover
 query: Put the land cover map on
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

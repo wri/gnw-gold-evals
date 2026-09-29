@@ -1,7 +1,7 @@
-id: ch-map-190
+id: ch-dataset-190
 uid: c8d448bceca37f44
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: Show rainfall on the map
 expected:
@@ -14,4 +14,4 @@ notes:
   behaviour: decline
   lineage: climate gap (#1 unmet topic)
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

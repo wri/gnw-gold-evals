@@ -1,7 +1,7 @@
-id: ch-map-060
+id: ch-dataset-060
 uid: eaf88f25d8b02272
 status: ready
-set: map
+set: dataset
 group: tc-gain
 query: Map where tree canopy has increased
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

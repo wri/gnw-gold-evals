@@ -1,7 +1,7 @@
-id: ch-map-065
+id: ch-dataset-065
 uid: d397851914707650
 status: ready
-set: map
+set: dataset
 group: tc-gain
 query: reforestation layer
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: gain is not restoration (catalog caution), but it is the only layer that answers
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

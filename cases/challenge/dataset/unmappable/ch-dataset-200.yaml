@@ -1,7 +1,7 @@
-id: ch-map-200
+id: ch-dataset-200
 uid: 61d623012d6b3842
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: soil moisture map
 expected:
@@ -15,4 +15,4 @@ notes:
   behaviour: decline
   lineage: out of domain, short
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

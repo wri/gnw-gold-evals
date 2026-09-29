@@ -1,7 +1,7 @@
-id: ch-map-049
+id: ch-dataset-049
 uid: aea3c865b2a1a35c
 status: ready
-set: map
+set: dataset
 group: tcl
 query: Hansen loss layer
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: 'jargon: dataset author'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

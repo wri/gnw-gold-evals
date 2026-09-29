@@ -199,7 +199,7 @@ class ExpectedData(BaseModel):
     # carry no expected_answer (ground truth is computed at run time, never
     # stored), so without this the Analysis bucket would never evaluate.
     expected_data_pull: bool | None = None
-    # Tools the agent must not call (;-separated; CHALLENGE map set). Opt-in:
+    # Tools the agent must not call (;-separated; CHALLENGE dataset set). Opt-in:
     # empty means no check (tool_checks.evaluate_forbidden_tools).
     expected_forbidden_tools: str = ""
     # PR-06 additions

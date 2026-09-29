@@ -1,7 +1,7 @@
-id: ch-map-165
+id: ch-dataset-165
 uid: f7af21a14f5ef9c5
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: map fire loss in IFLs
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: fires x IFL, acronym
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

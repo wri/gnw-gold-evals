@@ -1,7 +1,7 @@
-id: ch-map-014
+id: ch-dataset-014
 uid: 0956f249c86db61f
 status: ready
-set: map
+set: dataset
 group: grasslands
 query: Show natural grasslands on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

@@ -1,7 +1,7 @@
-id: ch-map-074
+id: ch-dataset-074
 uid: 32b00f6cc8b49f4d
 status: ready
-set: map
+set: dataset
 group: ghg-flux
 query: Show me the carbon emissions from deforestation on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   lineage: 'emissions from loss: TCL carries MgCO2e, flux carries gross emissions; both defensible
     (GOLD 4;6 family)'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

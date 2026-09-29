@@ -1,7 +1,7 @@
-id: ch-map-058
+id: ch-dataset-058
 uid: e9bf206cbbc5a332
 status: ready
-set: map
+set: dataset
 group: tc-gain
 query: Show areas where new tree cover has grown
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

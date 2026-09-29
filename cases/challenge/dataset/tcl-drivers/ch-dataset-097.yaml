@@ -1,7 +1,7 @@
-id: ch-map-097
+id: ch-dataset-097
 uid: a9ce3ed46be3b1a3
 status: ready
-set: map
+set: dataset
 group: tcl-drivers
 query: Show where tree cover loss came from agriculture, logging or wildfire
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

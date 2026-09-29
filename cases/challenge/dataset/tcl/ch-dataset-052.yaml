@@ -1,7 +1,7 @@
-id: ch-map-052
+id: ch-dataset-052
 uid: e808f830e95d0181
 status: ready
-set: map
+set: dataset
 group: tcl
 query: TCL
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: acronym only
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

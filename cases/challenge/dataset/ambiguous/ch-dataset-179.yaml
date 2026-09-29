@@ -1,7 +1,7 @@
-id: ch-map-179
+id: ch-dataset-179
 uid: 0d828f85c09f3914
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show savannas on the map
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: grasslands covers savannas; land cover short vegetation
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

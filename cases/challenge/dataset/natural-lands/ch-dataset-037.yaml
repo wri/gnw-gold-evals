@@ -1,7 +1,7 @@
-id: ch-map-037
+id: ch-dataset-037
 uid: 38ca8fd46a3a998e
 status: ready
-set: map
+set: dataset
 group: natural-lands
 query: nat lands layer
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: abbreviation
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

@@ -1,7 +1,7 @@
-id: ch-map-035
+id: ch-dataset-035
 uid: b834fa62e97d8ab4
 status: ready
-set: map
+set: dataset
 group: natural-lands
 query: Show a map separating natural forest from non-natural tree cover
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

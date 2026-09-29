@@ -1,7 +1,7 @@
-id: ch-map-187
+id: ch-dataset-187
 uid: 68388ad5237e0c52
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: Map the sLUC emission factors for soy
 expected:
@@ -15,4 +15,4 @@ notes:
   behaviour: decline
   lineage: 'sLUC: tabular only; crop, no place'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

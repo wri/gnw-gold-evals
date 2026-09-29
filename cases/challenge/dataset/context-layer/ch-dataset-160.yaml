@@ -1,7 +1,7 @@
-id: ch-map-160
+id: ch-dataset-160
 uid: 3017391fdfa098ee
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: Map where intact forests are being lost
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit IFL, loose
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

@@ -1,7 +1,7 @@
-id: ch-map-170
+id: ch-dataset-170
 uid: 296de5d1feeff25b
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: Show tree cover density for all trees, plantations included
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit opt-out
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

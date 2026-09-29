@@ -1,7 +1,7 @@
-id: ch-map-075
+id: ch-dataset-075
 uid: 91c334640a166153
 status: ready
-set: map
+set: dataset
 group: ghg-flux
 query: carbon sink map
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: colloquial
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

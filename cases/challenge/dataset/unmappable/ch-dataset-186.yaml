@@ -1,7 +1,7 @@
-id: ch-map-186
+id: ch-dataset-186
 uid: ff0965aa9c3d11f2
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: Show crop deforestation emission factors on the map
 expected:
@@ -15,4 +15,4 @@ notes:
   behaviour: decline
   lineage: 'sLUC: tabular only'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

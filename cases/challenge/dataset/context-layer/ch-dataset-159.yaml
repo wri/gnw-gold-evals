@@ -1,7 +1,7 @@
-id: ch-map-159
+id: ch-dataset-159
 uid: ec7b629a9ac2d3aa
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: Show tree cover loss in intact forest landscapes on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit IFL
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

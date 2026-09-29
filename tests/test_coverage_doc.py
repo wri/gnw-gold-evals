@@ -240,17 +240,17 @@ def test_cases_index_facets_aoi_set(tmp_path):
     assert row["subtype"] == "acronyms"
 
 
-def test_cases_index_facets_map_set(tmp_path):
-    # map: spatial intent; dataset cohorts carry no subtype, the cross-cutting
+def test_cases_index_facets_dataset_set(tmp_path):
+    # dataset: spatial intent; dataset cohorts carry no subtype, the cross-cutting
     # cohorts do; the no_selection sentinel is not a dataset
     row = _index_row(tmp_path, Case(
-        id="ch-map-010", status="ready", set="map", group="land-cover",
+        id="ch-dataset-010", status="ready", set="dataset", group="land-cover",
         query="landcover", expected={"dataset_id": "1"}))
     assert row["intent"] == "spatial"
     assert row["dataset_ids"] == ["1"]
     assert "subtype" not in row
     un = _index_row(tmp_path / "un", Case(
-        id="ch-map-190", status="ready", set="map", group="unmappable",
+        id="ch-dataset-190", status="ready", set="dataset", group="unmappable",
         query="map rainfall", expected={"dataset_id": "9;no_selection"}))
     assert un["dataset_ids"] == ["9"]
     assert un["subtype"] == "unmappable"

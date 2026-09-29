@@ -1,7 +1,7 @@
-id: ch-map-148
+id: ch-dataset-148
 uid: 5af724ad04da0629
 status: ready
-set: map
+set: dataset
 group: multilingual
 query: Tampilkan penyebab hilangnya tutupan pohon di peta
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: lang=id
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

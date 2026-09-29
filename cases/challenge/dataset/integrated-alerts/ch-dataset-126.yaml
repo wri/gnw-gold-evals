@@ -1,7 +1,7 @@
-id: ch-map-126
+id: ch-dataset-126
 uid: d90e943c02505344
 status: ready
-set: map
+set: dataset
 group: integrated-alerts
 query: Show recent tree clearing alerts
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

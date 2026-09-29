@@ -1,7 +1,7 @@
-id: ch-map-129
+id: ch-dataset-129
 uid: 0568b4ece50071a5
 status: ready
-set: map
+set: dataset
 group: integrated-alerts
 query: defor alerts
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: abbreviation
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

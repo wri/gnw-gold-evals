@@ -1,7 +1,7 @@
-id: ch-map-046
+id: ch-dataset-046
 uid: b832698e51851fc4
 status: ready
-set: map
+set: dataset
 group: tcl
 query: Show tree cover loss using a 75% canopy threshold on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: explicit canopy (jev canopy question)
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

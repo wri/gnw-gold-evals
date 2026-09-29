@@ -1,4 +1,4 @@
-"""dataset_id no_selection sentinel (CHALLENGE map set, unmappable cohort)."""
+"""dataset_id no_selection sentinel (CHALLENGE dataset set, unmappable cohort)."""
 
 import sys
 from pathlib import Path

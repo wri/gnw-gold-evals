@@ -1,7 +1,7 @@
-id: ch-map-066
+id: ch-dataset-066
 uid: c3d1fea1f17fdee4
 status: ready
-set: map
+set: dataset
 group: ghg-flux
 query: Show forest greenhouse gas net flux on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

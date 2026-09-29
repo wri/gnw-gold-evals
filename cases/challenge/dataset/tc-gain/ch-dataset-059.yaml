@@ -1,7 +1,7 @@
-id: ch-map-059
+id: ch-dataset-059
 uid: 21e6fbf15c924b14
 status: ready
-set: map
+set: dataset
 group: tc-gain
 query: Show me forest regrowth on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

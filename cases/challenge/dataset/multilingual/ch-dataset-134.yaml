@@ -1,7 +1,7 @@
-id: ch-map-134
+id: ch-dataset-134
 uid: 4dae8d0171eed644
 status: ready
-set: map
+set: dataset
 group: multilingual
 query: Muestra la pérdida de bosque primario en el mapa
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: lang=es; context layer asked explicitly
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

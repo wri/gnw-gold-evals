@@ -1,7 +1,7 @@
-id: ch-map-139
+id: ch-dataset-139
 uid: 04cc95f5e5df1b40
 status: ready
-set: map
+set: dataset
 group: multilingual
 query: Mostre a perda de floresta primária no mapa
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: lang=pt; context layer asked explicitly
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

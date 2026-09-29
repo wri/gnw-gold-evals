@@ -1,7 +1,7 @@
-id: ch-map-195
+id: ch-dataset-195
 uid: c2461ad8bcae033e
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: Show air pollution on the map
 expected:
@@ -15,4 +15,4 @@ notes:
   behaviour: decline
   lineage: out of domain
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

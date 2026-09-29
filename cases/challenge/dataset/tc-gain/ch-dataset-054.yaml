@@ -1,7 +1,7 @@
-id: ch-map-054
+id: ch-dataset-054
 uid: 94258b3eed035e06
 status: ready
-set: map
+set: dataset
 group: tc-gain
 query: Display tree cover gain
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

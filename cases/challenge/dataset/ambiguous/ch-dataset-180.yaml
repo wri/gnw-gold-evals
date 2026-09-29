@@ -1,7 +1,7 @@
-id: ch-map-180
+id: ch-dataset-180
 uid: f9c86d9fe16899bd
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show clearing on the map
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: alerts or loss
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

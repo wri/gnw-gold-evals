@@ -54,7 +54,7 @@ DEDICATED: dict[str, str] = {
     "chart_well_formed": OUTPUT,
     "chart_type_match": OUTPUT,
     "scope_match": SCOPE,
-    # CHALLENGE map set: opt-in tool-scope isolation
+    # CHALLENGE dataset set: opt-in tool-scope isolation
     "forbidden_tools_absent": SCOPE,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,

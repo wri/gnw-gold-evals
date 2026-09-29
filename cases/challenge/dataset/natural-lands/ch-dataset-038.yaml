@@ -1,7 +1,7 @@
-id: ch-map-038
+id: ch-dataset-038
 uid: 0d48a4f899dcde0e
 status: ready
-set: map
+set: dataset
 group: natural-lands
 query: show the no-conversion baseline
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: indirect, supply-chain jargon
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

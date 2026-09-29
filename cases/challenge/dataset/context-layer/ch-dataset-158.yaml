@@ -1,7 +1,7 @@
-id: ch-map-158
+id: ch-dataset-158
 uid: c9cea1779622c4fc
 status: ready
-set: map
+set: dataset
 group: context-layer
 query: old-growth rainforest loss on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: select
   lineage: old-growth as a synonym for primary
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

@@ -1,7 +1,7 @@
-id: ch-map-016
+id: ch-dataset-016
 uid: 1f4a9157ded6d210
 status: ready
-set: map
+set: dataset
 group: grasslands
 query: Show me natural and semi-natural grasslands on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

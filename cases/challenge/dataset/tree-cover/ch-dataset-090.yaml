@@ -1,7 +1,7 @@
-id: ch-map-090
+id: ch-dataset-090
 uid: eac7489207596fb2
 status: ready
-set: map
+set: dataset
 group: tree-cover
 query: treecover
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: one word, no space
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

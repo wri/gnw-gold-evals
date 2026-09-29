@@ -1,7 +1,7 @@
-id: ch-map-172
+id: ch-dataset-172
 uid: 7d5761038802dd9c
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show me forests on the map
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: tree cover, SBTN natural forest or land cover tree class
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

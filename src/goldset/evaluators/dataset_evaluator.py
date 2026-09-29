@@ -7,7 +7,7 @@ from goldset.evaluators.utils import normalize_value
 
 # Expected dataset_id sentinel: "no dataset selected is correct". Usable alone
 # or as an alternative ("9;no_selection"), mirroring context_layer's
-# no_selection. Added for the CHALLENGE map set's unmappable cohort, whose
+# no_selection. Added for the CHALLENGE dataset set's unmappable cohort, whose
 # correct behaviour (decline, never substitute a land dataset) otherwise
 # scored 0.0 unconditionally on the missing dataset.
 NO_SELECTION = "no_selection"

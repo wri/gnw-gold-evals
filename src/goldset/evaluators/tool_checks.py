@@ -4,7 +4,7 @@
 (``messages[].tool_calls``, the same surface ``evaluate_date_extraction`` and
 the run artifacts read) and fails if any tool the case forbids appears.
 
-Why it exists: the CHALLENGE ``map`` set asserts "show X on the map" is
+Why it exists: the CHALLENGE ``dataset`` set asserts "show X on the map" is
 served by ``pick_dataset`` alone. Nothing else in the harness can say that:
 ``data_pull: 'FALSE'`` switches the pull checks *off* rather than asserting
 no pull, ``scope`` classifies a clean pick-and-stop as ``none`` (the

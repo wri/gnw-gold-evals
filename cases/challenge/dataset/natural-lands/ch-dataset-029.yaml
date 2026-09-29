@@ -1,7 +1,7 @@
-id: ch-map-029
+id: ch-dataset-029
 uid: c51a1e367b1bb101
 status: ready
-set: map
+set: dataset
 group: natural-lands
 query: Display natural and non-natural land on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

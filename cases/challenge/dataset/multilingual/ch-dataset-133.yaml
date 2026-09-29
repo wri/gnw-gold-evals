@@ -1,7 +1,7 @@
-id: ch-map-133
+id: ch-dataset-133
 uid: efcb522f22349b95
 status: ready
-set: map
+set: dataset
 group: multilingual
 query: Muéstrame en el mapa las causas de la pérdida de cobertura arbórea
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: lang=es
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

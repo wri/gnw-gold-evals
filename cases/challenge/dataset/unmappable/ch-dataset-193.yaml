@@ -1,7 +1,7 @@
-id: ch-map-193
+id: ch-dataset-193
 uid: 3385322c4d5c5f7c
 status: ready
-set: map
+set: dataset
 group: unmappable
 query: Show flood risk on the map
 expected:
@@ -14,4 +14,4 @@ notes:
   behaviour: decline
   lineage: hazard gap
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

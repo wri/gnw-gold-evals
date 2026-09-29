@@ -1,7 +1,7 @@
-id: ch-map-088
+id: ch-dataset-088
 uid: c8ba90984b4c5959
 status: ready
-set: map
+set: dataset
 group: tree-cover
 query: TCD layer
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: 'jargon: tree canopy density'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

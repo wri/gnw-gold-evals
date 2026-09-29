@@ -1,7 +1,7 @@
-id: ch-map-184
+id: ch-dataset-184
 uid: de6d99bc553ef502
 status: ready
-set: map
+set: dataset
 group: ambiguous
 query: Show emissions on the map
 expected:
@@ -13,4 +13,4 @@ notes:
   behaviour: nudge
   lineage: flux or TCL emissions; sLUC is not mappable so not an acceptable option
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

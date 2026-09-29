@@ -1,7 +1,7 @@
-id: ch-map-070
+id: ch-dataset-070
 uid: 9f772aeadea84d1a
 status: ready
-set: map
+set: dataset
 group: ghg-flux
 query: Map where forests are a net carbon sink or source
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: medium
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

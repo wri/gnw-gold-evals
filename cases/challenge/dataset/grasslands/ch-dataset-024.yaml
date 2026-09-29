@@ -1,7 +1,7 @@
-id: ch-map-024
+id: ch-dataset-024
 uid: 5911a540d8bd6377
 status: ready
-set: map
+set: dataset
 group: grasslands
 query: show me the prairies and steppes
 expected:
@@ -12,4 +12,4 @@ notes:
   behaviour: select
   lineage: regional synonyms, no place named
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1

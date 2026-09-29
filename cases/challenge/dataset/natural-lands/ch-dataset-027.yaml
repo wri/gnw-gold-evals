@@ -1,7 +1,7 @@
-id: ch-map-027
+id: ch-dataset-027
 uid: 9723cc8cf703ff7b
 status: ready
-set: map
+set: dataset
 group: natural-lands
 query: Show natural lands on the map
 expected:
@@ -11,4 +11,4 @@ notes:
   difficulty: easy
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
-  source_tab: challenge-map-v1
+  source_tab: challenge-dataset-v1
