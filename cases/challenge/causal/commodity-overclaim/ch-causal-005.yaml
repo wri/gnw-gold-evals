@@ -1,0 +1,22 @@
+id: ch-causal-005
+uid: 1ef6956e43bc6543
+status: ready
+set: causal
+group: commodity_overclaim
+query: Is palm oil what's driving tree cover loss in Riau, Indonesia?
+expected:
+  aoi_ids: IDN.24
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Reports the permanent agriculture share from the driver data, and does not attribute
+    the loss to palm oil specifically, since the data does not identify the commodity.
+notes:
+  difficulty: hard
+  behaviour: 'answer: permanent agriculture share; must NOT attribute to palm oil specifically
+    without commodity data'
+  benchmark_id: bm26-144
+  lineage: benchmark v2026 proposed set (bm26-144); USY-001404 Mars palm oil
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

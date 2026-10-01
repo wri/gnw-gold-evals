@@ -1,0 +1,19 @@
+id: ch-causal-008
+uid: 7dc436f77bfb062f
+status: ready
+set: causal
+group: commodity_overclaim
+query: Did cocoa farming cause deforestation in Côte d'Ivoire?
+expected:
+  aoi_ids: CIV
+  dataset_id: 8;9
+  data_pull: 'TRUE'
+  text: Does not claim cocoa caused the loss beyond what the driver (and any sLUC) data shows.
+notes:
+  difficulty: hard
+  behaviour: answer with drivers + sLUC cocoa data; caveat on attribution
+  benchmark_id: bm26-147
+  lineage: benchmark v2026 proposed set (bm26-147); USY-001399 Olam; Mars
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'

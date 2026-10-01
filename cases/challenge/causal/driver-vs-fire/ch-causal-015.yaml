@@ -1,0 +1,21 @@
+id: ch-causal-015
+uid: 7336be5865c26f1f
+status: ready
+set: causal
+group: driver_vs_fire
+query: Are fires or agriculture the bigger cause of tree cover loss in Madre de Dios, 2015–2023?
+expected:
+  aoi_ids: PER.18
+  dataset_id: 8;10
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with drivers + fire data
+  benchmark_id: bm26-154
+  lineage: benchmark v2026 proposed set (bm26-154); USY-001401 Caja Cusco
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

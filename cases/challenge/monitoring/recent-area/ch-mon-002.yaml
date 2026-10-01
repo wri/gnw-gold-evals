@@ -1,0 +1,24 @@
+id: ch-mon-002
+uid: 8afb2c7ffcb42d05
+status: ready
+set: monitoring
+group: recent_area
+query: How many hectares of disturbance alerts were detected in the Kayapó Indigenous Territory
+  over the past 3 months?
+expected:
+  aoi_ids: BRA1507
+  dataset_id: '11'
+  start_date: '{run-90d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-111
+  lineage: benchmark v2026 proposed set (bm26-111); USY-000852 community territory monitoring
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

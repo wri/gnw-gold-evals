@@ -1,0 +1,22 @@
+id: ch-mon-008
+uid: 463c50b6f62b0beb
+status: ready
+set: monitoring
+group: recent_default
+query: Show me recent fire and deforestation alerts around Puerto Suárez, Bolivia
+expected:
+  aoi_ids: BOL.8.6.3
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: States the time window the alerts it reports cover.
+notes:
+  difficulty: hard
+  behaviour: answer with data; state window used
+  benchmark_id: bm26-117
+  lineage: benchmark v2026 proposed set (bm26-117); USY-001217 Puerto Suárez monitoring system
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth;
+    tests default-window disclosure

@@ -1,0 +1,27 @@
+id: ch-mon-026
+uid: 96201c7230b3ccea
+status: ready
+set: monitoring
+group: concession_alerts
+query: Any deforestation alerts inside oil palm concessions in Riau in the last month?
+expected:
+  aoi_ids: IDN.24
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Reports alerts inside oil palm concessions, or states that a concession layer is not
+    available; does not present province-wide alerts as concession alerts.
+notes:
+  difficulty: hard
+  behaviour: answer with data, or state concession layer is not available
+  benchmark_id: bm26-135
+  lineage: benchmark v2026 proposed set (bm26-135); USY-000591 TuK concessions; USY-001404
+    Mars
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth;
+    confirm concession layer support

@@ -1,0 +1,23 @@
+id: ch-causal-012
+uid: a452f89a685dbe1b
+status: ready
+set: causal
+group: premise_check
+query: Why did primary forest loss in Colombia drop after 2021?
+expected:
+  aoi_ids: COL
+  dataset_id: 4;8
+  start_date: '2019-01-01'
+  end_date: '2024-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  text: Checks from the data whether primary forest loss in Colombia actually fell after 2021
+    before explaining it, and caveats on causality.
+notes:
+  difficulty: hard
+  behaviour: check premise against data; drivers; caveat on causality
+  benchmark_id: bm26-151
+  lineage: benchmark v2026 proposed set (bm26-151); USY-001330 FDA; USY-001383 GEF-9
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'

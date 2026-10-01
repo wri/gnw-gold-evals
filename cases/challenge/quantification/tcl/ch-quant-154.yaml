@@ -1,0 +1,21 @@
+id: ch-quant-154
+uid: 026af8d69d19e466
+status: ready
+set: quantification
+group: tcl
+query: What was tree cover loss in Caquetá, Colombia in 2023?
+expected:
+  aoi_ids: COL.9
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: easy
+  behaviour: answer with data
+  benchmark_id: bm26-004
+  lineage: benchmark v2026 proposed set (bm26-004); USY-001529
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

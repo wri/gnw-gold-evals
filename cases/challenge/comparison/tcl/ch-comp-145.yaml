@@ -1,0 +1,21 @@
+id: ch-comp-145
+uid: e4d573d474e25907
+status: ready
+set: comparison
+group: tcl
+query: Did Yasuni National Park lose more tree cover in 2023 than in 2022?
+expected:
+  aoi_ids: '186'
+  dataset_id: '4'
+  start_date: '2022-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-046
+  lineage: benchmark v2026 proposed set (bm26-046); USY-001399 Olam PA monitoring
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

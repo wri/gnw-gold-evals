@@ -1,0 +1,22 @@
+id: ch-mon-022
+uid: b5078a4c1fa903b5
+status: ready
+set: monitoring
+group: recent_rank
+query: Which province of the DRC had the most disturbance alert area in the last 30 days?
+expected:
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with data; ranked
+  benchmark_id: bm26-131
+  lineage: benchmark v2026 proposed set (bm26-131); USY-000509 hot-spot identification
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth;
+    needs multi-AOI ranking support

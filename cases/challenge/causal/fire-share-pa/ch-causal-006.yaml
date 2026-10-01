@@ -1,0 +1,22 @@
+id: ch-causal-006
+uid: 8ba0dc23c0c5852b
+status: ready
+set: causal
+group: fire_share_pa
+query: How much of the tree cover loss in Salonga National Park between 2015 and 2023 was
+  caused by fire?
+expected:
+  aoi_ids: '555697863'
+  dataset_id: '10'
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-145
+  lineage: benchmark v2026 proposed set (bm26-145); USY-001516 UNESCO (fire share in WH forests)
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

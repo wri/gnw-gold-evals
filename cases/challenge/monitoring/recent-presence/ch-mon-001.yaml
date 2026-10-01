@@ -1,0 +1,23 @@
+id: ch-mon-001
+uid: 81f3fd24e8ea2e12
+status: ready
+set: monitoring
+group: recent_presence
+query: Have there been any new deforestation alerts in Virunga National Park in the last month?
+expected:
+  aoi_ids: '166889'
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-110
+  lineage: benchmark v2026 proposed set (bm26-110); USY-000509 Malaysia follow-up on alerts
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

@@ -1,0 +1,22 @@
+id: ch-quant-152
+uid: 4344c4f674e03726
+status: ready
+set: quantification
+group: tcl
+query: How many hectares of primary forest did Virunga National Park lose from 2019 to 2023?
+expected:
+  aoi_ids: '166889'
+  dataset_id: '4'
+  start_date: '2019-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-002
+  lineage: benchmark v2026 proposed set (bm26-002); USY-001516
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

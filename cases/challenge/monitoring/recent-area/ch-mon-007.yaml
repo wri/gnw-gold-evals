@@ -1,0 +1,23 @@
+id: ch-mon-007
+uid: f31856ba1baa9d99
+status: ready
+set: monitoring
+group: recent_area
+query: How much alert area was flagged in Sabah last month?
+expected:
+  aoi_ids: MYS.13
+  dataset_id: '11'
+  start_date: '{last_month_start}'
+  end_date: '{last_month_end}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-116
+  lineage: benchmark v2026 proposed set (bm26-116); USY-000509
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

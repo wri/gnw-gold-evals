@@ -1,0 +1,19 @@
+id: ch-quant-157
+uid: 1b0156b2a2284214
+status: ready
+set: quantification
+group: natural-lands
+query: How much natural land is there in Rio Grande do Sul, Brazil?
+expected:
+  aoi_ids: BRA.21
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-007
+  lineage: benchmark v2026 proposed set (bm26-007); USY-001293 Sicredi
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

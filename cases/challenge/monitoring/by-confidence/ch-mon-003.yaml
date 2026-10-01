@@ -1,0 +1,24 @@
+id: ch-mon-003
+uid: bb53429fefb9770b
+status: ready
+set: monitoring
+group: by_confidence
+query: Show me high-confidence alerts in Mato Grosso from this week
+expected:
+  aoi_ids: BRA.12
+  dataset_id: '11'
+  start_date: '{run-7d}'
+  end_date: '{run}'
+  date_tolerance_days: '2'
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with data
+  benchmark_id: bm26-112
+  lineage: benchmark v2026 proposed set (bm26-112); Mato Grosso public attorney (illegal deforestation)
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  unscored_params: confidence=high
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

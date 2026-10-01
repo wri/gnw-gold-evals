@@ -1,0 +1,23 @@
+id: ch-mon-029
+uid: fa4cab474c0f8185
+status: ready
+set: monitoring
+group: recent_area
+query: Summarize alerts in Sankuru National Reserve over the two weeks since my last check
+expected:
+  aoi_ids: '354001'
+  dataset_id: '11'
+  start_date: '{run-14d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-138
+  lineage: benchmark v2026 proposed set (bm26-138); USY-000509
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

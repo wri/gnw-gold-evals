@@ -1,0 +1,20 @@
+id: ch-comp-148
+uid: 48ca942a9b2eef49
+status: ready
+set: comparison
+group: tcl
+query: Was Gabon's tree cover loss in 2016–2017 higher than its 2006–2015 annual average?
+expected:
+  aoi_ids: GAB
+  dataset_id: '4'
+  start_date: '2006-01-01'
+  end_date: '2017-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with data; annualise correctly
+  benchmark_id: bm26-049
+  lineage: benchmark v2026 proposed set (bm26-049); Rainforest Foundation UK vs CAFI
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'

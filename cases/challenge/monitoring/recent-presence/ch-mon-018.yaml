@@ -1,0 +1,24 @@
+id: ch-mon-018
+uid: ecaf7f6f74cacf4f
+status: ready
+set: monitoring
+group: recent_presence
+query: Houve novos alertas de desmatamento no estado do Pará na última semana?
+expected:
+  aoi_ids: BRA.14
+  dataset_id: '11'
+  start_date: '{run-7d}'
+  end_date: '{run}'
+  date_tolerance_days: '2'
+  data_pull: 'TRUE'
+  text: Replies in Portuguese.
+notes:
+  difficulty: medium
+  behaviour: answer with data (in Portuguese)
+  benchmark_id: bm26-127
+  lineage: benchmark v2026 proposed set (bm26-127); Brazilian state/municipal enforcement
+    users
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

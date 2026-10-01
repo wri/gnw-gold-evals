@@ -1,0 +1,21 @@
+id: ch-mon-011
+uid: 2eb50e8d3ed2582e
+status: ready
+set: monitoring
+group: recent_default
+query: Have there been any disturbance alerts in Ghana's Western North region recently?
+expected:
+  aoi_ids: GHA16
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: States the time window the alerts it reports cover.
+notes:
+  difficulty: hard
+  behaviour: answer with data; state window used
+  benchmark_id: bm26-120
+  lineage: benchmark v2026 proposed set (bm26-120); USY-001392 Ghana Cocoa Belt
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

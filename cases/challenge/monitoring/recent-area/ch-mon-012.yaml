@@ -1,0 +1,23 @@
+id: ch-mon-012
+uid: 9d33dc992707e22b
+status: ready
+set: monitoring
+group: recent_area
+query: How many hectares of alerts were detected in Cusco region, Peru in the past 60 days?
+expected:
+  aoi_ids: PER.8
+  dataset_id: '11'
+  start_date: '{run-60d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-121
+  lineage: benchmark v2026 proposed set (bm26-121); USY-001386/001401 Caja Cusco Agroprotector
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

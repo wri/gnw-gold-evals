@@ -1,0 +1,23 @@
+id: ch-mon-004
+uid: 7f35dfb5d4c73bab
+status: ready
+set: monitoring
+group: ytd
+query: Any disturbance alerts in Yasuni National Park since January 1 this year?
+expected:
+  aoi_ids: '186'
+  dataset_id: '11'
+  start_date: '{current_year}-01-01'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-113
+  lineage: benchmark v2026 proposed set (bm26-113); USY-000509
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth

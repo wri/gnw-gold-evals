@@ -1,0 +1,19 @@
+id: ch-causal-013
+uid: 1736d22d0730e66e
+status: ready
+set: causal
+group: caveat_required
+query: Is logging responsible for forest loss in Gabon?
+expected:
+  aoi_ids: GAB
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Caveats that selective logging is under-detected in satellite tree cover loss data.
+notes:
+  difficulty: hard
+  behaviour: answer with drivers (logging category); caveat that selective logging is under-detected
+  benchmark_id: bm26-152
+  lineage: benchmark v2026 proposed set (bm26-152); Rainforest Foundation UK vs CAFI
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'

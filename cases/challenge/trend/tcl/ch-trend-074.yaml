@@ -1,0 +1,21 @@
+id: ch-trend-074
+uid: 4ba03dca9e726ff1
+status: ready
+set: trend
+group: tcl
+query: What is the trend in Colombia's primary forest loss from 2016 to 2023?
+expected:
+  aoi_ids: COL
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  difficulty: easy
+  behaviour: answer with data
+  benchmark_id: bm26-080
+  lineage: benchmark v2026 proposed set (bm26-080); USY-001330 FDA; USY-001383 GEF-9
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'

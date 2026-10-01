@@ -1,0 +1,24 @@
+id: ch-mon-017
+uid: 1e2b91c96fa58875
+status: ready
+set: monitoring
+group: recent_area
+query: Show me vegetation disturbance alerts in New Jersey from the past month
+expected:
+  aoi_ids: USA.31
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-126
+  lineage: benchmark v2026 proposed set (bm26-126); USY-001346 NJ DEP No Net Loss
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth;
+    temperate, non-forest disturbance

@@ -1,0 +1,21 @@
+id: ch-causal-014
+uid: aa6900805980096e
+status: ready
+set: causal
+group: why_pa
+query: Why is tree cover loss rising in Chiribiquete National Park?
+expected:
+  aoi_ids: '19984'
+  dataset_id: 4;8;10
+  data_pull: 'TRUE'
+  text: Checks from the data whether loss in Chiribiquete is in fact rising before explaining
+    it, using driver and fire data.
+notes:
+  difficulty: hard
+  behaviour: check premise; drivers + fire share inside PA
+  benchmark_id: bm26-153
+  lineage: benchmark v2026 proposed set (bm26-153); USY-001516
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'

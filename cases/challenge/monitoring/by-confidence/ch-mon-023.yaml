@@ -1,0 +1,22 @@
+id: ch-mon-023
+uid: d4a337871272b726
+status: ready
+set: monitoring
+group: by_confidence
+query: Show me the latest alerts in the Okapi Wildlife Reserve and tell me how confident they
+  are
+expected:
+  aoi_ids: '37043'
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: Explains what the confidence levels of the reported alerts mean.
+notes:
+  difficulty: medium
+  behaviour: answer with data incl. confidence caveat
+  benchmark_id: bm26-132
+  lineage: benchmark v2026 proposed set (bm26-132); USY-000509
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
