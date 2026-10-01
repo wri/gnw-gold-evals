@@ -524,6 +524,23 @@ design:
 **every** value must be matched within `NUMERIC_TOLERANCE` (0.02). One unmatched
 value fails the check.
 
+**Gotcha — only the last pull is graded.** The table comes from
+`statistics[-1].source_url`, so a trial that pulls more than once is graded on
+its final pull: a retry after corrected parameters, or two AOIs pulled
+separately, leaves the earlier pulls unread. This is the harness-wide
+convention (`utils.last_statistics`, shared with the data-pull evaluator, the
+guards and artifact capture), and taking the best match across several pulls
+would be a change in meaning, not a refinement: it would let a wrong final pull
+be rescued by an earlier exploratory one, the same way a coincidental chart
+figure is already refused. Reading a `0.0` on a multi-pull trace therefore needs
+care — the ledger's `ground_truth.agent_values` and the artifact's
+`statistics_last` both describe the **last** pull only, so whether the agent
+pulled more than once has to come from the trace at `trace_url`. Several areas in
+one question do not by themselves cause this: 1-038 pulls Manitoba and Alberta as
+two ids in a single request, and its `sum(area_ha) WHERE tree_cover_loss_year=2024`
+spans both. The exposure is a trace that issues *separate* pulls, where only the
+final one is compared.
+
 **Reason**: `reasons.ground_truth_match`, naming the selector, the expected
 figure and what the agent's pull gave — e.g. `"sum(area_ha): expected
 25,308,961.00, the agent's pull gives 25,807,553.00"`. `actuals` carries
@@ -1001,10 +1018,12 @@ seriously.
 (`output_checks.py:63-85`).
 
 **Fires on** `chart_type`, semicolon-separated alternatives, matched
-case-insensitively. **No `cases/v2` case sets this field today**, so the check is
-present but dormant — `cases/README.md` warns that chart type is the agent's most
+case-insensitively. **1-046 is the only `cases/v2` case that sets it**, added when
+that row moved to `ground_truth` and lost the `chart_produced` coverage `answer`
+had been carrying. `cases/README.md` warns that chart type is the agent's most
 nondeterministic surface and that a verdict should not be staked on it, so an
-expectation here should always carry alternatives (`chart_type: "bar;table"`).
+expectation here should carry alternatives (`chart_type: "bar;table"`) unless one
+type is genuinely required.
 
 **`null` vs `0.0`**: `null` with no expectation. `0.0` when a chart-type
 expectation exists and **no** chart was produced — a type expectation implies a

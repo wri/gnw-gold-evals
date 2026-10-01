@@ -104,9 +104,7 @@ compare the reports.
   friends). The agent pulls the full range and slices in code; the
   recorded window flips between runs while the answer stays right. Let
   `answer` carry the year; keep date expectations for genuinely
-  date-scoped pulls (integrated alerts, imagery). DIST-ALERT used to be
-  the other one — zeno deleted dataset 0 from its catalog before
-  2026-09-16, and the five cases naming it are all parked.
+  date-scoped pulls (integrated alerts, imagery).
 - **DON'T stake a verdict on chart choice.** Chart type is the agent's
   most nondeterministic surface (8 of run-5's 19 flaky rows). If chart
   type matters, expect alternatives: `chart_type: "bar;table"`.
@@ -167,19 +165,24 @@ asserts what query the agent should build. `ground_truth` is purely the
    DON'T above still applies: the case carries no dates, the request uses the
    catalog's full window, and `WHERE tree_cover_loss_year=2019` does the
    narrowing.
-4. **Spell the selector canonically**: lowercase aggregate, uppercase `WHERE`,
-   no padding — `sum(area_ha) WHERE year=2019`. Both spellings parse, but the
-   **raw string is hashed into the uid**, so `where` and `WHERE` would mint two
-   uids for the same test. Not yet enforced by the audit; see
-   `tools/audit_cases.py`.
+4. **Spell the selector canonically**: lowercase aggregate function name,
+   uppercase `WHERE`, unquoted filter value, no padding inside the expression:
+   `sum(area_ha) WHERE year=2019`. Both spellings parse, but the **raw string is
+   hashed into the uid**, so `where` and `WHERE` would mint two uids for the
+   same test. `tools/audit_cases.py` enforces this and fails `--strict` on a
+   selector that is spelled differently or does not parse at all; surrounding
+   whitespace is stripped before hashing and is not flagged.
 
-**The migration cost, stated plainly.** Dropping `answer` for `ground_truth`
-also drops `agent_answer` (analysis + explanation) and `chart_produced`
-(output), because both fire on `answer`. `ground_truth_answer` is info-only, so
-it restores no *gating*. If the row is meant to hold output coverage, **set
-`chart_type` in the same edit** — it is the better check anyway (it abstains
-when there is no chart instead of failing) and, since a migration mints a new
-uid regardless, adding it costs nothing at that moment and a second uid later.
+**The migration cost:**
+
+1. **New uid.** Adding `expected.ground_truth` mints a new uid and restarts the
+   case's history.
+2. **Fewer checks.** `agent_answer`, `charts_answer` and `chart_produced` only
+   run when `expected.answer` is present in the YAML, so removing that removes
+   these checks. They are replaced by `ground_truth_match`, which is
+   deterministic. The other new check is `ground_truth_answer`, which is
+   informative only and never fails a row, since a gating check has to be
+   deterministic.
 
 The area identity must be explicit and resolvable: the fetch will not geocode
 from the prompt, because that would redo the agent's own AOI resolution and let

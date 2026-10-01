@@ -9,6 +9,11 @@ matches more than one row, which is live: 1-038 pulls 2 AOIs and 1-059 pulls 254
 so ``area_ha WHERE year=2019`` would silently reduce 254 rows by an implicit
 rule nobody wrote down.
 
+``count`` counts the column's **numeric values**, not the rows the filter
+matched: a row whose value is null or non-numeric is skipped, as it is under
+every other aggregate. A column with no numeric values at all raises rather
+than counting zero, so ``count`` on a categorical column is not a row count.
+
 Parsed and applied in code, never by a judge — ``docs/specs/PLAN.md`` §6:
 numbers in code, structure and semantics to the judge.
 
@@ -30,9 +35,13 @@ AGGREGATES = {
     "count": lambda values: float(len(values)),
 }
 
-# `WHERE` is matched case-insensitively and the selector is normalised before
-# use, because the string is hashed into the uid: `WHERE` and `where` must not
-# mint two uids for what is the same test.
+# The regex accepts `where` in any capitalisation, and `Selector.canonical()`
+# prints a parsed selector back in one standard spelling for the run record.
+# Neither of those affects a case's uid, which hashes the YAML text exactly as
+# typed: a case written `where` and a case written `WHERE` are two different
+# uids, so GOLD reads them as two versions of the same test. Authors spell it
+# the standard way (`cases/README.md`), and `tools/audit_cases.py` fails
+# `--strict` when they do not.
 _SELECTOR = re.compile(
     r"^\s*(?P<agg>\w+)\s*\(\s*(?P<column>[\w.]+)\s*\)"
     r"(?:\s+where\s+(?P<key>[\w.]+)\s*=\s*(?P<value>.+?))?\s*$",
