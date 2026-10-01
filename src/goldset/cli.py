@@ -270,21 +270,26 @@ async def run_cases(
     total_cases = len(cases)
     completed_cases = 0
 
+    def _resolve_expected(expected: dict[str, str]) -> dict[str, str]:
+        return {k: resolve_templates(v, now=run_started) for k, v in expected.items()}
+
     def _resolve_case(case: Case) -> Case:
-        """Expand template variables in queries, preserving the original uid."""
+        """Expand template variables in queries and expected values (run-relative
+        date windows), preserving the original uid."""
         if case.is_multiturn:
             resolved_turns = tuple(
-                {**turn, "query": resolve_templates(turn["query"], now=run_started)}
+                {**turn, "query": resolve_templates(turn["query"], now=run_started),
+                 "expected": _resolve_expected(turn.get("expected") or {})}
                 for turn in case.turns
             )
             return Case(
-                id=case.id, status=case.status, group=case.group,
+                id=case.id, status=case.status, group=case.group, set=case.set,
                 expected=case.expected, notes=case.notes, turns=resolved_turns,
             )
         return Case(
-            id=case.id, status=case.status, group=case.group,
+            id=case.id, status=case.status, group=case.group, set=case.set,
             query=resolve_templates(case.query, now=run_started),
-            expected=case.expected, notes=case.notes,
+            expected=_resolve_expected(case.expected), notes=case.notes,
         )
 
     async def run_one(case: Case) -> dict:
