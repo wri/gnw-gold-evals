@@ -227,3 +227,26 @@ Latency is half of that verdict, so:
 - **Prod latency is reference only.** It includes internet round-trips and
   prod infrastructure (autoscaling, other users' load), so a prod vs local
   gap says nothing about the selector.
+
+## Batch 4: the benchmark v2026 cases (`monitoring`, `causal`, AOI-level)
+
+63 cases from the proposed BENCHMARK v2026 set
+(`seeds/benchmark-v2026-proposed.csv`, rows marked NEW), written from
+GFW/LCL user stories rather than observed traffic, so every one is tagged
+`notes.synthetic: TRUE`. Expectations were **drafted, not reviewed**
+(`notes.expectations`); AOI ids were resolved against prod `/api/aois` on
+2026-10-01. Review them before the November freeze.
+
+| set | n | what it adds |
+|---|---|---|
+| `monitoring` (new) | 30 | near-real-time integrated alerts (dataset 11) for parks, Indigenous territories, states and districts; rolling windows use run-relative date tokens (`{run-30d}`, `{last_month_start}`, `{current_year}-01-01`) with `date_tolerance_days`; 4 non-English; 3 scope rows (no area given, email subscription, coordinate buffer) judged by `text` |
+| `causal` (new) | 18 | driver and fire attribution; judged `text` checks for not over-claiming a commodity, checking the question's premise, and the selective-logging caveat |
+| quantification / comparison / trend | 15 | the same analyses at protected-area, Indigenous-territory and sub-national level (every earlier analytic row is country-level) |
+
+- Questions that name no dates carry no expected window: the window is
+  the agent's call, and an expected one would fail correct answers.
+- `ch-mon-028` (triage across a user's saved areas) is `todo`: it needs a
+  seeded test account.
+- Protected-area (WDPA) analytics fail upstream while PZB-1406 is open;
+  those rows count as failures, as any user would see them.
+
