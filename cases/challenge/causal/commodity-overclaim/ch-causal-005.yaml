@@ -20,3 +20,9 @@ notes:
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: causal
+  jtbd: 1,7
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Supply chain; Sustainable finance; Service providers
+  user_story_refs: USY-001404 Mars palm oil

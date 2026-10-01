@@ -17,3 +17,9 @@ notes:
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: quantification
+  jtbd: 2,5
+  impact_pathway: 5 Finance for nature
+  user_groups: Program mgrs; Field staff; Service providers; Policy/planning; GIS analysts;
+    Supply chain; Sustainable finance
+  user_story_refs: USY-001293 Sicredi

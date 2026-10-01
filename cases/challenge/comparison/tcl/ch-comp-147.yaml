@@ -21,3 +21,9 @@ notes:
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: comparison
+  jtbd: 7,8
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Sustainable finance;
+    Service providers; Journalists; Program mgrs
+  user_story_refs: USY-001516

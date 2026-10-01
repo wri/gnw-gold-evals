@@ -18,3 +18,8 @@ notes:
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: '1'
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators
+  user_story_refs: USY-001217 Bolivia fires

@@ -20,3 +20,9 @@ notes:
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Confirm natural-lands × loss intersection is supported
+  benchmark_type: quantification
+  jtbd: 5,7
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
+    Field staff; Journalists
+  user_story_refs: Trase EUDR; USY-001293 Sicredi

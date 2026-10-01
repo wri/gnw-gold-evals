@@ -19,3 +19,9 @@ notes:
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: quantification
+  jtbd: 1,5
+  impact_pathway: 3 Policy & planning
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Supply chain; Sustainable finance; Service providers
+  user_story_refs: USY-001529

@@ -20,3 +20,9 @@ notes:
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
     tests default-window disclosure
+  benchmark_type: monitoring
+  jtbd: '3'
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists
+  user_story_refs: USY-001217 Puerto Suárez monitoring system

@@ -19,3 +19,9 @@ notes:
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: comparison
+  jtbd: 5,8
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
+    Program mgrs
+  user_story_refs: Brazilian state enforcement

@@ -22,3 +22,12 @@ notes:
   manifest_id: m-fires-comp-04
   lineage: generated 2026-09-01 from phase-2 manifest; fires-comp-04a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-076
+  benchmark_type: comparison
+  jtbd: 1,3,7
+  impact_pathway: 1 Local stewardship; 3 Policy & planning
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Supply chain; Service providers; Sustainable finance
+  synthetic: 'FALSE'
+  user_story_refs: USY-000509 Malaysia; USY-001217 Puerto Suárez; USY-001516 UNESCO
+  refresh_risk: Low

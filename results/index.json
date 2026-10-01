@@ -1401,9 +1401,18 @@
     ]
   },
   "benchmarks": {
+    "2026-draft-2": {
+      "path": "benchmarks/2026-draft-2.json",
+      "status": "draft",
+      "frozen": null,
+      "members": 199,
+      "voided": 0,
+      "runs": [],
+      "canonical_runs": []
+    },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",
-      "status": "draft",
+      "status": "retired",
       "frozen": null,
       "members": 100,
       "voided": 0,

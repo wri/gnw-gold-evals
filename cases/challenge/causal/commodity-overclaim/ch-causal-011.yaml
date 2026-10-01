@@ -21,3 +21,9 @@ notes:
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: causal
+  jtbd: 1,5,7
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Supply chain; Sustainable finance; Service providers; Field staff
+  user_story_refs: Trase EUDR; USY-001293 Sicredi

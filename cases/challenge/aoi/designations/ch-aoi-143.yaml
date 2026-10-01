@@ -16,3 +16,12 @@ notes:
   verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
   origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
   observed: 'prod smoke 2026-09-15 (1 trial): resolved to Yanga, National Park, AUS (555625705)'
+  benchmark_id: bm26-175
+  benchmark_type: spatial
+  jtbd: 7,5
+  impact_pathway: 1 Local stewardship; 2 Supply chains
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Sustainable finance;
+    Service providers; Journalists
+  synthetic: 'FALSE'
+  user_story_refs: USY-000852 IWRM territories; USY-001399 Olam PAs
+  refresh_risk: Low

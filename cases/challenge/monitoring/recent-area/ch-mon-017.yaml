@@ -22,3 +22,9 @@ notes:
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
     temperate, non-forest disturbance
+  benchmark_type: monitoring
+  jtbd: '3'
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists
+  user_story_refs: USY-001346 NJ DEP No Net Loss

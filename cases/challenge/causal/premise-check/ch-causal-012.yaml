@@ -21,3 +21,9 @@ notes:
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: 1,9
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    All direct-connect groups
+  user_story_refs: USY-001330 FDA; USY-001383 GEF-9

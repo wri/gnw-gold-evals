@@ -18,3 +18,12 @@ notes:
   manifest_id: m-sluc-quant-05
   lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-05a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-020
+  benchmark_type: quantification
+  jtbd: 5,9
+  impact_pathway: 2 Commodity supply chains; 4 Commitments
+  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
+    All direct-connect groups
+  synthetic: 'FALSE'
+  user_story_refs: USY-001404 Mars; USY-001399 Olam
+  refresh_risk: Low

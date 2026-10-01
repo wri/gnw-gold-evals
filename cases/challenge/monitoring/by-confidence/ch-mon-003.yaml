@@ -22,3 +22,9 @@ notes:
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   unscored_params: confidence=high
   build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  benchmark_type: monitoring
+  jtbd: 3,5
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: Mato Grosso public attorney (illegal deforestation)

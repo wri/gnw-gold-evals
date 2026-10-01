@@ -25,3 +25,9 @@ notes:
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
     confirm concession layer support
+  benchmark_type: monitoring
+  jtbd: 3,5,7
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: USY-000591 TuK concessions; USY-001404 Mars

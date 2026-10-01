@@ -17,3 +17,9 @@ notes:
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: 5,9
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
+    All direct-connect groups
+  user_story_refs: USY-001399 Olam; Mars

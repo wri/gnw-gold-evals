@@ -16,3 +16,9 @@ notes:
     human review'
   synthetic: 'TRUE'
   build_notes: Scope row; expected_text_match judge
+  benchmark_type: monitoring
+  jtbd: '3'
+  impact_pathway: 'Cross-cutting: trust'
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists
+  user_story_refs: Roadmap job area 4 (NRT alerting)

@@ -17,3 +17,9 @@ notes:
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  benchmark_type: quantification
+  jtbd: 1,2
+  impact_pathway: 3 Policy & planning
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Service providers
+  user_story_refs: USY-001364 El Salvador compensation baseline

@@ -13,3 +13,12 @@ notes:
   verify_query: Gunung Leuser
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
+  benchmark_id: bm26-164
+  benchmark_type: spatial
+  jtbd: 7,5
+  impact_pathway: 1 Local stewardship; 2 Supply chains
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Sustainable finance;
+    Service providers; Journalists
+  synthetic: 'FALSE'
+  user_story_refs: USY-000852 IWRM territories; USY-001399 Olam PAs
+  refresh_risk: Low

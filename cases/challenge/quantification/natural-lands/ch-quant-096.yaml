@@ -15,3 +15,12 @@ notes:
   manifest_id: m-nl-quant-04
   lineage: generated 2026-09-01 from phase-2 manifest; nl-quant-04a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-035
+  benchmark_type: quantification
+  jtbd: 2,5,7
+  impact_pathway: 2 Commodity supply chains; 5 Finance
+  user_groups: Program mgrs; Field staff; Service providers; Policy/planning; GIS analysts;
+    Supply chain; Sustainable finance; Journalists
+  synthetic: 'FALSE'
+  user_story_refs: USY-001293 Sicredi; Trase EUDR
+  refresh_risk: Low

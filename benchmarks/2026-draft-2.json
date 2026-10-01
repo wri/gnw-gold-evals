@@ -1,0 +1,6006 @@
+{
+  "schema_version": 1,
+  "version": "2026-draft-2",
+  "status": "draft",
+  "created": "2026-10-01",
+  "frozen": null,
+  "source": {
+    "cases_dir": "cases/challenge",
+    "caseset_version": "124f96526065f24a"
+  },
+  "sampling": {
+    "tool": "tools/benchmark_from_sheet.py",
+    "method": "curated: one member per sheet row",
+    "seed_file": "seeds/benchmark-v2026-proposed.csv",
+    "excluded": [
+      {
+        "benchmark_id": "bm26-137",
+        "id": "ch-mon-028",
+        "status": "todo",
+        "reason": "needs a seeded test account with saved areas (portfolio triage); not runnable yet"
+      }
+    ]
+  },
+  "stage_order": [
+    "scope",
+    "retrieval",
+    "analysis",
+    "explanation",
+    "output"
+  ],
+  "types": [
+    {
+      "key": "refusal",
+      "label": "Refusal",
+      "sets": [],
+      "measured": true
+    },
+    {
+      "key": "identification",
+      "label": "Identification",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "geospatial",
+      "label": "Geospatial",
+      "sets": [
+        "aoi"
+      ],
+      "measured": true
+    },
+    {
+      "key": "dataset",
+      "label": "Dataset",
+      "sets": [
+        "dataset"
+      ],
+      "measured": true
+    },
+    {
+      "key": "quantification",
+      "label": "Quantification",
+      "sets": [
+        "quantification"
+      ],
+      "measured": true
+    },
+    {
+      "key": "monitoring",
+      "label": "Monitoring",
+      "sets": [
+        "monitoring"
+      ],
+      "measured": true
+    },
+    {
+      "key": "comparison",
+      "label": "Comparison",
+      "sets": [
+        "comparison"
+      ],
+      "measured": true
+    },
+    {
+      "key": "trend",
+      "label": "Trend",
+      "sets": [
+        "trend"
+      ],
+      "measured": true
+    },
+    {
+      "key": "conceptual",
+      "label": "Conceptual",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "risk",
+      "label": "Risk",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "causal",
+      "label": "Causal",
+      "sets": [
+        "causal"
+      ],
+      "measured": true
+    },
+    {
+      "key": "feasibility",
+      "label": "Feasibility",
+      "sets": [],
+      "measured": false
+    }
+  ],
+  "members": [
+    {
+      "uid": "209e1a802bcb1924",
+      "id": "ch-quant-151",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-001",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Field staff",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "4344c4f674e03726",
+      "id": "ch-quant-152",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-002",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Field staff",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ec4eb4c06a1b0dda",
+      "id": "ch-quant-153",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-003",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Field staff",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "026af8d69d19e466",
+      "id": "ch-quant-154",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-004",
+      "jobs": [
+        "1",
+        "5"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3181be0e993e4f47",
+      "id": "ch-quant-155",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-005",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "608fcb141a490040",
+      "id": "ch-quant-156",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-006",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1b0156b2a2284214",
+      "id": "ch-quant-157",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-007",
+      "jobs": [
+        "2",
+        "5"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "970fb685b7da35fd",
+      "id": "ch-quant-001",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-008",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "558567bca6e94783",
+      "id": "ch-quant-003",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-009",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "558df6c90a56288d",
+      "id": "ch-quant-004",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-010",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7587643048ef8a9b",
+      "id": "ch-quant-007",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-011",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "01f4547696dba49e",
+      "id": "ch-quant-009",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-012",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "bce1a479c172dea3",
+      "id": "ch-quant-010",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-013",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "559aebf17d01e03c",
+      "id": "ch-quant-021",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-014",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "880ee949c37bac89",
+      "id": "ch-quant-025",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-015",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c769733e47d2a4c1",
+      "id": "ch-quant-029",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-016",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "74d5eb38dc9754ed",
+      "id": "ch-quant-033",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-017",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b96ff3990dd6f491",
+      "id": "ch-quant-035",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-018",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7198724ef06a3691",
+      "id": "ch-quant-036",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-019",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "762c1af13b6f7d1d",
+      "id": "ch-quant-039",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-020",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "dc9c71e0d39e6096",
+      "id": "ch-quant-047",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-021",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "92b1917cae03173e",
+      "id": "ch-quant-049",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-022",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "9dea31eeae90b0d6",
+      "id": "ch-quant-055",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-023",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "24cd43eb05d179bc",
+      "id": "ch-quant-061",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-024",
+      "jobs": [
+        "8",
+        "11"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Supply chain",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a8ca83872928692d",
+      "id": "ch-quant-064",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-025",
+      "jobs": [
+        "8",
+        "11"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Supply chain",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "f33817a4ff26af2f",
+      "id": "ch-quant-068",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-026",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "fe08bbad2f99e15a",
+      "id": "ch-quant-072",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-027",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2a62d1a67c1bf3b1",
+      "id": "ch-quant-080",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-028",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c51f3daa0e435286",
+      "id": "ch-quant-082",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-029",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "aa11a9d863a7d267",
+      "id": "ch-quant-083",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-030",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7f7d8a8f59daf1dd",
+      "id": "ch-quant-085",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-031",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c134afb9f533f6fc",
+      "id": "ch-quant-091",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-032",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5e2b62bc275b83ad",
+      "id": "ch-quant-092",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-033",
+      "jobs": [
+        "2",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2",
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "4e6aa39f9da3de6e",
+      "id": "ch-quant-095",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-034",
+      "jobs": [
+        "2",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2",
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ce16479824493350",
+      "id": "ch-quant-096",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-035",
+      "jobs": [
+        "2",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2",
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ce70b654e936515b",
+      "id": "ch-quant-100",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-036",
+      "jobs": [
+        "2",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2",
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5b17f53bca85cbe8",
+      "id": "ch-quant-103",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-037",
+      "jobs": [
+        "1",
+        "8"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c061c972dec04129",
+      "id": "ch-quant-107",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-038",
+      "jobs": [
+        "1",
+        "8"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7824a9476a0dc246",
+      "id": "ch-quant-110",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-039",
+      "jobs": [
+        "1",
+        "8"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ddbe4aac1ca1be55",
+      "id": "ch-quant-115",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-040",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "05a6c6adc2167dbf",
+      "id": "ch-quant-118",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-041",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "24650753464b7689",
+      "id": "ch-quant-139",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-042",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "64fb1908b38a4417",
+      "id": "ch-quant-142",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-043",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a902daaf2dc8304a",
+      "id": "ch-quant-145",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-044",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "9cdbe6cb52a79068",
+      "id": "ch-quant-146",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-045",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e4d573d474e25907",
+      "id": "ch-comp-145",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-046",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Field staff",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "fc737257d8e54375",
+      "id": "ch-comp-146",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-047",
+      "jobs": [
+        "5",
+        "8"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Program mgrs"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "6097de262a7af1b7",
+      "id": "ch-comp-147",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-048",
+      "jobs": [
+        "7",
+        "8"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists",
+        "Program mgrs"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "48ca942a9b2eef49",
+      "id": "ch-comp-148",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-049",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9015f40f05fe0dcb",
+      "id": "ch-comp-001",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-050",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8a92fc69cd23bf4b",
+      "id": "ch-comp-002",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-051",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e4a3cad71da68a94",
+      "id": "ch-comp-003",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-052",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8b80ead730a494d1",
+      "id": "ch-comp-005",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-053",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e19508a08b37ef52",
+      "id": "ch-comp-006",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-054",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "daa64b323f2abb70",
+      "id": "ch-comp-007",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-055",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "d19126aa8350e1dc",
+      "id": "ch-comp-017",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-056",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "f437e76338429fe1",
+      "id": "ch-comp-025",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-057",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "57b0195a0674e71a",
+      "id": "ch-comp-031",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-058",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8f6602721943d315",
+      "id": "ch-comp-034",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-059",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "305f50bd72eb6f7b",
+      "id": "ch-comp-038",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-060",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2e8b94ec55788318",
+      "id": "ch-comp-043",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-061",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ab0dd4cacab53e95",
+      "id": "ch-comp-047",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-062",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "10e0ce11fc05bc4c",
+      "id": "ch-comp-055",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-063",
+      "jobs": [
+        "8",
+        "11"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Supply chain",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8ce507f087019cc9",
+      "id": "ch-comp-066",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-064",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ad36cecdb04bc0d1",
+      "id": "ch-comp-076",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-065",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "4d461cbb8d731201",
+      "id": "ch-comp-078",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-066",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "d80e089a55148d43",
+      "id": "ch-comp-085",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-067",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "956ea0dc85b591dd",
+      "id": "ch-comp-088",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-068",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "9a9a874e541c9818",
+      "id": "ch-comp-090",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-069",
+      "jobs": [
+        "2",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2",
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "26262d065c49f7f2",
+      "id": "ch-comp-093",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-070",
+      "jobs": [
+        "2",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2",
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "dfbfe20d36b26d88",
+      "id": "ch-comp-094",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-071",
+      "jobs": [
+        "2",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2",
+        "5"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e41aaf5300c3d3fc",
+      "id": "ch-comp-100",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-072",
+      "jobs": [
+        "1",
+        "8"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "f292fbd71589af61",
+      "id": "ch-comp-110",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-073",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1a861ccd29a3f623",
+      "id": "ch-comp-112",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-074",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Program mgrs",
+        "Field staff",
+        "Service providers",
+        "Policy/planning",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7bb3b6cc9e049b64",
+      "id": "ch-comp-133",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-075",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "803c60e175c46bdb",
+      "id": "ch-comp-138",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-076",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ac8da816fb8dd16f",
+      "id": "ch-comp-144",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-077",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2047f1c76b6fb088",
+      "id": "ch-trend-072",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-078",
+      "jobs": [
+        "1",
+        "5"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e1b17cd3c31f4606",
+      "id": "ch-trend-073",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-079",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "4ba03dca9e726ff1",
+      "id": "ch-trend-074",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-080",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7582bff8d58ac8ca",
+      "id": "ch-trend-075",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-081",
+      "jobs": [
+        "1",
+        "5"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a7eff4f0bc836cae",
+      "id": "ch-trend-001",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-082",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5d672a256806d24f",
+      "id": "ch-trend-002",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-083",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "aaad1a1d4bb4843c",
+      "id": "ch-trend-004",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-084",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "42d0a2d5020fa5e6",
+      "id": "ch-trend-005",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-085",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "d58b38448d7c1a22",
+      "id": "ch-trend-006",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-086",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a645e33258d22184",
+      "id": "ch-trend-007",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-087",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5ebf21749672bfef",
+      "id": "ch-trend-008",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-088",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e1dd1c58579ab756",
+      "id": "ch-trend-013",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-089",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c7196832089f91e4",
+      "id": "ch-trend-015",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-090",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1740ad71cd323950",
+      "id": "ch-trend-025",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-091",
+      "jobs": [
+        "1",
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "28c14ff5e8ef7827",
+      "id": "ch-trend-029",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-092",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2d1d3edefdf829a4",
+      "id": "ch-trend-032",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-093",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e41084774d3e510f",
+      "id": "ch-trend-037",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-094",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "fe01c1b0eb15404d",
+      "id": "ch-trend-039",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-095",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ed0ee07c316fa9e0",
+      "id": "ch-trend-041",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-096",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e7bc2e2998cb6903",
+      "id": "ch-trend-042",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-097",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "30089ff2a8838732",
+      "id": "ch-trend-045",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-098",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2b8e79586399d16a",
+      "id": "ch-trend-047",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-099",
+      "jobs": [
+        "1",
+        "2"
+      ],
+      "pathways": [
+        "3",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "76fc1c6f5f34a5e8",
+      "id": "ch-trend-050",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-100",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2fbce8db0984c0a3",
+      "id": "ch-trend-052",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-101",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "d8dae01a3ac29eb3",
+      "id": "ch-trend-053",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-102",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "26cc43f704366b32",
+      "id": "ch-trend-054",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-103",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b37fa2df9a38f9fd",
+      "id": "ch-trend-055",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-104",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1",
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1769058128129d7d",
+      "id": "ch-trend-061",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-105",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a6c77ae2c9c2cdd9",
+      "id": "ch-trend-063",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-106",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "0599cda134ea650b",
+      "id": "ch-trend-066",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-107",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "3cd15590e93cce9d",
+      "id": "ch-trend-067",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-108",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "9e2802ad7bfb4dc1",
+      "id": "ch-trend-071",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-109",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "81f3fd24e8ea2e12",
+      "id": "ch-mon-001",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-110",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8afb2c7ffcb42d05",
+      "id": "ch-mon-002",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-111",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "bb53429fefb9770b",
+      "id": "ch-mon-003",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "by_confidence",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-112",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7f35dfb5d4c73bab",
+      "id": "ch-mon-004",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "ytd",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-113",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "6c9766755bdd3fdb",
+      "id": "ch-mon-005",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-114",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "59c86f7ae90ec705",
+      "id": "ch-mon-006",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "by_confidence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-115",
+      "jobs": [
+        "3"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "f31856ba1baa9d99",
+      "id": "ch-mon-007",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-116",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "463c50b6f62b0beb",
+      "id": "ch-mon-008",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_default",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-117",
+      "jobs": [
+        "3"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7b766d2f5d8da999",
+      "id": "ch-mon-009",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_vs_prior",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-118",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "734db1172af2f2d4",
+      "id": "ch-mon-010",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-119",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2eb50e8d3ed2582e",
+      "id": "ch-mon-011",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_default",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-120",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9d33dc992707e22b",
+      "id": "ch-mon-012",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-121",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3c2e08be78bb9e32",
+      "id": "ch-mon-013",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "ytd",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-122",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8fed4fdeb47f2a0f",
+      "id": "ch-mon-014",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-123",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7e7d86a85fa864f1",
+      "id": "ch-mon-015",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "monthly_recent",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-124",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2f42c69a1cd699dc",
+      "id": "ch-mon-016",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_vs_prior",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-125",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1e2b91c96fa58875",
+      "id": "ch-mon-017",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-126",
+      "jobs": [
+        "3"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ecaf7f6f74cacf4f",
+      "id": "ch-mon-018",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-127",
+      "jobs": [
+        "3"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2dbc19dbd99e5106",
+      "id": "ch-mon-019",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-128",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a4888293e13978c8",
+      "id": "ch-mon-020",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-129",
+      "jobs": [
+        "3"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e17759eeffb47990",
+      "id": "ch-mon-021",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-130",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b5078a4c1fa903b5",
+      "id": "ch-mon-022",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_rank",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-131",
+      "jobs": [
+        "3",
+        "8"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Program mgrs"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d4a337871272b726",
+      "id": "ch-mon-023",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "by_confidence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-132",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5b6dad6ea65d7c3d",
+      "id": "ch-mon-024",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "no_aoi",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-133",
+      "jobs": [
+        "3"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2508793c08374760",
+      "id": "ch-mon-025",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "unsupported_action",
+      "difficulty": "hard",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-134",
+      "jobs": [
+        "3"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "96201c7230b3ccea",
+      "id": "ch-mon-026",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "concession_alerts",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-135",
+      "jobs": [
+        "3",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "0fb54475e69a2505",
+      "id": "ch-mon-027",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "buffer_unsupported",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-136",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "fa4cab474c0f8185",
+      "id": "ch-mon-029",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-138",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b82229cc0f550e34",
+      "id": "ch-mon-030",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "by_confidence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-139",
+      "jobs": [
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "cf1f0b0010e55a2d",
+      "id": "ch-causal-001",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_subnational",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-140",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "468bf9d2f37d4b7f",
+      "id": "ch-causal-002",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "spike_attribution",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-141",
+      "jobs": [
+        "1"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "c0572f500eb91739",
+      "id": "ch-causal-003",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "spike_attribution",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-142",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e40634b26bb99a36",
+      "id": "ch-causal-004",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_check",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-143",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1ef6956e43bc6543",
+      "id": "ch-causal-005",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "commodity_overclaim",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-144",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8ba0dc23c0c5852b",
+      "id": "ch-causal-006",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "fire_share_pa",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-145",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2ce17ee541a91ffc",
+      "id": "ch-causal-007",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "premise_check",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-146",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7dc436f77bfb062f",
+      "id": "ch-causal-008",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "commodity_overclaim",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-147",
+      "jobs": [
+        "5",
+        "9"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "63cfee3bee4d9966",
+      "id": "ch-causal-009",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_territory",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-148",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "db8171d7d561fbbf",
+      "id": "ch-causal-010",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "caveat_required",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-149",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d8240a8fed94afbb",
+      "id": "ch-causal-011",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "commodity_overclaim",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-150",
+      "jobs": [
+        "1",
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Field staff"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a452f89a685dbe1b",
+      "id": "ch-causal-012",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "premise_check",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-151",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1736d22d0730e66e",
+      "id": "ch-causal-013",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "caveat_required",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-152",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "aa6900805980096e",
+      "id": "ch-causal-014",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_pa",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-153",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "1"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7336be5865c26f1f",
+      "id": "ch-causal-015",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_vs_fire",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-154",
+      "jobs": [
+        "1",
+        "5"
+      ],
+      "pathways": [
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "0bae6383eeb3f71c",
+      "id": "ch-causal-016",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "spike_attribution",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-155",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e3bc598abce89d54",
+      "id": "ch-causal-017",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_share",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-156",
+      "jobs": [
+        "1",
+        "9"
+      ],
+      "pathways": [
+        "4"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "All direct-connect groups"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5ae80608fefea167",
+      "id": "ch-causal-018",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_pa",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-157",
+      "jobs": [
+        "1",
+        "7"
+      ],
+      "pathways": [
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e9758565aa3a5ac9",
+      "id": "ch-comp-122",
+      "type": "causal",
+      "set": "comparison",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-158",
+      "jobs": [
+        "1",
+        "7",
+        "8"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "162f06d067628063",
+      "id": "ch-comp-124",
+      "type": "causal",
+      "set": "comparison",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-159",
+      "jobs": [
+        "1",
+        "7",
+        "8"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "690b48011d1721ce",
+      "id": "ch-quant-011",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-160",
+      "jobs": [
+        "1",
+        "3",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "3"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "34d2239d87854110",
+      "id": "ch-quant-127",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-161",
+      "jobs": [
+        "1",
+        "7",
+        "8"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b7dd536d8ce4f51b",
+      "id": "ch-quant-133",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-162",
+      "jobs": [
+        "1",
+        "7",
+        "8"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "aebe454fbd95b5f8",
+      "id": "ch-quant-134",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-163",
+      "jobs": [
+        "1",
+        "7",
+        "8"
+      ],
+      "pathways": [
+        "4",
+        "5"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Journalists",
+        "Public/educators",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "49ebf23dfed7c5fb",
+      "id": "ch-aoi-026",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-164",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "fcb95a4dd5613562",
+      "id": "ch-aoi-034",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-165",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ae37fed74db65003",
+      "id": "ch-aoi-054",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multilingual",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-166",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "4ff8b2b6f8174510",
+      "id": "ch-aoi-056",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multilingual",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-167",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "d8631cb5b81ed607",
+      "id": "ch-aoi-057",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multilingual",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-168",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "db4676ee2aaba4ab",
+      "id": "ch-aoi-088",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-169",
+      "jobs": [
+        "8"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Supply chain"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7e726b01090b9c3a",
+      "id": "ch-aoi-090",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-170",
+      "jobs": [
+        "8"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "Program mgrs",
+        "GIS analysts",
+        "Supply chain"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7ca936cb3b13d529",
+      "id": "ch-aoi-110",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "vague",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-171",
+      "jobs": [
+        "3",
+        "5"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Service providers",
+        "Journalists",
+        "Sustainable finance"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "af5f3b7996bb8b42",
+      "id": "ch-aoi-137",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-172",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b4a6aa9cad673d8e",
+      "id": "ch-aoi-138",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-173",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "36866fcb0ed34020",
+      "id": "ch-aoi-142",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-174",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "42211c3bb408a6d5",
+      "id": "ch-aoi-143",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-175",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e700e16b5058e15c",
+      "id": "ch-aoi-146",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-176",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "57d4f544edbdc2d8",
+      "id": "ch-aoi-151",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-177",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "db4264643c069768",
+      "id": "ch-aoi-152",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-178",
+      "jobs": [
+        "5",
+        "7"
+      ],
+      "pathways": [
+        "1",
+        "2"
+      ],
+      "user_groups": [
+        "Policy/planning",
+        "GIS analysts",
+        "Field staff",
+        "Supply chain",
+        "Sustainable finance",
+        "Service providers",
+        "Journalists"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "70b36bc8d7d64795",
+      "id": "ch-dataset-131",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "multilingual",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-179",
+      "jobs": [
+        "10",
+        "11"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "04cc95f5e5df1b40",
+      "id": "ch-dataset-139",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "multilingual",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-180",
+      "jobs": [
+        "10",
+        "11"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "cd318a74bb1b5097",
+      "id": "ch-dataset-146",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "multilingual",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-181",
+      "jobs": [
+        "10",
+        "11"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "0bb8c8d53882a68d",
+      "id": "ch-dataset-157",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "context-layer",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-182",
+      "jobs": [
+        "10",
+        "11"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "55163127c4ca5d38",
+      "id": "ch-dataset-162",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "context-layer",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-183",
+      "jobs": [
+        "10",
+        "11"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ed06e16345d37c29",
+      "id": "ch-dataset-168",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "context-layer",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-184",
+      "jobs": [
+        "10",
+        "11"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "70fbaf7e974c13f3",
+      "id": "ch-dataset-171",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "ambiguous",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-185",
+      "jobs": [
+        "10",
+        "11"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "9c5ca1052ef1c4c8",
+      "id": "ch-aoi-028",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-186",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b7cf71c08e4c5d5d",
+      "id": "ch-aoi-087",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "hard",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-187",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "088216452a0e63b7",
+      "id": "ch-aoi-091",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-188",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1c5bb28fe57e595a",
+      "id": "ch-aoi-116",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-189",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5cd2fb1d2bbffb08",
+      "id": "ch-aoi-118",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-190",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ec7df4648226bad3",
+      "id": "ch-aoi-119",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-191",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "26e69e27bed0e9c7",
+      "id": "ch-aoi-128",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-192",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ae5bfdb82a59e76b",
+      "id": "ch-aoi-130",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "medium",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-193",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ff0965aa9c3d11f2",
+      "id": "ch-dataset-186",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-194",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "68388ad5237e0c52",
+      "id": "ch-dataset-187",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-195",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c8d448bceca37f44",
+      "id": "ch-dataset-190",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-196",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "0e58282e60e1e90d",
+      "id": "ch-dataset-192",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-197",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "3385322c4d5c5f7c",
+      "id": "ch-dataset-193",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-198",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a9101d81fa465485",
+      "id": "ch-dataset-198",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-199",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "f4120fb539d8ad3a",
+      "id": "ch-dataset-199",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-200",
+      "jobs": [
+        "10"
+      ],
+      "pathways": [
+        "x"
+      ],
+      "user_groups": [
+        "All direct-connect groups"
+      ],
+      "synthetic": false
+    }
+  ],
+  "errata": []
+}
