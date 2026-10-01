@@ -14,6 +14,11 @@ def test_run_tokens_resolve_to_iso_dates():
     assert resolve_templates("{run-30d}", NOW) == "2026-09-01"
     assert resolve_templates("{run-7d}..{run}", NOW) == "2026-09-24..2026-10-01"
     assert resolve_templates("alerts in {last_month}", NOW) == "alerts in September 2026"
+    assert resolve_templates("{month_start}", NOW) == "2026-10-01"
+    assert resolve_templates("{last_month_start}..{last_month_end}", NOW) == "2026-09-01..2026-09-30"
+    assert resolve_templates("{current_year}-01-01", NOW) == "2026-01-01"
+    jan = datetime(2027, 1, 15)
+    assert resolve_templates("{last_month_start}..{last_month_end}", jan) == "2026-12-01..2026-12-31"
 
 
 def test_run_tokens_validate_and_count_as_templates():

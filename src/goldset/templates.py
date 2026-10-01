@@ -24,6 +24,9 @@ TEMPLATE_VARS: dict[str, str] = {
     "current_month": "current calendar month and year, e.g. 'August 2026'",
     "last_month": "previous calendar month and year, e.g. 'July 2026'",
     "current_year": "current four-digit year, e.g. '2026'",
+    "month_start": "ISO date of the first day of the current month, e.g. '2026-10-01'",
+    "last_month_start": "ISO date of the first day of the previous month, e.g. '2026-09-01'",
+    "last_month_end": "ISO date of the last day of the previous month, e.g. '2026-09-30'",
 }
 
 
@@ -38,6 +41,13 @@ def _resolve(name: str, now: datetime) -> str:
         return datetime(year, month, 1).strftime("%B %Y")
     if name == "current_year":
         return str(now.year)
+    if name == "month_start":
+        return now.replace(day=1).strftime("%Y-%m-%d")
+    if name in ("last_month_start", "last_month_end"):
+        first_this = now.replace(day=1)
+        last_prev = first_this - timedelta(days=1)
+        day = last_prev.replace(day=1) if name == "last_month_start" else last_prev
+        return day.strftime("%Y-%m-%d")
     raise KeyError(name)
 
 
