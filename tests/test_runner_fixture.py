@@ -132,6 +132,33 @@ def test_run_record_names_its_caseset():
     assert validate_run(record) == []
 
 
+def test_run_record_names_selected_judge_backend():
+    import argparse
+
+    from goldset.cli import build_run_record
+
+    args = argparse.Namespace(
+        run_id="20260804T120000Z_staging_experimental",
+        build="b",
+        ff="experimental",
+        trials=1,
+        workers=10,
+        trial_timeout=900.0,
+        note=None,
+        cases_dir=__import__("pathlib").Path("cases/v2"),
+        judge_backend="openrouter-jev-decisions",
+    )
+    entries = [{"uid": "u1", "id": "1-001", "checks": {"aoi_id_match": 1.0}}]
+    record = build_run_record(
+        args,
+        {"caseset_version": "2276185a231bfdad"},
+        entries,
+        started="2026-08-04T12:00:00Z",
+        environment="staging",
+    )
+    assert record["judge_model"] == "typesafe/jev-1.13"
+
+
 def test_merge_trials_majority_and_detail():
     trials = [
         {"uid": "u", "id": "1-002", "checks": {"aoi_id_match": 1.0}, "latency_s": 1.0},
