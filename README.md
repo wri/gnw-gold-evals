@@ -45,14 +45,19 @@ measure what curation bought. See `cases/README.md` for authoring rules.
 uv sync
 uv run python -m pytest -q              # 475 tests, no network
 
-# secrets: API_TOKEN (environment-specific) and ANTHROPIC_API_KEY (judge)
-# may live in .env — loaded before the token check.
+# secrets: API_TOKEN (environment-specific) plus judge credentials.
+# default judge backend (`--judge-backend haiku`) uses ANTHROPIC_API_KEY.
+# optional TypeSafe JEV backend (`--judge-backend openrouter-jev-decisions`)
+# uses OPENROUTER_API_KEY. Secrets may live in .env.
 
 # run the GOLD set against staging (the harness lives here now).
 # --ff experimental is REQUIRED on any run whose verdict you trust:
 # dashboards + satellite imagery only exist behind that profile (CLAUDE.md).
 uv run gold run --env staging --ff experimental --trials 3
 uv run gold run --env staging --ff experimental --id 1-030 --verbose   # one case
+# optional: TypeSafe JEV via OpenRouter Decisions (default remains Haiku):
+uv run gold run --env staging --ff experimental \
+  --judge-backend openrouter-jev-decisions --id 1-030 --verbose
 # writes results/runs/<run_id>.json + gzipped raw artifacts
 
 # against a local project-zeno checkout (`make api` there, port 8000):
