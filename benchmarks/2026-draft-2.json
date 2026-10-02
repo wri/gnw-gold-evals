@@ -12,14 +12,7 @@
     "tool": "tools/benchmark_from_sheet.py",
     "method": "curated: one member per sheet row",
     "seed_file": "seeds/benchmark-v2026-proposed.csv",
-    "excluded": [
-      {
-        "benchmark_id": "bm26-137",
-        "id": "ch-mon-028",
-        "status": "todo",
-        "reason": "needs a seeded test account with saved areas (portfolio triage); not runnable yet"
-      }
-    ]
+    "excluded": []
   },
   "stage_order": [
     "scope",

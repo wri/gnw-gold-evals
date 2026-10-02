@@ -13,18 +13,11 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with data; ranked across saved AOIs
-  benchmark_id: bm26-137
-  lineage: benchmark v2026 proposed set (bm26-137); Roadmap job area 3 (portfolio monitoring)
+  lineage: benchmark v2026 proposed set (bm26-137); Roadmap job area 3 (portfolio monitoring);
+    removed from BENCHMARK v2026 on 2026-10-02 (AJ)
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
-  synthetic: 'TRUE'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
     needs a seeded test account with saved AOIs
   status_reason: needs a seeded test account with saved areas (portfolio triage); not runnable
     yet
-  benchmark_type: monitoring
-  jtbd: 3,5
-  impact_pathway: 1 Local stewardship
-  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
-    Journalists; Sustainable finance
-  user_story_refs: Roadmap job area 3 (portfolio monitoring)
