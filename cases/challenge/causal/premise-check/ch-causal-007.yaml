@@ -1,0 +1,26 @@
+id: ch-causal-007
+uid: 2ce17ee541a91ffc
+status: ready
+set: causal
+group: premise_check
+query: Why is deforestation increasing in Pará?
+expected:
+  aoi_ids: BRA.14
+  dataset_id: 4;8
+  data_pull: 'TRUE'
+  text: Checks from the data whether loss in Pará is in fact increasing before explaining
+    it, and caveats that drivers are not proof of cause.
+notes:
+  difficulty: hard
+  behaviour: check premise against trend; drivers; caveat on causality
+  benchmark_id: bm26-146
+  lineage: benchmark v2026 proposed set (bm26-146); Brazilian enforcement users
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: 1,7
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Supply chain; Sustainable finance; Service providers
+  user_story_refs: Brazilian enforcement users

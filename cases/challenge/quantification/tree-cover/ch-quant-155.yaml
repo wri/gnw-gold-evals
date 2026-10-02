@@ -1,0 +1,25 @@
+id: ch-quant-155
+uid: 3181be0e993e4f47
+status: ready
+set: quantification
+group: tree-cover
+query: How much tree cover does El Salvador have at 10% canopy cover?
+expected:
+  aoi_ids: SLV
+  dataset_id: '7'
+  dataset_parameters: '[{"name":"canopy_cover","values":[10]}]'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-005
+  lineage: benchmark v2026 proposed set (bm26-005); USY-001364 El Salvador compensation baseline
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  benchmark_type: quantification
+  jtbd: 1,2
+  impact_pathway: 3 Policy & planning
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Service providers
+  user_story_refs: USY-001364 El Salvador compensation baseline

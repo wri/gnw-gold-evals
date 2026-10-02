@@ -1,0 +1,28 @@
+id: ch-quant-153
+uid: ec4eb4c06a1b0dda
+status: ready
+set: quantification
+group: natural-lands
+query: How much natural land in Mato Grosso was lost after 2020?
+expected:
+  aoi_ids: BRA.12
+  dataset_id: 3;4
+  start_date: '2021-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with data or explain limits; EUDR cutoff framing
+  benchmark_id: bm26-003
+  lineage: benchmark v2026 proposed set (bm26-003); Trase EUDR; USY-001293 Sicredi
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Confirm natural-lands × loss intersection is supported
+  benchmark_type: quantification
+  jtbd: 5,7
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
+    Field staff; Journalists
+  user_story_refs: Trase EUDR; USY-001293 Sicredi

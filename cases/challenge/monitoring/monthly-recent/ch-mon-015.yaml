@@ -1,0 +1,30 @@
+id: ch-mon-015
+uid: 7e7d86a85fa864f1
+status: ready
+set: monitoring
+group: monthly_recent
+query: Summarize disturbance alerts in Chiribiquete National Park over the last 6 months,
+  month by month
+expected:
+  aoi_ids: '19984'
+  dataset_id: '11'
+  start_date: '{run-182d}'
+  end_date: '{run}'
+  date_tolerance_days: '7'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data + monthly chart
+  benchmark_id: bm26-124
+  lineage: benchmark v2026 proposed set (bm26-124); USY-000509
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  benchmark_type: monitoring
+  jtbd: 3,7
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: USY-000509

@@ -1,0 +1,30 @@
+id: ch-mon-019
+uid: 2dbc19dbd99e5106
+status: ready
+set: monitoring
+group: recent_area
+query: ¿Cuántas hectáreas de alertas hubo en el Parque Nacional Madidi en los últimos 30 días?
+expected:
+  aoi_ids: '98183'
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Replies in Spanish.
+notes:
+  difficulty: medium
+  behaviour: answer with data (in Spanish)
+  benchmark_id: bm26-128
+  lineage: benchmark v2026 proposed set (bm26-128); USY-001217 (Bolivia)
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  benchmark_type: monitoring
+  jtbd: 3,7
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: USY-001217 (Bolivia)

@@ -15,3 +15,11 @@ notes:
   verify_query: Cerrado
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
+  benchmark_id: bm26-190
+  benchmark_type: scope
+  jtbd: '10'
+  impact_pathway: 'Cross-cutting: trust (no misleading answers)'
+  user_groups: All direct-connect groups
+  synthetic: 'FALSE'
+  user_story_refs: —
+  refresh_risk: Scored info-only until clarification validator is stable

@@ -1,0 +1,28 @@
+id: ch-mon-010
+uid: 734db1172af2f2d4
+status: ready
+set: monitoring
+group: recent_area
+query: How much disturbance alert area has North Kalimantan had in the last 90 days?
+expected:
+  aoi_ids: IDN.35
+  dataset_id: '11'
+  start_date: '{run-90d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-119
+  lineage: benchmark v2026 proposed set (bm26-119); USY-000509
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  benchmark_type: monitoring
+  jtbd: 3,5
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: USY-000509

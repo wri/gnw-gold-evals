@@ -1,0 +1,29 @@
+id: ch-comp-147
+uid: 6097de262a7af1b7
+status: ready
+set: comparison
+group: tcl
+query: 'Which lost more primary forest between 2021 and 2023: Salonga or Virunga National
+  Park?'
+expected:
+  aoi_ids: 555697863;166889
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with data
+  benchmark_id: bm26-048
+  lineage: benchmark v2026 proposed set (bm26-048); USY-001516
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: comparison
+  jtbd: 7,8
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Sustainable finance;
+    Service providers; Journalists; Program mgrs
+  user_story_refs: USY-001516

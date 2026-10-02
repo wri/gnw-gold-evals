@@ -19,3 +19,12 @@ notes:
   manifest_id: m-lc-comp-01
   lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-01b
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-063
+  benchmark_type: comparison
+  jtbd: 8,11
+  impact_pathway: 3 Policy & planning
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Supply chain; All direct-connect
+    groups
+  synthetic: 'FALSE'
+  user_story_refs: USY-001529 Caquetá
+  refresh_risk: Low

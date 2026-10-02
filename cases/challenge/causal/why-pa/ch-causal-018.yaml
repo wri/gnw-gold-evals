@@ -1,0 +1,25 @@
+id: ch-causal-018
+uid: 5ae80608fefea167
+status: ready
+set: causal
+group: why_pa
+query: What is driving tree cover loss around Taï National Park in Côte d'Ivoire?
+expected:
+  aoi_ids: '721'
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with drivers data; cocoa caveat
+  benchmark_id: bm26-157
+  lineage: benchmark v2026 proposed set (bm26-157); USY-001399 Olam cocoa; Mars
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: causal
+  jtbd: 1,7
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Supply chain; Sustainable finance; Service providers
+  user_story_refs: USY-001399 Olam cocoa; Mars

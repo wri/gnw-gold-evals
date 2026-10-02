@@ -33,8 +33,14 @@ North Star.
 
 | Version | Status | Members | Notes |
 |---|---|---|---|
-| `2026-draft` | draft | 100 (20 each: geospatial, dataset, quantification, comparison, trend) | built 2026-09-29 so the FE can build against real data; not a published number |
-| `2026` | not yet sampled | | freeze planned November 2026 |
+| `2026-draft-2` | draft | 199 (quantification 45, comparison 32, trend 32, monitoring 29, causal 24, geospatial 15, refusal 15, dataset 7) | curated from the proposed v2026 set (`seeds/benchmark-v2026-proposed.csv`, built by `tools/benchmark_from_sheet.py`); members carry JTBD jobs, impact pathways and user groups; 62 new cases have drafted, unreviewed expectations |
+| `2026-draft` | retired | 100 (20 each: geospatial, dataset, quantification, comparison, trend) | sampled 2026-09-29; replaced by `2026-draft-2`; keeps its 29 Sep run as history |
+| `2026` | not yet frozen | | freeze planned November 2026, from `2026-draft-2` once the drafted expectations are reviewed |
+
+A version is either **sampled** (`tools/benchmark_sample.py`, stratified
+from CHALLENGE) or **curated** (`tools/benchmark_from_sheet.py`, one member
+per row of a reviewed sheet export, with the row's use-case facets). Both
+write the same manifest contract.
 
 ## Rules
 

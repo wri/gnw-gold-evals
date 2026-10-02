@@ -1,0 +1,27 @@
+id: ch-mon-027
+uid: 0fb54475e69a2505
+status: ready
+set: monitoring
+group: buffer_unsupported
+query: Were there any alerts within 10 km of this mill at -1.25, 101.45 this month?
+expected:
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  text: Explains that it cannot analyse a radius around a coordinate, and does not guess an
+    area.
+notes:
+  difficulty: hard
+  behaviour: 'decline or redirect: point/buffer AOIs not supported; must not guess an area'
+  benchmark_id: bm26-136
+  lineage: benchmark v2026 proposed set (bm26-136); USY-001399 Olam mills
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  build_notes: Re-classify to answerable if buffer AOIs ship
+  benchmark_type: monitoring
+  jtbd: 3,5
+  impact_pathway: 'Cross-cutting: trust'
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: USY-001399 Olam mills

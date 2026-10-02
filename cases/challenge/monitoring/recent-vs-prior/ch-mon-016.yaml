@@ -1,0 +1,30 @@
+id: ch-mon-016
+uid: 2f42c69a1cd699dc
+status: ready
+set: monitoring
+group: recent_vs_prior
+query: Did alert area in Odzala-Kokoua National Park go up in the last 30 days compared with
+  the 30 days before?
+expected:
+  aoi_ids: '643'
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with data
+  benchmark_id: bm26-125
+  lineage: benchmark v2026 proposed set (bm26-125); USY-000509
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  benchmark_type: monitoring
+  jtbd: 3,7
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: USY-000509

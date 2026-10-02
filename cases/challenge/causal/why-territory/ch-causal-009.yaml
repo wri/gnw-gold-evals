@@ -1,0 +1,25 @@
+id: ch-causal-009
+uid: 63cfee3bee4d9966
+status: ready
+set: causal
+group: why_territory
+query: What is causing tree cover loss in the Kayapó Indigenous Territory?
+expected:
+  aoi_ids: BRA1507
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with drivers data
+  benchmark_id: bm26-148
+  lineage: benchmark v2026 proposed set (bm26-148); USY-000852 territory monitoring
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: causal
+  jtbd: 1,7
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Supply chain; Sustainable finance; Service providers
+  user_story_refs: USY-000852 territory monitoring

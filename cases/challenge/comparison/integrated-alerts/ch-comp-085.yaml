@@ -16,3 +16,12 @@ notes:
   manifest_id: m-ialert-comp-07
   lineage: generated 2026-09-01 from phase-2 manifest; ialert-comp-07a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-067
+  benchmark_type: comparison
+  jtbd: 3,5
+  impact_pathway: 1 Local stewardship; 4 Commitments (EUDR)
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  synthetic: 'FALSE'
+  user_story_refs: USY-000509 Malaysia; USY-001346 NJ DEP; Trase/TRACT EUDR
+  refresh_risk: 'Medium: alert confidence can upgrade; re-verify at refresh'

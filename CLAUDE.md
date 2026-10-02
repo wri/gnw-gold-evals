@@ -25,7 +25,9 @@ set. The short version:
   gnw-evals eval-metrics-slice-1, authored via `generation/` — see
   `generation/README.md`), and `dataset` (dataset-selection prompts, phrased as
   "show X on the map", that should run `pick_dataset` alone; hand-authored in
-  `seeds/challenge-dataset-v1.csv`). Run one set with `gold run --set <name>`. Like
+  `seeds/challenge-dataset-v1.csv`), plus `monitoring` and `causal` (benchmark
+  v2026 cases, `seeds/benchmark-v2026-proposed.csv`; Batch 4 in the README).
+  Run one set with `gold run --set <name>`. Like
   `group`, `set` is never hashed into the uid.
 - Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
   never regression counts. Many cases are *expected to fail*: do not triage
@@ -54,9 +56,15 @@ a case store: read `benchmarks/README.md` first. Key rules:
   member. Editing a member case drops it (new uid); `tools/check_benchmark.py`
   (CI) errors on frozen versions and warns on drafts. Never edit a member
   of a frozen version: void it with an erratum and add new CHALLENGE cases.
-- Sample with `tools/benchmark_sample.py --version <v>` (20 per measured
-  type; aoi and dataset easy+medium only); regeneration is deliberate,
-  never CI's. Frozen manifests are never regenerated.
+- Build a version by sampling (`tools/benchmark_sample.py --version <v>`:
+  20 per measured type; aoi and dataset easy+medium only) or by curating
+  from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv>
+  --version <v>`: one member per row, with jobs, impact pathways and user
+  groups). Current draft: `2026-draft-2` (curated, 199). Regeneration is
+  deliberate, never CI's. Frozen manifests are never regenerated.
+- Rolling-window questions use run-relative date tokens in expected values
+  (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`,
+  `{last_month_end}`) plus `date_tolerance_days`; the uid hashes the token.
 - Run with `gold run --benchmark benchmarks/<v>.json --env prod --trials 3`
   (no ff); results go to `results/benchmark/`. Only canonical runs are trend
   points (`results/index.json` flags them). Roll up with
