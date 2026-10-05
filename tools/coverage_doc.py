@@ -138,12 +138,12 @@ def render_dataset_section(catalog: dict | None, active) -> tuple[list[str], lis
     lines = ["", "## Dataset coverage (project-zeno catalog)", ""]
     if catalog is None:
         lines += [
-            "No catalog snapshot found — run `uv run python "
+            "No catalog snapshot found: run `uv run python "
             "tools/sync_zeno_catalog.py` to snapshot project-zeno's dataset",
             "catalog, then regenerate this doc.",
         ]
         return lines, [
-            "- Dataset coverage unmeasured — no `zeno_catalog.json` snapshot; "
+            "- Dataset coverage unmeasured: no `zeno_catalog.json` snapshot; "
             "run `tools/sync_zeno_catalog.py`.",
         ]
     source = catalog["source"]
@@ -208,7 +208,7 @@ def render_dataset_section(catalog: dict | None, active) -> tuple[list[str], lis
             for u in unknown)
         lines += [
             "",
-            f"Expected `dataset_id` values not in the catalog: {details} — "
+            f"Expected `dataset_id` values not in the catalog: {details}; "
             "fix the cases or refresh the snapshot.",
         ]
     bullets = []
@@ -413,7 +413,7 @@ def main() -> int:
         current = out.read_text(encoding="utf-8") if out.exists() else ""
         if stamp.sub("_Last updated: <date>_", current) != stamp.sub(
                 "_Last updated: <date>_", text):
-            print(f"{out} is stale — regenerate with: "
+            print(f"{out} is stale; regenerate with: "
                   f"uv run python tools/coverage_doc.py --cases-dir {args.cases_dir}")
             return 1
         print(f"{out} is fresh")

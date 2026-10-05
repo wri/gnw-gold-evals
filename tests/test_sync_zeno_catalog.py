@@ -1,4 +1,4 @@
-"""Catalog snapshot extraction: trimming project-zeno catalog YAMLs."""
+"""Catalogue snapshot extraction: trimming project-zeno catalogue YAMLs."""
 
 import sys
 from pathlib import Path

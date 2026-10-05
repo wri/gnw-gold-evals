@@ -174,7 +174,7 @@ def run_import(
             return 1
 
     # An import that changes a case's test_group moves its file. Drop the
-    # old file first — regardless of source_tab ownership — or the same
+    # old file first (regardless of source_tab ownership), or the same
     # test_id would exist at two paths and check.py would fail the store.
     for case in cases:
         old_path = existing_paths.get(case.id)

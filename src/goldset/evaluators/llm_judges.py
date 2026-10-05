@@ -23,7 +23,7 @@ NUMERIC_TOLERANCE = 0.02
 _TOLERANCE_PCT = f"{NUMERIC_TOLERANCE:.0%}"
 
 # Numeric scoring rules for the answer judge. Kept at module level, and free of `{}` so
-# it can be concatenated into a ChatPromptTemplate without being read as a placeholder —
+# it can be concatenated into a ChatPromptTemplate without being read as a placeholder,
 # and so tests can assert on it without an API call.
 _NUMERIC_RULES = f"""
                 **NUMERIC** (numbers with optional units):

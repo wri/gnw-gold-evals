@@ -109,7 +109,7 @@ def test_named_entity_is_not_a_numeric_claim():
 
 
 def test_ambiguous_decimal_separator_is_skipped():
-    """Gold 1-093's '230.003 hektar' could be 230,003 or 230.003 — don't guess."""
+    """Gold 1-093's '230.003 hektar' could be 230,003 or 230.003: don't guess."""
     assert parse_expected_number("230.003 hektar") is None
 
 

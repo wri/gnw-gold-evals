@@ -43,7 +43,7 @@ RELATIVE_DATE_RE = re.compile(
 )
 
 # The rule (cases/README.md, DON'T #1): relative-date phrasing is tolerated
-# only when the case asserts *routing alone* — which AOI/dataset/layer/
+# only when the case asserts *routing alone*: which AOI/dataset/layer/
 # parameters the agent selected, its scope, and whether it asked to clarify.
 # Those stay true whatever the calendar says. Every other expectation
 # (answers, dates, class values, chart/dashboard/nudge content, judged text,

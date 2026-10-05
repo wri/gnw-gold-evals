@@ -14,7 +14,7 @@ def evaluate_dashboard_created(
 
     Tri-state scoring, mirroring evaluate_clarification's table:
         expected=True,  actual=True  -> 1.0 (correct)
-        expected=True,  actual=False -> 0.0 (wrong - expected but not created)
+        expected=True,  actual=False -> 0.0 (wrong: expected but not created)
         expected=False, actual=False -> 1.0 (correct)
         expected=False, actual=True  -> 0.0 (guardrail: unwanted dashboard)
         expected=None,  actual=True  -> 0.0 (unsolicited dashboard creation)
@@ -22,7 +22,7 @@ def evaluate_dashboard_created(
 
     Args:
         agent_state: Final agent state after execution
-        expected_dashboard_created: Expected dashboard-creation behavior
+        expected_dashboard_created: Expected dashboard-creation behaviour
             (True/False/None, None meaning "no expectation")
 
     Returns:

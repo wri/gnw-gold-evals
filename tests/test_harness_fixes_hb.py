@@ -43,7 +43,7 @@ def test_h4_dataset_choice_nudge_without_a_pull_is_suggest():
 
 
 def test_h4_aoi_choice_nudge_is_still_clarify():
-    """1-105 and mt-002 disambiguate an AOI — a different class, unaffected."""
+    """1-105 and mt-002 disambiguate an AOI: a different class, unaffected."""
     state = {"statistics": None, "suggested_datasets": [],
              "nudge": {"type": "aoi_choice", "options": ["Puri, Odisha, India"]}}
     assert classify_scope(state) == "clarify"
@@ -82,7 +82,7 @@ def test_h5_unsupported_still_fails_even_when_the_judge_liked_it():
 
 
 def test_h5_no_numeric_claim_abstains_rather_than_deferring_to_the_judge():
-    """1-001 expects TRUE, 1-004 expects 'Brazil' — the comparator has nothing to
+    """1-001 expects TRUE, 1-004 expects 'Brazil': the comparator has nothing to
     work with, so the row must not carry a gating chart verdict at all."""
     verdict = resolve_chart_verdict(judge_score=0, judge_reason="disliked the chart",
                                     support=None, explanation="")
@@ -126,7 +126,7 @@ def test_h6_cross_column_row_sums_are_candidates():
 
 
 def test_h6_makes_1_002_supported_at_its_recorded_figure():
-    """The agent reports 1,299,278.14 on 6/6 trials — high + highest."""
+    """The agent reports 1,299,278.14 on 6/6 trials: high plus highest."""
     result = evaluate_numeric_support("1,299,278 hectares", SAO_PAULO_TIERS, TOLERANCE)
     assert result["support"] == "supported", result["explanation"]
 
@@ -136,7 +136,7 @@ def test_h6_single_measure_column_gains_no_cross_column_candidate():
     single = json.dumps([{"type": "bar", "data": [{"year": 2001, "loss_ha": 10.0},
                                                   {"year": 2002, "loss_ha": 20.0}]}])
     values = chart_candidate_values(single)
-    # leaves 10, 20; column sum 30; column max 20 — and no spurious extras
+    # leaves 10, 20; column sum 30; column max 20; and no spurious extras
     assert sorted(set(values)) == [10.0, 20.0, 30.0]
 
 
@@ -149,7 +149,7 @@ def test_h6_label_columns_are_excluded_from_cross_column_sums():
 # ------------------------------------ dashboard_widgets_valid: empty dashboards
 
 def test_h7_empty_dashboard_abstains_when_no_widgets_were_expected():
-    """1-096's prompt is only 'Create a dashboard for brazil' — nothing was asked
+    """1-096's prompt is only 'Create a dashboard for brazil': nothing was asked
     to be in it, so an empty dashboard is not a defect."""
     result = evaluate_dashboard_widgets({"widgets": []}, None)
     assert result["dashboard_widgets_valid_score"] is None

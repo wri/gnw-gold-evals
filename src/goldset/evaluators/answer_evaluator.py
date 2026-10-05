@@ -109,7 +109,7 @@ def extract_final_answer_text(messages: list[Any]) -> str:
 
 
 def _score_and_reason(result: Any) -> tuple[float | None, str | None]:
-    """Normalize judge responses that may be a score or score/reason mapping."""
+    """Normalise judge responses that may be a score or score/reason mapping."""
     if isinstance(result, dict):
         return result.get("score"), result.get("reason")
     return result, None
@@ -138,7 +138,7 @@ def evaluate_final_answer(
     Args:
         agent_state: Final agent state after execution
         expected_answer: Expected answer text
-        expected_text: Expected text, meaning, or behavior to check in agent response
+        expected_text: Expected text, meaning, or behaviour to check in agent response
         query: Original user query
 
     """

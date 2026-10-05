@@ -120,7 +120,7 @@ def parse_expected_number(expected_answer: str) -> ExpectedNumber | None:
     if not token or token == "-":
         return None
     # The year and ambiguous-separator guards describe the digits, so they are
-    # tested against the magnitude — a sign must not smuggle a value past them.
+    # tested against the magnitude: a sign must not smuggle a value past them.
     magnitude = token.lstrip("-")
     if _YEAR.match(magnitude):
         return None

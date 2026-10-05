@@ -3,7 +3,7 @@ name: triage-run
 description: Use when analysing a finished GOLD run ("what failed", "triage this run", "look at the results"). Produces classified failures (agent regression, stale expectation, harness defect, flake) and a filled recommendations skeleton.
 ---
 
-# triage-run — turn a ledger run into actions
+# triage-run: turn a ledger run into actions
 
 Input: a `results/runs/<run_id>.json`. Output: a classified failure table and
 the four-section recommendations doc. The ledger file itself is read-only.
@@ -32,7 +32,7 @@ Read the run header first and state it:
   check); measured against expected is the triage evidence, so lead with it.
 - **Flapping rows:** checks whose per-trial values disagree (`trials` array).
   Cross-check with `uv run python tools/flakiness.py <run> --per-case`.
-- **Judge errors:** rows with `judge_errors` are *unmeasured*, not failed —
+- **Judge errors:** rows with `judge_errors` are *unmeasured*, not failed:
   rerun them before trusting anything about them.
 - **Error rows:** excluded from tallies, not failures; a contiguous block of
   timeouts is a load signature (check `workers`), not an agent regression.
@@ -45,7 +45,7 @@ Read the run header first and state it:
 |---|---|
 | **agent regression** | previously-passing uid now fails consistently across trials; actuals show changed behaviour |
 | **stale expectation** | agent output is defensibly right; expected value predates a data/product change |
-| **harness defect** | reason text contradicts actuals; check fired on wrong artifact; parse failure |
+| **harness defect** | reason text contradicts actuals; check fired on the wrong artefact; parse failure |
 | **flake** | trial disagreement, nudge-dependent routing, borderline tolerance |
 
 Rules of thumb:

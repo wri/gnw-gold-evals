@@ -1,9 +1,9 @@
 ---
 name: case-edit
-description: Use when changing any GOLD case — prompt, expected values, status, notes, park/unpark. Explains uid consequences first, then runs the full lifecycle (check --fix, coverage doc, audit) and enforces status-transition rules.
+description: Use when changing any GOLD case (prompt, expected values, status, notes, park/unpark). Explains uid consequences first, then runs the full lifecycle (check --fix, coverage doc, audit) and enforces status-transition rules.
 ---
 
-# case-edit — the case-store lifecycle
+# case-edit: the case-store lifecycle
 
 One case per YAML file under `cases/v2/<group>/<id>.yaml`. Every edit ends
 with the after-edit ritual (section 4); skipping it fails CI. Terms are

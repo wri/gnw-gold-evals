@@ -160,7 +160,7 @@ def write_run(results_dir: Path, run: dict) -> Path:
     return path
 
 
-# Everything a resumed invocation needs to reconstruct the run's config —
+# Everything a resumed invocation needs to reconstruct the run's config:
 # flags on a --resume invocation are ignored in favour of these, so the two
 # halves of a resumed run cannot diverge.
 REQUIRED_PARTIAL_HEADER_FIELDS = (

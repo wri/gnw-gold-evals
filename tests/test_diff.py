@@ -28,7 +28,7 @@ def run_fixture(results, caseset="cs1", run_id="20260731T000000Z_staging"):
 
 
 def run_tool(tmp_path, run_a, run_b, *flags):
-    """Invoke tools/diff_runs.py as CI would, on two serialized runs."""
+    """Invoke tools/diff_runs.py as CI would, on two serialised runs."""
     a, b = tmp_path / "a.json", tmp_path / "b.json"
     a.write_text(json.dumps(run_a))
     b.write_text(json.dumps(run_b))
@@ -74,7 +74,7 @@ def test_classify_covers_all_transitions():
 
 def test_diff_over_intersection_only():
     report = diff(RUN_A, RUN_B)
-    assert report["shared_cases"] == 2  # u1, u2 — u3/u4 are churn, stale excluded
+    assert report["shared_cases"] == 2  # u1, u2 (u3/u4 are churn, stale excluded)
     assert report["only_in_a"] == 1 and report["only_in_b"] == 1
     assert report["stale_a"] == 1 and report["stale_b"] == 0
 
@@ -86,7 +86,7 @@ def test_diff_over_intersection_only():
 
 
 def test_stale_rows_never_counted_as_regression():
-    # the stale 1-009 in RUN_A passes aoi; absent in RUN_B — must not appear
+    # the stale 1-009 in RUN_A passes aoi; absent in RUN_B: must not appear
     report = diff(RUN_A, RUN_B)
     ids = [r["id"] for kind in ("regressions", "recoveries") for r in report[kind]]
     assert "1-009" not in ids
@@ -115,7 +115,7 @@ GATE_A = run_fixture(
         },
     ]
 )
-# date_coverage (info-only) regresses alongside two real checks — one
+# date_coverage (info-only) regresses alongside two real checks: one
 # dedicated (aoi_id_match -> retrieval), one shared (agent_answer ->
 # analysis + explanation).
 GATE_B_REAL_AND_INFO = run_fixture(

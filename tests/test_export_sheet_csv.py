@@ -140,7 +140,7 @@ def test_uid_history_survives_group_rename(tmp_path):
 
 
 def test_export_emits_every_notes_column(tmp_path, monkeypatch):
-    """aoi_type/date_scrub (and friends) must survive export — the importer
+    """aoi_type/date_scrub (and friends) must survive export: the importer
     replaces notes wholesale, so any key the CSV drops is wiped on the next
     push -> sheet-edit -> re-import round trip."""
     repo = _fixture_repo(tmp_path)

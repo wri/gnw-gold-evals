@@ -89,8 +89,8 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
     TestResult->entry mapper (injected to avoid a circular import);
     ``artifact_sink_factory(turn_number)`` returns a per-turn sink or None.
 
-    A turn that errors (``result.error`` is set by ``run_test``'s own
-    degradation — transport failure, timeout) aborts the conversation:
+    A turn that errors (``run_test`` sets ``result.error`` on a transport
+    failure or timeout) aborts the conversation:
     firing turn N+1 would race a possibly-still-processing backend and
     compare deltas against an all-empty snapshot. The un-run turns
     contribute no checks at all; the entry records the turn-tagged error.

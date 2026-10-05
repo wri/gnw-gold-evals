@@ -40,10 +40,10 @@ EXPECTED_BY_UID = {
 
 def test_report_layers():
     text = render(RUN, EXPECTED_BY_UID)
-    # layer 1: verdicts — u3 measured only an info check, so it's uncovered
+    # layer 1: verdicts (u3 measured only an info check, so it's uncovered)
     assert "Rows clean: 1/4" in text
     assert "uncovered 1" in text and "1-003" in text
-    # layer 2: bucket table — analysis has no dedicated checks
+    # layer 2: bucket table (analysis has no dedicated checks)
     assert "| analysis | shared" in text or "dedicated —" in text
     assert "UNMEASURED" not in text.split("| retrieval")[1].split("\n")[0]
     # layer 3: reconciliation itemises u2's missing must-run checks
@@ -65,7 +65,7 @@ def test_failing_row_shows_the_cases_current_status():
 
 def test_failing_rows_exclude_info_only_checks_even_when_turn_prefixed():
     """report_run's failing-row line must use the same is_info_only rule
-    buckets.row_verdict uses — a bare INFO_ONLY membership check misses
+    buckets.row_verdict uses. A bare INFO_ONLY membership check misses
     turn-prefixed names like t2.charts_answer_judge, which would otherwise
     show up as if it were a reason the row failed, when it never gates."""
     run = {**RUN, "results": [

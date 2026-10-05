@@ -1,9 +1,9 @@
 ---
 name: gold-run
-description: Use when running the GOLD eval set or finishing a run — preflight (ff/trials/build), execute the run, then the full after-run ritual (reports, flakiness, diff, recommendations doc, commit).
+description: Use when running the GOLD eval set or finishing a run. Covers preflight (ff, trials, build label), the run itself, then the full after-run ritual (reports, flakiness, diff, recommendations doc, commit).
 ---
 
-# gold-run — run the set and finish the job
+# gold-run: run the set and finish the job
 
 A run is not done when the JSON lands: it is done when someone can act on it.
 This skill covers preflight, the run, and the four-step after-run ritual
@@ -22,7 +22,7 @@ cited. Terms are defined in the [README glossary](../../../README.md#glossary).
   profile, and then diff it only against other `experimental` runs. Check the
   `ff` of the baseline you will diff against before you start. The rule, and
   what each profile holds: [README, Running the set](../../../README.md#running-the-set).
-- **Tier — decide out loud:**
+- **Tier: decide out loud.**
   - *Smoke* (`--trials 1`, the default): minutes-fast iteration. Never
     committed, never diffed, never a baseline.
   - *Official* (`--trials 3`): anything that produces a regression count or
@@ -73,14 +73,14 @@ Run all four, in order:
 3. **Recommendations doc** at `results/recommendations/<run_id>.md`: use the
    **triage-run** skill, which classifies the failures and fills the four
    sections listed in [README, After a run](../../../README.md#after-a-run).
-4. **Commit** — but **stop and show the user what will be committed first**
+4. **Commit**, but **stop and show the user what will be committed first**
    (run JSON + reports + recommendations in one commit). Never hand-edit a
    run file; a re-ingest after a tooling fix means visibly deleting the file
    in a reviewable commit.
 
 ## Guardrails
 
-- Ledger entries are written by the harness only — no backfills, no edits.
+- Ledger entries are written by the harness only: no backfills, no edits.
 - A scoped re-run never gets spliced into an older run file; compose the
   current picture with `tools/compose_runs.py` instead.
 - Never trend or diff across a differing `ff`.

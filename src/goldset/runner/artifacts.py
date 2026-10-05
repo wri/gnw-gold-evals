@@ -1,9 +1,9 @@
-"""Per-case raw-artifact capture: keep more than we score.
+"""Per-case raw-artefact capture: keep more than we score.
 
 The committed ledger stays small; these gzipped JSONs (gitignored, under
 ``results/artifacts/<run_id>/<uid>.json.gz``) hold the signals future
-validators and triage need — decoded codeact, the tool-call sequence, the
-last statistics payload, chart specs, dashboard widget bodies — so a run
+validators and triage need (decoded codeact, the tool-call sequence, the
+last statistics payload, chart specs, dashboard widget bodies), so a run
 can be re-analysed without being re-executed.
 """
 
@@ -99,7 +99,7 @@ def build_artifact(
 
 
 class ArtifactWriter:
-    """Writes one gzipped JSON per case under a run's artifact directory."""
+    """Writes one gzipped JSON per case under a run's artefact directory."""
 
     def __init__(self, artifacts_dir: Path, run_id: str):
         self._dir = artifacts_dir / run_id

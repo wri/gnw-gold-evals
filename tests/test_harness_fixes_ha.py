@@ -39,7 +39,7 @@ def test_h1_negative_expected_number_keeps_its_sign():
 
 
 def test_h1_negative_expected_matches_the_charts_own_net_flux():
-    """The chart's net-flux series held -286,993.69 all along — a 0.0001% match
+    """The chart's net-flux series held -286,993.69 all along: a 0.0001% match
     that the unsigned parse rejected in favour of a far-off gross-emissions bar."""
     charts = json.dumps(
         [

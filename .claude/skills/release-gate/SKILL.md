@@ -1,9 +1,9 @@
 ---
 name: release-gate
-description: Use when comparing two GOLD runs for a release verdict — "did this build break anything", "gate this release". Checks comparability preconditions, runs the diff, frames the count against trial noise.
+description: Use when comparing two GOLD runs for a release verdict ("did this build break anything", "gate this release"). Checks comparability preconditions, runs the diff, frames the count against trial noise.
 ---
 
-# release-gate — the two-run verdict
+# release-gate: the two-run verdict
 
 GOLD's headline is a regression count between two runs. The count is only
 meaningful if the two runs are comparable; check that before diffing. Terms
@@ -36,7 +36,7 @@ uv run python tools/diff_runs.py results/runs/<old>.json results/runs/<new>.json
 
 - **Regressions:** pass to fail on a uid present in both runs. Only gating
   checks count (section 3).
-- **Recoveries:** fail→pass — report, but recoveries never offset
+- **Recoveries:** fail to pass. Report them, but recoveries never offset
   regressions in the verdict.
 - **Coverage loss:** checks that silently stopped evaluating
   (`--fail-on-coverage-loss`). A check that vanished is not a check that
@@ -57,7 +57,7 @@ actual, per-trial pattern). Cross-check suspicious regressions against
 flapping check is a flake finding, not a release blocker, unless it flapped
 into consistent failure.
 
-Zero regressions with material coverage loss is **not a pass** — say what
+Zero regressions with material coverage loss is **not a pass**: say what
 stopped being measured and why before any green light.
 
 ## Hand-offs

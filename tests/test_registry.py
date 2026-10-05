@@ -45,7 +45,7 @@ def test_every_known_score_field_is_owned_exactly_once():
 
 def test_run_evaluations_with_no_expectations_scores_nothing():
     """No expected values -> every score None, and (critically) no judge is
-    invoked — this test passes with no ANTHROPIC_API_KEY."""
+    invoked, so this test passes with no ANTHROPIC_API_KEY."""
     runner = _Probe()
     evaluations = runner._run_evaluations(
         agent_state={"messages": [], "charts_data": []},

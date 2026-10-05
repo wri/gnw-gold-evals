@@ -49,7 +49,7 @@ NOTE_ORDER = ["status_reason", "aoi_type"]
 def note_columns(entries: list) -> list[str]:
     """Every notes key observed across the exported cases, stable order:
     NOTE_ORDER first (always present, for sheet-layout stability), then the
-    rest sorted. Dropping unlisted keys here is not an option — the importer
+    rest sorted. Dropping unlisted keys here is not an option: the importer
     replaces ``notes`` wholesale, so a push -> sheet-edit -> re-import round
     trip would wipe any curated metadata the export left out."""
     observed = {key for _path, case in entries for key in case.notes}
@@ -93,7 +93,7 @@ def _history_entries(repo: Path, relative: str) -> list[tuple[str, ...]]:
     """(sha, date, subject, path-at-that-commit) newest first, rename-aware.
 
     ``git log --follow`` traces renames, but ``git show {sha}:{path}`` needs
-    the path the file had *at that commit* — showing the current path fails
+    the path the file had *at that commit*. Showing the current path fails
     for every pre-rename commit and drops those transitions. ``--name-status``
     yields the per-commit path: the last tab field (the post-commit path on
     R/C lines, the only path otherwise).
@@ -122,7 +122,7 @@ def uid_history(repo: Path | None, path: Path) -> list[dict[str, str]]:
         return []
     relative = str(path.resolve().relative_to(repo))
     # NB: --follow combined with --reverse silently truncates history to the
-    # earliest commit (git quirk) — fetch newest-first and reverse in code.
+    # earliest commit (git quirk), so fetch newest-first and reverse in code.
     transitions = []
     previous_uid: str | None = None
     for sha, date, subject, commit_path in reversed(

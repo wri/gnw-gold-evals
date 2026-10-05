@@ -62,7 +62,7 @@ def _collapse_entry(entry: dict) -> tuple[dict, dict]:
     of reading as spurious A=x B=None disagreements.
 
     Collision rule when several turns carry the same base check in one
-    entry: **any-fail** — keep the worst turn's value (0.0 beats 1.0; None
+    entry: **any-fail**. Keep the worst turn's value (0.0 beats 1.0; None
     only when no turn evaluated the check), and keep the reason attached to
     the turn that supplied that value. A retirement gate must not hide a
     failing turn behind a passing sibling.

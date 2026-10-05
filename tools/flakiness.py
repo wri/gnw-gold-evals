@@ -104,7 +104,7 @@ def collect(run: dict) -> tuple[dict, list[dict]]:
             "expected_verdicts": expected,
             "insufficient_data": insufficient,
             # a partial sample can look stable precisely because the flaky
-            # trials are the ones that errored — never call it clean
+            # trials are the ones that errored, so never call it clean
             "within_gate": flake_std <= gate and not insufficient,
         }
     return stats, flappy_cases

@@ -42,7 +42,7 @@ INSTRUCTION_FIELDS = (
 
 
 def snapshot_entry(raw: dict, source_name: str) -> dict:
-    """Trim one catalog YAML to the fields coverage reporting needs."""
+    """Trim one catalogue YAML file to the fields coverage reporting needs."""
     missing = [k for k in ("dataset_id", "dataset_name") if raw.get(k) is None]
     if missing:
         raise ValueError(f"{source_name}: catalog entry missing {', '.join(missing)}")

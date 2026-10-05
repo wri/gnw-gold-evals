@@ -11,7 +11,7 @@ Currently info-only (``buckets.INFO_ONLY``).
 Precision over recall: only **bolded** segments are considered claims (the
 answer template bolds key findings), and the number parser inherits
 chart_numeric's abstention rules (years skipped, ambiguous locale decimals
-abstain) — a multilingual row that can't be parsed safely is a ``None``,
+abstain): a multilingual row that can't be parsed safely is a ``None``,
 never a guess.
 """
 

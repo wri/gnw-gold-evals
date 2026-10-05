@@ -3,7 +3,7 @@
     uv run python tools/render_trends.py
     # -> results/reports/trends.html
 
-A run-over-run ticker: overall pass rate (one line per ff profile — never
+A run-over-run ticker: overall pass rate (one line per ff profile, never
 drawn across differing tool profiles), KPI tiles with deltas against the
 previous comparable run, and per-bucket small multiples. Question-set
 version changes are marked on the axis. The template also works

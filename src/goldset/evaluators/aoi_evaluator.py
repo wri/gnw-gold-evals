@@ -105,7 +105,7 @@ def _normalize_aoi_ids(
     expected_ids: list[str],
     source: str,
 ) -> tuple[list[str], list[str]]:
-    """Normalize AOI IDs based on source type.
+    """Normalise AOI IDs based on source type.
 
     Args:
         actual_ids: Actual AOI IDs from agent state

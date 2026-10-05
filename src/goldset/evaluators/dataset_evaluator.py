@@ -7,7 +7,7 @@ from goldset.evaluators.utils import normalize_value
 
 
 def _normalize_dataset_parameters(value: Any) -> str:
-    """Normalize dataset parameters for stable JSON comparison.
+    """Normalise dataset parameters for stable JSON comparison.
 
     Only the `name` and `values` fields are considered for matching.
     """

@@ -47,7 +47,7 @@ def evaluate_nudge(
             Empty/None means no type check.
         expected_nudge_options: Allowed nudge options. The agent must offer
             at least one, and may not offer any outside this set (matched by
-            substring, not exact equality - see `_option_matches`). Empty/None
+            substring, not exact equality; see `_option_matches`). Empty/None
             means no options check.
 
     Returns:

@@ -172,7 +172,7 @@ def write_case(root: Path, case: Case) -> Path:
 
 
 def read_case(path: Path) -> tuple[Case, str]:
-    """Load a case file. Returns (case, stored_uid) — the stored uid is what
+    """Load a case file. Returns (case, stored_uid): the stored uid is what
     the file claims; ``case.uid`` is what the content hashes to. A mismatch
     means the file was edited without running ``check.py --fix``."""
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))

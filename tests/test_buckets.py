@@ -19,7 +19,7 @@ def test_every_registered_check_is_tagged_exactly_once():
     tagged = set(DEDICATED) | set(SHARED) | set(INFO_ONLY)
     registered = {field.removesuffix("_score") for field in ALL_SCORE_FIELDS}
     # state_delta is produced by the multiturn orchestration, not a
-    # registry evaluator — tagged but never registered.
+    # registry evaluator, so it is tagged but never registered.
     assert registered | {"state_delta"} == tagged
     assert not set(DEDICATED) & set(SHARED)
     assert all(bucket in BUCKETS for bucket in DEDICATED.values())
@@ -36,7 +36,7 @@ def test_row_verdicts():
     assert row_verdict({"checks": {"aoi_id_match": 1.0, "agent_answer": 0.0}}) == "fail"
     assert row_verdict({"checks": {"aoi_id_match": None}}) == "uncovered"
     assert row_verdict({"checks": {}}) == "uncovered"
-    # info-only failures never make a verdict — and never hide as a pass
+    # info-only failures never make a verdict, and never hide as a pass
     assert row_verdict({"checks": {"date_coverage": 0.0}}) == "uncovered"
     assert row_verdict({"checks": {"aoi_id_match": 1.0}, "judge_errors": ["agent_answer"]}) == "error"
     assert row_verdict({"checks": {"aoi_id_match": 1.0}, "error": "timeout"}) == "error"

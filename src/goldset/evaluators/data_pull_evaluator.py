@@ -113,7 +113,7 @@ def evaluate_date_extraction(
     if not expected_start or not expected_end:
         return result
 
-    # Dates were expected but the agent never scoped a request - it did not look for
+    # Dates were expected but the agent never scoped a request: it did not look for
     # a period at all, which is a failure rather than an absent check.
     if not windows:
         result["date_extraction_score"] = 0.0
@@ -121,7 +121,7 @@ def evaluate_date_extraction(
 
     for name, start, end in windows:
         # An omitted bound is an open-ended request ("from 2001 onwards"), which the
-        # agent does use - e.g. pull_data(start_date="2001-01-01") with no end. Only
+        # agent does use, e.g. pull_data(start_date="2001-01-01") with no end. Only
         # the bounds the agent actually supplied are checked; the other side is
         # unconstrained and left to date_coverage. Requiring both would fail a
         # legitimately open-ended pull.
@@ -195,7 +195,7 @@ def evaluate_date_selection(
 
     Containment, not equality: the agent legitimately pulls a wider range than asked
     for and slices in code, so demanding an exact match penalises correct behaviour.
-    This asks the only question the recorded range can answer - was the requested
+    This asks the only question the recorded range can answer: was the requested
     period inside the data that was pulled.
 
     Reported for diagnosis only (``date_coverage`` is in ``buckets.INFO_ONLY``, so it

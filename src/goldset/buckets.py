@@ -186,7 +186,7 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
     """Checks that MUST evaluate given a case's expectations. Conditional
     checks (charts_answer, web_fallback, pull_source_match, dashboard
     sub-checks, date_coverage) may legitimately abstain and are never
-    implied — so every reconciliation miss is a real hole."""
+    implied, so every reconciliation miss is a real hole."""
     implied: set[str] = set()
     if expected.get("aoi_ids"):
         implied.add("aoi_id_match")
@@ -244,7 +244,7 @@ def reconcile(
     entries: list[dict[str, Any]], implied_by_uid: dict[str, Any]
 ) -> dict[str, Any]:
     """Implied-vs-evaluated ledger line. ``missing`` must be empty or every
-    item explained — silent non-measurement is the bug class this kills.
+    item explained: silent non-measurement is the bug class this catches.
     Values in ``implied_by_uid`` may be a raw expected-dict (legacy) or a
     precomputed set of check names."""
     implied_total = evaluated_of_implied = 0

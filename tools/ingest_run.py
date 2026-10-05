@@ -59,7 +59,7 @@ def started_from_filename(path: Path) -> str | None:
     )
 
 
-# Scalar expected_* columns with stable rendering in the detailed CSV —
+# Scalar expected_* columns with stable rendering in the detailed CSV:
 # the drift-detection surface for the weak (test_id) join. List-rendered
 # columns (aoi_ids, suggested_datasets, ...) are format-unstable and
 # excluded; reconciliation covers their absence separately.
@@ -76,7 +76,7 @@ DRIFT_COLUMNS = (
 def expectation_drift(row: dict, case) -> list[str]:
     """Columns present in the CSV whose value differs from the case's
     current expectation. A case *gaining* new expectations since the run is
-    not drift — the run simply didn't test them."""
+    not drift: the run simply didn't test them."""
     drifted = []
     for column in DRIFT_COLUMNS:
         csv_value = normalize_text(row.get(f"expected_{column}"))
@@ -122,7 +122,7 @@ def build_entry(row: dict, by_id: dict, by_uid: set, num_trials: int = 1) -> dic
             drift = expectation_drift(row, case)
             if drift:
                 # The run scored different expectations than the case now
-                # holds — re-keying it would attribute old results to new
+                # holds; re-keying it would attribute old results to new
                 # content, the exact misattribution uids exist to prevent.
                 entry["stale_case"] = True
                 entry["drift"] = drift

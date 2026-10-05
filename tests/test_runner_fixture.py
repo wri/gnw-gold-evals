@@ -1,7 +1,7 @@
-"""End-to-end runner test against a mocked API — no network, no judge.
+"""End-to-end runner test against a mocked API: no network, no judge.
 
 Covers: streamed chat POST, trace capture, state fetch, evaluation via the
-registry, artifact capture, and the CLI's result->ledger-entry mapping.
+registry, artefact capture, and the CLI's result->ledger-entry mapping.
 """
 
 import gzip
@@ -109,7 +109,7 @@ async def test_result_maps_to_ledger_entry(patched_client, tmp_path):
 
 
 def test_run_record_names_its_caseset():
-    """A run must say which store it loaded, not just the content hash —
+    """A run must say which store it loaded, not just the content hash:
     caseset_version alone can't tell a reader v1 from v2 without git
     archaeology over the manifests."""
     import argparse
@@ -156,7 +156,7 @@ def test_artifact_writer_round_trip(tmp_path):
 
 
 def test_failed_checks_carry_their_actuals():
-    """Expected-vs-measured in reports needs the measured side recorded —
+    """Expected-vs-measured in reports needs the measured side recorded:
     on failures only, trimmed, absent when nothing failed."""
     from goldset.eval_types import TestResult
 
@@ -173,7 +173,7 @@ def test_failed_checks_carry_their_actuals():
 
 
 class _KeepaliveStream(httpx.AsyncByteStream):
-    """A stream that never finishes but keeps every per-read timeout happy —
+    """A stream that never finishes but keeps every per-read timeout happy:
     the exact staging failure mode of 2026-08-01."""
 
     async def __aiter__(self):
@@ -191,7 +191,7 @@ class _HangingTransport(httpx.AsyncBaseTransport):
 @pytest.mark.anyio
 async def test_wall_clock_limit_bounds_a_keepalive_stream(monkeypatch):
     """The per-read HTTP timeout resets on every keepalive; only the
-    wall-clock limit can end such a trial — as an error row, quickly."""
+    wall-clock limit can end such a trial, as an error row, quickly."""
     real_client = httpx.AsyncClient
     monkeypatch.setattr(
         httpx,

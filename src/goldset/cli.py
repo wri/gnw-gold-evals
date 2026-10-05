@@ -68,9 +68,9 @@ def require_api_token(environment: str) -> str | None:
     return token
 
 
-# Which actual_* diagnostics substantiate each check — recorded on the
-# entry for FAILED checks only, so reports can show expected vs measured
-# without re-running anything.
+# Which actual_* diagnostics substantiate each check. They are recorded on
+# the entry for FAILED checks only, so reports can show expected against
+# measured without re-running anything.
 ACTUALS_FOR_CHECK = {
     "aoi_id_match": ("actual_id",),
     "dataset_id_match": ("actual_dataset_id",),
@@ -292,7 +292,7 @@ async def run_cases(
             # reads differently from a FAIL on a verified (done) one.
             completed_cases += 1
             # flush: through a pipe, block buffering can hold every progress
-            # line until exit — exactly when a killed run needs them visible.
+            # line until exit, which is exactly when a killed run needs them.
             print(
                 f"  {case.id} [{label}] status={case.status} "
                 f"({completed_cases}/{total_cases})",
@@ -307,9 +307,10 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
                      entries: list[dict], started: str, environment: str) -> dict:
     """The ledger record for a finished run (contract: results/README.md).
 
-    ``caseset`` names the store directory the run loaded (``v1``/``v2``) —
-    ``caseset_version`` alone is a content hash a reader can't attribute to
-    a store without git archaeology. Runs before 2026-08-04 lack the field.
+    ``caseset`` names the store directory the run loaded (``v1``/``v2``),
+    because ``caseset_version`` alone is a content hash a reader cannot trace
+    to a store without digging through git history. Runs before 2026-08-04
+    lack the field.
     """
     record = {
         "run_id": args.run_id,

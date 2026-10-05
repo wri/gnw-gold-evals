@@ -32,7 +32,7 @@ class APITestRunner(BaseTestRunner):
         verbose: bool = False,
         wall_clock_limit: float = 900.0,
     ):
-        """Initialize with API configuration."""
+        """Initialise with API configuration."""
         self.api_base_url = api_base_url
         self.api_token = api_token
         self.ff = ff
@@ -149,7 +149,7 @@ class APITestRunner(BaseTestRunner):
                     # Fetch dashboard details when a dashboard was created this turn.
                     # agent_state only carries the dashboard_id; AOI/widget details
                     # live on the dashboard resource itself. A failed fetch degrades
-                    # to dashboard=None (soft failure) rather than erroring the row -
+                    # to dashboard=None (soft failure) rather than erroring the row:
                     # the primary chat result already succeeded.
                     dashboard: dict[str, Any] | None = None
                     dashboard_id = (
@@ -185,7 +185,7 @@ class APITestRunner(BaseTestRunner):
 
             # Run evaluations off the loop thread: judge calls inside are
             # synchronous HTTP, and a slow one on the loop thread freezes
-            # every other worker (and every timer — including the wall
+            # every other worker (and every timer, including the wall
             # clock above). abandon_on_cancel lets cancellation proceed;
             # the abandoned thread dies on the judge client's own timeout.
             evaluations = await anyio.to_thread.run_sync(
@@ -248,7 +248,7 @@ class APITestRunner(BaseTestRunner):
             )
         except Exception as e:
             # str(e) can be empty (bare exceptions print as "Error: " and
-            # land unreadable in the ledger) — always carry at least the
+            # land unreadable in the ledger), so always carry at least the
             # exception type.
             error_text = str(e) or type(e).__name__
             print(f"Error: {error_text}")

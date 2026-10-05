@@ -49,7 +49,7 @@ def _numeric_values(record: dict[str, Any]) -> list[float]:
 
 def parse_class_values(expected: str) -> list[tuple[str, str]] | None:
     """``"mangroves=15,444 hectares; other=3 ha"`` -> [(name, value_text)].
-    None when any pair is malformed — abstain rather than half-check."""
+    None when any pair is malformed: abstain rather than half-check."""
     pairs = []
     for chunk in expected.split(";"):
         chunk = chunk.strip()

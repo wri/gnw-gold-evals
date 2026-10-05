@@ -46,7 +46,7 @@ class TestResult(BaseModel):
     execution_time: str
     duration_seconds: float | None = None
 
-    # AOI evaluation fields - separate binary scores (0/1/None)
+    # AOI evaluation fields: separate binary scores (0/1/None)
     aoi_id_match_score: float | None = None
     actual_id: str | None = None
     actual_name: str | None = None
@@ -54,7 +54,7 @@ class TestResult(BaseModel):
     actual_source: str | None = None
     match_aoi_id: bool = False
 
-    # Dataset evaluation fields - separate binary scores (0/1/None)
+    # Dataset evaluation fields: separate binary scores (0/1/None)
     dataset_id_match_score: float | None = None
     dataset_parameter_match_score: float | None = None
     context_layer_match_score: float | None = None
@@ -63,7 +63,7 @@ class TestResult(BaseModel):
     actual_dataset_parameters: str | None = None
     actual_context_layer: str | None = None
 
-    # Data pull evaluation fields - separate binary scores (0/1/None)
+    # Data pull evaluation fields: separate binary scores (0/1/None)
     data_pull_exists_score: float | None = None
     date_coverage_score: float | None = None
     date_extraction_score: float | None = None

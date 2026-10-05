@@ -6,18 +6,18 @@ __pycache__/
 *.egg-info/
 dist/
 
-# Local scratch — exported CSVs, ad-hoc analysis. Cases and results are
+# Local scratch: exported CSVs, ad-hoc analysis. Cases and results are
 # deliberately NOT ignored: they are the point of this repo.
 scratch/
 
 # Secrets
 .env
 
-# Per-run raw artifacts (large, regenerable) — the committed ledger lives in results/runs/
+# Per-run raw artefacts (large, regenerable). The committed ledger lives in results/runs/
 results/artifacts/
 
 # In-flight run state (finalised into the immutable run JSON, then deleted;
-# survives only when a run was killed — resume with `gold run --resume <run_id>`)
+# survives only when a run was killed; resume with `gold run --resume <run_id>`)
 results/runs/*.partial.jsonl
 
 # Local planning notes, never committed. Committed docs must not link here:

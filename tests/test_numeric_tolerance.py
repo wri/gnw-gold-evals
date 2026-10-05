@@ -82,8 +82,8 @@ def test_deterministic_check_overrides_a_wrong_judge_rejection():
 def test_a_deterministic_fail_falls_back_to_a_judge_pass():
     """The asymmetric fallback: a deterministic FAIL is not final, because the
     parser is locale-blind in a way the judge (reading the actual prose) is
-    not. This is the accepted tradeoff — a lenient judge could rescue a
-    genuine miss here too — but it's one-directional (see the next test):
+    not. This is the accepted trade-off (a lenient judge could rescue a
+    genuine miss here too), but it's one-directional (see the next test):
     a deterministic PASS is never revisited, so this can only ever turn a
     FAIL into a PASS, never the reverse."""
     verdict = resolve_answer_verdict(
@@ -130,7 +130,7 @@ def test_a_deterministic_pass_is_never_revisited_by_the_judge():
 def test_french_decimal_comma_is_rescued_by_the_judge():
     """1-091: the agent correctly answered "289,11 hectares" (French decimal
     comma). The parser reads the comma as a thousands separator and gets
-    28,911 — a false ~99x miss — but the judge, reading the actual French
+    28,911 (a false ~99x miss), but the judge, reading the actual French
     sentence, correctly recognises it as a match."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
@@ -171,7 +171,7 @@ def test_boundary_is_inclusive():
 
 
 def test_unit_conversion_is_handled_in_code_not_by_the_model():
-    """Expected in kha, extracted in hectares — same value, different units."""
+    """Expected in kha, extracted in hectares: same value, different units."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
         expected_answer="200 kha",
@@ -207,8 +207,8 @@ def test_falls_back_to_the_judge_when_extraction_is_empty():
 
 
 def test_falls_back_to_the_judge_when_extraction_does_not_parse():
-    """An ambiguous decimal ("230.003") can't be resolved deterministically —
-    same abstention rule the chart comparator uses."""
+    """An ambiguous decimal ("230.003") can't be resolved deterministically:
+    the same abstention rule the chart comparator uses."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
         expected_answer="230.003 hectares",
@@ -220,7 +220,7 @@ def test_falls_back_to_the_judge_when_extraction_does_not_parse():
 
 
 def test_falls_back_to_the_judge_on_a_percent_unit_mismatch():
-    """Expected is a percentage, extracted number is not — a parsing artifact,
+    """Expected is a percentage, extracted number is not: a parsing artefact,
     not the population this override is meant to fix."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",

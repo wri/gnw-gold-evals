@@ -1,9 +1,9 @@
 ---
 name: sync-catalog
-description: Use when project-zeno's dataset catalog may have changed — "did zeno's datasets change", "refresh the catalog". Syncs the snapshot, regenerates COVERAGE.md, summarises coverage impact.
+description: Use when project-zeno's dataset catalogue may have changed ("did zeno's datasets change", "refresh the catalog"). Syncs the snapshot, regenerates COVERAGE.md, summarises coverage impact.
 ---
 
-# sync-catalog — dataset coverage refresh
+# sync-catalog: dataset coverage refresh
 
 The agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` on
 `wri/project-zeno` main) defines dataset ids, dataset-specific parameters,
@@ -39,7 +39,7 @@ are defined in the [README glossary](../../../README.md#glossary).
 
 ## Follow-ups to propose (not to do silently)
 
-- New catalog capability with zero coverage → suggest cases via the
+- New catalogue capability with zero coverage → suggest cases via the
   **new-case** skill.
 - A removed dataset/parameter that active cases still expect → triage those
   cases via **case-edit** (stale expectations park with evidence, not

@@ -178,7 +178,7 @@ def test_non_dict_chart_elements_are_guarded():
     well_formed = evaluate_chart_well_formed(state(charts=charts))
     assert well_formed["chart_well_formed_score"] == 0.0
     assert "not an object" in well_formed["chart_well_formed_reason"]
-    # a non-dict first chart reads as "no chart type" — expectation fails
+    # a non-dict first chart reads as "no chart type", so the expectation fails
     assert evaluate_chart_type(state(charts=["garbage"]), "pie")[
         "chart_type_match_score"] == 0.0
 

@@ -1,9 +1,9 @@
 ---
 name: new-case
-description: Use when authoring a new GOLD case — "add a case for…". Interviews for the capability, maps expected fields to checks, enforces authoring rules and verified answers before done.
+description: Use when authoring a new GOLD case ("add a case for…"). Interviews for the capability, maps expected fields to checks, enforces authoring rules and verified answers before done.
 ---
 
-# new-case — author a case that earns its place
+# new-case: author a case that earns its place
 
 GOLD is a capability smoke test: a case earns its place by failing when a
 capability breaks, deterministically. Full authoring rules:
@@ -38,7 +38,7 @@ measures: [evaluators README index](../../../src/goldset/evaluators/README.md#in
 ## 3. Authoring rules (the DON'Ts that bite)
 
 - **Determinism over realism**: no relative dates ("last year"), no phrasing
-  the agent can defensibly satisfy two different ways — unless ambiguity *is*
+  the agent can defensibly satisfy two different ways, unless ambiguity *is*
   the capability (nudge/clarification cases), in which case grade the nudge.
 - Don't name the dataset in the prompt when dataset *selection* is what's
   being tested. `dataset_id: "<a>;<b>"` accepts either dataset; use it only

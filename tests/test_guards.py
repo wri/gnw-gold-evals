@@ -143,7 +143,7 @@ def test_g4_pull_source_match_and_abstention():
     )
     assert mismatch["pull_source_match_score"] == 0.0
 
-    # the 3/84 real shape without a dataset_id key: abstain, auditable — the
+    # the 3/84 real shape without a dataset_id key: abstain, auditable. The
     # diagnostic carries the source_url/id the guard saw.
     entry = {k: v for k, v in PULL[0].items() if k != "dataset_id"}
     unreadable = evaluate_guards(
@@ -167,7 +167,7 @@ def test_g4_dataset_id_zero_is_a_real_reference():
 
 def test_g4_never_token_matches_numeric_ids_against_source_url():
     # "11" appears in the url only as a date fragment; without an explicit
-    # dataset_id the guard must abstain, never token-match the url — real
+    # dataset_id the guard must abstain, never token-match the url: real
     # urls identify datasets by slug, so any numeric hit is spurious.
     entry = {k: v for k, v in PULL[0].items() if k != "dataset_id"}
     entry["source_url"] += "?start_date=2024-11-01&end_date=2024-11-30"

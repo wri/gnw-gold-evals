@@ -123,7 +123,7 @@ Optional fields, written only when they apply:
   (gitignored, fsynced per case). The immutable run JSON is still written
   once, at the end, and the partial deleted. A killed run is finished with
   `gold run --resume <run_id>`; a record completed that way carries
-  `resumed: true` (its timing mixes two sessions — everything else is
+  `resumed: true` (its timing mixes two sessions; everything else is
   identical to an unbroken run).
 - **Checks are tri-state.** `1.0` pass, `0.0` fail, `null` not evaluated.
   A case's expected values imply checks that must evaluate

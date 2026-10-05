@@ -82,7 +82,7 @@ def test_parity_nothing_comparable_is_an_explicit_gate_failure():
 def test_parity_handles_turn_prefixed_checks():
     # Mirrors test_flakiness_handles_turn_prefixed_checks: a multiturn row
     # stores its checks as t<N>.<name>; the legacy side stores bare names.
-    # Without base-name normalization this reads as a spurious
+    # Without base-name normalisation this reads as a spurious
     # DETERMINISTIC disagreement (A=1.0 B=None).
     run_a = run_fixture([
         {"uid": "u1", "id": "mt-001", "checks": {"aoi_id_match": 1.0}},
@@ -153,7 +153,7 @@ def test_flakiness_is_within_case_not_pooled():
 
 
 def test_flakiness_flags_insufficient_verdicts():
-    """1 real verdict out of 3 trials is 'mostly errored', not 'stable' —
+    """1 real verdict out of 3 trials is 'mostly errored', not 'stable':
     std over the partial sample must never count as within the gate."""
     run = run_fixture([
         {"uid": "u1", "id": "1-001",
