@@ -297,3 +297,39 @@ def test_turn_prefixed_gating_check_still_gates(tmp_path):
     assert [r["check"] for r in report["regressions"]] == ["t1.aoi_id_match"]
     assert report["regressions"][0]["info_only"] is False
     assert report["regressions_by_bucket"]["retrieval"] == 1
+
+
+# ---------------------------------------------------------------------------
+# The headline must say how many transitions the gate acts on, not just the
+# total; the JSON keeps its shape and gains the gating counts.
+
+
+def test_headline_splits_gating_from_info_only(tmp_path):
+    result = run_tool(tmp_path, GATE_A, GATE_B_REAL_AND_INFO)
+    assert "**3 regressions (2 gating, 1 info-only), 0 recoveries" in result.stdout
+    assert "0 checks lost (0 gating, 0 info-only)**" in result.stdout
+
+    lost = run_tool(tmp_path, MT_A, MT_B_INFO_ONLY)
+    assert "**2 regressions (0 gating, 2 info-only)" in lost.stdout
+    assert "1 checks lost (0 gating, 1 info-only)**" in lost.stdout
+
+
+def test_json_report_keeps_its_keys_and_adds_gating_counts(tmp_path):
+    out = tmp_path / "report.json"
+    result = run_tool(tmp_path, GATE_A, GATE_B_REAL_AND_INFO, "--json", str(out))
+    assert result.returncode == 0
+    report = json.loads(out.read_text())
+    for key in (
+        "regressions", "recoveries", "coverage_gained", "coverage_lost",
+        "regressions_by_bucket", "shared_cases", "only_in_a", "only_in_b",
+        "stale_a", "stale_b",
+    ):
+        assert key in report
+    assert len(report["regressions"]) == 3
+    assert report["gating_regressions"] == 2
+    assert report["gating_coverage_lost"] == 0
+
+    info_lost = diff(GATE_A, COV_B_INFO_LOST)
+    assert info_lost["gating_coverage_lost"] == 0
+    real_lost = diff(GATE_A, COV_B_REAL_LOST)
+    assert real_lost["gating_coverage_lost"] == 1

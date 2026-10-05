@@ -56,6 +56,10 @@ def classify(prev: float | None, cur: float | None) -> str | None:
     return None
 
 
+def gating_count(items: list[dict]) -> int:
+    return sum(1 for item in items if not item["info_only"])
+
+
 def diff(run_a: dict, run_b: dict) -> dict:
     index_a, index_b = indexable(run_a), indexable(run_b)
     shared = sorted(set(index_a) & set(index_b))
@@ -81,12 +85,23 @@ def diff(run_a: dict, run_b: dict) -> dict:
         )
         for bucket in BUCKETS
     }
+    # Additive fields: the per-item lists above keep their shape, and these
+    # counts are the ones the --fail-on-* gates read.
+    result["gating_regressions"] = gating_count(result["regressions"])
+    result["gating_coverage_lost"] = gating_count(result["coverage_lost"])
     result["shared_cases"] = len(shared)
     result["only_in_a"] = len(set(index_a) - set(index_b))
     result["only_in_b"] = len(set(index_b) - set(index_a))
     result["stale_a"] = sum(1 for e in run_a["results"] if e.get("stale_case"))
     result["stale_b"] = sum(1 for e in run_b["results"] if e.get("stale_case"))
     return result
+
+
+def split_count(items: list[dict], label: str) -> str:
+    """``3 regressions (2 gating, 1 info-only)``: the total alone overstates
+    what the gate acts on, since info-only transitions never fail it."""
+    gating = gating_count(items)
+    return f"{len(items)} {label} ({gating} gating, {len(items) - gating} info-only)"
 
 
 def render(run_a: dict, run_b: dict, report: dict) -> str:
@@ -98,10 +113,10 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
         f"{report['only_in_b']} only in B; "
         f"stale: {report['stale_a']}/{report['stale_b']})",
         "",
-        f"**{len(report['regressions'])} regressions, "
+        f"**{split_count(report['regressions'], 'regressions')}, "
         f"{len(report['recoveries'])} recoveries, "
         f"{len(report['coverage_gained'])} checks gained, "
-        f"{len(report['coverage_lost'])} checks lost**",
+        f"{split_count(report['coverage_lost'], 'checks lost')}**",
     ]
     by_bucket = report.get("regressions_by_bucket") or {}
     if any(by_bucket.values()):
@@ -150,11 +165,9 @@ def main() -> int:
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(report, indent=2) + "\n")
-    real_regressions = [r for r in report["regressions"] if not r["info_only"]]
-    if args.fail_on_regression and real_regressions:
+    if args.fail_on_regression and report["gating_regressions"]:
         return 1
-    real_coverage_lost = [c for c in report["coverage_lost"] if not c["info_only"]]
-    if args.fail_on_coverage_loss and real_coverage_lost:
+    if args.fail_on_coverage_loss and report["gating_coverage_lost"]:
         return 1
     return 0
 
