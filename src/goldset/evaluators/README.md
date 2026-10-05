@@ -1,1240 +1,553 @@
-# Evaluators — check reference
+# Evaluators: check reference
 
-This is the triage reference for every check the GOLD harness can emit. It
-describes behaviour **as the code in this directory stands** (last evaluator
-changes: 2026-08-03/04, H1–H8 of `docs/specs/caseset-v2-improvement-plan.md` §4).
-Where the code and an older spec disagree, the code wins and the difference is
-called out.
+The triage reference for every check the GOLD harness emits: what it measures, what `1.0`, `0.0` and `null` mean, where its evidence lands in the run record, and how to triage a failure. Terms are defined in the [README glossary](../../../README.md#glossary). If this file and the code disagree, the code is right: fix this file in the same PR.
 
-Every mean/std quoted below comes from the 3-trial validation run
-`results/runs/20260803T201245Z_staging.json` (reproduce with
-`uv run python tools/flakiness.py results/runs/20260803T201245Z_staging.json`),
-which is the most complete run on the current case set. **That run omitted
-`--ff experimental`**, so the four dashboard checks and the imagery rows were not
-exercised in it; where a dashboard figure is quoted it comes from the
-flag-bearing partial run `20260803T215155Z_staging_experimental` and its small n
-is stated. `results/recommendations/20260803T201245Z.md` explains the flag and
-why the run_id suffix is the tell.
+This file quotes no pass rates or stability figures, because they change with every case and agent edit. For current ones, run `uv run python tools/flakiness.py results/runs/<run_id>.json --per-case` on the latest 3-trial run in `results/runs/`.
 
-## What an evaluator is here
+An evaluator is a function in this directory. It receives the agent's final state (the `GET /api/threads/{id}/state` payload), the case's expected values as an `ExpectedData` (`adapter.py` adds the `expected_` prefix to each key of the case's `expected:` block), the query and, for the dashboard checks, the dashboard fetched from `GET /api/dashboards/{id}`. It returns `<check>_score` fields plus `actual_*` diagnostics and changes nothing. The runner calls every evaluator in `registry.EVALUATORS` and merges the results; each `<check>_score` becomes the ledger check `<check>`. The legacy `overall_score` is not a check.
 
-An evaluator is a function of the agent's final state plus the case's
-expectations — side-effect-free on its inputs, though the judged ones do call
-Haiku. It takes `agent_state` (the `/api/threads/{id}/state` payload as
-the runner received it), an `ExpectedData` (the case's `expected:` block,
-re-prefixed with `expected_` by `adapter.py:21`), the query, and — for dashboard
-checks — the separately fetched dashboard payload. It returns a flat dict of
-`<check>_score` fields plus `actual_*` diagnostics. Nothing mutates the state;
-nothing calls the agent.
+### Scores: `1.0`, `0.0` and `null`
 
-The runner iterates `EVALUATORS` in declaration order and merges the dicts, so
-**later evaluators win key collisions** (`registry.py:57-224`,
-`runner/base.py:126-146`). Every `*_score` key except `overall_score` becomes a
-ledger check, with the suffix stripped: `charts_answer_judge_score` →
-`charts_answer_judge` (`cli.py:86-90`, `ledger.py:42-48`). `overall_score` is a
-legacy flat mean kept only for output parity and is deliberately not extended
-with checks added after the port (`runner/base.py:148-166`) — never read it.
+Every check is `1.0` (pass), `0.0` (fail) or `null` (not evaluated). Each entry below says when an absence scores `null` (the check does not apply) and when it scores `0.0` (something that should be there is missing). That choice matters most: an absence that should fail but scores `null` raises the pass rate without anyone noticing. So an expected AOI that never resolved scores `0.0`, not `null`.
 
-### Tri-state, and why `null` vs `0.0` is the whole game
+Most checks are opt-in: they run only when the case sets a particular expected value. The exceptions run on any row with the relevant output: `chart_integrity`, `chart_well_formed`, `answer_traceability`, `dashboard_widgets_valid`, and `dashboard_created` (an unsolicited dashboard fails).
 
-Every check is `1.0` (pass), `0.0` (fail), or `null` (not applicable). The
-ledger refuses anything else (`ledger.py:61-69`). `docs/specs/PLAN.md` §6 requires each
-check to decide *deliberately* whether an absence is `null` or `0.0`, so each
-section below states its rule. Two consequences worth internalising while
-triaging:
+The run report's reconciliation line compares the checks a case's expected values imply (`buckets.implied_checks`) with the checks that evaluated. Checks that may legitimately abstain (`charts_answer`, `web_fallback`, `pull_source_match`, the dashboard sub-checks, `date_coverage`) are never implied, so every miss on that line is a real hole.
 
-- A row with **zero** evaluated gating checks is `uncovered`, not a pass
-  (`buckets.py:113-124`). Silent non-measurement is the bug class the
-  reconciliation line exists to catch (`buckets.py:189-227`, `247-276`).
-- An absence that *should* have been a failure is the most expensive kind of
-  bug here, because it inflates the pass rate invisibly. Most of the PR-04 "F"
-  fixes were exactly this (e.g. an AOI expectation with no resolved AOI used to
-  return `null`; it is now `0.0` — `aoi_evaluator.py:52-58`).
+### Verdicts: gating, info-only and error
 
-### Numbers in code, structure to the judge
+`buckets.row_verdict` gives each row one verdict:
 
-No judge is ever asked to do arithmetic (`docs/specs/PLAN.md` §6). The precedent is
-recorded at the top of `chart_numeric.py:3-8`: asked about a chart whose 25
-yearly values sum to 25.31 Mha, Haiku reported the same chart as summing to
-27.4 Mha and to 26.0 Mha, each "within tolerance" of whatever expected value it
-had been handed. So numeric agreement is computed in
-`chart_numeric.evaluate_numeric_support` against the chart's own encoded data,
-and `llm_judge_chart`'s prompt explicitly forbids the model from judging
-numbers (`llm_judges.py:366-372`).
+- `error`: the API call or a judge call failed. Never counted as a fail.
+- `uncovered`: no gating check evaluated. Never counted as a pass.
+- `fail`: at least one gating check scored `0.0`.
+- `pass`: otherwise.
 
-`agent_answer` used to be the one exception — the judge did its own
-tolerance arithmetic from prose, and a live run caught it disagreeing with its
-own stated rule on identical input (1-009: accepted a 0.51% delta in one
-trial, rejected the same delta in another, citing a tolerance the delta was
-actually inside — `results/recommendations/20260804T104634Z.md` §3). It now
-follows the same split as the chart check: the judge only extracts which
-number in the prose answers the question (`extracted_number`), and
-`resolve_answer_verdict` applies `NUMERIC_TOLERANCE` in code, against the same
-`parse_expected_number` parser the chart comparator uses, so an answer and its
-chart cannot disagree about what "within tolerance" means. The judge's own
-score is used outright as a fallback for the row where `extracted_number`
-can't be parsed deterministically at all (empty, ambiguous decimal, or a
-percent/non-percent unit mismatch) — that population is exactly as reliable as
-it was before.
+A gating check can turn a row to `fail`. An info-only check is recorded and reported but never affects a verdict or the release gate (see [Info-only checks](#info-only-checks)). A judge outage never guesses a score: the check stays `null`, its name goes into the entry's `judge_errors`, and the row becomes `error`.
 
-Unlike the chart check, though, a deterministic **FAIL** here is not final.
-`parse_expected_number` only understands English scale words and a period
-decimal separator — fine for the chart comparator, whose candidates are
-already-parsed JSON numbers, but this check parses free-form prose in
-whatever language the agent answered in. Two live rows caught it silently
-misreading a *correct* answer as a huge miss: 1-094 ("61.19万公顷", the Chinese
-scale word for 10,000, read as bare 61.19) and 1-091 ("289,11 hectares", a
-French decimal comma, read as 28,911). So on a deterministic FAIL, the judge's own score is consulted as a
-second opinion, and a judge PASS overrides to give a pass — the judges read the
-actual prose and can apply the language/numeric convention the parser can't.
+### Where the evidence lands
 
-Only three checks are judged at all — `clarification_requested`,
-`agent_answer`, `expected_text_match` — plus the now-info-only
-`charts_answer_judge`.
+- `reasons.<check>`: any result field named `<check>_reason` or `<check>_score_reason`, first 500 characters, kept whatever the score. The chart check's field is spelt `chart_answer_score_reason` and stored as `reasons.charts_answer` (`ledger.REASON_ALIASES`).
+- `actuals.<check>`: the `actual_*` diagnostics listed in `cli.ACTUALS_FOR_CHECK`, first 300 characters, recorded **only when the check scored `0.0`**. Several evaluators write an explanation into an `actual_*` field when they abstain; those rows score `null`, so the explanation never reaches the ledger. Each entry says where to look instead.
+- In a multi-trial run, `checks` holds the majority verdict and `trials[].checks` each trial's scores, but `reasons`, `actuals` and `trace_url` come from the **last trial only**. A check whose majority is `0.0` can therefore have no `actuals` (the last trial passed) or a passing reason.
+- `results/artifacts/<run_id>/<uid>.json.gz` (later trials add `_t2`, `_t3`; multi-turn turns use `<uid>_turn<N>`): the raw agent state, with the final answer, code-act output, tool calls, last statistics entry, charts, AOI selection, dataset, nudge and dashboard widgets. Artefacts are gitignored, so they exist only on the machine that ran the run. Evaluator diagnostics are not stored there; re-derive a missing reason from the state.
 
-### Gating vs info-only
+### Multi-turn cases
 
-A **gating** check can turn a row's verdict to `fail`. An **info-only** check is
-reported and never enters a verdict (`buckets.py:83-90`, `113-124`). Demotion is
-an admission-discipline device, not silencing: judged checks run info-only until
-they show std ≤ 0.10 over 3 trials (`docs/specs/PLAN.md` §4), and a check that proves
-unreliable in a live run is demoted with a stated re-admission condition. See
-[Info-only checks](#info-only-checks-and-what-re-admission-requires) at the end.
+Per-turn checks are stored with a turn prefix (`t2.aoi_id_match`), and the verdict, bucket and diff code strips it (`buckets.base_check_name`), so every entry below applies per turn. Per-turn reasons are not in `reasons`: they sit in `turns_detail[<N-1>].reasons`. Actuals are flattened as `actuals["t<N>.<check>"]`.
 
-Judge **outages** are a third state: they raise rather than guessing
-(`llm_judges.py:107-113`), the check stays `null`, the check name is appended to
-`judge_errors`, and the row's verdict becomes `error` — never `fail`
-(`buckets.py:115-116`).
+### Numbers are compared in code
 
-### Where a failure's evidence lands
-
-- `reasons.<check>` — any field named `<check>_reason` or `<check>_score_reason`
-  (`ledger.py:51-58`), trimmed to 500 chars. One historical alias:
-  `chart_answer_score_reason` → `reasons.charts_answer` (`ledger.py:21`).
-- `actuals.<check>` — the `actual_*` diagnostics mapped in
-  `cli.py:41-64`, **recorded only for checks that scored `0.0`**
-  (`cli.py:68-80`). This is a real triage trap: several evaluators write
-  carefully-worded abstention strings into `actual_*` fields (see
-  [`pull_source_match`](#pull_source_match),
-  [`class_value_match`](#class_value_match), [`scope_match`](#scope_match)), and
-  because those abstentions score `null`, the strings never reach the ledger.
-  A third gap: the clarification judge's prose lands in
-  `clarification_explanation`, which matches neither reason pattern, so it is
-  dropped too.
-- `results/artifacts/<run_id>/<uid>[_t<trial>].json.gz` — raw state (final answer,
-  codeact, tool calls, last statistics, charts, aoi_selection, dataset, nudge,
-  dashboard widgets: `runner/artifacts.py:76-98`; one file per trial,
-  `:105-112`). Evaluator diagnostics are *not* in there, so when a reason string
-  is missing this is where you re-derive it.
-
-### Multi-turn
-
-Conversation checks are flattened under a turn prefix — `t2.aoi_id_match` — and
-all bucket/verdict/diff machinery strips it (`buckets.py:93-99`,
-`runner/multiturn.py:176-184`). Everything below applies per turn unchanged.
-
----
+No LLM judge does arithmetic. The judge (`claude-haiku-4-5` at temperature 0, `models.HAIKU`) extracts or classifies, and code applies the 2% tolerance (`llm_judges.NUMERIC_TOLERANCE`) with one parser, `chart_numeric.parse_expected_number`, so an answer and its chart agree on what "within tolerance" means. `charts_answer` gates on the code comparison alone; `agent_answer` lets the judge overturn a code failure, because the parser cannot read every language's number format.
 
 ## Index
 
-Bucket tags come from `buckets.py:32-66`; "shared" means a failure cannot be
-attributed to one bucket, which is why the bucket table reports the two
-populations separately. "Switched on by" names the key as written in a case
-YAML's `expected:` block (unprefixed — `adapter.py:21` adds `expected_`). "Kind"
-is the registry's `EvaluatorSpec.kind` (`registry.py:49-54`), which is also what
-decides whether `tools/flakiness.py` holds a check to the judged ±0.10 gate or
-the tighter deterministic one (`tools/flakiness.py:31-40`).
+This is the canonical check-to-bucket map; other docs link here. Bucket tags come from `buckets.DEDICATED` and `buckets.SHARED`, and the info-only set from `buckets.INFO_ONLY`. The five buckets ask: **retrieval**, did the agent understand the question and fetch the data; **analysis**, are the numbers right; **explanation**, is the prose faithful to the data; **output**, are the charts and dashboards correct; **scope**, did it do the right amount of work. A shared check belongs to two buckets because its failure cannot be pinned on either, so bucket tables count dedicated and shared checks separately. A check with no bucket counts toward none.
 
-| Check | Bucket | Kind | Verdict role | Switched on by | Source |
+"Kind" says whether an LLM judge contributes: deterministic (code only), judge, or mixed (judge and code together). `tools/flakiness.py` holds every check from an evaluator whose `EvaluatorSpec.kind` is `llm_judge` or `mixed` to the judged stability limit (standard deviation at most 0.10 over 3 trials) and the rest to the deterministic limit (0.04). "Runs when" names keys of the case's `expected:` block. `;` means "any of these" in `dataset_id`, `scope`, `nudge_type` and `chart_type`, but "all of these" in `aoi_ids`; `nudge_options`, `dashboard_widgets`, `class_values` and `suggested_datasets` use it as a list separator with rules of their own (see each entry). Which fields the active cases set is counted in [COVERAGE.md](../../../cases/v2/COVERAGE.md#expected-field-census-active-cases).
+
+| Check | Bucket | Role | Kind | Evaluator | Runs when |
 |---|---|---|---|---|---|
-| [`aoi_id_match`](#aoi_id_match) | retrieval | deterministic | gates | `aoi_ids` | `aoi_evaluator.py:8` |
-| [`dataset_id_match`](#dataset_id_match) | retrieval | deterministic | gates | `dataset_id` | `dataset_evaluator.py:40` |
-| [`dataset_parameter_match`](#dataset_parameter_match) | retrieval | deterministic | gates | `dataset_parameters` **and** `dataset_id` | `dataset_evaluator.py:124-129` |
-| [`context_layer_match`](#context_layer_match) | retrieval | deterministic | gates | `context_layer` **and** `dataset_id` | `dataset_evaluator.py:132-138` |
-| [`date_extraction`](#date_extraction) | retrieval | deterministic | gates | `start_date` **and** `end_date` | `data_pull_evaluator.py:63` |
-| [`date_coverage`](#date_coverage) | — (untagged) | deterministic | **info-only** | `start_date` **and** `end_date` | `data_pull_evaluator.py:188` |
-| [`data_pull_exists`](#data_pull_exists) | retrieval | deterministic | gates | derived: `answer`, or `dashboard_widgets` containing `insight` | `data_pull_evaluator.py:284` |
-| [`answered_without_data`](#answered_without_data) | retrieval | deterministic | gates | derived: same as above | `guards.py:100-105` |
-| [`pull_source_match`](#pull_source_match) | retrieval | deterministic | gates | `dataset_id` + a pull happened | `guards.py:119-153` |
-| [`state_delta`](#state_delta) | retrieval | deterministic | gates | a turn's `deltas:` block | `runner/multiturn.py:45` |
-| [`class_value_match`](#class_value_match) | analysis | deterministic | **info-only** | `class_values` | `analysis_checks.py:65` |
-| [`chart_integrity`](#chart_integrity) | analysis | deterministic | gates | nothing — any row with charts | `analysis_checks.py:121` |
-| [`charts_answer`](#charts_answer) | analysis + output (shared) | mixed — deterministic comparator decides, judge recorded | gates (on the comparator alone, H5) | `answer` + charts present | `answer_evaluator.py:168-186`, `llm_judges.py:237-292` |
-| [`charts_answer_judge`](#charts_answer_judge) | — (untagged) | judged | **info-only** | same as `charts_answer` | `llm_judges.py:292`, `eval_types.py:86-87` |
-| [`agent_answer`](#agent_answer) | analysis + explanation (shared) | judged | gates | `answer` + non-empty final message | `answer_evaluator.py:189-201` |
-| [`expected_text_match`](#expected_text_match) | explanation | judged | gates | `text` + non-empty final message | `answer_evaluator.py:203-218` |
-| [`answer_traceability`](#answer_traceability) | explanation | deterministic | **info-only** | nothing — any row with charts + a bold unit-bearing claim | `explanation_checks.py:55` |
-| [`web_fallback`](#web_fallback) | explanation | deterministic | gates | derived data-pull expectation + non-empty answer | `guards.py:107-117` |
-| [`chart_produced`](#chart_produced) | output | deterministic | gates | `answer` + derived data-pull expectation | `guards.py:97-98` |
-| [`chart_well_formed`](#chart_well_formed) | output | deterministic | gates | nothing — any row with charts | `output_checks.py:20` |
-| [`chart_type_match`](#chart_type_match) | output | deterministic | gates | `chart_type` | `output_checks.py:63` |
-| [`dashboard_created`](#dashboard_created) | output + scope (shared) | deterministic | gates | `dashboard_created`, **or** an unsolicited dashboard | `dashboard_evaluator.py:9` |
-| [`dashboard_aoi_match`](#dashboard_aoi_match) | output | deterministic | gates | `aoi_ids` + a fetched dashboard | `dashboard_evaluator.py:48` |
-| [`dashboard_widgets_match`](#dashboard_widgets_match) | output | deterministic | gates | `dashboard_widgets` + a fetched dashboard | `dashboard_evaluator.py:159-161` |
-| [`dashboard_widgets_valid`](#dashboard_widgets_valid) | output | deterministic | gates | a fetched dashboard with ≥1 widget, or `dashboard_widgets` with none delivered | `dashboard_evaluator.py:163-181` |
-| [`clarification_requested`](#clarification_requested) | scope | judged | gates | `clarification` (`true`/`false`) | `clarification_evaluator.py:8` |
-| [`suggested_datasets_match`](#suggested_datasets_match) | scope | deterministic | gates | `suggested_datasets` | `suggested_datasets_evaluator.py:6` |
-| [`nudge_match`](#nudge_match) | scope | deterministic | gates | `nudge_type` and/or `nudge_options` | `nudge_evaluator.py:35` |
-| [`scope_match`](#scope_match) | scope | deterministic | gates | `scope` | `scope_checks.py:54` |
+| [`aoi_id_match`](#aoi_id_match) | retrieval | gating | deterministic | `aoi_evaluator.evaluate_aoi_selection` | `aoi_ids` |
+| [`dataset_id_match`](#dataset_id_match) | retrieval | gating | deterministic | `dataset_evaluator.evaluate_dataset_selection` | `dataset_id` |
+| [`dataset_parameter_match`](#dataset_parameter_match) | retrieval | gating | deterministic | `dataset_evaluator.evaluate_dataset_selection` | `dataset_parameters` and `dataset_id` |
+| [`context_layer_match`](#context_layer_match) | retrieval | gating | deterministic | `dataset_evaluator.evaluate_dataset_selection` | `context_layer` and `dataset_id` |
+| [`date_extraction`](#date_extraction) | retrieval | gating | deterministic | `data_pull_evaluator.evaluate_date_extraction` | `start_date` and `end_date` |
+| [`date_coverage`](#date_coverage) | none | info-only | deterministic | `data_pull_evaluator.evaluate_date_selection` | `start_date` and `end_date` |
+| [`data_pull_exists`](#data_pull_exists) | retrieval | gating | deterministic | `data_pull_evaluator.evaluate_data_pull` | a pull is expected: `answer`, or `insight` in `dashboard_widgets`, unless `clarification` is `true` |
+| [`answered_without_data`](#answered_without_data) | retrieval | gating | deterministic | `guards.evaluate_guards` | a pull is expected |
+| [`pull_source_match`](#pull_source_match) | retrieval | gating | deterministic | `guards.evaluate_guards` | `dataset_id`, and a pull happened |
+| [`state_delta`](#state_delta) | retrieval | gating | deterministic | `runner.multiturn.evaluate_deltas` | a turn's `deltas:` block (turn 2 onwards) |
+| [`chart_integrity`](#chart_integrity) | analysis | gating | deterministic | `analysis_checks.evaluate_chart_integrity` | any row with charts |
+| [`class_value_match`](#class_value_match) | analysis | info-only | deterministic | `analysis_checks.evaluate_class_values` | `class_values` |
+| [`charts_answer`](#charts_answer) | analysis and output (shared) | gating | mixed | `llm_judges.resolve_chart_verdict` | `answer`, and charts exist |
+| [`charts_answer_judge`](#charts_answer_judge) | none | info-only | judge | `llm_judges.llm_judge_chart` | same rows as `charts_answer` |
+| [`agent_answer`](#agent_answer) | analysis and explanation (shared) | gating | mixed | `llm_judges.resolve_answer_verdict` | `answer`, and a final message |
+| [`expected_text_match`](#expected_text_match) | explanation | gating | judge | `llm_judges.llm_judge_expected_text` | `text`, and a final message |
+| [`web_fallback`](#web_fallback) | explanation | gating | deterministic | `guards.evaluate_guards` | a pull is expected, and a final message |
+| [`answer_traceability`](#answer_traceability) | explanation | info-only | deterministic | `explanation_checks.evaluate_answer_traceability` | any row with charts and a final message |
+| [`chart_produced`](#chart_produced) | output | gating | deterministic | `guards.evaluate_guards` | `answer`, unless `clarification` is `true` |
+| [`chart_well_formed`](#chart_well_formed) | output | gating | deterministic | `output_checks.evaluate_chart_well_formed` | any row with charts |
+| [`chart_type_match`](#chart_type_match) | output | gating | deterministic | `output_checks.evaluate_chart_type` | `chart_type` |
+| [`dashboard_created`](#dashboard_created) | output and scope (shared) | gating | deterministic | `dashboard_evaluator.evaluate_dashboard_created` | `dashboard_created`, or any row where a dashboard was created |
+| [`dashboard_aoi_match`](#dashboard_aoi_match) | output | gating | deterministic | `dashboard_evaluator.evaluate_dashboard_aoi` | `aoi_ids`, and a dashboard was fetched |
+| [`dashboard_widgets_match`](#dashboard_widgets_match) | output | gating | deterministic | `dashboard_evaluator.evaluate_dashboard_widgets` | `dashboard_widgets`, and a dashboard was fetched |
+| [`dashboard_widgets_valid`](#dashboard_widgets_valid) | output | gating | deterministic | `dashboard_evaluator.evaluate_dashboard_widgets` | a fetched dashboard with widgets, or `dashboard_widgets` with none delivered |
+| [`clarification_requested`](#clarification_requested) | scope | gating | judge | `clarification_evaluator.evaluate_clarification` | `clarification` |
+| [`nudge_match`](#nudge_match) | scope | gating | deterministic | `nudge_evaluator.evaluate_nudge` | `nudge_type` or `nudge_options` |
+| [`scope_match`](#scope_match) | scope | gating | deterministic | `scope_checks.evaluate_scope` | `scope` |
+| [`suggested_datasets_match`](#suggested_datasets_match) | scope | gating (legacy) | deterministic | `suggested_datasets_evaluator.evaluate_suggested_datasets` | `suggested_datasets` (legacy: the agent no longer writes this field) |
 
-Two expected fields drive **no** check of their own: `aoi_source` is read only by
-`dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
-at all — it is present on 90 of the 114 `cases/v2` cases and, per
-`docs/specs/PLAN.md` §2.2, is hashed into the uid regardless of being unscored. Do not
-read either as coverage.
-
-`chart_type_match` currently fires on **zero** `cases/v2` rows (no case sets
-`chart_type`), and `suggested_datasets_match` on one. Both are live code with
-near-empty populations.
-
----
-
-# Retrieval
+Two expected fields switch on no check of their own: `aoi_source` is read only by `dashboard_aoi_match`, and `dataset_name` by no check at all (it still counts toward the uid, like every expected value). Do not read either as coverage.
 
 ## `aoi_id_match`
 
-**Measures** whether the agent resolved the place named in the prompt to the
-expected area-of-interest ids. Compares the *set* of `src_id`s in
-`agent_state["aoi_selection"]["aois"]` against the expected set
-(`aoi_evaluator.py:60-69`).
+Retrieval · gating · deterministic · `aoi_evaluator.evaluate_aoi_selection` · runs when: `aoi_ids` is set
 
-**Fires on** `aoi_ids`. The value splits on `;` into a **set compared by set
-equality** (`eval_types.py:229-238`) — `;` here means "all of these", the
-opposite of the `dataset_id` and `scope` convention where `;` means
-"either of these". `cases/v2/imagery/1-104.yaml`'s `notes.rewrite` records the
-consequence: a two-level either-or AOI expectation is simply unexpressable.
+**Measures.** Whether the agent resolved the place in the prompt to the expected area-of-interest ids: the set of `src_id`s in `agent_state["aoi_selection"]["aois"]` must equal the expected set. `;` in `aoi_ids` means "all of these", so an either-or AOI expectation cannot be written.
 
-**`null` vs `0.0`**: `null` only when no `aoi_ids` expectation exists. An
-expectation with **no resolved AOI is `0.0`** (`aoi_evaluator.py:52-58`, PR-04
-F1) — this used to return `null` and silently raise the row's mean.
+**Scores.** `1.0` when the two sets are equal after normalisation · `0.0` when they differ, or when no AOI was resolved at all · `null` when `aoi_ids` is not set.
 
-**Reason**: none. Evidence is `actuals.aoi_id_match` = `actual_id`, the stringified
-list of `src_id`s (`cli.py:42`).
+**Evidence.** `reasons.aoi_id_match`: none · `actuals.aoi_id_match` (failing rows only): `actual_id`, the resolved ids as a list.
 
-**Gotchas.**
-- Normalisation is source-dependent and lossy. For `source == "gadm"`,
-  `normalize_gadm_id` truncates at the first `_` and maps `-`→`.`
-  (`utils.py:6-10`), so `BRA.25_1` → `bra.25` and **`USA.5_1` and `USA.5_2`
-  compare equal** — the GADM level suffix is not checked. Non-GADM sources
-  compare lowercased strings only (`aoi_evaluator.py:122-131`).
-- The normalisation branch is chosen from the **first** AOI's `source`
-  (`aoi_evaluator.py:102`), so a mixed-source multi-AOI result is normalised
-  under one rule.
-- `expected_aoi_source` is *not* checked here. Only `dashboard_aoi_match` uses it.
-- `aoi_selection` is assumed to be a dict; a list-shaped payload would raise
-  rather than abstain (`aoi_evaluator.py:84-85`). Every observed payload is a
-  dict, so this is latent, not active.
-
-**Stability**: among the most stable gating checks — 0.98, ±0.01, 1 flapping row
-over 75 in the 3-trial validation run `20260803T201245Z`.
+**Triage.**
+- Normalisation follows the first resolved AOI's `source`. For `gadm` (the global administrative boundaries dataset), `utils.normalize_gadm_id` drops the trailing `_N` version suffix, maps `-` to `.` and lower-cases, so `BRA.25_1` becomes `bra.25` and `USA.5_1` equals `USA.5_2`. Other sources compare lower-cased strings.
+- A multi-AOI result with mixed sources is normalised under the first AOI's rule.
+- `aoi_source` is not checked here; only `dashboard_aoi_match` reads it.
 
 ## `dataset_id_match`
 
-**Measures** whether the agent picked the expected dataset from the registry:
-`normalize_value(agent_state["dataset"]["dataset_id"])` against the expected id
-(`dataset_evaluator.py:104-113`).
+Retrieval · gating · deterministic · `dataset_evaluator.evaluate_dataset_selection` · runs when: `dataset_id` is set
 
-**Fires on** `dataset_id`. Accepts `;`-separated **alternatives** — any one
-matching passes (PR-09 H7). This exists because some rows are defensible either
-way: 1-003's `dataset_id: "0;11"` covers DIST-ALERT vs integrated alerts.
+**Measures.** Whether the agent selected the expected dataset: `agent_state["dataset"]["dataset_id"]` against the expected id. `;` separates acceptable alternatives (for example `8;10`) for cases where two datasets answer the question equally well; any one passes.
 
-**`null` vs `0.0`**: `null` with no expectation; `0.0` when an expectation exists
-and no dataset was selected at all (`dataset_evaluator.py:85-94`).
+**Scores.** `1.0` when the selected id matches an alternative · `0.0` when it matches none, or when no dataset was selected · `null` when `dataset_id` is not set.
 
-**Reason**: none; `actuals.dataset_id_match` = `actual_dataset_id`.
+**Evidence.** `reasons.dataset_id_match`: none · `actuals.dataset_id_match` (failing rows only): `actual_dataset_id`.
 
-**Gotchas.** `normalize_value` maps `None`, the literal string `"None"`, and
-whitespace to `""` (`utils.py:13-17`), so a state field holding the string
-`"None"` reads as "no dataset". Dataset id `0` is a real registry id and is
-handled correctly here because comparison is on normalised strings, not
-truthiness — but see `pull_source_match` for where that distinction had to be
-made explicit. `cases/README.md` forbids naming the dataset in the prompt, so
-this check is measuring inference, not obedience; 0.91 ±0.06 with 12 flapping
-rows over 90 in `20260803T201245Z` reflects genuine agent routing
-nondeterminism.
+**Triage.**
+- `utils.normalize_value` turns `None`, the string `"None"` and whitespace into an empty value, so a state field holding `"None"` reads as no dataset selected.
+- Cases must not name the dataset in the prompt (see [cases/README.md](../../../cases/README.md)), so this check measures the agent's routing. A row that flips between trials usually shows real routing variation, not a harness fault.
+- This reads the dataset the agent declared. Whether the pull used it is `pull_source_match`'s question.
 
 ## `dataset_parameter_match`
 
-**Measures** whether the dataset was parameterised as expected — the filters,
-class selections, and gas basis that decide *which* number gets computed.
-Compares a normalised JSON projection keeping only `name` and `values`
-(`dataset_evaluator.py:9-37`, `115-129`).
+Retrieval · gating · deterministic · `dataset_evaluator.evaluate_dataset_selection` · runs when: `dataset_parameters` and `dataset_id` are both set
 
-**Fires on** `dataset_parameters` — **but only when `dataset_id` is also set.**
-The evaluator returns all three of its scores as `null` before looking at
-parameters if `expected_dataset_id` is empty (`dataset_evaluator.py:69-81`).
+**Measures.** Whether the selected dataset carries the expected parameters: the filters, class selections or gas basis that decide which number is computed. Both sides are parsed as JSON and compared after keeping only each parameter's `name` and `values`.
 
-**`null` vs `0.0`**: `null` with no expectation, and `null` when the dataset
-itself was never selected (`dataset_evaluator.py:88`) — the parameter question
-is meaningless without a dataset. Otherwise exact-string comparison of the
-normalised projections, so any mismatch is `0.0`.
+**Scores.** `1.0` when the two projections are identical · `0.0` on any difference · `null` when either expected field is missing, or when no dataset was selected (parameters mean nothing without one).
 
-**Reason**: none; `actuals.dataset_parameter_match` = the actual parameters JSON.
+**Evidence.** `reasons.dataset_parameter_match`: none · `actuals.dataset_parameter_match` (failing rows only): `actual_dataset_parameters`, the actual parameters as JSON.
 
-**Gotchas.**
-- The `dataset_id` coupling above is a **reconciliation hazard**:
-  `buckets.py:199-200` implies this check from `dataset_parameters` alone, so a
-  case with parameters but no `dataset_id` will show up as a reconciliation
-  miss rather than a silent zero. That is the intended failure mode, but the
-  fix is to add `dataset_id` to the case, not to the check.
-- If the expected value is not valid JSON, `_normalize_dataset_parameters` falls
-  back to `normalize_value` on the raw string (`dataset_evaluator.py:22-23`),
-  which will essentially never equal the actual serialised JSON — a malformed
-  expectation reads as a hard failure, not an abstention.
-- Only `name` and `values` are compared; every other parameter key is invisible
-  to this check by design.
-- One `cases/v2` row sets it, so its run statistics are not evidence of
-  anything (1 case, ±0.00 in `20260803T201245Z`).
+**Triage.**
+- The evaluator returns `null` for all three dataset checks when `dataset_id` is not set. A case with parameters but no `dataset_id` therefore shows as a miss on the reconciliation line: add `dataset_id` to the case.
+- An expected value that is not valid JSON is compared as a raw string and will almost never match, so a malformed expectation reads as a failure, not an abstention.
+- Parameter keys other than `name` and `values` are ignored by design.
 
 ## `context_layer_match`
 
-**Measures** whether the agent applied the expected context layer (the
-intersecting layer, e.g. a land-cover or driver overlay).
+Retrieval · gating · deterministic · `dataset_evaluator.evaluate_dataset_selection` · runs when: `context_layer` and `dataset_id` are both set
 
-**Fires on** `context_layer`, again **only when `dataset_id` is set**
-(`dataset_evaluator.py:69-81`).
+**Measures.** Whether the agent applied the expected context layer: an overlay intersected with the dataset, such as land cover or deforestation drivers. The special value `no_selection` asserts that the agent chose no context layer.
 
-**`null` vs `0.0`**: `null` with no expectation or no selected dataset. There is
-one sentinel: `context_layer: no_selection` inverts the check — it passes when
-the agent selected *no* context layer and fails when it selected any
-(`dataset_evaluator.py:134-135`). Otherwise it is exact normalised equality.
+**Scores.** `1.0` when the normalised layer names are equal, or, for `no_selection`, when no layer was chosen · `0.0` otherwise · `null` when either expected field is missing, or when no dataset was selected.
 
-**Reason**: none; `actuals.context_layer_match` = `actual_context_layer`.
+**Evidence.** `reasons.context_layer_match`: none · `actuals.context_layer_match` (failing rows only): `actual_context_layer`.
 
-**Gotcha**: `no_selection` is the only way to express a negative expectation, and
-it is compared against normalised emptiness, so a state field holding `"None"`
-counts as no selection. 11 rows, 1.00 ±0.00 in `20260803T201245Z` — stable.
+**Triage.**
+- `no_selection` is the only way to write a negative expectation. A state field holding the string `"None"` counts as no selection.
+- As with `dataset_parameter_match`, a case that sets `context_layer` without `dataset_id` shows as a reconciliation miss: add `dataset_id`.
 
 ## `date_extraction`
 
-**Measures** whether the agent understood the period named in the prompt, read
-from the `start_date`/`end_date` **arguments it passed to its own tools** —
-`pull_data`, falling back to `pick_dataset` (`data_pull_evaluator.py:25`,
-`28-60`). The module docstring (`data_pull_evaluator.py:1-17`) explains why this
-and not recorded state: `agent_state["start_date"]` has been observed recording
-the requested window, the dataset's full coverage extent, and a rolling window
-ending today, for the same query. Tool arguments are the only consistent signal.
+Retrieval · gating · deterministic · `data_pull_evaluator.evaluate_date_extraction` · runs when: `start_date` and `end_date` are both set
 
-**Fires on** `start_date` **and** `end_date` together
-(`data_pull_evaluator.py:108-113`). One without the other is `null`.
+**Measures.** Whether the agent understood the period in the prompt, read from the `start_date`/`end_date` arguments of its own `pull_data` calls (or of its `pick_dataset` calls when no `pull_data` call carried dates). Expected dates may be `YYYY-MM-DD`, `M/D/YYYY` or a bare year, which means 1 January for a start and 31 December for an end.
 
-**`null` vs `0.0`**: `null` when either expected bound is missing or unparseable
-by `normalize_start_date`/`normalize_end_date` (`utils.py:46-81`, which accept
-`M/D/YYYY`, `YYYY-MM-DD`, and bare `YYYY` — a bare year expands to Jan 1 for a
-start and Dec 31 for an end). `0.0` when dates were expected and the agent made
-**no** dated tool call at all (`data_pull_evaluator.py:116-118`) — it never
-scoped a request, which is a failure and not an absence. `0.0` when dated calls
-exist and none matches (`:142`).
+**Scores.** `1.0` when any of those calls matches the expected window · `0.0` when none matches, or when the agent made no dated call at all (it never scoped a request) · `null` when either expected date is missing or unparseable.
 
-**Reason**: none, but three diagnostics are written every run:
-`actual_extracted_start_date` / `actual_extracted_end_date` (the matching window,
-or the last one observed if nothing matched), `date_extraction_source` (which
-tool supplied it), and `actual_extracted_windows` (every observed window as
-`tool:start..end`, semicolon-joined). Only the first two are surfaced in
-`actuals` (`cli.py:46`).
+**Evidence.** `reasons.date_extraction`: none · `actuals.date_extraction` (failing rows only): `actual_extracted_start_date` and `actual_extracted_end_date`, the last window the agent used. The full list of windows is not stored; read the artefact's `tool_calls`.
 
-**Gotchas.**
-- **Any** dated call matching passes, so a comparative query that pulls twice is
-  not penalised (`data_pull_evaluator.py:121-140`).
-- An omitted bound on the agent's side is treated as an open-ended request and
-  the missing side is simply not constrained (`:127-131`) — so
-  `pull_data(start_date="2001-01-01")` with no end can pass an expectation that
-  named both bounds. That is deliberate; coverage of the other side is
-  `date_coverage`'s question.
-- Only 9 `cases/v2` rows set dates, because `cases/README.md` forbids date
-  expectations on annual datasets. 1.00 ±0.00 in `20260803T201245Z`.
+**Triage.**
+- A bound the agent left out is not checked, so `pull_data(start_date="2001-01-01")` with no end date passes an expectation that names both bounds. This is deliberate: open-ended requests are legitimate.
+- Any matching call passes, so a comparative query that pulls twice is not penalised.
+- [cases/README.md](../../../cases/README.md) rules out date expectations on annual datasets, which always pull their full range: set dates only on date-scoped cases such as alerts or imagery.
+
+**Why it is built this way.** The `start_date`/`end_date` recorded in agent state are unreliable: for the same query they have held the requested window, the dataset's full extent or a rolling window ending today. The tool arguments are the consistent signal; `date_coverage` reads the state fields, info-only.
 
 ## `date_coverage`
 
-**Measures** something different from `date_extraction`: whether the range
-*recorded in state* **contains** the requested period — containment, not
-equality, because the agent legitimately pulls wider and slices in code
-(`data_pull_evaluator.py:188-281`, comparison at `:271-274`).
+No bucket · info-only · deterministic · `data_pull_evaluator.evaluate_date_selection` · runs when: `start_date` and `end_date` are both set
 
-**Fires on** `start_date` **and** `end_date`.
+**Measures.** Whether the date range recorded in agent state (`start_date`/`end_date`, falling back to the last statistics entry's dates) contains the requested period. Containment, not equality, because the agent may pull a wider range and slice it in code.
 
-**Info-only**, and untagged for buckets (`buckets.py:83-90`;
-`buckets_for("date_coverage") == ()`). It is excluded from `overall_score` and
-from the release gate precisely because the state field it reads is unreliable.
+**Scores.** `1.0` when the recorded range contains the expected one · `0.0` when it does not, or when the recorded range is missing or unparseable · `null` when either expected date is missing or unparseable.
 
-**`null` vs `0.0`**: `null` with no or unparseable expectations. `0.0` when the
-expectation is parseable but the recorded range is missing (`:249-255`) or
-unparseable (`:262-268`) — a deliberate "missing actual = wrong", which is
-tolerable only because the check does not gate.
+**Evidence.** `reasons.date_coverage`: none · `actuals.date_coverage` (failing rows only): `actual_start_date` and `actual_end_date`, the recorded range (absent when none was recorded).
 
-**Reason**: none; `date_success` mirrors the score, and `actual_start_date` /
-`actual_end_date` carry the recorded range (`cli.py:47`).
+**Triage.**
+- Never file a finding on this check alone; `date_extraction` is the scored date check.
+- It sits in no bucket and never affects a verdict or the release gate.
+
+**Why it is built this way.** The recorded range is unreliable (see `date_extraction`), so as a gating check it would fail correct answers. Scoring a missing range as `0.0` is tolerable only because the check does not gate.
 
 ## `data_pull_exists`
 
-**Measures** whether an analytics pull actually happened and produced something:
-the last `statistics` entry must carry a `source_url` or an `id`, or else at
-least `min_rows` (default 1) rows of legacy inline data
-(`data_pull_evaluator.py:171-185`, `284-338`).
+Retrieval · gating · deterministic · `data_pull_evaluator.evaluate_data_pull` · runs when: a pull is expected (`answer` is set, or `dashboard_widgets` contains `insight`, unless `clarification` is `true`)
 
-**Fires on** the *derived* expectation `ExpectedData.expects_data_pull()`
-(`eval_types.py:264-277`): true when `answer` is set, or when
-`dashboard_widgets` contains `insight`; forced false when `clarification` is
-`true`. Map-only dashboard rows therefore do not require a pull.
+**Measures.** Whether an analytics pull happened: the last entry in `agent_state["statistics"]` must carry a `source_url` or an `id`, or at least one row of inline data. "A pull is expected" is `ExpectedData.expects_data_pull`, the same rule `answered_without_data` and `web_fallback` use.
 
-**`null` vs `0.0`**: `null` when no pull is expected (`:312-318`). `0.0` whenever
-one is expected and the criteria are unmet, including the no-statistics case
-(`:326-329`, `data_pull_error: "no data retrieved"`).
+**Scores.** `1.0` when the last statistics entry passes that test · `0.0` when it does not, including when there is no statistics entry · `null` when no pull is expected.
 
-**Reason**: none; `actuals.data_pull_exists` = `data_pull_error`, which is either
-`"no data retrieved"` or `"insufficient rows of data retrieved"` (`cli.py:48`).
+**Evidence.** `reasons.data_pull_exists`: none · `actuals.data_pull_exists` (failing rows only): `data_pull_error`, either `no data retrieved` or `insufficient rows of data retrieved`.
 
-**Gotcha**: `row_count` is `1` whenever `source_url`/`id` is present, regardless
-of the real row count (`:179-180`) — it is a presence flag, not a measurement.
-0.94 ±0.04, 6 flapping over 69 rows in `20260803T201245Z`; its flapping is the
-head of the nudge-cascade chain, so treat a flip here as the *cause* of the
-`chart_produced`/`charts_answer` flips on the same row rather than three
-independent findings.
+**Triage.**
+- A failure here usually explains the `chart_produced` and `charts_answer` failures on the same row: treat them as one finding, not three.
+- The common cause is the agent offering a choice (a nudge) instead of pulling. If the case sets `scope`, `actuals.scope_match` then reads `clarify` or `suggest`.
+- A map-only dashboard case (no `insight` widget) does not require a pull.
 
 ## `answered_without_data`
 
-**Measures** the failure that motivated the guards module: a confident,
-substantive answer with **no pull and no dataset selection** behind it
-(`guards.py:100-105`). Reference case **1-030** — it pulled no data, selected no
-dataset, answered from web knowledge citing `wri.org`, and scored
-`agent_answer` 1.0 (`guards.py:6-7`, in the module's reference-failure list).
+Retrieval · gating · deterministic · `guards.evaluate_guards` · runs when: a pull is expected (the `data_pull_exists` rule)
 
-**Fires on** the derived data-pull expectation (same rule as
-`data_pull_exists`).
+**Measures.** A confident answer with nothing behind it: a final message of at least 80 characters (`guards.SUBSTANTIVE_ANSWER_CHARS`) when no pull happened and no dataset was selected. A pull happened when the last statistics entry has a `source_url`, an `id` or non-empty data (`guards._data_was_pulled`).
 
-**`null` vs `0.0`**: `null` when no pull was expected. `0.0` only when *all
-three* hold: the final message is ≥ `SUBSTANTIVE_ANSWER_CHARS` (80) characters
-(`guards.py:27`), no pull happened (`guards.py:48-55`), and no dataset was
-selected (`:91`). Score reads "1.0 = clean, 0.0 = violated".
+**Scores.** `1.0` when the row is clean · `0.0` when all three conditions hold · `null` when no pull is expected.
 
-**Reason**: none, and no `actuals` entry either — read
-`actual_agent_answer`/the artifact to see what it answered with.
+**Evidence.** `reasons.answered_without_data`: none · no `actuals`. Read `actuals.agent_answer` if that check also failed, or the artefact's `final_answer`.
 
-**Gotchas.**
-- The dataset-selection term makes this narrower than "no pull". An agent that
-  selects a dataset and then fails to pull passes this guard; that failure is
-  `data_pull_exists`'s to report. Deliberate: 1-030 did neither.
-- The 80-character threshold is what separates an answer from a refusal or
-  greeting; a terse-but-wrong ungrounded answer under 80 chars slips through.
+**Triage.**
+- An agent that selects a dataset and then fails to pull passes this guard; `data_pull_exists` reports that failure.
+- An ungrounded answer under 80 characters slips through. The threshold separates answers from refusals and greetings.
+- `agent_answer` at `1.0` beside this check at `0.0` means a right-sounding answer with no data behind it, often from web knowledge: check `web_fallback` on the same row.
 
 ## `pull_source_match`
 
-**Measures** whether the pull that happened actually referenced the expected
-dataset — closing the gap where `dataset_id_match` passes on the agent's
-*declared* selection while the pull went elsewhere. Compares the statistics
-entry's explicit `dataset_id` key (`guards.py:58-69`, `119-153`).
+Retrieval · gating · deterministic · `guards.evaluate_guards` · runs when: `dataset_id` is set and a pull happened
 
-**Fires on** `dataset_id` **and** a pull having happened.
+**Measures.** Whether the pull used the expected dataset: the `dataset_id` key of the last statistics entry against the expected id, with the same `;` alternatives as `dataset_id_match`.
 
-**`null` vs `0.0`**: `null` with no expected dataset or no pull. Also `null` — an
-explicit, documented abstention — when the statistics entry carries no
-`dataset_id` key at all (3 of 84 live pull-bearing artifacts observed;
-`guards.py:130-139`). `0.0` only on a real mismatch.
+**Scores.** `1.0` when the pull's id matches an alternative · `0.0` when it names a different dataset · `null` when `dataset_id` is not set, no pull happened, or the statistics entry has no `dataset_id` key.
 
-**Fires on `;`-alternatives** as of PR-09 H7 (`guards.py:146-153`): the expected
-value splits on `;` and any alternative matching passes. Before this,
-`cases/README.md`'s own sanctioned `dataset_id: "0;11"` pattern could never
-match — the practice the case guide recommends guaranteed a failure.
+**Evidence.** `reasons.pull_source_match`: none · `actuals.pull_source_match` (failing rows only): `actual_pull_source`, the pull's dataset id. When the entry has no `dataset_id`, the evaluator writes a note naming the `source_url` and `id` it saw, but the row scores `null`, so the note never reaches the ledger: read the artefact's `statistics_last`.
 
-**Reason**: none. `actual_pull_source` is either the pull's dataset id or the
-abstention string `"statistics entry carries no dataset_id (source_url=…, id=…);
-guard abstained"`. **Only the former reaches the ledger** — the abstention scores
-`null`, and `cli.py:68-80` records `actuals` for failing checks only. If you need
-to audit abstentions, count them from the artifacts.
+**Triage.**
+- `dataset_id_match` at `1.0` beside this check at `0.0` means the agent declared the right dataset and pulled from a different one.
+- Only the last statistics entry is compared, so on a query that pulls twice only the second pull counts.
 
-**Gotchas.**
-- `source_url` and `id` are deliberately **not** compared. Real source URLs
-  reference datasets by slug (`/v0/land_change/<slug>/analytics`), never by
-  registry id, so with short numeric ids ("0"–"11") a token match against the
-  URL would false-positive on date fragments — `11` is also a month in
-  `start_date=2024-11-01` — and a non-match would false-negative every correct
-  slug URL (`guards.py:121-129`).
-- Presence is checked by key, not truthiness, because dataset id `0` is a real
-  registry id (`guards.py:66-69`).
-- 0.97 ±0.02 over 85 rows in `20260803T201245Z`.
+**Why it is built this way.** `source_url` and `id` are not compared. Source URLs name datasets by slug (`/v0/land_change/<slug>/analytics`), not by id, so matching a short id such as `11` against a URL would hit dates (`2024-11-01`) and miss every correct slug.
 
 ## `state_delta`
 
-**Not in this directory** — it lives in `runner/multiturn.py:45-81` — but it is
-tagged as a retrieval check (`buckets.py:58`) and appears in ledgers as
-`t<N>.state_delta`, so it belongs in this index.
+Retrieval · gating · deterministic · `runner.multiturn.evaluate_deltas` (outside this directory and the registry) · runs when: a multi-turn case's turn has a `deltas:` block (turn 2 onwards)
 
-**Measures** the state transitions a conversation turn asserts, against snapshots
-built from the same `actual_*` diagnostics the validators read
-(`SNAPSHOT_FIELDS`, `runner/multiturn.py:25-42`). Three assertion kinds:
-`changed` (must differ from the previous turn), `retain` (must be identical —
-context loss), `absent` (must be empty — carryover contamination).
+**Measures.** The state changes a turn asserts against the previous turn: `changed` (the field must differ), `retain` (it must be identical, which catches lost context) and `absent` (it must be empty, which catches state carried over by mistake). The snapshot fields (`runner.multiturn.SNAPSHOT_FIELDS`) are `aoi_ids`, `dataset_id`, `context_layer`, `start_date`, `end_date`, `suggested_datasets`, `nudge_type` and `dashboard_id`, taken from the same `actual_*` values the other checks read; the dates are the tool-call dates `date_extraction` reads.
 
-**Fires on** a turn's `deltas:` block, and only from turn 2 onward (there is no
-previous snapshot for turn 1: `runner/multiturn.py:122`).
+**Scores.** `1.0` when every asserted change holds · `0.0` when any fails · `null` when a delta names a field outside the snapshot (`schema/case.schema.json` lists the same names, so a typo fails at authoring time).
 
-**`null` vs `0.0`**: `null` when a delta names a field outside `SNAPSHOT_FIELDS`
-— it abstains for the whole turn rather than half-checking
-(`runner/multiturn.py:67-77`). `schema/case.schema.json` enums the same eight
-field names and `tests/test_schema.py` enforces the sync, so a typo should fail
-at authoring time rather than silently abstain at runtime. `0.0` when any
-asserted transition fails.
+**Evidence.** Stored as `t<N>.state_delta`. The reason is in `turns_detail[<N-1>].reasons.state_delta`, a `;`-joined list such as `dataset_id should have been retained: '4' -> '11'` · no `actuals`.
 
-**Reason**: `reasons.t<N>.state_delta`, a semicolon-joined list of concrete
-transitions, e.g. `"dataset_id should have been retained: '4' -> '0'"`.
-
-**Gotcha**: a turn that errors aborts the conversation, and the un-run turns
-contribute **no checks at all** (`runner/multiturn.py:113-115`) — the row becomes
-an `error`, not a partial measurement. 8 rows, 0.96 ±0.06 in
-`20260803T201245Z`, flagged over-gate on small-n only.
-
----
-
-# Analysis
-
-## `class_value_match`
-
-**Measures** the failure the headline judge structurally cannot see: a wrong
-per-class sub-total hiding under a correct total. It parses
-`"mangroves=15,444 hectares; other=3 ha"` into pairs
-(`analysis_checks.py:48-62`), finds records whose *string* values contain the
-class name, and compares the closest numeric value in those records against the
-target within the shared 2% tolerance (`analysis_checks.py:98-114`).
-
-**Fires on** `class_values` (6 `cases/v2` rows).
-
-**Info-only** — see [the closing section](#info-only-checks-and-what-re-admission-requires).
-
-**`null` vs `0.0`**: `null` when the expectation is malformed (any chunk without
-`=`, or an empty name/value: `:50-61`, `:76-80`) and `null` when a class's value
-text is unparseable by `parse_expected_number` (`:92-96`) — abstain rather than
-half-check. `0.0` when there are **no data records at all** (`:83-86`), and
-`0.0` when any single class misses (all-or-nothing across classes: `:116`).
-
-**Reason**: none; `actual_class_values` carries either the findings string
-(`"mangroves: closest 15,444.00 (0.00%)"` / `"short vegetation: no matching
-record"`) or an abstention note. As with `pull_source_match`, abstention text
-does not reach the ledger.
-
-**Gotchas.**
-- Class matching is **substring containment on any string field of the record**
-  (`:98-104`), so a short class name can match the wrong record and a class name
-  absent from the chart's own vocabulary reports `"no matching record"`. That is
-  exactly the 1-015 finding in `results/recommendations/20260803T201245Z.md`
-  item 8: after a prompt rewrite the chart became per-county rather than
-  per-class, so the expectation is now unsatisfiable by construction.
-- Records are drawn from both `charts_data[*].data` and the last statistics
-  entry (`:21-37`), so a class can be satisfied by data the chart never plots.
+**Triage.**
+- A turn that errors ends the conversation: later turns record no checks, and the row's verdict is `error`, not a partial score.
+- The `suggested_datasets` snapshot field is legacy and always empty, because the agent no longer writes it. Assert on `nudge_type` instead.
 
 ## `chart_integrity`
 
-**Measures** mis-joined record sets at source: every field an axis references
-must be non-null in every record that has that key
-(`analysis_checks.py:121-156`). Reference case **1-060** (run 6) zipped a state
-ranking and a driver breakdown into one array, null-padding 3 of 10 records in
-the pie's own axis fields, and the prose then quoted the wrong figure
-(`analysis_checks.py:8-10`).
+Analysis · gating · deterministic · `analysis_checks.evaluate_chart_integrity` · runs when: the row produced charts (no expectation needed)
 
-**Fires on** nothing — it is expectation-free and runs on any row that produced
-charts.
+**Measures.** Whether each chart's record data was joined correctly: every field a chart's `xAxis` or `yAxis` names must be non-null in every record that has that key. Nulls there are the signature of two record sets merged into one array.
 
-**`null` vs `0.0`**: `null` only when there are no charts (`:126-127`); it is a
-*chart* integrity check, so a chartless row is genuinely n/a — whether a chart
-should have existed is `chart_produced`'s question. Otherwise `1.0`/`0.0`.
+**Scores.** `1.0` when no axis field is null · `0.0` when any is · `null` when there are no charts.
 
-**Reason**: `reasons.chart_integrity`, e.g. `"chart 0 (pie): xAxis field 'driver'
-is null in 3/10 records — mis-joined record sets"`. This is the most directly
-actionable reason string in the suite; it names the chart index, its type, the
-axis, the field, and the padding ratio.
+**Evidence.** `reasons.chart_integrity` names the chart index, its type, the axis, the field and how many records are padded, for example `chart 0 (pie): xAxis field 'driver' is null in 3/10 records` · no `actuals`.
 
-**Gotchas.**
-- Only `xAxis` and `yAxis` are inspected (`:140`), and only records that *have*
-  the key with a `None` value count as padded — a record missing the key
-  entirely is not a problem here (it is `chart_well_formed`'s, if the key is
-  absent from every record).
-- Deliberate overlap with `chart_well_formed`: a broken *spec* is an Output
-  failure, a mis-joined *dataset* under a plausible spec is an Analysis failure
-  (`output_checks.py:5-8`). The two reason strings read differently on purpose.
-- **The most stable check in the suite**: 0.99, ±0.01 over 94 rows in
-  `20260803T201245Z`, which is why
-  `results/recommendations/20260803T201245Z.md` item 4 treats its verdict on
-  1-043/1-060 as trustworthy enough to file upstream as the single
-  highest-value fix.
+**Triage.**
+- A failure usually means the agent merged two tables (say a ranking and a breakdown) into one array, and its prose then often quotes the wrong figure. File it against the agent.
+- A key missing from every record is a `chart_well_formed` failure, not this one. Whether a chart should exist at all is `chart_produced`'s question.
+- Only `xAxis` and `yAxis` are inspected.
 
----
+## `class_value_match`
 
-# Analysis + Output (shared)
+Analysis · info-only · deterministic · `analysis_checks.evaluate_class_values` · runs when: `class_values` is set
+
+**Measures.** Per-class figures under a total, which `agent_answer` only notices if an error moves the total past tolerance. `class_values` lists `name=value` pairs separated by `;` (`mangroves=15,444 hectares; other=3 ha`). For each class the check finds the records, in every chart's data and in the last statistics entry, whose string fields contain the class name (case-insensitive), and takes the closest number in them; it must be within 2%.
+
+**Scores.** `1.0` when every class is within tolerance · `0.0` when any class misses or matches no record, or when there are no data records at all · `null` when the expectation is malformed or a class value has no parseable number.
+
+**Evidence.** `reasons.class_value_match`: none · `actuals.class_value_match` (failing rows only): `actual_class_values`, one finding per class, such as `mangroves: closest 15,444.00 (0.00%)` or `short vegetation: no matching record`. Abstention notes score `null` and never reach the ledger.
+
+**Triage.**
+- Matching is a substring test on any string field, so a short class name can match the wrong record.
+- If the chart breaks the figure down by something other than the classes (by county instead of by land-cover class, say), the expectation cannot pass: fix the case.
+- Records from the statistics entry count too, so a class can pass on data the chart never plots.
 
 ## `charts_answer`
 
-**Measures**, since H5 (2026-08-03), exactly one thing: whether the chart's own
-encoded data contains the figure the case expects, within the 2% relative
-tolerance (`NUMERIC_TOLERANCE`, `llm_judges.py:18`). The gating verdict comes
-from `chart_numeric.evaluate_numeric_support` (`chart_numeric.py:323-371`); the
-Haiku appropriateness verdict is recorded but never gates
-(`resolve_chart_verdict`, `llm_judges.py:237-292`).
+Analysis and output (shared) · gating · mixed · `llm_judges.resolve_chart_verdict` · runs when: `answer` is set and the row produced charts
 
-This is the single most important behavioural change to know when reading a run
-older than 2026-08-03. Previously the override was asymmetric — `unsupported`
-forced 0, but `supported` only annotated the reason and the judge still decided.
-Five of the six rows where `charts_answer` flapped across two 3-trial runs were
-rows the comparator had already passed or abstained on, so 100% of the movement
-was the judge's framing opinion. **1-059** is the proof: the chart's own data
-contained the expected global total to 0.07%, the judge failed it twice on
-framing ("the user would need to manually sum all regions"), then passed an
-identical third trial (`llm_judges.py:243-263`).
+**Measures.** Whether the charts' own data contains the figure in `answer`, within 2%, computed in code by `chart_numeric.evaluate_numeric_support`. The candidates are every numeric value (except label-like keys such as `year`, `date`, `id` and `rank`, listed in `chart_numeric._NON_MEASURE_KEYS`), every column's sum and maximum, per-record sums across two or more measure columns and their grand total, and, when the expected figure is a percentage, each value's share of its column. The chart judge also runs, but its opinion is recorded separately as `charts_answer_judge` and never changes this score.
 
-**Fires on** `answer` **and** a non-empty serialised charts payload
-(`answer_evaluator.py:171`).
+**Scores.** `1.0` when the closest candidate is within 2% · `0.0` when it is not, or when the chart data holds no number at all · `null` when `answer` has no figure to check (a yes/no answer, a place name, a first number that is a year or zero, or an ambiguous decimal such as `230.003`), or when the judge call failed (the row becomes `error`).
 
-**`null` vs `0.0`**: `null` when there is no numeric claim to check — a boolean,
-a year, a bare place name, or a figure whose decimal separator is ambiguous
-(`chart_numeric.py:99-144`). The row then carries no gating chart verdict at all
-rather than a coin-flip aesthetic one. `0.0` when a numeric claim exists and the
-chart's closest candidate exceeds tolerance, **including** when the chart data
-holds no comparable figure at all (`chart_numeric.py:350-356`).
+**Evidence.** `reasons.charts_answer` starts with the comparator's `deterministic check: ...` sentence and ends with the judge's. `the judge (info-only) disagreed on framing` means the row passed on the data and the judge objected; `overriding the judge (info-only)` means it failed on the data and the judge approved; `no numeric claim to check deterministically; not scored` is the `null` case · `actuals.charts_answer` (failing rows only): the charts' `insight` prose, not their data.
 
-**Candidate figures** — what counts as "the chart contains it"
-(`chart_numeric.py:300-320`):
-- every numeric leaf, excluding label-ish keys (`year`, `month`, `date`, `id`,
-  `index`, `order`, `position`, `rank`: `:45-58`);
-- per-column sums and maxima of every list-of-records (`:167-202`) — a chart
-  plotting 25 yearly values supports an expected period total it never draws;
-- **cross-column row sums and their grand total** (H6, `:205-259`), for charts
-  that split one quantity into several measure columns. Reference case
-  **1-002**: São Paulo's alerts are plotted as `high_confidence` and
-  `highest_confidence`, and the expected 1,299,278.14 ha is their sum, which was
-  not a candidate at all — the row failed every trial while the agent's prose
-  was right. Only record sets with ≥2 measure columns contribute, and the
-  docstring is explicit that this widens the candidate set and is therefore more
-  permissive by choice;
-- per-column shares as percentages, **only** when the expected value is a
-  percent (`:262-297`, `:318-319`).
+**Triage.**
+- Act on the numbers; judge objections in the reason are info-only.
+- `parse_expected_number` reads the first number in `answer`, so write the figure first (`25.5 Mha`, not `In 2020, 25.5 Mha were lost`, which abstains on the year). It converts only scale words (`thousand`, `million`, `billion`) and hectare units (`Mha`, `kha`, `ha`); give any other figure in the unit the chart uses. An expectation that is not a figure but contains a digit (`Sentinel-2`) still yields one, so put it in `text`.
+- Chart payloads over 80,000 characters are cut to fit (trailing charts dropped, then data rows halved, marked `"_truncated": true`), so a failure on a very large chart may come from the cut.
+- A judge outage makes this check `null` even though code decides it, because the comparator runs only after the judge call returns.
 
-**Reason**: `reasons.charts_answer` (note the ledger alias from
-`chart_answer_score_reason`, `ledger.py:21`). Four shapes, and the wording tells
-you which branch fired (`llm_judges.py:265-292`):
-- `"deterministic check: the chart's closest figure to the expected 25,540,000 is
-  25,521,080.13, a 0.07% difference, within the 2% tolerance. <judge reason>"` —
-  comparator and judge agree;
-- `"… — the judge (info-only) disagreed on framing: <judge reason>"` — passed on
-  data, judge objected. Nothing to act on unless you are auditing the judge;
-- `"… — overriding the judge (info-only), which said: <judge reason>"` — failed on
-  data while the judge liked the chart. Act on the numbers;
-- `"no numeric claim to check deterministically; not scored. Judge (info-only)
-  said: <judge reason>"` — the `null` case.
-
-**Gotchas.**
-- `parse_expected_number` takes the **first** number in the `answer` cell and
-  stops. A cell whose first number is a bare year abstains entirely (`2015-2020`
-  → `null`), which is usually what you want — but a cell like
-  `"In 2020, 25.5 Mha were lost"` parses the token `"2020,"`, which the
-  `^(19|20)\d{2}$` year guard does *not* match because of the trailing comma, so
-  the expected value becomes **2020** and the check compares that against the
-  chart. No `cases/v2` row currently has that shape, so this is latent — but it
-  is the reason expected answers should be the bare figure and nothing else.
-- Sign is load-bearing and now handled (H1, `chart_numeric.py:68-74`): net-flux
-  rows express a sink as a negative (1-055: `-286,994 Mg CO2e`), and dropping
-  the minus compared +286,994 against a series holding −286,993.69 — an exact
-  match reported as an 86.96% miss. The lookbehind stops a word-internal hyphen
-  reading as a minus, so `Sentinel-2` yields +2 — the *sign* is fixed, not the
-  extraction: a non-numeric expectation that happens to contain a digit still
-  produces a numeric claim. Prefer `text` over `answer` for such expectations.
-- Scale words are honoured before units (`"25.54 million hectares"` beside
-  `"25 Mha"`: `:25-29`, `:135-139`); missing them was worth three false failures
-  on the 2026-07-31 run.
-- The charts payload handed to both halves is truncated safely — trailing charts
-  dropped, then data rows halved, marked `"_truncated": true`, always parseable
-  (`answer_evaluator.py:53-94`). The earlier blind 80k slice emitted invalid
-  JSON, which `chart_numeric` read as "no candidates" and turned into a forced
-  numeric failure (PR-04 F5).
-- Post-H5 it evaluates on far fewer rows (26 vs 60) at 0.96 ±0.04, 2 flapping —
-  the shrinkage is the `null` rule working as designed
-  (`results/recommendations/20260803T201245Z.md` item 13). `tools/flakiness.py`
-  still classifies it as **judged** because the registry marks the evaluator
-  `kind="mixed"` (`registry.py:120`, `tools/flakiness.py:31-35`), so it is held
-  to the 0.10 judged gate.
+**Why it is built this way.** The judge's arithmetic is unreliable (asked about 25 yearly values summing to 25.31 Mha, it reported 27.4 Mha and 26.0 Mha), and its framing opinions flipped between identical trials. [cases/README.md](../../../cases/README.md) also rules out failing a case on chart choice.
 
 ## `charts_answer_judge`
 
-**Measures** what the Haiku chart judge thought — whether the chart set is an
-appropriate and complete way to answer the query, judged on structure and
-coverage only (the prompt forbids it from judging numbers,
-`llm_judges.py:366-372`). It is written out of `resolve_chart_verdict` as
-`judge_score` (`llm_judges.py:292`) and surfaced as its own ledger check
-(`answer_evaluator.py:182`, `eval_types.py:86-87`).
+No bucket · info-only · judge · `llm_judges.llm_judge_chart` · runs when: the same rows as `charts_answer`
 
-**Fires on** exactly the same conditions as [`charts_answer`](#charts_answer):
-`answer` set and a non-empty charts payload.
+**Measures.** The chart judge's opinion: whether the chart set suits the query on structure and coverage (the right measure, place, period and breakdown). It sees the chart JSON and the agent's code-act output, and its prompt forbids judging numbers. `resolve_chart_verdict` returns it as `judge_score`.
 
-**Info-only**, born that way on 2026-08-03 (H5), and untagged for buckets — it
-contributes to no bucket and to no verdict. Its whole purpose is to keep
-measuring the surface that used to gate, so its reliability can be tracked
-toward re-admission the way `answer_traceability`'s is
-(`answer_evaluator.py:164-167`).
+**Scores.** `1.0` when the judge approved · `0.0` when it objected · `null` when `charts_answer` did not run, or when the judge call failed (recorded in `judge_errors` as `charts_answer`).
 
-**`null` vs `0.0`**: `null` when `charts_answer` did not run at all, and `null`
-when the judge call raised (the exception path records only
-`charts_answer` in `judge_errors`; `answer_evaluator.py:183-185`). `0.0` when the
-judge objected, `1.0` when it approved — including on rows where the deterministic
-comparator abstained, which is the population that used to produce coin-flip
-verdicts.
+**Evidence.** No reason of its own: the judge's sentence is inside `reasons.charts_answer` · no `actuals`.
 
-**Reason**: it has none of its own. The judge's sentence is embedded in
-`reasons.charts_answer`, prefixed by which branch fired — look for
-`"the judge (info-only) disagreed on framing"` (comparator passed, judge objected)
-or `"overriding the judge (info-only), which said"` (comparator failed, judge
-approved).
-
-**Gotcha**: a `charts_answer` 1.0 beside a `charts_answer_judge` 0.0 is the
-**expected, non-actionable** shape post-H5. It means the chart's data contains the
-figure and the judge disliked the framing. Do not file it as a defect without
-first checking whether the objection is the 1-059 pattern ("the user would need to
-manually sum all regions"), which is a framing preference, not a data problem.
-0.90 ±0.07 with 10 flapping rows over 64 in `20260803T201245Z`.
+**Triage.**
+- `charts_answer` at `1.0` beside this check at `0.0` is expected and needs no action: the data holds the figure and the judge disliked the framing (for example "the user would need to manually sum all regions").
+- It counts toward no bucket and never affects a verdict or the release gate. It is kept so the judge's reliability can be tracked.
 
 ## `agent_answer`
 
-**Measures** whether the final assistant message captures the expected answer,
-judged by Haiku against a typed rubric — boolean, numeric, year, or named entity
-(`ANSWER_JUDGE_PROMPT`, `llm_judges.py:46-104`; call at
-`answer_evaluator.py:189-201`). Boolean/year/named-entity rows are the judge's own
-call, same as always. For numeric rows the judge only extracts which number in the
-prose answers the question into `extracted_number`; `resolve_answer_verdict`
-(`llm_judges.py`) then applies `NUMERIC_TOLERANCE` in code against
-`parse_expected_number`, the same parser and constant the chart comparator uses —
-the same H5-style split as `charts_answer`, and for the same reason. This used to
-be the one place a judge was trusted with arithmetic, until a live run caught it
-disagreeing with its own stated rule on identical input: 1-009 accepted a 0.51%
-delta as a match in one trial and rejected the same delta in another, citing a
-tolerance the delta was actually inside
-(`results/recommendations/20260804T104634Z.md` §3). The judge's own score survives
-only as a fallback for the row where `extracted_number` can't be parsed
-deterministically (empty, an ambiguous decimal, or a percent/non-percent
-mismatch) — exactly as reliable on that population as before.
+Analysis and explanation (shared) · gating · mixed · `llm_judges.resolve_answer_verdict` · runs when: `answer` is set and the final message is not empty
 
-A deterministic FAIL is not final, though — unlike `charts_answer`.
-`parse_expected_number` only understands English scale words and a period
-decimal separator (fine for the chart comparator, whose candidates are
-already-parsed JSON numbers; not fine for prose in an arbitrary language).
-1-094 ("61.19万公顷") and 1-091 ("289,11 hectares") each parsed a correct
-answer as a huge miss — a Chinese scale word and a French decimal comma,
-respectively, neither of which the parser knows about. So on a deterministic
-FAIL, `resolve_answer_verdict` checks the judge's own score as a second
-opinion, and a judge PASS overrides to a pass; a judge FAIL agrees with the
-deterministic FAIL.
+**Measures.** Whether the final message gives the expected answer. The judge (`llm_judges.ANSWER_JUDGE_PROMPT`) classifies the expectation as boolean, numeric, year or named entity, and scores boolean, year and named-entity rows itself. On numeric rows it only copies the main figure from the answer into `extracted_number`, and code compares that with `answer` within 2%, using the same parser as `charts_answer`.
 
-**Fires on** `answer` **and** a non-empty final message text
-(`answer_evaluator.py:191`).
+**Scores.** `1.0` when the code comparison passes, or when it fails and the judge says the answer matches · `0.0` when both say no (on non-numeric rows, when the judge says no) · `null` when `answer` is not set, the final message is empty, or the judge call failed (the row becomes `error`). The judge's own score also decides when the code comparison cannot run: an empty extraction, a number either side cannot parse, or a percentage on one side only.
 
-**`null` vs `0.0`**: `null` with no `answer` expectation, and `null` when the
-final message is empty — there is nothing to judge. `null` also on judge outage,
-with `"JUDGE ERROR: …"` in the reason and the check name in `judge_errors`, which
-makes the row an `error` (`:199-201`, `buckets.py:115-116`). Otherwise the
-judge's 0/1.
+**Evidence.** `reasons.agent_answer`: the judge's sentence, or on numeric rows `deterministic check: expected ..., extracted ... from "...", a ...% difference, ...`, where `overriding the deterministic check (locale-blind number parsing)` marks a judge rescue · `actuals.agent_answer` (failing rows only): the final answer text.
 
-**Reason**: `reasons.agent_answer` — the judge's own sentence for boolean/year/
-named-entity rows, or, for numeric rows, one of three deterministic-check
-shapes (mirroring `charts_answer`'s): `"deterministic check: expected 100
-hectares, extracted 102 hectares from \"102 hectares\", a 2.00% difference,
-within the 2% tolerance"` on a plain pass or agreed fail (the judge's own
-sentence appended after a fail); or `"… — overriding the deterministic check
-(locale-blind number parsing): the judge read the actual answer and says it
-matches: <judge reason>"` when the judge rescued a FAIL the parser produced
-(1-091, 1-094). `answer_eval_type` is decided internally (in the structured
-output but not persisted separately). `actuals.agent_answer` = the full final
-answer text, trimmed to 300 chars.
+**Triage.**
+- The judge can rescue a code failure because the parser reads only English scale words and `.` as the decimal point, so it misreads correct answers such as `61.19万公顷` or `289,11 hectares`. A rescue is the expected outcome on non-English answers.
+- Prose and chart are scored separately: `agent_answer` at `1.0` with `charts_answer` at `0.0` means right prose and a wrong or incomplete chart.
+- Shared between two buckets, so a failure is not attributed to either.
 
-**Gotchas.**
-- Shared-tagged (analysis + explanation): a failure here cannot be attributed to
-  a bucket, which is why bucket tables report dedicated and shared populations
-  separately (`buckets.py:62-66`).
-- The prose answer and the chart are scored independently, so
-  `agent_answer` 1.0 with `charts_answer` 0.0 is the normal shape of "right
-  prose, wrong or incomplete chart" — and `agent_answer` 1.0 with
-  `answered_without_data` 0.0 is the 1-030 shape: a confident right-sounding
-  answer with nothing behind it.
-- 0.91 ±0.09 over 66 rows in `20260803T201245Z` — inside the judged gate but the
-  loosest of the three judges.
-
----
-
-# Explanation
+**Why it is built this way.** The judge applied its own tolerance inconsistently on identical input, so code does the comparison; the rescue covers what the parser cannot read.
 
 ## `expected_text_match`
 
-**Measures** whether the answer contains a stated piece of information, or
-satisfies a stated qualitative behaviour — terminology, caveats, resolution
-statements, refusal wording (`llm_judge_expected_text`,
-`llm_judges.py:416-479`). The prompt accepts semantic equivalence
-("30 x 30 resolution" ↔ "30-meter by 30-meter pixels") and treats an
-instruction-shaped expectation as satisfied if the response does the thing.
+Explanation · gating · judge · `llm_judges.llm_judge_expected_text` · runs when: `text` is set and the final message is not empty
 
-**Fires on** `text` (26 `cases/v2` rows) **and** a non-empty final message.
+**Measures.** Whether the answer contains a stated piece of information or does a stated thing, such as a caveat, a term or a refusal. The judge accepts semantic equivalents (`30 x 30 resolution` matches `30-meter by 30-meter pixels`) and treats an instruction-shaped expectation as met if the response does it.
 
-**`null` vs `0.0`**: `null` with no `text` expectation or an empty answer; `null`
-on judge outage (row becomes `error`). `0.0` when the response omits,
-contradicts, or only weakly implies the expectation.
+**Scores.** `1.0` when the response includes it · `0.0` when the response omits it, contradicts it or only weakly implies it · `null` when `text` is not set, the answer is empty, or the judge call failed (the row becomes `error`).
 
-**Reason**: `reasons.expected_text_match`, one judge sentence.
-`actuals.expected_text_match` = the answer text.
+**Evidence.** `reasons.expected_text_match`: one judge sentence · `actuals.expected_text_match` (failing rows only): the final answer text.
 
-**Gotchas.** `text` is the right home for behavioural and terminological
-expectations that `answer` cannot express, but it is a judged surface: two
-expectations in one `text` cell can disagree with each other. mt-007 is the
-worked example — its `text` said the agent "maintains and re-confirms its
-**original** figure" while its `answer` anchored a specific number that turn 1
-did not reliably produce, so the two expectations passed on mutually exclusive
-trials (`results/recommendations/20260803T201245Z.md` item 9). 0.92 ±0.04 over
-25 rows.
-
-## `answer_traceability`
-
-**Measures** whether the headline number the prose asserts is derivable from the
-charts shown beside it — the deterministic "does the answer mislead" check
-(`explanation_checks.py:55-80`). Evidence from run 6: of 63 extractable headline
-numbers, 15 were not traceable to the chart data, and 1-027's
-"**679.16 hectares**" appears nowhere in its own chart — all of them scored
-`agent_answer` 1.0 (`explanation_checks.py:10-12`).
-
-**Fires on** nothing — expectation-free. It needs charts, a non-empty answer, and
-a bolded claim.
-
-**Info-only** — see [the closing section](#info-only-checks-and-what-re-admission-requires).
-
-**`null` vs `0.0`**: `null` when there are no charts or no prose (`:61-64`), and
-`null` when no bolded segment carries a parseable number **with a unit**
-(`:66-69`). The unit requirement is the precision device: only `**bold**`
-segments count as claims (the answer template bolds key findings), and a bold
-segment must match `_MEASURE_RE` — a percent sign, or one of a fixed unit
-vocabulary including `ha`/`hectares`/`hektar`, `km²`, `tonnes`, `MgCO2e`, and the
-scale words (`:40-44`). Bare bold numbers are counts and ranks ("**2**
-datasets", "top **5**") and were the dominant false-positive class in the first
-live run. `0.0` when a claim exists and the chart data does not support it.
-
-**Reason**: `reasons.answer_traceability` — the same `evaluate_numeric_support`
-explanation string as `charts_answer` (`"deterministic check: the chart's closest
-figure to the expected … is …, a …% difference, exceeding the 2% tolerance"`), or
-`"no bolded numeric claim found"`. `actuals.answer_traceability` = the claim text.
-
-**Gotchas.** Only the **first** qualifying bold claim is checked (`:47-52`) —
-this is a headline check, not an audit of every figure. It inherits every
-`parse_expected_number` abstention rule, so a multilingual row with locale
-decimals is a `null`, never a guess. 0.90 ±0.05 over 86 rows in
-`20260803T201245Z`.
+**Triage.**
+- `text` is the home for behaviour and terminology that `answer` cannot express, but it is judged: read the reason before filing.
+- Keep one expectation per `text` and make sure it cannot conflict with the case's `answer`. Two expectations that need different trials to pass make the row flap.
 
 ## `web_fallback`
 
-**Measures** whether an answer that was supposed to come from a data pull instead
-cites the web — the second half of the 1-030 signal (`guards.py:107-117`).
+Explanation · gating · deterministic · `guards.evaluate_guards` · runs when: a pull is expected and the final message is not empty
 
-**Fires on** the derived data-pull expectation **and** a non-empty answer.
+**Measures.** Whether an answer that should come from pulled data cites the web instead: any link (`http://`, `https://` or `www.`) in the final message outside the product's own domains (`guards._OWN_DOMAINS`: `globalnaturewatch.org` and `globalforestwatch.org`).
 
-**`null` vs `0.0`**: `null` when no pull was expected or the answer is empty.
-`0.0` when the answer contains **any** link (`https?://…` or `www.…`) outside the
-product's own domains (`guards.py:37-38`, `109-115`).
+**Scores.** `1.0` when there is no outside link · `0.0` when there is at least one · `null` when no pull is expected or the answer is empty.
 
-**Reason**: none; `actuals.web_fallback` = `actual_web_links`, up to five
-deduplicated sorted links.
+**Evidence.** `reasons.web_fallback`: none · `actuals.web_fallback` (failing rows only): `actual_web_links`, up to five distinct links.
 
-**Gotchas.**
-- `_OWN_DOMAINS` is `("globalnaturewatch.org", "globalforestwatch.org")`. The
-  second was added by H8 (2026-08-03): the product serves its own map tiles from
-  `tiles.globalforestwatch.org` and links GFW dashboards for the same figures it
-  just pulled, so flagging it made the guard's own premise false on 1-095, which
-  had answered correctly from a real pull (`guards.py:29-36`).
-- **`wri.org` deliberately still fires.** A `wri.org` citation is the blog-skill
-  tell that 1-030 exists to catch, and it is a live finding: mt-007's turn 2
-  fails `t2.web_fallback` on all three trials by citing WRI insight pages under
-  pushback (`results/recommendations/20260803T201245Z.md` item 2).
-- The check is link-shaped, not provenance-shaped. An answer that came entirely
-  from web knowledge but cites nothing passes here; that is
-  `answered_without_data`'s job. 0.97 ±0.01 over 69 rows.
+**Triage.**
+- The check looks at links, not provenance: a web-knowledge answer that cites nothing passes here, and `answered_without_data` covers it.
+- `wri.org` links fail on purpose: they usually mean the agent answered from a WRI blog post instead of pulling data.
 
----
+**Why it is built this way.** `globalforestwatch.org` is allow-listed because the product serves its own map tiles from it and links its dashboards for figures it has just pulled.
 
-# Output
+## `answer_traceability`
+
+Explanation · info-only · deterministic · `explanation_checks.evaluate_answer_traceability` · runs when: the row produced charts and a final message (no expectation needed)
+
+**Measures.** Whether the headline figure in the answer appears in the charts beside it. The claim is the first bold segment (`**...**`) that holds a number with a unit, scale word or percent sign (`explanation_checks._MEASURE_RE`); the comparator behind `charts_answer` checks it within 2%.
+
+**Scores.** `1.0` when the chart data contains the claim · `0.0` when it does not · `null` when there are no charts or no answer, no bold segment qualifies, or the claim has no checkable number (a year, an ambiguous decimal).
+
+**Evidence.** `reasons.answer_traceability`: the comparator's explanation, or `no bolded numeric claim found` (stored even on `null` rows) · `actuals.answer_traceability` (failing rows only): the claim text.
+
+**Triage.**
+- A `0.0` beside `agent_answer` at `1.0` means the prose states a figure its own chart does not show.
+- Only the first qualifying claim is checked: this is a headline check, not an audit of every number.
+
+**Why it is built this way.** Bold numbers without a unit are mostly counts and ranks (`**2** datasets`, `top **5**`), which were the main source of false failures; the unit rule filters them out.
 
 ## `chart_produced`
 
-**Measures** the absence that used to be invisible: a row whose expected answer
-implies a chart must produce one (`guards.py:97-98`, PR-04 F2). Before this,
-"no chart" made `charts_answer` vanish to `null` and the row scored on its prose
-alone — 1-004, 1-008, 1-030 and 1-055 all answered in prose with no chart at all
-(`guards.py:8-9`).
+Output · gating · deterministic · `guards.evaluate_guards` · runs when: `answer` is set, unless `clarification` is `true`
 
-**Fires on** `answer` **and** the derived data-pull expectation. The second
-condition is what exempts a clarification row (`clarification: true` forces
-`expects_data_pull()` false, `eval_types.py:272-273`) even though it may carry an
-`answer`.
+**Measures.** Whether a case whose expected answer needs data produced a chart: `agent_state["charts_data"]` must not be empty. Chart quality belongs to `chart_well_formed`, `chart_integrity` and `charts_answer`.
 
-**`null` vs `0.0`**: `null` when either condition is absent; otherwise `1.0` if
-`charts_data` is non-empty, `0.0` if not. There is no middle ground — this is a
-presence check, and everything about the chart's quality belongs to
-`chart_well_formed`, `chart_integrity`, and `charts_answer`.
+**Scores.** `1.0` when there is at least one chart · `0.0` when there is none · `null` when `answer` is not set or `clarification` is `true`.
 
-**Reason**: none, and no `actuals` entry. A `0.0` here means literally
-"`charts_data` was empty".
+**Evidence.** `reasons.chart_produced`: none · no `actuals`. A `0.0` means exactly that `charts_data` was empty.
 
-**Gotchas — read this one before filing anything.** `chart_produced` is currently
-**the worst gating check in the suite**: 0.89, ±0.10, 14 flapping rows over 66 in
-`20260803T201245Z`, sitting exactly on the admission gate. Two distinct
-populations (`docs/specs/caseset-v2-improvement-plan.md` §5, "the other flake
-engine"): cascade-driven rows (no pull → no chart), and ~6 standalone rows where
-the agent pulls, answers correctly, and simply omits the chart (1-008, 1-012,
-1-035, 1-048, 1-050, 1-069). No case edit fixes the second population — it needs
-a product stance on whether data answers must always chart. **Both the plan §5
-and `results/recommendations/20260803T201245Z.md` item 14 recommend demoting it
-to info-only until that stance exists; the code has not done so.** It is in
-`DEDICATED` and not in `INFO_ONLY` (`buckets.py:43`, `83-90`), so today it gates.
-Treat a lone `chart_produced` flip as weak evidence.
+**Triage.**
+- If `data_pull_exists` also failed, the missing chart follows from the missing pull: one finding.
+- Some rows pull, answer correctly and simply leave out the chart. Whether every data answer must have a chart is a product question no case edit can settle, so treat a lone `chart_produced` flip as weak evidence.
+
+**Why it is built this way.** Without it, a missing chart only leaves `charts_answer` at `null`, and the row is scored on its prose alone.
 
 ## `chart_well_formed`
 
-**Measures** expectation-free structural sanity: a chart with empty data, or
-whose axis fields reference keys absent from its own records, renders as garbage
-whatever the analysis computed (`output_checks.py:20-60`).
+Output · gating · deterministic · `output_checks.evaluate_chart_well_formed` · runs when: the row produced charts (no expectation needed)
 
-**Fires on** nothing — any row that produced charts.
+**Measures.** Basic chart structure: each chart entry must be an object with non-empty record data, and every field its `xAxis` or `yAxis` names must exist in at least one record.
 
-**`null` vs `0.0`**: `null` only when there are no charts (`:27-28`). `0.0` for a
-non-object chart entry, empty/absent record data, or an axis naming a field that
-appears in no record.
+**Scores.** `1.0` when every chart passes · `0.0` when any chart fails · `null` when there are no charts.
 
-**Reason**: `reasons.chart_well_formed`, semicolon-joined per problem, e.g.
-`"chart 1 (pie): empty data; chart 1 (pie): xAxis references field 'driver'
-absent from data"`.
+**Evidence.** `reasons.chart_well_formed`, one problem per chart joined by `;`, for example `chart 1 (pie): empty data` or `chart 1 (pie): xAxis references field 'driver' absent from data` · no `actuals`.
 
-**Gotchas.** `actual_max_pie_slices` is written when any pie chart exists — it is
-surfaced for triage and deliberately **not** thresholded ("thresholded later if
-noisy", `:58-59`), so it never affects the score. The overlap with
-`chart_integrity` is intentional and the split is by cause: spec broken → Output,
-data mis-joined → Analysis. 1.00 ±0.00 over 94 rows in `20260803T201245Z` — the
-cleanest check in the suite, which also means a failure here is worth taking
-seriously.
+**Triage.**
+- It overlaps `chart_integrity` on purpose and splits by cause: a broken chart spec is an output failure (this check); mis-joined data under a sound spec is an analysis failure (`chart_integrity`).
+- `actual_max_pie_slices` is computed for pie charts but has no threshold and is not stored in the ledger.
 
 ## `chart_type_match`
 
-**Measures** whether the **first** chart's `type` is one of the accepted types
-(`output_checks.py:63-85`).
+Output · gating · deterministic · `output_checks.evaluate_chart_type` · runs when: `chart_type` is set
 
-**Fires on** `chart_type`, semicolon-separated alternatives, matched
-case-insensitively. **No `cases/v2` case sets this field today**, so the check is
-present but dormant — `cases/README.md` warns that chart type is the agent's most
-nondeterministic surface and that a verdict should not be staked on it, so an
-expectation here should always carry alternatives (`chart_type: "bar;table"`).
+**Measures.** Whether the first chart's `type` is one of the `;`-separated alternatives in `chart_type`, ignoring case.
 
-**`null` vs `0.0`**: `null` with no expectation. `0.0` when a chart-type
-expectation exists and **no** chart was produced — a type expectation implies a
-chart (`:77-80`). `0.0` on a type mismatch.
+**Scores.** `1.0` when it is · `0.0` when it is not, or when no chart was produced (a type expectation implies a chart) · `null` when `chart_type` is not set.
 
-**Reason**: none; `actuals.chart_type_match` = `actual_chart_type`.
+**Evidence.** `reasons.chart_type_match`: none · `actuals.chart_type_match` (failing rows only): `actual_chart_type`.
 
-**Gotcha**: only `charts_data[0]` is inspected. A row whose second chart is the
-expected one fails.
+**Triage.**
+- Only `charts_data[0]` is inspected, so a row whose second chart has the expected type fails.
+- Chart type is the agent's least predictable output, and [cases/README.md](../../../cases/README.md) advises against staking a verdict on it; a case that does should list alternatives (`bar;table`). The census in COVERAGE.md shows whether any active case sets the field.
 
 ## `dashboard_created`
 
-**Measures** whether a dashboard was created this turn, from
-`agent_state["dashboard_id"]` (`dashboard_evaluator.py:9-45`).
+Output and scope (shared) · gating · deterministic · `dashboard_evaluator.evaluate_dashboard_created` · runs when: `dashboard_created` is set, or a dashboard was created on any row
 
-**Fires on** `dashboard_created` (tri-state `true`/`false`/absent) — **and, on any
-row, on an unsolicited dashboard.**
+**Measures.** Whether the agent created a dashboard this turn, read from `agent_state["dashboard_id"]`. `dashboard_created` takes `true`, `false` or no value.
 
-**`null` vs `0.0`** — the full table (`dashboard_evaluator.py:15-22`):
-`expected=True/actual=True` → 1.0; `True/False` → 0.0; `False/False` → 1.0;
-`False/True` → 0.0 (guardrail); **`None/True` → 0.0** (unsolicited creation is a
-guardrail violation on a row that never mentioned dashboards); `None/False` →
-`null`. That fifth row is the one to remember: this check can fail a case that
-set no dashboard expectation at all.
+**Scores.** Expected `true`: `1.0` if created, `0.0` if not · expected `false`: `1.0` if not created, `0.0` if created · no expectation: `0.0` if created (an unsolicited dashboard), `null` if not.
 
-**Reason**: none; `actuals.dashboard_created` = the boolean.
+**Evidence.** `reasons.dashboard_created`: none · `actuals.dashboard_created` (failing rows only): `actual_dashboard_created`, the boolean.
 
-**Gotchas.** Shared-tagged (output + scope). Dashboards live behind the agent's
-`experimental` tool profile: a run launched without `--ff experimental` scores
-these rows 0.0 for the *run configuration*, not the agent
-(`results/recommendations/20260803T201245Z.md` item 1 — the whole retraction is
-worth reading, and the run_id suffix is the tell). In the flag-bearing partial
-run `20260803T215155Z_staging_experimental` it was 1.00 ±0.00 over 9 rows; in
-the flagless run, 0.22 ±0.00 over 9.
+**Triage.**
+- This check can fail a case that never mentions dashboards: an unsolicited dashboard is a scope failure.
+- Dashboards are on the agent's default tool profile, so a `0.0` is an agent failure, not a run-configuration artefact. Never diff two runs with different `ff` (see [Comparing two runs](../../../results/README.md#comparing-two-runs)).
+- Shared between two buckets, so a failure is not attributed to either.
 
 ## `dashboard_aoi_match`
 
-**Measures** that the created dashboard is scoped to exactly one AOI, and that it
-is the AOI already under test on that row (`dashboard_evaluator.py:48-107`). It
-deliberately reuses `aoi_ids`/`aoi_source` rather than introducing a
-dashboard-specific column.
+Output · gating · deterministic · `dashboard_evaluator.evaluate_dashboard_aoi` · runs when: `aoi_ids` is set and a dashboard was fetched
 
-**Fires on** `aoi_ids` **and** a successfully fetched dashboard payload.
+**Measures.** Whether the created dashboard covers exactly one area, the one the case expects. After any turn that sets `dashboard_id`, the runner fetches the dashboard from `GET /api/dashboards/{id}`; its single AOI's id is compared with `aoi_ids` (normalised as in `aoi_id_match`) and, when the case sets it, its source with `aoi_source`.
 
-**`null` vs `0.0`**: `null` when the dashboard is `None` — no dashboard was
-created, or the fetch failed and degraded softly rather than erroring the row
-(`runner/api.py:142-166`) — and `null` when the row has no `aoi_ids`. `0.0` when
-the dashboard has a number of AOIs other than exactly one (`:91-93`), or when the
-single AOI's id or source mismatches.
+**Scores.** `1.0` when there is exactly one AOI and it matches · `0.0` when the AOI count is not one, or the id or source differs · `null` when there is no dashboard payload (none was created, or the fetch failed) or `aoi_ids` is not set.
 
-**Reason**: none; `actuals.dashboard_aoi_match` = `actual_dashboard_aoi_id` and
-`actual_dashboard_aoi_count`.
+**Evidence.** `reasons.dashboard_aoi_match`: none · `actuals.dashboard_aoi_match` (failing rows only): `actual_dashboard_aoi_id` and `actual_dashboard_aoi_count`.
 
-**Gotchas.** This is the **only** consumer of `aoi_source`
-(`registry.py:160`); an empty `aoi_source` skips the source comparison
-(`:103-105`). Id normalisation is `aoi_evaluator._normalize_aoi_ids`, so the
-GADM level-suffix blindness described under
-[`aoi_id_match`](#aoi_id_match) applies here too. A failed dashboard fetch is
-indistinguishable in the ledger from "no dashboard created" — both are `null`
-here — so check `actual_dashboard_created` and the run log's
-`"Warning: failed to fetch dashboard"` line before concluding.
+**Triage.**
+- A failed fetch looks the same as no dashboard: both score `null`. Check `dashboard_created` on the row, and the run's console output for `Warning: failed to fetch dashboard`, before concluding.
+- This is the only check that reads `aoi_source`; an empty `aoi_source` skips the source comparison.
 
 ## `dashboard_widgets_match`
 
-**Measures** widget composition as a **multiset**: order does not matter, counts
-do (`dashboard_evaluator.py:159-161`).
+Output · gating · deterministic · `dashboard_evaluator.evaluate_dashboard_widgets` · runs when: `dashboard_widgets` is set and a dashboard was fetched
 
-**Fires on** `dashboard_widgets` (semicolon-separated, e.g. `insight;map` —
-split by `eval_types.py:204-215`) **and** a fetched dashboard.
+**Measures.** The dashboard's widget types as a multiset: order is ignored, counts matter. `dashboard_widgets` lists types separated by `;`, for example `insight;insight;map`.
 
-**`null` vs `0.0`**: `null` when the dashboard is `None` or no widget expectation
-exists. `0.0` on any multiset difference, including a missing widget on an
-otherwise-correct dashboard.
+**Scores.** `1.0` when the multisets are equal · `0.0` on any difference, including one missing widget · `null` when `dashboard_widgets` is not set or there is no dashboard payload.
 
-**Reason**: none; `actuals.dashboard_widgets_match` =
-`actual_dashboard_widget_types`, the stringified list.
+**Evidence.** `reasons.dashboard_widgets_match`: none · `actuals.dashboard_widgets_match` (failing rows only): `actual_dashboard_widget_types`.
 
-**Gotcha**: `dashboard_widgets` containing `insight` also switches on the whole
-derived data-pull family (`eval_types.py:274-277`) — `data_pull_exists`,
-`answered_without_data`, `web_fallback`. A map-only dashboard row does not.
+**Triage.**
+- `insight` in `dashboard_widgets` also means a pull is expected, which switches on `data_pull_exists`, `answered_without_data` and `web_fallback`. A map-only dashboard case does not.
+- When no dashboard was created this check is `null`, and `dashboard_created` carries the failure.
 
 ## `dashboard_widgets_valid`
 
-**Measures** whether each widget's content actually resolved, per type
-(`_widget_is_valid`, `dashboard_evaluator.py:110-124`): an `insight` widget must
-have a non-null `insight`; a `text` widget must have `config.text` (PR-04 F3 —
-the API nests the markdown there; the flat `text` key is kept as a fallback for
-older payloads); a `map` widget must have a `tile_url` under
-`config.dataset` or `config.imagery`. Any **other** widget type returns invalid
-(`:124`).
+Output · gating · deterministic · `dashboard_evaluator.evaluate_dashboard_widgets` · runs when: a fetched dashboard has widgets, or `dashboard_widgets` is set and none arrived
 
-**Fires on** a fetched dashboard with at least one widget, **or** a
-`dashboard_widgets` expectation that produced none.
+**Measures.** Whether each widget's content resolved (`dashboard_evaluator._widget_is_valid`): an `insight` widget needs a non-null `insight`; a `text` widget needs `config.text` (or a flat `text` key, for older payloads); a `map` widget needs a `tile_url` under `config.dataset` or `config.imagery`. Any other widget type is invalid.
 
-**`null` vs `0.0`** — changed by H7 on 2026-08-03, and this is the version to
-read (`dashboard_evaluator.py:163-181`):
-- widgets present → `1.0`/`0.0` on their content;
-- no widgets **and** widgets were expected → `0.0` (F3's real intent: content was
-  requested and is missing);
-- no widgets **and** nothing was expected → **`null`**. Previously `0.0`. 1-096's
-  prompt is only *"Create a dashboard for brazil"* and sets no widget
-  expectation, yet an empty dashboard failed it on 4 of 6 trials, and it passed
-  only on trials where the agent volunteered an **unsolicited** text widget —
-  while `dashboard_created` treats an unsolicited dashboard as a guardrail
-  violation. The rule rewarded exactly what its sibling punished. The code
-  comment also records the honest limitation: **there is no syntax for "expect
-  zero widgets"** (an empty value parses to `None`, i.e. no expectation), so if
-  the product stance really is "a created dashboard must never be empty", that
-  needs its own check with its own spec decision.
+**Scores.** `1.0` when every widget is valid · `0.0` when any widget is invalid, or when widgets were expected and none arrived · `null` when there is no dashboard payload, or when no widgets arrived and none were expected.
 
-**Reason**: none, and no `actuals` mapping — read `actual_dashboard_widget_types`
-from the sibling check or the artifact's `dashboard_widgets`.
+**Evidence.** `reasons.dashboard_widgets_valid`: none · no `actuals`. Read `actuals.dashboard_widgets_match` if it failed, or the artefact's `dashboard_widgets`.
 
-**Gotcha**: an unrecognised widget type fails the whole dashboard, because
-`_widget_is_valid` returns `False` by default (`:124`). If the product adds a
-widget type, this check will report it as invalid content — which is arguably the
-right alarm, but it is a harness update, not an agent regression.
+**Triage.**
+- A widget type the product adds later fails this check until `_widget_is_valid` learns it. That is a harness update, not an agent regression.
+- There is no way to write "expect zero widgets" (an empty value means no expectation), so an empty dashboard on a case with no widget expectation scores `null`.
 
----
-
-# Scope
+**Why it is built this way.** An empty dashboard fails only when widgets were asked for. Failing it otherwise would reward the agent for adding widgets nobody requested.
 
 ## `clarification_requested`
 
-**Measures** whether the agent asked for clarification instead of attempting the
-task — judged from prose, because there is no state field for "asked a question"
-(`clarification_evaluator.py:8-77`, `llm_judges.py:116-202`). The judge reads
-`charts_data[0].insight` if present, else the final message
-(`llm_judges.py:126-155`), and its prompt explicitly excludes the common
-false positive: an answer followed by an optional offer to go further is **not**
-a clarification (`llm_judges.py:179-184`).
+Scope · gating · judge · `clarification_evaluator.evaluate_clarification` · runs when: `clarification` is set
 
-**Fires on** `clarification`, parsed tri-state (`true`/`1`/`yes` → True,
-`false`/`0`/`no` → False, empty → no expectation; `eval_types.py:8-32`).
+**Measures.** Whether the agent asked the user for clarification instead of attempting the task. `llm_judges.llm_judge_clarification` reads the first chart's `insight` if there is one, otherwise the final message. An answer followed by an optional offer to go further is not a clarification.
 
-**`null` vs `0.0`**: `null` when there is no expectation — the check is skipped
-entirely before the judge is called (`:42-47`), which also saves the API call.
-Otherwise `1.0` on a match and `0.0` on a mismatch in either direction: expected
-clarification and got an attempt, or expected an attempt and got a question.
-Judge outage → `null` + `judge_errors` → row becomes `error`
-(`:57-63`); this used to be swallowed to `False`, which scored **1.0** on
-`clarification: false` rows during outages (`llm_judges.py:199-202`).
+**Scores.** `1.0` when the judge's verdict matches the expectation (`true`, `1` or `yes`; `false`, `0` or `no`) · `0.0` when it does not, in either direction · `null` when `clarification` is not set or holds any other value (the judge is not called), or when the judge call failed (the row becomes `error`).
 
-**Reason**: **not persisted.** The judge's prose lands in
-`clarification_explanation`, which matches neither the `_reason` nor the
-`_score_reason` pattern (`ledger.py:51-58`), so it is dropped from the ledger
-entry. `actuals.clarification_requested` = the boolean only. On a judge outage
-the `"JUDGE ERROR: …"` text is lost the same way; only the check name in
-`judge_errors` survives.
+**Evidence.** No reason: the judge's explanation goes to `clarification_explanation`, which is not a reason field, so the ledger drops it · `actuals.clarification_requested` (failing rows only): the judge's boolean.
 
-**Gotchas.** The judge's structured output puts `explanation` before
-`is_clarification`, per the working agreement — Haiku commits to the first field
-it emits and argues with itself otherwise (PR-04 F6,
-`llm_judges.py:119-123`). Only 3 `cases/v2` rows set `clarification`, and at
-±0.16 it was flagged over-gate in `20260803T201245Z`; with 3 rows that is a
-small-n artifact, but the recommendation is explicit that it is below the
-coverage floor and should either gain rows or be read as advisory
-(`results/recommendations/20260803T201245Z.md` item 15).
+**Triage.**
+- `clarification: true` turns off every check that expects a pull (`data_pull_exists`, `answered_without_data`, `web_fallback`, `chart_produced`).
+- When the case can name the nudge it expects, `nudge_match` and `scope_match` read it from state and are steadier than this judge.
 
-## `suggested_datasets_match`
-
-**Measures** whether the agent's `suggested_datasets` state field is a non-empty
-**subset** of the allowed ids: at least one match, and nothing outside the
-expected set (`suggested_datasets_evaluator.py:6-68`).
-
-**Fires on** `suggested_datasets` (semicolon-separated). One `cases/v2` row sets
-it.
-
-**`null` vs `0.0`**: `null` with no expectation. `0.0` when the expectation exists
-and the state field is empty (`:52-56`), and `0.0` when the suggestions are
-not a valid non-empty subset.
-
-**Reason**: none; `actuals.suggested_datasets_match` = the semicolon-joined ids.
-
-**Gotcha — this is measuring a dead surface.** `scope_checks.py:41-46` records
-that `suggested_datasets` was populated in **0 of 1,298** retained case-trials:
-the `pick_aoi`/`pick_dataset` → nudge migration (wri/project-zeno#770) moved
-suggestion onto the nudge surface, where `dataset_choice` appears 162 times. So
-any row expecting suggestions here will score 0.0 for a product-shape reason,
-not an agent failure. `classify_scope` was fixed for this (H4); this check was
-not, and does not appear in `20260803T201245Z`'s flakiness table at all because
-nothing evaluated it. Prefer `scope: suggest` and/or `nudge_type:
-dataset_choice`.
+**Why it is built this way.** No state field records a question asked in prose, so this needs a judge. It gates without having passed the judged-check admission rule because it came from the earlier harness already gating (see [Info-only checks](#info-only-checks)).
 
 ## `nudge_match`
 
-**Measures** the agent's nudge shape — the generic `nudge` state field
-`{type, options}` written by `send_nudge` and by the `aoi_choice`/`dataset_choice`
-migrations (`nudge_evaluator.py:35-121`). It is the deterministic substitute for
-judged clarification detection whenever a case can name the nudge it expects.
+Scope · gating · deterministic · `nudge_evaluator.evaluate_nudge` · runs when: `nudge_type` or `nudge_options` is set
 
-**Fires on** `nudge_type` and/or `nudge_options`; either alone is enough, and
-each is checked only if provided (`:89-113`).
+**Measures.** The agent's nudge: its structured offer of a choice, stored in the `nudge` state field as `{type, options, data?}`. The type must be one of the `;`-separated values in `nudge_type`, ignoring case. For `nudge_options`, every option the agent offers must match an expected option and at least one must; options match by case-insensitive substring in either direction, so `Odisha, India` matches `Puri, Odisha, India (District)`. The agent need not offer every expected option.
 
-**`null` vs `0.0`**: `null` only when neither is expected (`:82-87`) —
-diagnostics are still extracted, because multi-turn delta snapshots and triage
-need them on turns with no expectation. Otherwise `1.0` if the type check and
-the options check both pass, `0.0` otherwise. An expectation on options with
-**no** options offered is `0.0` (`:98-99`).
+**Scores.** `1.0` when every part the case sets passes · `0.0` when any part fails, including options expected and none offered · `null` when neither field is set.
 
-**Reason**: none; `actuals.nudge_match` = `actual_nudge_type` and
-`actual_nudge_options`.
+**Evidence.** `reasons.nudge_match`: none · `actuals.nudge_match` (failing rows only): `actual_nudge_type` and `actual_nudge_options`.
 
-**Gotchas.** Both comparisons are deliberately loose, because for
-`aoi_choice`/`dataset_choice` nudges the type *and* the option wording are
-LLM-generated — only the literal `send_nudge`-with-fixed-args case is fully
-deterministic (`nudge_evaluator.py:10-16`). `nudge_type` accepts `;`-separated
-acceptable values; options match by case-insensitive substring containment **in
-either direction** (`_option_matches`, `:22-32`), so `"Odisha, India"` matches
-`"Puri, Odisha, India (District)"`. The options rule is subset-shaped: at least
-one expected match, and every offered option must be within the expected set, so
-an extra unexpected option fails the check. 6 rows, 0.94 ±0.08, flagged
-over-gate on small-n.
+**Triage.**
+- One extra option that the case does not list fails the check.
+- For `aoi_choice` and `dataset_choice` nudges the model writes the type and the option wording, hence the loose matching; only `send_nudge` with fixed arguments is fully predictable.
+- A clarification asked in prose with no `nudge` in state is invisible here; `clarification_requested` judges the prose.
 
 ## `scope_match`
 
-**Measures** whether the agent did the right *kind* of work, classified
-deterministically from state instead of from the suite's two flakiest judges
-(`scope_checks.py:1-20`, `54-87`). Observable classes, in precedence order — an
-agent that pulls data has analysed, whatever else it also did
-(`classify_scope`, `:33-51`):
+Scope · gating · deterministic · `scope_checks.evaluate_scope` · runs when: `scope` is set
 
-| class | condition |
-|---|---|
-| `analyse` | a data pull happened (`guards._data_was_pulled`) |
-| `suggest` | `suggested_datasets` populated, **or** a `dataset_choice` nudge — no pull |
-| `clarify` | any other nudge type — no pull |
-| `none` | none of the above; matches an expected `refuse` (`:85`) |
+**Measures.** Whether the agent did the right kind of work. `scope_checks.classify_scope` puts the final state in one class, checked in this order (an agent that pulled data has analysed, whatever else it did): `analyse`, a pull happened · `suggest`, no pull and a `dataset_choice` nudge (or the legacy `suggested_datasets` field) · `clarify`, no pull and any other nudge, such as `aoi_choice` · `none`, anything else, which matches an expected `refuse`. `scope` takes `;`-separated alternatives, and `analyze` is accepted for `analyse`.
 
-The `dataset_choice` → `suggest` rule is H4 (2026-08-03) and is load-bearing: a
-`dataset_choice` nudge *is* a dataset suggestion post-#770, and without this rule
-every row expecting `suggest` failed on a field the product no longer writes, so
-the "suggest" coverage the case set claimed was fictional (`:42-50`).
-`aoi_choice` and friends remain `clarify` — a different class.
+**Scores.** `1.0` when the observed class is one of the alternatives · `0.0` when it is not · `null` when `scope` is not set, or when any alternative is not a valid class (the whole expectation abstains rather than scoring on the rest).
 
-**Fires on** `scope` — 102 of the `cases/v2` expectation blocks set it, making
-this the widest-firing scope check by far. `analyze` is accepted as an alias for
-`analyse` (`:30`).
+**Evidence.** `reasons.scope_match`: none · `actuals.scope_match` (failing rows only): `actual_scope`, the observed class, so triage reads as "expected `suggest`, observed `analyse`".
 
-**`null` vs `0.0`**: `null` when no scope is expected, and `null` when **any**
-alternative is invalid — the whole expectation abstains rather than silently
-scoring on the remainder, because a typo must be loud, not lenient (`:76-81`).
-`0.0` on a genuine class mismatch.
+**Triage.**
+- An agent that asks in prose without setting a nudge classifies as `none`, so expect `clarify` only where a nudge is expected.
+- An invalid value scores `null`, which the reconciliation line reports as a missing check: look there for typos.
+- Use alternatives (`refuse;suggest`) when the case's own `text` allows two behaviours; a single value would flap between trials.
 
-**`;`-alternatives** were added by H3 (`:59-65`): some rows are legitimately
-either-way and a single pin makes them flap. 1-089 is the reference — its own
-`text` expectation licenses two behaviours ("Refuses … **or** acknowledge and
-caution that TCL is annual") and the agent does both across identical trials, so
-`refuse;clarify` is the honest expectation.
+**Why it is built this way.** It reads state instead of asking a judge, because judged scope classification was too unstable across trials.
 
-**Reason**: none; `actuals.scope_match` = `actual_scope`, the observed class —
-which makes triage a one-line read ("expected `suggest`, observed `analyse`").
-The invalid-expectation abstention string is written to the same field but, being
-a `null`, never reaches the ledger.
+## `suggested_datasets_match`
 
-**Known limitation (S3, deferred, `:13-15`)**: on builds without `send_nudge` the
-agent clarifies in prose and leaves the nudge state empty, which classifies as
-`none`. Only populate `scope: clarify` on nudge-capable rows. Evidence it earns
-its keep: 1-085 ("How do fires impact nature in Spain?") ran a full analysis
-where the sheet expected dataset suggestions — caught here as expected `suggest`
-vs observed `analyse` (`:17-19`). 0.94 ±0.05 over 88 rows in
-`20260803T201245Z`.
+Scope · gating · deterministic · `suggested_datasets_evaluator.evaluate_suggested_datasets` · runs when: `suggested_datasets` is set · **legacy**
 
----
+**Measures.** Whether the agent's `suggested_datasets` state field is a non-empty subset of the expected dataset ids. The agent no longer writes this field: it was replaced by `nudge`, and dataset suggestions now arrive as a `dataset_choice` nudge.
 
-# Info-only checks, and what re-admission requires
+**Scores.** `1.0` when at least one suggestion matches and none falls outside the expected set · `0.0` when the field is empty or holds an unexpected id, which today means every time · `null` when `suggested_datasets` is not set.
 
-Four checks are reported and never enter a verdict (`buckets.py:83-90`). The
-demotion rationale is recorded in the comments immediately above that frozenset
-(`buckets.py:68-82`), and `tools/flakiness.py` labels them `info-only` instead of
-holding them to a gate.
+**Evidence.** `reasons.suggested_datasets_match`: none · `actuals.suggested_datasets_match` (failing rows only): `actual_suggested_datasets` (absent when the field is empty).
 
-| Check | Demoted | Why | Re-admission requires |
-|---|---|---|---|
-| `date_coverage` | at design time | The state field it reads (`agent_state["start_date"]`) is inconsistent about what it records — the requested window, the dataset's full extent, or a rolling window ending today, for the same query (`data_pull_evaluator.py:1-17`). `date_extraction` is the scored date check. | Not stated in code. The blocker is a product-side change to what state records, not a threshold. |
-| `answer_traceability` | 2026-08-01, after its first live run | Claim extraction misfired on unitless bold counts and ranks on ~5 of 9 failures. The unit-required rule (`explanation_checks.py:40-44`) now applies. | A 3-trial run with **zero** extraction false positives (PR-08 step 5). It ran 0.90 ±0.05 over 86 rows in `20260803T201245Z`. |
-| `class_value_match` | 2026-08-01, after the first 3-trial run | Mean 0.25 over its 4 rows, whose expected values came from unverified sheet scratchpads — i.e. the check was reporting bad expectations, not bad behaviour. | W3's population review verifying the figures. Now 0.44 over 6 rows; two new figures came in verified (1-010's 110.10 ha, 1-027's 679.17 ha) and 1-015's is unsatisfiable against its rewritten chart shape (`results/recommendations/20260803T201245Z.md` item 8). |
-| `charts_answer_judge` | born info-only 2026-08-03 (H5) | `charts_answer` is now gated on the deterministic comparator alone. Five of the six rows where `charts_answer` flapped over two 3-trial runs were rows the comparator had already passed or abstained on — all the movement was the judge's framing opinion — and `cases/README.md` forbids staking a verdict on chart choice. | std ≤ 0.10 over 3 trials. It ran **0.90 ±0.07 with 10 flapping rows** over 64 in `20260803T201245Z`, which is the direct measurement of what used to be gated. Item 13 of that run's recommendations says keep it info-only. |
+**Triage.**
+- A `0.0` here is a case to update, not an agent regression.
+- Do not write new cases against this field. Use `nudge_type: dataset_choice` (`nudge_match`) or `scope: suggest` (`scope_match`).
+- The check stays because the frozen v1 store still has cases that set the field.
 
-Two notes on how info-only interacts with the rest of the machinery, both worth
-knowing before you read a bucket table:
+## Info-only checks
 
-- `date_coverage` and `charts_answer_judge` are in neither `DEDICATED` nor
-  `SHARED`, so `buckets_for` returns `()` and they contribute to no bucket.
-  `answer_traceability` and `class_value_match` **are** in `DEDICATED`
-  (explanation and analysis respectively), and `_tally`/`rows_covered` do not
-  filter info-only (`buckets.py:127-160`) — so they *do* count toward those two
-  buckets' pass/evaluated tallies and coverage while being excluded from row
-  verdicts (`buckets.py:117-121`). Whether that asymmetry is deliberate is not
-  stated anywhere in the code or specs; `tests/test_buckets.py` pins the
-  tagging-completeness rule but not this interaction. Read bucket figures for
-  analysis and explanation with it in mind.
-- `implied_checks` never implies a conditional check — `charts_answer`,
-  `web_fallback`, `pull_source_match`, the dashboard sub-checks, `date_coverage`
-  — precisely so that every reconciliation miss is a real hole
-  (`buckets.py:189-193`). A check being absent from the reconciliation line is
-  not evidence that it ran. Note the matching asymmetry here: `implied_checks`
-  *does* imply the info-only `class_value_match` from `class_values`
-  (`buckets.py:221-222`), and `reconcile` counts it, while
-  `tools/coverage_doc.py:76` strips info-only checks before reporting coverage —
-  so the reconciliation line and the coverage doc are counting slightly
-  different populations.
+An info-only check (`buckets.INFO_ONLY`) is recorded and reported but never affects a row verdict or the release gate: `tools/diff_runs.py` lists its regressions but never fails `--fail-on-regression` or `--fail-on-coverage-loss` on them (its headline regression count still includes them), `tools/flakiness.py` labels it `info-only` instead of holding it to a stability limit, and COVERAGE.md leaves it out of its coverage counts.
 
-## Adding or changing a check
+| Check | Why it is info-only | What would let it gate |
+|---|---|---|
+| `date_coverage` | The state field it reads records different ranges for the same query (see `date_extraction`). | A change in the agent so that state records the requested window. No threshold applies. |
+| `answer_traceability` | On its first run, claim extraction picked up unitless bold counts and ranks; the unit rule now filters them. | A 3-trial run with no extraction false positives (claims that are not real measures). |
+| `class_value_match` | Its expected figures were copied from unverified working notes, so its failures reported bad expectations, not bad behaviour. | A review that verifies its cases' expected figures against the source data. |
+| `charts_answer_judge` | It is the chart judge's framing opinion, which flipped between identical trials; `charts_answer` gates on the code comparison alone. | A standard deviation of at most 0.10 over 3 trials. [cases/README.md](../../../cases/README.md) separately rules out failing a case on chart choice. |
 
-The two rules that bite hardest, both from `docs/specs/PLAN.md` §6:
+New judged checks start info-only and gate only once a 3-trial run shows a standard deviation of at most 0.10. Three judged checks gate without having passed that step (`agent_answer`, `expected_text_match` and `clarification_requested`), because they came from the earlier gnw-evals harness already gating; `tools/flakiness.py` still holds them to the judged limit.
 
-1. Decide, and write down in the check's spec, whether an absence is `null` or
-   `0.0`. Every section above exists because someone had to reconstruct that
-   decision from behaviour.
-2. Tag the check in `buckets.py` — `DEDICATED`, `SHARED`, or `INFO_ONLY`.
-   `tests/test_buckets.py:17-24` asserts that every registered
-   `*_score` field is tagged exactly once, so an untagged check fails the suite
-   rather than quietly scoring into nothing.
+Two interactions to keep in mind when reading a bucket table:
 
-Deterministic checks ship after a clean run against known-good rows; judged
-checks ship info-only until they demonstrate std ≤ 0.10 over 3 trials
-(`docs/specs/PLAN.md` §4). And whenever check semantics change, the next run must carry
-`--note` — the after-every-run ritual in `CLAUDE.md` depends on it to keep a
-`diff_runs` regression from being misread as an agent change.
+- `date_coverage` and `charts_answer_judge` sit in no bucket. `answer_traceability` and `class_value_match` are tagged to explanation and analysis, and `buckets.summarize_buckets` does not filter info-only checks, so they count toward those buckets' pass and evaluated tallies and `rows_covered`, while never touching a verdict.
+- `buckets.implied_checks` implies `class_value_match` whenever `class_values` is set, so its absence shows on the reconciliation line, while COVERAGE.md leaves info-only checks out of its coverage counts. The two count slightly different populations.
+
+## Adding a check
+
+1. Decide whether an absence scores `null` (the check does not apply) or `0.0` (a failure), and write the reason in the evaluator's docstring and in this file's entry.
+2. Write the evaluator in this directory and register it in `registry.EVALUATORS` with its `score_fields` and `kind`. The runner merges every evaluator's result and later evaluators overwrite earlier keys, so use output names no other evaluator writes. `kind` (`deterministic`, `llm_judge` or `mixed`) decides which stability limit `tools/flakiness.py` applies.
+3. Name reason fields `<check>_reason` so the ledger keeps them, and list the `actual_*` fields that explain a failure in `cli.ACTUALS_FOR_CHECK`.
+4. In `buckets.py`, put the check in `DEDICATED` or `SHARED` (or neither, if it should count toward no bucket), and also in `INFO_ONLY` if it must not gate. `tests/test_buckets.py::test_every_registered_check_is_tagged_exactly_once` fails if a registered check is in none of the three sets, a tagged name is not registered, or a check is in both `DEDICATED` and `SHARED`.
+5. If a case's expected values guarantee the check must evaluate, add it to `buckets.implied_checks`, so a silent `null` shows on the reconciliation line. Leave out checks that may legitimately abstain.
+6. A new expected field also needs an `ExpectedData` field in `eval_types.py`, an entry in `FIELD_CHECKS` in `tools/coverage_doc.py`, and authoring guidance in [cases/README.md](../../../cases/README.md).
+7. Ship a deterministic check after a clean run on known-good cases. Ship a judged check info-only until a 3-trial run shows a standard deviation of at most 0.10.
+8. Add a row to the [Index](#index) and an entry to this file. When a check's semantics change, pass `--note` on the next run, so a diff against an earlier run is not read as an agent change.
