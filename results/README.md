@@ -1,9 +1,14 @@
-# Results ledger — contract
+# Results ledger: contract
 
-Committed, per-run JSON files: the longitudinal record GOLD exists to keep.
-(The gnw-evals `outputs/` directory is gitignored scratch; this is the
-opposite — small, stable, committed.) The ingester that writes these lands
-in **PR-02**; this contract is fixed now so nothing has to be re-scored.
+Terms are defined in the [README glossary](../README.md#glossary).
+
+`results/runs/` holds one committed JSON file per run: the long-term record
+GOLD exists to keep. `gold run` writes these files. Older runs made with
+gnw-evals were converted by `tools/ingest_run.py` (see
+[Legacy tools](../tools/README.md#legacy-tools)). Raw per-case agent state
+goes to `results/artifacts/` (gitignored), rendered reports to
+`results/reports/`, the written analysis of each official run to
+`results/recommendations/`, and multi-run write-ups to `results/campaigns/`.
 
 ## File naming
 
@@ -11,59 +16,104 @@ in **PR-02**; this contract is fixed now so nothing has to be re-scored.
 results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
 ```
 
+The time is the run's start in UTC. The `_<ff>` suffix is left out when the
+run used the agent's default profile, so a `_prod` run and a
+`_prod_experimental` run used different profiles.
+
 ## Shape
+
+Trimmed from `results/runs/20260831T163347Z_prod.json`:
 
 ```jsonc
 {
-  "run_id": "20260731T120022Z_staging_experimental",
-  "started": "2026-07-31T12:00:22Z",
-  "environment": "staging",            // staging | prod | local
-  "build": "GNW 2026.7.29.1",          // agent build the API reported
-  "ff": "experimental",                 // agent tool profile, or null
-  "harness": {"repo": "gnw-evals", "sha": "5a377cd"},
+  "run_id": "20260831T163347Z_prod",
+  "started": "2026-08-31T16:33:47Z",     // UTC
+  "environment": "prod",                 // staging | prod | local
+  "build": "baseline",                   // the --build label (default "unknown")
+  "ff": null,                            // agent tool profile; null = default
+  "harness": {"repo": "gnw-gold-evals", "sha": "28941a8"},
   "judge_model": "claude-haiku-4-5",
-  "num_trials": 1,
-  "caseset": "v2",                      // store directory loaded (cases/<caseset>);
-                                        // recorded from 2026-08-04 — older runs
-                                        // lack it (attribute via caseset_version
-                                        // against the manifests' git history)
-  "caseset_version": "2f8b10272938527c",  // must match cases/<caseset>/MANIFEST.json
+  "num_trials": 3,
+  "workers": 10,                         // concurrency, to trace timeouts to load
+  "trial_timeout": 900.0,                // per-trial wall-clock limit, seconds
+  "caseset": "v2",                       // store loaded: cases/<caseset>
+  "caseset_version": "bf5a593d71d658ae", // that store's MANIFEST.json at run time
   "results": [
     {
-      "uid": "0fa55d427af482af",       // the exact case version scored
-      "id": "1-002",                    // lineage id, for humans
-      "checks": {                       // score name -> 1.0 | 0.0 | null
-        "aoi_id_match": 1.0,
-        "dataset_id_match": 1.0,
-        "date_extraction": 1.0,
-        "agent_answer": 0.0
+      "uid": "6c8b9a9d674922d2",         // the exact case version scored
+      "id": "1-005",                     // lineage id, for humans
+      "checks": {                        // every check: 1.0 | 0.0 | null
+        "aoi_id_match": 1.0,             // (the majority verdict when trials > 1)
+        "dataset_id_match": 0.0,
+        "date_extraction": null,
+        ...
       },
-      "reasons": {                      // judged checks only, trimmed
-        "agent_answer": "expected 1,319,600 ha, actual 1,299,278 ha ..."
+      "reasons": {                       // any check that explained its score,
+        "answer_traceability":           // trimmed to 500 characters
+          "deterministic check: the chart's closest figure to the expected ..."
       },
-      "actuals": {                      // failed checks only: the measured
-        "agent_answer": "1,299,278 ha"  // values, so reports can show
-      },                                // expected vs measured (PR-13 on)
-      "latency_s": 49.9,
-      "trace_url": "https://langfuse...."
+      "actuals": {                       // failed checks only: the measured value,
+        "dataset_id_match": "11"         // so reports show expected vs measured
+      },
+      "latency_s": 126.2,
+      "trace_url": "https://langfuse.globalnaturewatch.org/project/wri_lcl/traces/...",
+      "trials": [                        // trials > 1 only: each trial's own checks
+        {"checks": {"aoi_id_match": 1.0, "dataset_id_match": 0.0, ...}, "latency_s": 17.0},
+        {"checks": {...}, "latency_s": 20.7},
+        {"checks": {...}, "latency_s": 126.2}
+      ]
     }
-  ]
+  ],
+  "buckets": {                           // per-bucket tallies that reports render
+    "retrieval": {"dedicated": {"passed": 407, "evaluated": 438},
+                  "shared": {"passed": 0, "evaluated": 0},
+                  "rows_covered": 103},
+    ...                                  // analysis, explanation, output, scope
+    "rows_total": 109,
+    "verdicts": {"pass": 94, "fail": 15, "error": 0, "uncovered": 0}
+  }
 }
 ```
+
+`validate_run` in `src/goldset/ledger.py` requires `run_id`, `started`,
+`environment`, `build`, `ff`, `harness`, `judge_model`, `num_trials`,
+`caseset_version` and `results`. Runs before 2026-08-04 lack `workers`,
+`trial_timeout` and `caseset`; to find which store such a run loaded, match
+its `caseset_version` against the manifests' git history.
+
+Optional fields, written only when they apply:
+
+| Field | Level | Meaning |
+|---|---|---|
+| `methodology_note` | run | The `--note` text: check semantics changed since the previous run, so movement on those checks is not an agent change. |
+| `resumed` | run | `true` when the run was finished with `gold run --resume`; its timing mixes two sessions. |
+| `error` | entry | The agent call failed or timed out, or the harness hit an error. The row verdict is `error`, never `fail`. |
+| `judge_errors` | entry | Checks whose judge call failed. They stay `null` and the row verdict is `error`. |
+| `info` | entry | `{"slow": true, "threshold_s": 180.0}` when the case took longer than `--slow-threshold`. Never scored. |
+| `turns_detail` | entry | Multi-turn cases only: each turn's query, reasons, latency and trace URL. Their checks sit in `checks` as `t<N>.<check>`. |
+| `stale_case`, `drift`, `joined_by` | entry | Written only by `tools/ingest_run.py`; see "Stale means stale" below. |
 
 ## Rules
 
 - **Keying.** Results reference cases by `uid`. If a case was edited since
   the run, the uid mismatch makes that visible instead of silently
   attributing old scores to new content. Runs also record the whole-set
-  `caseset_version`; regression comparisons (PR-02's `diff_runs.py`) are
-  computed over the **intersection of uids** between two runs, so set growth
-  never masquerades as regression or recovery.
-- **Stale means stale.** A row that carries a uid the store no longer holds
-  is recorded `stale_case: true` — it is never re-resolved through the
-  weaker `test_id`+query join, however well the query text still matches.
-  Only rows with no uid at all (legacy sheet runs) may use that fallback,
-  and it is drift-checked against the case's current expectations.
+  `caseset_version`. Diffs cover only the uids both runs share, so a
+  growing case set never shows up as regressions or recoveries (see
+  [Comparing two runs](#comparing-two-runs)).
+- <a id="stale-means-stale"></a>**Stale means stale.** Only the legacy
+  importer, `tools/ingest_run.py`, writes `stale_case: true`. A row that
+  carries a uid joins on that uid alone: if the store no longer holds it,
+  the row is stale and is never re-matched through a weaker join, however
+  well its query still matches, because that would attach old scores to
+  edited case content. A row with no uid (legacy sheet runs) may join on
+  `id` plus the exact query, with a warning (`joined_by: "test_id"`), and is
+  stale if the case's expected values have changed since (`drift` lists
+  them). Stale rows stay in the file but are left out of diffs and
+  flakiness. `gold run` always writes current uids. Separately,
+  `tools/report_run.py` shows `stale_case` as the status of a failing row
+  whose uid the current store no longer holds, which means the case was
+  edited after the run.
 - **Run files are immutable.** `write_run` refuses to overwrite an existing
   run file with different content; byte-identical re-ingest (idempotence) is
   allowed. Re-ingesting after a tooling fix means deleting the file first,
@@ -76,25 +126,72 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
   `resumed: true` (its timing mixes two sessions — everything else is
   identical to an unbroken run).
 - **Checks are tri-state.** `1.0` pass, `0.0` fail, `null` not evaluated.
-  Every run report must state evaluated-vs-implied check counts (the
-  reconciliation line) — see PR-05.
-- **Multi-trial runs** store one entry per case with
-  `"trials": [{...}, {...}, {...}]` per check where trials > 1; the
-  top-level `checks` value is the majority verdict.
-- **No fabricated or backfilled runs.** A ledger entry is written by the
-  ingester from real harness output, never by hand.
+  A case's expected values imply checks that must evaluate
+  (`buckets.implied_checks_for_case`). `tools/report_run.py` prints the
+  reconciliation line: how many implied checks were actually evaluated,
+  with each miss listed, so a check that silently stopped running shows up.
+- **Multi-trial runs** (`num_trials` above 1) still store one entry per
+  case. Its `checks` map holds each check's majority verdict: pass only if
+  more than half of the trials that evaluated it passed (ties fail), `null`
+  if no trial evaluated it. `trials` lists every trial as
+  `{"checks": {...}, "latency_s": ...}`. `error` and `judge_errors` collect
+  the errors of every trial; `reasons`, `actuals`, `latency_s`, `trace_url`
+  and `turns_detail` come from the last trial.
+- **No fabricated or backfilled runs.** A run file is written by
+  `gold run` (or, for legacy runs, `tools/ingest_run.py`) from real harness
+  output, never by hand.
+
+## Comparing two runs
+
+`tools/diff_runs.py <older> <newer>` compares two runs check by check, on
+every case both runs scored, and reports regressions (pass to fail),
+recoveries (fail to pass) and coverage changes (a check that started or
+stopped being evaluated). The count means something only when the two runs
+are comparable. Check these before you diff, and before you trust a count
+someone else produced:
+
+1. **Same `ff`.** Each profile gives the agent different tools, so a diff
+   across profiles measures the profile, not the build. The run_id ends
+   with the ff: `20260831T163347Z_prod` (default profile) cannot be diffed
+   against `20260831T155003Z_prod_experimental`.
+2. **Same trial count, and 3 trials for anything that yields a regression
+   count**: a release gate, a baseline, a before-and-after comparison. Read
+   `num_trials` in each file. A 1-trial run is a smoke run and is never
+   diffed (see [Running the set](../README.md#running-the-set)).
+3. **Same environment** (`staging`, `prod` or `local`, also in the run_id).
+   Environments usually run different agent builds, so a diff across them
+   measures the environment.
+
+`caseset_version` may differ. The diff covers only the uids present in both
+runs (stale rows excluded), so added, removed or edited cases show up as
+"only in A" or "only in B", never as regressions or recoveries. Report the
+number of shared cases with the result, because a small overlap makes a
+weak verdict. Pass `--strict` to refuse any pair whose `caseset_version`
+differs.
+
+**Why 3 trials.** Two trials of the same run (same build, same cases,
+nothing changed) differ by 18 to 29 spurious regressions. That is more than
+the 15 real regressions measured between two different builds, so a
+1-trial diff cannot tell a clean release from a broken one, and a 1-trial
+run diffed against a 3-trial baseline is worse. Comparing the three trials
+stored in `20260831T163347Z_prod` pairwise gives the same band.
+
+**Info-only checks never gate.** Checks in `buckets.INFO_ONLY` (see
+[Info-only checks](../src/goldset/evaluators/README.md#info-only-checks))
+appear in the diff, but `--fail-on-regression` and `--fail-on-coverage-loss`
+ignore them. If the newer run carries a `methodology_note`, movement on the
+checks it names comes from a harness change, not from the agent.
 
 ## Composing a current picture across runs
 
-A scoped re-run is often all that's needed — when only a handful of rows changed,
+A scoped re-run is often all that's needed: when only a handful of rows changed,
 or when one capability was unreachable (a missing `ff`, a service outage). The
 temptation is then to write those fresher scores into the earlier run file so
-there is a single number to quote. **Don't**: `write_run` refuses it, and the rules
-above forbid it — but the deeper reason is that a run record also describes *how*
+there is a single number to quote. **Don't.** `write_run` refuses it and the rules
+above forbid it, but the deeper reason is that a run record also describes *how*
 its rows were produced (`ff`, `workers`, `build`, `harness`, `caseset_version`).
-Splice in rows produced under different conditions and that metadata becomes a lie,
-so the next person to diff the file is misled. That is precisely how the 2026-08-03
-`ff=experimental` misdiagnosis happened.
+Splice in rows produced under different conditions and that metadata becomes
+false, which misleads the next person to diff the file.
 
 Compose in the **analysis** instead:
 
@@ -111,11 +208,8 @@ ledger as honest, independently reproducible records; only the summary is joined
 
 ## Ledger resets
 
-- **2026-08-04 — v2 baseline reset.** All runs against v2 curation states
-  (the 2026-08-02 run and the 2026-08-03 verification/iteration runs) and all
-  generated reports were removed in one reviewable commit, so the first
-  official v2 run (staging, `ff=experimental`, 3 trials) starts the v2 record
-  clean. The v1 sheet-lineage runs (2026-07-31 / 2026-08-01,
-  `caseset_version d564c1b3b4786bc0`) were kept, as were
-  `results/recommendations/` and `results/campaigns/` — analysis history
-  survives its inputs. The removed files remain in git history.
+- **2026-08-04: v2 baseline reset.** Runs scored against intermediate v2
+  curation states (2026-08-02 and 2026-08-03) and their reports were
+  deleted, so the v2 record starts at the first official v2 run. They remain
+  in git history. The v1 runs from 2026-07-31 and 2026-08-01, and the
+  recommendations and campaign docs from that period, were kept.
