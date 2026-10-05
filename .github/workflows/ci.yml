@@ -41,12 +41,13 @@ jobs:
         run: uv run python tools/coverage_doc.py --check
 
   # Manual release gate (workflow_dispatch only; never runs on push or PR).
-  # Runs the GOLD set against staging with 3 trials and no ff, then diffs
-  # that run against the newest committed run in results/runs/ with the same
-  # environment, ff and trial count, failing on any gating regression. If no
-  # committed run matches on all three, the job fails rather than diff
-  # against an incomparable baseline. Needs the API_TOKEN_STAGING and
-  # ANTHROPIC_API_KEY repo secrets.
+  # Runs the GOLD set (cases/v2) against staging with 3 trials and no ff,
+  # then diffs that run against the newest committed run in results/runs/
+  # with the same environment, ff, trial count and case store (caseset),
+  # failing on any gating regression. If no committed run matches on all
+  # four, the job fails rather than diff against an incomparable baseline;
+  # runs that predate the caseset field never match. Needs the
+  # API_TOKEN_STAGING and ANTHROPIC_API_KEY repo secrets.
   staging-run:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest

@@ -3,14 +3,16 @@
     uv run python tools/find_baseline.py results/runs/NEW.json [--runs-dir results/runs]
 
 Prints the path of the newest run in ``--runs-dir`` that is comparable to the
-given run: same ``environment``, same ``ff`` (unset matches only unset) and
-same ``num_trials``. The given run itself is never its own baseline. "Newest"
-is by the run header's ``started`` timestamp.
+given run: same ``environment``, same ``ff`` (unset matches only unset), same
+``num_trials`` and same case store (``caseset``: v1 or v2). Runs from before
+2026-08-04 carry no ``caseset``; their store is unknown, so they never match a
+run that records one. The given run itself is never its own baseline.
+"Newest" is by the run header's ``started`` timestamp.
 
 Exits 1 with a message when no comparable run exists. A diff across a
-differing environment, ``ff`` or trial count measures the setup, not the
-release (CLAUDE.md), so the gate must fail loudly rather than fall back to
-whatever run happens to sort last.
+differing environment, ``ff``, trial count or case store measures the setup,
+not the release (CLAUDE.md), so the gate must fail loudly rather than fall
+back to whatever run happens to sort last.
 
 In CI the directory holds the committed ledger plus the fresh run, so the
 answer is the newest comparable committed run.
@@ -26,7 +28,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from goldset.ledger import read_run
 
-COMPARABLE_ON = ("environment", "ff", "num_trials")
+# caseset is absent (None) on runs that predate the field, and None never
+# equals "v1"/"v2", so an unknown store is never guessed to match. Two such
+# runs can still match each other: cases/v1 was the only store before v2
+# landed on 2026-08-04, the same day the field did.
+COMPARABLE_ON = ("environment", "ff", "num_trials", "caseset")
+UNSET_LABEL = {"ff": "unset", "caseset": "unknown"}
 
 
 def comparability(run: dict) -> tuple:
@@ -35,7 +42,8 @@ def comparability(run: dict) -> tuple:
 
 def describe(run: dict) -> str:
     return ", ".join(
-        f"{field}={run.get(field) if run.get(field) is not None else 'unset'}"
+        f"{field}="
+        f"{run.get(field) if run.get(field) is not None else UNSET_LABEL.get(field, 'unset')}"
         for field in COMPARABLE_ON
     )
 
@@ -70,8 +78,8 @@ def main() -> int:
         print(
             f"no run in {args.runs_dir} is comparable to {new_run['run_id']} "
             f"({describe(new_run)}); refusing to diff against an incomparable "
-            "baseline. Commit a run made with the same --env, --ff and --trials "
-            "first.",
+            "baseline. Commit a run made with the same --env, --ff, --trials "
+            "and --cases-dir first.",
             file=sys.stderr,
         )
         return 1
