@@ -1,14 +1,12 @@
-"""Explanation-bucket validator (PR-06 E1): answer traceability.
+"""Explanation-bucket check: answer traceability.
 
 The deterministic "does the answer mislead" check: the headline number the
 prose asserts must be derivable from the charts shown beside it (leaf, sum,
-max, or share, within the shared 2% tolerance). Expectation-free — it
+max, or share, within ``NUMERIC_TOLERANCE``). It needs no expectation: it
 compares the agent's own outputs, so it runs on any row with a chart and a
-bolded numeric claim.
-
-Evidence (run 6): of 63 extractable headline numbers, 15 were not traceable
-to the chart data; 1-027's "**679.16 hectares**" appears nowhere in its own
-chart. All of them scored ``agent_answer`` 1.0.
+bolded numeric claim. It exists because an answer can quote a headline figure
+that appears nowhere in its own chart and still pass ``agent_answer``.
+Currently info-only (``buckets.INFO_ONLY``).
 
 Precision over recall: only **bolded** segments are considered claims (the
 answer template bolds key findings), and the number parser inherits
@@ -35,8 +33,8 @@ from goldset.evaluators.llm_judges import NUMERIC_TOLERANCE
 _BOLD_RE = re.compile(r"\*\*(.+?)\*\*", re.DOTALL)
 
 # A measure carries a unit, scale word, or percent. Bare numbers in bold are
-# counts and ranks ("**2** datasets", "top **5**") — first live run showed
-# them as the dominant false-positive class (2026-08-01).
+# usually counts or ranks ("**2** datasets", "top **5**"), the main source of
+# false positives.
 _MEASURE_RE = re.compile(
     r"\d[\d,.]*\s*(?:%|(?:percent|mha|kha|ha|hectares?|hektare?|hektar|km²|km2"
     r"|tonnes?|mgco2e|tco2e|thousand|million|billion)\b)",

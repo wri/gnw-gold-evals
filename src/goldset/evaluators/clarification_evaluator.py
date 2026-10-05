@@ -20,7 +20,7 @@ def evaluate_clarification(
         expected_clarification: Expected clarification behavior
             - True: clarification is expected
             - False: clarification is not expected
-            - None: no expectation (empty string from CSV)
+            - None: no expectation (the case sets no clarification value)
         query: Original user query for clarification detection
 
     Returns:
@@ -46,12 +46,10 @@ def evaluate_clarification(
             "clarification_explanation": None,
         }
 
-    # If no query, can't detect clarification
     if not query:
         actual_clarification = False
         explanation = "No query provided"
     else:
-        # Call LLM judge once to detect clarification
         try:
             clarification = llm_judge_clarification(agent_state, query)
         except JudgeError as error:
@@ -64,7 +62,6 @@ def evaluate_clarification(
         actual_clarification = clarification["is_clarification"]
         explanation = clarification["explanation"]
 
-    # Calculate score based on expectation (True or False)
     if actual_clarification == expected_clarification:
         score = 1.0
     else:

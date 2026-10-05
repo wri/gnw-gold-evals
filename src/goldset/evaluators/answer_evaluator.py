@@ -51,13 +51,12 @@ _CHARTS_JSON_LIMIT = 80_000
 
 
 def _serialize_charts_json(charts: list[dict[str, Any]]) -> str:
-    """Serialize all chart JSONs (insight stripped), always as valid JSON.
+    """Serialise all charts (without their insight prose), always as valid JSON.
 
-    The previous implementation blind-sliced the string at 80k chars, which
-    could emit unparseable JSON — chart_numeric then read it as "no
-    candidates" and forced a numeric failure (PR-04 F5). Oversized output
-    now drops trailing charts, then halves data rows, and marks the result
-    with "_truncated": true — parseable at every step.
+    Output over _CHARTS_JSON_LIMIT characters is never cut as a string, because
+    invalid JSON would leave chart_numeric with no candidates and force a numeric
+    failure. Instead it drops trailing charts, then halves data rows, and marks
+    the result with "_truncated": true.
     """
     if not charts:
         return ""
@@ -122,14 +121,15 @@ def evaluate_final_answer(
     expected_text: str = "",
     query: str = "",
 ) -> dict[str, Any]:
-    """Check if final answer contains key information from expected answer using LLM-as-a-judge.
+    """Score the agent's answer and charts against the case's expected answer and text.
 
     Clarification detection is handled separately by evaluate_clarification().
     This function only evaluates answers.
 
     Returns answer scores:
-    - charts_answer_score: Judges whether charts_data[0] JSON is appropriate
-      for the query and expected answer
+    - charts_answer_score: whether the chart data contains the expected figure
+      (deterministic; see resolve_chart_verdict)
+    - charts_answer_judge_score: the chart judge's own verdict, info-only
     - agent_answer_score: Compares expected_answer to messages[-1].content
     - expected_text_match_score: Checks whether messages[-1].content includes
       expected_text semantically
@@ -141,9 +141,6 @@ def evaluate_final_answer(
         expected_text: Expected text, meaning, or behavior to check in agent response
         query: Original user query
 
-    Returns:
-        Dict with charts_answer_score, agent_answer_score, and actual values
-
     """
     # Extract charts data (all charts, not just the first)
     charts_data = agent_state.get("charts_data", [])
@@ -152,7 +149,6 @@ def evaluate_final_answer(
     )
     actual_charts_json = _serialize_charts_json(charts_data)
 
-    # Extract agent message
     actual_agent_answer = extract_final_answer_text(agent_state.get("messages", []))
 
     # Extract codeact parts (base64-encoded code/output from agent reasoning)
@@ -161,10 +157,10 @@ def evaluate_final_answer(
 
     judge_errors: list[str] = []
 
-    # Score chart JSON, not prose insight text. The gating score comes from the
-    # deterministic comparator (H5); the judge's own verdict rides along as
-    # `charts_answer_judge`, reported and never gating, so its reliability can be
-    # tracked toward re-admission the way answer_traceability's is.
+    # Score the chart JSON, not the prose insight. The score comes from the
+    # deterministic comparator; the judge's own verdict is kept as
+    # `charts_answer_judge`, which is info-only (buckets.INFO_ONLY) so its
+    # reliability can be tracked before it is ever allowed to gate.
     charts_answer_score = None
     charts_answer_score_reason = None
     charts_answer_judge_score = None
@@ -180,11 +176,10 @@ def evaluate_final_answer(
             charts_answer_score, charts_answer_score_reason = _score_and_reason(verdict)
             if isinstance(verdict, dict):
                 charts_answer_judge_score = verdict.get("judge_score")
-        except Exception as error:  # judge outage: error, never a verdict (F4)
+        except Exception as error:  # judge outage: an error, never a verdict
             charts_answer_score_reason = f"JUDGE ERROR: {error}"
             judge_errors.append("charts_answer")
 
-    # Score agent answer
     agent_answer_score = None
     agent_answer_score_reason = None
     if expected_answer and actual_agent_answer:
@@ -217,7 +212,6 @@ def evaluate_final_answer(
             expected_text_match_score_reason = f"JUDGE ERROR: {error}"
             judge_errors.append("expected_text_match")
 
-    # Set actual values to None if empty strings for cleaner CSV output
     return {
         "charts_answer_score": charts_answer_score,
         "charts_answer_judge_score": charts_answer_judge_score,

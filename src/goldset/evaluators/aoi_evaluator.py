@@ -25,7 +25,6 @@ def evaluate_aoi_selection(
         actual_id, actual_name, actual_subtype, actual_source
 
     """
-    # Initialize result dict with all fields
     result: dict[str, Any] = {
         "aoi_id_match_score": None,
         "actual_id": None,
@@ -35,7 +34,8 @@ def evaluate_aoi_selection(
         "match_aoi_id": False,
     }
 
-    # STEP 1: Extract actual values from agent_state (ALWAYS do this if data exists)
+    # Actual values are recorded even without an expectation: multi-turn delta
+    # snapshots and triage need them.
     actual_data = _extract_actual_aoi_data(agent_state)
     if actual_data:
         result.update(
@@ -47,9 +47,8 @@ def evaluate_aoi_selection(
             },
         )
 
-    # STEP 2: Early exit only when there is no expectation. An expectation
-    # with NO resolved AOI is a hard failure (PR-04 F1) - previously this
-    # returned None and silently raised the row's mean.
+    # No expectation: not scored. An expectation with no resolved AOI is a
+    # failure (0.0), not an absent check.
     if not expected_aoi_ids:
         return result
 
@@ -57,7 +56,6 @@ def evaluate_aoi_selection(
         result["aoi_id_match_score"] = 0.0
         return result
 
-    # STEP 3: Normalize and compare AOI IDs
     normalized_actual, normalized_expected = _normalize_aoi_ids(
         actual_data["raw_ids"],
         expected_aoi_ids,
@@ -87,7 +85,6 @@ def _extract_actual_aoi_data(agent_state: dict[str, Any]) -> dict[str, Any] | No
     if not aois:
         return None
 
-    # Extract lists
     raw_ids = [aoi.get("src_id", "") for aoi in aois]
     names = [aoi.get("name", "") for aoi in aois]
     subtypes = [aoi.get("subtype", "") for aoi in aois]
