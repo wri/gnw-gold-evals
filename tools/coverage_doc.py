@@ -38,8 +38,9 @@ from goldset.store import load_store, read_manifest
 
 ACTIVE_EXCLUDED = {"not doing"}
 
-# expected-field -> the check(s) it switches on (mirrors buckets.implied_checks;
-# fields listed as reference-only never gate anything by themselves).
+# Expected field -> the checks it switches on, for the census table. Keep in
+# step with buckets.implied_checks, the authoritative map; "(+ ... when ...)"
+# marks a conditional check, which may abstain and so is never implied.
 FIELD_CHECKS = {
     "aoi_ids": "aoi_id_match",
     "dataset_id": "dataset_id_match",
@@ -47,18 +48,21 @@ FIELD_CHECKS = {
     "context_layer": "context_layer_match",
     "start_date": "date_extraction (with end_date)",
     "end_date": "date_extraction (with start_date)",
-    "answer": "agent_answer, charts_answer, chart_produced",
+    "answer": ("agent_answer, chart_produced, data_pull_exists, "
+               "answered_without_data (+ charts_answer when a chart exists)"),
     "text": "expected_text_match",
     "clarification": "clarification_requested",
-    "suggested_datasets": "suggested_datasets_match",
+    "suggested_datasets": ("suggested_datasets_match (legacy: the agent now "
+                           "writes nudge; author nudge_type / nudge_options)"),
     "nudge_type": "nudge_match",
     "nudge_options": "nudge_match",
     "dashboard_created": "dashboard_created",
-    "dashboard_widgets": "dashboard_widgets_match, dashboard_widgets_valid",
+    "dashboard_widgets": ("dashboard_widgets_match (+ dashboard_widgets_valid "
+                          "when a dashboard exists)"),
     "class_values": "class_value_match (info-only)",
     "chart_type": "chart_type_match",
     "scope": "scope_match",
-    "aoi_source": "reference only (dashboard AOI source)",
+    "aoi_source": "no check of its own (dashboard_aoi_match also compares it)",
     "dataset_name": "reference only",
 }
 
@@ -80,7 +84,7 @@ def expected_records(case) -> list[dict]:
 
 
 def split_dataset_ids(value: object) -> set[str]:
-    """Expected dataset_id values accept alternatives: '0;11' means either."""
+    """Expected dataset_id values accept alternatives: '8;10' means either."""
     return {part.strip() for part in str(value or "").split(";") if part.strip()}
 
 
@@ -146,15 +150,20 @@ def render_dataset_section(catalog: dict | None, active) -> tuple[list[str], lis
     datasets = catalog["datasets"]
     stats = dataset_stats(active)
     lines += [
-        f"Catalog snapshot `cases/zeno_catalog.json` — "
+        f"Catalog snapshot `cases/zeno_catalog.json`: "
         f"project-zeno@{source['sha'][:7]} ({source['ref']}, synced "
         f"{source['synced']}), {len(datasets)} datasets. Refresh with",
         "`uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.",
-        "A case counts toward every dataset its `dataset_id` accepts (`0;11`",
-        "counts for both). Datasets carry four instruction fields unless noted;",
-        "`selection_hints` are exercised by any case grading `dataset_id`,",
-        "while prompt/code/presentation instructions shape behaviour that only",
-        "answer-graded cases (`answer` or `text` expected) actually check.",
+        "A case counts toward every dataset its `dataset_id` accepts (`8;10`",
+        "counts toward both 8 and 10).",
+        "",
+        "Each dataset carries four instruction fields that steer the agent:",
+        "`selection_hints` (when to pick the dataset), `prompt_instructions`,",
+        "`code_instructions` and `presentation_instructions`. A dataset missing",
+        "any of them shows `(missing: …)` after its name. Any case that grades",
+        "`dataset_id` exercises `selection_hints`; only answer-graded cases",
+        "(those expecting `answer` or `text`, counted in the answer-graded",
+        "column) exercise the other three.",
         "",
         "| id | dataset | cases | answer-graded | parameters covered "
         "| context layers covered |",
@@ -221,8 +230,8 @@ def render_dataset_section(catalog: dict | None, active) -> tuple[list[str], lis
 
 
 def bucket_case_coverage(cases) -> dict[str, dict[str, int]]:
-    """Per bucket: active cases reached via a dedicated check, via shared
-    checks only, and not at all — gating checks only."""
+    """Per bucket: active cases reached via a dedicated gating check, and
+    cases reached via shared gating checks only."""
     out = {b: {"dedicated": 0, "shared_only": 0} for b in BUCKETS}
     for case in cases:
         implied = {base_check_name(c) for c in implied_checks_for_case(case)}
@@ -240,7 +249,7 @@ def bucket_case_coverage(cases) -> dict[str, dict[str, int]]:
 def render(cases_dir: Path, catalog_path: Path | None = None) -> str:
     manifest = read_manifest(cases_dir)
     if manifest is None:
-        raise SystemExit(f"no manifest under {cases_dir} — import cases first")
+        raise SystemExit(f"no manifest under {cases_dir}: run tools/check.py --fix")
     catalog_path = catalog_path or (cases_dir.parent / "zeno_catalog.json")
     catalog = (json.loads(catalog_path.read_text(encoding="utf-8"))
                if catalog_path.exists() else None)
@@ -249,12 +258,13 @@ def render(cases_dir: Path, catalog_path: Path | None = None) -> str:
 
     statuses = Counter(c.status.lower() for c in cases)
     lines = [
-        f"# GOLD case-set coverage — {cases_dir.name}",
+        f"# GOLD case-set coverage: {cases_dir.name}",
         "",
-        "Generated by `tools/coverage_doc.py` — derived from the case store,",
-        "never hand-edited. Regenerate after any case edit; CI can verify",
-        "freshness with `--check`. Coverage counts use **gating** checks only;",
+        "Generated by `tools/coverage_doc.py` from the case store; never",
+        "hand-edited. Regenerate after any case edit; CI fails a PR whose copy",
+        "is stale (`--check`). Coverage counts use **gating** checks only;",
         "info-only checks are listed separately (they never enter a verdict).",
+        "Terms are defined in the [README glossary](../../README.md#glossary).",
         "",
         f"`caseset_version {manifest['caseset_version']}` · {len(cases)} cases · "
         + " · ".join(f"{s} {n}" for s, n in sorted(statuses.items()))
@@ -281,10 +291,18 @@ def render(cases_dir: Path, catalog_path: Path | None = None) -> str:
         "",
         "## Bucket coverage (active cases)",
         "",
-        "How many active cases *imply* at least one gating check in each",
-        "bucket — an implied check must evaluate, so this is guaranteed",
-        "coverage, not best-case. Conditional checks (chart integrity and",
-        "friends) run on top of it whenever their trigger state exists.",
+        "For each bucket, the number of active cases whose expected values",
+        "imply at least one gating check in it. An implied check must evaluate",
+        "on every run, so this count is a floor, not a best case. A *dedicated*",
+        "check belongs to one bucket; a *shared* check ("
+        + ", ".join(f"`{name}`" for name in SHARED)
+        + ") spans two,",
+        "so its failure cannot be pinned on either. \"Via shared only\" counts",
+        "cases that reach a bucket through shared checks alone. Conditional",
+        "checks (such as `charts_answer`, `chart_integrity` and",
+        "`dashboard_aoi_match`) may abstain, so they are never implied and not",
+        "counted here; they add coverage on top whenever their trigger state",
+        "exists.",
         "",
         "| bucket | via dedicated check | via shared only | total | of active |",
         "|---|---|---|---|---|",
@@ -356,20 +374,26 @@ def render(cases_dir: Path, catalog_path: Path | None = None) -> str:
         "",
         "## Known gaps",
         "",
-        f"- Expected fields no active case uses: {', '.join(unused) or 'none'} —",
-        "  the checks they switch on can never fire until cases set them.",
-        f"- Info-only checks (reported, never gating): {', '.join(sorted(INFO_ONLY))}.",
-        "  Their buckets lose that much *gating* coverage until re-admission",
-        "  (see `src/goldset/buckets.py` for the demotion rationale).",
+        f"- Expected fields no active case uses: {', '.join(unused) or 'none'}.",
+        "  Their checks cannot fire until a case sets the field. Leave",
+        "  `suggested_datasets` unused: it is legacy (the agent now writes",
+        "  `nudge`), so author `nudge_type` / `nudge_options` instead.",
+        f"- Info-only checks: {', '.join(sorted(INFO_ONLY))}. They run and are",
+        "  reported but never affect a verdict, so the bucket coverage above",
+        "  excludes them. Why each is info-only, and what would make it gate:",
+        "  [evaluators README](../../src/goldset/evaluators/README.md#info-only-checks).",
         *dataset_gap_bullets,
-        "- Full check semantics and case archetypes: `docs/evaluator-map.html`.",
+        "- What each check measures: [evaluators README index]"
+        "(../../src/goldset/evaluators/README.md#index); how to write a case:",
+        "  [cases/README.md](../README.md).",
         "",
     ]
     return "\n".join(lines)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--out", type=Path, default=None,
                         help="default: <cases-dir>/COVERAGE.md")
