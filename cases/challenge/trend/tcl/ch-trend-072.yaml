@@ -1,0 +1,27 @@
+id: ch-trend-072
+uid: 2047f1c76b6fb088
+status: ready
+set: trend
+group: tcl
+query: Has tree cover loss in Madre de Dios, Peru been rising or falling from 2015 to 2023?
+expected:
+  aoi_ids: PER.18
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-078
+  lineage: benchmark v2026 proposed set (bm26-078); USY-001401 Caja Cusco (Amazon Peru)
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: trend
+  jtbd: 1,5
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Supply chain; Sustainable finance; Service providers
+  user_story_refs: USY-001401 Caja Cusco (Amazon Peru)

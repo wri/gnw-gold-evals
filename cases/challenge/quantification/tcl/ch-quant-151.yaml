@@ -1,0 +1,28 @@
+id: ch-quant-151
+uid: 209e1a802bcb1924
+status: ready
+set: quantification
+group: tcl
+query: How much tree cover loss happened in the Kayapó Indigenous Territory between 2015 and
+  2023?
+expected:
+  aoi_ids: BRA1507
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-001
+  lineage: benchmark v2026 proposed set (bm26-001); USY-000852
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: quantification
+  jtbd: 5,7
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
+    Field staff; Journalists
+  user_story_refs: USY-000852

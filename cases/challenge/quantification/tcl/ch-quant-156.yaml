@@ -1,0 +1,27 @@
+id: ch-quant-156
+uid: 608fcb141a490040
+status: ready
+set: quantification
+group: tcl
+query: How much tree cover did India lose between 2001 and 2023?
+expected:
+  aoi_ids: IND
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: easy
+  behaviour: answer with data
+  benchmark_id: bm26-006
+  lineage: benchmark v2026 proposed set (bm26-006); USY-001284 Indian Express / National Green
+    Tribunal
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  benchmark_type: quantification
+  jtbd: 1,9
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    All direct-connect groups
+  user_story_refs: USY-001284 Indian Express / National Green Tribunal

@@ -1,0 +1,24 @@
+id: ch-mon-025
+uid: 2508793c08374760
+status: ready
+set: monitoring
+group: unsupported_action
+query: Email me every time there is a new alert in Kruger National Park
+expected:
+  text: Explains that it cannot send alert emails itself and points the user to the alert
+    subscription feature; does not claim to have set one up.
+notes:
+  difficulty: hard
+  behaviour: redirect to alert-subscription feature; must not claim to have set it up
+  benchmark_id: bm26-134
+  lineage: benchmark v2026 proposed set (bm26-134); Roadmap job area 4 (NRT alerting)
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  build_notes: Scope row; expected_text_match judge
+  benchmark_type: monitoring
+  jtbd: '3'
+  impact_pathway: 'Cross-cutting: trust'
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists
+  user_story_refs: Roadmap job area 4 (NRT alerting)

@@ -13,3 +13,11 @@ notes:
   lineage: loss (TCL) or alerts; both defensible
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
   source_tab: challenge-dataset-v1
+  benchmark_id: bm26-185
+  benchmark_type: spatial
+  jtbd: 10,11
+  impact_pathway: 'Cross-cutting: dataset discovery'
+  user_groups: All direct-connect groups
+  synthetic: 'FALSE'
+  user_story_refs: —
+  refresh_risk: Low

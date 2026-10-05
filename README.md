@@ -92,6 +92,9 @@ cases/v1, cases/v2      one YAML per case, grouped by capability; MANIFEST.json 
 results/gold/           committed GOLD run ledger + reports (contract: results/README.md)
 results/challenge/      committed CHALLENGE run ledger + rollup recommendations
                         (rates, not regressions — see cases/challenge/README.md)
+benchmarks/             BENCHMARK manifests: frozen uid subsets of CHALLENGE
+                        (benchmarks/README.md)
+results/benchmark/      committed BENCHMARK run ledger (gold run --benchmark)
 schema/case.schema.json the case contract; every file validated in tests
 src/goldset/            store, canonical hashing, ledger, adapter, buckets,
                         evaluator registry, runner/ (API + multiturn), cli (gold)
@@ -149,6 +152,9 @@ loads. Rules live in CLAUDE.md; these encode the *procedures* around them.
   docs (the run isn't done until one exists)
 - [results/challenge/](results/challenge/) — the CHALLENGE ledger: same
   contract, pass-rate verdicts via `tools/challenge_rollup.py`
+- [benchmarks/README.md](benchmarks/README.md) — BENCHMARK: the frozen,
+  versioned CHALLENGE subset behind the North Star; manifest, freeze,
+  errata, canonical runs, metric semantics
 - [results/gold/campaigns/](results/gold/campaigns/) — campaign narratives
 - [tools/README.md](tools/README.md) — every CLI, grouped by lifecycle
 

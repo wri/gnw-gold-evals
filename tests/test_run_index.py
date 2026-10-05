@@ -137,3 +137,59 @@ def test_check_mode_gates_freshness(tmp_path):
     # regenerating clears the drift
     assert subprocess.run(base, check=False).returncode == 0
     assert subprocess.run([*base, "--check"], check=False).returncode == 0
+
+
+def write_bench(repo: Path, uids: list[str], errata=()) -> None:
+    from goldset.benchmark import QUERY_TYPES, SCHEMA_VERSION
+    path = repo / "benchmarks" / "t-draft.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps({
+        "schema_version": SCHEMA_VERSION, "version": "t-draft", "status": "draft",
+        "frozen": None, "source": {"cases_dir": "cases/challenge"}, "sampling": {},
+        "types": list(QUERY_TYPES),
+        "members": [{"uid": u, "id": f"ch-aoi-{i:03d}", "type": "geospatial",
+                     "set": "aoi", "cohort": "direct", "difficulty": "easy",
+                     "stages": ["retrieval"]} for i, u in enumerate(uids)],
+        "errata": list(errata),
+    }), encoding="utf-8")
+
+
+BENCH_BLOCK = {"path": "benchmarks/t-draft.json", "version": "t-draft",
+               "status": "draft", "manifest_sha": "0" * 16, "members": 2}
+
+
+def bench_run(run_id, uids, **overrides):
+    fields = {"num_trials": 3, "benchmark": BENCH_BLOCK,
+              "results": [{"uid": u, "id": "x", "checks": {}} for u in uids]}
+    return make_run(run_id, "challenge", **{**fields, **overrides})
+
+
+def test_benchmark_runs_are_flagged_canonical_or_not(tmp_path):
+    results_dir = make_results_tree(tmp_path)
+    write_bench(tmp_path, ["a" * 16, "b" * 16])
+    write_run(results_dir, "benchmark", bench_run("20260929T100000Z_prod", ["a" * 16, "b" * 16]))
+    write_run(results_dir, "benchmark", bench_run("20260929T110000Z_prod", ["a" * 16]))
+    write_run(results_dir, "benchmark", bench_run(
+        "20260929T120000Z_staging", ["a" * 16, "b" * 16],
+        environment="staging", num_trials=1))
+    index = build_index(results_dir, use_glob=True)
+    runs = {e["run_id"]: e for e in index["sets"]["benchmark"]}
+    assert runs["20260929T100000Z_prod"]["canonical"] is True
+    assert runs["20260929T110000Z_prod"]["canonical_reasons"] == [
+        "1 active member(s) not in the run"]
+    staging = runs["20260929T120000Z_staging"]["canonical_reasons"]
+    assert any("environment" in r for r in staging) and any("num_trials" in r for r in staging)
+    version = index["benchmarks"]["t-draft"]
+    assert version["runs"] == sorted(runs)
+    assert version["canonical_runs"] == ["20260929T100000Z_prod"]
+    assert "benchmark" not in index["sets"]["gold"][0]
+
+
+def test_erratum_after_a_run_does_not_uncanonicalise_it(tmp_path):
+    results_dir = make_results_tree(tmp_path)
+    write_bench(tmp_path, ["a" * 16, "b" * 16],
+                errata=[{"uid": "b" * 16, "date": "2026-10-01", "reason": "x"}])
+    write_run(results_dir, "benchmark", bench_run("20260929T100000Z_prod", ["a" * 16]))
+    index = build_index(results_dir, use_glob=True)
+    assert index["sets"]["benchmark"][0]["canonical"] is True
+    assert index["benchmarks"]["t-draft"]["voided"] == 1

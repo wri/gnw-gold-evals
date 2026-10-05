@@ -1,0 +1,1310 @@
+{
+  "schema_version": 1,
+  "version": "2026-draft",
+  "status": "retired",
+  "created": "2026-09-29",
+  "frozen": null,
+  "source": {
+    "cases_dir": "cases/challenge",
+    "caseset_version": "72fafbb2ec30afd2"
+  },
+  "sampling": {
+    "tool": "tools/benchmark_sample.py",
+    "method": "stratified, largest-remainder proportional allocation",
+    "per_type": 20,
+    "seed": 2026,
+    "eligible": "status ready; aoi and dataset restricted to difficulty easy/medium",
+    "strata": "difficulty/cohort where the set labels difficulty, else cohort",
+    "allocation": {
+      "geospatial": {
+        "easy/data-quality": 1,
+        "easy/designations": 1,
+        "easy/direct": 3,
+        "easy/multi": 1,
+        "medium/acronyms": 1,
+        "medium/ambiguity": 2,
+        "medium/designations": 3,
+        "medium/direct": 2,
+        "medium/expansion": 1,
+        "medium/global": 1,
+        "medium/multilingual": 2,
+        "medium/sources": 2
+      },
+      "dataset": {
+        "easy/ghg-flux": 1,
+        "easy/grasslands": 1,
+        "easy/integrated-alerts": 1,
+        "easy/land-cover": 1,
+        "easy/multilingual": 1,
+        "easy/natural-lands": 1,
+        "medium/ambiguous": 1,
+        "medium/context-layer": 1,
+        "medium/ghg-flux": 1,
+        "medium/grasslands": 1,
+        "medium/integrated-alerts": 1,
+        "medium/land-cover": 1,
+        "medium/multilingual": 1,
+        "medium/natural-lands": 1,
+        "medium/tc-gain": 1,
+        "medium/tcl": 1,
+        "medium/tcl-drivers": 1,
+        "medium/tcl-fires": 1,
+        "medium/tree-cover": 1,
+        "medium/unmappable": 1
+      },
+      "quantification": {
+        "ghg-flux": 2,
+        "grasslands": 2,
+        "integrated-alerts": 2,
+        "land-cover": 2,
+        "natural-lands": 1,
+        "sluc": 1,
+        "tc-gain": 1,
+        "tcl": 4,
+        "tcl-drivers": 2,
+        "tcl-fires": 2,
+        "tree-cover": 1
+      },
+      "comparison": {
+        "ghg-flux": 1,
+        "grasslands": 2,
+        "integrated-alerts": 2,
+        "land-cover": 2,
+        "natural-lands": 1,
+        "sluc": 2,
+        "tc-gain": 2,
+        "tcl": 4,
+        "tcl-drivers": 1,
+        "tcl-fires": 2,
+        "tree-cover": 1
+      },
+      "trend": {
+        "grasslands": 3,
+        "integrated-alerts": 3,
+        "sluc": 3,
+        "tcl": 8,
+        "tcl-fires": 3
+      }
+    }
+  },
+  "stage_order": [
+    "scope",
+    "retrieval",
+    "analysis",
+    "explanation",
+    "output"
+  ],
+  "types": [
+    {
+      "key": "refusal",
+      "label": "Refusal",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "identification",
+      "label": "Identification",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "geospatial",
+      "label": "Geospatial",
+      "sets": [
+        "aoi"
+      ],
+      "measured": true
+    },
+    {
+      "key": "dataset",
+      "label": "Dataset",
+      "sets": [
+        "dataset"
+      ],
+      "measured": true
+    },
+    {
+      "key": "quantification",
+      "label": "Quantification",
+      "sets": [
+        "quantification"
+      ],
+      "measured": true
+    },
+    {
+      "key": "monitoring",
+      "label": "Monitoring",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "comparison",
+      "label": "Comparison",
+      "sets": [
+        "comparison"
+      ],
+      "measured": true
+    },
+    {
+      "key": "trend",
+      "label": "Trend",
+      "sets": [
+        "trend"
+      ],
+      "measured": true
+    },
+    {
+      "key": "conceptual",
+      "label": "Conceptual",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "risk",
+      "label": "Risk",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "causal",
+      "label": "Causal",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "feasibility",
+      "label": "Feasibility",
+      "sets": [],
+      "measured": false
+    }
+  ],
+  "members": [
+    {
+      "uid": "beda3578c1c61a59",
+      "id": "ch-aoi-007",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "direct",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "a6a3dba2786f98b7",
+      "id": "ch-aoi-008",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "direct",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "71f952f82ef89a64",
+      "id": "ch-aoi-010",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "direct",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "3b6d3241c6dc0de2",
+      "id": "ch-aoi-017",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "direct",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "60e1b2776be534ba",
+      "id": "ch-aoi-018",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "direct",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "9440cdf47dae8e1c",
+      "id": "ch-aoi-030",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1f27456aed0245c9",
+      "id": "ch-aoi-032",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "80c9514f8ccba35e",
+      "id": "ch-aoi-046",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "acronyms",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "ae37fed74db65003",
+      "id": "ch-aoi-054",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multilingual",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "6052899cfaa5dc26",
+      "id": "ch-aoi-058",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multilingual",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "77765765117a4399",
+      "id": "ch-aoi-066",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "data-quality",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "3cbe6839351fe072",
+      "id": "ch-aoi-072",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "ambiguity",
+      "difficulty": "medium",
+      "stages": [
+        "scope"
+      ]
+    },
+    {
+      "uid": "1e94f5a9bcf110e5",
+      "id": "ch-aoi-078",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "ambiguity",
+      "difficulty": "medium",
+      "stages": [
+        "scope"
+      ]
+    },
+    {
+      "uid": "15590edf0721b2d7",
+      "id": "ch-aoi-089",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "4b1731430884ea5e",
+      "id": "ch-aoi-097",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "expansion",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "61e7268e94674ea3",
+      "id": "ch-aoi-102",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "global",
+      "difficulty": "medium",
+      "stages": [
+        "explanation"
+      ]
+    },
+    {
+      "uid": "36866fcb0ed34020",
+      "id": "ch-aoi-142",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "5a4378ca4afe5e1f",
+      "id": "ch-aoi-145",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "7ca3447c6b69795a",
+      "id": "ch-aoi-147",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "88e7350d3b3bd94e",
+      "id": "ch-aoi-154",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "0d2dd44950ad1ed9",
+      "id": "ch-dataset-003",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "land-cover",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "b1cee37db46da114",
+      "id": "ch-dataset-006",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "land-cover",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1f4a9157ded6d210",
+      "id": "ch-dataset-016",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "grasslands",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "60ba74271be7060d",
+      "id": "ch-dataset-022",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "grasslands",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "585d16c4f7e18415",
+      "id": "ch-dataset-028",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "natural-lands",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "50ab1d45a2543d1b",
+      "id": "ch-dataset-033",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "natural-lands",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "fa2f708c54cfae7a",
+      "id": "ch-dataset-047",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "21e6fbf15c924b14",
+      "id": "ch-dataset-059",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "tc-gain",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "d694717558ae137b",
+      "id": "ch-dataset-069",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "ghg-flux",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "396da996d49f2489",
+      "id": "ch-dataset-072",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "ghg-flux",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "6a7e1a05e52c4fa4",
+      "id": "ch-dataset-083",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "tree-cover",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "d4cf4071c9381e12",
+      "id": "ch-dataset-100",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "tcl-drivers",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "a119fddacdd16717",
+      "id": "ch-dataset-111",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "tcl-fires",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "e9e9bd26d55153fb",
+      "id": "ch-dataset-120",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "integrated-alerts",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "add57d6e1cde92ae",
+      "id": "ch-dataset-122",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "integrated-alerts",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "70b36bc8d7d64795",
+      "id": "ch-dataset-131",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "multilingual",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "efcb522f22349b95",
+      "id": "ch-dataset-133",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "multilingual",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "55163127c4ca5d38",
+      "id": "ch-dataset-162",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "context-layer",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "a194b2bb984a60e3",
+      "id": "ch-dataset-178",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "ambiguous",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "89ee01c7c96d318f",
+      "id": "ch-dataset-188",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ]
+    },
+    {
+      "uid": "82141bbd9ace397c",
+      "id": "ch-quant-006",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "a4b351fefea58cc0",
+      "id": "ch-quant-008",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "690b48011d1721ce",
+      "id": "ch-quant-011",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "559aebf17d01e03c",
+      "id": "ch-quant-021",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "880ee949c37bac89",
+      "id": "ch-quant-025",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "c8db9544eb2c2667",
+      "id": "ch-quant-027",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "4007119d0b85bb1a",
+      "id": "ch-quant-041",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "ed6811b2c3ff8cca",
+      "id": "ch-quant-044",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "fa9edce9b696bed0",
+      "id": "ch-quant-052",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "f529b8bfe3e6683d",
+      "id": "ch-quant-058",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "407981e7b908787a",
+      "id": "ch-quant-063",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "8df8f9ccd7f6c7b0",
+      "id": "ch-quant-074",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "edb9823f8d1e04e3",
+      "id": "ch-quant-079",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1d0b540fb8556ca0",
+      "id": "ch-quant-086",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "6d3452dc98d298e1",
+      "id": "ch-quant-088",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "0a9fffb95ed3c98d",
+      "id": "ch-quant-099",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "e33ec3acf4b5bad2",
+      "id": "ch-quant-111",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "182acf7300167836",
+      "id": "ch-quant-117",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "b7dd536d8ce4f51b",
+      "id": "ch-quant-133",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "64fb1908b38a4417",
+      "id": "ch-quant-142",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "a9c88208d8086e0c",
+      "id": "ch-comp-009",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1a3364634d37d004",
+      "id": "ch-comp-015",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "78ae4c3d86a517c0",
+      "id": "ch-comp-021",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "d562fc610c821e0b",
+      "id": "ch-comp-030",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "86b813124bc3e4ca",
+      "id": "ch-comp-040",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "606969e6781a9bb6",
+      "id": "ch-comp-042",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "666e2112f9410727",
+      "id": "ch-comp-048",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "b878ff17828ab778",
+      "id": "ch-comp-056",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "3a65b6eb18b94116",
+      "id": "ch-comp-060",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "3050d45cf32974a6",
+      "id": "ch-comp-068",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "bf71c858c5938709",
+      "id": "ch-comp-074",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "6fbd2db571b0a2ca",
+      "id": "ch-comp-079",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "00bdaf9b07801c3c",
+      "id": "ch-comp-080",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "fa906bd57dfd8594",
+      "id": "ch-comp-096",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "cbd627d068d508bc",
+      "id": "ch-comp-102",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1e8cea806ca5e0fd",
+      "id": "ch-comp-116",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "61186b1f1f0ee398",
+      "id": "ch-comp-119",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "02cf224ef8f9ae24",
+      "id": "ch-comp-129",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "df5a7585e68f8771",
+      "id": "ch-comp-135",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "8e3915f13824f03b",
+      "id": "ch-comp-140",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "a645e33258d22184",
+      "id": "ch-trend-007",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "9d91134dfd0843e4",
+      "id": "ch-trend-009",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "ebdeeb5d7382c751",
+      "id": "ch-trend-010",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "e1dd1c58579ab756",
+      "id": "ch-trend-013",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "c7196832089f91e4",
+      "id": "ch-trend-015",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "85160360329a154f",
+      "id": "ch-trend-019",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1740ad71cd323950",
+      "id": "ch-trend-025",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "da1616bbaa269986",
+      "id": "ch-trend-027",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "3450d65aee17e379",
+      "id": "ch-trend-030",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "6f80f0970f8f5568",
+      "id": "ch-trend-031",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "eacecf2440e3d34c",
+      "id": "ch-trend-034",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "699816c97c19d7ab",
+      "id": "ch-trend-040",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "e7bc2e2998cb6903",
+      "id": "ch-trend-042",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "048722f966608f87",
+      "id": "ch-trend-043",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "f2fb98d0a0a55b6f",
+      "id": "ch-trend-051",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "4e0ad62653c3a160",
+      "id": "ch-trend-057",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "79e9b8c7ce28a883",
+      "id": "ch-trend-059",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1769058128129d7d",
+      "id": "ch-trend-061",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "b2c55c8ffde37e1e",
+      "id": "ch-trend-064",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    },
+    {
+      "uid": "1d7b75e0055b10ae",
+      "id": "ch-trend-065",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ]
+    }
+  ],
+  "errata": [],
+  "retired": {
+    "date": "2026-10-01",
+    "reason": "replaced by 2026-draft-2, the curated v2026 proposed set (seeds/benchmark-v2026-proposed.csv)",
+    "superseded_by": "2026-draft-2"
+  }
+}

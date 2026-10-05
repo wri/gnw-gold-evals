@@ -1,0 +1,29 @@
+id: ch-mon-020
+uid: a4888293e13978c8
+status: ready
+set: monitoring
+group: recent_area
+query: Berapa luas peringatan deforestasi di Kalimantan Utara bulan lalu?
+expected:
+  aoi_ids: IDN.35
+  dataset_id: '11'
+  start_date: '{last_month_start}'
+  end_date: '{last_month_end}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Replies in Indonesian.
+notes:
+  difficulty: medium
+  behaviour: answer with data (in Indonesian)
+  benchmark_id: bm26-129
+  lineage: benchmark v2026 proposed set (bm26-129); USY-000591 TuK Indonesia
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  benchmark_type: monitoring
+  jtbd: '3'
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists
+  user_story_refs: USY-000591 TuK Indonesia

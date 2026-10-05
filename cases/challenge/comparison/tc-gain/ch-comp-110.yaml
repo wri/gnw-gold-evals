@@ -19,3 +19,12 @@ notes:
   manifest_id: m-gain-comp-01
   lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-01a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-073
+  benchmark_type: comparison
+  jtbd: 2,1
+  impact_pathway: 3 Policy & planning (restoration)
+  user_groups: Program mgrs; Field staff; Service providers; Policy/planning; GIS analysts;
+    Journalists; Public/educators
+  synthetic: 'FALSE'
+  user_story_refs: USY-001364 El Salvador 20x20; USY-001330 FDA
+  refresh_risk: Low

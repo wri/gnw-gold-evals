@@ -19,3 +19,12 @@ notes:
   manifest_id: m-tcl-trend-01
   lineage: gnw-evals eval-metrics-slice-1 gt-trend-01
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-082
+  benchmark_type: trend
+  jtbd: 1,5,9
+  impact_pathway: 4 Commitments & accountability; 5 Finance for nature
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Supply chain; Sustainable finance; Service providers; All direct-connect groups
+  synthetic: 'FALSE'
+  user_story_refs: USY-001284 India loss; USY-001383 GEF-9 targets; RF-UK Gabon/CAFI
+  refresh_risk: Low

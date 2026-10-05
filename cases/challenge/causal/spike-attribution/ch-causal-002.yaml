@@ -1,0 +1,25 @@
+id: ch-causal-002
+uid: 468bf9d2f37d4b7f
+status: ready
+set: causal
+group: spike_attribution
+query: What caused the spike in Bolivia's tree cover loss in 2024?
+expected:
+  aoi_ids: BOL
+  dataset_id: 10;8
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: hard
+  behaviour: answer with fire + driver data
+  benchmark_id: bm26-141
+  lineage: benchmark v2026 proposed set (bm26-141); USY-001217 Bolivia fires
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: '1'
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators
+  user_story_refs: USY-001217 Bolivia fires

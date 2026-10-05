@@ -1,0 +1,28 @@
+id: ch-trend-075
+uid: 7582bff8d58ac8ca
+status: ready
+set: trend
+group: tcl
+query: Has tree cover loss in Ghana's Ashanti region increased between 2010 and 2023, and
+  which year was worst?
+expected:
+  aoi_ids: GHA2
+  dataset_id: '4'
+  start_date: '2010-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-081
+  lineage: benchmark v2026 proposed set (bm26-081); USY-001392 Ghana Cocoa Belt
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: trend
+  jtbd: 1,5
+  impact_pathway: 5 Finance for nature
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Supply chain; Sustainable finance; Service providers
+  user_story_refs: USY-001392 Ghana Cocoa Belt
