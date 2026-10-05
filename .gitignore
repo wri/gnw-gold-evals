@@ -20,5 +20,6 @@ results/artifacts/
 # survives only when a run was killed — resume with `gold run --resume <run_id>`)
 results/runs/*.partial.jsonl
 
-# AI planning (local-only; untracked 2026-08-04)
+# Local planning notes, never committed. Committed docs must not link here:
+# a fresh clone does not have these files.
 docs/specs/
