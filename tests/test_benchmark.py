@@ -41,7 +41,8 @@ def test_query_types_split_geospatial_and_dataset():
     assert by_key["geospatial"]["sets"] == ["aoi"]
     assert by_key["dataset"]["sets"] == ["dataset"]
     measured = {k for k, t in by_key.items() if t["sets"]}
-    assert measured == {"geospatial", "dataset", "quantification", "comparison", "trend"}
+    assert measured == {"geospatial", "dataset", "quantification", "comparison", "trend",
+                        "monitoring", "causal"}
 
 
 def test_round_trip_and_member_uids():

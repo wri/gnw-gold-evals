@@ -1,0 +1,27 @@
+id: ch-causal-017
+uid: e3bc598abce89d54
+status: ready
+set: causal
+group: driver_share
+query: How much of the DRC's tree cover loss from 2015 to 2024 came from shifting cultivation
+  versus permanent agriculture?
+expected:
+  aoi_ids: COD
+  dataset_id: '8'
+  start_date: '2015-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-156
+  lineage: benchmark v2026 proposed set (bm26-156); USY-001330 FDA drivers
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: 1,9
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    All direct-connect groups
+  user_story_refs: USY-001330 FDA drivers

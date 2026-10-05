@@ -12,14 +12,21 @@ caught by ``validate_templates`` (called from the audit and from check.py).
 from __future__ import annotations
 
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 _TOKEN_RE = re.compile(r"\{([a-z_]+)\}")
+# Run-relative ISO dates for expected values of rolling-window questions
+# ("alerts in the last month"): {run} is the run's date, {run-30d} is 30 days
+# before it. The YAML keeps the token, so the uid is stable across runs.
+_DATE_TOKEN_RE = re.compile(r"\{run(?:-(\d+)d)?\}")
 
 TEMPLATE_VARS: dict[str, str] = {
     "current_month": "current calendar month and year, e.g. 'August 2026'",
     "last_month": "previous calendar month and year, e.g. 'July 2026'",
     "current_year": "current four-digit year, e.g. '2026'",
+    "month_start": "ISO date of the first day of the current month, e.g. '2026-10-01'",
+    "last_month_start": "ISO date of the first day of the previous month, e.g. '2026-09-01'",
+    "last_month_end": "ISO date of the last day of the previous month, e.g. '2026-09-30'",
 }
 
 
@@ -34,6 +41,13 @@ def _resolve(name: str, now: datetime) -> str:
         return datetime(year, month, 1).strftime("%B %Y")
     if name == "current_year":
         return str(now.year)
+    if name == "month_start":
+        return now.replace(day=1).strftime("%Y-%m-%d")
+    if name in ("last_month_start", "last_month_end"):
+        first_this = now.replace(day=1)
+        last_prev = first_this - timedelta(days=1)
+        day = last_prev.replace(day=1) if name == "last_month_start" else last_prev
+        return day.strftime("%Y-%m-%d")
     raise KeyError(name)
 
 
@@ -46,13 +60,16 @@ def resolve_templates(text: str, now: datetime | None = None) -> str:
     if "{" not in text:
         return text
     now = now or datetime.now()
+    text = _DATE_TOKEN_RE.sub(
+        lambda m: (now - timedelta(days=int(m.group(1) or 0))).strftime("%Y-%m-%d"), text
+    )
     return _TOKEN_RE.sub(lambda m: _resolve(m.group(1), now), text)
 
 
 def validate_templates(text: str) -> list[str]:
     """Return a list of problems; empty means every token is recognised."""
     problems: list[str] = []
-    for match in _TOKEN_RE.finditer(text):
+    for match in re.finditer(r"\{([a-z_][a-z0-9_+-]*)\}", _DATE_TOKEN_RE.sub("", text)):
         name = match.group(1)
         if name not in TEMPLATE_VARS:
             problems.append(f"unknown template variable {{{name}}}")
@@ -61,4 +78,4 @@ def validate_templates(text: str) -> list[str]:
 
 def has_templates(text: str) -> bool:
     """True when *text* contains at least one ``{var}`` token."""
-    return bool(_TOKEN_RE.search(text))
+    return bool(_TOKEN_RE.search(text) or _DATE_TOKEN_RE.search(text))

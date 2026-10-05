@@ -52,16 +52,40 @@ QUERY_TYPES: tuple[dict[str, Any], ...] = (
     {"key": "geospatial", "label": "Geospatial", "sets": ["aoi"]},
     {"key": "dataset", "label": "Dataset", "sets": ["dataset"]},
     {"key": "quantification", "label": "Quantification", "sets": ["quantification"]},
-    {"key": "monitoring", "label": "Monitoring", "sets": []},
+    {"key": "monitoring", "label": "Monitoring", "sets": ["monitoring"]},
     {"key": "comparison", "label": "Comparison", "sets": ["comparison"]},
     {"key": "trend", "label": "Trend", "sets": ["trend"]},
     {"key": "conceptual", "label": "Conceptual", "sets": []},
     {"key": "risk", "label": "Risk", "sets": []},
-    {"key": "causal", "label": "Causal", "sets": []},
+    {"key": "causal", "label": "Causal", "sets": ["causal"]},
     {"key": "feasibility", "label": "Feasibility", "sets": []},
 )
 
 MEMBER_FIELDS = ("uid", "id", "type", "set", "cohort", "difficulty", "stages")
+# Optional use-case facets (curated versions imported from a sheet): the
+# sheet row id, Jobs-to-be-Done numbers, impact pathway numbers ("x" =
+# cross-cutting), user groups, and whether the question is synthetic.
+OPTIONAL_LIST_FIELDS = ("jobs", "pathways", "user_groups")
+
+IMPACT_PATHWAYS = {
+    "1": "Local stewardship",
+    "2": "Commodity supply chains",
+    "3": "Policy & planning",
+    "4": "Commitments & accountability",
+    "5": "Finance for nature",
+    "x": "Cross-cutting: trust",
+}
+JOBS = {
+    "1": "Historical land-use change trends and areas of concern",
+    "2": "Restoration and remediation opportunities",
+    "3": "Recent disturbances and alerts in areas of interest",
+    "5": "Monitor land-use change in areas of interest for compliance",
+    "7": "Land-use change against protected areas, IPLC lands and concessions",
+    "8": "Compare global and national data",
+    "9": "Clear, simplified metrics",
+    "10": "Understand and evaluate available data",
+    "11": "Explore and visualise interactively",
+}
 
 
 @dataclass(frozen=True)
@@ -73,9 +97,14 @@ class Member:
     cohort: str
     difficulty: str  # "" where the source case carries no label
     stages: tuple[str, ...]
+    benchmark_id: str = ""
+    jobs: tuple[str, ...] = ()
+    pathways: tuple[str, ...] = ()
+    user_groups: tuple[str, ...] = ()
+    synthetic: bool = False
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        out: dict[str, Any] = {
             "uid": self.uid,
             "id": self.id,
             "type": self.type,
@@ -84,6 +113,14 @@ class Member:
             "difficulty": self.difficulty,
             "stages": list(self.stages),
         }
+        if self.benchmark_id:
+            out["benchmark_id"] = self.benchmark_id
+        for name in OPTIONAL_LIST_FIELDS:
+            if getattr(self, name):
+                out[name] = list(getattr(self, name))
+        if self.synthetic:
+            out["synthetic"] = True
+        return out
 
 
 @dataclass(frozen=True)
@@ -142,6 +179,12 @@ class Benchmark:
             unknown = [s for s in m.stages if s not in STAGE_ORDER]
             if unknown:
                 problems.append(f"{m.id}: unknown stages {unknown}")
+            bad = [p for p in m.pathways if p not in IMPACT_PATHWAYS]
+            if bad:
+                problems.append(f"{m.id}: unknown impact pathways {bad}")
+            bad = [j for j in m.jobs if j not in JOBS]
+            if bad:
+                problems.append(f"{m.id}: unknown jobs {bad}")
         for e in self.errata:
             if e.uid not in seen:
                 problems.append(f"erratum {e.uid} does not name a member")
@@ -171,6 +214,11 @@ def from_dict(data: dict[str, Any]) -> Benchmark:
             uid=raw["uid"], id=raw["id"], type=raw["type"], set=raw["set"],
             cohort=raw["cohort"], difficulty=raw["difficulty"],
             stages=tuple(raw["stages"]),
+            benchmark_id=raw.get("benchmark_id", ""),
+            jobs=tuple(raw.get("jobs", ())),
+            pathways=tuple(raw.get("pathways", ())),
+            user_groups=tuple(raw.get("user_groups", ())),
+            synthetic=bool(raw.get("synthetic", False)),
         ))
     errata = tuple(
         Erratum(uid=e["uid"], date=e.get("date", ""), reason=e.get("reason", ""))

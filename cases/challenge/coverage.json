@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "72fafbb2ec30afd2",
-  "case_count": 718,
+  "caseset_version": "124f96526065f24a",
+  "case_count": 781,
   "statuses": {
-    "ready": 713,
-    "todo": 5
+    "ready": 775,
+    "todo": 6
   },
-  "active_count": 718,
+  "active_count": 781,
   "groups": [
     {
       "group": "acronyms",
@@ -34,11 +34,51 @@
       }
     },
     {
+      "group": "buffer_unsupported",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "by_confidence",
+      "cases": 4,
+      "active": 4,
+      "statuses": {
+        "ready": 4
+      }
+    },
+    {
+      "group": "caveat_required",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "commodity_overclaim",
+      "cases": 3,
+      "active": 3,
+      "statuses": {
+        "ready": 3
+      }
+    },
+    {
       "group": "concepts",
       "cases": 16,
       "active": 16,
       "statuses": {
         "ready": 16
+      }
+    },
+    {
+      "group": "concession_alerts",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
       }
     },
     {
@@ -74,12 +114,44 @@
       }
     },
     {
+      "group": "driver_check",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "driver_share",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "driver_vs_fire",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
       "group": "expansion",
       "cases": 10,
       "active": 10,
       "statuses": {
         "ready": 6,
         "todo": 4
+      }
+    },
+    {
+      "group": "fire_share_pa",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
       }
     },
     {
@@ -123,6 +195,14 @@
       }
     },
     {
+      "group": "monthly_recent",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
       "group": "multi",
       "cases": 10,
       "active": 10,
@@ -140,10 +220,74 @@
     },
     {
       "group": "natural-lands",
-      "cases": 34,
-      "active": 34,
+      "cases": 36,
+      "active": 36,
       "statuses": {
-        "ready": 34
+        "ready": 36
+      }
+    },
+    {
+      "group": "no_aoi",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "portfolio_rank",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "todo": 1
+      }
+    },
+    {
+      "group": "premise_check",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "recent_area",
+      "cases": 9,
+      "active": 9,
+      "statuses": {
+        "ready": 9
+      }
+    },
+    {
+      "group": "recent_default",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "recent_presence",
+      "cases": 4,
+      "active": 4,
+      "statuses": {
+        "ready": 4
+      }
+    },
+    {
+      "group": "recent_rank",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "recent_vs_prior",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
       }
     },
     {
@@ -163,6 +307,14 @@
       }
     },
     {
+      "group": "spike_attribution",
+      "cases": 3,
+      "active": 3,
+      "statuses": {
+        "ready": 3
+      }
+    },
+    {
       "group": "tc-gain",
       "cases": 37,
       "active": 37,
@@ -172,10 +324,10 @@
     },
     {
       "group": "tcl",
-      "cases": 101,
-      "active": 101,
+      "cases": 112,
+      "active": 112,
       "statuses": {
-        "ready": 101
+        "ready": 112
       }
     },
     {
@@ -188,18 +340,18 @@
     },
     {
       "group": "tcl-fires",
-      "cases": 49,
-      "active": 49,
+      "cases": 50,
+      "active": 50,
       "statuses": {
-        "ready": 49
+        "ready": 50
       }
     },
     {
       "group": "tree-cover",
-      "cases": 35,
-      "active": 35,
+      "cases": 36,
+      "active": 36,
       "statuses": {
-        "ready": 35
+        "ready": 36
       }
     },
     {
@@ -211,6 +363,14 @@
       }
     },
     {
+      "group": "unsupported_action",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
       "group": "vague",
       "cases": 8,
       "active": 8,
@@ -218,11 +378,43 @@
         "ready": 7,
         "todo": 1
       }
+    },
+    {
+      "group": "why_pa",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "why_subnational",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "why_territory",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "ytd",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
     }
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 671,
+      "dedicated": 732,
       "shared_only": 0
     },
     "analysis": {
@@ -230,7 +422,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 45,
+      "dedicated": 67,
       "shared_only": 0
     },
     "output": {
@@ -238,34 +430,34 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 226,
+      "dedicated": 227,
       "shared_only": 0
     }
   },
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 561,
+      "cases": 621,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 475,
+      "cases": 533,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 365,
+      "cases": 425,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
       "field": "end_date",
-      "cases": 226,
+      "cases": 272,
       "switches_on": "date_extraction (with start_date)"
     },
     {
       "field": "start_date",
-      "cases": 226,
+      "cases": 272,
       "switches_on": "date_extraction (with end_date)"
     },
     {
@@ -275,22 +467,22 @@
     },
     {
       "field": "context_layer",
-      "cases": 163,
+      "cases": 168,
       "switches_on": "context_layer_match"
     },
     {
       "field": "text",
-      "cases": 45,
+      "cases": 67,
       "switches_on": "expected_text_match"
     },
     {
       "field": "dataset_parameters",
-      "cases": 36,
+      "cases": 37,
       "switches_on": "dataset_parameter_match"
     },
     {
       "field": "clarification",
-      "cases": 18,
+      "cases": 19,
       "switches_on": "clarification_requested"
     },
     {
@@ -349,7 +541,9 @@
       "switches_on": "suggested_datasets_match"
     }
   ],
-  "unknown_expected_fields": [],
+  "unknown_expected_fields": [
+    "date_tolerance_days"
+  ],
   "dataset_coverage": {
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",
@@ -381,7 +575,7 @@
         "dataset_id": "3",
         "dataset_name": "SBTN Natural Lands Map",
         "missing_instructions": [],
-        "cases": 42,
+        "cases": 44,
         "answer_graded": 0,
         "parameters": [],
         "context_layers": []
@@ -390,8 +584,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 117,
-        "answer_graded": 0,
+        "cases": 133,
+        "answer_graded": 4,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -401,7 +595,7 @@
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 20
+            "cases": 24
           },
           {
             "name": "intact_forest",
@@ -436,12 +630,12 @@
         "dataset_id": "7",
         "dataset_name": "Tree cover",
         "missing_instructions": [],
-        "cases": 41,
+        "cases": 42,
         "answer_graded": 0,
         "parameters": [
           {
             "name": "canopy_cover",
-            "cases": 9
+            "cases": 10
           }
         ],
         "context_layers": [
@@ -455,8 +649,8 @@
         "dataset_id": "8",
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
-        "cases": 40,
-        "answer_graded": 0,
+        "cases": 57,
+        "answer_graded": 11,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -469,8 +663,8 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 37,
-        "answer_graded": 4,
+        "cases": 38,
+        "answer_graded": 5,
         "parameters": [],
         "context_layers": []
       },
@@ -478,8 +672,8 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 57,
-        "answer_graded": 0,
+        "cases": 64,
+        "answer_graded": 2,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -489,7 +683,7 @@
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 6
+            "cases": 7
           },
           {
             "name": "intact_forest",
@@ -501,8 +695,8 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 53,
-        "answer_graded": 0,
+        "cases": 80,
+        "answer_graded": 8,
         "parameters": [],
         "context_layers": []
       },
@@ -553,6 +747,12 @@
       "status": "todo",
       "group": "vague",
       "reason": null
+    },
+    {
+      "id": "ch-mon-028",
+      "status": "todo",
+      "group": "portfolio_rank",
+      "reason": "needs a seeded test account with saved areas (portfolio triage); not runnable yet"
     }
   ],
   "known_gaps": {

@@ -13,3 +13,11 @@ notes:
   verify_query: São Paulo
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
+  benchmark_id: bm26-169
+  benchmark_type: spatial
+  jtbd: '8'
+  impact_pathway: 'Cross-cutting: right place'
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Supply chain
+  synthetic: 'FALSE'
+  user_story_refs: —
+  refresh_risk: Low

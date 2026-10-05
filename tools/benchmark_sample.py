@@ -109,6 +109,8 @@ def build(cases_dir: Path, version: str, per_type: int, seed: int,
     for qtype in QUERY_TYPES:
         for set_name in qtype["sets"]:
             chosen = sample_type(cases, set_name, per_type, seed)
+            if not chosen:
+                continue  # no eligible cases yet: the type stays unmeasured
             if len(chosen) < per_type:
                 raise SystemExit(
                     f"{set_name}: only {len(chosen)} eligible cases for "
@@ -148,7 +150,7 @@ def build(cases_dir: Path, version: str, per_type: int, seed: int,
         },
         "stage_order": list(STAGE_ORDER),
         "types": [
-            {**t, "measured": bool(t["sets"])} for t in QUERY_TYPES
+            {**t, "measured": t["key"] in strata_record} for t in QUERY_TYPES
         ],
         "members": members,
         "errata": [],

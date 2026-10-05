@@ -16,3 +16,11 @@ notes:
   lineage: out of domain
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
   source_tab: challenge-dataset-v1
+  benchmark_id: bm26-200
+  benchmark_type: scope
+  jtbd: '10'
+  impact_pathway: 'Cross-cutting: trust (no misleading answers)'
+  user_groups: All direct-connect groups
+  synthetic: 'FALSE'
+  user_story_refs: —
+  refresh_risk: Low

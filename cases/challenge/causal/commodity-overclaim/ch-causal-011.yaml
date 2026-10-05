@@ -1,0 +1,29 @@
+id: ch-causal-011
+uid: d8240a8fed94afbb
+status: ready
+set: causal
+group: commodity_overclaim
+query: Is soy or cattle driving tree cover loss in Mato Grosso since 2015?
+expected:
+  aoi_ids: BRA.12
+  dataset_id: '8'
+  start_date: '2015-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Does not name soy or cattle as the driver, since the driver data does not identify
+    the commodity.
+notes:
+  difficulty: hard
+  behaviour: answer with drivers data; must not name a commodity the data does not identify
+  benchmark_id: bm26-150
+  lineage: benchmark v2026 proposed set (bm26-150); Trase EUDR; USY-001293 Sicredi
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: causal
+  jtbd: 1,5,7
+  impact_pathway: 2 Commodity supply chains
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Supply chain; Sustainable finance; Service providers; Field staff
+  user_story_refs: Trase EUDR; USY-001293 Sicredi

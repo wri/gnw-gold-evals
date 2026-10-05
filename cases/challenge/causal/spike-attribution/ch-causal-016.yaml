@@ -1,0 +1,26 @@
+id: ch-causal-016
+uid: 0bae6383eeb3f71c
+status: ready
+set: causal
+group: spike_attribution
+query: What caused Indonesia's spike in tree cover loss in 2016?
+expected:
+  aoi_ids: IDN
+  dataset_id: 10;8
+  start_date: '2016-01-01'
+  end_date: '2016-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: easy
+  behaviour: answer with fire + driver data (2015 fire season effects)
+  benchmark_id: bm26-155
+  lineage: benchmark v2026 proposed set (bm26-155); USY-000591 TuK
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: 1,9
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    All direct-connect groups
+  user_story_refs: USY-000591 TuK

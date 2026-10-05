@@ -17,3 +17,12 @@ notes:
   manifest_id: m-grass-trend-05
   lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-05a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-098
+  benchmark_type: trend
+  jtbd: 1,2
+  impact_pathway: 3 Policy & planning; 5 Finance
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    Field staff; Service providers
+  synthetic: 'FALSE'
+  user_story_refs: USY-001529 Caquetá; USY-001293 Sicredi
+  refresh_risk: Low

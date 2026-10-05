@@ -1,0 +1,30 @@
+id: ch-causal-010
+uid: db8171d7d561fbbf
+status: ready
+set: causal
+group: caveat_required
+query: Why was Gabon's tree cover loss higher in 2016–2017 than its 2006–2015 average, when
+  it reported lower emissions?
+expected:
+  aoi_ids: GAB
+  dataset_id: 4;8
+  start_date: '2006-01-01'
+  end_date: '2017-12-31'
+  data_pull: 'TRUE'
+  text: Caveats that selective logging is not captured by satellite tree cover loss data.
+notes:
+  difficulty: hard
+  behaviour: answer with data; must caveat that selective logging is not captured by satellite
+    loss data
+  benchmark_id: bm26-149
+  lineage: benchmark v2026 proposed set (bm26-149); Rainforest Foundation UK vs CAFI results-based
+    payment
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  benchmark_type: causal
+  jtbd: 1,9
+  impact_pathway: 5 Finance for nature
+  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
+    All direct-connect groups
+  user_story_refs: Rainforest Foundation UK vs CAFI results-based payment

@@ -58,7 +58,13 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from goldset.benchmark import STAGE_ORDER, Benchmark, load_benchmark  # noqa: E402
+from goldset.benchmark import (  # noqa: E402
+    IMPACT_PATHWAYS,
+    JOBS,
+    STAGE_ORDER,
+    Benchmark,
+    load_benchmark,
+)
 from goldset.buckets import (  # noqa: E402
     DEDICATED,
     base_check_name,
@@ -567,9 +573,22 @@ def rollup_benchmark(run: dict[str, Any], bench: Benchmark) -> dict[str, Any]:
             # coverage matrix row: members exercising each stage
             "stages": {s: sum(s in m.stages for m in mine) for s in STAGE_ORDER},
         })
+    def by_facet(field: str, labels: dict[str, str]) -> list[dict[str, Any]]:
+        # A member can sit in several groups (multi-tagged), so groups overlap.
+        out = []
+        for key, label in labels.items():
+            mine = [m for m in members.values() if key in getattr(m, field)]
+            if not mine:
+                continue
+            entries = [by_uid[m.uid] for m in mine if m.uid in by_uid]
+            out.append({"key": key, "label": label, "members": len(mine), **_block(entries)})
+        return out
+
     return {
         "run_id": run.get("run_id"),
         "version": bench.version,
+        "pathways": by_facet("pathways", IMPACT_PATHWAYS),
+        "jobs": by_facet("jobs", JOBS),
         "status": bench.status,
         "members": len(members),
         "voided": len(bench.errata),
@@ -604,6 +623,11 @@ def render_benchmark_markdown(rollups: list[dict[str, Any]]) -> str:
                 f"{_pct(t['ci_low'])}-{_pct(t['ci_high'])} | "
                 + " | ".join(str(fm[s]) for s in ATTRIBUTION) + " |"
             )
+        for facet, title in (("pathways", "impact pathway"), ("jobs", "job")):
+            if r.get(facet):
+                lines += ["", f"By {title} (members can sit in several):", "",
+                          "| group | n | complete |", "|---|---|---|"]
+                lines += [f"| {g['label']} | {g['n']} | {_pct(g['rate'])} |" for g in r[facet]]
         lines += ["", "Coverage (members exercising each stage):", "",
                   "| type | " + " | ".join(STAGE_ORDER) + " |",
                   "|---|" + "---|" * len(STAGE_ORDER)]

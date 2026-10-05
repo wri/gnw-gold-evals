@@ -1,0 +1,27 @@
+id: ch-comp-146
+uid: fc737257d8e54375
+status: ready
+set: comparison
+group: tcl
+query: Compare tree cover loss in Pará and Mato Grosso in 2023
+expected:
+  aoi_ids: BRA.14;BRA.12
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-047
+  lineage: benchmark v2026 proposed set (bm26-047); Brazilian state enforcement
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  benchmark_type: comparison
+  jtbd: 5,8
+  impact_pathway: 4 Commitments & accountability
+  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
+    Program mgrs
+  user_story_refs: Brazilian state enforcement

@@ -64,3 +64,24 @@ def test_benchmark_rollup_rates_modes_and_matrix():
     assert types["trend"]["members"] == 1              # voided member left out
     md = cr.render_benchmark_markdown([r])
     assert "not yet measured" in md and "North Star: **66.7%**" in md
+
+
+def test_rollup_groups_by_pathway_and_job():
+    b = from_dict({
+        "schema_version": SCHEMA_VERSION, "version": "t", "status": "draft", "frozen": None,
+        "source": {}, "sampling": {}, "types": list(QUERY_TYPES), "errata": [],
+        "members": [
+            {"uid": "a", "id": "a", "type": "trend", "set": "trend", "cohort": "c", "difficulty": "",
+             "stages": ["retrieval"], "pathways": ["1", "4"], "jobs": ["1"]},
+            {"uid": "b", "id": "b", "type": "trend", "set": "trend", "cohort": "c", "difficulty": "",
+             "stages": ["retrieval"], "pathways": ["4"], "jobs": ["3"]},
+        ],
+    })
+    run = {"run_id": "r", "results": [entry("a", {"dataset_id_match": 1.0}),
+                                      entry("b", {"dataset_id_match": 0.0})]}
+    r = cr.rollup_benchmark(run, b)
+    pw = {g["key"]: g for g in r["pathways"]}
+    assert (pw["1"]["passed"], pw["1"]["n"]) == (1, 1)
+    assert (pw["4"]["passed"], pw["4"]["n"]) == (1, 2)
+    assert {g["key"] for g in r["jobs"]} == {"1", "3"}
+    assert "By impact pathway" in cr.render_benchmark_markdown([r])

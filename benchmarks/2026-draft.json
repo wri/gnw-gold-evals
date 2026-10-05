@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "2026-draft",
-  "status": "draft",
+  "status": "retired",
   "created": "2026-09-29",
   "frozen": null,
   "source": {
@@ -1301,5 +1301,10 @@
       ]
     }
   ],
-  "errata": []
+  "errata": [],
+  "retired": {
+    "date": "2026-10-01",
+    "reason": "replaced by 2026-draft-2, the curated v2026 proposed set (seeds/benchmark-v2026-proposed.csv)",
+    "superseded_by": "2026-draft-2"
+  }
 }

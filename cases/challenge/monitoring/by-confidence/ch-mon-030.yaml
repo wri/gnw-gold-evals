@@ -1,0 +1,31 @@
+id: ch-mon-030
+uid: b82229cc0f550e34
+status: ready
+set: monitoring
+group: by_confidence
+query: How many high-confidence alerts were there in Tesso Nilo National Park in the last
+  30 days?
+expected:
+  aoi_ids: '317197'
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  benchmark_id: bm26-139
+  lineage: benchmark v2026 proposed set (bm26-139); USY-000591 TuK (Riau fires)
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  unscored_params: confidence=high
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  benchmark_type: monitoring
+  jtbd: 3,7
+  impact_pathway: 1 Local stewardship
+  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
+    Journalists; Sustainable finance
+  user_story_refs: USY-000591 TuK (Riau fires)
