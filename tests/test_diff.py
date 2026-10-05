@@ -333,3 +333,12 @@ def test_json_report_keeps_its_keys_and_adds_gating_counts(tmp_path):
     assert info_lost["gating_coverage_lost"] == 0
     real_lost = diff(GATE_A, COV_B_REAL_LOST)
     assert real_lost["gating_coverage_lost"] == 1
+
+
+def test_help_keeps_the_docstring_layout():
+    # The transition table is only readable with its line breaks intact.
+    result = subprocess.run(
+        [sys.executable, str(TOOL), "--help"], capture_output=True, text=True
+    )
+    assert result.returncode == 0
+    assert "\n    regression        1.0 -> 0.0\n" in result.stdout
