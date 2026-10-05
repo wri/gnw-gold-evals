@@ -6,17 +6,22 @@ description: Use when running the GOLD eval set or finishing a run — preflight
 # gold-run — run the set and finish the job
 
 A run is not done when the JSON lands: it is done when someone can act on it.
-This skill covers preflight, the run, and CLAUDE.md's four-step after-run
-ritual, executed rather than cited.
+This skill covers preflight, the run, and the four-step after-run ritual
+([README, After a run](../../../README.md#after-a-run)), executed rather than
+cited. Terms are defined in the [README glossary](../../../README.md#glossary).
 
 ## 1. Preflight (all of these, every time)
 
-- **Token:** `API_TOKEN` must be set (`.env` holds it; the CLI loads it).
-- **Tool profile:** default to `--ff experimental`. Without it, dashboards and
-  satellite imagery are *absent* and every dashboard row fails in a way that is
-  indistinguishable from the capability being removed (see CLAUDE.md). If the
-  user explicitly wants the default profile, say what will fail and why, and
-  never compare the result against an experimental run.
+- **Token:** set the token for the target environment: `STAGING_API_TOKEN`
+  for `--env staging`, `PROD_API_TOKEN` for `--env prod`, plus
+  `ANTHROPIC_API_KEY` for the judge (the CLI loads `.env`). `API_TOKEN` is
+  only a fallback (and the one `--env local` reads), so make sure it does not
+  hold another environment's token. See [README, Setup](../../../README.md#setup).
+- **Tool profile:** run the default profile (no `--ff`). Add
+  `--ff experimental` only when the run is about something still behind that
+  profile, and then diff it only against other `experimental` runs. Check the
+  `ff` of the baseline you will diff against before you start. The rule, and
+  what each profile holds: [README, Running the set](../../../README.md#running-the-set).
 - **Tier — decide out loud:**
   - *Smoke* (`--trials 1`, the default): minutes-fast iteration. Never
     committed, never diffed, never a baseline.
@@ -32,15 +37,17 @@ ritual, executed rather than cited.
   timeout block once mimicked a capability loss).
 
 ```bash
-uv run gold run --env staging --ff experimental --build "<label>"            # smoke
-uv run gold run --env staging --ff experimental --trials 3 --build "<label>" # official
+uv run gold run --env staging --build "<label>"              # smoke
+uv run gold run --env staging --trials 3 --build "<label>"   # official
 ```
 
 ## 2. During the run
 
-Watch the output for judge errors (rows flagged `JUDGE ERRORS` must be rerun
-before being trusted) and for contiguous blocks of timeouts near the end — a
-load-shaped signature, not an agent regression.
+Watch the progress lines for `[ERROR]` rows and the closing line ("N with
+ERRORS (rerun before trusting)"). An error row (a crash, a timeout or a judge
+error) is unmeasured, not failed: rerun it before trusting it. A contiguous
+block of timeouts near the end is a load signature, not an agent regression.
+If the run is killed, finish it with `uv run gold run --resume <run_id>`.
 
 ## 3. After the run (official tier; smoke stops here)
 
@@ -58,15 +65,14 @@ Run all four, in order:
    uv run python tools/flakiness.py results/runs/<run_id>.json --per-case
    uv run python tools/diff_runs.py results/runs/<prev>.json results/runs/<run_id>.json
    ```
-   *Comparable means:* same trial count, same `ff` (check the run_id suffix:
-   `…_staging_experimental` vs bare `…_staging`), overlapping caseset. If no
-   comparable run exists, say so — do not diff against something else.
-3. **Recommendations doc** at `results/recommendations/<run_id>.md`, four
-   sections: what to file upstream (agent behaviour, with row lists as
-   evidence); what the run says about the case set (stale expectations,
-   coverage holes, probation re-admissions); what it says about the harness;
-   a next-run watchlist. `results/recommendations/20260801T093002Z.md` is the
-   model.
+   Diff only against a comparable run: same `ff` (check the run_id suffix,
+   `…_prod_experimental` versus `…_prod`), same trial count, same
+   environment. The full definition is in
+   [results/README.md, Comparing two runs](../../../results/README.md#comparing-two-runs).
+   If no comparable run exists, say so; do not diff against something else.
+3. **Recommendations doc** at `results/recommendations/<run_id>.md`: use the
+   **triage-run** skill, which classifies the failures and fills the four
+   sections listed in [README, After a run](../../../README.md#after-a-run).
 4. **Commit** — but **stop and show the user what will be committed first**
    (run JSON + reports + recommendations in one commit). Never hand-edit a
    run file; a re-ingest after a tooling fix means visibly deleting the file

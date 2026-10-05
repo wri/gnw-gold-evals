@@ -5,12 +5,12 @@ description: Use when project-zeno's dataset catalog may have changed — "did z
 
 # sync-catalog — dataset coverage refresh
 
-The agent's dataset catalog (`src/agent/datasets/catalog/*.yml` on
+The agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` on
 `wri/project-zeno` main) defines dataset ids, dataset-specific parameters,
-context layers, and per-dataset instruction fields. COVERAGE.md reports case
-coverage against a committed snapshot of it (`cases/zeno_catalog.json`) so CI
-needs no network. Background: CLAUDE.md §"Dataset coverage against
-project-zeno".
+context layers and per-dataset instruction fields. COVERAGE.md reports case
+coverage against a committed snapshot of it (`cases/zeno_catalog.json`), so
+CI needs no network, and explains how cases are counted against it. Terms
+are defined in the [README glossary](../../../README.md#glossary).
 
 ## Steps
 
@@ -30,9 +30,10 @@ project-zeno".
    ```
 4. **Read the coverage impact** from COVERAGE.md's dataset table and Known
    gaps: new gaps (a new dataset with 0 cases, a new parameter no case
-   exercises), disappeared gaps, and any expected `dataset_id` in cases that
-   the catalog no longer knows (that line names the ids — those cases need
-   attention before the next run).
+   exercises), disappeared gaps, and any expected `dataset_id` the catalogue
+   no longer knows. Those appear on the line "Expected `dataset_id` values
+   not in the catalog: …", which is present only when such cases exist; they
+   need attention before the next run.
 5. **Commit both files together** (`cases/zeno_catalog.json` +
    `cases/v2/COVERAGE.md`) with a message naming the zeno sha synced.
 

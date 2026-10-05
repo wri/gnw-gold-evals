@@ -1,26 +1,35 @@
 ---
 name: triage-run
-description: Use when analysing a finished GOLD run — "what failed", "triage this run", "look at the results". Produces classified failures (agent / stale case / harness / flake) and a filled recommendations skeleton.
+description: Use when analysing a finished GOLD run ("what failed", "triage this run", "look at the results"). Produces classified failures (agent regression, stale expectation, harness defect, flake) and a filled recommendations skeleton.
 ---
 
 # triage-run — turn a ledger run into actions
 
 Input: a `results/runs/<run_id>.json`. Output: a classified failure table and
 the four-section recommendations doc. The ledger file itself is read-only.
+Terms are defined in the [README glossary](../../../README.md#glossary).
 
 ## 1. Context before rows
 
-Read the run header first and state it: `ff` (run_id suffix — a bare
-`…_staging` run never exercised dashboards/imagery), `num_trials` (1-trial =
-smoke; its "failures" may be trial noise), `caseset`/`caseset_version`
-(matches current `cases/v2/MANIFEST.json`? if not, rows may be stale),
-`build`, `workers`/`trial_timeout`, and any `methodology_note`.
+Read the run header first and state it:
+
+- `ff` (also the run_id suffix), read together with the run date. Before
+  2026-08-31 dashboards and imagery existed only behind `ff=experimental`;
+  from that date the default profile has them. What each profile holds:
+  [README, Running the set](../../../README.md#running-the-set).
+- `num_trials`: a 1-trial run is a smoke run, and its "failures" may be trial
+  noise.
+- `caseset` / `caseset_version`: if the version differs from that store's
+  current `MANIFEST.json` (`cases/<caseset>/`), some rows were scored against
+  older case content.
+- `build`, `workers` / `trial_timeout`, and any `methodology_note`.
 
 ## 2. Extract the signal
 
-- **Failing rows:** any check `== 0.0` (majority verdict on multi-trial).
-  Pull `reasons` (judged checks) and `actuals` (expected vs measured) — the
-  expected-vs-measured pair is the triage evidence, lead with it.
+- **Failing rows:** any gating check `== 0.0` (the majority verdict on a
+  multi-trial run). An info-only check at `0.0` never fails a row. Pull
+  `reasons` (judged checks) and `actuals` (the measured value for each failed
+  check); measured against expected is the triage evidence, so lead with it.
 - **Flapping rows:** checks whose per-trial values disagree (`trials` array).
   Cross-check with `uv run python tools/flakiness.py <run> --per-case`.
 - **Judge errors:** rows with `judge_errors` are *unmeasured*, not failed —
@@ -39,20 +48,25 @@ smoke; its "failures" may be trial noise), `caseset`/`caseset_version`
 | **harness defect** | reason text contradicts actuals; check fired on wrong artifact; parse failure |
 | **flake** | trial disagreement, nudge-dependent routing, borderline tolerance |
 
-Rules of thumb from history: dashboard rows all failing → check `ff` before
-anything else; answer ~right but off by a tolerance → check dataset/params
-routing in actuals; multiple AOI resolutions across trials → known agent
-ambiguity, consider whether the case can earn a verdict at all.
+Rules of thumb:
+
+- A whole capability failing at once (every dashboard row, say): first check
+  that the run's profile had it (`ff` and run date, section 1).
+- An answer roughly right but outside the tolerance: check dataset and
+  parameter routing in actuals.
+- Several AOI resolutions across trials: a known agent ambiguity; consider
+  whether the case can earn a verdict at all.
 
 ## 4. Deliverable
 
-Fill `results/recommendations/<run_id>.md` (model:
-`results/recommendations/20260801T093002Z.md`):
+Fill `results/recommendations/<run_id>.md` with the four sections the
+after-run ritual requires ([README, After a run](../../../README.md#after-a-run));
+`results/recommendations/20260801T093002Z.md` is the model:
 
-1. **File upstream** — agent behaviour, with failing/flapping row lists.
-2. **Case set** — stale expectations, park/unpark candidates, coverage holes.
-3. **Harness** — check defects found while triaging.
-4. **Next-run watchlist** — what to confirm on the following run.
+1. **File upstream:** agent behaviour, with failing and flapping row lists.
+2. **Case set:** stale expectations, park and unpark candidates, coverage holes.
+3. **Harness:** check defects found while triaging.
+4. **Next-run watchlist:** what to confirm on the following run.
 
 ## Hand-offs (never do these inline)
 
