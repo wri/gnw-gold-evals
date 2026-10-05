@@ -1,10 +1,11 @@
-"""Render the four-layer GOLD report for a ledger run (PR-05).
+"""Print a four-layer Markdown report of one ledger run.
 
     uv run python tools/report_run.py results/runs/<run_id>.json
 
-Layers: row verdicts -> bucket table (scores beside coverage denominators)
--> reconciliation (implied vs evaluated, misses itemised) -> diagnostics
-(judge errors, slow rows). Markdown to stdout.
+The layers, in order: row verdicts; the bucket table (scores beside coverage
+denominators); reconciliation (implied versus evaluated checks, each miss
+listed); diagnostics (failing and errored rows, judge errors, slow rows).
+Use it for a quick read in the terminal or to paste into a PR.
 """
 
 from __future__ import annotations
@@ -105,7 +106,7 @@ def render(
             lines.append(
                 f"- {entry['id']} (status: {status}): {', '.join(sorted(failed))}"
             )
-            # multiturn detail (PR-09 H5): which turn sent what
+            # Multi-turn rows: show which turn's query failed which checks.
             for number, turn in enumerate(entry.get("turns_detail") or [], start=1):
                 turn_failed = [n for n in failed if n.startswith(f"t{number}.")]
                 if turn_failed:
@@ -128,7 +129,9 @@ def render(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("run", type=Path)
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     args = parser.parse_args()

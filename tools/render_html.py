@@ -7,7 +7,7 @@
     # -> results/reports/all-runs.html (every run, run-selector dropdown)
 
 Injects the run(s) (plus the current INFO_ONLY set, so verdict rendering
-matches buckets.py) into ``templates/run-report.html``. The template also
+matches buckets.py) into `templates/run-report.html`. The template also
 works uninjected: opened raw it accepts a run JSON by drag-and-drop.
 """
 
@@ -126,7 +126,9 @@ def render_report_all(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("run", type=Path, nargs="?",
                         help="results/runs/<run_id>.json")
     parser.add_argument("--all", action="store_true",

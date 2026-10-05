@@ -1,18 +1,20 @@
-"""Snapshot project-zeno's dataset catalog for coverage reporting.
+"""Snapshot project-zeno's dataset catalogue for coverage reporting.
 
 The agent repo (wri/project-zeno) defines every dataset the agent can use in
-``src/agent/datasets/catalog/*.yml``: dataset ids, dataset-specific
-parameters (e.g. ``canopy_cover``), context layers, and the four per-dataset
-instruction fields. COVERAGE.md reports case coverage against that catalog,
-but must stay regenerable offline (CI runs ``coverage_doc.py --check`` with
-no sibling checkout), so this tool commits a trimmed snapshot and
-``coverage_doc.py`` reads only the snapshot:
+`src/agent/datasets/catalog/*.yml`: dataset ids, dataset-specific parameters
+(for example `canopy_cover`), context layers, and the four per-dataset
+instruction fields. COVERAGE.md reports case coverage against that
+catalogue, but must stay regenerable offline: CI runs
+`coverage_doc.py --check` with no project-zeno checkout. So this tool commits
+a trimmed snapshot (cases/zeno_catalog.json), and `coverage_doc.py` reads
+only the snapshot:
 
-    uv run python tools/sync_zeno_catalog.py             # fetch origin/main, write cases/zeno_catalog.json
-    uv run python tools/sync_zeno_catalog.py --no-fetch  # use origin/main as already fetched
+    uv run python tools/sync_zeno_catalog.py             # fetch origin/main first
+    uv run python tools/sync_zeno_catalog.py --no-fetch  # use origin/main as fetched
 
-Files are read via ``git show <ref>:<path>`` so the project-zeno working
-tree is never touched. After a sync, regenerate the doc:
+Run it whenever project-zeno adds, removes or changes a dataset. Files are
+read with `git show <ref>:<path>`, so the project-zeno working tree is never
+touched. After a sync, regenerate the coverage doc:
 
     uv run python tools/coverage_doc.py
 """
@@ -114,7 +116,9 @@ def build_snapshot(zeno: Path, ref: str, fetch: bool) -> dict:
 
 def main() -> int:
     repo_root = Path(__file__).resolve().parents[1]
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--zeno", type=Path, default=repo_root.parent / "project-zeno",
                         help="path to a project-zeno checkout (default: sibling dir)")
     parser.add_argument("--ref", default="origin/main",

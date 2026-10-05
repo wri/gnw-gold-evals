@@ -37,7 +37,9 @@ def render_trends(runs: list[dict], template_text: str, generated: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--runs-dir", type=Path, default=Path("results/runs"),
                         help="ledger directory to chart")
     parser.add_argument("--out", type=Path, default=None,

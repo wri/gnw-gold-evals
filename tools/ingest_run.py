@@ -1,21 +1,25 @@
-"""Ingest a gnw-evals run (the ``*_detailed.csv``) into the results ledger.
+"""Legacy: ingest a gnw-evals run (its *_detailed.csv) into the results ledger.
 
-    uv run python tools/ingest_run.py \
-      --detailed ../gnw-evals/outputs/gold_run6_..._detailed.csv \
-      --environment staging --build "GNW 2026.7.29.1" --ff experimental \
-      --harness-sha unknown
+Only for runs made with the old gnw-evals harness; `gold run` writes the
+ledger itself.
 
-Joining (see results/README.md): rows carrying a ``uid`` column (exports
-from this repo) join directly — and if that uid is no longer in the store,
-the row is stale, full stop; falling back to a weaker join would re-key old
-scores onto edited case content, the exact misattribution uids exist to
-prevent. Only rows with no uid at all (legacy sheet runs) fall back to
-``test_id`` plus an exact-normalised-query match against the current store,
-a warned, weaker join. Rows that match neither are recorded with
-``stale_case: true``: never dropped, never re-keyed, excluded from
-regression math.
+    uv run python tools/ingest_run.py --detailed <gnw-evals-output>_detailed.csv
+        --environment staging --build "<label>" --harness-sha unknown
 
-Idempotent: same inputs and flags produce a byte-identical ledger file.
+How rows join the case store (rules in results/README.md):
+
+- A row with a `uid` column (exported from this repo) joins on that uid.
+- A row with no uid (old sheet runs) falls back to `test_id` plus an exact
+  match on the normalised query, with a warning.
+
+A row is stale if its uid is no longer in the store, if the fallback join
+finds no match, or if a fallback-joined row's scalar expected values
+(`DRIFT_COLUMNS`) differ from the case's current ones. A stale row is never
+re-keyed through a weaker join, because that would put old scores on edited
+case content, the misattribution uids exist to prevent. It is recorded with
+`stale_case: true`: never dropped, and left out of regression maths.
+
+Idempotent: the same inputs and flags produce a byte-identical ledger file.
 """
 
 from __future__ import annotations
@@ -141,7 +145,9 @@ def build_entry(row: dict, by_id: dict, by_uid: set, num_trials: int = 1) -> dic
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--detailed", type=Path, required=True)
     # defaults are repo-root-relative so the tool works from any cwd
     parser.add_argument("--cases-dir", type=Path, default=REPO_ROOT / "cases/v2")
