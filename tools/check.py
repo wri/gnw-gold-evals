@@ -3,9 +3,11 @@
     uv run python tools/check.py          # verify; nonzero exit on drift (CI)
     uv run python tools/check.py --fix    # recompute uids + manifest after edits
 
-The editing workflow this enables: edit a case YAML by hand -> run
-``check.py --fix`` -> commit. The uid then truthfully identifies the new
-version of the case, and the manifest's caseset_version moves with it.
+After hand-editing a case YAML, run `check.py --fix`: the case's uid then
+identifies its new content, and the manifest's caseset_version moves with
+it. This is only the first step of the after-edit ritual: finish it
+(README.md, "Changing cases") before committing, or CI fails on a stale
+COVERAGE.md.
 """
 
 from __future__ import annotations
@@ -27,7 +29,9 @@ from goldset.templates import validate_templates
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--fix", action="store_true")
     args = parser.parse_args()

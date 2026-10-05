@@ -1,198 +1,93 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. Terms are defined in the [README glossary](README.md#glossary).
 
 ## What this repo is
 
-The GOLD **capability smoke-test set** for the GNW / Project Zeno agent, as a
-versioned repo replacing a live Google Sheet. GOLD answers one question per
-release: *did an agent change break a capability that used to work?* It is
-not a quality measure — the headline is a **regression count**, never a mean
-score, and determinism outranks realism in every design call.
+GOLD is the capability regression suite for the GNW / Project Zeno agent: cases, harness and results ledger in one versioned repo. It answers one question per release: *did an agent change break a capability that used to work?* The headline is a **regression count**, never a mean score, and determinism outranks realism in every design call.
 
-Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR
-per spec (case store → results ledger → harness port → fixes → bucket scoring →
-new validators → multiturn). All planning docs — the design plan, PR specs, and
-case-set plans — are local-only notes in `docs/specs/`, which is gitignored;
-the repo itself carries only `docs/evaluator-map.html`. The parent evidence
-base is `gnw-evals/.claude/reports/five-bucket-coverage-plan.md`.
+Before proposing changes, read `README.md`, `cases/README.md` and `results/README.md`. Where a rule below rests on a design decision, its reason is given with it.
 
 ## Commands
 
 ```bash
-uv sync                                  # install (Python >=3.11, hatchling layout)
-uv run pytest                            # full suite
-uv run pytest tests/test_canonical.py -q               # one file
+uv sync                                                        # install (Python 3.11+)
+uv run pytest -q                                               # full suite, no network
+uv run pytest tests/test_canonical.py -q                       # one file
 uv run pytest tests/test_store.py::test_write_read_round_trip  # one test
+uv run ruff check src tools tests                              # lint, as CI runs it
 
-# case-store lifecycle
-uv run python tools/check.py             # verify uids + manifest (CI gate; nonzero on drift)
-uv run python tools/check.py --fix       # REQUIRED after hand-editing any case YAML
-uv run python tools/import_sheet.py --csv <export.csv>   # or --url; idempotent; --prune for removals
-uv run python tools/export_csv.py --out scratch/gold.csv --status-exclude "not doing"
+# Runs. Tokens: STAGING_API_TOKEN / PROD_API_TOKEN, else API_TOKEN;
+# .env is loaded automatically (README "Setup").
+uv run gold run --env staging --build "<label>"              # smoke: 1 trial, 10 workers
+uv run gold run --env staging --trials 3 --build "<label>"   # official / release gate
+uv run gold run --resume <run_id>                            # finish a killed run
+uv run gold run --dry-run                                    # list selected cases, no API calls
 
-# coverage doc + dataset catalog snapshot
-uv run python tools/coverage_doc.py       # REQUIRED after any case edit, alongside check.py --fix
-uv run python tools/sync_zeno_catalog.py  # refresh cases/zeno_catalog.json from project-zeno main
+# After any case edit: all three, committed with the edit
+uv run python tools/check.py --fix
+uv run python tools/coverage_doc.py
+uv run python tools/audit_cases.py --strict
+
+uv run python tools/sync_zeno_catalog.py   # refresh the dataset catalogue snapshot
 ```
 
-**COVERAGE.md must move with the case set.** Any change to a case —
-prompt, expected values, status, group, a new or deleted case — is
-incomplete until `tools/check.py --fix` *and* `tools/coverage_doc.py` have
-run and both results are committed with the edit. The doc carries a
-`Last updated` stamp (date-only differences don't trip the gate) and CI
-fails the PR via `coverage_doc.py --check` if the content is stale.
+## Rules for runs
+
+Procedures and reasons: README ["Running the set"](README.md#running-the-set) and ["After a run"](README.md#after-a-run).
+
+- **Profile.** Run the default profile (no `--ff`) unless the cases under test need a feature still behind `experimental`. Never diff or trend across differing `ff`; the run_id suffix shows it (`_prod` versus `_prod_experimental`).
+- **Two tiers.** A smoke run (1 trial, the CLI default) is never committed, diffed or used as a baseline. Anything that produces a regression count or becomes a baseline uses `--trials 3`.
+- **Comparable runs only.** Both sides of a diff need the same `ff`, the same trial count and the same environment ([Comparing two runs](results/README.md#comparing-two-runs)). If no comparable run exists, say so rather than diffing against something else.
+- **Methodology note.** If check semantics changed since the previous run, pass `--note "<what changed>"` when starting `gold run`, so diffs are not read as agent changes.
+- **Timeouts.** A block of `ReadTimeout`s late in a run usually means too many workers (runs record `workers` and `trial_timeout` so this can be traced). Lower `--workers` before blaming the agent.
+- **Finish official runs.** An official run is not done until the four steps in README "After a run" are complete. Show the user what will be committed before committing.
+- **The ledger is written by the harness only.** Never hand-write, edit, backfill or splice a run file; a re-ingest after a tooling fix means deleting the file visibly in a reviewable commit. To combine a full run with a scoped re-run, use `tools/compose_runs.py` ([results/README.md](results/README.md)).
+
+## Rules for cases
+
+**COVERAGE.md must move with the case set.** Any change to a case file (query, expected values, status, group, notes, or a new or deleted case) is incomplete until `tools/check.py --fix` and `tools/coverage_doc.py` have run and their output is committed with the edit; run `tools/audit_cases.py --strict` as well. CI fails the PR on a stale uid or manifest, a stale COVERAGE.md (a changed `Last updated` date alone does not count) or an audit violation. Procedure: README ["Changing cases"](README.md#changing-cases); the `case-edit` and `new-case` skills have the steps.
+
+- Edit `cases/v2` only. `cases/v1` is frozen, and `tests/test_v1_frozen.py` fails if it changes.
+- Status changes follow [Status lifecycle](cases/README.md#status-lifecycle). In particular, `done` needs a passing 3-trial run at the case's current uid, cited by run_id in `notes.status_reason`, and parking needs a dated `status_reason`.
+
+## The identity system
+
+**WARNING**: critical for the ledger. Do not break it. Every result in `results/runs/` is keyed on a case's uid, so the uid is the only link between a score and the exact case content it was measured against. If the hash changes for content that did not change, every committed run stops matching its cases and the regression history is lost. If the hash misses a change that did happen, old scores are silently attributed to the edited case, and diffs compare two different tests as if they were one. `src/goldset/canonical.py` defines the hashing; the README glossary defines [uid](README.md#uid) and [caseset_version](README.md#caseset-version).
+
+- **uid** = `sha256(canonical_json(query + non-empty expected values))[:16]`. Changing the query or any `expected` value mints a new uid: that is the versioning mechanism, not an error. `status`, `group`, `notes`, key order, leading and trailing whitespace, and line endings never affect it, so triage never mints a version.
+- **Multi-turn uids** hash every turn's query and expected values in order, so reordering turns mints a new uid. In v2, each turn's `deltas` are hashed too; frozen v1 uids leave them out.
+- **The hash covers every expected field, scored or not** (for example `dataset_name`, which no check reads). An unscored field is still part of what the case asserts, and a check may start reading it later; if the hash skipped it, an edit to it would change the case without a new uid. Do not narrow the hash to scored fields, and do not move expectations into `notes` to avoid uid churn.
+- **caseset_version** (in each store's `MANIFEST.json`) hashes the sorted uids. Results key on uid; diffs run over the uids two runs share.
+- **`id`** (such as `1-030`) is the stable lineage handle across versions.
+- `tests/test_schema.py` validates every case file against `schema/case.schema.json`, so a malformed case fails the suite, not a run.
 
 ## Dataset coverage against project-zeno
 
-COVERAGE.md's "Dataset coverage" section reports the case set against the
-**agent's dataset catalog**: `src/agent/datasets/catalog/*.yml` on
-`wri/project-zeno` main. Each catalog YAML defines the `dataset_id`/name, any
-dataset-specific `parameters` (e.g. `canopy_cover` with its legal values),
-`context_layers`, and four per-dataset instruction fields
-(`prompt_instructions`, `selection_hints`, `code_instructions`,
-`presentation_instructions`).
-
-To get this info next time: the sibling checkout lives at
-`../project-zeno`; `tools/sync_zeno_catalog.py` runs `git fetch origin main`
-there and reads the files with `git show origin/main:<path>` — the working
-tree is never touched (override with `--zeno <path>` / `--ref <ref>`). It
-writes the trimmed, committed snapshot `cases/zeno_catalog.json` (source sha
-+ sync date recorded), and `coverage_doc.py` renders only from that snapshot
-so CI's freshness gate needs no network and no sibling repo. When zeno's
-catalog changes: re-run the sync, regenerate COVERAGE.md, and commit both
-together. Coverage semantics: a case counts toward every dataset its
-`dataset_id` accepts; `answer`/`text`-graded cases are the ones that exercise
-a dataset's prompt/code/presentation instructions, while any `dataset_id`
-check exercises its `selection_hints`.
-
-Runs execute in-repo (the gnw-evals bridge was retired after the
-2026-08-01 parity run; `export_csv.py` remains for triage):
-
-```bash
-export API_TOKEN="$STAGING_API_TOKEN"   # .env holds it; the CLI reads API_TOKEN
-
-uv run gold run --env staging --ff experimental --build "<label>"              # iteration (1 trial, 10 workers)
-uv run gold run --env staging --ff experimental --trials 3 --build "<label>"   # official / gate
-uv run gold run --resume <run_id>                                              # finish a killed run
-```
-
-Runs stream each completed case to `results/runs/<run_id>.partial.jsonl`
-(gitignored, fsynced per line), so a killed run loses at most the case that
-was mid-flight. `--resume` rebuilds the run's config from that file's header
-(other flags are ignored), refuses if the caseset changed, runs only the
-missing cases, and writes the same immutable run JSON — marked
-`resumed: true` — before deleting the partial.
-
-**What `ff` gates changed on 2026-08-31 — read the date on any run before
-trusting old guidance.** `ff` is the agent's tool profile, passed through in
-the request payload and omitted entirely when unset, so the agent runs its
-**default** toolset. Until late August 2026, **dashboards** and **satellite
-imagery** existed only behind `ff=experimental`: without the flag all seven
-`dashboard` rows failed `dashboard_created` on every trial, indistinguishable
-from the capability having been removed, which cost a full misdiagnosis on
-2026-08-03 (`results/recommendations/20260803T201245Z.md` item 1). Every run
-before 2026-08-31 therefore used `ff=experimental`.
-
-As of prod run `20260831T163347Z_prod` (3 trials, no ff), all seven dashboard
-rows and the imagery row **pass on the default profile**: the default profile
-now carries dashboards + imagery, and `experimental` only unhides LGMS
-(dataset 12) and adds two view-context tools. The six LGMS cases
-(1-112..1-117) are `not doing` while runs target the default profile; their
-`status_reason` notes carry the re-admission condition.
-
-**Never diff runs with differing `ff`** — the profiles differ in capability
-surface, so a cross-ff diff measures the profile, not the release.
-`make_run_id` encodes ff in the filename (`…_prod` versus
-`…_prod_experimental`); check it before comparing two runs.
-
-**Two tiers, deliberately (set 2026-08-03).** The CLI defaults to
-`--trials 1 --workers 10` for fast iteration — answering "did my prompt rewrite
-stop the nudge?" in minutes. Those runs are **smoke only**: not committed, not
-diffed, never a baseline.
-
-**Anything that produces a regression count stays `--trials 3`.** Measured on
-the two 3-trial runs: comparing two trials *of the same run* — same build, same
-cases, nothing changed — reports **18–29 spurious regressions**, which is larger
-than the **15** real regressions between two genuinely different runs. A
-single-trial diff cannot separate a clean release from a broken one, and
-`diff_runs.py --fail-on-regression` would fail on nearly every run. A 1-trial run
-compared against a 3-trial baseline is worse still, so the two sides of any
-comparison must carry the same trial count.
-
-Runs now record `workers` and `trial_timeout`, because the 2026-08-02 run's 19
-`ReadTimeout`s arrived as one contiguous block across the final quarter of the
-run — a load-shaped signature that cannot be diagnosed without knowing the
-concurrency that produced it. Raising workers is the main suspect to watch.
-
-## After every run (do all four, in order)
-
-1. **Render the report**: `uv run python tools/render_html.py
-   results/runs/<run_id>.json` → `results/reports/<run_id>.html`
-   (the template also accepts a run JSON by drag-and-drop). Refresh the
-   cross-run pages too: `render_html.py --all`, `render_inspector.py --all`
-   (one file each, run-selector dropdown, deep-linkable via `#<run_id>`)
-   and `render_trends.py` (pass-rate ticker; never trends across a
-   differing `ff`).
-2. **Flakiness + diff**: `uv run python tools/flakiness.py
-   results/runs/<run_id>.json --per-case`, and `tools/diff_runs.py
-   <previous> <current>` against the last comparable run.
-3. **Write `results/recommendations/<run_id>.md`** — the run is not done
-   until someone can act on it. Cover: what to file upstream (agent
-   behaviour, with the flapping/failing row lists as evidence), what the
-   run says about the case set (stale expectations, coverage holes,
-   probation re-admissions), what it says about the harness, and a
-   next-run watchlist. `results/recommendations/20260801T093002Z.md` is
-   the model.
-4. **Commit** the ledger JSON, the report, and the recommendation doc
-   together; use `--note` on the run whenever check semantics changed
-   since the previous one.
-
-## The identity system (load-bearing — do not break)
-
-`src/goldset/canonical.py` defines everything downstream trusts:
-
-- **`uid`** = `sha256(canonical_json(query + non-empty expected values))[:16]`.
-  Changing the prompt or any `expected` value mints a new uid — that is the
-  versioning mechanism, not an error. `status`, `group`, `notes`, key order,
-  whitespace, and CRLF never affect it: triage must not mint versions.
-- The hash deliberately covers **all** expected fields, scored or not
-  (docs/specs/PLAN.md §2.2 has the rationale — don't "optimise" it to scored-only).
-- **`caseset_version`** in per-store `MANIFEST.json` (cases/v1, cases/v2) hashes all sorted uids.
-  Results (see `results/README.md`) key on uid + caseset_version; regression
-  diffs run over uid intersections between runs.
-- `id` (the sheet's `test_id`) is the stable lineage handle across versions.
-
-Consequently: any edit to a case file must be followed by
-`tools/check.py --fix` **and** `tools/coverage_doc.py` (COVERAGE.md derives
-from the store), and CI-style verification is plain `check.py` plus
-`coverage_doc.py --check`.
-`tests/test_schema.py` validates every case file against
-`schema/case.schema.json`, so a malformed case fails the suite, not a run.
+COVERAGE.md's "Dataset coverage" section measures the case set against the agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` in wri/project-zeno), read from the committed snapshot `cases/zeno_catalog.json` so that CI needs no network. When project-zeno adds, removes or changes a dataset, run `tools/sync_zeno_catalog.py`, then `tools/coverage_doc.py`, and commit both together. The sync reads `origin/main` of the sibling checkout `../project-zeno` with `git show` and never touches its working tree (`--zeno` and `--ref` override the defaults). The `sync-catalog` skill has the steps.
 
 ## Architecture
 
-- `src/goldset/` — the library: `canonical.py` (hashing) and `store.py`
-  (frozen `Case` dataclass, YAML read/write, manifest). Tools in `tools/`
-  are thin CLIs over it, adding `src/` to `sys.path` directly (the package
-  is also installed editable via uv).
-- `cases/v{1,2}/<group-slug>/<id>.yaml` (v1 = imported baseline, v2 = curated working set; see cases/README.md) — one case per file so PR review/blame/
-  revert work per case. `expected:` = hashed expectations, prefix-stripped;
-  `notes:` = unhashed annotations. Unknown top-level keys are rejected on
-  read. Import routes sheet columns by prefix: `expected_*` → expected,
-  everything else → notes.
-- `results/` — committed per-run JSON ledger (contract fixed in
-  `results/README.md` even though the ingester lands in PR-02). Checks are
-  tri-state `1.0/0.0/null`; **no hand-written or backfilled entries, ever**.
-- Sheet relationship is **one-way**: import sheet → repo; the repo is the
-  source of truth and re-imports are reviewable PRs whose diff is the sheet
-  delta. Import is byte-idempotent on an unchanged sheet.
+- `src/goldset/`: the library.
+  - `canonical.py`: uid and caseset_version hashing.
+  - `store.py`: the `Case` dataclass, case YAML read and write, manifests. Unknown top-level keys are rejected on read.
+  - `templates.py`: `{token}` dates in queries, resolved when a run starts (the uid hashes the token).
+  - `adapter.py`, `eval_types.py`: turn a case's expectations into the harness's typed inputs, and define its result type.
+  - `runner/`: API calls (`api.py`), multi-turn threads (`multiturn.py`), raw artefact capture (`artifacts.py`).
+  - `evaluators/` and `registry.py`: the checks, and the order the runner calls them in.
+  - `models.py`: the LLM judge client.
+  - `buckets.py`: the bucket map, the info-only set, row verdicts, and the reconciliation of implied with evaluated checks.
+  - `ledger.py`: run records, run_ids, majority verdicts and partial files.
+  - `cli.py`: the `gold` command.
+- `tools/`: thin CLIs over `src/goldset` (they add `src/` to `sys.path`); see `tools/README.md`.
+- `cases/v{1,2}/<group>/<id>.yaml`: one case per file, so review, blame and revert work per case. `expected:` holds the hashed expectations (keys without the `expected_` prefix); `notes:` holds unhashed annotations.
+- `results/`: the committed ledger; contract in `results/README.md`. Checks are tri-state `1.0`/`0.0`/`null`.
+- `schema/case.schema.json`: the case contract. `templates/`: the HTML report templates.
+- The case store is the source of truth. The Google Sheet it was first imported from is retired; README ["Legacy tools"](README.md#legacy-tools) covers the remaining bridge tools.
 
-## Working agreements (from docs/specs/PLAN.md §6)
+## Working agreements
 
-- Numbers in code; structure and semantics to the judge — no LLM judge is
-  ever asked to do arithmetic.
-- Every check's spec decides whether an absence scores `null` (n/a) or
-  `0.0` (failure), and says why.
-- Judged checks run info-only until they show std ≤ 0.10 over 3 trials.
-- Judge structured outputs put reasoning before the score field.
+- Numbers in code; structure and semantics to the judge. No LLM judge is ever asked to do arithmetic.
+- Every check's documentation decides whether a missing input scores `null` (not evaluated) or `0.0` (fail), and says why.
+- A new judged check starts info-only and gates only once it shows a standard deviation of at most 0.10 over a 3-trial run (`tools/flakiness.py`). The three judged checks inherited from gnw-evals (`agent_answer`, `expected_text_match`, `clarification_requested`) already gated and still do.
+- Judge structured outputs put the reasoning field before the score field.

@@ -1,30 +1,34 @@
-"""Import a GOLD Google-Sheet tab (CSV export) into the case store.
+"""Legacy: import cases from a sheet-format CSV, such as an old GOLD sheet tab.
 
-Usage::
+The GOLD Google Sheet is retired and the case store is the source of truth.
+Use this only to bring in cases kept in a spreadsheet with the sheet's
+columns, then treat the result like any case edit (README.md, "Changing
+cases"). It writes to cases/v2 by default. cases/v1 is the frozen baseline
+(tests/test_v1_frozen.py), so pass `--cases-dir cases/v1` only for a
+deliberate re-import of it.
 
     uv run python tools/import_sheet.py --gid 123456789     # tab of $SPREADSHEET_ID
     uv run python tools/import_sheet.py --csv path/to/gold.csv
     uv run python tools/import_sheet.py --url "https://docs.google.com/...gid=0"
     uv run python tools/import_sheet.py --gid 0 --prune
 
-Every imported case records its origin in ``notes.source_tab``; ``--prune``
-is **scoped to that source** — it only deletes orphans the same tab
-imported earlier, and reports (never touches) unmanaged orphans. A row
-whose ``test_id`` already exists from a *different* source errors unless
-``--update`` is passed. A sheet ``uid`` column, if present, is never
+Every imported case records its origin in `notes.source_tab`. `--prune` is
+scoped to that source: it deletes only the orphans that the same tab
+imported earlier, and reports (never touches) orphans from anywhere else. A
+row whose `test_id` already exists from a different source is an error
+unless `--update` is passed. A sheet `uid` column, if present, is never
 trusted (uids are always recomputed) but is compared: rows whose sheet uid
 differs are listed as "edited on sheet since last push".
 
-Column handling (lossless by construction):
+Column handling (every content column is kept):
 
-- ``test_id`` / ``status`` / ``test_group`` / ``query`` -> case metadata
-- ``expected_*``  -> ``expected`` (prefix stripped; participates in the uid)
-- everything else -> ``notes``   (prefix ``note_`` stripped; NOT hashed)
+- `test_id`, `status`, `test_group`, `query`: case metadata
+- `expected_*`: `expected` (prefix stripped; part of the uid)
+- `uid`, `last_changed`: sync markers, never case content
+- everything else: `notes` (prefix `note_` stripped; not hashed)
 
 Rows with an empty query are skipped and counted. Duplicate test_ids abort
-the import. Re-importing an unchanged sheet is byte-idempotent. ``--prune``
-deletes case files whose id no longer appears in the sheet; without it,
-orphans are reported but kept.
+the import. Re-importing an unchanged sheet leaves every file byte-identical.
 """
 
 from __future__ import annotations
@@ -74,9 +78,9 @@ SYNC_COLUMNS = {"uid", "last_changed"}
 def parse_cases(text: str, source_tab: str = "") -> tuple[list[Case], int, list[str]]:
     """Parse the sheet CSV into cases.
 
-    Returns (cases, skipped_empty_query, sheet_edited_ids) — the last being
+    Returns (cases, skipped_empty_query, sheet_edited_ids). The last lists
     rows whose sheet ``uid`` column no longer matches their recomputed uid,
-    i.e. edited on the sheet since the last push (P5).
+    that is, rows edited on the sheet since the last push.
     """
     rows = list(csv.reader(io.StringIO(text)))
     header_index = find_header(rows)
@@ -152,7 +156,7 @@ def run_import(
     existing = {case.id: case for _p, case, _u in store}
     existing_paths = {case.id: path for path, case, _u in store}
 
-    # P4: a row colliding with a case from a DIFFERENT source is an error
+    # A row colliding with a case from a DIFFERENT source is an error
     # unless --update makes the takeover explicit. Without a source_tab we
     # cannot attribute ownership, so the guard does not apply.
     if not update and source_tab:
@@ -170,7 +174,7 @@ def run_import(
             return 1
 
     # An import that changes a case's test_group moves its file. Drop the
-    # old file first — regardless of source_tab ownership — or the same
+    # old file first (regardless of source_tab ownership), or the same
     # test_id would exist at two paths and check.py would fail the store.
     for case in cases:
         old_path = existing_paths.get(case.id)
@@ -180,7 +184,7 @@ def run_import(
 
     written = [write_case(cases_dir, case) for case in cases]
 
-    # P3: prune is scoped to this import's source — unmanaged orphans
+    # Prune is scoped to this import's source: unmanaged orphans
     # (no or different source_tab) are reported, never deleted.
     wanted = {case_path(cases_dir, case).resolve() for case in cases}
     for path, case, _uid in load_store(cases_dir):
@@ -216,11 +220,13 @@ def main() -> int:
 
     from dotenv import load_dotenv
 
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--csv", type=Path, help="path to a sheet CSV export")
     group.add_argument("--url", help="CSV export URL of the sheet")
-    group.add_argument("--gid", help="tab gid within $SPREADSHEET_ID (P1)")
+    group.add_argument("--gid", help="tab gid within $SPREADSHEET_ID")
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--prune", action="store_true",
                         help="delete orphans previously imported from this same tab")

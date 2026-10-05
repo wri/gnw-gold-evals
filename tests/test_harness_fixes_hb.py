@@ -1,14 +1,20 @@
-"""PR-Hb — the four check-semantics changes (docs/specs/caseset-v2-improvement-plan.md §4).
+"""Tests for four deliberate changes to what a check measures.
 
-    H4  classify_scope: a dataset_choice nudge with no pull IS `suggest`
-    H5  charts_answer gated on numeric support; the judge becomes info-only
-    H6  chart candidates include cross-column row sums and their grand total
-    H7  dashboard_widgets_valid abstains when no widgets were expected
+- `classify_scope` counts a `dataset_choice` nudge with no data pull as
+  `suggest` (`test_h4_*`).
+- `charts_answer` is decided by the deterministic numeric comparison: it
+  passes or fails on whether the chart data contains the expected figure,
+  and abstains when there is no figure to compare. The LLM judge's verdict
+  is kept as the info-only check `charts_answer_judge` (`test_h5_*`).
+- Chart candidate figures include row sums across measure columns and their
+  grand total (`test_h6_*`).
+- `dashboard_widgets_valid` abstains on an empty dashboard when the case
+  expects no widgets (`test_h7_*`).
 
-Each deliberately changes what a check *means*, so runs after this need `--note`.
-
-Usage
-$ uv run python -m pytest tests/test_harness_fixes_hb.py -v
+A run that spans a change like these should say so with `gold run --note`,
+so its diff is not read as the agent getting better or worse. The h numbers
+continue from test_harness_fixes_ha.py and are unrelated to the h numbers in
+test_hardening.py.
 """
 
 import json
@@ -25,7 +31,7 @@ from goldset.evaluators.scope_checks import classify_scope, evaluate_scope
 TOLERANCE = 0.02
 
 
-# --------------------------------------------------------------------------- H4
+# ----------------------------------------- classify_scope: dataset_choice nudge
 
 def test_h4_dataset_choice_nudge_without_a_pull_is_suggest():
     """`suggested_datasets` is populated in 0 of 1,298 retained trials; the
@@ -37,7 +43,7 @@ def test_h4_dataset_choice_nudge_without_a_pull_is_suggest():
 
 
 def test_h4_aoi_choice_nudge_is_still_clarify():
-    """1-105 and mt-002 disambiguate an AOI — a different class, unaffected."""
+    """1-105 and mt-002 disambiguate an AOI: a different class, unaffected."""
     state = {"statistics": None, "suggested_datasets": [],
              "nudge": {"type": "aoi_choice", "options": ["Puri, Odisha, India"]}}
     assert classify_scope(state) == "clarify"
@@ -56,7 +62,7 @@ def test_h4_populated_suggested_datasets_still_suggests():
     assert classify_scope(state) == "suggest"
 
 
-# --------------------------------------------------------------------------- H5
+# --------------------------------------- charts_answer: numeric support decides
 
 def test_h5_numeric_support_decides_when_it_can():
     """1-059: the chart's data contained the global total to 0.07%, and the judge
@@ -76,7 +82,7 @@ def test_h5_unsupported_still_fails_even_when_the_judge_liked_it():
 
 
 def test_h5_no_numeric_claim_abstains_rather_than_deferring_to_the_judge():
-    """1-001 expects TRUE, 1-004 expects 'Brazil' — the comparator has nothing to
+    """1-001 expects TRUE, 1-004 expects 'Brazil': the comparator has nothing to
     work with, so the row must not carry a gating chart verdict at all."""
     verdict = resolve_chart_verdict(judge_score=0, judge_reason="disliked the chart",
                                     support=None, explanation="")
@@ -90,7 +96,7 @@ def test_h5_judge_verdict_is_tagged_info_only():
     assert is_info_only("t2.charts_answer_judge")
 
 
-# --------------------------------------------------------------------------- H6
+# ------------------------------------------ chart candidates: cross-column sums
 
 # 1-002: São Paulo alerts split across two confidence-tier columns. Neither
 # column total is the answer; their sum (1,299,278.14) is.
@@ -120,7 +126,7 @@ def test_h6_cross_column_row_sums_are_candidates():
 
 
 def test_h6_makes_1_002_supported_at_its_recorded_figure():
-    """The agent reports 1,299,278.14 on 6/6 trials — high + highest."""
+    """The agent reports 1,299,278.14 on 6/6 trials: high plus highest."""
     result = evaluate_numeric_support("1,299,278 hectares", SAO_PAULO_TIERS, TOLERANCE)
     assert result["support"] == "supported", result["explanation"]
 
@@ -130,7 +136,7 @@ def test_h6_single_measure_column_gains_no_cross_column_candidate():
     single = json.dumps([{"type": "bar", "data": [{"year": 2001, "loss_ha": 10.0},
                                                   {"year": 2002, "loss_ha": 20.0}]}])
     values = chart_candidate_values(single)
-    # leaves 10, 20; column sum 30; column max 20 — and no spurious extras
+    # leaves 10, 20; column sum 30; column max 20; and no spurious extras
     assert sorted(set(values)) == [10.0, 20.0, 30.0]
 
 
@@ -140,17 +146,17 @@ def test_h6_label_columns_are_excluded_from_cross_column_sums():
     assert not any(abs(v - (2024 + 291_728.59)) < 0.01 for v in values)
 
 
-# --------------------------------------------------------------------------- H7
+# ------------------------------------ dashboard_widgets_valid: empty dashboards
 
 def test_h7_empty_dashboard_abstains_when_no_widgets_were_expected():
-    """1-096's prompt is only 'Create a dashboard for brazil' — nothing was asked
+    """1-096's prompt is only 'Create a dashboard for brazil': nothing was asked
     to be in it, so an empty dashboard is not a defect."""
     result = evaluate_dashboard_widgets({"widgets": []}, None)
     assert result["dashboard_widgets_valid_score"] is None
 
 
 def test_h7_empty_dashboard_still_fails_when_widgets_were_expected():
-    """PR-04 F3's real intent survives: content was requested and is missing."""
+    """When the case expected widgets, an empty dashboard still fails."""
     result = evaluate_dashboard_widgets({"widgets": []}, ["map"])
     assert result["dashboard_widgets_valid_score"] == 0.0
     assert result["dashboard_widgets_match_score"] == 0.0

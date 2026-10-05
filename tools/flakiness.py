@@ -1,18 +1,21 @@
-"""Flakiness table from a multi-trial run (PR-08 steps 2, 3, 5).
+"""Per-check flakiness of a multi-trial run.
 
-    uv run python tools/flakiness.py results/runs/<trials-run>.json
+    uv run python tools/flakiness.py results/runs/<run_id>.json [--per-case]
 
-Per check: mean, std (population), and flip count across trials — the
-admission evidence for judged checks (std <= 0.10 over 3 trials, PLAN §4)
-and the guard-validation evidence (deterministic checks at std <= 0.04).
-Per case: which rows flapped at all, so the multiturn seed table for
-PR-07's spec falls straight out of `--per-case`.
+For each check: its mean, its flake std (the population std of one case's
+trial values, averaged over cases) and how many cases' trials disagreed.
+The limits are 0.10 for judged and mixed checks and 0.04 for deterministic
+ones. A new judged check stays info-only until it holds 0.10 over 3 trials;
+a deterministic check over 0.04 points to agent or harness instability.
+`--per-case` also lists every case whose trials disagreed.
 
-A check that produced fewer verdicts than the run implies (judge errors,
-lost trials) is flagged INSUFFICIENT DATA and never counts as within its
-gate — std over a partial sample says nothing about stability. A run where
-nothing was measured at all exits nonzero instead of printing an
-all-clear-looking empty table.
+A check with fewer verdicts than the run implies (judge errors, lost trials)
+is flagged INSUFFICIENT DATA and never counts as within its limit: std over
+a partial sample says nothing about stability.
+
+Exits 1 if any gating check is over its limit (shown as OVER GATE) or short
+of verdicts, or if the run measured nothing at all, so an empty table never
+reads as all-clear.
 """
 
 from __future__ import annotations
@@ -50,11 +53,10 @@ def trial_values(entry: dict, check: str) -> list[float | None]:
 def collect(run: dict) -> tuple[dict, list[dict]]:
     """(per-check stats, per-case flap list).
 
-    Flakiness is WITHIN-case variance across trials — the std of one case's
-    3 trial values, averaged over cases. Pooling values across cases would
-    measure the pass *rate's* spread instead (a check consistently failing
-    on 3 of 90 rows is not flaky), which is what this tool got wrong on its
-    first live outing (2026-08-01) and what the fixture test now pins.
+    Flakiness is WITHIN-case variance across trials: the std of one case's
+    trial values, averaged over cases. Pooling values across cases would
+    measure the spread of the pass rate instead (a check that consistently
+    fails on 3 of 90 rows is not flaky). A fixture test pins this.
     """
     per_check_means: dict[str, list[float]] = {}
     per_check_stds: dict[str, list[float]] = {}
@@ -102,7 +104,7 @@ def collect(run: dict) -> tuple[dict, list[dict]]:
             "expected_verdicts": expected,
             "insufficient_data": insufficient,
             # a partial sample can look stable precisely because the flaky
-            # trials are the ones that errored — never call it clean
+            # trials are the ones that errored, so never call it clean
             "within_gate": flake_std <= gate and not insufficient,
         }
     return stats, flappy_cases
@@ -148,7 +150,9 @@ def render(run: dict, stats: dict, flappy: list[dict], per_case: bool) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("run", type=Path)
     parser.add_argument("--per-case", action="store_true")
     args = parser.parse_args()

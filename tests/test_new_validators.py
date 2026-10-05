@@ -1,4 +1,13 @@
-"""PR-06 validators, fixtures shaped on the run-6 rows that motivated them."""
+"""Tests for the deterministic per-bucket validators.
+
+Test-name prefixes map to checks: a2 `class_value_match` and a3
+`chart_integrity` (analysis bucket), e1 `answer_traceability` (explanation),
+o2 `chart_well_formed` and o3 `chart_type_match` (output), s1 `scope_match`
+(scope).
+
+Fixtures copy the shape of the staging results that exposed each failure
+(1-027, 1-060, 1-085).
+"""
 
 from types import SimpleNamespace
 
@@ -56,7 +65,7 @@ def state(charts=None, prose=None, stats=None, suggested=None, nudge=None):
     }
 
 
-# --- A2 class_value_match
+# --- class_value_match
 
 def test_a2_matches_named_class_value_within_tolerance():
     result = evaluate_class_values(
@@ -82,7 +91,7 @@ def test_a2_no_data_fails_and_ambiguity_abstains():
     assert parse_class_values("no-equals-sign") is None
 
 
-# --- A3 chart_integrity
+# --- chart_integrity
 
 def test_a3_null_padded_axis_fields_fail():
     result = evaluate_chart_integrity(state(charts=[CHART_1_060]))
@@ -97,7 +106,7 @@ def test_a3_clean_chart_passes_and_no_chart_abstains():
     assert evaluate_chart_integrity(state())["chart_integrity_score"] is None
 
 
-# --- E1 answer_traceability
+# --- answer_traceability
 
 def test_e1_catches_1_027_untraceable_figure():
     prose = "There are approximately **679.16 hectares** of natural short vegetation."
@@ -126,7 +135,7 @@ def test_e1_abstains_without_bold_claim_or_charts():
         "answer_traceability_score"] is None  # no charts
 
 
-# --- O2 chart_well_formed
+# --- chart_well_formed
 
 def test_o2_axis_referencing_missing_field_fails():
     broken = {**CHART_1_027, "yAxis": "hectares_wrong"}
@@ -144,7 +153,7 @@ def test_o2_empty_data_fails_and_pie_slices_are_info_only():
     assert ok["actual_max_pie_slices"] == 2
 
 
-# --- O3 chart_type_match
+# --- chart_type_match
 
 def test_o3_alternatives_and_missing_chart():
     assert evaluate_chart_type(state(charts=[CHART_1_027]), "pie;table")[
@@ -169,12 +178,12 @@ def test_non_dict_chart_elements_are_guarded():
     well_formed = evaluate_chart_well_formed(state(charts=charts))
     assert well_formed["chart_well_formed_score"] == 0.0
     assert "not an object" in well_formed["chart_well_formed_reason"]
-    # a non-dict first chart reads as "no chart type" — expectation fails
+    # a non-dict first chart reads as "no chart type", so the expectation fails
     assert evaluate_chart_type(state(charts=["garbage"]), "pie")[
         "chart_type_match_score"] == 0.0
 
 
-# --- S1 scope_match
+# --- scope_match
 
 PULL = [{"source_url": "https://api/x", "id": "p1", "data": [{"a": 1}]}]
 
@@ -202,8 +211,8 @@ def test_s1_invalid_expected_abstains():
 
 
 def test_e1_bare_numbers_are_not_claims():
-    """Counts and ranks in bold are not measures (first live run, 2026-08-01:
-    '**2** datasets', 'top **5**' dominated the false positives)."""
+    """Bold counts and ranks are not measures. In an early staging run,
+    '**2** datasets' and 'top **5**' made up most of the false positives."""
     assert first_bold_claim("I found **2** datasets for you") is None
     assert first_bold_claim("the top **5** regions are listed") is None
     assert first_bold_claim("roughly **4,615** in total") is None

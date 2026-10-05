@@ -1,19 +1,25 @@
-"""The five-bucket scoring model (PR-05).
+"""The five-bucket scoring model.
 
 Buckets answer "which part of the pipeline broke": Retrieval (did the agent
 extract the right things from the prompt), Analysis (right computation),
-Explanation (prose faithful to the data), Output (artifacts presented
-correctly), Scope (right amount of work). Every check is tagged dedicated
-to one bucket or shared across two — a shared check's failure cannot be
-attributed, which is why the bucket table reports the two populations
-separately.
+Explanation (prose faithful to the data), Output (artefacts presented
+correctly), Scope (right amount of work).
 
-Three verdict rules the flat mean got wrong, now explicit:
+Every check is tagged below: ``DEDICATED`` (it speaks for one bucket),
+``SHARED`` (its failure straddles two buckets and cannot be attributed to
+either, so the bucket table reports shared checks separately) or
+``INFO_ONLY`` (recorded, never part of a verdict). An info-only check that
+also has a ``DEDICATED`` tag still counts in that bucket's tallies.
 
-- a row with zero evaluated checks is **uncovered**, never a pass;
-- info-only checks and judge errors never enter a verdict — an errored row
-  is an *error*, not a failure;
-- an unmeasured bucket renders as unmeasured, never omitted.
+Row verdicts (``row_verdict``), in order of precedence:
+
+- error: the trial errored or a judge call failed. Never counted as a fail.
+- uncovered: no gating check produced a score. Never counted as a pass.
+- fail: a gating check scored 0.0.
+- pass: otherwise.
+
+``summarize_buckets`` always emits all five buckets, so a bucket with no
+scored checks shows as unmeasured instead of disappearing.
 """
 
 from __future__ import annotations
@@ -47,14 +53,13 @@ DEDICATED: dict[str, str] = {
     "clarification_requested": SCOPE,
     "suggested_datasets_match": SCOPE,
     "nudge_match": SCOPE,
-    # PR-06 bucket-filling validators
     "class_value_match": ANALYSIS,
     "chart_integrity": ANALYSIS,
     "answer_traceability": EXPLANATION,
     "chart_well_formed": OUTPUT,
     "chart_type_match": OUTPUT,
     "scope_match": SCOPE,
-    # Multi-turn conversation-level checks (PR-07)
+    # Multi-turn: scored by runner/multiturn.py, not by a registry evaluator.
     "state_delta": RETRIEVAL,
 }
 
@@ -65,21 +70,12 @@ SHARED: dict[str, tuple[str, str]] = {
     "dashboard_created": (OUTPUT, SCOPE),
 }
 
-# Reported for diagnosis, never part of any verdict.
-# answer_traceability: demoted 2026-08-01 after its first live run — claim
-# extraction misfired on unitless bold counts/ranks on ~5 of 9 failures
-# (the unit-required rule now applies). Re-admit after a 3-trial run with
-# zero extraction false positives (PR-08 step 5).
-# class_value_match: demoted 2026-08-01 after the first 3-trial run — mean
-# 0.25 over its 4 rows, whose expected values came from unverified sheet
-# scratchpads. Re-admit when W3's population review verifies the figures.
-# charts_answer_judge: born info-only 2026-08-03 (H5). charts_answer is now
-# gated on the deterministic comparator alone; this records what the chart judge
-# thought, because five of the six rows where charts_answer flapped over two
-# 3-trial runs were rows the comparator had already passed or abstained on —
-# i.e. all the movement was the judge's framing opinion, and cases/README.md
-# forbids staking a verdict on chart choice. Re-admit only if it demonstrates
-# std <= 0.10 over 3 trials.
+# Recorded for diagnosis, never part of a verdict. Why each check is here, and
+# what re-admits it: src/goldset/evaluators/README.md#info-only-checks
+# date_coverage: the state field it reads is unreliable (see data_pull_evaluator).
+# answer_traceability: its claim extraction gave false positives.
+# class_value_match: its expected figures are not all verified yet.
+# charts_answer_judge: the judge's view of chart choice, which flaps between trials.
 INFO_ONLY: frozenset[str] = frozenset(
     {
         "date_coverage",
@@ -190,7 +186,7 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
     """Checks that MUST evaluate given a case's expectations. Conditional
     checks (charts_answer, web_fallback, pull_source_match, dashboard
     sub-checks, date_coverage) may legitimately abstain and are never
-    implied — so every reconciliation miss is a real hole."""
+    implied, so every reconciliation miss is a real hole."""
     implied: set[str] = set()
     if expected.get("aoi_ids"):
         implied.add("aoi_id_match")
@@ -228,7 +224,7 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
 
 
 def implied_checks_for_case(case: Any) -> set[str]:
-    """Implied checks for a store Case — multiturn-aware (PR-09 H4).
+    """Implied checks for a store Case, multi-turn cases included.
     Multi-turn cases imply their per-turn checks under ``t<N>.`` prefixes,
     plus ``t<N>.state_delta`` for every turn carrying delta assertions;
     without this they contribute zero implied checks and a conversation
@@ -248,7 +244,7 @@ def reconcile(
     entries: list[dict[str, Any]], implied_by_uid: dict[str, Any]
 ) -> dict[str, Any]:
     """Implied-vs-evaluated ledger line. ``missing`` must be empty or every
-    item explained — silent non-measurement is the bug class this kills.
+    item explained: silent non-measurement is the bug class this catches.
     Values in ``implied_by_uid`` may be a raw expected-dict (legacy) or a
     precomputed set of check names."""
     implied_total = evaluated_of_implied = 0

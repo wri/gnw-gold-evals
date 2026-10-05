@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/wri/gnw-gold-evals/schema/case.schema.json",
   "title": "GOLD case",
-  "description": "One capability smoke-test case: single-turn (query + expected) or multi-turn (turns). The uid is a truncated SHA-256 over the canonical serialisation of the queries + non-empty expected values — order-sensitive across turns (see src/goldset/canonical.py); tools/check.py enforces that it is truthful.",
+  "description": "One GOLD case, single-turn (query and expected) or multi-turn (turns). Its uid is a truncated SHA-256 of the case content: the query plus its non-empty expected values or, for a multi-turn case, every turn's query, expected values and (in cases/v2 only) deltas, in order. Status, group and notes are never hashed. See src/goldset/canonical.py; tools/check.py fails if a stored uid does not match.",
   "type": "object",
   "required": ["id", "uid", "status", "group"],
   "additionalProperties": false,
@@ -20,7 +20,7 @@
     "status": {
       "type": "string",
       "minLength": 1,
-      "description": "Lifecycle: ready | todo | done | not doing (lowercased on import)."
+      "description": "Lifecycle state, in lower case: ready (not yet verified at the current uid), todo (held by a known blocker), done (verified at the current uid) or not doing (parked, so gold run skips it). What each requires: cases/README.md, Status lifecycle."
     },
     "group": {
       "type": "string",
@@ -32,7 +32,7 @@
     },
     "expected": {
       "$ref": "#/$defs/expectations",
-      "description": "Single-turn only: expectations, keyed without the 'expected_' prefix."
+      "description": "Single-turn only: the values the case is graded on, each a string. Every non-empty value is part of the uid; most switch on one or more checks (see the index in src/goldset/evaluators/README.md). What ';' means differs by field: see cases/README.md."
     },
     "turns": {
       "type": "array",
@@ -47,7 +47,7 @@
           "expected": { "$ref": "#/$defs/expectations" },
           "deltas": {
             "type": "object",
-            "description": "State-transition assertions vs the previous turn (turn >= 2 only). Fields are snapshot names: aoi_ids, dataset_id, context_layer, start_date, end_date, suggested_datasets, nudge_type, dashboard_id.",
+            "description": "Turn 2 onwards (ignored on turn 1): how the agent's state should move since the previous turn, scored as the state_delta check. changed: the field must differ from the previous turn. retain: it must stay the same (catches lost context). absent: it must be empty (catches carry-over). Field names are the per-turn state snapshot (SNAPSHOT_FIELDS in src/goldset/runner/multiturn.py). In cases/v2 deltas are part of the uid; in cases/v1 they are not.",
             "additionalProperties": false,
             "properties": {
               "changed": { "$ref": "#/$defs/fieldList" },

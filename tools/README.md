@@ -1,51 +1,57 @@
-# tools/ — the CLI surface
+# tools/: the CLI surface
 
-Thin CLIs over `src/goldset/` (they add `src/` to `sys.path` directly).
-Everything runs as `uv run python tools/<tool>.py`; the live harness itself
-is the `gold` entry point (`uv run gold run …`, see the root README and
-CLAUDE.md). Tools never hand-write ledger entries — see `results/README.md`
-for the contract they all respect.
+Terms are defined in the [README glossary](../README.md#glossary).
+
+Thin CLIs over `src/goldset/` (each adds `src/` to `sys.path` itself). Run
+any of them as `uv run python tools/<tool>.py`; `--help` prints its usage.
+The harness itself is the `gold` command (`uv run gold run`, see
+[Running the set](../README.md#running-the-set)). No tool hand-writes a
+ledger entry: [results/README.md](../results/README.md) has the contract
+they all follow.
 
 ## Case store
 
 | tool | what it does |
 |---|---|
-| `check.py` | Verify (or `--fix`: repair) case-store integrity: uids, schema validity, manifest. **`--fix` is required after hand-editing any case YAML**; plain `check.py` is the CI gate. |
-| `audit_cases.py` | Case-set hygiene audit: depth, coverage floors, DON'T violations. Report-only by default; `--strict` to gate. |
-| `coverage_doc.py` | Regenerate `cases/v2/COVERAGE.md` from the store + catalog snapshot. **Required after any case edit**; `--check` is the CI freshness gate. |
-| `sync_zeno_catalog.py` | Refresh `cases/zeno_catalog.json` from project-zeno `origin/main` (dataset ids, dataset-specific parameters, context layers, instruction fields). Follow with `coverage_doc.py`. |
-
-## Sheet bridge (one-way each direction)
-
-| tool | what it does |
-|---|---|
-| `import_sheet.py` | Import a GOLD Google-Sheet tab (CSV export or `--url`) into the case store. Idempotent; `--prune` for removals. |
-| `export_sheet_csv.py` | Export the case store as sheet-uploadable CSVs. |
-| `export_csv.py` | Export the store to a gnw-evals-compatible CSV (kept for triage). |
+| `check.py` | Verify the case store: every uid matches its case, every case is valid, and the manifest is current. Run `--fix` after any case edit to recompute uids and the manifest; CI runs plain `check.py` on both stores. Part of the [after-edit steps](../README.md#changing-cases). |
+| `audit_cases.py` | Check the case set against the authoring rules in `cases/README.md`: depth, coverage floors and the DON'T list. Run it before opening a case PR. CI runs it with `--strict`, which fails on depth and DON'T violations (see [the audit gate](../cases/README.md#the-audit-gate)). |
+| `coverage_doc.py` | Regenerate `cases/v2/COVERAGE.md` from the store and the catalogue snapshot. Run it after any case edit or catalogue sync, and commit the result with the edit; CI's `--check` fails if the committed file is out of date. |
+| `sync_zeno_catalog.py` | Refresh `cases/zeno_catalog.json`, the committed snapshot of project-zeno's dataset catalogue (dataset ids, dataset-specific parameters, context layers, instruction fields) that COVERAGE.md measures against. Run it when project-zeno adds, removes or changes a dataset. It reads `origin/main` of a sibling `project-zeno` checkout (`--zeno` for another path). Then run `coverage_doc.py`. |
 
 ## Results ledger
 
 | tool | what it does |
 |---|---|
-| `diff_runs.py` | Regression diff between two runs over their uid intersection. `--fail-on-regression` / `--fail-on-coverage-loss` to gate. Only compare runs with the same trial count and `ff`. |
-| `flakiness.py` | Flakiness table from a multi-trial run (`--per-case` for detail); flags partial samples as INSUFFICIENT DATA. |
-| `compose_runs.py` | Compose a current picture from a primary run plus scoped supplements — analysis-side only, never writes to `results/runs/` (see results/README.md §Composing). |
-| `ingest_run.py` | Ingest a legacy gnw-evals `*_detailed.csv` into the ledger (historical runs only; in-repo runs write the ledger directly). |
-| `parity.py` | Old-path vs new-path parity for the 2026-08-01 harness port (PR-08 step 1; historical). |
+| `diff_runs.py` | Count regressions, recoveries and coverage changes between two runs, over the cases both scored. Use it after an official run, against the last comparable run, and as the release gate (`--fail-on-regression`, optionally `--fail-on-coverage-loss`). Only diff runs that are comparable as defined in [Comparing two runs](../results/README.md#comparing-two-runs). |
+| `flakiness.py` | For one multi-trial run, each check's mean, standard deviation and flip count across trials (`--per-case` lists the cases that flapped). Use it after every official run, and before calling a regression real, to see whether the check just flaps. Partial samples are flagged INSUFFICIENT DATA. |
+| `compose_runs.py` | When a scoped re-run has refreshed some rows of a full run, combine the two into one current picture without editing either run file. Each row shows which run it came from; nothing is written to `results/runs/` (see [Composing](../results/README.md#composing-a-current-picture-across-runs)). |
 
 ## Reports
 
 | tool | what it does |
 |---|---|
-| `report_run.py` | Markdown four-layer GOLD report for one run (PR-05). |
-| `render_html.py` | Standalone stakeholder HTML report; `--all` builds the cross-run page with a run-selector dropdown. |
-| `render_inspector.py` | Per-check inspection matrix; `--all` for the cross-run page. |
-| `render_trends.py` | Pass-rate ticker across all ledger runs — never read trends across a differing `ff`. |
+| `report_run.py` | Markdown summary of one run on stdout: row verdicts, the bucket table, implied against evaluated checks (the reconciliation line), and diagnostics such as judge errors and slow rows. Use it for a quick read in the terminal or to paste into a PR. |
+| `render_html.py` | Standalone HTML report of one run for stakeholders; `--all` builds the cross-run page with a run selector. Refresh both after every official run. |
+| `render_inspector.py` | HTML matrix of every case against every check, with expected and measured values. Use it to find which checks failed on which cases; `--all` builds the cross-run page. |
+| `render_trends.py` | Pass-rate trends across every run in the ledger, one line per `ff`. Use it to see movement across releases; never read a trend across differing `ff`. |
+
+## Legacy tools
+
+Status: legacy. The GOLD Google Sheet that cases used to live in is
+retired, and the case store is the source of truth. `gold run` replaced
+gnw-evals as the runner. Routine work never needs these tools; each is kept
+for the job in its last column.
+
+| tool | what it was for | what it is still for |
+|---|---|---|
+| `import_sheet.py` | Imported GOLD sheet tabs into the case store; `cases/v1` is that import. | Bulk-loading cases drafted in a spreadsheet with the old sheet's columns (`--csv`). They land in `cases/v2` unless you pass `--cases-dir`; review them like any case edit. Pointing it at `cases/v1` moves the frozen baseline, which `tests/test_v1_frozen.py` rejects. |
+| `export_sheet_csv.py` | Wrote the store as CSVs for the sheet: `cases.csv` replaced the tab, `changelog.csv` held each case's uid history. | A spreadsheet view of the cases for a reviewer who wants one (`--out` is required; multi-turn cases are skipped). |
+| `export_csv.py` | Wrote single-turn cases as a gnw-evals test CSV, so gnw-evals could run them before `gold run` existed. | Running GOLD cases through the gnw-evals CLI, for example to compare its verdict with `gold run` on the same build (`--out` is required). |
+| `ingest_run.py` | Converted gnw-evals runs (`*_detailed.csv`) into ledger run files; the runs in `results/runs/` whose `harness.repo` is `gnw-evals` came in this way. | Importing any other gnw-evals run. `gold run` writes its own run files. |
+| `parity.py` | Showed that `gold run` gives the same verdicts as gnw-evals on the same build, before gnw-evals was retired as the runner. | Repeating that check if you suspect the two harnesses score a shared check differently. |
 
 ## After-run ritual
 
-After every run, in order: `render_html.py` (+ `--all`, `render_inspector.py
---all`, `render_trends.py`), then `flakiness.py` + `diff_runs.py` against the
-last comparable run, then write `results/recommendations/<run_id>.md`, then
-commit run + report + recommendation together. CLAUDE.md has the full
-checklist.
+The steps after every official run (render the reports, check flakiness and
+diff, write the recommendations doc, commit) are in the root README under
+[After a run](../README.md#after-a-run).

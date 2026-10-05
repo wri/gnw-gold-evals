@@ -1,4 +1,5 @@
-"""Audit-tool semantics (PR-11): each rule catches its violation class."""
+"""Tests for tools/audit_cases.py: each audit rule catches the violations it
+targets."""
 
 import sys
 from pathlib import Path
@@ -48,8 +49,8 @@ def test_relative_dates_flagged_only_with_pinned_expectations():
 
 
 def test_relative_date_exempt_only_when_all_keys_are_routing_only():
-    # class_values drifts with the window: outside the allow-list -> caught
-    # (the old date/answer-only check let this straight through).
+    # class_values changes as the relative window moves, and it is not in
+    # the routing-only allow-list, so the relative-date rule flags it.
     caught = Case(id="rc", status="done", group="class-comparison",
                   query="Which land cover class shrank most in the last 5 years?",
                   expected={"dataset_id": "7", "scope": "analyse",

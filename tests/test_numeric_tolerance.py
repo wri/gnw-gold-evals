@@ -1,19 +1,19 @@
 """Unit tests for the answer judge's numeric tolerance.
 
-The judge only extracts which number in the prose answers the question
-(`extracted_number`); `resolve_answer_verdict` applies the tolerance in code, the
-same way `resolve_chart_verdict` already does for charts — except a deterministic
-FAIL here falls back to the judge's own score (asymmetrically: never a PASS),
-because the parser is locale-blind in a way the judge is not (1-091, 1-094).
-What's testable without an API call: that the tolerance constant is single-sourced
-and reaches the prompt, that the prompt does not ask the model to compute a match
-itself, that splicing the fragment in has not broken the LangChain placeholders (a
-stray `{` in a shared fragment becomes a template variable and the judge call fails
-at runtime), and that the deterministic-vs-judge combination behaves correctly on
-its own.
+The judge only extracts the number in the answer that responds to the
+question (`extracted_number`). `resolve_answer_verdict` then applies the
+tolerance in code, as `resolve_chart_verdict` does for charts. One
+difference: a deterministic FAIL falls back to the judge's verdict, because
+the parser cannot read some formats the judge can (a French decimal comma in
+1-091, a Chinese scale word in 1-094). A deterministic PASS is final.
 
-Usage
-$ uv run python -m pytest tests/test_numeric_tolerance.py -v
+Without an API call, these tests check that:
+
+- the tolerance is defined once and appears in the prompt;
+- the prompt does not ask the model to compute the match;
+- the shared prompt fragment adds no LangChain template variables (a stray
+  `{` would become a required variable and fail the judge call at runtime);
+- the deterministic and judge verdicts combine correctly.
 """
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -42,9 +42,9 @@ def test_answer_judge_prompt_states_the_tolerance_and_the_extraction_field():
 
 
 def test_prompt_does_not_ask_the_model_to_compute_the_match():
-    """Regression guard: the model must not be asked to do the arithmetic itself
-    again — that's the defect this change fixes (1-009: the judge accepted a
-    0.51% delta in one trial and rejected the same delta in another)."""
+    """The prompt must not ask the model to do the arithmetic: the judge is
+    inconsistent at it (on 1-009 it accepted a 0.51% difference in one trial
+    and rejected the same difference in another)."""
     assert "Tolerance formula" not in _NUMERIC_RULES
     assert "MATCH (1)" not in _NUMERIC_RULES
     assert "NO MATCH (0)" not in _NUMERIC_RULES
@@ -82,8 +82,8 @@ def test_deterministic_check_overrides_a_wrong_judge_rejection():
 def test_a_deterministic_fail_falls_back_to_a_judge_pass():
     """The asymmetric fallback: a deterministic FAIL is not final, because the
     parser is locale-blind in a way the judge (reading the actual prose) is
-    not. This is the accepted tradeoff — a lenient judge could rescue a
-    genuine miss here too — but it's one-directional (see the next test):
+    not. This is the accepted trade-off (a lenient judge could rescue a
+    genuine miss here too), but it's one-directional (see the next test):
     a deterministic PASS is never revisited, so this can only ever turn a
     FAIL into a PASS, never the reverse."""
     verdict = resolve_answer_verdict(
@@ -112,10 +112,9 @@ def test_a_deterministic_fail_agreeing_with_a_judge_fail_stays_failed():
 
 
 def test_a_deterministic_pass_is_never_revisited_by_the_judge():
-    """The override only runs one direction: a judge FAIL must never drag a
-    correct deterministic PASS down, or a lenient parser bug fix becomes a
-    strict one — reintroducing 1-009's flavor of judge-arithmetic noise from
-    the other side."""
+    """The override runs in one direction only: a judge FAIL never overturns a
+    deterministic PASS. Otherwise the judge's inconsistent arithmetic (seen on
+    1-009) would come back as false failures."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
         expected_answer="100 hectares",
@@ -131,7 +130,7 @@ def test_a_deterministic_pass_is_never_revisited_by_the_judge():
 def test_french_decimal_comma_is_rescued_by_the_judge():
     """1-091: the agent correctly answered "289,11 hectares" (French decimal
     comma). The parser reads the comma as a thousands separator and gets
-    28,911 — a false ~99x miss — but the judge, reading the actual French
+    28,911 (a false ~99x miss), but the judge, reading the actual French
     sentence, correctly recognises it as a match."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
@@ -172,7 +171,7 @@ def test_boundary_is_inclusive():
 
 
 def test_unit_conversion_is_handled_in_code_not_by_the_model():
-    """Expected in kha, extracted in hectares — same value, different units."""
+    """Expected in kha, extracted in hectares: same value, different units."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
         expected_answer="200 kha",
@@ -184,8 +183,8 @@ def test_unit_conversion_is_handled_in_code_not_by_the_model():
 
 
 def test_non_numeric_rows_are_untouched():
-    """Boolean/year/named_entity rows never had the arithmetic bug; leave them to
-    the judge exactly as before."""
+    """Boolean, year and named-entity expectations have no figure to compare,
+    so the judge's verdict stands."""
     verdict = resolve_answer_verdict(
         answer_eval_type="named_entity",
         expected_answer="Brazil",
@@ -208,8 +207,8 @@ def test_falls_back_to_the_judge_when_extraction_is_empty():
 
 
 def test_falls_back_to_the_judge_when_extraction_does_not_parse():
-    """An ambiguous decimal ("230.003") can't be resolved deterministically —
-    same abstention rule the chart comparator uses."""
+    """An ambiguous decimal ("230.003") can't be resolved deterministically:
+    the same abstention rule the chart comparator uses."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",
         expected_answer="230.003 hectares",
@@ -221,7 +220,7 @@ def test_falls_back_to_the_judge_when_extraction_does_not_parse():
 
 
 def test_falls_back_to_the_judge_on_a_percent_unit_mismatch():
-    """Expected is a percentage, extracted number is not — a parsing artifact,
+    """Expected is a percentage, extracted number is not: a parsing artefact,
     not the population this override is meant to fix."""
     verdict = resolve_answer_verdict(
         answer_eval_type="numeric",

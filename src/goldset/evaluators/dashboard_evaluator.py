@@ -14,7 +14,7 @@ def evaluate_dashboard_created(
 
     Tri-state scoring, mirroring evaluate_clarification's table:
         expected=True,  actual=True  -> 1.0 (correct)
-        expected=True,  actual=False -> 0.0 (wrong - expected but not created)
+        expected=True,  actual=False -> 0.0 (wrong: expected but not created)
         expected=False, actual=False -> 1.0 (correct)
         expected=False, actual=True  -> 0.0 (guardrail: unwanted dashboard)
         expected=None,  actual=True  -> 0.0 (unsolicited dashboard creation)
@@ -22,7 +22,7 @@ def evaluate_dashboard_created(
 
     Args:
         agent_state: Final agent state after execution
-        expected_dashboard_created: Expected dashboard-creation behavior
+        expected_dashboard_created: Expected dashboard-creation behaviour
             (True/False/None, None meaning "no expectation")
 
     Returns:
@@ -52,9 +52,8 @@ def evaluate_dashboard_aoi(
 ) -> dict[str, Any]:
     """Check the dashboard has exactly one AOI, matching the expected AOI.
 
-    Reuses the existing expected_aoi_ids/expected_aoi_source columns rather than
-    a new column - the dashboard's AOI should be the same AOI already under test
-    elsewhere in the row.
+    Reuses the case's aoi_ids and aoi_source expectations rather than adding new
+    ones: the dashboard's AOI should be the AOI the case already tests.
 
     Args:
         dashboard: Fetched dashboard payload (GET /api/dashboards/{id}), or None
@@ -113,8 +112,8 @@ def _widget_is_valid(widget: dict[str, Any]) -> bool:
     if widget_type == "insight":
         return widget.get("insight") is not None
     if widget_type == "text":
-        # the API nests the markdown at config.text (PR-04 F3); the flat
-        # key is kept as a fallback for older payloads
+        # The API nests the markdown at config.text; the flat key is a
+        # fallback for older payloads.
         config = widget.get("config") or {}
         return config.get("text") is not None or widget.get("text") is not None
     if widget_type == "map":
@@ -137,9 +136,9 @@ def evaluate_dashboard_widgets(
             Compared as a multiset (order doesn't matter, but counts do).
 
     Returns:
-        Dict with dashboard_widgets_match_score (0/1/None) - multiset match against
-        expected; dashboard_widgets_valid_score (0/1/None) - independent content
-        sanity check, None only when there are zero widgets to check; and
+        Dict with dashboard_widgets_match_score (0/1/None): multiset match against
+        expected; dashboard_widgets_valid_score (0/1/None): independent content
+        sanity check, None when there are no widgets and none were expected; and
         actual_dashboard_widget_types (str of the actual widget_type list).
 
     """
@@ -164,19 +163,14 @@ def evaluate_dashboard_widgets(
         all_valid = all(_widget_is_valid(w) for w in widgets)
         result["dashboard_widgets_valid_score"] = 1.0 if all_valid else 0.0
     elif expected_dashboard_widgets:
-        # Content was requested and is missing — PR-04 F3's real intent.
+        # Widgets were expected and there are none.
         result["dashboard_widgets_valid_score"] = 0.0
     else:
-        # H7, reversing part of F3: an empty dashboard is only an "empty
-        # artifact" if something was asked to be in it. 1-096's prompt is just
-        # "Create a dashboard for brazil" and sets no widget expectation, yet it
-        # failed on 4 of 6 trials and passed only where the agent volunteered an
-        # *unsolicited* text widget — while evaluate_dashboard_created treats an
-        # unsolicited dashboard as a guardrail violation. The case also had no
-        # way to answer the check: there is no syntax for "expect zero widgets"
-        # (an empty value parses to None, i.e. no expectation). If the product
-        # stance really is "a created dashboard must never be empty", that
-        # belongs in its own check with its own spec decision.
+        # No widgets and none expected: nothing to validate. An empty dashboard
+        # fails only when widgets were asked for. A case cannot say "expect zero
+        # widgets" (an empty value means no expectation), so failing here would
+        # penalise cases that never asked for content. If an empty dashboard
+        # should always fail, that needs its own check.
         result["dashboard_widgets_valid_score"] = None
 
     return result

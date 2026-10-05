@@ -1,4 +1,6 @@
-"""API test runner for E2E testing framework."""
+"""Run one query against the GNW agent: stream ``POST /api/chat``, fetch the
+final thread state (and the dashboard, if one was created) and score it with
+every registered evaluator."""
 
 import base64
 import json
@@ -30,7 +32,7 @@ class APITestRunner(BaseTestRunner):
         verbose: bool = False,
         wall_clock_limit: float = 900.0,
     ):
-        """Initialize with API configuration."""
+        """Initialise with API configuration."""
         self.api_base_url = api_base_url
         self.api_token = api_token
         self.ff = ff
@@ -64,29 +66,34 @@ class APITestRunner(BaseTestRunner):
         artifact_sink: Callable[[dict[str, Any]], Any] | None = None,
         thread_id: str | None = None,
     ) -> TestResult:
-        """Run a single agent test using API endpoint.
+        """Send one query to the agent and score the final state.
 
         Args:
-            query: User query to test
-            expected_data: Expected test results for evaluation
+            query: the user query to send.
+            expected_data: the case's expectations, passed to every evaluator.
+            artifact_sink: called once with the raw-state artefact (see
+                runner/artifacts.py); a failure in it never fails the trial.
+            thread_id: an existing thread to continue (a later turn of a
+                multi-turn case); omit it to start a fresh thread.
 
         Returns:
-            TestResult with evaluation scores and metadata
-
+            A TestResult with scores and diagnostics. Any exception, including
+            the wall-clock timeout, returns an error TestResult instead of
+            raising.
         """
-        # A caller-supplied thread_id continues an existing conversation
-        # (multi-turn, PR-07); the default is a fresh single-turn thread.
+        # A caller-supplied thread_id continues an existing conversation (a
+        # multi-turn case); the default is a fresh single-turn thread.
         thread_id = thread_id or str(uuid4())
         trace_url = None
         app_thread_url = self._build_app_thread_url(self.api_base_url, thread_id)
         start_time = time.time()
 
         try:
-            # Collect all streaming responses to ensure conversation completes
+            # Read the whole stream before fetching state: the thread state is
+            # only final once the stream closes.
             responses = []
             trace_id = None
 
-            # Prepare request payload
             payload = {
                 "query": query,
                 "user_persona": "Researcher",
@@ -101,12 +108,10 @@ class APITestRunner(BaseTestRunner):
             if self.api_token:
                 headers["Authorization"] = f"Bearer {self.api_token}"
 
-            # Use httpx async client for streaming, under a hard per-trial
-            # deadline. The 240s httpx timeout is per-read: a stream that
-            # keeps sending keepalives resets it forever (staging pinned
-            # four workers for 2h+ this way on 2026-08-01). The wall clock
-            # bounds the whole trial; TimeoutError degrades to an error
-            # row via the handler below.
+            # Hard per-trial deadline: the 240s httpx timeout is per read, so a
+            # stream that keeps sending keepalives never trips it. The wall
+            # clock bounds the whole trial; TimeoutError becomes an error row
+            # via the handler below.
             with anyio.fail_after(self.wall_clock_limit):
                 async with httpx.AsyncClient(timeout=240.0) as client:
                     async with client.stream(
@@ -122,7 +127,6 @@ class APITestRunner(BaseTestRunner):
                                 stream_data = json.loads(line)
                                 responses.append(stream_data)
 
-                                # Capture trace ID from stream
                                 if stream_data.get("node") == "trace_info":
                                     update_data = json.loads(
                                         stream_data.get("update", "{}"),
@@ -130,7 +134,6 @@ class APITestRunner(BaseTestRunner):
                                     trace_id = update_data.get("trace_id")
                                     trace_url = update_data.get("trace_url")
 
-                    # Get final agent state using the state endpoint
                     state_response = await client.get(
                         f"{self.api_base_url}/api/threads/{thread_id}/state",
                         headers=headers,
@@ -138,17 +141,15 @@ class APITestRunner(BaseTestRunner):
                     state_response.raise_for_status()
                     response_data = state_response.json()
                     agent_state = response_data.get("state", {})
-                    # `loads` is LangChain's own beta-decorated deserializer; the
-                    # warning fires on every call, but there's nothing actionable
-                    # in it (we're not choosing to opt into or out of the beta
-                    # status per-call), so it's suppressed at the one call site.
+                    # LangChain's `loads` is marked beta and warns on every call;
+                    # the warning is not actionable, so it is suppressed here.
                     with suppress_langchain_beta_warning():
                         agent_state = loads(agent_state, allowed_objects="core")
 
                     # Fetch dashboard details when a dashboard was created this turn.
                     # agent_state only carries the dashboard_id; AOI/widget details
                     # live on the dashboard resource itself. A failed fetch degrades
-                    # to dashboard=None (soft failure) rather than erroring the row -
+                    # to dashboard=None (soft failure) rather than erroring the row:
                     # the primary chat result already succeeded.
                     dashboard: dict[str, Any] | None = None
                     dashboard_id = (
@@ -184,7 +185,7 @@ class APITestRunner(BaseTestRunner):
 
             # Run evaluations off the loop thread: judge calls inside are
             # synchronous HTTP, and a slow one on the loop thread freezes
-            # every other worker (and every timer — including the wall
+            # every other worker (and every timer, including the wall
             # clock above). abandon_on_cancel lets cancellation proceed;
             # the abandoned thread dies on the judge client's own timeout.
             evaluations = await anyio.to_thread.run_sync(
@@ -197,7 +198,6 @@ class APITestRunner(BaseTestRunner):
             )
             overall_score = self._calculate_overall_score(evaluations, expected_data)
 
-            # Print tool trace in verbose mode
             if self.verbose:
                 print(
                     self._format_tool_trace(
@@ -248,7 +248,7 @@ class APITestRunner(BaseTestRunner):
             )
         except Exception as e:
             # str(e) can be empty (bare exceptions print as "Error: " and
-            # land unreadable in the ledger) — always carry at least the
+            # land unreadable in the ledger), so always carry at least the
             # exception type.
             error_text = str(e) or type(e).__name__
             print(f"Error: {error_text}")
@@ -303,7 +303,6 @@ class APITestRunner(BaseTestRunner):
         messages = agent_state.get("messages", [])
         raw_parts = agent_state.get("codeact_parts", [])
 
-        # Extract tool call / tool message pairs from messages
         tool_calls: list[dict[str, Any]] = []
         for msg in messages:
             if hasattr(msg, "tool_calls") and msg.tool_calls:
@@ -317,7 +316,6 @@ class APITestRunner(BaseTestRunner):
                             },
                         )
 
-        # Match tool messages back to their calls
         for msg in messages:
             if hasattr(msg, "tool_call_id") and hasattr(msg, "content"):
                 tid = msg.tool_call_id
@@ -326,7 +324,6 @@ class APITestRunner(BaseTestRunner):
                         tc["output"] = msg.content
                         break
 
-        # Print tool calls from messages
         if tool_calls:
             lines.append("")
             lines.append("--- Tool Calls ---")
@@ -341,7 +338,6 @@ class APITestRunner(BaseTestRunner):
                     output = self._truncate(output, 3000)
                     lines.append(f"  Output:\n{self._indent(output, '    ')}")
 
-        # Decode and print codeact_parts
         if raw_parts:
             lines.append("")
             lines.append("--- Execution Trace ---")

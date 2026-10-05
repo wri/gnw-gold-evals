@@ -1,11 +1,20 @@
-"""``gold`` — run the GOLD set against a live GNW API, writing the ledger.
+"""gold: run GOLD cases against a live GNW agent API and record the results.
 
-    gold run --env staging --trials 3
-    gold run --api-base-url https://api.staging.globalnaturewatch.org --id 1-030
+Examples:
+  gold run --env staging --trials 3
+  gold run --api-base-url https://api.staging.globalnaturewatch.org --id 1-030
+  gold run --resume <run_id>
+  gold prune-artifacts --keep-runs 5
 
-Configuration policy (deliberately unlike gnw-evals): **flags always win.**
-The environment supplies secrets only — ``API_TOKEN`` and
-``ANTHROPIC_API_KEY`` (judge). No env var silently overrides a CLI default.
+Each run writes one run record under results/runs/. The profile, trial and
+smoke-run rules are in README.md, "Running the set".
+
+Flags always win: no environment variable changes a flag or its default.
+The environment (or a .env file) supplies secrets only:
+  STAGING_API_TOKEN, PROD_API_TOKEN  API token for that environment. API_TOKEN
+                                     is the fallback, and the only one a local
+                                     run reads.
+  ANTHROPIC_API_KEY                  the LLM judge
 """
 
 from __future__ import annotations
@@ -59,9 +68,9 @@ def require_api_token(environment: str) -> str | None:
     return token
 
 
-# Which actual_* diagnostics substantiate each check — recorded on the
-# entry for FAILED checks only, so reports can show expected vs measured
-# without re-running anything.
+# Which actual_* diagnostics substantiate each check. They are recorded on
+# the entry for FAILED checks only, so reports can show expected against
+# measured without re-running anything.
 ACTUALS_FOR_CHECK = {
     "aoi_id_match": ("actual_id",),
     "dataset_id_match": ("actual_dataset_id",),
@@ -137,10 +146,10 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
 
 
 def latency_info(latency_s: float | None, slow_threshold: float) -> dict | None:
-    """G3: info-only slow flag for a merged entry — reported, never scored.
+    """Info-only "slow" flag for a merged entry: recorded, never scored.
 
-    Strictly over-threshold flags; at or under (or no recorded latency)
-    returns None so no ``info`` key is written.
+    Returns None (so no ``info`` key is written) when the latency is at or
+    under the threshold, or was not recorded.
     """
     if latency_s is None or latency_s <= slow_threshold:
         return None
@@ -160,8 +169,8 @@ def merge_trials(entries: list[dict]) -> dict:
     merged["trials"] = [
         {"checks": e["checks"], "latency_s": e.get("latency_s")} for e in entries
     ]
-    # Errors from ANY trial must survive the merge (PR-09 H3) — the base
-    # copy above only carries the final trial's metadata.
+    # Errors from ANY trial must survive the merge: the base copy above only
+    # carries the final trial's metadata.
     judge_errors = sorted({je for e in entries for je in e.get("judge_errors", [])})
     if judge_errors:
         merged["judge_errors"] = judge_errors
@@ -195,12 +204,8 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
         cases = [c for c in cases if c.id.lower() in wanted]
     if args.group:
         cases = [c for c in cases if args.group.lower() in c.group.lower()]
-    # With default string sorting, multi-turn cases get started last, since 'mt-'
-    # sorts after '1-'. But they take significant longer than the non-multi-turn
-    # cases, so force them to be started first (longest-processing-time-first
-    # scheduling). This speeds up the whole test run, since then you don't have a
-    # long tail of a few multi-turn cases trying to finish at the end of the test
-    # run.
+    # Start multi-turn cases first: they take longest, and if started last (as
+    # 'mt-' sorts after '1-') they leave a long tail at the end of the run.
     return sorted(cases, key=lambda c: (not c.is_multiturn, c.id))
 
 
@@ -222,7 +227,7 @@ async def run_cases(
         wall_clock_limit=args.trial_timeout,
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
-    # hard cap concurrency against the live API (20 ran fine on gnw-evals)
+    # Hard cap on concurrency against the live API (20 is known to run cleanly).
     semaphore = asyncio.Semaphore(max(1, min(args.workers, 20)))
 
     run_started = datetime.now()
@@ -230,7 +235,8 @@ async def run_cases(
     completed_cases = 0
 
     def _resolve_case(case: Case) -> Case:
-        """Expand template variables in queries, preserving the original uid."""
+        """Expand template variables in queries. The result hashes to a new uid
+        if a query was templated, so run_one records the stored case's uid."""
         if case.is_multiturn:
             resolved_turns = tuple(
                 {**turn, "query": resolve_templates(turn["query"], now=run_started)}
@@ -272,22 +278,21 @@ async def run_cases(
                     )
                     trials.append(result_to_entry(result, original_uid))
             entry = merge_trials(trials)
-            # G3: slow rows get an info flag — reported, never scored.
+            # Slow rows get an info flag: recorded, never scored.
             info = latency_info(entry.get("latency_s"), args.slow_threshold)
             if info:
                 entry["info"] = info
             if entry_sink is not None:
                 entry_sink(entry)
-            # Same verdict the ledger and reports use (buckets.row_verdict): an
-            # info-only check (e.g. charts_answer_judge) scoring 0.0 must not
-            # print FAIL here when nothing gating actually failed.
+            # Use row_verdict, as the ledger and reports do, so an info-only
+            # check scoring 0.0 does not print FAIL.
             verdict = row_verdict(entry)
             label = {"fail": "FAIL", "error": "ERROR"}.get(verdict, "ok")
             # status rides along so a FAIL on an unverified (ready/todo) case
             # reads differently from a FAIL on a verified (done) one.
             completed_cases += 1
             # flush: through a pipe, block buffering can hold every progress
-            # line until exit — exactly when a killed run needs them visible.
+            # line until exit, which is exactly when a killed run needs them.
             print(
                 f"  {case.id} [{label}] status={case.status} "
                 f"({completed_cases}/{total_cases})",
@@ -302,9 +307,10 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
                      entries: list[dict], started: str, environment: str) -> dict:
     """The ledger record for a finished run (contract: results/README.md).
 
-    ``caseset`` names the store directory the run loaded (``v1``/``v2``) —
-    ``caseset_version`` alone is a content hash a reader can't attribute to
-    a store without git archaeology. Runs before 2026-08-04 lack the field.
+    ``caseset`` names the store directory the run loaded (``v1``/``v2``),
+    because ``caseset_version`` alone is a content hash a reader cannot trace
+    to a store without digging through git history. Runs before 2026-08-04
+    lack the field.
     """
     record = {
         "run_id": args.run_id,
@@ -337,9 +343,7 @@ def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
         run_record["resumed"] = True
     path = write_run(args.results_dir, run_record)
     partial.unlink()
-    # Gating verdict only (buckets.row_verdict) — an info-only check scoring
-    # 0.0 (e.g. charts_answer_judge) must not count as a failing case here,
-    # or this line lies about how many rows actually need attention.
+    # Use row_verdict so an info-only check scoring 0.0 does not count as a failure.
     failed = sum(1 for e in entries if row_verdict(e) == "fail")
     errored = sum(1 for e in entries if row_verdict(e) == "error")
     line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
@@ -352,10 +356,10 @@ def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
 def resume_run(args: argparse.Namespace) -> int:
     """Finish a killed run from its in-flight partial file.
 
-    All run configuration comes from the partial's header — flags on the
-    resume invocation are ignored except ``--results-dir``, which locates
-    the partial. The final record is indistinguishable from an unbroken run
-    bar a ``resumed: true`` marker (its timing mixes two sessions).
+    All run configuration comes from the partial's header. Flags on the
+    resume invocation are ignored, except ``--results-dir``, which locates
+    the partial, and ``--verbose``. The final record matches an unbroken run
+    apart from a ``resumed: true`` marker (its timing mixes two sessions).
     """
     partial = partial_path(args.results_dir, args.resume)
     final = args.results_dir / RUNS_DIRNAME / f"{args.resume}.json"
@@ -412,8 +416,9 @@ def resume_run(args: argparse.Namespace) -> int:
 
 
 def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
-    """Artifacts are regenerable and unbounded (PR-09 H6): keep the newest
-    N run directories (run_ids sort chronologically), delete the rest."""
+    """Artefacts are uncommitted and grow without limit: keep the newest N run
+    directories (run_ids sort chronologically) and delete the rest. A pruned
+    run can no longer be re-analysed from raw state; its ledger record stays."""
     import shutil
 
     artifacts = results_dir / "artifacts"
@@ -430,21 +435,31 @@ def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(prog="gold", description=__doc__)
+    parser = argparse.ArgumentParser(
+        prog="gold",
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     sub = parser.add_subparsers(dest="command", required=True)
     run = sub.add_parser("run", help="run cases against a live API")
     run.add_argument("--env", choices=sorted(ENV_URLS), default="staging")
     run.add_argument("--api-base-url", default=None,
                      help="explicit URL; overrides --env")
-    run.add_argument("--ff", default=None, help="agent tool profile")
+    run.add_argument("--ff", default=None,
+                     help="agent tool profile (the ff feature flag sent with each "
+                          "chat request). Omit it for the default profile, which "
+                          "is enough for a trusted run; pass 'experimental' only "
+                          "to test features still behind it. Never diff runs "
+                          "made with different --ff.")
     run.add_argument("--build", default="unknown",
                      help="agent build label, e.g. 'GNW 2026.7.29.1'")
-    run.add_argument("--trials", type=int, default=1)
-    # Default raised 5 -> 10 on 2026-08-03 for fast iteration runs. Concurrency
-    # is recorded on the run (see the ledger's `workers`) because the 08-02
-    # run's 19 ReadTimeouts arrived as one contiguous block over the last
-    # quarter of the run — a load-shaped signature that is undiagnosable
-    # without knowing what concurrency produced it.
+    run.add_argument("--trials", type=int, default=1,
+                     help="trials per case; each check keeps its majority verdict "
+                          "(ties fail). Use 3 for any run you will diff or keep "
+                          "as a baseline; 1, the default, is a smoke run.")
+    # Concurrency is recorded on the run (the ledger's `workers` field): a burst
+    # of timeouts late in a run usually means load, and that cannot be diagnosed
+    # without knowing the concurrency.
     run.add_argument("--workers", type=int, default=10)
     run.add_argument("--status-exclude", default="not doing")
     run.add_argument("--id", action="append", default=None,
@@ -455,19 +470,18 @@ def main() -> int:
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")
     run.add_argument("--trial-timeout", type=float, default=900.0,
-                     help="hard per-trial wall-clock limit in seconds; a trial "
-                          "over it degrades to an error row (the per-read HTTP "
-                          "timeout cannot bound a stream that keeps sending "
-                          "keepalives)")
+                     help="hard per-trial time limit in seconds; a trial that "
+                          "exceeds it is recorded as an error")
     run.add_argument("--note", default=None,
                      help="methodology note recorded on the run (e.g. after a "
                           "check-semantics change, so diffs aren't read as agent movement)")
     run.add_argument("--dry-run", action="store_true",
                      help="list selected cases without calling the API")
     run.add_argument("--resume", default=None, metavar="RUN_ID",
-                     help="finish a killed run from its .partial.jsonl; all "
-                          "other flags are ignored (the run's config comes "
-                          "from the partial's header)")
+                     help="finish a killed run from its .partial.jsonl. The "
+                          "run's settings come from that file, so other flags "
+                          "are ignored, except --results-dir (which must match "
+                          "the original run) and --verbose.")
     run.add_argument("--verbose", action="store_true")
 
     prune = sub.add_parser(
@@ -500,9 +514,8 @@ def main() -> int:
             print(f"{case.id}  {case.uid}  [{case.status}] {preview[:70]}")
         print(f"{len(cases)} cases selected (dry run)")
         return 0
-    # Secrets may live in .env (as in gnw-evals). Loaded here, before the
-    # token check, and never used for anything but secrets — CLI defaults
-    # still cannot be overridden by the environment.
+    # Secrets may live in .env. Loaded here, before the token check, and used
+    # only for secrets: the environment never overrides a CLI default.
     load_dotenv()
 
     args.resolved_url = args.api_base_url or ENV_URLS[args.env]

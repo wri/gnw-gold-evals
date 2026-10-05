@@ -1,14 +1,13 @@
-"""Bridge between the case store and the ported harness types.
+"""Convert a store ``Case`` into the ``ExpectedData`` the evaluators read.
 
-``Case.expected`` keys are stored without the ``expected_`` prefix; the
-harness's ``ExpectedData`` (ported verbatim from gnw-evals) wants prefixed
-fields and applies its own parsing (semicolon splits, tri-state booleans).
-The adapter re-prefixes and lets those validators do exactly what they did
-in gnw-evals — no second parsing layer to drift.
+Case YAML stores expectation keys without the ``expected_`` prefix.
+``ExpectedData`` wants the prefix and does its own parsing (semicolon lists,
+tri-state booleans), so this module only adds the prefix: one parser, not two.
 
-The case ``uid`` rides along as a pydantic extra field (both harness models
-are ``extra="allow"``), so it flows untouched through ``run_test`` into the
-``TestResult`` and out to the ledger.
+The case uid rides along as a pydantic extra field, but nothing relies on it:
+the ledger takes its uid from the stored case (``run_cases`` in ``cli.py``),
+because a templated query resolves to different text, and so to a different
+uid, at run time.
 """
 
 from __future__ import annotations

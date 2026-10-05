@@ -4,9 +4,6 @@ The composition exists because the ledger contract forbids the obvious shortcut
 (writing later scores into an earlier run file), so the properties that matter are:
 freshest-measurement-wins, current-uid-only, nothing silently dropped, and no
 ledger file written.
-
-Usage
-$ uv run python -m pytest tests/test_compose_runs.py -v
 """
 
 import importlib.util

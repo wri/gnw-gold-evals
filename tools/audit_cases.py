@@ -1,16 +1,18 @@
-"""Case-set audit: depth, coverage floors, and DON'T violations.
+"""Case-set audit: depth, coverage floors and DON'T violations.
 
     uv run python tools/audit_cases.py                # report (exit 0)
     uv run python tools/audit_cases.py --strict       # exit 1 on violations
 
-Encodes the rules from ``cases/README.md`` and the acceptance criteria
-from ``docs/specs/caseset-implementation-plan.md`` (W1/W2/W3):
+Encodes the authoring rules in cases/README.md (its DOs, DON'Ts and "The
+audit gate" sections):
 
-- depth: every ready/done/todo case implies >=2 checks across >=2 buckets
-  (the ``metadata`` group is the sanctioned judged-only exception)
-- coverage floors: every group and every dataset id >=3 rows
-- DON'Ts: relative-date queries (tolerated when only routing is asserted),
-  date expectations on non-date-scoped datasets, judged-only rows
+- depth: every ready, todo or done case implies at least 2 checks across at
+  least 2 buckets (the `metadata` group is the one allowed judged-only
+  exception)
+- coverage floors: every group and every dataset id has at least 3 active
+  cases
+- DON'Ts: relative-date queries (allowed when only routing is asserted),
+  date expectations on datasets that are not date-scoped, judged-only cases
 """
 
 from __future__ import annotations
@@ -41,7 +43,7 @@ RELATIVE_DATE_RE = re.compile(
 )
 
 # The rule (cases/README.md, DON'T #1): relative-date phrasing is tolerated
-# only when the case asserts *routing alone* — which AOI/dataset/layer/
+# only when the case asserts *routing alone*: which AOI/dataset/layer/
 # parameters the agent selected, its scope, and whether it asked to clarify.
 # Those stay true whatever the calendar says. Every other expectation
 # (answers, dates, class values, chart/dashboard/nudge content, judged text,
@@ -194,13 +196,14 @@ def render(report: dict) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--strict", action="store_true",
-                        help="exit 1 on depth/DON'T violations. Coverage floors "
-                             "stay report-only: clearing them means authoring new "
-                             "cases, not fixing existing ones. Enforced in CI from "
-                             "2026-08-04.")
+                        help="exit 1 on depth or DON'T violations (CI runs this). "
+                             "Coverage floors stay report-only: clearing them "
+                             "means authoring new cases, not fixing existing ones.")
     args = parser.parse_args(argv)
 
     cases = [case for _p, case, _u in load_store(args.cases_dir)]

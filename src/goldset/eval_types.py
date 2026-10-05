@@ -1,4 +1,5 @@
-"""Type definitions for E2E testing framework."""
+"""Pydantic models for one trial: ``ExpectedData`` (a case's expectations) and
+``TestResult`` (the scores and diagnostics it produced)."""
 
 from typing import Any
 
@@ -12,28 +13,25 @@ def _parse_tri_state_bool(v: str | bool | None) -> bool | None:
     - "false", "False", "0", "no" -> False
     - "true", "True", "1", "yes" -> True
     - Boolean values pass through unchanged
+    - Any other string -> None (no expectation)
     """
     if v is None:
         return None
     if isinstance(v, bool):
         return v
     if isinstance(v, str):
-        # Empty string means no expectation
         if not v or v.strip() == "":
             return None
-        # Explicit false values
         if v.lower() in ("false", "0", "no"):
             return False
-        # Explicit true values
         if v.lower() in ("true", "1", "yes"):
             return True
-        # Default to None for any other value
         return None
     return bool(v) if v else None
 
 
 class TestResult(BaseModel):
-    """Result of a single E2E test execution."""
+    """Scores and diagnostics from one trial of a case (or of one turn)."""
 
     model_config = ConfigDict(extra="allow")
 
@@ -48,7 +46,7 @@ class TestResult(BaseModel):
     execution_time: str
     duration_seconds: float | None = None
 
-    # AOI evaluation fields - separate binary scores (0/1/None)
+    # AOI evaluation fields: separate binary scores (0/1/None)
     aoi_id_match_score: float | None = None
     actual_id: str | None = None
     actual_name: str | None = None
@@ -56,7 +54,7 @@ class TestResult(BaseModel):
     actual_source: str | None = None
     match_aoi_id: bool = False
 
-    # Dataset evaluation fields - separate binary scores (0/1/None)
+    # Dataset evaluation fields: separate binary scores (0/1/None)
     dataset_id_match_score: float | None = None
     dataset_parameter_match_score: float | None = None
     context_layer_match_score: float | None = None
@@ -65,7 +63,7 @@ class TestResult(BaseModel):
     actual_dataset_parameters: str | None = None
     actual_context_layer: str | None = None
 
-    # Data pull evaluation fields - separate binary scores (0/1/None)
+    # Data pull evaluation fields: separate binary scores (0/1/None)
     data_pull_exists_score: float | None = None
     date_coverage_score: float | None = None
     date_extraction_score: float | None = None
@@ -83,7 +81,7 @@ class TestResult(BaseModel):
 
     # Answer evaluation fields
     charts_answer_score: float | None = None
-    # The chart judge's own appropriateness verdict: reported, never gating (H5).
+    # The chart judge's own appropriateness verdict: reported, never gating.
     charts_answer_judge_score: float | None = None
     chart_answer_score_reason: str | None = None
     agent_answer_score: float | None = None
@@ -143,10 +141,10 @@ class TestResult(BaseModel):
     # Error handling
     error: str | None = None
 
-    # Trial metadata
+    # Unused: num_trials and the *_score_std fields below are never set. Trials
+    # are merged per check, by majority, in cli.merge_trials.
     num_trials: int = 1
 
-    # Std deviation per score (only populated when num_trials > 1)
     overall_score_std: float | None = None
     aoi_id_match_score_std: float | None = None
     dataset_id_match_score_std: float | None = None
@@ -168,7 +166,7 @@ class TestResult(BaseModel):
     nudge_match_score_std: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for CSV export."""
+        """Plain dict of every field, including None values."""
         return self.model_dump(exclude_none=False)
 
 
@@ -193,7 +191,6 @@ class ExpectedData(BaseModel):
     expected_dashboard_widgets: list[str] | None = None
     expected_nudge_type: str = ""
     expected_nudge_options: list[str] = []
-    # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""
     expected_class_values: str = ""
@@ -229,11 +226,11 @@ class ExpectedData(BaseModel):
     @field_validator("expected_aoi_ids", mode="before")
     @classmethod
     def split_aoi_ids(cls, v: str | list[str]) -> list[str]:
-        """Split string input into a list of strings."""
+        """Split semicolon-separated AOI ids into a list; the agent must select
+        exactly this set (the ids are not alternatives)."""
         if isinstance(v, list):
             return v
         if isinstance(v, str):
-            # Split by comma and strip whitespace, filter out empty strings
             return [item.strip() for item in v.split(";") if item.strip()]
         return []
 

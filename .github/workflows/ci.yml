@@ -27,17 +27,17 @@ jobs:
         run: uv run ruff check src tools tests
       - name: Tests (includes per-case schema conformance)
         run: uv run pytest -q
-      # Enforcing from 2026-08-04, once W1-W4 cleared the last depth and DON'T
-      # violations. --strict fails the build on those two classes only; the
-      # coverage floors (groups/datasets below 3) stay report-only, because
-      # clearing them means authoring new cases rather than fixing existing ones.
-      - name: Case-set audit (rubric gate)
+      # --strict fails the build on depth and DON'T violations (rules in
+      # cases/README.md). Coverage floors (groups or datasets with fewer than
+      # 3 active cases) stay report-only, because clearing them means
+      # authoring new cases rather than fixing existing ones.
+      - name: Case-set audit (depth and DON'T rules, --strict)
         run: uv run python tools/audit_cases.py --strict
-      - name: Case-store integrity (uids + manifest truthful, both versions)
+      - name: Case-store integrity (uids and manifests match the YAML, v1 and v2)
         run: |
           uv run python tools/check.py --cases-dir cases/v1
           uv run python tools/check.py --cases-dir cases/v2
-      - name: Coverage doc freshness (COVERAGE.md derived, never hand-edited)
+      - name: COVERAGE.md is up to date (generated, never hand-edited)
         run: uv run python tools/coverage_doc.py --check
 
   # The release gate as a button: a live staging run + regression diff

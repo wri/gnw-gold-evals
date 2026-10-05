@@ -1,11 +1,8 @@
 """Unit tests for the nudge evaluator.
 
 Covers the generic `nudge` state field ({type, options}) introduced in
-wri/project-zeno#770, which replaces suggested_datasets and generalizes
+wri/project-zeno#770, which replaces suggested_datasets and generalises
 pick_aoi/pick_dataset disambiguation and the standalone send_nudge tool.
-
-Usage
-$ uv run pytest tests/test_nudge_evaluator.py -v
 """
 
 from goldset.eval_types import ExpectedData
@@ -14,8 +11,8 @@ from goldset.evaluators.nudge_evaluator import evaluate_nudge
 
 def test_nudge_evaluator_no_expectation():
     """No expected_nudge_type/options means the score abstains, but the
-    actuals are still extracted — multi-turn delta snapshots and triage
-    need them on turns with no nudge expectation (PR-07)."""
+    actuals are still extracted: multi-turn delta snapshots and triage
+    need them on turns with no nudge expectation."""
     result = evaluate_nudge(
         agent_state={"nudge": {"type": "aoi_choice", "options": ["A", "B"]}},
         expected_nudge_type=None,
@@ -220,7 +217,7 @@ def test_nudge_evaluator_options_only_no_expected_type():
 
 
 def test_expected_data_parses_semicolon_separated_nudge_options():
-    """CSV rows use semicolons to separate multiple valid nudge options."""
+    """Case files list alternative nudge options as one `;`-separated string."""
     expected = ExpectedData(
         expected_nudge_type="dataset_choice",
         expected_nudge_options="Tree cover loss;Global all ecosystem disturbance alerts (DIST-ALERT)",

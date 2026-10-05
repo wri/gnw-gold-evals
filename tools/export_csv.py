@@ -1,15 +1,16 @@
-"""Export the case store to a gnw-evals-compatible CSV.
+"""Legacy: export cases as a gnw-evals test CSV, to cross-check gold run verdicts.
 
-Bridge tool: until the harness is ported (PR-03), runs still execute via
-gnw-evals' ``--test-file``. This makes the repo the source of truth today
-with zero harness changes::
+GOLD runs use `uv run gold run`, not gnw-evals. This tool is kept only for
+cross-checks, when you want the old gnw-evals harness to score some cases,
+for example to compare its verdict with `gold run` on a disputed case.
 
-    uv run python tools/export_csv.py --out /tmp/gold.csv
+    uv run python tools/export_csv.py --out /tmp/gold.csv --status-exclude "not doing"
     # then, in gnw-evals:
     #   uv run gnw_evals --test-file /tmp/gold.csv --sample-size -1 ...
 
-The ``uid`` is carried in a trailing column; gnw-evals ignores unknown
-columns, and the results importer (PR-02) joins on it.
+Multi-turn cases are skipped, because the gnw-evals CSV is single-turn. The
+case `uid` goes in a trailing column (gnw-evals ignores unknown columns), so
+`tools/ingest_run.py` can join the results back to the exact case version.
 """
 
 from __future__ import annotations
@@ -56,7 +57,9 @@ def expected_columns(cases) -> list[str]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument(
