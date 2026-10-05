@@ -1,9 +1,14 @@
-"""Guard semantics (PR-04 G1-G4 + F2), fixtures shaped on real run-6 rows.
+"""Tests for the guard checks in `evaluators/guards.py` and the slow-row
+latency flag.
 
-The statistics fixture mirrors the live entry shape pinned from 84
-pull-bearing staging artifacts (results/campaigns/20260801-pr08.md, step 4):
-``source_url`` references the dataset by slug, ``dataset_id`` is int-typed
-and present on most (81/84) but not all entries.
+Test-name prefixes map to checks: g1 `answered_without_data`, g2
+`web_fallback`, g3 the latency flag (`goldset.cli.latency_info`), g4
+`pull_source_match`, f2 `chart_produced`.
+
+The `statistics` fixture copies the entry shape seen in 84 staging
+artefacts that carried a data pull (results/campaigns/20260801-pr08.md,
+step 4): `source_url` names the dataset by slug, and `dataset_id` is an int
+present on most entries (81 of 84) but not all.
 """
 
 from types import SimpleNamespace
@@ -123,8 +128,8 @@ def test_g2_web_fallback_flags_external_links_only():
 
 
 def test_g4_pull_source_match_and_abstention():
-    # dataset_id is int-typed on real entries; normalize_value bridges the
-    # int/str comparison against the sheet's string expectation.
+    # dataset_id is an int on real entries; normalize_value bridges the
+    # comparison with the case's string expectation.
     match = evaluate_guards(
         state(answer="a" * 100, stats=[{**PULL[0], "dataset_id": 11}]),
         expects_data_pull=True, expected_answer="x", expected_dataset_id="11",
@@ -151,8 +156,8 @@ def test_g4_pull_source_match_and_abstention():
 
 
 def test_g4_dataset_id_zero_is_a_real_reference():
-    # registry id 0 exists on 6 cases; a truthiness read (`get(...) or ...`)
-    # would have skipped it and abstained.
+    # 0 is a real dataset id. A truthiness read such as `get(...) or ...`
+    # would treat it as missing and abstain.
     result = evaluate_guards(
         state(answer="a" * 100, stats=[{**PULL[0], "dataset_id": 0}]),
         expects_data_pull=True, expected_answer="x", expected_dataset_id="0",

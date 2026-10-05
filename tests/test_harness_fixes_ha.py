@@ -1,15 +1,19 @@
-"""PR-Ha — the four corrective harness fixes (docs/specs/caseset-v2-improvement-plan.md §4).
+"""Regression tests for evaluator bugs that failed correct agent answers.
 
-Each of these turned a *correct* agent answer into a failing check, so every
-case below is taken from the row that exposed it in a real staging run.
+Each fixture comes from the case whose staging run exposed the bug:
 
-    H1  parse_expected_number dropped a leading minus sign          (1-055)
-    H2  pull_source_match never split ";" alternatives              (1-003, 1-062)
-    H3  evaluate_scope had no ";" alternatives support               (1-089)
-    H8  web_fallback flagged the product's own tile domain          (1-095)
+- `parse_expected_number` dropped a leading minus sign, so an expected net
+  carbon sink could never match (1-055; `test_h1_*`).
+- `pull_source_match` ignored `;`-separated dataset alternatives (1-003,
+  1-062; `test_h2_*`).
+- `evaluate_scope` ignored `;`-separated scope alternatives (1-089;
+  `test_h3_*`).
+- `web_fallback` treated a link to Global Forest Watch (which hosts the
+  product's map tiles) as a sign of a web-sourced answer (1-095;
+  `test_h8_*`).
 
-Usage
-$ uv run python -m pytest tests/test_harness_fixes_ha.py -v
+The h numbers continue in test_harness_fixes_hb.py (h4 to h7) and are
+unrelated to the h numbers in test_hardening.py.
 """
 
 import json
@@ -25,7 +29,7 @@ from goldset.evaluators.scope_checks import evaluate_scope
 TOLERANCE = 0.02
 
 
-# --------------------------------------------------------------------------- H1
+# -------------------------------------------- parse_expected_number: minus sign
 
 def test_h1_negative_expected_number_keeps_its_sign():
     """1-055 expects a net *sink*: -286,994 Mg CO2e. The sign is the capability."""
@@ -71,7 +75,7 @@ def test_h1_negative_ambiguous_decimal_still_abstains():
     assert parse_expected_number("-230.003") is None
 
 
-# --------------------------------------------------------------------------- H2
+# -------------------------------------------- pull_source_match: ; alternatives
 
 def _pull_state(dataset_id: int) -> dict:
     return {
@@ -83,8 +87,9 @@ def _pull_state(dataset_id: int) -> dict:
 
 
 def test_h2_pull_source_accepts_either_alternative():
-    """1-003 expects '0;11' — DIST-ALERT and integrated alerts are both correct
-    routings, per cases/README.md. Either must satisfy the guard."""
+    """An expectation may list `;`-separated alternative datasets; any one of
+    them satisfies the guard. The fixture uses `0;11`, the pair 1-003 once
+    accepted."""
     for dataset_id in (0, 11):
         result = evaluate_guards(
             _pull_state(dataset_id),
@@ -118,24 +123,26 @@ def test_h2_single_value_expectation_is_unchanged():
 
 
 def test_h2_dataset_id_zero_is_a_real_registry_id():
-    """id 0 is DIST-ALERT, not absence — the falsiness bug that manufactured
-    1-088's phantom standing failure."""
+    """Dataset id 0 is a real id, not "no expectation". A falsy check treated
+    it as missing, which gave 1-088 a failure on every run that was not the
+    agent's fault. (Dataset 0, DIST-ALERT, is retired in the agent but still
+    appears in parked cases and older runs.)"""
     assert evaluate_guards(
         _pull_state(0), expects_data_pull=True, expected_answer="",
         expected_dataset_id="0",
     )["pull_source_match_score"] == 1.0
 
 
-# --------------------------------------------------------------------------- H3
+# ----------------------------------------------- evaluate_scope: ; alternatives
 
 def test_h3_scope_accepts_alternatives():
-    """1-089's own `text` licenses two behaviours: refuse outright, or caution
-    and offer the annual dataset via a nudge. Both must pass.
+    """1-089's `text` allows two behaviours: refuse outright, or caution and
+    offer the annual dataset through a nudge. Both must pass.
 
-    Note the alternative is `refuse;suggest`, not `refuse;clarify`: H4 classifies
-    a `dataset_choice` nudge as `suggest`, and 1-089's observed nudge offers
-    datasets ("Tree cover loss"). This is the coordination the plan flagged — H3
-    and H4 together decide 1-089's expectation.
+    The alternative is `refuse;suggest`, not `refuse;clarify`, because
+    `classify_scope` counts a `dataset_choice` nudge as `suggest` (see
+    test_harness_fixes_hb.py) and 1-089's nudge offers datasets ("Tree cover
+    loss"). Changing either rule changes what 1-089 should expect.
     """
     refused = {"statistics": None, "suggested_datasets": [], "nudge": {}}
     cautioned = {"statistics": None, "suggested_datasets": [],
@@ -170,7 +177,7 @@ def test_h3_invalid_alternative_still_abstains():
     assert "bogus" in (result["actual_scope"] or "")
 
 
-# --------------------------------------------------------------------------- H8
+# ---------------------------------------- web_fallback: the product's own links
 
 def _answer_state(answer: str) -> dict:
     return {
@@ -182,8 +189,9 @@ def _answer_state(answer: str) -> dict:
 
 
 def test_h8_own_tile_domain_is_not_web_fallback():
-    """1-095 answered correctly from a real pull and linked the product's own
-    GFW dashboard; G2's premise ('came from web knowledge') was false."""
+    """1-095 answered from a real data pull and linked a Global Forest Watch
+    dashboard for the same figures. A link to the product's own domains is
+    not evidence of a web-sourced answer."""
     state = _answer_state(
         "Finland lost 241,368.24 hectares in 2025 at a 10% canopy threshold. "
         "See also https://www.globalforestwatch.org/dashboards/country/FIN/ "
@@ -195,7 +203,9 @@ def test_h8_own_tile_domain_is_not_web_fallback():
 
 
 def test_h8_wri_org_citation_still_fires():
-    """1-030's signal must survive: a wri.org citation is the blog-skill tell."""
+    """A wri.org link in an answer to a data question means the agent answered
+    from a WRI blog post instead of pulling data (1-030), so `web_fallback`
+    must still flag it."""
     state = _answer_state(
         "Ziguinchor has the most mangroves in Senegal, per "
         "https://www.wri.org/insights/mangrove-restoration." + " padding" * 10,
@@ -206,18 +216,14 @@ def test_h8_wri_org_citation_still_fires():
     assert "wri.org" in (result["actual_web_links"] or "")
 
 
-# --------------------------------------------------------------------- H1 (cont.)
+# ---------------------------------- parse_expected_number: trailing punctuation
 
 def test_h1_a_year_followed_by_a_comma_still_abstains():
-    """Found while documenting the evaluators (2026-08-04): the token "2020,"
-    carries a trailing comma, so it missed the `^(19|20)\\d{2}$` year guard and
-    became the expected *value* — an expectation of 2020 hectares.
-
-    Abstention, rather than skipping ahead to 25.5 Mha, is the deliberate
-    outcome: it matches what the same string without the comma has always done
-    (`"In 2020 25.5 Mha"` -> None). A leading year means the claim is ambiguous,
-    and this check abstains rather than guessing which number is the answer.
-    No cases/v2 row has this shape; the guard is here so none can.
+    """A leading year followed by a comma ("In 2020, 25.5 Mha") must abstain,
+    as the same string without the comma does. The bug let "2020," slip past
+    the year guard and become an expected value of 2020 hectares. A leading
+    year makes the claim ambiguous, so the check abstains rather than guess
+    which number is the answer.
     """
     assert parse_expected_number("In 2020, 25.5 Mha of loss") is None
     assert parse_expected_number("In 2020 25.5 Mha of loss") is None

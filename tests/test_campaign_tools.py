@@ -1,4 +1,11 @@
-"""PR-08 campaign tooling: parity comparison and flakiness tables."""
+"""Tests for tools/parity.py and tools/flakiness.py.
+
+parity.py (legacy) compares a run imported from gnw-evals with a run of this
+harness on the same agent build, using only the checks both can produce (the
+"legacy" checks). It validated the move off gnw-evals and stays in case an
+old gnw-evals run needs comparing. flakiness.py reports, per check, how much
+results vary across a run's trials.
+"""
 
 import json
 import sys
@@ -21,7 +28,8 @@ def run_fixture(results, run_id="20260801T000000Z_staging", trials=1):
 
 
 def test_legacy_check_surface_is_the_port_surface():
-    # exactly the PR-03 checks, no PR-04/06 additions, no info-only
+    # only checks gnw-evals can produce: none of the checks added in this
+    # repo, and no info-only checks
     assert "answered_without_data" not in LEGACY_CHECKS
     assert "scope_match" not in LEGACY_CHECKS
     assert "date_coverage" not in LEGACY_CHECKS
@@ -130,8 +138,9 @@ def test_flakiness_stats_and_flap_detection():
 
 
 def test_flakiness_is_within_case_not_pooled():
-    """A check that consistently fails on one case and passes on nine is
-    NOT flaky — the first live run misread exactly this as OVER GATE."""
+    """A check that always fails on one case and always passes on nine has a
+    0.9 pass rate but zero flakiness: flakiness is measured within each case
+    across trials, not pooled across cases."""
     entries = [{"uid": f"u{i}", "id": f"c{i}",
                 "checks": {"dataset_id_match": 1.0 if i else 0.0},
                 "trials": [{"checks": {"dataset_id_match": 1.0 if i else 0.0}}] * 3}

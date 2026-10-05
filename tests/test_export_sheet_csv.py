@@ -1,4 +1,8 @@
-"""Push-phase-1 exporter (PR-13): sheet CSVs + git-derived changelog."""
+"""Tests for tools/export_sheet_csv.py (legacy: the Google Sheet is retired).
+
+It writes the case store as `cases.csv` in the old sheet's layout, plus
+`changelog.csv`, each case's history of uid changes derived from git.
+"""
 
 import csv
 import subprocess

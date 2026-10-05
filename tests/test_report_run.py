@@ -1,4 +1,5 @@
-"""Four-layer report rendering (PR-05)."""
+"""Tests for tools/report_run.py: the four report layers (verdicts, bucket
+table, reconciliation, diagnostics) and the failing-rows list."""
 
 import sys
 from pathlib import Path

@@ -91,7 +91,7 @@ async def test_run_test_scores_and_captures(patched_client, tmp_path):
     assert result.overall_score == 1.0
     # extras flow through: uid arrived on the TestResult
     assert result.model_dump()["uid"] == CASE.uid
-    # artifact carries the raw signals the CSVs used to drop
+    # the artefact keeps raw agent signals that a run record does not
     assert artifact["statistics_last"]["data_rows_total"] == 1
     assert artifact["dataset"]["dataset_id"] == "11"
 

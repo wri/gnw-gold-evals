@@ -1,4 +1,5 @@
-"""Ingest semantics: joining, staleness, idempotence."""
+"""Tests for tools/ingest_run.py (legacy: imports old gnw-evals runs into the
+ledger): joining, staleness, idempotence."""
 
 import sys
 from pathlib import Path

@@ -209,7 +209,7 @@ def test_fail_on_coverage_loss_gates_real_check(tmp_path):
 
 
 def test_coverage_loss_passes_without_flag(tmp_path):
-    # default OFF: current CI behaviour is preserved
+    # off by default: without the flag, coverage loss does not fail the diff
     result = run_tool(tmp_path, GATE_A, COV_B_REAL_LOST)
     assert result.returncode == 0
     gated = run_tool(tmp_path, GATE_A, COV_B_REAL_LOST, "--fail-on-regression")

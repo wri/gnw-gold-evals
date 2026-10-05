@@ -1,5 +1,5 @@
-"""Multiturn semantics (PR-07): identity, deltas, store, and a full
-two-turn conversation against a stateful mocked API."""
+"""Multi-turn cases: identity, deltas, the store, and a full two-turn
+conversation against a stateful mocked API."""
 
 import json
 
