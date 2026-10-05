@@ -1,5 +1,5 @@
-"""Multi-turn conversations (PR-07): same thread, per-turn checks, and
-state-delta assertions between turns.
+"""Multi-turn conversations: same thread, per-turn checks, and state-delta
+assertions between turns.
 
 Mechanically cheap because the API is thread-native: each turn is one
 ``run_test`` call sharing the conversation's ``thread_id``; the state
@@ -9,8 +9,9 @@ validator applies per-turn unchanged.
 Delta assertions compare the *snapshots* two consecutive turns produced:
 
     changed: [field, ...]   the field must differ from the previous turn
-    retain:  [field, ...]   the field must be identical (context loss)
-    absent:  [field, ...]   the field must be empty (carryover contamination)
+    retain:  [field, ...]   the field must be identical (catches lost context)
+    absent:  [field, ...]   the field must be empty (catches a value carried
+                            over from the previous turn)
 
 Snapshots are built from the TestResult's ``actual_*`` diagnostics, so the
 comparison is over exactly what the validators already read.

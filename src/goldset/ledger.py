@@ -1,12 +1,14 @@
 """The results ledger: build, validate, read and write run records.
 
-The contract lives in ``results/README.md`` and is deliberately frozen ahead
-of the harness port: results key on case ``uid`` + ``caseset_version``,
-checks are tri-state (``1.0`` / ``0.0`` / ``None``), and nothing is ever
-hand-written into the ledger.
+The record format is defined in ``results/README.md``: results key on case
+``uid`` and ``caseset_version``, checks are tri-state (``1.0`` / ``0.0`` /
+``None``), and nothing is ever hand-written into the ledger.
 
-Naming quirk handled here once: the gnw-evals CSVs call the score
-``charts_answer_score`` but its reason column ``chart_answer_score_reason``.
+The CSV helpers (``check_name_from_column``, ``parse_score``,
+``majority_from_mean``) serve ``tools/ingest_run.py``, which imports legacy
+gnw-evals result CSVs. One naming quirk is handled here, in ``REASON_ALIASES``:
+the score is ``charts_answer_score`` but its reason field is
+``chart_answer_score_reason``.
 """
 
 from __future__ import annotations

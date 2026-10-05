@@ -6,6 +6,10 @@ expected value therefore mints a new uid; metadata (status, group, notes)
 does not participate, so triage annotations never masquerade as a new
 version of the test.
 
+A multi-turn case's uid covers every turn's query and expectations, in order.
+In v2 it also covers each turn's ``deltas``. v1 is frozen and its uids do not,
+so they never change (see ``conversation_uid``).
+
 The ``caseset_version`` is a hash over the sorted uids of every case in the
 store: any edit to any case, or adding/removing one, changes the set
 version. Results ledgers key on both, so a score is always pinned to the
@@ -22,7 +26,7 @@ UID_LENGTH = 16
 
 
 def normalize_text(value: object) -> str:
-    """Normalise a cell value for hashing: str, unified newlines, stripped."""
+    """Normalise a value for hashing: str, unified newlines, stripped."""
     if value is None:
         return ""
     text = str(value).replace("\r\n", "\n").replace("\r", "\n")
@@ -32,8 +36,8 @@ def normalize_text(value: object) -> str:
 def canonical_payload(query: str, expected: Mapping[str, object]) -> str:
     """Deterministic JSON string a case uid is computed over.
 
-    Empty expectations are dropped so that adding a blank column to the
-    source never changes identity. Key order never matters.
+    Empty expectations are dropped, so adding an empty key to a case never
+    changes its identity. Key order never matters.
     """
     clean = {key: normalize_text(value) for key, value in expected.items()}
     clean = {key: value for key, value in clean.items() if value}

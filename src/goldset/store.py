@@ -2,14 +2,15 @@
 
 Layout::
 
-    cases/
-      MANIFEST.json          # generated — caseset_version + id->uid index
-      <group-slug>/<id>.yaml # one case per file, PR-reviewable
+    cases/<version>/           # v1 (frozen baseline) or v2 (working set)
+      MANIFEST.json            # generated: caseset_version and an id-to-uid index
+      <group-slug>/<id>.yaml   # one case per file
 
-Case files are the source of truth and are hand-editable. After any edit,
-``tools/check.py --fix`` recomputes uids and the manifest; ``tools/check.py``
-alone verifies them (CI-friendly). Regeneration is idempotent: importing an
-unchanged sheet produces byte-identical files.
+Case files are the source of truth and are edited by hand. After any edit,
+follow the after-edit ritual in README.md, "Changing cases": its first step,
+``tools/check.py --fix``, recomputes uids and the manifest, and
+``tools/check.py`` alone verifies them (CI runs it). ``write_case`` output is
+deterministic, so rewriting an unchanged case produces a byte-identical file.
 """
 
 from __future__ import annotations
@@ -42,7 +43,7 @@ class Case:
     """A single GOLD case. Frozen: edits produce a new instance.
 
     Single-turn cases carry ``query`` + ``expected``. Multi-turn cases
-    (PR-07) carry ``turns`` instead: a list of ``{query, expected, deltas}``
+    carry ``turns`` instead: a list of ``{query, expected, deltas}``
     dicts, where ``deltas`` (turn >= 2 only) asserts state transitions
     between turns (``changed`` / ``retain`` / ``absent`` field lists).
     """

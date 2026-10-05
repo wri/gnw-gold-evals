@@ -1,4 +1,5 @@
-"""Base test runner interface for E2E testing framework."""
+"""Shared runner logic: apply the evaluator registry to an agent state, and
+build the error ``TestResult`` when a trial fails."""
 
 from abc import ABC, abstractmethod
 from datetime import datetime
@@ -17,7 +18,7 @@ class BaseTestRunner(ABC):
         query: str,
         expected_data: ExpectedData,
     ) -> TestResult:
-        """Run a single E2E test.
+        """Send one query to the agent and return its scored TestResult.
 
         Args:
             query: User query to test
@@ -132,9 +133,9 @@ class BaseTestRunner(ABC):
     ) -> dict[str, Any]:
         """Run every registered evaluator on the agent state.
 
-        Iterates the registry in its declared order and merges result dicts
-        — identical order and merge semantics to the hand-written sequence
-        this replaces (later evaluators win key collisions).
+        Iterates the registry in its declared order and merges the result
+        dicts, so a later evaluator wins a key collision. Judge errors from
+        every evaluator are collected into ``judge_errors``.
         """
         evaluations: dict[str, Any] = {}
         judge_errors: list[str] = []
@@ -150,32 +151,23 @@ class BaseTestRunner(ABC):
         evaluations: dict[str, Any],
         expected_data: ExpectedData,
     ) -> float:
-        """Calculate overall score from individual evaluation scores.
+        """Mean of the applicable original checks, rounded to two decimal places.
 
-        LEGACY: the flat mean ported verbatim from gnw-evals, kept only for
-        output parity. Row verdicts and bucket tallies in ``buckets.py``
-        supersede it, and it is deliberately NOT extended with checks added
-        after the port (the PR-04 guards, the PR-06 validators). Its output
-        (``overall_score``) is excluded from ledger check ingestion via
-        ``NON_CHECK_SCORES`` in ``ledger.py``/``cli.py``.
-
-        Each check (AOI ID, dataset ID, context layer, data pull,
-        date match, answer, clarification) is scored independently as 0 or 1.
-
-        Only non-None scores are included in the average. A score of None
-        means that check was not applicable (missing expected value).
+        Display only: it appears in --verbose output, is never written to the
+        ledger (``NON_CHECK_SCORES`` excludes it) and never decides a verdict,
+        which comes from ``buckets.row_verdict``. Checks added after the
+        original set are deliberately left out, so the number stays comparable
+        with older output. Only checks the case has an expectation for are
+        averaged, and a None score is skipped.
         """
         scores = []
 
-        # Clarification check
         if expected_data.expected_clarification is not None:
             scores.append(evaluations.get("clarification_requested_score"))
 
-        # AOI checks
         if expected_data.expected_aoi_ids:
             scores.append(evaluations.get("aoi_id_match_score"))
 
-        # Dataset checks
         if expected_data.expected_dataset_id:
             scores.append(evaluations.get("dataset_id_match_score"))
         if expected_data.expected_dataset_parameters:
@@ -183,7 +175,7 @@ class BaseTestRunner(ABC):
         if expected_data.expected_context_layer:
             scores.append(evaluations.get("context_layer_match_score"))
 
-        # Data pull checks — only when the test expects an insight/answer
+        # Data pull: only when the case expects an insight or answer.
         if expected_data.expects_data_pull():
             scores.append(evaluations.get("data_pull_exists_score"))
         # Date: only `date_extraction_score` counts. `date_coverage_score` is
@@ -192,17 +184,14 @@ class BaseTestRunner(ABC):
         if expected_data.expected_start_date and expected_data.expected_end_date:
             scores.append(evaluations.get("date_extraction_score"))
 
-        # Suggested datasets check
         if expected_data.expected_suggested_datasets:
             scores.append(evaluations.get("suggested_datasets_match_score"))
 
-        # Nudge check
         if expected_data.expected_nudge_type or expected_data.expected_nudge_options:
             scores.append(evaluations.get("nudge_match_score"))
 
-        # Dashboard checks
         # NOTE: uses `is not None` (not truthy) so expected_dashboard_created=False
-        # guardrail rows are still included - a truthy check would silently drop them.
+        # guardrail rows are still included; a truthy check would silently drop them.
         if expected_data.expected_dashboard_created is not None:
             scores.append(evaluations.get("dashboard_created_score"))
         if expected_data.expected_dashboard_created and expected_data.expected_aoi_ids:
@@ -212,14 +201,12 @@ class BaseTestRunner(ABC):
         if expected_data.expected_dashboard_created:
             scores.append(evaluations.get("dashboard_widgets_valid_score"))
 
-        # Answer checks
         if expected_data.expected_answer:
             scores.append(evaluations.get("charts_answer_score"))
             scores.append(evaluations.get("agent_answer_score"))
         if expected_data.expected_text:
             scores.append(evaluations.get("expected_text_match_score"))
 
-        # Filter out None values (checks that weren't applicable)
         valid_scores = [s for s in scores if s is not None]
 
         if not valid_scores:
