@@ -1,7 +1,8 @@
 {
-  "caseset_version": "aec8d9e5bf8512ca",
+  "caseset_version": "11b00f815a1b2e70",
   "case_count": 135,
   "source": "gold-live.csv",
+  "uid_includes_deltas": true,
   "cases": [
     {
       "id": "1-001",
@@ -743,73 +744,73 @@
     },
     {
       "id": "mt-001",
-      "uid": "39840a3c054ab3bf",
+      "uid": "f07fd985deb76c61",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-002",
-      "uid": "38a4baf80d283015",
+      "uid": "5f35540166be74af",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-003",
-      "uid": "9bbb055d80fab8dd",
+      "uid": "fd8d8489361a6e5b",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-004",
-      "uid": "3b0e419f5583d1ea",
+      "uid": "636fc19f46d767a6",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-005",
-      "uid": "086692eda35ba8b0",
+      "uid": "f04c442b6ce8ebe0",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-006",
-      "uid": "2b81a8ae1b9301e4",
+      "uid": "9a38ae9cae58fb9b",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-007",
-      "uid": "ea4e5bf8c098c152",
+      "uid": "6e91deceb728f283",
       "group": "multiturn",
       "status": "not doing"
     },
     {
       "id": "mt-008",
-      "uid": "fa33ca99a2484307",
+      "uid": "91cecdd149d9ac47",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-009",
-      "uid": "af8932d33bb444c5",
+      "uid": "effa17a9c754708b",
       "group": "multiturn",
       "status": "ready"
     },
     {
       "id": "mt-010",
-      "uid": "97a3b2c323800fbb",
+      "uid": "cb5217c8dbf2cef5",
       "group": "multiturn",
       "status": "not doing"
     },
     {
       "id": "mt-011",
-      "uid": "5910b7e35b413544",
+      "uid": "6c3916f0efddfd97",
       "group": "multiturn",
       "status": "not doing"
     },
     {
       "id": "mt-012",
-      "uid": "edab678e96435330",
+      "uid": "6e376cfa37e3d1d0",
       "group": "multiturn",
       "status": "not doing"
     }

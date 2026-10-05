@@ -44,6 +44,7 @@ from goldset.store import (
     build_manifest,
     case_path,
     load_store,
+    store_uid_includes_deltas,
     write_case,
     write_manifest,
 )
@@ -196,7 +197,11 @@ def run_import(
             print(f"orphan from another source, untouched: {path}")
 
     survivors = [case for _p, case, _u in load_store(cases_dir)]
-    manifest = build_manifest(survivors, source)
+    # Carry the store's uid_includes_deltas rule over: the survivors were
+    # loaded under it, and a manifest without it would misdescribe their uids.
+    manifest = build_manifest(
+        survivors, source, store_uid_includes_deltas(cases_dir)
+    )
     write_manifest(cases_dir, manifest)
 
     if sheet_edited:

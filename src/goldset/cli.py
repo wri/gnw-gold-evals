@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import dataclasses
 import os
 import subprocess
 import sys
@@ -230,20 +231,17 @@ async def run_cases(
     completed_cases = 0
 
     def _resolve_case(case: Case) -> Case:
-        """Expand template variables in queries, preserving the original uid."""
+        """Expand template variables in queries. ``replace`` carries every
+        other field over, including the store's uid_includes_deltas rule;
+        the ledger still records the pre-resolution uid (``original_uid``)."""
         if case.is_multiturn:
             resolved_turns = tuple(
                 {**turn, "query": resolve_templates(turn["query"], now=run_started)}
                 for turn in case.turns
             )
-            return Case(
-                id=case.id, status=case.status, group=case.group,
-                expected=case.expected, notes=case.notes, turns=resolved_turns,
-            )
-        return Case(
-            id=case.id, status=case.status, group=case.group,
-            query=resolve_templates(case.query, now=run_started),
-            expected=case.expected, notes=case.notes,
+            return dataclasses.replace(case, turns=resolved_turns)
+        return dataclasses.replace(
+            case, query=resolve_templates(case.query, now=run_started)
         )
 
     async def run_one(case: Case) -> dict:
