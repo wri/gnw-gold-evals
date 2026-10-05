@@ -223,3 +223,77 @@ def test_fail_on_coverage_loss_ignores_info_only(tmp_path):
     report = diff(GATE_A, COV_B_INFO_LOST)
     assert [c["check"] for c in report["coverage_lost"]] == ["date_coverage"]
     assert report["coverage_lost"][0]["info_only"] is True
+
+
+# ---------------------------------------------------------------------------
+# Multi-turn entries flatten per-turn checks under a ``t<N>.`` prefix; the
+# info-only rule must see through it, as buckets.row_verdict does.
+
+MT_A = run_fixture(
+    [
+        {
+            "uid": "m1",
+            "id": "mt-001",
+            "checks": {
+                "t1.date_coverage": 1.0,
+                "t1.aoi_id_match": 1.0,
+                "t2.charts_answer_judge": 1.0,
+                "t2.answer_traceability": 1.0,
+            },
+        },
+    ]
+)
+# Every prefixed info-only check flips (two regress, one stops being
+# evaluated); the one gating check holds.
+MT_B_INFO_ONLY = run_fixture(
+    [
+        {
+            "uid": "m1",
+            "id": "mt-001",
+            "checks": {
+                "t1.date_coverage": 0.0,
+                "t1.aoi_id_match": 1.0,
+                "t2.charts_answer_judge": 0.0,
+                "t2.answer_traceability": None,
+            },
+        },
+    ],
+    run_id="20260731T010000Z_staging",
+)
+
+
+def test_turn_prefixed_info_only_checks_never_gate(tmp_path):
+    result = run_tool(
+        tmp_path, MT_A, MT_B_INFO_ONLY,
+        "--fail-on-regression", "--fail-on-coverage-loss",
+    )
+    assert result.returncode == 0, result.stdout
+
+    report = diff(MT_A, MT_B_INFO_ONLY)
+    assert sorted(r["check"] for r in report["regressions"]) == [
+        "t1.date_coverage",
+        "t2.charts_answer_judge",
+    ]
+    assert all(r["info_only"] for r in report["regressions"])
+    assert [c["check"] for c in report["coverage_lost"]] == ["t2.answer_traceability"]
+    assert report["coverage_lost"][0]["info_only"] is True
+
+
+def test_turn_prefixed_gating_check_still_gates(tmp_path):
+    mt_b_real = run_fixture(
+        [
+            {
+                "uid": "m1",
+                "id": "mt-001",
+                "checks": {**MT_A["results"][0]["checks"], "t1.aoi_id_match": 0.0},
+            },
+        ],
+        run_id="20260731T010000Z_staging",
+    )
+    result = run_tool(tmp_path, MT_A, mt_b_real, "--fail-on-regression")
+    assert result.returncode == 1
+
+    report = diff(MT_A, mt_b_real)
+    assert [r["check"] for r in report["regressions"]] == ["t1.aoi_id_match"]
+    assert report["regressions"][0]["info_only"] is False
+    assert report["regressions_by_bucket"]["retrieval"] == 1

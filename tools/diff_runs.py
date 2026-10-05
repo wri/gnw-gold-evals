@@ -30,7 +30,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from goldset.buckets import BUCKETS, INFO_ONLY, buckets_for
+from goldset.buckets import BUCKETS, buckets_for, is_info_only
 from goldset.ledger import read_run
 
 TRANSITIONS = ("regressions", "recoveries", "coverage_gained", "coverage_lost")
@@ -65,8 +65,10 @@ def diff(run_a: dict, run_b: dict) -> dict:
         for check in sorted(set(entry_a["checks"]) | set(entry_b["checks"])):
             kind = classify(entry_a["checks"].get(check), entry_b["checks"].get(check))
             if kind:
+                # is_info_only strips the multi-turn ``t<N>.`` prefix; a bare
+                # INFO_ONLY lookup let t2.charts_answer_judge gate the release.
                 item = {"uid": uid, "id": entry_b.get("id") or entry_a.get("id"), "check": check,
-                        "buckets": list(buckets_for(check)), "info_only": check in INFO_ONLY}
+                        "buckets": list(buckets_for(check)), "info_only": is_info_only(check)}
                 if kind == "regressions":
                     reason = (entry_b.get("reasons") or {}).get(check)
                     if reason:
