@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Any
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -39,6 +40,9 @@ from goldset.models import HAIKU
 # the chart's is — see `resolve_answer_verdict`'s docstring for the asymmetric fallback.
 NUMERIC_TOLERANCE = 0.02
 _TOLERANCE_PCT = f"{NUMERIC_TOLERANCE:.0%}"
+
+_NUMERIC_CANDIDATE_RE = re.compile(r"-?\d[\d,]*(?:\.\d+)?(?:\s*[%A-Za-z²]+)?")
+_NUMERIC_CANDIDATE_MAX = 12
 
 # Numeric scoring rules for the answer judge. Kept at module level, and free of `{}` so
 # it can be concatenated into a ChatPromptTemplate without being read as a placeholder —
@@ -217,6 +221,23 @@ def _openrouter_binary_judgement(
         f"mapped to score={score}"
     )
     return score, reason
+
+
+def _numeric_extraction_candidates(text: str) -> list[str]:
+    """Candidate numeric snippets as written in the answer text.
+
+    OpenRouter Decisions' choice question can then select which candidate is
+    the primary answer number, preserving deterministic tolerance gating in
+    `resolve_answer_verdict`.
+    """
+    candidates: list[str] = []
+    for match in _NUMERIC_CANDIDATE_RE.finditer(text or ""):
+        token = match.group(0).strip().rstrip(",.;:)")
+        if token and token not in candidates:
+            candidates.append(token)
+        if len(candidates) >= _NUMERIC_CANDIDATE_MAX:
+            break
+    return candidates
 
 
 def llm_judge_clarification(agent_state: dict, query: str) -> dict:
@@ -427,8 +448,8 @@ def llm_judge(
                     "type": "noul",
                     "instructions": (
                         "Determine whether ACTUAL_INSIGHT matches "
-                        "EXPECTED_ANSWER. For numeric rows, treat values within "
-                        f"{_TOLERANCE_PCT} as a match."
+                        "EXPECTED_ANSWER. Use semantic and factual consistency "
+                        "without doing deterministic tolerance arithmetic."
                     ),
                     "criteria": {
                         "true": "Actual insight matches expected answer.",
@@ -448,6 +469,43 @@ def llm_judge(
         answer_eval_type = _answer_field(eval_answer, "choice") or "named_entity"
         if answer_eval_type not in {"boolean", "numeric", "named_entity", "year"}:
             answer_eval_type = "named_entity"
+
+        extracted_number = ""
+        if answer_eval_type == "numeric":
+            candidates = _numeric_extraction_candidates(actual_answer)
+            if candidates:
+                option_keys = [f"option_{idx + 1}" for idx in range(len(candidates))]
+                extraction_answers = _openrouter_answers(
+                    check="agent_answer",
+                    questions={
+                        "extracted_number_choice": {
+                            "type": "choice",
+                            "instructions": (
+                                "Select the option that is the main number in "
+                                "ACTUAL_INSIGHT directly answering "
+                                "EXPECTED_ANSWER. Prefer totals over breakdown "
+                                "numbers."
+                            ),
+                            "criteria": {
+                                key: (
+                                    "Use this when the main answer number is "
+                                    f"exactly: {candidate}"
+                                )
+                                for key, candidate in zip(option_keys, candidates)
+                            },
+                        }
+                    },
+                    state={
+                        "expected_answer": expected_answer,
+                        "actual_insight": actual_answer,
+                    },
+                )
+                choice_answer = extraction_answers.get("extracted_number_choice")
+                choice_key = _answer_field(choice_answer, "choice")
+                if isinstance(choice_key, str):
+                    option_map = dict(zip(option_keys, candidates))
+                    extracted_number = option_map.get(choice_key, "")
+
         noul = _noul_to_score(_answer_field(match_answer, "noul"), check="agent_answer")
         judge_score = 1 if noul >= 0.5 else 0
         confidence = _answer_field(match_answer, "confidence")
@@ -463,7 +521,7 @@ def llm_judge(
             answer_eval_type=answer_eval_type,
             score=judge_score,
             reason=judge_reason,
-            extracted_number="",
+            extracted_number=extracted_number,
         )
     else:
         JUDGE_PROMPT = ChatPromptTemplate.from_messages([("user", ANSWER_JUDGE_PROMPT)])
