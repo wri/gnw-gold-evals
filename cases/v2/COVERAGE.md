@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
+`caseset_version c4aa8167ddfc6e42` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-25_
+_Last updated: 2026-10-08_
 
 ## Groups
 
@@ -40,31 +40,31 @@ friends) run on top of it whenever their trigger state exists.
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
 | retrieval | 99 | 0 | 99 | 94% |
-| analysis | 0 | 70 | 70 | 67% |
-| explanation | 25 | 60 | 85 | 81% |
-| output | 75 | 3 | 78 | 74% |
+| analysis | 0 | 71 | 71 | 68% |
+| explanation | 24 | 61 | 85 | 81% |
+| output | 76 | 3 | 79 | 75% |
 | scope | 89 | 7 | 96 | 91% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 89 | dataset_id_match |
+| dataset_id | 90 | dataset_id_match |
 | scope | 88 | scope_match |
 | aoi_source | 83 | reference only (dashboard AOI source) |
-| dataset_name | 82 | reference only |
+| dataset_name | 83 | reference only |
 | aoi_ids | 73 | aoi_id_match |
-| answer | 70 | agent_answer, charts_answer, chart_produced |
-| text | 25 | expected_text_match |
-| context_layer | 9 | context_layer_match |
+| answer | 71 | agent_answer, charts_answer, chart_produced |
+| text | 24 | expected_text_match |
+| context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | class_values | 6 | class_value_match (info-only) |
-| nudge_options | 6 | nudge_match |
 | dashboard_widgets | 5 | dashboard_widgets_match, dashboard_widgets_valid |
 | end_date | 5 | date_extraction (with start_date) |
+| nudge_options | 5 | nudge_match |
 | start_date | 5 | date_extraction (with end_date) |
 | clarification | 3 | clarification_requested |
-| nudge_type | 3 | nudge_match |
+| nudge_type | 2 | nudge_match |
 | dataset_parameters | 1 | dataset_parameter_match |
 | chart_type | 0 ← unused | chart_type_match |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
@@ -85,7 +85,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 42 | 30 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
+| 4 | Tree cover loss | 43 | 31 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
