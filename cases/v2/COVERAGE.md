@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version cf3fbf98924ea585` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
+`caseset_version d2ec4a843ddcdb12` · 139 cases · done 93 · not doing 30 · ready 12 · todo 4 · **109 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-09_
 
@@ -15,7 +15,7 @@ _Last updated: 2026-10-09_
 |---|---|---|---|
 | class-comparison | 9 | 6 | done 6, not doing 3 |
 | comparative | 14 | 13 | done 11, not doing 1, todo 2 |
-| context-layer | 2 | 1 | done 1, not doing 1 |
+| context-layer | 6 | 5 | done 4, not doing 1, todo 1 |
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
@@ -39,24 +39,24 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 99 | 0 | 99 | 94% |
-| analysis | 0 | 71 | 71 | 68% |
-| explanation | 24 | 61 | 85 | 81% |
-| output | 76 | 3 | 79 | 75% |
-| scope | 89 | 7 | 96 | 91% |
+| retrieval | 103 | 0 | 103 | 94% |
+| analysis | 0 | 74 | 74 | 68% |
+| explanation | 26 | 63 | 89 | 82% |
+| output | 79 | 3 | 82 | 75% |
+| scope | 93 | 7 | 100 | 92% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 90 | dataset_id_match |
-| scope | 88 | scope_match |
-| aoi_source | 83 | reference only (dashboard AOI source) |
-| dataset_name | 83 | reference only |
-| aoi_ids | 73 | aoi_id_match |
-| answer | 71 | agent_answer, charts_answer, chart_produced |
-| text | 24 | expected_text_match |
-| context_layer | 10 | context_layer_match |
+| dataset_id | 94 | dataset_id_match |
+| scope | 92 | scope_match |
+| aoi_source | 87 | reference only (dashboard AOI source) |
+| dataset_name | 87 | reference only |
+| aoi_ids | 77 | aoi_id_match |
+| answer | 74 | agent_answer, charts_answer, chart_produced |
+| text | 26 | expected_text_match |
+| context_layer | 14 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | class_values | 6 | class_value_match (info-only) |
 | dashboard_widgets | 5 | dashboard_widgets_match, dashboard_widgets_valid |
@@ -84,7 +84,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 43 | 31 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4, natural_forest ×1 |
+| 4 | Tree cover loss | 47 | 35 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4, natural_forest ×5 |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
@@ -135,6 +135,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
 | 1-062 | todo | comparative | 2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a... |
+| 1-130 | todo | context-layer | todo 2026-10-09: blocked on project-zeno applying a 10% canopy threshold with the natural_forest layer (AJ,... |
 
 ## Known gaps
 
