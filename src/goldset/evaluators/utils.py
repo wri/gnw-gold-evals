@@ -79,3 +79,17 @@ def normalize_end_date(date_str: str | None) -> str:
         return f"{date_str}-12-31"
 
     return normalize_date(date_str)
+
+
+def last_statistics(agent_state: dict) -> dict | None:
+    """The most recent analytics pull recorded in agent state, or None.
+
+    ``statistics`` is normally a list appended to per pull, but a dict has been
+    observed, so both are accepted. Shared by the data-pull evaluator, the
+    guards, artifact capture and the runner's pulled-data fetch, which each grew
+    their own copy of this.
+    """
+    statistics = agent_state.get("statistics")
+    if isinstance(statistics, list):
+        statistics = statistics[-1] if statistics else None
+    return statistics if isinstance(statistics, dict) else None

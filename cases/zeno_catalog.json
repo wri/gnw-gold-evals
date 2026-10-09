@@ -1,29 +1,12 @@
 {
   "source": {
-    "repo": "git@github.com:wri/project-zeno.git",
+    "repo": "https://github.com/wri/project-zeno.git",
     "ref": "origin/main",
-    "sha": "f9cf409cccf0a7ba2a985e8d0945db1c6fd44cc9",
+    "sha": "64b53a514f4de188d30e015857ea6ec75344429f",
     "path": "src/agent/datasets/catalog",
-    "synced": "2026-08-07"
+    "synced": "2026-09-16"
   },
   "datasets": [
-    {
-      "dataset_id": "0",
-      "dataset_name": "Global all ecosystem disturbance alerts (DIST-ALERT)",
-      "parameters": [],
-      "context_layers": [
-        "driver",
-        "natural_lands",
-        "grasslands",
-        "land_cover"
-      ],
-      "instructions": [
-        "prompt_instructions",
-        "selection_hints",
-        "code_instructions",
-        "presentation_instructions"
-      ]
-    },
     {
       "dataset_id": "1",
       "dataset_name": "Global land cover",
@@ -34,7 +17,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/land_cover_change/analytics",
+      "content_date": "2015-2024",
+      "content_date_fixed": false,
+      "start_date": "2015-01-01",
+      "end_date": "2024-12-31"
     },
     {
       "dataset_id": "2",
@@ -46,7 +34,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/grasslands/analytics",
+      "content_date": "2000-2022, annual",
+      "content_date_fixed": false,
+      "start_date": "2000-01-01",
+      "end_date": "2022-12-31"
     },
     {
       "dataset_id": "3",
@@ -58,7 +51,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/natural_lands/analytics",
+      "content_date": "2020",
+      "content_date_fixed": true,
+      "start_date": "2020-01-01",
+      "end_date": "2020-12-31"
     },
     {
       "dataset_id": "4",
@@ -86,7 +84,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/tree_cover_loss/analytics",
+      "content_date": "2001-2025 annual",
+      "content_date_fixed": false,
+      "start_date": "2001-01-01",
+      "end_date": "2025-12-31"
     },
     {
       "dataset_id": "5",
@@ -98,7 +101,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/tree_cover_gain/analytics",
+      "content_date": "2000-2020 five year intervals",
+      "content_date_fixed": false,
+      "start_date": "2000-01-01",
+      "end_date": "2020-12-31"
     },
     {
       "dataset_id": "6",
@@ -119,7 +127,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/carbon_flux/analytics",
+      "content_date": "2001-2025",
+      "content_date_fixed": false,
+      "start_date": "2001-01-01",
+      "end_date": "2025-12-31"
     },
     {
       "dataset_id": "7",
@@ -146,7 +159,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/tree_cover/analytics",
+      "content_date": "2000",
+      "content_date_fixed": true,
+      "start_date": "2000-01-01",
+      "end_date": "2000-12-31"
     },
     {
       "dataset_id": "8",
@@ -171,7 +189,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/tree_cover_loss/analytics",
+      "content_date": "2001-2025",
+      "content_date_fixed": true,
+      "start_date": "2001-01-01",
+      "end_date": "2025-12-31"
     },
     {
       "dataset_id": "9",
@@ -183,7 +206,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/deforestation_luc_emissions_factor/analytics",
+      "content_date": "2020-2024",
+      "content_date_fixed": true,
+      "start_date": "2020-01-01",
+      "end_date": "2024-12-31"
     },
     {
       "dataset_id": "10",
@@ -211,7 +239,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/tree_cover_loss/analytics",
+      "content_date": "2001-2025 annual",
+      "content_date_fixed": false,
+      "start_date": "2001-01-01",
+      "end_date": "2025-12-31"
     },
     {
       "dataset_id": "11",
@@ -223,7 +256,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/integrated_alerts/analytics",
+      "content_date": "1 December 2023 - present",
+      "content_date_fixed": false,
+      "start_date": "2023-12-01",
+      "end_date": null
     },
     {
       "dataset_id": "12",
@@ -235,7 +273,12 @@
         "selection_hints",
         "code_instructions",
         "presentation_instructions"
-      ]
+      ],
+      "analytics_api_endpoint": "/v0/land_change/land_ghg_inventory/analytics",
+      "content_date": "2016-2024",
+      "content_date_fixed": false,
+      "start_date": "2016-01-01",
+      "end_date": null
     }
   ]
 }

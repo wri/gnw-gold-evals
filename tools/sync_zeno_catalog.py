@@ -40,7 +40,16 @@ INSTRUCTION_FIELDS = (
 
 
 def snapshot_entry(raw: dict, source_name: str) -> dict:
-    """Trim one catalog YAML to the fields coverage reporting needs."""
+    """Trim one catalog YAML to the fields coverage reporting and the
+    ground-truth request builder need.
+
+    Besides the coverage fields, each entry keeps the dataset's analytics
+    contract: endpoint, content date, whether that date is fixed, and the
+    start/end window. ``goldset.groundtruth.catalog`` builds analytics requests
+    from these. Payload shape, the intersections that separate datasets 4, 8
+    and 10, and the AOI type map have no representation in the catalog YAML and
+    are defined in ``goldset.groundtruth.catalog`` instead.
+    """
     missing = [k for k in ("dataset_id", "dataset_name") if raw.get(k) is None]
     if missing:
         raise ValueError(f"{source_name}: catalog entry missing {', '.join(missing)}")
@@ -60,7 +69,25 @@ def snapshot_entry(raw: dict, source_name: str) -> dict:
         "instructions": [
             f for f in INSTRUCTION_FIELDS if str(raw.get(f) or "").strip()
         ],
+        # Analytics contract. A missing end_date means "to today"; the request
+        # builder substitutes the current date, as zeno does.
+        "analytics_api_endpoint": _optional_str(raw.get("analytics_api_endpoint")),
+        "content_date": _optional_str(raw.get("content_date")),
+        "content_date_fixed": bool(raw.get("content_date_fixed")),
+        "start_date": _optional_str(raw.get("start_date")),
+        "end_date": _optional_str(raw.get("end_date")),
     }
+
+
+def _optional_str(value: object) -> str | None:
+    """Catalog scalars as strings; absent/blank stays None rather than ''.
+
+    ``start_date`` parses as a ``datetime.date`` under yaml.safe_load when it is
+    unquoted, so str() rather than a cast — and None must survive as None so the
+    builder can tell "no end date" from an empty one.
+    """
+    text = str(value).strip() if value is not None else ""
+    return text or None
 
 
 def sort_datasets(entries: list[dict]) -> list[dict]:
@@ -75,8 +102,11 @@ def sort_datasets(entries: list[dict]) -> list[dict]:
 
 def git(zeno: Path, *args: str) -> str:
     result = subprocess.run(
+        # encoding, not bare text=True: the catalog YAML is UTF-8 (it carries
+        # "≥ 5 m", em dashes, "—"), and text=True decodes with the platform
+        # codepage, which is cp1252 on Windows and raises UnicodeDecodeError.
         ["git", "-C", str(zeno), *args],
-        capture_output=True, text=True, check=False,
+        capture_output=True, encoding="utf-8", check=False,
     )
     if result.returncode != 0:
         raise SystemExit(

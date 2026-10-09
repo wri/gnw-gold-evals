@@ -211,6 +211,54 @@ def test_resume_finalises_when_nothing_remains(tmp_path, monkeypatch, hermetic):
     assert not partial.exists()
 
 
+def test_resume_restores_the_analytics_host_and_sums_prefetch_time(
+    tmp_path, monkeypatch, hermetic
+):
+    """A run started against a custom analytics host must not resume against
+    the default one — resume ignores flags, so the header has to carry it."""
+    import goldset.groundtruth
+
+    gt_case = Case(id="1-046", status="ready", group="direct", query="q gt",
+                   expected={"aoi_ids": "MDG.3.4_1", "aoi_source": "gadm",
+                             "dataset_id": "4", "ground_truth": "sum(area_ha)"})
+    cases_dir = tmp_path / "cases" / "v2"
+    for case in (CASE_A, gt_case):
+        write_case(cases_dir, case)
+    manifest = build_manifest([CASE_A, gt_case], source="test")
+    write_manifest(cases_dir, manifest)
+    path = write_partial_header(tmp_path / "results", make_header(
+        run_id=RUN_ID, trials=1, cases_dir=str(cases_dir),
+        caseset_version=manifest["caseset_version"],
+        analytics_base_url="https://analytics.custom", prefetch_seconds=2.0,
+    ))
+    append_partial_entry(path, entry_for(CASE_A))
+
+    hosts: list[str] = []
+
+    def fake_prefetch(targets, client, verbose=False):
+        hosts.append(client.base_url)
+        return {}
+
+    async def fake_run_cases(args, cases, entry_sink=None):
+        entries = [{**entry_for(case), "ground_truth": {"values": [1.0]}}
+                   for case in cases]
+        for entry in entries:
+            entry_sink(entry)
+        return entries
+
+    monkeypatch.setattr(goldset.groundtruth, "prefetch", fake_prefetch)
+    monkeypatch.setattr(cli, "run_cases", fake_run_cases)
+    args = resume_args(tmp_path)
+    args.verbose = False   # argparse always sets it; prefetch reads it
+    assert cli.resume_run(args) == 0
+
+    assert hosts == ["https://analytics.custom"]
+    record = read_run(tmp_path / "results" / "runs" / f"{RUN_ID}.json")
+    assert record["ground_truth"]["base_url"] == "https://analytics.custom"
+    assert record["ground_truth"]["cases"] == 1
+    assert record["ground_truth"]["prefetch_seconds"] >= 2.0   # first session kept
+
+
 def test_resume_refuses_caseset_drift(tmp_path, hermetic):
     cases_dir, manifest = make_store(tmp_path)
     partial = make_partial(tmp_path, cases_dir, manifest, [entry_for(CASE_A)])

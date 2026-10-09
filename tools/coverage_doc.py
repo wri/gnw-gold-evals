@@ -48,6 +48,7 @@ FIELD_CHECKS = {
     "start_date": "date_extraction (with end_date)",
     "end_date": "date_extraction (with start_date)",
     "answer": "agent_answer, charts_answer, chart_produced",
+    "ground_truth": "ground_truth_match, ground_truth_answer (info-only)",
     "text": "expected_text_match",
     "clarification": "clarification_requested",
     "suggested_datasets": "suggested_datasets_match",
@@ -94,6 +95,13 @@ def expected_parameter_names(expected: dict, case_id: str) -> set[str]:
         raise SystemExit(f"{case_id}: unparseable dataset_parameters: {exc}")
 
 
+# Expectations that make a case grade the *content* of an answer, and so
+# exercise a dataset's prompt/code/presentation instructions. `ground_truth`
+# counts: it asserts the same kind of figure as `answer`, fetched at run time
+# instead of stored in the case.
+ANSWER_GRADED_FIELDS = ("answer", "text", "ground_truth")
+
+
 def dataset_stats(cases) -> dict[str, dict]:
     """Per expected dataset id: case count, answer-graded case count, and the
     context layers / parameter names those cases exercise. Pairing is per
@@ -108,8 +116,7 @@ def dataset_stats(cases) -> dict[str, dict]:
         for record in expected_records(case):
             rec_ids = split_dataset_ids(record.get("dataset_id"))
             ids |= rec_ids
-            if str(record.get("answer") or "").strip() or str(
-                    record.get("text") or "").strip():
+            if any(str(record.get(f) or "").strip() for f in ANSWER_GRADED_FIELDS):
                 answered |= rec_ids
             layer = str(record.get("context_layer") or "").strip()
             layers |= {(i, layer) for i in rec_ids if layer}
@@ -154,7 +161,8 @@ def render_dataset_section(catalog: dict | None, active) -> tuple[list[str], lis
         "counts for both). Datasets carry four instruction fields unless noted;",
         "`selection_hints` are exercised by any case grading `dataset_id`,",
         "while prompt/code/presentation instructions shape behaviour that only",
-        "answer-graded cases (`answer` or `text` expected) actually check.",
+        "answer-graded cases (`answer`, `text` or `ground_truth` expected)",
+        "actually check.",
         "",
         "| id | dataset | cases | answer-graded | parameters covered "
         "| context layers covered |",
