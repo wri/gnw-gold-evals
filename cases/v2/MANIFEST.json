@@ -1,6 +1,6 @@
 {
-  "caseset_version": "0e8c12b0afb37e08",
-  "case_count": 126,
+  "caseset_version": "9022c1dda484b7aa",
+  "case_count": 135,
   "source": "gold-live.csv",
   "cases": [
     {
@@ -155,7 +155,7 @@
     },
     {
       "id": "1-026",
-      "uid": "2ca8d841e098e077",
+      "uid": "12080066c6e4f3d4",
       "group": "class-comparison",
       "status": "done"
     },
@@ -221,7 +221,7 @@
     },
     {
       "id": "1-037",
-      "uid": "a0f0a84c4c433913",
+      "uid": "ea93ce88e6587f89",
       "group": "comparative",
       "status": "done"
     },
@@ -251,7 +251,7 @@
     },
     {
       "id": "1-042",
-      "uid": "c3fe107faccb7192",
+      "uid": "98a07007f57e6829",
       "group": "direct",
       "status": "done"
     },
@@ -377,7 +377,7 @@
     },
     {
       "id": "1-063",
-      "uid": "e729f151494155b6",
+      "uid": "b67ce54fbd0a6641",
       "group": "class-comparison",
       "status": "done"
     },
@@ -497,7 +497,7 @@
     },
     {
       "id": "1-084",
-      "uid": "a8f937053af97d9c",
+      "uid": "dbfe4e89da16a150",
       "group": "dataset-suggestion",
       "status": "done"
     },
@@ -706,6 +706,42 @@
       "status": "ready"
     },
     {
+      "id": "1-123",
+      "uid": "3d2132cebbe36916",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-124",
+      "uid": "f9431156b1b59300",
+      "group": "refusal",
+      "status": "not doing"
+    },
+    {
+      "id": "1-125",
+      "uid": "ab11c24d6b51cc52",
+      "group": "comparative",
+      "status": "not doing"
+    },
+    {
+      "id": "1-127",
+      "uid": "4caeed10d6effd61",
+      "group": "refusal",
+      "status": "not doing"
+    },
+    {
+      "id": "1-128",
+      "uid": "60bed919dd513c0d",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
+      "id": "1-129",
+      "uid": "e99ac0c7d7e74b59",
+      "group": "direct",
+      "status": "not doing"
+    },
+    {
       "id": "mt-001",
       "uid": "39840a3c054ab3bf",
       "group": "multiturn",
@@ -745,7 +781,7 @@
       "id": "mt-007",
       "uid": "ea4e5bf8c098c152",
       "group": "multiturn",
-      "status": "todo"
+      "status": "not doing"
     },
     {
       "id": "mt-008",
@@ -758,6 +794,24 @@
       "uid": "af8932d33bb444c5",
       "group": "multiturn",
       "status": "ready"
+    },
+    {
+      "id": "mt-010",
+      "uid": "97a3b2c323800fbb",
+      "group": "multiturn",
+      "status": "not doing"
+    },
+    {
+      "id": "mt-011",
+      "uid": "5910b7e35b413544",
+      "group": "multiturn",
+      "status": "not doing"
+    },
+    {
+      "id": "mt-012",
+      "uid": "edab678e96435330",
+      "group": "multiturn",
+      "status": "not doing"
     }
   ]
 }

@@ -10,6 +10,10 @@ on:
         description: "Agent build label recorded on the run (e.g. GNW 2026.7.29.1)"
         required: false
         default: "unknown"
+      workers:
+        description: "Concurrent workers for the staging run (CLI default is 10; hard-capped at 20)"
+        required: false
+        default: "10"
 
 jobs:
   test:
@@ -51,7 +55,7 @@ jobs:
           API_TOKEN: ${{ secrets.API_TOKEN_STAGING }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          uv run gold run --env staging --trials 3 --workers 5 \
+          uv run gold run --env staging --trials 3 --workers "${{ inputs.workers }}" \
             --build "${{ inputs.build_label }}"
       - name: Regression gate vs previous committed run
         run: |
