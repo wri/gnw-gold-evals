@@ -196,6 +196,44 @@ def test_canopy_cover_defaults_and_pins():
     ) == 50
 
 
+def _layer_case(dataset_id: str, layer: str) -> Case:
+    return Case(
+        id=f"x-{dataset_id}", status="done", group="direct", query="q",
+        expected={"aoi_ids": "MDG.3.4_1", "aoi_source": "gadm",
+                  "dataset_id": dataset_id, "context_layer": layer,
+                  "ground_truth": "sum(area_ha)"},
+    )
+
+
+@pytest.mark.parametrize("dataset_id", ["4", "8", "10"])
+@pytest.mark.parametrize("layer", ["primary_forest", "intact_forest"])
+def test_the_loss_family_takes_either_forest_layer(dataset_id, layer):
+    request = build_request(_layer_case(dataset_id, layer))
+    assert request.payload["forest_filter"] == layer
+
+
+@pytest.mark.parametrize("dataset_id", ["5", "7"])
+def test_gain_and_extent_take_primary_forest_only(dataset_id):
+    """Only the tree-cover-loss datasets have an `intact_forest` filter. Tree
+    cover gain and tree cover do not, so the request sends null for it, as the
+    agent does."""
+    assert build_request(
+        _layer_case(dataset_id, "primary_forest")
+    ).payload["forest_filter"] == "primary_forest"
+    assert build_request(
+        _layer_case(dataset_id, "intact_forest")
+    ).payload["forest_filter"] is None
+
+
+@pytest.mark.parametrize("dataset_id", ["4", "5", "7", "8", "10"])
+def test_a_layer_that_is_not_a_forest_filter_is_dropped(dataset_id):
+    """`context_layer` is not `forest_filter`. A layer that is not a forest
+    filter is sent as null, which is what the agent sends."""
+    assert build_request(
+        _layer_case(dataset_id, "natural_lands")
+    ).payload["forest_filter"] is None
+
+
 @pytest.mark.parametrize("layer", [None, "natural_lands"])
 def test_integrated_alerts_payload_is_dates_only(layer):
     """Integrated Alerts takes the AOI and full dates only. The API rejects

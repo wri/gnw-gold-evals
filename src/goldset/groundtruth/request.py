@@ -34,6 +34,12 @@ _GADM_SUFFIX = re.compile(r"_[1-5]$")
 # time rather than returning a confusing API error.
 _GADM_ONLY = {"9", "12"}
 
+_FOREST_FILTERS = {
+    "loss": frozenset({"primary_forest", "intact_forest"}),
+    "gain": frozenset({"primary_forest"}),
+    "extent": frozenset({"primary_forest"}),
+}
+
 
 class RequestError(Exception):
     """A case cannot be turned into an analytics request."""
@@ -113,6 +119,15 @@ def _snap(year: str, floor: int) -> str:
     return str(max(floor, value - value % 5))
 
 
+def forest_filter(layer: str | None, style: str) -> str | None:
+    """The ``forest_filter`` this dataset accepts for a case's context layer.
+
+    ``None`` when the dataset has no filter for that layer — the same as the
+    agent sends.
+    """
+    return layer if layer in _FOREST_FILTERS.get(style, frozenset()) else None
+
+
 def build_request(case: Any, dataset_id: str | None = None) -> AnalyticsRequest:
     """Build the analytics request a ground-truth case implies.
 
@@ -175,17 +190,17 @@ def build_request(case: Any, dataset_id: str | None = None) -> AnalyticsRequest:
     elif dataset.style == "loss":
         start, end = _years(expected, dataset)
         payload |= {"start_year": start, "end_year": end,
-                    "forest_filter": layer,
+                    "forest_filter": forest_filter(layer, dataset.style),
                     "intersections": list(dataset.intersections),
                     "canopy_cover": canopy_cover(expected)}
     elif dataset.style == "gain":
         start, end = _years(expected, dataset)
         payload |= {"start_year": _snap(start, 2000), "end_year": _snap(end, 2005),
-                    "forest_filter": layer}
+                    "forest_filter": forest_filter(layer, dataset.style)}
     elif dataset.style == "canopy":
         payload |= {"canopy_cover": canopy_cover(expected)}
     elif dataset.style == "extent":
-        payload |= {"forest_filter": layer,
+        payload |= {"forest_filter": forest_filter(layer, dataset.style),
                     "canopy_cover": canopy_cover(expected)}
     # "none": AOI only.
 
