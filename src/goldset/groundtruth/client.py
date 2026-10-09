@@ -32,15 +32,24 @@ DONE = ("success", "saved")
 FAILED = ("failed", "error")
 
 
-def analytics_headers(token: str) -> dict:
+def analytics_headers(token: str, environment: str = X_ENVIRONMENT) -> dict:
     """Headers every analytics request needs, wherever it is issued from.
+
+    The default is production, because ground truth is the published data
+    whichever agent deployment a run targets.
     """
     return {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "X-environment": X_ENVIRONMENT,
+        "X-environment": environment,
         "Authorization": f"Bearer {token}",
     }
+
+
+def agent_environment(run_environment: str) -> str:
+    """Which analytics environment the agent under test reads from.
+    """
+    return "staging" if run_environment == "staging" else X_ENVIRONMENT
 
 
 class AnalyticsError(Exception):

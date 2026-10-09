@@ -207,6 +207,7 @@ async def run_cases(
     entry_sink=None,
 ) -> list[dict]:
     # Deferred import: langchain/httpx stay out of store-only invocations.
+    from goldset.groundtruth.client import agent_environment
     from goldset.runner.api import APITestRunner
     from goldset.runner.artifacts import ArtifactWriter
     from goldset.runner.multiturn import run_conversation
@@ -223,6 +224,9 @@ async def run_cases(
             (os.environ.get("ANALYTICS_API_TOKEN") or os.environ.get("API_TOKEN"))
             if args.ground_truth else None
         ),
+        # That re-read fetches a result the agent created, so it asks for the
+        # environment the agent ran in. Ground truth stays on production.
+        analytics_environment=agent_environment(getattr(args, "environment", "")),
     )
     writer = ArtifactWriter(args.results_dir / "artifacts", args.run_id)
     # hard cap concurrency against the live API (20 ran fine on gnw-evals)
@@ -475,9 +479,9 @@ def resume_run(args: argparse.Namespace) -> int:
     args.prefetch_seconds = header.get("prefetch_seconds")
 
     load_dotenv()
-    # The header pins the environment the run started against, so resume
-    # resolves the same env-specific token main() would have.
-    args.api_token = require_api_token(header["environment"])
+    
+    args.environment = header["environment"]
+    args.api_token = require_api_token(args.environment)
     if not args.api_token:
         return 1
 
@@ -604,6 +608,7 @@ def main() -> int:
         environment = "local"
     else:
         environment = "prod"
+    args.environment = environment
 
     args.api_token = require_api_token(environment)
     if not args.api_token:

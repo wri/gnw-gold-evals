@@ -30,6 +30,7 @@ class APITestRunner(BaseTestRunner):
         verbose: bool = False,
         wall_clock_limit: float = 900.0,
         analytics_token: str | None = None,
+        analytics_environment: str | None = None,
     ):
         """Initialize with API configuration."""
         self.api_base_url = api_base_url
@@ -40,6 +41,7 @@ class APITestRunner(BaseTestRunner):
         # Set only for ground-truth runs: lets the runner re-read the agent's
         # own `source_url` to see the table it actually pulled.
         self.analytics_token = analytics_token
+        self.analytics_environment = analytics_environment
 
     async def _fetch_pulled_data(
         self, client: httpx.AsyncClient, agent_state: dict[str, Any]
@@ -52,18 +54,25 @@ class APITestRunner(BaseTestRunner):
         "the agent's pulled data" mean the data rather than the chart, so a
         correct pull that never reached a chart is no longer a failure.
 
+        This result belongs to the agent, so it is read with the agent deployment's 
+        own analytics environment. Ground truth is fetched from back-end production
+
         Soft-fails to None like the dashboard fetch: this is enrichment, and
         killing a trial over a diagnostic GET would buy nothing.
         """
         from goldset.evaluators.utils import last_statistics
-        from goldset.groundtruth.client import analytics_headers
+        from goldset.groundtruth.client import X_ENVIRONMENT, analytics_headers
 
         source_url = (last_statistics(agent_state) or {}).get("source_url")
         if not source_url:
             return None
         try:
             response = await client.get(
-                str(source_url), headers=analytics_headers(self.analytics_token or "")
+                str(source_url),
+                headers=analytics_headers(
+                    self.analytics_token or "",
+                    self.analytics_environment or X_ENVIRONMENT,
+                ),
             )
             response.raise_for_status()
             return (response.json().get("data") or {}).get("result") or None

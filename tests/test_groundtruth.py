@@ -6,6 +6,7 @@ at once: the GADM suffix strip, a metric that is not the obvious column, and a
 year that lives in the selector rather than the request.
 """
 
+import asyncio
 import json
 from pathlib import Path
 
@@ -13,7 +14,12 @@ import httpx
 import pytest
 
 from goldset.groundtruth.catalog import dataset_for, datasets
-from goldset.groundtruth.client import AnalyticsClient, AnalyticsError
+from goldset.groundtruth.client import (
+    AnalyticsClient,
+    AnalyticsError,
+    agent_environment,
+    analytics_headers,
+)
 from goldset.groundtruth.request import RequestError, build_request, canopy_cover
 from goldset.groundtruth.selector import (
     SelectorError,
@@ -194,6 +200,50 @@ def test_canopy_cover_defaults_and_pins():
     assert canopy_cover(
         {"dataset_parameters": '[{"name": "canopy_cover", "values": [50]}]'}
     ) == 50
+
+
+def _pull_read_environment(run_environment: str) -> str:
+    """The ``X-environment`` the runner sends when re-reading the agent's pull."""
+    from goldset.runner.api import APITestRunner
+
+    seen: dict[str, str] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["environment"] = request.headers["X-environment"]
+        return httpx.Response(200, json={"data": {"result": {"area_ha": [1.0]}}})
+
+    runner = APITestRunner(
+        api_base_url="https://api.example",
+        api_token="tok",
+        analytics_token="analytics-tok",
+        analytics_environment=agent_environment(run_environment),
+    )
+    state = {"statistics": [{"source_url": "http://analytics.example/x/1"}]}
+
+    async def read():
+        async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+            return await runner._fetch_pulled_data(client, state)
+
+    assert asyncio.run(read()) == {"area_ha": [1.0]}
+    return seen["environment"]
+
+
+def test_a_staging_run_reads_the_agents_pull_from_staging():
+    """That result belongs to the agent's deployment, which created it under its
+    own environment, so the read asks for the same one."""
+    assert _pull_read_environment("staging") == "staging"
+
+
+@pytest.mark.parametrize("run_environment", ["prod", "local", ""])
+def test_other_runs_read_the_agents_pull_from_production(run_environment):
+    """Zeno takes the environment from GNW_STAGE, which defaults to production,
+    so only a staging deployment reads staging."""
+    assert _pull_read_environment(run_environment) == "production"
+
+
+def test_ground_truth_requests_stay_on_production():
+    """Ground truth is the published data whichever deployment a run targets."""
+    assert analytics_headers("tok")["X-environment"] == "production"
 
 
 def _layer_case(dataset_id: str, layer: str) -> Case:
