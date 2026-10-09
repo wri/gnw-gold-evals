@@ -21,7 +21,7 @@ results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
   "build": "GNW 2026.7.29.1",          // agent build the API reported
   "ff": "experimental",                 // agent tool profile, or null
   "harness": {"repo": "gnw-evals", "sha": "5a377cd"},
-  "judge_model": "claude-haiku-4-5",
+  "judge_model": "claude-haiku-4-5",   // default; may be "typesafe/jev-1.13"
   "num_trials": 1,
   "caseset": "v2",                      // store directory loaded (cases/<caseset>);
                                         // recorded from 2026-08-04 — older runs

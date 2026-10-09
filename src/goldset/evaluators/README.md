@@ -20,7 +20,8 @@ why the run_id suffix is the tell.
 
 An evaluator is a function of the agent's final state plus the case's
 expectations — side-effect-free on its inputs, though the judged ones do call
-Haiku. It takes `agent_state` (the `/api/threads/{id}/state` payload as
+the configured judge backend (Haiku by default, optional OpenRouter Decisions
+with TypeSafe JEV). It takes `agent_state` (the `/api/threads/{id}/state` payload as
 the runner received it), an `ExpectedData` (the case's `expected:` block,
 re-prefixed with `expected_` by `adapter.py:21`), the query, and — for dashboard
 checks — the separately fetched dashboard payload. It returns a flat dict of
@@ -726,7 +727,7 @@ you which branch fired (`llm_judges.py:265-292`):
 
 ## `charts_answer_judge`
 
-**Measures** what the Haiku chart judge thought — whether the chart set is an
+**Measures** what the chart judge thought — whether the chart set is an
 appropriate and complete way to answer the query, judged on structure and
 coverage only (the prompt forbids it from judging numbers,
 `llm_judges.py:366-372`). It is written out of `resolve_chart_verdict` as
@@ -765,7 +766,8 @@ manually sum all regions"), which is a framing preference, not a data problem.
 ## `agent_answer`
 
 **Measures** whether the final assistant message captures the expected answer,
-judged by Haiku against a typed rubric — boolean, numeric, year, or named entity
+judged by the configured backend (Haiku by default) against a typed rubric —
+boolean, numeric, year, or named entity
 (`ANSWER_JUDGE_PROMPT`, `llm_judges.py:46-104`; call at
 `answer_evaluator.py:189-201`). Boolean/year/named-entity rows are the judge's own
 call, same as always. For numeric rows the judge only extracts which number in the

@@ -5,7 +5,8 @@
 
 Configuration policy (deliberately unlike gnw-evals): **flags always win.**
 The environment supplies secrets only — ``API_TOKEN`` and
-``ANTHROPIC_API_KEY`` (judge). No env var silently overrides a CLI default.
+``ANTHROPIC_API_KEY``/``OPENROUTER_API_KEY`` (judge). No env var silently
+overrides a CLI default.
 """
 
 from __future__ import annotations
@@ -24,6 +25,12 @@ from dotenv import load_dotenv
 from goldset.adapter import case_to_expected
 from goldset.buckets import row_verdict, summarize_buckets
 from goldset.eval_types import TestResult
+from goldset.judge_config import (
+    DEFAULT_JUDGE_BACKEND,
+    JUDGE_BACKEND_CHOICES,
+    JUDGE_BACKEND_ENV_VAR,
+    judge_model_for_backend,
+)
 from goldset.ledger import (
     RUNS_DIRNAME,
     append_partial_entry,
@@ -43,7 +50,6 @@ ENV_URLS = {
     "prod": "https://api.globalnaturewatch.org",
     "local": "http://localhost:8000",
 }
-JUDGE_MODEL = "claude-haiku-4-5"
 NON_CHECK_SCORES = {"overall_score"}
 REASON_TRIM = 500
 ENV_TOKEN_VARS = {"staging": "STAGING_API_TOKEN", "prod": "PROD_API_TOKEN"}
@@ -335,6 +341,7 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
     ``caseset_version`` alone is a content hash a reader can't attribute to
     a store without git archaeology. Runs before 2026-08-04 lack the field.
     """
+    judge_backend = getattr(args, "judge_backend", DEFAULT_JUDGE_BACKEND)
     record = {
         "run_id": args.run_id,
         "started": started,
@@ -342,7 +349,7 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
         "build": args.build,
         "ff": args.ff,
         "harness": {"repo": "gnw-gold-evals", "sha": _harness_sha()},
-        "judge_model": JUDGE_MODEL,
+        "judge_model": judge_model_for_backend(judge_backend),
         "num_trials": args.trials,
         "workers": args.workers,
         "trial_timeout": args.trial_timeout,
@@ -477,6 +484,10 @@ def resume_run(args: argparse.Namespace) -> int:
     for field in ("ff", "build", "trials", "workers", "trial_timeout",
                   "slow_threshold", "status_exclude", "id", "group", "note"):
         setattr(args, field, header[field])
+    args.judge_backend = header.get(
+        "judge_backend",
+        getattr(args, "judge_backend", DEFAULT_JUDGE_BACKEND),
+    )
     args.run_id = header["run_id"]
     args.resolved_url = header["resolved_url"]
     # .get(): partials written before ground truth lacked both, and must still
@@ -490,6 +501,7 @@ def resume_run(args: argparse.Namespace) -> int:
     args.api_token = require_api_token(args.environment)
     if not args.api_token:
         return 1
+    os.environ[JUDGE_BACKEND_ENV_VAR] = args.judge_backend
 
     done_uids = {entry["uid"] for entry in done}
     remaining = [c for c in select_cases(args) if c.uid not in done_uids]
@@ -535,6 +547,15 @@ def main() -> int:
     run.add_argument("--api-base-url", default=None,
                      help="explicit URL; overrides --env")
     run.add_argument("--ff", default=None, help="agent tool profile")
+    run.add_argument(
+        "--judge-backend",
+        choices=JUDGE_BACKEND_CHOICES,
+        default=DEFAULT_JUDGE_BACKEND,
+        help=(
+            "judge backend: default Anthropic Haiku, or TypeSafe JEV via "
+            "OpenRouter Decisions"
+        ),
+    )
     run.add_argument("--build", default="unknown",
                      help="agent build label, e.g. 'GNW 2026.7.29.1'")
     run.add_argument("--trials", type=int, default=1)
@@ -619,6 +640,7 @@ def main() -> int:
     args.api_token = require_api_token(environment)
     if not args.api_token:
         return 1
+    os.environ[JUDGE_BACKEND_ENV_VAR] = args.judge_backend
     started = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     args.run_id = make_run_id(started, environment, args.ff)
 
@@ -633,6 +655,7 @@ def main() -> int:
         "environment": environment,
         "resolved_url": args.resolved_url,
         "ff": args.ff,
+        "judge_backend": args.judge_backend,
         "build": args.build,
         "trials": args.trials,
         "workers": args.workers,
