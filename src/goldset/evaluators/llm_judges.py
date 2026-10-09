@@ -414,18 +414,31 @@ def resolve_answer_verdict(
     return {"score": 0, "reason": f"{deterministic_reason}. {judge_reason}"}
 
 
+class AnswerJudgement(BaseModel):
+    answer_eval_type: str  # "boolean", "numeric", "named_entity", "year"
+    reason: str
+    score: int
+    extracted_number: str = ""  # numeric rows only; see resolve_answer_verdict
+
+
+def judge_answer(expected_answer: str, actual_answer: str) -> AnswerJudgement:
+    """The raw answer-judge call, before any deterministic override."""
+    JUDGE_PROMPT = ChatPromptTemplate.from_messages([("user", ANSWER_JUDGE_PROMPT)])
+    judge_chain = JUDGE_PROMPT | HAIKU.with_structured_output(AnswerJudgement)
+    return judge_chain.invoke(
+        {
+            "expected_answer": expected_answer,
+            "actual_answer": actual_answer,
+        },
+    )
+
+
 def llm_judge(
     expected_answer: str,
     actual_answer: str,
     include_reason: bool = False,
 ):
     """Use LLM to judge if an actual answer captures the essence of an expected answer."""
-
-    class Score(BaseModel):
-        answer_eval_type: str  # "boolean", "numeric", "named_entity", "year"
-        reason: str
-        score: int
-        extracted_number: str = ""  # numeric rows only; see resolve_answer_verdict
 
     if _using_openrouter_decisions():
         answers = _openrouter_answers(
@@ -517,23 +530,14 @@ def llm_judge(
             f"OpenRouter Decisions ({OPENROUTER_JEV_MODEL}) "
             f"type={answer_eval_type}, noul={noul:.2f}{confidence_text}"
         )
-        llm_judgement = Score(
+        llm_judgement = AnswerJudgement(
             answer_eval_type=answer_eval_type,
             score=judge_score,
             reason=judge_reason,
             extracted_number=extracted_number,
         )
     else:
-        JUDGE_PROMPT = ChatPromptTemplate.from_messages([("user", ANSWER_JUDGE_PROMPT)])
-
-        judge_chain = JUDGE_PROMPT | HAIKU.with_structured_output(Score)
-
-        llm_judgement = judge_chain.invoke(
-            {
-                "expected_answer": expected_answer,
-                "actual_answer": actual_answer,
-            },
-        )
+        llm_judgement = judge_answer(expected_answer, actual_answer)
 
     verdict = resolve_answer_verdict(
         answer_eval_type=llm_judgement.answer_eval_type,

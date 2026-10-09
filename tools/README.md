@@ -27,7 +27,7 @@ for the contract they all respect.
 
 | tool | what it does |
 |---|---|
-| `diff_runs.py` | Regression diff between two runs over their uid intersection. `--fail-on-regression` / `--fail-on-coverage-loss` to gate. Only compare runs with the same trial count and `ff`. |
+| `diff_runs.py` | Regression diff between two runs over their uid intersection. `--fail-on-regression` / `--fail-on-coverage-loss` to gate. A ground-truth check that flips while its data digest moved is a non-gating **data bump**, flagged when it may hide a real regression. Only compare runs with the same trial count and `ff`. |
 | `flakiness.py` | Flakiness table from a multi-trial run (`--per-case` for detail); flags partial samples as INSUFFICIENT DATA. |
 | `compose_runs.py` | Compose a current picture from a primary run plus scoped supplements — analysis-side only, never writes to `results/runs/` (see results/README.md §Composing). |
 | `ingest_run.py` | Ingest a legacy gnw-evals `*_detailed.csv` into the ledger (historical runs only; in-repo runs write the ledger directly). |

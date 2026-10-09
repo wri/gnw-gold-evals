@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
+`caseset_version 9022c1dda484b7aa` · 135 cases · done 89 · not doing 30 · ready 13 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-25_
+_Last updated: 2026-10-09_
 
 ## Groups
 
@@ -19,7 +19,7 @@ _Last updated: 2026-09-25_
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
-| direct | 29 | 21 | done 20, not doing 8, todo 1 |
+| direct | 29 | 21 | done 19, not doing 8, ready 1, todo 1 |
 | imagery | 5 | 1 | done 1, not doing 4 |
 | metadata | 5 | 5 | done 5 |
 | multilingual | 5 | 5 | done 5 |
@@ -41,51 +41,52 @@ friends) run on top of it whenever their trigger state exists.
 |---|---|---|---|---|
 | retrieval | 99 | 0 | 99 | 94% |
 | analysis | 0 | 70 | 70 | 67% |
-| explanation | 25 | 60 | 85 | 81% |
-| output | 75 | 3 | 78 | 74% |
+| explanation | 24 | 60 | 84 | 80% |
+| output | 76 | 3 | 79 | 75% |
 | scope | 89 | 7 | 96 | 91% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 89 | dataset_id_match |
+| dataset_id | 90 | dataset_id_match |
 | scope | 88 | scope_match |
 | aoi_source | 83 | reference only (dashboard AOI source) |
-| dataset_name | 82 | reference only |
+| dataset_name | 83 | reference only |
 | aoi_ids | 73 | aoi_id_match |
 | answer | 70 | agent_answer, charts_answer, chart_produced |
-| text | 25 | expected_text_match |
-| context_layer | 9 | context_layer_match |
+| text | 24 | expected_text_match |
+| context_layer | 10 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
 | class_values | 6 | class_value_match (info-only) |
-| nudge_options | 6 | nudge_match |
 | dashboard_widgets | 5 | dashboard_widgets_match, dashboard_widgets_valid |
 | end_date | 5 | date_extraction (with start_date) |
+| nudge_options | 5 | nudge_match |
 | start_date | 5 | date_extraction (with end_date) |
 | clarification | 3 | clarification_requested |
-| nudge_type | 3 | nudge_match |
+| nudge_type | 2 | nudge_match |
+| chart_type | 1 | chart_type_match |
 | dataset_parameters | 1 | dataset_parameter_match |
-| chart_type | 0 ← unused | chart_type_match |
+| ground_truth | 1 | ground_truth_match, ground_truth_answer (info-only) |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@f9cf409 (origin/main, synced 2026-08-07), 13 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@64b53a5 (origin/main, synced 2026-09-16), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
 `selection_hints` are exercised by any case grading `dataset_id`,
 while prompt/code/presentation instructions shape behaviour that only
-answer-graded cases (`answer` or `text` expected) actually check.
+answer-graded cases (`answer`, `text` or `ground_truth` expected)
+actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 0 | Global all ecosystem disturbance alerts (DIST-ALERT) | 0 ← gap | 0 | — | driver ×0 ← gap, natural_lands ×0 ← gap, grasslands ×0 ← gap, land_cover ×0 ← gap |
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 42 | 30 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
+| 4 | Tree cover loss | 43 | 31 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
@@ -139,11 +140,11 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: chart_type, suggested_datasets —
+- Expected fields no active case uses: suggested_datasets —
   the checks they switch on can never fire until cases set them.
-- Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
+- Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage, ground_truth_answer.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
-- Catalog datasets with no active case: 0, 12.
-- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: driver (0), natural_lands (0), grasslands (0), land_cover (0), primary_forest (7, 10), intact_forest (10).
+- Catalog datasets with no active case: 12.
+- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: primary_forest (7, 10), intact_forest (10).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

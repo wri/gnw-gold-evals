@@ -18,7 +18,11 @@ is why extraction is the scored check and coverage is reported for diagnosis.
 
 from typing import Any
 
-from goldset.evaluators.utils import normalize_end_date, normalize_start_date
+from goldset.evaluators.utils import (
+    last_statistics,
+    normalize_end_date,
+    normalize_start_date,
+)
 
 # Tools whose arguments carry the agent's chosen analysis window, most authoritative
 # first. `pull_data` is the actual request; `pick_dataset` is an earlier echo of it.
@@ -144,16 +148,8 @@ def evaluate_date_extraction(
 
 
 def _latest_statistics(agent_state: dict[str, Any]) -> dict[str, Any]:
-    """Return the most recent statistics entry from agent state."""
-    stats = agent_state.get("statistics")
-    if not stats:
-        return {}
-    if isinstance(stats, dict):
-        return stats
-    if isinstance(stats, list) and stats:
-        last = stats[-1]
-        return last if isinstance(last, dict) else {}
-    return {}
+    """The most recent statistics entry, or {} — callers here index it freely."""
+    return last_statistics(agent_state) or {}
 
 
 def _count_rows(raw_data: Any) -> int:
