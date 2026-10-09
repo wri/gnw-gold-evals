@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version c4aa8167ddfc6e42` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
+`caseset_version cf3fbf98924ea585` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-09_
 

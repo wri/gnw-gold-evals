@@ -1,5 +1,5 @@
 id: 1-084
-uid: dbfe4e89da16a150
+uid: a0e498080969981e
 status: done
 group: dataset-suggestion
 query: Show me trends in natural forest loss in Gabon
@@ -10,7 +10,7 @@ expected:
   dataset_id: '4'
   dataset_name: Tree cover loss
   context_layer: natural_forest
-  answer: 104,841.67 hectares
+  answer: 104,789.14 hectares
   scope: analyse
 notes:
   aoi_type: gadm 0
@@ -39,3 +39,15 @@ notes:
     wording had drifted from always-nudging to usually-not — 9/12 trials skipped clarification
     against a clean 2026-09-24 baseline) by moving the case onto a wording the new capability
     was built to serve, rather than re-fighting the old ambiguity.'
+  threshold: '2026-10-09: answer moved from 104,841.67 to 104,789.14 ha, the natural forest
+    figure at the expected 10% canopy threshold (analytics API, staging: natural_forest_only
+    + canopy_cover=10; 2021 16,523.87; 2022 25,826.66; 2023 17,453.48; 2024 25,637.53; 2025
+    19,347.60). The old figure matched natural_forest_only with no canopy_cover to the hectare,
+    i.e. the agent currently runs natural forest loss unthresholded, which AJ confirmed is
+    wrong. The two are 0.05% apart, so this row passes before and after that fix; 1-130 is
+    the row that detects it. value_2 (emissions) goes away with the fix: the API returns no
+    carbon below 30% canopy.'
+  status_reason: 're-verified 2026-10-09 at the new uid after the answer moved to the 10%
+    figure: run 20261009T101010Z_staging_experimental (3 trials, ff=experimental) passed every
+    check on 3/3. The agent''s 104,842 ha is still the unthresholded figure, 0.05% from the
+    expected 104,789.14.'
