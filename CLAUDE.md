@@ -62,9 +62,21 @@ writes the trimmed, committed snapshot `cases/zeno_catalog.json` (source sha
 so CI's freshness gate needs no network and no sibling repo. When zeno's
 catalog changes: re-run the sync, regenerate COVERAGE.md, and commit both
 together. Coverage semantics: a case counts toward every dataset its
-`dataset_id` accepts; `answer`/`text`-graded cases are the ones that exercise
-a dataset's prompt/code/presentation instructions, while any `dataset_id`
-check exercises its `selection_hints`.
+`dataset_id` accepts; `answer`/`text`/`ground_truth`-graded cases are the ones
+that exercise a dataset's prompt/code/presentation instructions, while any
+`dataset_id` check exercises its `selection_hints`.
+
+**The snapshot is also the ground-truth request table.** It carries
+`analytics_api_endpoint`, `content_date`, `content_date_fixed`, `start_date`
+and `end_date`, and `src/goldset/groundtruth/catalog.py` builds every analytics
+request from them — so a dataset that extends its window upstream cannot leave
+the harness computing ground truth over the old one. What that module still
+hardcodes is everything with **no YAML representation**: payload shape, the
+4/8/10 `intersections` split, and the AOI type map are zeno's `_build_payload`
+and `_get_aoi_type` *code*, so they move only in a reviewed upstream PR. A
+dataset absent from the snapshot is absent from the table and fails loudly —
+that is what retired DIST-ALERT (dataset 0) when zeno deleted its catalog entry
+before 2026-09-16.
 
 Runs execute in-repo (the gnw-evals bridge was retired after the
 2026-08-01 parity run; `export_csv.py` remains for triage):
@@ -83,6 +95,18 @@ was mid-flight. `--resume` rebuilds the run's config from that file's header
 (other flags are ignored), refuses if the caseset changed, runs only the
 missing cases, and writes the same immutable run JSON — marked
 `resumed: true` — before deleting the partial.
+
+**Cases carrying `expected.ground_truth` prefetch their expected numbers from
+the analytics API before any trial** (PZB-1282). Consequences worth knowing
+before reading a run: a prefetch failure **aborts the run before the first
+agent call**, so nothing is written to `results/runs/` and there is no partial
+to misread; the fetch is one snapshot per run, so all trials of a case grade
+against the same values; and analytics requests always go to **production**
+whatever `--env` targets. Because every run fetches fresh, two runs on different
+days can legitimately differ with no agent change — `tools/diff_runs.py` files
+those as **data bumps**, never regressions, when the case's value digest moved.
+`ground_truth` is also what tells `coverage_doc.py` a case is answer-graded, so
+a migrated case keeps its dataset-instruction coverage.
 
 **What `ff` gates changed on 2026-08-31 — read the date on any run before
 trusting old guidance.** `ff` is the agent's tool profile, passed through in

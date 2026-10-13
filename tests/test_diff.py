@@ -223,3 +223,179 @@ def test_fail_on_coverage_loss_ignores_info_only(tmp_path):
     report = diff(GATE_A, COV_B_INFO_LOST)
     assert [c["check"] for c in report["coverage_lost"]] == ["date_coverage"]
     assert report["coverage_lost"][0]["info_only"] is True
+
+
+# ---------------------------------------------------------------------------
+# Data bumps: a ground-truth check that flips because the fetched data changed.
+
+GT_REQUEST = {"endpoint": "/v0/land_change/tree_cover_loss/analytics",
+              "payload": {"aoi": {"type": "admin", "ids": ["MDG.3.4"]}}}
+RUN_B_ID = "20260731T010000Z_staging"
+
+
+def gt_entry(match, digest, values, agent_values=None, *, request=GT_REQUEST,
+             fixed=False, checks=None, trials=None):
+    ground_truth = {"selector": "sum(area_ha)", "values": values, "digest": digest,
+                    "dataset_id": "4", "content_date_fixed": fixed, "request": request}
+    if agent_values is not None:
+        ground_truth["agent_values"] = agent_values
+    entry = {"uid": "g1", "id": "1-046", "ground_truth": ground_truth,
+             "checks": {"ground_truth_match": match, **(checks or {})}}
+    if trials is not None:
+        entry["trials"] = [{"checks": {"ground_truth_match": t}} for t in trials]
+    return entry
+
+
+def gt_run(entry, run_id="20260731T000000Z_staging"):
+    run = run_fixture([entry], run_id=run_id)
+    run["ground_truth"] = {"base_url": "https://analytics.example", "cases": 1,
+                           "prefetch_seconds": 1.0, "tolerance": 0.02}
+    return run
+
+
+def test_flip_with_a_moved_digest_is_a_data_bump_not_a_regression(tmp_path):
+    """The agent still reads the previous figure: the flip is the data's doing."""
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0], [[100.0]]))
+    run_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0], [[100.0]]), run_id=RUN_B_ID)
+    report = diff(run_a, run_b)
+    assert report["regressions"] == []
+    [bump] = report["data_bumps"]
+    assert (bump["check"], bump["cause"], bump["direction"]) == (
+        "ground_truth_match", "data", "1.0 → 0.0")
+    assert bump["digests"] == ["aaaa1111", "bbbb2222"]
+    assert "possible_hidden_regression" not in bump
+
+    result = run_tool(tmp_path, run_a, run_b, "--fail-on-regression")
+    assert result.returncode == 0
+    assert "1 data bumps" in result.stdout
+
+
+def test_a_flip_with_the_same_digest_is_still_a_regression(tmp_path):
+    """The headline stays honest: identical numbers in both runs means the agent moved."""
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0], [[100.0]]))
+    run_b = gt_run(gt_entry(0.0, "aaaa1111", [100.0], [[12.0]]), run_id=RUN_B_ID)
+    report = diff(run_a, run_b)
+    assert [r["check"] for r in report["regressions"]] == ["ground_truth_match"]
+    assert report["data_bumps"] == []
+    assert run_tool(tmp_path, run_a, run_b, "--fail-on-regression").returncode == 1
+
+
+def test_a_recovery_with_a_moved_digest_is_a_data_bump():
+    """A data change can't count in the agent's favour either."""
+    run_a = gt_run(gt_entry(0.0, "aaaa1111", [100.0], [[90.0]]))
+    run_b = gt_run(gt_entry(1.0, "bbbb2222", [90.0], [[90.0]]), run_id=RUN_B_ID)
+    report = diff(run_a, run_b)
+    assert report["recoveries"] == []
+    assert [b["direction"] for b in report["data_bumps"]] == ["0.0 → 1.0"]
+
+
+def test_the_cause_names_a_request_change_and_a_fixed_dataset():
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0]))
+    changed = {**GT_REQUEST, "payload": {"aoi": {"type": "admin", "ids": ["MDG.3"]}}}
+    request_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0], request=changed), run_id=RUN_B_ID)
+    assert diff(run_a, request_b)["data_bumps"][0]["cause"] == "request"
+    fixed_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0], fixed=True), run_id=RUN_B_ID)
+    assert diff(run_a, fixed_b)["data_bumps"][0]["cause"] == "fixed_dataset"
+
+
+def test_other_checks_on_a_bumped_row_still_regress():
+    """A data change explains ground-truth flips only."""
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0], checks={"aoi_id_match": 1.0}))
+    run_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0], checks={"aoi_id_match": 0.0}),
+                   run_id=RUN_B_ID)
+    report = diff(run_a, run_b)
+    assert [r["check"] for r in report["regressions"]] == ["aoi_id_match"]
+    assert [b["check"] for b in report["data_bumps"]] == ["ground_truth_match"]
+
+
+def test_a_missing_digest_leaves_the_regression_counted():
+    entry_a = gt_entry(1.0, "aaaa1111", [100.0])
+    del entry_a["ground_truth"]["digest"]
+    run_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0]), run_id=RUN_B_ID)
+    report = diff(gt_run(entry_a), run_b)
+    assert [r["check"] for r in report["regressions"]] == ["ground_truth_match"]
+    assert report["data_bumps"] == []
+
+
+# --- the blind spot: a real break landing in the same run as a data change
+
+def test_a_bump_is_flagged_when_the_agent_figure_matches_neither_run(tmp_path):
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0], [[100.0]]))
+    run_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0], [[12.0]]), run_id=RUN_B_ID)
+    [bump] = diff(run_a, run_b)["data_bumps"]
+    assert "matching neither run's data" in bump["possible_hidden_regression"]
+
+    # detected and reported, never gated
+    result = run_tool(tmp_path, run_a, run_b, "--fail-on-regression")
+    assert result.returncode == 0
+    assert "possible hidden regression" in result.stdout
+
+
+def test_a_bump_is_flagged_when_the_agent_pull_lacked_the_metric():
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0], [[100.0]]))
+    run_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0], [[None]]), run_id=RUN_B_ID)
+    [bump] = diff(run_a, run_b)["data_bumps"]
+    assert bump["possible_hidden_regression"] == (
+        "the agent's pull held no figure for the metric")
+
+
+def test_only_the_failing_trials_are_examined():
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0], [[100.0]] * 3, trials=[1.0] * 3))
+    # trial 1 passed on the chart fallback, so it carries no figure: not evidence
+    stale = gt_entry(0.0, "bbbb2222", [110.0], [[None], [100.0], [100.0]],
+                     trials=[1.0, 0.0, 0.0])
+    [bump] = diff(run_a, gt_run(stale, run_id=RUN_B_ID))["data_bumps"]
+    assert "possible_hidden_regression" not in bump
+
+    broken = gt_entry(0.0, "bbbb2222", [110.0], [[None], [100.0], [12.0]],
+                      trials=[1.0, 0.0, 0.0])
+    [bump] = diff(run_a, gt_run(broken, run_id=RUN_B_ID))["data_bumps"]
+    assert "possible_hidden_regression" in bump
+
+
+def test_bumps_without_recorded_agent_figures_are_not_flagged():
+    run_a = gt_run(gt_entry(1.0, "aaaa1111", [100.0]))
+    run_b = gt_run(gt_entry(0.0, "bbbb2222", [110.0]), run_id=RUN_B_ID)
+    assert "possible_hidden_regression" not in diff(run_a, run_b)["data_bumps"][0]
+
+
+def test_a_synthetic_data_release_is_classified_end_to_end():
+    """Two tables served for the same request, through the real prefetch and
+    ledger record: the digest moves, the request doesn't, and the flip is a
+    data bump rather than a regression."""
+    import httpx
+
+    from goldset.groundtruth.client import AnalyticsClient
+    from goldset.groundtruth.fetch import prefetch
+    from goldset.store import Case
+
+    case = Case(id="1-076", status="done", group="direct", query="q",
+                expected={"aoi_ids": "RUS", "aoi_source": "gadm", "dataset_id": "4",
+                          "ground_truth": "sum(area_ha)"})
+
+    def serving(table):
+        def handler(request):
+            if request.method == "POST":
+                return httpx.Response(
+                    200, json={"status": "saved", "data": {"link": "http://a/x/r"}})
+            return httpx.Response(200, json={"data": {"result": table}})
+        return AnalyticsClient(token="t", transport=httpx.MockTransport(handler))
+
+    before = {"tree_cover_loss_year": [2024, 2025], "area_ha": [300.0, 400.0]}
+    after = {"tree_cover_loss_year": [2024, 2025, 2026], "area_ha": [300.0, 400.0, 500.0]}
+    record_a = prefetch([case], serving(before))[case.uid].to_ledger()
+    record_b = prefetch([case], serving(after))[case.uid].to_ledger()
+    assert record_a["digest"] != record_b["digest"]
+    assert record_a["request"] == record_b["request"]
+
+    def entry(score, record, figure):
+        return {"uid": case.uid, "id": case.id, "checks": {"ground_truth_match": score},
+                "ground_truth": {**record, "agent_values": [[figure]]}}
+
+    # the agent still sums the two years it saw before: a stale read, not a break
+    report = diff(gt_run(entry(1.0, record_a, 700.0)),
+                  gt_run(entry(0.0, record_b, 700.0), run_id=RUN_B_ID))
+    assert report["regressions"] == []
+    [bump] = report["data_bumps"]
+    assert bump["cause"] == "data"
+    assert "possible_hidden_regression" not in bump

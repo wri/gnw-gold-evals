@@ -1,6 +1,7 @@
 """Catalog snapshot extraction: trimming project-zeno catalog YAMLs."""
 
 import sys
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -19,6 +20,11 @@ RAW = {
         {"value": "primary_forest", "description": "dropped"},
         {"value": "intact_forest"},
     ],
+    "content_date": "2001-2025 annual",
+    "content_date_fixed": False,
+    "start_date": date(2001, 1, 1),   # unquoted in the YAML: parses as a date
+    "end_date": "2025-12-31",
+    "analytics_api_endpoint": "/v0/land_change/tree_cover_loss/analytics",
     "prompt_instructions": "Reports gross annual loss...",
     "selection_hints": "Best dataset for annual loss...",
     "code_instructions": "CHART TYPES: ...",
@@ -35,7 +41,21 @@ def test_snapshot_entry_trims_to_coverage_fields():
         "parameters": [{"name": "canopy_cover", "values": [10, 30]}],
         "context_layers": ["primary_forest", "intact_forest"],
         "instructions": list(INSTRUCTION_FIELDS),
+        "analytics_api_endpoint": "/v0/land_change/tree_cover_loss/analytics",
+        "content_date": "2001-2025 annual",
+        "content_date_fixed": False,
+        "start_date": "2001-01-01",
+        "end_date": "2025-12-31",
     }
+
+
+def test_an_open_ended_window_keeps_none_rather_than_empty_string():
+    """`end_date` absent means "to today"; the request builder tells that apart
+    from an empty one, so it must not be flattened to ''."""
+    entry = snapshot_entry({k: v for k, v in RAW.items() if k != "end_date"}, "f.yml")
+    assert entry["end_date"] is None
+    assert snapshot_entry({**RAW, "analytics_api_endpoint": "  "}, "f.yml")[
+        "analytics_api_endpoint"] is None
 
 
 def test_snapshot_entry_records_missing_instructions():
