@@ -2,9 +2,9 @@
   "source": {
     "repo": "https://github.com/wri/project-zeno.git",
     "ref": "origin/main",
-    "sha": "64b53a514f4de188d30e015857ea6ec75344429f",
+    "sha": "9e71aa4ddb12dc6e40fe6fcdf857c2cc15fa7691",
     "path": "src/agent/datasets/catalog",
-    "synced": "2026-09-16"
+    "synced": "2026-10-13"
   },
   "datasets": [
     {
@@ -77,7 +77,8 @@
       ],
       "context_layers": [
         "primary_forest",
-        "intact_forest"
+        "intact_forest",
+        "natural_forest"
       ],
       "instructions": [
         "prompt_instructions",
@@ -250,7 +251,9 @@
       "dataset_id": "11",
       "dataset_name": "Integrated alerts",
       "parameters": [],
-      "context_layers": [],
+      "context_layers": [
+        "natural_lands"
+      ],
       "instructions": [
         "prompt_instructions",
         "selection_hints",
@@ -278,7 +281,7 @@
       "content_date": "2016-2024",
       "content_date_fixed": false,
       "start_date": "2016-01-01",
-      "end_date": null
+      "end_date": "2024-12-31"
     }
   ]
 }

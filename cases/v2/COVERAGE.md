@@ -6,7 +6,7 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version 612f3de4e88db410` · 135 cases · done 89 · not doing 30 · ready 13 · todo 3 · **105 active** (everything but `not doing` runs by default)
+`caseset_version ad7fd6e591baf19b` · 143 cases · done 96 · not doing 30 · ready 13 · todo 4 · **113 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-14_
 
@@ -16,7 +16,7 @@ _Last updated: 2026-10-14_
 |---|---|---|---|
 | class-comparison | 9 | 6 | done 6, not doing 3 |
 | comparative | 14 | 13 | done 11, not doing 1, todo 2 |
-| context-layer | 2 | 1 | done 1, not doing 1 |
+| context-layer | 10 | 9 | done 8, not doing 1, todo 1 |
 | dashboard | 7 | 7 | done 7 |
 | dataset-parameters | 1 | 1 | done 1 |
 | dataset-suggestion | 8 | 6 | done 6, not doing 2 |
@@ -46,30 +46,30 @@ exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 99 | 0 | 99 | 94% |
-| analysis | 0 | 70 | 70 | 67% |
-| explanation | 24 | 60 | 84 | 80% |
-| output | 76 | 3 | 79 | 75% |
-| scope | 89 | 7 | 96 | 91% |
+| retrieval | 107 | 0 | 107 | 95% |
+| analysis | 0 | 76 | 76 | 67% |
+| explanation | 27 | 65 | 92 | 81% |
+| output | 82 | 3 | 85 | 75% |
+| scope | 97 | 7 | 104 | 92% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 90 | dataset_id_match |
-| scope | 88 | scope_match |
-| aoi_source | 83 | no check of its own (dashboard_aoi_match also compares it) |
-| dataset_name | 83 | reference only |
-| aoi_ids | 73 | aoi_id_match |
-| answer | 70 | agent_answer, chart_produced, data_pull_exists, answered_without_data (+ charts_answer when a chart exists) |
-| text | 24 | expected_text_match |
-| context_layer | 10 | context_layer_match |
+| dataset_id | 98 | dataset_id_match |
+| scope | 96 | scope_match |
+| aoi_source | 91 | no check of its own (dashboard_aoi_match also compares it) |
+| dataset_name | 91 | reference only |
+| aoi_ids | 81 | aoi_id_match |
+| answer | 76 | agent_answer, chart_produced, data_pull_exists, answered_without_data (+ charts_answer when a chart exists) |
+| text | 27 | expected_text_match |
+| context_layer | 18 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
+| end_date | 8 | date_extraction (with start_date) |
+| start_date | 8 | date_extraction (with end_date) |
 | class_values | 6 | class_value_match (info-only) |
 | dashboard_widgets | 5 | dashboard_widgets_match (+ dashboard_widgets_valid when a dashboard exists) |
-| end_date | 5 | date_extraction (with start_date) |
 | nudge_options | 5 | nudge_match |
-| start_date | 5 | date_extraction (with end_date) |
 | clarification | 3 | clarification_requested |
 | nudge_type | 2 | nudge_match |
 | chart_type | 1 | chart_type_match |
@@ -79,7 +79,7 @@ exists.
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json`: project-zeno@64b53a5 (origin/main, synced 2026-09-16), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json`: project-zeno@9e71aa4 (origin/main, synced 2026-10-13), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`8;10`
 counts toward both 8 and 10).
@@ -97,14 +97,14 @@ answer-graded column) exercise the other three.
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 43 | 31 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
+| 4 | Tree cover loss | 47 | 35 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4, natural_forest ×5 |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
 | 8 | Tree cover loss by dominant driver | 5 | 5 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
 | 10 | Tree cover loss due to fires | 2 | 1 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
-| 11 | Integrated alerts | 7 | 5 | — | — |
+| 11 | Integrated alerts | 11 | 9 | — | natural_lands ×4 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
@@ -148,6 +148,7 @@ answer-graded column) exercise the other three.
 | 1-027 | todo | direct | CHART aggregates results, hiding requested class |
 | 1-030 | todo | comparative | Expecting SBTN analysis but using the Blog skill |
 | 1-062 | todo | comparative | 2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a... |
+| 1-130 | todo | context-layer | todo 2026-10-09: blocked on project-zeno applying a 10% canopy threshold with the natural_forest layer (AJ,... |
 
 ## Known gaps
 
