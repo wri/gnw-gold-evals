@@ -1,5 +1,5 @@
 {
-  "caseset_version": "11b00f815a1b2e70",
+  "caseset_version": "612f3de4e88db410",
   "case_count": 135,
   "source": "gold-live.csv",
   "uid_includes_deltas": true,
@@ -156,7 +156,7 @@
     },
     {
       "id": "1-026",
-      "uid": "2ca8d841e098e077",
+      "uid": "12080066c6e4f3d4",
       "group": "class-comparison",
       "status": "done"
     },
@@ -276,9 +276,9 @@
     },
     {
       "id": "1-046",
-      "uid": "cf98ea5d8d7d7811",
+      "uid": "20c73adad1bea602",
       "group": "direct",
-      "status": "done"
+      "status": "ready"
     },
     {
       "id": "1-047",
@@ -498,7 +498,7 @@
     },
     {
       "id": "1-084",
-      "uid": "a8f937053af97d9c",
+      "uid": "dbfe4e89da16a150",
       "group": "dataset-suggestion",
       "status": "done"
     },

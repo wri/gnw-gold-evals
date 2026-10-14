@@ -120,6 +120,15 @@ class TestResult(BaseModel):
     actual_dashboard_widget_types: str | None = None
     dashboard_widgets_valid_score: float | None = None
 
+    # Ground-truth evaluation fields
+    ground_truth_match_score: float | None = None
+    ground_truth_match_score_reason: str | None = None
+    agent_ground_truth: str | None = None
+    agent_ground_truth_values: list[float | None] | None = None
+    ground_truth_answer_score: float | None = None
+    ground_truth_answer_score_reason: str | None = None
+    agent_ground_truth_answer: str | None = None
+
     # Expected data fields
     expected_aoi_ids: list[str] | None = None
     expected_aoi_source: str = ""
@@ -193,6 +202,10 @@ class ExpectedData(BaseModel):
     expected_dashboard_widgets: list[str] | None = None
     expected_nudge_type: str = ""
     expected_nudge_options: list[str] = []
+    # PR-31 ground-truth grading additions
+    expected_ground_truth: str = ""        # the selector, from the case
+    ground_truth_values: list[float] = []  # fetched at run start — NOT from the case,
+    ground_truth_unresolved: str = ""      # so deliberately unprefixed
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""
@@ -267,11 +280,12 @@ class ExpectedData(BaseModel):
         Gold-set rows require a data pull when ``expected_answer`` is set
         (chart/insight answers depend on pulled statistics). Dashboard rows
         require a data pull when ``expected_dashboard_widgets`` includes
-        ``insight``; map-only dashboard rows do not.
+        ``insight``; map-only dashboard rows do not. A ``ground_truth`` row
+        grades the agent's pull itself, so it requires one too.
         """
         if self.expected_clarification is True:
             return False
-        if self.expected_answer:
+        if self.expected_answer or self.expected_ground_truth:
             return True
         widgets = self.expected_dashboard_widgets or []
         return "insight" in widgets

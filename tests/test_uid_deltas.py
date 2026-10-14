@@ -204,7 +204,7 @@ def test_resolved_multiturn_case_keeps_the_store_rule(tmp_path, monkeypatch):
     args = Namespace(
         resolved_url="http://localhost", api_token="t", ff=None, verbose=False,
         trial_timeout=60.0, results_dir=tmp_path, run_id="20261005T000000Z_local",
-        workers=1, trials=1, slow_threshold=180.0,
+        workers=1, trials=1, slow_threshold=180.0, ground_truth={},
     )
     [entry] = asyncio.run(cli.run_cases(args, [case]))
 

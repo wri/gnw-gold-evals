@@ -27,7 +27,7 @@ for the contract they all respect.
 
 | tool | what it does |
 |---|---|
-| `diff_runs.py` | Regression diff between two runs over their uid intersection. `--fail-on-regression` / `--fail-on-coverage-loss` to gate. Only compare runs with the same trial count and `ff`. |
+| `diff_runs.py` | Regression diff between two runs over their uid intersection. `--fail-on-regression` / `--fail-on-coverage-loss` to gate. A ground-truth check that flips while its data digest moved is a non-gating **data bump**, flagged when it may hide a real regression. Only compare runs with the same trial count and `ff`. |
 | `find_baseline.py` | Print the newest run in `results/runs/` with the same environment, `ff`, trial count and case store (`caseset`) as a given run (itself excluded); exits nonzero when none exists. The CI release gate diffs against it. |
 | `flakiness.py` | Flakiness table from a multi-trial run (`--per-case` for detail); flags partial samples as INSUFFICIENT DATA. |
 | `compose_runs.py` | Compose a current picture from a primary run plus scoped supplements — analysis-side only, never writes to `results/runs/` (see results/README.md §Composing). |
