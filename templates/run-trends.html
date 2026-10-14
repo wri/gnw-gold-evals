@@ -22,8 +22,8 @@
     --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #898781;
     --grid: #e1e0d9; --baseline: #c3c2b7;
     --border: rgba(11,11,11,0.10);
-    --series-1: #2a78d6;          /* ff experimental (and single-series) */
-    --series-2: #eb6834;          /* ff default / other */
+    --series-1: #2a78d6;          /* first ff series drawn, or the only one */
+    --series-2: #eb6834;          /* every further ff series */
     --delta-good: #006300; --delta-bad: #d03b3b;
   }
   @media (prefers-color-scheme: dark) {
@@ -58,7 +58,7 @@
   .note { color: var(--text-muted); font-size: .78rem; margin: .3rem 0 0; }
   .card { background: var(--surface-1); border: 1px solid var(--border);
           border-radius: 10px; padding: 14px 16px; }
-  /* filters — one row, above everything they scope */
+  /* filters: one row, above everything they scope */
   .filters { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
              margin: 1rem 0; }
   .filters label { font-size: .78rem; color: var(--text-secondary); }

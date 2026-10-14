@@ -62,7 +62,9 @@ def render_inspector_all(runs: list[dict], template_text: str, generated: str,
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("run", type=Path, nargs="?",
                         help="results/runs/<run_id>.json")
     parser.add_argument("--all", action="store_true",

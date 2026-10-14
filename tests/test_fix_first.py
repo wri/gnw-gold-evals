@@ -1,4 +1,23 @@
-"""Regression tests for the six inherited defects (PR-04 F1-F6)."""
+"""Regression tests for scoring defects inherited from gnw-evals.
+
+This harness was ported from gnw-evals (github.com/wri/gnw-evals), and these
+defects came with it:
+
+- AOI check: a case that expects places but resolves none scores 0.0, not
+  None (`test_f1_*`).
+- Dashboard widgets: text widgets are read from `config.text` (the legacy
+  flat `text` key still works), and an empty dashboard fails validity only
+  when the case expected widgets (`test_f3_*`).
+- Judge outages: a failed LLM judge call scores None and is listed in
+  `judge_errors`; it never becomes a pass or a fail (`test_f4_*`).
+- Chart serialisation: charts sent to the judge stay valid JSON when
+  truncated for size (`test_f5_*`).
+- Judge schemas: the reasoning field comes before the score, because the
+  judge model commits to the first field it emits (`test_f6_*`).
+
+The remaining defect (a chart expected but none produced) is tested in
+test_guards.py as `test_f2_*`.
+"""
 
 import json
 from pathlib import Path
@@ -22,7 +41,7 @@ JUDGES_SOURCE = (
 ).read_text()
 
 
-# --- F1: expected AOIs + none resolved -> 0.0, not silence
+# --- expected AOIs but none resolved -> 0.0, not silence
 
 def test_f1_missing_aoi_fails_when_expected():
     result = evaluate_aoi_selection({}, ["BRA.25_1"], "query")
@@ -33,7 +52,7 @@ def test_f1_no_expectation_still_skips():
     assert evaluate_aoi_selection({}, [], "query")["aoi_id_match_score"] is None
 
 
-# --- F3: widget text key + empty dashboards
+# --- widget text key and empty dashboards
 
 def test_f3_text_widget_reads_config_text():
     dashboard = {"widgets": [{"widget_type": "text", "config": {"text": "# hi"}}]}
@@ -49,13 +68,12 @@ def test_f3_legacy_flat_text_key_still_accepted():
 
 
 def test_f3_empty_dashboard_fails_validity_when_widgets_were_expected():
-    """F3 narrowed by H7 on 2026-08-03 (see docs/specs/PR-04-fix-first.md).
+    """An empty dashboard fails validity only when the case expected widgets.
 
-    "An existing dashboard with zero widgets is an empty artifact" holds only
-    when the case asked for content. 1-096 ("Create a dashboard for brazil")
-    sets no widget expectation and cannot express one, so it was failing for
-    obeying its prompt — and passing only on the trials where the agent added an
-    *unsolicited* widget, which evaluate_dashboard_created treats as a violation.
+    1-096 ("Create a dashboard for brazil") expects no widgets and cannot
+    express one. Failing its empty dashboard would punish the agent for
+    obeying the prompt and reward it for adding a widget nobody asked for,
+    which `evaluate_dashboard_created` counts as a violation.
     """
     assert evaluate_dashboard_widgets({"widgets": []}, ["map"])[
         "dashboard_widgets_valid_score"] == 0.0
@@ -67,7 +85,7 @@ def test_f3_empty_dashboard_fails_validity_when_widgets_were_expected():
         "dashboard_widgets_valid_score"] is None
 
 
-# --- F4: judge outage -> None + judge_errors, never a verdict
+# --- judge outage -> None plus judge_errors, never a verdict
 
 STATE = {
     "messages": [SimpleNamespace(content="The answer is 42 hectares.")],
@@ -107,7 +125,7 @@ def test_f4_clarification_outage_no_longer_scores(monkeypatch):
     assert result["judge_errors"] == ["clarification_requested"]
 
 
-# --- F5: chart serialisation is valid JSON at every size
+# --- chart serialisation is valid JSON at every size
 
 def test_f5_small_charts_unchanged():
     charts = [{"type": "bar", "data": [{"a": 1}], "insight": "dropped"}]
@@ -125,7 +143,7 @@ def test_f5_oversized_charts_stay_parseable_and_marked():
     assert parsed[0]["data"]  # numeric content survives for chart_numeric
 
 
-# --- F6: reasoning precedes the verdict in every judge schema
+# --- reasoning precedes the verdict in every judge schema
 
 @pytest.mark.parametrize(
     ("first", "second"),

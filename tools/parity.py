@@ -1,17 +1,20 @@
-"""Parity comparison for PR-08 step 1: old path vs new path, same build.
+"""Legacy: re-prove that gold run reproduces gnw-evals verdicts on one build.
 
-    uv run python tools/parity.py results/runs/<legacy-ingested>.json \
-                                  results/runs/<gold-run>.json
+This was a one-off check, run before gnw-evals was retired as the GOLD
+runner. Rerun it only if that proof is needed again, for example after
+changing how a check that both harnesses produce is computed.
 
-Compares **majority verdicts on the legacy checks only** — the 16 checks
-that exist on both paths (PR-04/06 checks don't exist in gnw-evals, and
-info-only checks never carry a verdict). Every disagreement is listed with
-both sides' reason strings; the acceptable class is judge-sampling noise,
-and the table in the output is what goes into the PR-03 parity box.
+    uv run python tools/parity.py results/runs/A.json results/runs/B.json
 
-Exit code is the gate: 0 only when at least one legacy check was compared
-and no deterministic check disagreed. Zero comparable checks is a failure
-in its own right — an empty comparison must never read as parity.
+A is a gnw-evals run imported with `tools/ingest_run.py`; B is a `gold run`
+on the same agent build. It compares majority verdicts on the checks both
+harnesses produce (`LEGACY_CHECKS`), skipping checks only `gold run` has and
+info-only checks. Every disagreement is listed with both sides' reasons.
+Disagreements on judged checks are expected judge-sampling noise; any
+disagreement on a deterministic check fails.
+
+Exits 0 only when at least one check was compared and no deterministic check
+disagreed: an empty comparison is never parity.
 """
 
 from __future__ import annotations
@@ -25,8 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from goldset.buckets import INFO_ONLY, base_check_name
 from goldset.ledger import read_run
 
-# The checks the gnw-evals path can produce (PR-03 port surface, minus
-# info-only). New-harness-only checks are excluded by construction.
+# Checks both harnesses produce (gnw-evals and gold run), minus info-only ones.
 LEGACY_CHECKS = frozenset(
     {
         "aoi_id_match",
@@ -60,7 +62,7 @@ def _collapse_entry(entry: dict) -> tuple[dict, dict]:
     of reading as spurious A=x B=None disagreements.
 
     Collision rule when several turns carry the same base check in one
-    entry: **any-fail** — keep the worst turn's value (0.0 beats 1.0; None
+    entry: **any-fail**. Keep the worst turn's value (0.0 beats 1.0; None
     only when no turn evaluated the check), and keep the reason attached to
     the turn that supplied that value. A retirement gate must not hide a
     failing turn behind a passing sibling.
@@ -167,7 +169,9 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("run_a", type=Path, help="legacy-path (ingested) run JSON")
     parser.add_argument("run_b", type=Path, help="gold-run JSON")
     args = parser.parse_args()

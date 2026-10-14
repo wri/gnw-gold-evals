@@ -1,10 +1,12 @@
-"""Evaluator registry: named, typed dispatch for the ported evaluators.
+"""Evaluator registry: the ordered list of evaluators run on every agent state.
 
-The runner iterates ``EVALUATORS`` in order and merges each result dict —
-the order below reproduces gnw-evals' hand-written ``_run_evaluations``
-call sequence exactly (later evaluators win key collisions, as before).
+The runner calls each spec in order and merges the result dicts, so a later
+evaluator overwrites an earlier one's key on a collision. Keep the order
+stable.
 
-PR-05 extends the spec with bucket tags; PR-03 keeps it behaviour-neutral.
+Bucket membership is not declared here. Tag every new score field in
+``buckets.py`` (``DEDICATED``, ``SHARED`` or ``INFO_ONLY``);
+``tests/test_buckets.py`` fails if one is missing.
 """
 
 from __future__ import annotations

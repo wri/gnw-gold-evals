@@ -1,22 +1,20 @@
-"""Scope-bucket validator (PR-06 S1): did the agent do the right *kind* of
-work — deterministically, from state, replacing reliance on the suite's two
-flakiest judges (±0.29 / ±0.23 std over 3 trials) for scope classification.
+"""Scope-bucket check: did the agent do the right kind of work?
 
-Observable classes, in precedence order (an agent that pulls data has
-analysed, whatever else it also did):
+Classifies the final state in code rather than with an LLM judge, because judges
+were too unstable across trials for this.
 
-    analyse  — a data pull happened
-    suggest  — datasets suggested, no pull
-    clarify  — a nudge was issued, no pull
-    none     — none of the above (matches an expected ``refuse``)
+Classes, in precedence order (an agent that pulled data has analysed, whatever
+else it did):
 
-Known limitation (S3, deferred): on builds without ``send_nudge`` the agent
-clarifies in prose and leaves the nudge state empty — that classifies as
-``none``. Populate ``expected_scope: clarify`` only on nudge-capable rows.
+    analyse:  a data pull happened
+    suggest:  no pull; the agent offered datasets (a ``dataset_choice`` nudge,
+              or the legacy ``suggested_datasets`` field)
+    clarify:  no pull; any other nudge, for example ``aoi_choice``
+    none:     none of the above (matches an expected ``refuse``)
 
-Evidence: 1-085 ("How do fires impact nature in Spain?") ran a full
-analysis when the sheet expected dataset suggestions — caught here as
-expected ``suggest`` vs observed ``analyse``.
+Limitation: an agent that asks for clarification in prose without setting
+``nudge`` classifies as ``none``. Set ``scope: clarify`` only on cases that
+expect the agent to send a nudge.
 """
 
 from __future__ import annotations
@@ -37,14 +35,8 @@ def classify_scope(agent_state: dict[str, Any]) -> str:
         return "suggest"
     nudge = agent_state.get("nudge") or {}
     if isinstance(nudge, dict) and nudge.get("type"):
-        # A dataset_choice nudge IS a dataset suggestion (H4). The
-        # ``suggested_datasets`` state field above is populated in 0 of 1,298
-        # retained case-trials: the pick_aoi/pick_dataset -> nudge migration
-        # (wri/project-zeno#770) moved suggestion onto the nudge surface, and
-        # dataset_choice appears 162 times there. Without this, every row
-        # expecting ``suggest`` failed on a field the product no longer writes,
-        # so the "suggest" coverage the case set claimed was fictional.
-        # aoi_choice and friends remain ``clarify`` — a different class.
+        # The agent now offers datasets through a dataset_choice nudge and no
+        # longer writes suggested_datasets. Every other nudge type is clarify.
         if nudge.get("type") == "dataset_choice":
             return "suggest"
         return "clarify"
@@ -54,15 +46,14 @@ def classify_scope(agent_state: dict[str, Any]) -> str:
 def evaluate_scope(agent_state: dict[str, Any], expected_scope: str) -> dict[str, Any]:
     """Score the observed scope class against the expectation.
 
-    ``expected_scope`` accepts ``;``-separated alternatives, matching the
-    dataset_id convention (cases/README.md): some rows are legitimately
-    either-way and a single pin makes them flap. 1-089 is the reference case —
-    its own ``text`` expectation licenses two behaviours ("Refuses … **or**
-    acknowledge and caution that TCL is annual"), and the agent does both across
-    identical trials, so ``refuse;clarify`` is the honest expectation.
+    ``expected_scope`` accepts ``;``-separated alternatives, like ``dataset_id``
+    (see cases/README.md), for cases where two behaviours are both acceptable
+    and a single value would flap between trials. For example, a case whose
+    expected text allows either a refusal or a caution with a dataset offer
+    expects ``refuse;suggest``.
 
     Any invalid alternative abstains for the whole expectation rather than
-    silently scoring on the remainder — a typo must be loud, not lenient.
+    silently scoring on the remainder: a typo must be loud, not lenient.
     """
     result: dict[str, Any] = {"scope_match_score": None, "actual_scope": None}
     alternatives = [

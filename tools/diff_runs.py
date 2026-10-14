@@ -1,11 +1,16 @@
 """Regression diff between two ledger runs.
 
-    uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
-      [--json out.json] [--strict] [--fail-on-regression] [--fail-on-coverage-loss]
+    uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json
+        [--json out.json] [--strict] [--fail-on-regression] [--fail-on-coverage-loss]
 
-Comparison runs over the **intersection of uids** (stale rows excluded), so
-case-set churn is reported but never counted as regression. Transitions per
-check between run A (older) and run B (newer):
+Only diff runs with the same `ff`, the same trial count (3) and the same
+environment; otherwise trial-to-trial noise, or a change in the agent's
+tools, counts as regressions. See "Comparing two runs" in results/README.md.
+
+The diff covers only the uids present in both runs (rows flagged
+`stale_case` are left out), so cases added, removed or edited between the
+runs are reported as identity churn, never as regressions. For each check,
+from run A (older) to run B (newer):
 
     regression        1.0 -> 0.0
     recovery          0.0 -> 1.0
@@ -14,27 +19,32 @@ check between run A (older) and run B (newer):
     coverage gained   not evaluated -> evaluated
     coverage lost     evaluated -> not evaluated
 
-A data bump separates a dataset update served by the analytics API from an
-agent regression. The API exposes no dataset version, so the digest recorded
-on each ground-truth entry is the only signal. Each bump names its cause —
-``data`` (same request, different numbers), ``request`` (GOLD's own request
-changed: a harness change) or ``fixed_dataset`` (a dataset declared never to
-change, changed). Bumps are listed, never counted as regressions or recoveries,
-and never gate.
+A data bump tells a dataset update served by the analytics API apart from
+an agent regression. The API exposes no dataset version, so the digest
+recorded on each ground-truth entry is the only signal. Each bump names its
+cause: `data` (same request, different numbers), `request` (GOLD's own
+request changed, so a harness change) or `fixed_dataset` (a dataset declared
+never to change has changed). Bumps are listed, never counted as regressions
+or recoveries, and never gate.
 
-A bump can hide a real break: an agent that fails in the same run the data
+A bump can hide a real break. An agent that fails in the same run the data
 moves is filed here, and if it stays broken the next diff sees 0.0 -> 0.0.
-So a ``ground_truth_match`` bump is checked against the agent's own recorded
+So a `ground_truth_match` bump is checked against the agent's own recorded
 figure: one that matches neither run's values, or no figure at all, is not
-explained by the data and is flagged ``possible_hidden_regression``. Flagged
+explained by the data and is flagged `possible_hidden_regression`. Flagged
 bumps are reported, not gated.
 
-``--strict`` refuses to compare runs with different caseset_versions.
-``--fail-on-regression`` exits nonzero if any regression exists (CI gate).
-Info-only checks (``INFO_ONLY``) are reported but never gate.
-``--fail-on-coverage-loss`` exits nonzero if any non-info-only check went
-evaluated -> not evaluated. Off by default; turn it on to catch a harness
-bug that silently stops evaluating checks (which would otherwise pass CI).
+Info-only checks (`goldset.buckets.INFO_ONLY`, also under a multi-turn
+`t<N>.` prefix) are reported but never gate. The headline splits regressions
+and lost checks into gating and info-only counts, and the `--fail-on-*` gates
+read the gating counts.
+
+`--strict` refuses (exit 2) to compare runs whose caseset_version differs.
+`--fail-on-regression` exits 1 on any gating regression: this is the release
+gate.
+`--fail-on-coverage-loss` exits 1 if any gating check went from evaluated to
+not evaluated. It is off by default; turn it on to catch a harness bug that
+silently stops scoring a check, which would otherwise pass.
 """
 
 from __future__ import annotations
@@ -46,7 +56,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from goldset.buckets import BUCKETS, INFO_ONLY, buckets_for
+from goldset.buckets import BUCKETS, buckets_for, is_info_only
 from goldset.ledger import read_run
 
 TRANSITIONS = ("regressions", "recoveries", "data_bumps", "coverage_gained", "coverage_lost")
@@ -81,6 +91,10 @@ def classify(prev: float | None, cur: float | None) -> str | None:
     if prev is not None and cur is None:
         return "coverage_lost"
     return None
+
+
+def gating_count(items: list[dict]) -> int:
+    return sum(1 for item in items if not item["info_only"])
 
 
 def data_bump_cause(entry_a: dict, entry_b: dict) -> str | None:
@@ -148,8 +162,10 @@ def diff(run_a: dict, run_b: dict) -> dict:
             prev, cur = entry_a["checks"].get(check), entry_b["checks"].get(check)
             kind = classify(prev, cur)
             if kind:
+                # is_info_only strips the multi-turn ``t<N>.`` prefix; a bare
+                # INFO_ONLY lookup let t2.charts_answer_judge gate the release.
                 item = {"uid": uid, "id": entry_b.get("id") or entry_a.get("id"), "check": check,
-                        "buckets": list(buckets_for(check)), "info_only": check in INFO_ONLY}
+                        "buckets": list(buckets_for(check)), "info_only": is_info_only(check)}
                 if kind in ("regressions", "recoveries") and check in GROUND_TRUTH_CHECKS:
                     cause = data_bump_cause(entry_a, entry_b)
                     if cause:
@@ -176,12 +192,23 @@ def diff(run_a: dict, run_b: dict) -> dict:
         )
         for bucket in BUCKETS
     }
+    # Additive fields: the per-item lists above keep their shape, and these
+    # counts are the ones the --fail-on-* gates read.
+    result["gating_regressions"] = gating_count(result["regressions"])
+    result["gating_coverage_lost"] = gating_count(result["coverage_lost"])
     result["shared_cases"] = len(shared)
     result["only_in_a"] = len(set(index_a) - set(index_b))
     result["only_in_b"] = len(set(index_b) - set(index_a))
     result["stale_a"] = sum(1 for e in run_a["results"] if e.get("stale_case"))
     result["stale_b"] = sum(1 for e in run_b["results"] if e.get("stale_case"))
     return result
+
+
+def split_count(items: list[dict], label: str) -> str:
+    """``3 regressions (2 gating, 1 info-only)``: the total alone overstates
+    what the gate acts on, since info-only transitions never fail it."""
+    gating = gating_count(items)
+    return f"{len(items)} {label} ({gating} gating, {len(items) - gating} info-only)"
 
 
 def render(run_a: dict, run_b: dict, report: dict) -> str:
@@ -193,11 +220,11 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
         f"{report['only_in_b']} only in B; "
         f"stale: {report['stale_a']}/{report['stale_b']})",
         "",
-        f"**{len(report['regressions'])} regressions, "
+        f"**{split_count(report['regressions'], 'regressions')}, "
         f"{len(report['recoveries'])} recoveries, "
         f"{len(report['data_bumps'])} data bumps, "
         f"{len(report['coverage_gained'])} checks gained, "
-        f"{len(report['coverage_lost'])} checks lost**",
+        f"{split_count(report['coverage_lost'], 'checks lost')}**",
     ]
     by_bucket = report.get("regressions_by_bucket") or {}
     if any(by_bucket.values()):
@@ -239,7 +266,9 @@ def render(run_a: dict, run_b: dict, report: dict) -> str:
 
 def main() -> int:
     sys.stdout.reconfigure(encoding="utf-8")
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("run_a", type=Path, help="older run JSON")
     parser.add_argument("run_b", type=Path, help="newer run JSON")
     parser.add_argument("--json", type=Path, default=None)
@@ -264,11 +293,9 @@ def main() -> int:
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
         args.json.write_text(json.dumps(report, indent=2) + "\n")
-    real_regressions = [r for r in report["regressions"] if not r["info_only"]]
-    if args.fail_on_regression and real_regressions:
+    if args.fail_on_regression and report["gating_regressions"]:
         return 1
-    real_coverage_lost = [c for c in report["coverage_lost"] if not c["info_only"]]
-    if args.fail_on_coverage_loss and real_coverage_lost:
+    if args.fail_on_coverage_loss and report["gating_coverage_lost"]:
         return 1
     return 0
 

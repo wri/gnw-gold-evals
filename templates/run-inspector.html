@@ -332,7 +332,7 @@ function expectedFor(check, ctx, turn) {
 function detailHTML(entry, ctx, flk, infoOnly) {
   const reasons = entry.reasons || {}, actuals = entry.actuals || {};
   const trials = entry.trials || [];
-  // The full prompt(s) sent, across the top — per turn for conversations.
+  // The full prompt(s) sent, across the top: one per turn for conversations.
   let html = "";
   if (ctx.turns && ctx.turns.length) {
     html += `<div class="prompt">` + ctx.turns.map((t, i) =>

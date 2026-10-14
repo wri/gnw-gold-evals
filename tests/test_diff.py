@@ -28,7 +28,7 @@ def run_fixture(results, caseset="cs1", run_id="20260731T000000Z_staging"):
 
 
 def run_tool(tmp_path, run_a, run_b, *flags):
-    """Invoke tools/diff_runs.py as CI would, on two serialized runs."""
+    """Invoke tools/diff_runs.py as CI would, on two serialised runs."""
     a, b = tmp_path / "a.json", tmp_path / "b.json"
     a.write_text(json.dumps(run_a))
     b.write_text(json.dumps(run_b))
@@ -74,7 +74,7 @@ def test_classify_covers_all_transitions():
 
 def test_diff_over_intersection_only():
     report = diff(RUN_A, RUN_B)
-    assert report["shared_cases"] == 2  # u1, u2 — u3/u4 are churn, stale excluded
+    assert report["shared_cases"] == 2  # u1, u2 (u3/u4 are churn, stale excluded)
     assert report["only_in_a"] == 1 and report["only_in_b"] == 1
     assert report["stale_a"] == 1 and report["stale_b"] == 0
 
@@ -86,7 +86,7 @@ def test_diff_over_intersection_only():
 
 
 def test_stale_rows_never_counted_as_regression():
-    # the stale 1-009 in RUN_A passes aoi; absent in RUN_B — must not appear
+    # the stale 1-009 in RUN_A passes aoi; absent in RUN_B: must not appear
     report = diff(RUN_A, RUN_B)
     ids = [r["id"] for kind in ("regressions", "recoveries") for r in report[kind]]
     assert "1-009" not in ids
@@ -115,7 +115,7 @@ GATE_A = run_fixture(
         },
     ]
 )
-# date_coverage (info-only) regresses alongside two real checks — one
+# date_coverage (info-only) regresses alongside two real checks: one
 # dedicated (aoi_id_match -> retrieval), one shared (agent_answer ->
 # analysis + explanation).
 GATE_B_REAL_AND_INFO = run_fixture(
@@ -209,7 +209,7 @@ def test_fail_on_coverage_loss_gates_real_check(tmp_path):
 
 
 def test_coverage_loss_passes_without_flag(tmp_path):
-    # default OFF: current CI behaviour is preserved
+    # off by default: without the flag, coverage loss does not fail the diff
     result = run_tool(tmp_path, GATE_A, COV_B_REAL_LOST)
     assert result.returncode == 0
     gated = run_tool(tmp_path, GATE_A, COV_B_REAL_LOST, "--fail-on-regression")
@@ -223,6 +223,125 @@ def test_fail_on_coverage_loss_ignores_info_only(tmp_path):
     report = diff(GATE_A, COV_B_INFO_LOST)
     assert [c["check"] for c in report["coverage_lost"]] == ["date_coverage"]
     assert report["coverage_lost"][0]["info_only"] is True
+
+
+# ---------------------------------------------------------------------------
+# Multi-turn entries flatten per-turn checks under a ``t<N>.`` prefix; the
+# info-only rule must see through it, as buckets.row_verdict does.
+
+MT_A = run_fixture(
+    [
+        {
+            "uid": "m1",
+            "id": "mt-001",
+            "checks": {
+                "t1.date_coverage": 1.0,
+                "t1.aoi_id_match": 1.0,
+                "t2.charts_answer_judge": 1.0,
+                "t2.answer_traceability": 1.0,
+            },
+        },
+    ]
+)
+# Every prefixed info-only check flips (two regress, one stops being
+# evaluated); the one gating check holds.
+MT_B_INFO_ONLY = run_fixture(
+    [
+        {
+            "uid": "m1",
+            "id": "mt-001",
+            "checks": {
+                "t1.date_coverage": 0.0,
+                "t1.aoi_id_match": 1.0,
+                "t2.charts_answer_judge": 0.0,
+                "t2.answer_traceability": None,
+            },
+        },
+    ],
+    run_id="20260731T010000Z_staging",
+)
+
+
+def test_turn_prefixed_info_only_checks_never_gate(tmp_path):
+    result = run_tool(
+        tmp_path, MT_A, MT_B_INFO_ONLY,
+        "--fail-on-regression", "--fail-on-coverage-loss",
+    )
+    assert result.returncode == 0, result.stdout
+
+    report = diff(MT_A, MT_B_INFO_ONLY)
+    assert sorted(r["check"] for r in report["regressions"]) == [
+        "t1.date_coverage",
+        "t2.charts_answer_judge",
+    ]
+    assert all(r["info_only"] for r in report["regressions"])
+    assert [c["check"] for c in report["coverage_lost"]] == ["t2.answer_traceability"]
+    assert report["coverage_lost"][0]["info_only"] is True
+
+
+def test_turn_prefixed_gating_check_still_gates(tmp_path):
+    mt_b_real = run_fixture(
+        [
+            {
+                "uid": "m1",
+                "id": "mt-001",
+                "checks": {**MT_A["results"][0]["checks"], "t1.aoi_id_match": 0.0},
+            },
+        ],
+        run_id="20260731T010000Z_staging",
+    )
+    result = run_tool(tmp_path, MT_A, mt_b_real, "--fail-on-regression")
+    assert result.returncode == 1
+
+    report = diff(MT_A, mt_b_real)
+    assert [r["check"] for r in report["regressions"]] == ["t1.aoi_id_match"]
+    assert report["regressions"][0]["info_only"] is False
+    assert report["regressions_by_bucket"]["retrieval"] == 1
+
+
+# ---------------------------------------------------------------------------
+# The headline must say how many transitions the gate acts on, not just the
+# total; the JSON keeps its shape and gains the gating counts.
+
+
+def test_headline_splits_gating_from_info_only(tmp_path):
+    result = run_tool(tmp_path, GATE_A, GATE_B_REAL_AND_INFO)
+    assert "**3 regressions (2 gating, 1 info-only), 0 recoveries" in result.stdout
+    assert "0 checks lost (0 gating, 0 info-only)**" in result.stdout
+
+    lost = run_tool(tmp_path, MT_A, MT_B_INFO_ONLY)
+    assert "**2 regressions (0 gating, 2 info-only)" in lost.stdout
+    assert "1 checks lost (0 gating, 1 info-only)**" in lost.stdout
+
+
+def test_json_report_keeps_its_keys_and_adds_gating_counts(tmp_path):
+    out = tmp_path / "report.json"
+    result = run_tool(tmp_path, GATE_A, GATE_B_REAL_AND_INFO, "--json", str(out))
+    assert result.returncode == 0
+    report = json.loads(out.read_text())
+    for key in (
+        "regressions", "recoveries", "coverage_gained", "coverage_lost",
+        "regressions_by_bucket", "shared_cases", "only_in_a", "only_in_b",
+        "stale_a", "stale_b",
+    ):
+        assert key in report
+    assert len(report["regressions"]) == 3
+    assert report["gating_regressions"] == 2
+    assert report["gating_coverage_lost"] == 0
+
+    info_lost = diff(GATE_A, COV_B_INFO_LOST)
+    assert info_lost["gating_coverage_lost"] == 0
+    real_lost = diff(GATE_A, COV_B_REAL_LOST)
+    assert real_lost["gating_coverage_lost"] == 1
+
+
+def test_help_keeps_the_docstring_layout():
+    # The transition table is only readable with its line breaks intact.
+    result = subprocess.run(
+        [sys.executable, str(TOOL), "--help"], capture_output=True, text=True
+    )
+    assert result.returncode == 0
+    assert "\n    regression        1.0 -> 0.0\n" in result.stdout
 
 
 # ---------------------------------------------------------------------------

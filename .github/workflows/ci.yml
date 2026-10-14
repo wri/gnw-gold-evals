@@ -27,22 +27,27 @@ jobs:
         run: uv run ruff check src tools tests
       - name: Tests (includes per-case schema conformance)
         run: uv run pytest -q
-      # Enforcing from 2026-08-04, once W1-W4 cleared the last depth and DON'T
-      # violations. --strict fails the build on those two classes only; the
-      # coverage floors (groups/datasets below 3) stay report-only, because
-      # clearing them means authoring new cases rather than fixing existing ones.
-      - name: Case-set audit (rubric gate)
+      # --strict fails the build on depth and DON'T violations (rules in
+      # cases/README.md). Coverage floors (groups or datasets with fewer than
+      # 3 active cases) stay report-only, because clearing them means
+      # authoring new cases rather than fixing existing ones.
+      - name: Case-set audit (depth and DON'T rules, --strict)
         run: uv run python tools/audit_cases.py --strict
-      - name: Case-store integrity (uids + manifest truthful, both versions)
+      - name: Case-store integrity (uids and manifests match the YAML, v1 and v2)
         run: |
           uv run python tools/check.py --cases-dir cases/v1
           uv run python tools/check.py --cases-dir cases/v2
-      - name: Coverage doc freshness (COVERAGE.md derived, never hand-edited)
+      - name: COVERAGE.md is up to date (generated, never hand-edited)
         run: uv run python tools/coverage_doc.py --check
 
-  # The release gate as a button: a live staging run + regression diff
-  # against the most recent committed run. Needs API_TOKEN_STAGING and
-  # ANTHROPIC_API_KEY repo secrets; never runs on push/PR.
+  # Manual release gate (workflow_dispatch only; never runs on push or PR).
+  # Runs the GOLD set (cases/v2) against staging with 3 trials and no ff,
+  # then diffs that run against the newest committed run in results/runs/
+  # with the same environment, ff, trial count and case store (caseset),
+  # failing on any gating regression. If no committed run matches on all
+  # four, the job fails rather than diff against an incomparable baseline;
+  # runs that predate the caseset field never match. Needs the
+  # API_TOKEN_STAGING and ANTHROPIC_API_KEY repo secrets.
   staging-run:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
@@ -57,12 +62,13 @@ jobs:
         run: |
           uv run gold run --env staging --trials 3 --workers "${{ inputs.workers }}" \
             --build "${{ inputs.build_label }}"
-      - name: Regression gate vs previous committed run
+      - name: Regression gate vs newest comparable committed run
         run: |
-          PREV=$(ls results/runs/*.json | sort | tail -2 | head -1)
+          set -euo pipefail
           NEW=$(ls results/runs/*.json | sort | tail -1)
+          PREV=$(uv run python tools/find_baseline.py "$NEW")
           uv run python tools/diff_runs.py "$PREV" "$NEW" --fail-on-regression
-      - name: Upload run + report
+      - name: Upload run ledger (results/runs/)
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:

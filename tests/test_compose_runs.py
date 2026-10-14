@@ -4,9 +4,6 @@ The composition exists because the ledger contract forbids the obvious shortcut
 (writing later scores into an earlier run file), so the properties that matter are:
 freshest-measurement-wins, current-uid-only, nothing silently dropped, and no
 ledger file written.
-
-Usage
-$ uv run python -m pytest tests/test_compose_runs.py -v
 """
 
 import importlib.util
@@ -134,6 +131,10 @@ def test_mixed_ff_across_sources_is_flagged_loudly(tmp_path):
     rendered = compose_runs.render(compose_runs.compose(primary, [supp], tmp_path))
     assert "Sources disagree on `ff`" in rendered
     assert "**unset**" in rendered
+    # The rule that still holds since the default profile gained dashboards
+    # and imagery (2026-08-31): never compose across differing ff.
+    assert "must never be composed" in rendered
+    assert "dashboards" not in rendered
 
 
 def test_composition_writes_no_ledger_file(tmp_path):

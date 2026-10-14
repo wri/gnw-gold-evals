@@ -1,15 +1,13 @@
-"""Output-bucket validators (PR-06 O2, O3), both deterministic.
+"""Output-bucket checks, both deterministic.
 
-O2 ``chart_well_formed`` is expectation-free structural sanity: a chart
-whose axis fields reference nothing, or whose data is empty, renders as
-garbage regardless of what the analysis computed. It deliberately overlaps
-A3 ``chart_integrity`` — a broken *spec* is an Output failure, a mis-joined
-*dataset* under a plausible spec is an Analysis failure; the two reasons
-read differently on purpose.
+``chart_well_formed`` needs no expectation: it fails a chart whose data is empty
+or whose axis fields name keys absent from the data, since that renders badly
+whatever the analysis computed. It overlaps ``chart_integrity`` on purpose: a
+broken *spec* is an Output failure, a mis-joined *dataset* under a plausible
+spec is an Analysis failure, and the two reasons read differently.
 
-O3 ``chart_type_match`` needs the new ``expected_chart_type`` field
-(semicolon alternatives, matched against the first chart) — ported from
-the eval-metrics branch design.
+``chart_type_match`` compares the first chart's type with the case's
+``chart_type`` expectation (``;``-separated alternatives).
 """
 
 from __future__ import annotations

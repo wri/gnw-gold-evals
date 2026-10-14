@@ -4,21 +4,21 @@ from datetime import datetime
 
 
 def normalize_gadm_id(gadm_id: str) -> str:
-    """Normalize GADM ID for comparison."""
+    """Normalise GADM ID for comparison."""
     if not gadm_id:
         return ""
     return gadm_id.split("_")[0].replace("-", ".").lower()
 
 
 def normalize_value(value) -> str:
-    """Normalize values for comparison, handling None, empty strings, and 'None' strings."""
+    """Normalise values for comparison, handling None, empty strings, and 'None' strings."""
     if value is None or value == "None" or str(value).strip() == "":
         return ""
     return str(value).strip().lower()
 
 
 def normalize_date(date_str: str | None) -> str:
-    """Normalize date strings to YYYY-MM-DD format.
+    """Normalise date strings to YYYY-MM-DD format.
 
     For YYYY format, defaults to January 1st. For start/end date pairs,
     use normalize_start_date() and normalize_end_date() instead.
@@ -44,10 +44,10 @@ def normalize_date(date_str: str | None) -> str:
 
 
 def normalize_start_date(date_str: str | None) -> str:
-    """Normalize a start date to YYYY-MM-DD format.
+    """Normalise a start date to YYYY-MM-DD format.
 
     YYYY format converts to beginning of year (YYYY-01-01).
-    Other formats normalized via normalize_date().
+    Other formats normalised via normalize_date().
 
     """
     if not date_str or date_str == "None" or str(date_str).strip() == "":
@@ -63,10 +63,10 @@ def normalize_start_date(date_str: str | None) -> str:
 
 
 def normalize_end_date(date_str: str | None) -> str:
-    """Normalize an end date to YYYY-MM-DD format.
+    """Normalise an end date to YYYY-MM-DD format.
 
     YYYY format converts to end of year (YYYY-12-31).
-    Other formats normalized via normalize_date().
+    Other formats normalised via normalize_date().
 
     """
     if not date_str or date_str == "None" or str(date_str).strip() == "":

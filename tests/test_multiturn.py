@@ -1,5 +1,5 @@
-"""Multiturn semantics (PR-07): identity, deltas, store, and a full
-two-turn conversation against a stateful mocked API."""
+"""Multi-turn cases: identity, deltas, the store, and a full two-turn
+conversation against a stateful mocked API."""
 
 import json
 
@@ -44,6 +44,54 @@ def test_conversation_uid_ignores_deltas_and_metadata():
     assert conversation_uid(TURNS) != conversation_uid(changed)
 
 
+def test_conversation_uid_with_deltas_mints_on_delta_edits():
+    """The v2 rule (uid_includes_deltas): a scored delta assertion is test
+    content, so editing one mints a new version."""
+    base = conversation_uid(TURNS, include_deltas=True)
+    assert base != conversation_uid(TURNS)  # deltas now participate
+    edited = (TURNS[0], {**TURNS[1], "deltas": {"changed": ["aoi_ids"]}})
+    assert conversation_uid(edited, include_deltas=True) != base
+    swapped_kind = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"changed": ["aoi_ids"], "absent": ["dataset_id"]}},
+    )
+    assert conversation_uid(swapped_kind, include_deltas=True) != base
+    added_field = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"changed": ["aoi_ids", "start_date"],
+                                "retain": ["dataset_id"]}},
+    )
+    assert conversation_uid(added_field, include_deltas=True) != base
+
+
+def test_conversation_uid_with_deltas_ignores_delta_key_and_list_order():
+    turns = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"changed": ["aoi_ids", "start_date"],
+                                "retain": ["dataset_id", "context_layer"]}},
+    )
+    reordered = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"retain": ["context_layer", "dataset_id"],
+                                "changed": ["start_date", "aoi_ids"]}},
+    )
+    assert conversation_uid(turns, include_deltas=True) == conversation_uid(
+        reordered, include_deltas=True
+    )
+
+
+def test_conversation_uid_with_deltas_ignores_empty_deltas():
+    """Only non-empty deltas participate: a turn with none, ``{}``, or only
+    empty lists hashes as it would without the flag."""
+    no_deltas = (TURNS[0], {"query": TURNS[1]["query"],
+                            "expected": TURNS[1]["expected"]})
+    empty = (TURNS[0], {**no_deltas[1], "deltas": {}})
+    empty_lists = (TURNS[0], {**no_deltas[1], "deltas": {"changed": [], "retain": []}})
+    expected_uid = conversation_uid(no_deltas)
+    for turns in (no_deltas, empty, empty_lists):
+        assert conversation_uid(turns, include_deltas=True) == expected_uid
+
+
 # --- store
 
 def test_multiturn_round_trip(tmp_path):
@@ -67,7 +115,7 @@ def test_multiturn_validation():
 
 def test_typoed_delta_field_fails_authoring_validation():
     """A typo'd snapshot field (aoi_id vs aoi_ids) must fail at authoring
-    time — a silently-abstaining delta check is a coverage hole."""
+    time: a silently-abstaining delta check is a coverage hole."""
     typo = Case(id="x", status="ready", group="g",
                 turns=(TURNS[0],
                        {**TURNS[1], "deltas": {"changed": ["aoi_id"]}}))
@@ -169,7 +217,7 @@ async def test_two_turn_conversation(stateful_transport):
     runner = APITestRunner(api_base_url="https://api.example", api_token="tok")
     entry = await run_conversation(runner, CASE, result_to_entry)
 
-    # one thread, two POSTs — the continuation mechanism
+    # one thread, two POSTs: the continuation mechanism
     assert stateful_transport["chats"] == 2
     assert len(stateful_transport["thread_ids"]) == 1
 
@@ -224,7 +272,7 @@ async def test_errored_turn_aborts_conversation(first_turn_fails_transport):
 @pytest.mark.anyio
 async def test_delta_exception_degrades_turn_not_run(stateful_transport, monkeypatch):
     """An unexpected exception in delta code must degrade the turn to an
-    error state (mirroring run_test's own degradation), never propagate —
+    error state (mirroring run_test's own degradation), never propagate:
     run_cases gathers without return_exceptions."""
 
     def boom(previous, current, deltas):
@@ -234,7 +282,7 @@ async def test_delta_exception_degrades_turn_not_run(stateful_transport, monkeyp
     runner = APITestRunner(api_base_url="https://api.example", api_token="tok")
     entry = await run_conversation(runner, CASE, result_to_entry)
 
-    # turn 1 has no deltas, so only turn 2 trips the guard — after both ran
+    # turn 1 has no deltas, so only turn 2 trips the guard, after both ran
     assert stateful_transport["chats"] == 2
     assert entry["error"] == "t2: delta evaluation failed: snapshot diff bug"
     assert "t2.state_delta" not in entry["checks"]
@@ -335,7 +383,7 @@ async def test_progress_counter_reaches_total_regardless_of_completion_order(
     async def fake_run_conversation(
         runner, case, result_to_entry, artifact_sink_factory=None
     ):
-        # reverse-order delay: mt-2 finishes first, mt-0 finishes last —
+        # reverse-order delay: mt-2 finishes first, mt-0 finishes last,
         # the opposite of input order, to prove the counter isn't just
         # echoing each case's position in `cases`.
         await asyncio.sleep(0.03 * (2 - int(case.id.split("-")[1])))

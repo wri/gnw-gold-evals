@@ -1,13 +1,15 @@
-"""Analysis-bucket validators (PR-06 A2, A3) — the bucket's first dedicated
-checks. Both deterministic: numbers and structure in code, per the working
-agreement.
+"""Analysis-bucket checks, both deterministic (numbers are compared in code,
+never by a judge).
 
-A2 ``class_value_match`` catches the failure the headline judge cannot: a
-wrong per-class sub-total hiding under a correct total (only visible if it
-moves the headline by more than the tolerance). A3 ``chart_integrity``
-catches mis-joined record arrays at source — run-6's 1-060 zipped a state
-ranking and a driver breakdown into one array, null-padding 3 of 10 records
-in the pie's own axis fields, and the prose then quoted the wrong figure.
+``class_value_match`` compares per-class figures (for example
+"mangroves=15,444 hectares") with the chart and statistics data. It catches a
+wrong sub-total under a correct headline total, which ``agent_answer`` only sees
+if the error moves the total past the tolerance. Currently info-only
+(``buckets.INFO_ONLY``).
+
+``chart_integrity`` fails a chart whose axis fields are null in any record.
+Nulls there usually mean two record sets were merged into one array (for
+example a ranking and a breakdown), and the prose then quotes the wrong figure.
 """
 
 from __future__ import annotations
@@ -47,7 +49,7 @@ def _numeric_values(record: dict[str, Any]) -> list[float]:
 
 def parse_class_values(expected: str) -> list[tuple[str, str]] | None:
     """``"mangroves=15,444 hectares; other=3 ha"`` -> [(name, value_text)].
-    None when any pair is malformed — abstain rather than half-check."""
+    None when any pair is malformed: abstain rather than half-check."""
     pairs = []
     for chunk in expected.split(";"):
         chunk = chunk.strip()
