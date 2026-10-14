@@ -1,4 +1,24 @@
-"""PR-09 hardening items, each reproducing its original defect."""
+"""Regression tests for assorted harness and tooling bugs, one group per bug.
+
+Each test reproduces the original defect:
+
+- The CI workflow parses, its test job runs lint, tests and `check.py`, and
+  the staging run only starts by hand (`test_ci_workflow_*`).
+- Ingest (legacy `tools/ingest_run.py`): a row with no uid joins a case by
+  test_id and query. If an expectation the row was scored against has
+  changed since (gaining new ones does not count), the row is marked stale
+  and never re-keyed to the edited case (`test_h2_*`).
+- Merging trials keeps the errors and judge errors of any trial
+  (`test_h3_*`).
+- Multi-turn cases contribute their implied checks, prefixed `t<N>.`, to
+  reconciliation (`test_h4_*`).
+- Reports show per-turn detail for failing conversations (`test_h5_*`).
+- Artefact pruning keeps the newest N runs (`test_h6_*`).
+- `dataset_id` expectations accept `;`-separated alternatives (`test_h7_*`).
+
+The h numbers are local to this file: test_harness_fixes_ha.py and
+test_harness_fixes_hb.py reuse them for unrelated fixes.
+"""
 
 import sys
 from pathlib import Path
@@ -15,7 +35,7 @@ from goldset.cli import merge_trials, prune_artifacts
 from goldset.evaluators.dataset_evaluator import evaluate_dataset_selection
 from goldset.store import Case
 
-# --- H1: the CI workflow is valid YAML with the gate steps present
+# --- the CI workflow is valid YAML with the gate steps present
 
 def test_ci_workflow_parses_and_gates():
     workflow = yaml.safe_load(
@@ -26,7 +46,7 @@ def test_ci_workflow_parses_and_gates():
     assert workflow["jobs"]["staging-run"]["if"] == "github.event_name == 'workflow_dispatch'"
 
 
-# --- H2: expectation drift on the weak join -> stale, never re-keyed
+# --- ingest: a uid-less row whose expectations changed goes stale, never re-keyed
 
 CASE = Case(
     id="1-002", status="done", group="direct",
@@ -59,7 +79,7 @@ def test_h2_drifted_row_goes_stale_not_rekeyed():
     assert entry["drift"] == ["answer"]
 
 
-# --- H3: errors from any trial survive the merge
+# --- errors from any trial survive the merge
 
 def test_h3_merge_trials_unions_errors():
     trials = [
@@ -73,7 +93,7 @@ def test_h3_merge_trials_unions_errors():
     assert "trial 1 blew up" in merged["error"]
 
 
-# --- H4: multiturn cases contribute implied checks
+# --- multi-turn cases contribute implied checks
 
 MT = Case(id="mt-x", status="ready", group="multiturn", turns=(
     {"query": "q1", "expected": {"clarification": "TRUE"}},
@@ -101,7 +121,7 @@ def test_h4_reconcile_accepts_precomputed_sets():
                                   "check": "t2.aoi_id_match"}]
 
 
-# --- H5: failing conversations render per-turn detail
+# --- failing conversations render per-turn detail
 
 def test_h5_report_renders_turn_detail():
     run = {
@@ -117,7 +137,7 @@ def test_h5_report_renders_turn_detail():
     assert '- t2 "And for Indonesia?" -> state_delta' in text
 
 
-# --- H6: artifact pruning keeps the newest N
+# --- artefact pruning keeps the newest N
 
 def test_h6_prune_artifacts(tmp_path, capsys):
     artifacts = tmp_path / "artifacts"
@@ -129,7 +149,7 @@ def test_h6_prune_artifacts(tmp_path, capsys):
     assert remaining == ["20260715T000000Z_b", "20260801T000000Z_c"]
 
 
-# --- H7: dataset_id accepts ;-alternatives
+# --- dataset_id accepts ;-separated alternatives
 
 def _state(dataset_id):
     return {"dataset": {"dataset_id": dataset_id, "dataset_name": "x",

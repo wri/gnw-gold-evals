@@ -5,10 +5,9 @@ from goldset.judge_config import HAIKU_MODEL
 
 load_dotenv()
 
-# timeout is load-bearing: judge calls are synchronous, so an unbounded
-# request blocks the event loop and freezes the whole run (observed
-# 2026-08-02 during an upstream API incident — every worker stalled at
-# its next judge call). Bounded here, and run_test additionally runs
+# timeout is load-bearing: judge calls are synchronous, so an unbounded request
+# can stall a worker indefinitely (in one upstream API incident, every worker
+# froze at its next judge call). Bounded here, and run_test additionally runs
 # evaluations off the loop thread.
 HAIKU = ChatAnthropic(
     model=HAIKU_MODEL,

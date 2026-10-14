@@ -1,11 +1,16 @@
 """Regression diff between two ledger runs.
 
-    uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json \
-      [--json out.json] [--strict] [--fail-on-regression] [--fail-on-coverage-loss]
+    uv run python tools/diff_runs.py results/runs/A.json results/runs/B.json
+        [--json out.json] [--strict] [--fail-on-regression] [--fail-on-coverage-loss]
 
-Comparison runs over the **intersection of uids** (stale rows excluded), so
-case-set churn is reported but never counted as regression. Transitions per
-check between run A (older) and run B (newer):
+Only diff runs with the same `ff`, the same trial count (3) and the same
+environment; otherwise trial-to-trial noise, or a change in the agent's
+tools, counts as regressions. See "Comparing two runs" in results/README.md.
+
+The diff covers only the uids present in both runs (rows flagged
+`stale_case` are left out), so cases added, removed or edited between the
+runs are reported as identity churn, never as regressions. For each check,
+from run A (older) to run B (newer):
 
     regression        1.0 -> 0.0
     recovery          0.0 -> 1.0
@@ -14,27 +19,32 @@ check between run A (older) and run B (newer):
     coverage gained   not evaluated -> evaluated
     coverage lost     evaluated -> not evaluated
 
-A data bump separates a dataset update served by the analytics API from an
-agent regression. The API exposes no dataset version, so the digest recorded
-on each ground-truth entry is the only signal. Each bump names its cause —
-``data`` (same request, different numbers), ``request`` (GOLD's own request
-changed: a harness change) or ``fixed_dataset`` (a dataset declared never to
-change, changed). Bumps are listed, never counted as regressions or recoveries,
-and never gate.
+A data bump tells a dataset update served by the analytics API apart from
+an agent regression. The API exposes no dataset version, so the digest
+recorded on each ground-truth entry is the only signal. Each bump names its
+cause: `data` (same request, different numbers), `request` (GOLD's own
+request changed, so a harness change) or `fixed_dataset` (a dataset declared
+never to change has changed). Bumps are listed, never counted as regressions
+or recoveries, and never gate.
 
-A bump can hide a real break: an agent that fails in the same run the data
+A bump can hide a real break. An agent that fails in the same run the data
 moves is filed here, and if it stays broken the next diff sees 0.0 -> 0.0.
-So a ``ground_truth_match`` bump is checked against the agent's own recorded
+So a `ground_truth_match` bump is checked against the agent's own recorded
 figure: one that matches neither run's values, or no figure at all, is not
-explained by the data and is flagged ``possible_hidden_regression``. Flagged
+explained by the data and is flagged `possible_hidden_regression`. Flagged
 bumps are reported, not gated.
 
-``--strict`` refuses to compare runs with different caseset_versions.
-``--fail-on-regression`` exits nonzero if any regression exists (CI gate).
-Info-only checks (``INFO_ONLY``) are reported but never gate.
-``--fail-on-coverage-loss`` exits nonzero if any non-info-only check went
-evaluated -> not evaluated. Off by default; turn it on to catch a harness
-bug that silently stops evaluating checks (which would otherwise pass CI).
+Info-only checks (`goldset.buckets.INFO_ONLY`, also under a multi-turn
+`t<N>.` prefix) are reported but never gate. The headline splits regressions
+and lost checks into gating and info-only counts, and the `--fail-on-*` gates
+read the gating counts.
+
+`--strict` refuses (exit 2) to compare runs whose caseset_version differs.
+`--fail-on-regression` exits 1 on any gating regression: this is the release
+gate.
+`--fail-on-coverage-loss` exits 1 if any gating check went from evaluated to
+not evaluated. It is off by default; turn it on to catch a harness bug that
+silently stops scoring a check, which would otherwise pass.
 """
 
 from __future__ import annotations

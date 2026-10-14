@@ -1,4 +1,4 @@
-<!-- GOLD run report skeleton — written for a non-technical reader.
+<!-- GOLD run report skeleton, written for a non-technical reader.
 
      Reusable three ways:
      1. tools/render_html.py injects a payload into the RUN_PAYLOAD script
@@ -6,7 +6,7 @@
      2. tools/render_html.py --all injects every ledger run at once; a
         dropdown (newest first, human-readable datetime) switches between
         them, and the URL hash deep-links a specific run.
-     3. Opened raw (placeholder intact), it shows a drop zone — drop any
+     3. Opened raw (placeholder intact), it shows a drop zone: drop any
         results/runs/<id>.json onto it to render locally, no server.
         Dropping more files adds them to the dropdown in every mode.
 
@@ -148,7 +148,7 @@ function flappedChecks(entry) {
 }
 
 // Re-score a plain checks map (one trial's worth) without entry-level
-// error context — good enough for spread-between-repeats estimates.
+// error context: good enough for spread-between-repeats estimates.
 function checksVerdict(checks, infoOnly) {
   const scored = Object.entries(checks || {})
     .filter(([n, v]) => v !== null && !infoOnly.includes(baseName(n)));

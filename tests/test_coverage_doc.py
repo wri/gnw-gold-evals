@@ -102,9 +102,9 @@ def test_dataset_coverage_section(tmp_path):
     assert ("| 11 | Integrated alerts (missing: code_instructions, "
             "presentation_instructions, prompt_instructions) | 0 ← gap | 0 | — | — |"
             ) in text
-    # ids the catalog does not know are flagged, not silently counted
+    # ids the catalogue does not know are flagged, not silently counted
     assert "not in the catalog: 99" in text
-    # known gaps summarise unexercised catalog features and empty datasets
+    # known gaps summarise unexercised catalogue features and empty datasets
     assert "- Catalog datasets with no active case: 11." in text
     assert ("- Catalog features no active case exercises — context layers: "
             "driver (0), natural_lands (0), intact_forest (4).") in text
@@ -116,7 +116,7 @@ def test_render_derives_content_and_coverage(tmp_path):
     assert "No catalog snapshot found" in text
     assert "3 cases" in text and "**2 active**" in text
     assert "| direct | 2 | 1 | done 1, not doing 1 |" in text
-    # 1-001 via dataset_id_match, mt-001 via t2.state_delta — both dedicated
+    # 1-001 via dataset_id_match, mt-001 via t2.state_delta: both dedicated
     assert "| retrieval | 2 | 0 | 2 | 100% |" in text
     # analysis is reachable only via shared checks (1-001's answer judges)
     assert "| analysis | 0 | 1 | 1 | 50% |" in text

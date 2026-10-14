@@ -1,7 +1,7 @@
 [project]
 name = "gnw-gold-evals"
 version = "0.1.0"
-description = "GOLD capability smoke-test set for the Global Nature Watch agent: content-addressed case store, results ledger, and (incoming) harness."
+description = "GOLD regression suite for the Global Nature Watch agent: content-addressed case store, evaluation harness and results ledger."
 requires-python = ">=3.11"
 dependencies = [
     "pyyaml>=6.0",

@@ -3,7 +3,7 @@
     uv run python tools/render_trends.py
     # -> results/reports/trends.html
 
-A run-over-run ticker: overall pass rate (one line per ff profile — never
+A run-over-run ticker: overall pass rate (one line per ff profile, never
 drawn across differing tool profiles), KPI tiles with deltas against the
 previous comparable run, and per-bucket small multiples. Question-set
 version changes are marked on the axis. The template also works
@@ -37,7 +37,9 @@ def render_trends(runs: list[dict], template_text: str, generated: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--runs-dir", type=Path, default=Path("results/runs"),
                         help="ledger directory to chart")
     parser.add_argument("--out", type=Path, default=None,

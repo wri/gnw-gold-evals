@@ -1,4 +1,4 @@
-"""Tests for goldset.templates — query template variable resolution."""
+"""Tests for goldset.templates: query template variable resolution."""
 
 from datetime import datetime
 

@@ -1,21 +1,20 @@
-"""Bridge between the case store and the ported harness types.
+"""Convert a store ``Case`` into the ``ExpectedData`` the evaluators read.
 
-``Case.expected`` keys are stored without the ``expected_`` prefix; the
-harness's ``ExpectedData`` (ported verbatim from gnw-evals) wants prefixed
-fields and applies its own parsing (semicolon splits, tri-state booleans).
-The adapter re-prefixes and lets those validators do exactly what they did
-in gnw-evals — no second parsing layer to drift.
+Case YAML stores expectation keys without the ``expected_`` prefix.
+``ExpectedData`` wants the prefix and does its own parsing (semicolon lists,
+tri-state booleans), so this module only adds the prefix: one parser, not two.
 
-The case ``uid`` rides along as a pydantic extra field (both harness models
-are ``extra="allow"``), so it flows untouched through ``run_test`` into the
-``TestResult`` and out to the ledger.
+The case uid rides along as a pydantic extra field, but nothing relies on it:
+the ledger takes its uid from the stored case (``run_cases`` in ``cli.py``),
+because a templated query resolves to different text, and so to a different
+uid, at run time.
 
-Ground truth enters here too, and this is the **only** place it does. A case's
-``ground_truth`` selector is already re-prefixed to ``expected_ground_truth`` by
-the loop below, like any other expectation; the *values* fetched for it at run
+Ground truth enters here too, and this is the only place it does. A case's
+``ground_truth`` selector is re-prefixed to ``expected_ground_truth`` by the
+loop below, like any other expectation. The values fetched for it at run
 start are not from the case, so they are attached separately and unprefixed.
-``ground_truth`` defaults to ``None``, and that default is the guarantee that a
-case without one is built exactly as it was before this existed.
+``ground_truth`` defaults to ``None``, so a case without one is built from its
+expectations alone.
 """
 
 from __future__ import annotations

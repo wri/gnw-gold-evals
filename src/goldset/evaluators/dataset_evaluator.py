@@ -7,7 +7,7 @@ from goldset.evaluators.utils import normalize_value
 
 
 def _normalize_dataset_parameters(value: Any) -> str:
-    """Normalize dataset parameters for stable JSON comparison.
+    """Normalise dataset parameters for stable JSON comparison.
 
     Only the `name` and `values` fields are considered for matching.
     """
@@ -65,7 +65,7 @@ def evaluate_dataset_selection(
     """
     # Actual values are extracted unconditionally (like the AOI evaluator):
     # multi-turn delta snapshots and triage need them even on turns with no
-    # dataset expectation (PR-07). Scores stay gated on the expectation.
+    # dataset expectation. Scores stay gated on the expectation.
     if not expected_dataset_id:
         dataset = agent_state.get("dataset") or {}
         return {
@@ -101,9 +101,8 @@ def evaluate_dataset_selection(
     )
     actual_context_layer = dataset.get("context_layer", "")
 
-    # Normalize values for comparison. The expected id accepts ;-separated
-    # alternatives (PR-09 H7): some rows are defensible-either-way (1-003:
-    # DIST-ALERT 0 vs integrated alerts 11) — match any alternative.
+    # The expected id accepts ;-separated alternatives for cases where more than
+    # one dataset is defensible (for example "8;10"); any alternative matches.
     expected_id_alternatives = {
         normalize_value(alt)
         for alt in str(expected_dataset_id).split(";")
@@ -118,7 +117,6 @@ def evaluate_dataset_selection(
     expected_context_str = normalize_value(expected_context_layer)
     actual_context_str = normalize_value(actual_context_layer)
 
-    # Binary scoring: Each component is 0 or 1 (or None if not evaluated)
     dataset_id_match_score = 1.0 if dataset_match else 0.0
 
     if not expected_parameters_str:
@@ -128,7 +126,7 @@ def evaluate_dataset_selection(
             1.0 if expected_parameters_str == actual_parameters_str else 0.0
         )
 
-    # Context layer matching: if expected is empty, return None (not evaluated)
+    # An expected "no_selection" means the agent should choose no context layer.
     if not expected_context_str:
         context_layer_match_score = None
     elif expected_context_str == "no_selection":

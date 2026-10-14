@@ -1,6 +1,8 @@
-"""Importer semantics: header scan, column routing, idempotence, dupes,
-and the PR-10 sheet-pull hardening (source_tab scoping, collisions,
-sheet-uid drift)."""
+"""Tests for tools/import_sheet.py, the legacy importer from the retired
+Google Sheet: header detection, column routing, idempotence, duplicate ids,
+and the safeguards for importing from more than one sheet tab (prune scoped
+to the importing tab, collisions with another tab's test_id, sheet uids that
+disagree with recomputed ones)."""
 
 import codecs
 import sys
@@ -44,7 +46,7 @@ def test_parse_routes_columns():
         "status_reason": "Chart shows all levels",
         "aoi_type": "gadm",
         "value_1": "679.17",
-        "source_tab": "gid:0",  # P2: provenance recorded, never hashed
+        "source_tab": "gid:0",  # provenance: recorded, never hashed
     }
 
 
@@ -66,7 +68,7 @@ def test_missing_required_column_aborts():
 
 
 def test_sheet_uid_drift_reported_not_trusted(tmp_path):
-    """P5: a uid column on the sheet is advisory — recomputed uids win,
+    """A uid column on the sheet is advisory: recomputed uids win, and
     mismatches are reported as sheet-side edits."""
     cases, _, _ = parse_cases(SHEET)
     real_uid = cases[0].uid
@@ -94,7 +96,7 @@ def test_run_import_idempotent(tmp_path):
 
 
 def test_prune_is_scoped_to_the_importing_tab(tmp_path):
-    """P3: --prune deletes only this tab's own orphans; cases from other
+    """--prune deletes only this tab's own orphans; cases from other
     sources (or with no source_tab) are reported and left alone."""
     foreign = Case(id="9-001", status="ready", group="direct", query="other tab",
                    notes={"source_tab": "gid:999"})
@@ -116,7 +118,7 @@ def test_prune_is_scoped_to_the_importing_tab(tmp_path):
 
 
 def test_collision_with_other_source_errors_without_update(tmp_path):
-    """P4: taking over another source's test_id must be explicit."""
+    """Taking over another source's test_id must be explicit."""
     theirs = Case(id="1-001", status="ready", group="temporal", query="theirs",
                   notes={"source_tab": "gid:999"})
     write_case(tmp_path, theirs)

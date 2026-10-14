@@ -1,10 +1,7 @@
 """Unit tests for the deterministic chart numeric check.
 
-Cases come from real gold rows wherever possible, so a regression here is a regression
-against something the eval actually scores.
-
-Usage
-$ uv run python -m pytest tests/test_chart_numeric.py -v
+Fixtures come from real cases wherever possible, so a regression here is a
+regression against something the suite actually scores.
 """
 
 import json
@@ -46,7 +43,8 @@ OCCITANIE_DRIVERS = json.dumps(
 
 
 def test_parses_plain_hectares():
-    """The commonest shape in the sheet: a figure with thousands separators."""
+    """The commonest shape in expected answers: a figure with thousands
+    separators."""
     parsed = parse_expected_number("13,359.47 hectares")
     assert parsed is not None
     assert parsed.value == 13_359.47
@@ -54,13 +52,13 @@ def test_parses_plain_hectares():
 
 
 def test_unit_multiplier_scales_into_chart_units():
-    """Charts encode hectares; the sheet sometimes writes Mha or kha."""
+    """Charts encode hectares; expected answers sometimes use Mha or kha."""
     assert parse_expected_number("25 Mha").value == 25_000_000
     assert parse_expected_number("211 kha").value == 211_000
 
 
 def test_written_scale_words_are_applied():
-    """The sheet writes '25.54 million hectares' as readily as '25 Mha'.
+    """Expected answers write '25.54 million hectares' as often as '25 Mha'.
 
     Missing this reported gold 1-059, 1-079 and 1-103 as differences of tens of millions
     of percent, failing three rows whose charts were right.
@@ -111,7 +109,7 @@ def test_named_entity_is_not_a_numeric_claim():
 
 
 def test_ambiguous_decimal_separator_is_skipped():
-    """Gold 1-093's '230.003 hektar' could be 230,003 or 230.003 — don't guess."""
+    """Gold 1-093's '230.003 hektar' could be 230,003 or 230.003: don't guess."""
     assert parse_expected_number("230.003 hektar") is None
 
 
@@ -192,7 +190,8 @@ def test_empty_chart_cannot_support_a_figure():
 
 
 def test_explanation_states_both_values_for_audit():
-    """The reason lands in a CSV column and has to be readable beside the sheet."""
+    """The explanation becomes the check's reason in the ledger and reports, so
+    it must state both the expected and the measured value."""
     result = evaluate_numeric_support("25 Mha", RUSSIA_YEARLY, TOLERANCE)
     assert "25,000,000" in result["explanation"]
     assert "25,308,960" in result["explanation"]

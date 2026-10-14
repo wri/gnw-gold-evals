@@ -1,4 +1,5 @@
-"""Five-bucket scoring model semantics (PR-05)."""
+"""Tests for goldset.buckets: how checks map to the five buckets, row
+verdicts, bucket tallies and implied-check reconciliation."""
 
 from goldset.buckets import (
     BUCKETS,
@@ -18,7 +19,7 @@ def test_every_registered_check_is_tagged_exactly_once():
     tagged = set(DEDICATED) | set(SHARED) | set(INFO_ONLY)
     registered = {field.removesuffix("_score") for field in ALL_SCORE_FIELDS}
     # state_delta is produced by the multiturn orchestration, not a
-    # registry evaluator — tagged but never registered.
+    # registry evaluator, so it is tagged but never registered.
     assert registered | {"state_delta"} == tagged
     assert not set(DEDICATED) & set(SHARED)
     assert all(bucket in BUCKETS for bucket in DEDICATED.values())
@@ -35,7 +36,7 @@ def test_row_verdicts():
     assert row_verdict({"checks": {"aoi_id_match": 1.0, "agent_answer": 0.0}}) == "fail"
     assert row_verdict({"checks": {"aoi_id_match": None}}) == "uncovered"
     assert row_verdict({"checks": {}}) == "uncovered"
-    # info-only failures never make a verdict — and never hide as a pass
+    # info-only failures never make a verdict, and never hide as a pass
     assert row_verdict({"checks": {"date_coverage": 0.0}}) == "uncovered"
     assert row_verdict({"checks": {"aoi_id_match": 1.0}, "judge_errors": ["agent_answer"]}) == "error"
     assert row_verdict({"checks": {"aoi_id_match": 1.0}, "error": "timeout"}) == "error"
@@ -57,10 +58,11 @@ def test_summarize_dual_tagged_checks_count_in_both_buckets():
 
 
 def test_errored_entries_bank_no_bucket_tallies():
-    """A conversation that errored mid-way must not contribute its earlier
-    turns' pass/fail counts to bucket tallies or coverage — row_verdict
-    parity: an errored row is an error, not a measurement. Verdicts still
-    count the entry, so the error stays visible."""
+    """A conversation that errored partway must not add its earlier turns'
+    passes and failures to bucket tallies or coverage. This matches
+    `row_verdict`, which treats an errored row as an error, not a
+    measurement. Verdict counts still include the entry, so the error stays
+    visible."""
     entries = [
         {"checks": {"t1.aoi_id_match": 1.0, "t1.charts_answer": 1.0},
          "error": "t2: timeout"},
@@ -88,8 +90,9 @@ def test_implied_checks_from_expectations():
     # a map-only dashboard implies no pull; an insight widget does
     assert "data_pull_exists" not in implied_checks({"dashboard_widgets": "map"})
     assert "data_pull_exists" in implied_checks({"dashboard_widgets": "insight;map"})
-    # each PR-06 expected field implies exactly its dedicated check —
-    # equality, so a typo'd field-name lookup in implied_checks fails here
+    # class_values, chart_type and scope each imply exactly their dedicated
+    # check. The assertions use equality, so a mistyped field name in
+    # implied_checks fails here.
     assert implied_checks({"class_values": "Natural=2,124 ha"}) == {
         "class_value_match"
     }

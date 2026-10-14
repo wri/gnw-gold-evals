@@ -1,21 +1,18 @@
-"""Compose a current picture from a primary run plus scoped supplementary runs.
+"""Combine a primary run with scoped re-runs into one current picture.
 
-    uv run python tools/compose_runs.py results/runs/PRIMARY.json \
+    uv run python tools/compose_runs.py results/runs/PRIMARY.json
         results/runs/SUPP1.json [results/runs/SUPP2.json ...] [--json out.json]
 
-**This never writes to `results/runs/`.** The ledger contract
-(`results/README.md`) is explicit: *"Run files are immutable"* and *"No
-fabricated or backfilled runs — a ledger entry is written by the ingester from
-real harness output, never by hand."* Splicing later scores into an earlier run
-file would also make that file's own `ff`, `workers` and `build` metadata a lie
-about how its rows were produced, which is exactly the trap that made the
-2026-08-03 `ff=experimental` misdiagnosis possible.
+This never writes to `results/runs/`. Run files are immutable, and a run's
+metadata (`ff`, `workers`, `build`) must describe how its own rows were
+produced, so rows from another run cannot be spliced in. See "Composing a
+current picture across runs" in results/README.md.
 
-So the composition happens in the *analysis*, not in the record. Each active case
-is resolved to its most recent valid measurement at its **current uid**:
-supplementary runs win over the primary, later supplementary runs win over
-earlier. Every row is reported with its provenance so the result is auditable,
-and rows nothing measured are called out rather than quietly dropped.
+So the combining happens in the analysis, not in the record. Each active case
+is resolved to its latest measurement at its current uid: supplementary runs
+override the primary, and each supplementary run overrides those listed
+before it. Every row is reported with the run it came from, and active cases
+that no run measured are listed rather than dropped.
 """
 
 from __future__ import annotations
@@ -152,7 +149,9 @@ def render(report: dict) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("primary", type=Path)
     parser.add_argument("supplements", type=Path, nargs="*")
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
