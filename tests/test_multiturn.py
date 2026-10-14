@@ -44,6 +44,54 @@ def test_conversation_uid_ignores_deltas_and_metadata():
     assert conversation_uid(TURNS) != conversation_uid(changed)
 
 
+def test_conversation_uid_with_deltas_mints_on_delta_edits():
+    """The v2 rule (uid_includes_deltas): a scored delta assertion is test
+    content, so editing one mints a new version."""
+    base = conversation_uid(TURNS, include_deltas=True)
+    assert base != conversation_uid(TURNS)  # deltas now participate
+    edited = (TURNS[0], {**TURNS[1], "deltas": {"changed": ["aoi_ids"]}})
+    assert conversation_uid(edited, include_deltas=True) != base
+    swapped_kind = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"changed": ["aoi_ids"], "absent": ["dataset_id"]}},
+    )
+    assert conversation_uid(swapped_kind, include_deltas=True) != base
+    added_field = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"changed": ["aoi_ids", "start_date"],
+                                "retain": ["dataset_id"]}},
+    )
+    assert conversation_uid(added_field, include_deltas=True) != base
+
+
+def test_conversation_uid_with_deltas_ignores_delta_key_and_list_order():
+    turns = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"changed": ["aoi_ids", "start_date"],
+                                "retain": ["dataset_id", "context_layer"]}},
+    )
+    reordered = (
+        TURNS[0],
+        {**TURNS[1], "deltas": {"retain": ["context_layer", "dataset_id"],
+                                "changed": ["start_date", "aoi_ids"]}},
+    )
+    assert conversation_uid(turns, include_deltas=True) == conversation_uid(
+        reordered, include_deltas=True
+    )
+
+
+def test_conversation_uid_with_deltas_ignores_empty_deltas():
+    """Only non-empty deltas participate: a turn with none, ``{}``, or only
+    empty lists hashes as it would without the flag."""
+    no_deltas = (TURNS[0], {"query": TURNS[1]["query"],
+                            "expected": TURNS[1]["expected"]})
+    empty = (TURNS[0], {**no_deltas[1], "deltas": {}})
+    empty_lists = (TURNS[0], {**no_deltas[1], "deltas": {"changed": [], "retain": []}})
+    expected_uid = conversation_uid(no_deltas)
+    for turns in (no_deltas, empty, empty_lists):
+        assert conversation_uid(turns, include_deltas=True) == expected_uid
+
+
 # --- store
 
 def test_multiturn_round_trip(tmp_path):
@@ -304,6 +352,9 @@ async def test_cli_dispatches_conversations_to_run_conversation(
         resolved_url="https://api.example", api_token="tok", ff=None, verbose=False,
         results_dir=tmp_path, run_id="r1", workers=1, trials=1,
         slow_threshold=180.0, trial_timeout=900.0,
+        # main() always sets this before run_cases; empty means no
+        # ground-truth case in the run, which is true of every multi-turn one.
+        ground_truth={},
     )
     entries = await run_cases(args, [CASE])
     assert calls == [("mt-x", "result_to_entry")]
@@ -344,7 +395,7 @@ async def test_progress_counter_reaches_total_regardless_of_completion_order(
     args = argparse.Namespace(
         resolved_url="https://api.example", api_token="tok", ff=None, verbose=False,
         results_dir=tmp_path, run_id="r1", workers=3, trials=1,
-        slow_threshold=180.0, trial_timeout=900.0,
+        slow_threshold=180.0, trial_timeout=900.0, ground_truth={},
     )
     await run_cases(args, cases)
     lines = [line for line in capsys.readouterr().out.splitlines() if line.strip()]

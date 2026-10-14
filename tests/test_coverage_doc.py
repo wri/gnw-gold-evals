@@ -144,5 +144,5 @@ def test_check_mode_gates_freshness(tmp_path):
                           "_Last updated: 2000-01-01_", text), encoding="utf-8")
     assert subprocess.run([*base, "--check"], check=False).returncode == 0
     # any real content change is drift
-    doc.write_text(doc.read_text() + "\ndrift\n", encoding="utf-8")
+    doc.write_text(doc.read_text(encoding="utf-8") + "\ndrift\n", encoding="utf-8")
     assert subprocess.run([*base, "--check"], check=False).returncode == 1

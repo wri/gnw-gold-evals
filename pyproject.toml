@@ -9,6 +9,7 @@ dependencies = [
     "pydantic>=2.7",
     "langchain-core>=0.3",
     "langchain-anthropic>=0.3",
+    "openrouter>=0.8.2",
     "python-dotenv>=1.0",
 ]
 

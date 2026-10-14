@@ -50,6 +50,7 @@ FIELD_CHECKS = {
     "end_date": "date_extraction (with start_date)",
     "answer": ("agent_answer, chart_produced, data_pull_exists, "
                "answered_without_data (+ charts_answer when a chart exists)"),
+    "ground_truth": "ground_truth_match, ground_truth_answer (info-only)",
     "text": "expected_text_match",
     "clarification": "clarification_requested",
     "suggested_datasets": ("suggested_datasets_match (legacy: the agent now "
@@ -98,6 +99,13 @@ def expected_parameter_names(expected: dict, case_id: str) -> set[str]:
         raise SystemExit(f"{case_id}: unparseable dataset_parameters: {exc}")
 
 
+# Expectations that make a case grade the *content* of an answer, and so
+# exercise a dataset's prompt/code/presentation instructions. `ground_truth`
+# counts: it asserts the same kind of figure as `answer`, fetched at run time
+# instead of stored in the case.
+ANSWER_GRADED_FIELDS = ("answer", "text", "ground_truth")
+
+
 def dataset_stats(cases) -> dict[str, dict]:
     """Per expected dataset id: case count, answer-graded case count, and the
     context layers / parameter names those cases exercise. Pairing is per
@@ -112,8 +120,7 @@ def dataset_stats(cases) -> dict[str, dict]:
         for record in expected_records(case):
             rec_ids = split_dataset_ids(record.get("dataset_id"))
             ids |= rec_ids
-            if str(record.get("answer") or "").strip() or str(
-                    record.get("text") or "").strip():
+            if any(str(record.get(f) or "").strip() for f in ANSWER_GRADED_FIELDS):
                 answered |= rec_ids
             layer = str(record.get("context_layer") or "").strip()
             layers |= {(i, layer) for i in rec_ids if layer}
@@ -162,8 +169,8 @@ def render_dataset_section(catalog: dict | None, active) -> tuple[list[str], lis
         "`code_instructions` and `presentation_instructions`. A dataset missing",
         "any of them shows `(missing: …)` after its name. Any case that grades",
         "`dataset_id` exercises `selection_hints`; only answer-graded cases",
-        "(those expecting `answer` or `text`, counted in the answer-graded",
-        "column) exercise the other three.",
+        "(those expecting `answer`, `text` or `ground_truth`, counted in the",
+        "answer-graded column) exercise the other three.",
         "",
         "| id | dataset | cases | answer-graded | parameters covered "
         "| context layers covered |",

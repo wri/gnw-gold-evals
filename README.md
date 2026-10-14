@@ -50,12 +50,13 @@ Definitions only: counts are in [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md), an
 - **scope**: the kind of work a case expects: `analyse` (pull data and answer), `suggest` (offer datasets), `clarify` (ask the user to choose) or `refuse` (decline). The harness classifies the agent's final state into one of these; `refuse` matches a state with no data pull, no suggestion and no nudge.
 - **`;` in expected values**: in `dataset_id`, `scope`, `nudge_type` and `chart_type`, `a;b` means either value is acceptable. In `aoi_ids` it means all of them (the two sets must match). Other fields have their own rules, given with each check in the [evaluators README](src/goldset/evaluators/README.md#index).
 - **multi-turn case, deltas**: a case with `turns:` instead of one query and expected block; all turns share one thread. A turn's `deltas` say which state fields must have `changed`, stayed the same (`retain`) or become empty (`absent`) since the previous turn, scored as the `state_delta` check.
+- <a id="ground-truth"></a>**ground truth**: an `expected.ground_truth` selector, such as `sum(area_ha) WHERE year=2019`, that names a figure instead of pinning its value. The harness fetches the value from the analytics API when the run starts, so the case survives data releases with its uid. See [Run-time ground truth](cases/README.md#run-time-ground-truth-ground_truth).
 - **query template**: a token such as `{current_year}` in a query, replaced with a concrete date when the run starts. The uid hashes the token, not the date, so the case keeps its identity as time passes.
 - **env_gated**: a note on a case whose capability is missing in some environment or profile, so its zeros are not read as regressions. Only people read it; no code does.
 - **sentinel**: a deliberately loosely worded case, kept so that a drift towards over-nudging is still caught.
 - **depth rule**: a case's expected values must imply at least two checks in at least two buckets, so a pass always measured something. CI enforces it ([The audit gate](cases/README.md#the-audit-gate)).
 - **COVERAGE.md**: `cases/v2/COVERAGE.md`, a generated report of what v2 covers: groups, buckets, expected fields, datasets and parked cases. Never edit it by hand; CI fails if it is out of date.
-- **catalogue snapshot**: `cases/zeno_catalog.json`, a committed copy of the agent's dataset catalogue, so COVERAGE.md can be generated without network access.
+- **catalogue snapshot**: `cases/zeno_catalog.json`, a committed copy of the agent's dataset catalogue, so COVERAGE.md can be generated without network access. It also holds the analytics endpoint and date window that ground-truth requests are built from.
 
 ### Runs and results
 
@@ -70,6 +71,7 @@ Definitions only: counts are in [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md), an
 - **artefacts**: raw agent state for each case and trial, gzipped under `results/artifacts/<run_id>/` (gitignored). They keep evidence a run record does not. `uv run gold prune-artifacts` deletes all but the newest runs' artefacts.
 - **methodology note**: text passed with `--note` and stored as `methodology_note` on the run, recording that check semantics changed since the previous run.
 - **regression, recovery**: between two runs, for a case uid present in both: a check that went from pass to fail (regression) or from fail to pass (recovery). Counted per check, not per case. Info-only checks never count towards the gate.
+- <a id="data-bump"></a>**data bump**: a ground-truth check that flipped between two runs while the digest of its fetched values moved, so the data changed under the case. `diff_runs.py` lists bumps but never counts them as regressions or recoveries, and they never gate. A bump that the agent's own recorded figure does not explain is flagged as a possible hidden regression.
 - **coverage loss, coverage gain**: a check that went from evaluated to not evaluated (loss) or the reverse (gain) between two runs. A check that stopped running has not passed.
 - **comparable runs**: two runs whose diff means something: same `ff`, same trial count (3) and same environment. The caseset_version may differ, because a diff only covers uids present in both runs. See [Comparing two runs](results/README.md#comparing-two-runs).
 - **baseline**: the official run a new run is diffed against: the most recent committed official run that is comparable with it.
@@ -86,7 +88,7 @@ Definitions only: counts are in [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md), an
 - **check**: one named score on a case, such as `aoi_id_match`. Every check is tri-state.
 - **evaluator**: a function of the agent's final state and the case's expected values that returns one or more checks. Evaluators are registered in `src/goldset/registry.py`.
 - **deterministic, judged**: how a check decides: in code, or by asking the LLM judge. Some checks combine the two (for example, the judge picks the figure out of the prose and code compares it); the evaluators README says which.
-- **judge**: the LLM (`claude-haiku-4-5`) that scores judged checks. It is never asked to do arithmetic; numbers are compared in code.
+- **judge**: the LLM (`claude-haiku-4-5` unless `--judge-backend` picks another) that scores judged checks. It is never asked to do arithmetic; numbers are compared in code.
 - **tri-state**: every check scores `1.0` (pass), `0.0` (fail) or `null` (not evaluated). Each check's documentation says when a missing input scores `null` and when it scores `0.0`.
 - **implied check, reconciliation line**: implied checks are those a case's expected values guarantee will be evaluated. A report's reconciliation line compares the implied count with the evaluated count, so a check that silently did not run shows up.
 - <a id="bucket"></a>**bucket**: one of five pipeline stages a check speaks for: retrieval, analysis, explanation, output and scope (see [How scoring reads](#how-scoring-reads)). A **dedicated** check belongs to one bucket; a **shared** check belongs to two, because its failure cannot be pinned on one.
@@ -108,7 +110,9 @@ uv run ruff check src tools tests     # lint, as CI runs it
 Live runs need two secrets, set in your shell or in a `.env` file at the repo root (gitignored; `gold run` loads it before checking for a token):
 
 - **An API token for the target environment**: `STAGING_API_TOKEN` for `--env staging`, `PROD_API_TOKEN` for `--env prod`. If that variable is not set, the CLI falls back to `API_TOKEN`, which is also the only one `--env local` reads. So a stale environment-specific token in `.env` wins over a fresh `API_TOKEN`.
-- **`ANTHROPIC_API_KEY`**, for the LLM judge.
+- **Judge credentials**: `ANTHROPIC_API_KEY` for the default judge. With `--judge-backend openrouter-jev-decisions` the judge is TypeSafe JEV through OpenRouter Decisions, which needs `OPENROUTER_API_KEY` instead.
+
+Cases with `expected.ground_truth` also call the production analytics API. They use `ANALYTICS_API_TOKEN` when it is set, and the API token otherwise.
 
 ## Running the set
 
@@ -146,7 +150,7 @@ uv run python tools/diff_runs.py results/runs/<baseline>.json results/runs/<cand
   --fail-on-regression --fail-on-coverage-loss
 ```
 
-`--fail-on-regression` exits 1 on any regression in a gating check; `--fail-on-coverage-loss` also fails when a gating check stopped being evaluated. The count only means something if the two runs are comparable: same `ff`, same trial count (3) and same environment. [Comparing two runs](results/README.md#comparing-two-runs) gives the conditions and the evidence behind them; the `release-gate` skill walks through the verdict.
+`--fail-on-regression` exits 1 on any regression in a gating check; `--fail-on-coverage-loss` also fails when a gating check stopped being evaluated. The count only means something if the two runs are comparable: same `ff`, same trial count (3) and same environment. [Comparing two runs](results/README.md#comparing-two-runs) gives the conditions and the evidence behind them; the `release-gate` skill walks through the verdict. Ground-truth flips caused by a data change are reported as [data bumps](#data-bump), not regressions; review any flagged as a possible hidden regression before trusting the count.
 
 ## After a run
 

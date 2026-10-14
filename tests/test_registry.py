@@ -20,6 +20,7 @@ EXPECTED_ORDER = (
     "date_extraction",
     "data_pull",
     "answer",
+    "ground_truth",
     "suggested_datasets",
     "nudge",
     "dashboard_created",
@@ -40,7 +41,7 @@ def test_registry_order_matches_legacy_merge_order():
 def test_every_known_score_field_is_owned_exactly_once():
     # Pinned so that adding or removing a score field is a deliberate,
     # visible edit.
-    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 28
+    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 30
 
 
 def test_run_evaluations_with_no_expectations_scores_nothing():

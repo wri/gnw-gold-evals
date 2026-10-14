@@ -13,10 +13,11 @@ defined in the [README glossary](../../../README.md#glossary).
 
 - Editing the **query or any non-empty `expected` value mints a new uid**.
   In a multi-turn case, so does reordering the turns and, in `cases/v2`,
-  changing any turn's `deltas`. That is versioning, not an error, but say it
-  out loud: results keyed to the old uid drop out of future diffs (no later
-  run shares that uid), so the case needs re-verification at its new uid
-  before it can be trusted (or stay `done`).
+  changing any turn's `deltas` (its MANIFEST.json sets `uid_includes_deltas`;
+  reordering delta keys or field lists does not count). That is versioning,
+  not an error, but say it out loud: results keyed to the old uid drop out of
+  future diffs (no later run shares that uid), so the case needs
+  re-verification at its new uid before it can be trusted (or stay `done`).
 - **`status`, `group`, `notes`, formatting, key order never affect the uid.**
   Triage annotations are free.
 - The uid hashes **all** expected fields, scored or not (for example

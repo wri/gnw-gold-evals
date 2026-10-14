@@ -40,6 +40,7 @@ Procedures and reasons: README ["Running the set"](README.md#running-the-set) an
 - **Two tiers.** A smoke run (1 trial, the CLI default) is never committed, diffed or used as a baseline. Anything that produces a regression count or becomes a baseline uses `--trials 3`.
 - **Comparable runs only.** Both sides of a diff need the same `ff`, the same trial count and the same environment ([Comparing two runs](results/README.md#comparing-two-runs)). If no comparable run exists, say so rather than diffing against something else.
 - **Methodology note.** If check semantics changed since the previous run, pass `--note "<what changed>"` when starting `gold run`, so diffs are not read as agent changes.
+- **Ground truth.** Cases with `expected.ground_truth` fetch their expected figures from the production analytics API, whatever `--env`, once per run before the first trial. A failed fetch aborts the run before any agent call, so nothing is written. Because every run fetches afresh, two runs can differ with no agent change; `diff_runs.py` files those flips as data bumps, never regressions ([Run-time ground truth](cases/README.md#run-time-ground-truth-ground_truth)).
 - **Timeouts.** A block of `ReadTimeout`s late in a run usually means too many workers (runs record `workers` and `trial_timeout` so this can be traced). Lower `--workers` before blaming the agent.
 - **Finish official runs.** An official run is not done until the four steps in README "After a run" are complete. Show the user what will be committed before committing.
 - **The ledger is written by the harness only.** Never hand-write, edit, backfill or splice a run file; a re-ingest after a tooling fix means deleting the file visibly in a reviewable commit. To combine a full run with a scoped re-run, use `tools/compose_runs.py` ([results/README.md](results/README.md)).
@@ -56,7 +57,7 @@ Procedures and reasons: README ["Running the set"](README.md#running-the-set) an
 **WARNING**: critical for the ledger. Do not break it. Every result in `results/runs/` is keyed on a case's uid, so the uid is the only link between a score and the exact case content it was measured against. If the hash changes for content that did not change, every committed run stops matching its cases and the regression history is lost. If the hash misses a change that did happen, old scores are silently attributed to the edited case, and diffs compare two different tests as if they were one. `src/goldset/canonical.py` defines the hashing; the README glossary defines [uid](README.md#uid) and [caseset_version](README.md#caseset-version).
 
 - **uid** = `sha256(canonical_json(query + non-empty expected values))[:16]`. Changing the query or any `expected` value mints a new uid: that is the versioning mechanism, not an error. `status`, `group`, `notes`, key order, leading and trailing whitespace, and line endings never affect it, so triage never mints a version.
-- **Multi-turn uids** hash every turn's query and expected values in order, so reordering turns mints a new uid. In v2, each turn's `deltas` are hashed too; frozen v1 uids leave them out.
+- **Multi-turn uids** hash every turn's query and expected values in order, so reordering turns mints a new uid. In v2, each turn's `deltas` are hashed too (its `MANIFEST.json` sets `uid_includes_deltas`); frozen v1 uids leave them out.
 - **The hash covers every expected field, scored or not** (for example `dataset_name`, which no check reads). An unscored field is still part of what the case asserts, and a check may start reading it later; if the hash skipped it, an edit to it would change the case without a new uid. Do not narrow the hash to scored fields, and do not move expectations into `notes` to avoid uid churn.
 - **caseset_version** (in each store's `MANIFEST.json`) hashes the sorted uids. Results key on uid; diffs run over the uids two runs share.
 - **`id`** (such as `1-030`) is the stable lineage handle across versions.
@@ -65,6 +66,8 @@ Procedures and reasons: README ["Running the set"](README.md#running-the-set) an
 ## Dataset coverage against project-zeno
 
 COVERAGE.md's "Dataset coverage" section measures the case set against the agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` in wri/project-zeno), read from the committed snapshot `cases/zeno_catalog.json` so that CI needs no network. When project-zeno adds, removes or changes a dataset, run `tools/sync_zeno_catalog.py`, then `tools/coverage_doc.py`, and commit both together. The sync reads `origin/main` of the sibling checkout `../project-zeno` with `git show` and never touches its working tree (`--zeno` and `--ref` override the defaults). The `sync-catalog` skill has the steps.
+
+The snapshot is also the ground-truth request table. It carries each dataset's `analytics_api_endpoint`, `content_date`, `content_date_fixed`, `start_date` and `end_date`, and `src/goldset/groundtruth/catalog.py` builds every analytics request from them, so a dataset whose window grows upstream cannot leave ground truth computed over the old one. Payload shape, the 4/8/10 `intersections` split and the AOI type map have no YAML form in project-zeno (they are code in its `_build_payload` and `_get_aoi_type`), so `catalog.py` hardcodes them and they change only with a reviewed upstream change. A dataset missing from the snapshot has no request, and a case that needs it fails the run loudly.
 
 ## Architecture
 
@@ -75,7 +78,8 @@ COVERAGE.md's "Dataset coverage" section measures the case set against the agent
   - `adapter.py`, `eval_types.py`: turn a case's expectations into the harness's typed inputs, and define its result type.
   - `runner/`: API calls (`api.py`), multi-turn threads (`multiturn.py`), raw artefact capture (`artifacts.py`).
   - `evaluators/` and `registry.py`: the checks, and the order the runner calls them in.
-  - `models.py`: the LLM judge client.
+  - `models.py`: the LLM judge client; `judge_config.py`: the judge backend (`--judge-backend`) and the model name recorded on runs.
+  - `groundtruth/`: run-time ground truth: selector parsing, analytics requests built from the catalogue snapshot, and the fetch before the first trial.
   - `buckets.py`: the bucket map, the info-only set, row verdicts, and the reconciliation of implied with evaluated checks.
   - `ledger.py`: run records, run_ids, majority verdicts and partial files.
   - `cli.py`: the `gold` command.

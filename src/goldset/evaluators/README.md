@@ -18,12 +18,12 @@ The run report's reconciliation line compares the checks a case's expected value
 
 `buckets.row_verdict` gives each row one verdict:
 
-- `error`: the API call or a judge call failed. Never counted as a fail.
+- `error`: the API call or a judge call failed, or a ground-truth case could not be graded (see [`ground_truth_match`](#ground_truth_match)). Never counted as a fail.
 - `uncovered`: no gating check evaluated. Never counted as a pass.
 - `fail`: at least one gating check scored `0.0`.
 - `pass`: otherwise.
 
-A gating check can turn a row to `fail`. An info-only check is recorded and reported but never affects a verdict or the release gate (see [Info-only checks](#info-only-checks)). A judge outage never guesses a score: the check stays `null`, its name goes into the entry's `judge_errors`, and the row becomes `error`.
+A gating check can turn a row to `fail`. An info-only check is recorded and reported but never affects a verdict or the release gate (see [Info-only checks](#info-only-checks)). A judge outage never guesses a score: the check stays `null`, its name goes into the entry's `judge_errors`, and the row becomes `error`. The one exception is the info-only `ground_truth_answer`, which keeps its outages out of `judge_errors` (see its entry).
 
 ### Where the evidence lands
 
@@ -38,7 +38,7 @@ Per-turn checks are stored with a turn prefix (`t2.aoi_id_match`), and the verdi
 
 ### Numbers are compared in code
 
-No LLM judge does arithmetic. The judge (`claude-haiku-4-5` at temperature 0, `models.HAIKU`) extracts or classifies, and code applies the 2% tolerance (`llm_judges.NUMERIC_TOLERANCE`) with one parser, `chart_numeric.parse_expected_number`, so an answer and its chart agree on what "within tolerance" means. `charts_answer` gates on the code comparison alone; `agent_answer` lets the judge overturn a code failure, because the parser cannot read every language's number format.
+No LLM judge does arithmetic. The judge (by default `claude-haiku-4-5` at temperature 0, `models.HAIKU`; `--judge-backend openrouter-jev-decisions` swaps in TypeSafe JEV through OpenRouter Decisions) extracts or classifies, and code applies the 2% tolerance (`llm_judges.NUMERIC_TOLERANCE`) with one parser, `chart_numeric.parse_expected_number`, so an answer and its chart agree on what "within tolerance" means. `charts_answer` gates on the code comparison alone; `agent_answer` lets the judge overturn a code failure, because the parser cannot read every language's number format.
 
 ## Index
 
@@ -54,15 +54,17 @@ This is the canonical check-to-bucket map; other docs link here. Bucket tags com
 | [`context_layer_match`](#context_layer_match) | retrieval | gating | deterministic | `dataset_evaluator.evaluate_dataset_selection` | `context_layer` and `dataset_id` |
 | [`date_extraction`](#date_extraction) | retrieval | gating | deterministic | `data_pull_evaluator.evaluate_date_extraction` | `start_date` and `end_date` |
 | [`date_coverage`](#date_coverage) | none | info-only | deterministic | `data_pull_evaluator.evaluate_date_selection` | `start_date` and `end_date` |
-| [`data_pull_exists`](#data_pull_exists) | retrieval | gating | deterministic | `data_pull_evaluator.evaluate_data_pull` | a pull is expected: `answer`, or `insight` in `dashboard_widgets`, unless `clarification` is `true` |
+| [`data_pull_exists`](#data_pull_exists) | retrieval | gating | deterministic | `data_pull_evaluator.evaluate_data_pull` | a pull is expected: `answer`, `ground_truth`, or `insight` in `dashboard_widgets`, unless `clarification` is `true` |
 | [`answered_without_data`](#answered_without_data) | retrieval | gating | deterministic | `guards.evaluate_guards` | a pull is expected |
 | [`pull_source_match`](#pull_source_match) | retrieval | gating | deterministic | `guards.evaluate_guards` | `dataset_id`, and a pull happened |
 | [`state_delta`](#state_delta) | retrieval | gating | deterministic | `runner.multiturn.evaluate_deltas` | a turn's `deltas:` block (turn 2 onwards) |
+| [`ground_truth_match`](#ground_truth_match) | retrieval | gating | deterministic | `groundtruth_checks.evaluate_ground_truth` | `ground_truth`, with values fetched at run start |
 | [`chart_integrity`](#chart_integrity) | analysis | gating | deterministic | `analysis_checks.evaluate_chart_integrity` | any row with charts |
 | [`class_value_match`](#class_value_match) | analysis | info-only | deterministic | `analysis_checks.evaluate_class_values` | `class_values` |
 | [`charts_answer`](#charts_answer) | analysis and output (shared) | gating | mixed | `llm_judges.resolve_chart_verdict` | `answer`, and charts exist |
 | [`charts_answer_judge`](#charts_answer_judge) | none | info-only | judge | `llm_judges.llm_judge_chart` | same rows as `charts_answer` |
 | [`agent_answer`](#agent_answer) | analysis and explanation (shared) | gating | mixed | `llm_judges.resolve_answer_verdict` | `answer`, and a final message |
+| [`ground_truth_answer`](#ground_truth_answer) | analysis and explanation (shared) | info-only | mixed | `groundtruth_checks.evaluate_ground_truth` | `ground_truth`, with values fetched at run start, and a final message |
 | [`expected_text_match`](#expected_text_match) | explanation | gating | judge | `llm_judges.llm_judge_expected_text` | `text`, and a final message |
 | [`web_fallback`](#web_fallback) | explanation | gating | deterministic | `guards.evaluate_guards` | a pull is expected, and a final message |
 | [`answer_traceability`](#answer_traceability) | explanation | info-only | deterministic | `explanation_checks.evaluate_answer_traceability` | any row with charts and a final message |
@@ -174,7 +176,7 @@ No bucket · info-only · deterministic · `data_pull_evaluator.evaluate_date_se
 
 ## `data_pull_exists`
 
-Retrieval · gating · deterministic · `data_pull_evaluator.evaluate_data_pull` · runs when: a pull is expected (`answer` is set, or `dashboard_widgets` contains `insight`, unless `clarification` is `true`)
+Retrieval · gating · deterministic · `data_pull_evaluator.evaluate_data_pull` · runs when: a pull is expected (`answer` or `ground_truth` is set, or `dashboard_widgets` contains `insight`, unless `clarification` is `true`)
 
 **Measures.** Whether an analytics pull happened: the last entry in `agent_state["statistics"]` must carry a `source_url` or an `id`, or at least one row of inline data. "A pull is expected" is `ExpectedData.expects_data_pull`, the same rule `answered_without_data` and `web_fallback` use.
 
@@ -231,6 +233,22 @@ Retrieval · gating · deterministic · `runner.multiturn.evaluate_deltas` (outs
 **Triage.**
 - A turn that errors ends the conversation: later turns record no checks, and the row's verdict is `error`, not a partial score.
 - The `suggested_datasets` snapshot field is legacy and always empty, because the agent no longer writes it. Assert on `nudge_type` instead.
+
+## `ground_truth_match`
+
+Retrieval · gating · deterministic · `groundtruth_checks.evaluate_ground_truth` · runs when: `ground_truth` is set and its values were fetched at run start
+
+**Measures.** Whether the agent's own data pull contains the figure the analytics API returns for the case's selector (see [Run-time ground truth](../../../cases/README.md#run-time-ground-truth-ground_truth)). The harness fetches the expected values once per run, before the first trial. After each trial the runner reads the table behind the agent's last `statistics` entry (its `source_url`) and applies the selector to it, and every expected value must be matched within 2% (`llm_judges.NUMERIC_TOLERANCE`). Both sides query the same API, so this measures whether the agent built the right request and read the right number, not the data itself. A readable pull decides alone: a chart that happens to show the right figure cannot rescue a pull built with the wrong area, dataset, window or parameters. Only when the pulled table cannot be read does the check fall back to the figures in `charts_data`.
+
+**Scores.** `1.0` when every expected value is found within tolerance · `0.0` when the readable pull lacks a value or gives a different one, or when the agent made no pull at all (a numeric question answered without data is a failure, not an abstention) · `null` when `ground_truth` is not set, or when the pull could not be read and no chart figure matched (the harness could not see, so there is no verdict against the agent). If the selector names a column the fetched response lacks, or no values were fetched for the case, both ground-truth checks stay `null` and the row gets an `error`, so the check never passes against nothing.
+
+**Evidence.** `reasons.ground_truth_match`: the selector, then for each value the expected figure, what the agent's pull (or the chart fallback) gave and the difference, and whether that is within tolerance · `actuals.ground_truth_match` (failing rows only): `agent_ground_truth`, the same comparison · the entry's `ground_truth` object records what was fetched, its `digest`, and in `agent_values` the agent's own figure per trial (taken from its pull only, never from the chart fallback).
+
+**Triage.**
+- Only the last pull is graded. A trial that pulls more than once (a retry with corrected parameters, or two areas pulled separately) is graded on its final pull, as every check that reads `statistics` is. `agent_values` and the artefact describe the last pull only, so look for earlier pulls in the trace at `trace_url`. Several areas in one request are fine: the selector spans every id the request names.
+- A flip between two runs while the case's `digest` moved is a data bump, not a regression: `tools/diff_runs.py` lists it separately and flags it when the agent's figure matches neither run's values ([Comparing two runs](../../../results/README.md#comparing-two-runs)).
+- An unresolved selector is reported when the run starts (the prefetch line names the cases) and every trial of the case errors. Fix the selector against the API's column names ([cases/README.md](../../../cases/README.md#run-time-ground-truth-ground_truth), rule 1); it is not an agent failure.
+- It shares an evaluator with the judged `ground_truth_answer`, whose `kind` is `mixed`, so `tools/flakiness.py` holds it to the judged stability limit.
 
 ## `chart_integrity`
 
@@ -310,6 +328,20 @@ Analysis and explanation (shared) · gating · mixed · `llm_judges.resolve_answ
 - Shared between two buckets, so a failure is not attributed to either.
 
 **Why it is built this way.** The judge applied its own tolerance inconsistently on identical input, so code does the comparison; the rescue covers what the parser cannot read.
+
+## `ground_truth_answer`
+
+Analysis and explanation (shared) · info-only · mixed · `groundtruth_checks.evaluate_ground_truth` · runs when: `ground_truth` is set, its values were fetched at run start, and the final message is not empty
+
+**Measures.** Whether the final message states the fetched figure: the usage half of run-time ground truth, where `ground_truth_match` is the retrieval half. A row can pull the right table and then state a different number. The judge (`llm_judges.judge_answer`) only extracts which number in the prose answers the question; code compares it with each fetched value within 2%.
+
+**Scores.** `1.0` when every extracted figure is within tolerance · `0.0` when any is outside it · `null` when `ground_truth` is not set, the final message is empty, the judge returns no comparable figure for a value (nothing parseable, or a percentage), or the judge call fails.
+
+**Evidence.** `reasons.ground_truth_answer`: for each value, the expected figure, the figure the prose states and the difference, or `JUDGE ERROR: ...` on an outage · `actuals.ground_truth_answer` (failing rows only): `agent_ground_truth_answer`.
+
+**Triage.**
+- A judge outage never turns the row to `error`. Unlike every other judged check, this one keeps the failure out of `judge_errors`, because an info-only check must not touch a verdict; the row is still decided by its gating checks, such as `ground_truth_match`.
+- On a case that uses `ground_truth` instead of `answer`, `agent_answer` and `charts_answer` do not run, so this is the only check of the figure the answer states, and it does not gate.
 
 ## `expected_text_match`
 
@@ -525,20 +557,21 @@ Scope · gating · deterministic · `suggested_datasets_evaluator.evaluate_sugge
 
 ## Info-only checks
 
-An info-only check (`buckets.INFO_ONLY`) is recorded and reported but never affects a row verdict or the release gate: `tools/diff_runs.py` lists its regressions but never fails `--fail-on-regression` or `--fail-on-coverage-loss` on them (its headline regression count still includes them), `tools/flakiness.py` labels it `info-only` instead of holding it to a stability limit, and COVERAGE.md leaves it out of its coverage counts.
+An info-only check (`buckets.INFO_ONLY`) is recorded and reported but never affects a row verdict or the release gate: `tools/diff_runs.py` lists its regressions but never fails `--fail-on-regression` or `--fail-on-coverage-loss` on them (its headline shows them as a separate info-only count), `tools/flakiness.py` labels it `info-only` instead of holding it to a stability limit, and COVERAGE.md leaves it out of its coverage counts.
 
 | Check | Why it is info-only | What would let it gate |
 |---|---|---|
 | `date_coverage` | The state field it reads records different ranges for the same query (see `date_extraction`). | A change in the agent so that state records the requested window. No threshold applies. |
 | `answer_traceability` | On its first run, claim extraction picked up unitless bold counts and ranks; the unit rule now filters them. | A 3-trial run with no extraction false positives (claims that are not real measures). |
 | `class_value_match` | Its expected figures were copied from unverified working notes, so its failures reported bad expectations, not bad behaviour. | A review that verifies its cases' expected figures against the source data. |
+| `ground_truth_answer` | It is judged, and every new judged check starts info-only. `ground_truth_match` already gates the same figure deterministically, so gating the prose too would count one failure twice. | A standard deviation of at most 0.10 over 3 trials. |
 | `charts_answer_judge` | It is the chart judge's framing opinion, which flipped between identical trials; `charts_answer` gates on the code comparison alone. | A standard deviation of at most 0.10 over 3 trials. [cases/README.md](../../../cases/README.md) separately rules out failing a case on chart choice. |
 
 New judged checks start info-only and gate only once a 3-trial run shows a standard deviation of at most 0.10. Three judged checks gate without having passed that step (`agent_answer`, `expected_text_match` and `clarification_requested`), because they came from the earlier gnw-evals harness already gating; `tools/flakiness.py` still holds them to the judged limit.
 
 Two interactions to keep in mind when reading a bucket table:
 
-- `date_coverage` and `charts_answer_judge` sit in no bucket. `answer_traceability` and `class_value_match` are tagged to explanation and analysis, and `buckets.summarize_buckets` does not filter info-only checks, so they count toward those buckets' pass and evaluated tallies and `rows_covered`, while never touching a verdict.
+- `date_coverage` and `charts_answer_judge` sit in no bucket. `answer_traceability` and `class_value_match` are tagged to explanation and analysis, and `ground_truth_answer` is shared between analysis and explanation. `buckets.summarize_buckets` does not filter info-only checks, so they count toward those buckets' pass and evaluated tallies and `rows_covered`, while never touching a verdict.
 - `buckets.implied_checks` implies `class_value_match` whenever `class_values` is set, so its absence shows on the reconciliation line, while COVERAGE.md leaves info-only checks out of its coverage counts. The two count slightly different populations.
 
 ## Adding a check

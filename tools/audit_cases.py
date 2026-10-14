@@ -13,6 +13,7 @@ audit gate" sections):
   cases
 - DON'Ts: relative-date queries (allowed when only routing is asserted),
   date expectations on datasets that are not date-scoped, judged-only cases
+- selectors: a `ground_truth` selector parses and is spelled canonically
 """
 
 from __future__ import annotations
@@ -26,6 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from goldset.buckets import buckets_for, implied_checks_for_case
+from goldset.groundtruth.selector import SelectorError, parse_selector
 from goldset.store import Case, load_store
 from goldset.templates import validate_templates
 
@@ -60,6 +62,11 @@ DETERMINISTIC_FIELDS = {
     "start_date", "end_date", "suggested_datasets", "nudge_type",
     "nudge_options", "dashboard_created", "dashboard_widgets",
     "scope", "chart_type", "class_values", "clarification",
+    # ground_truth is the most deterministic expectation in the set: the figure
+    # is fetched at run time and compared in code, never judged. Deliberately
+    # NOT in ROUTING_ONLY_FIELDS above — a fetch still needs a fixed window, so
+    # "deforestation last year" plus a selector must keep flagging.
+    "ground_truth",
 }
 
 
@@ -148,6 +155,33 @@ def dont_violations(case: Case) -> list[str]:
     return problems
 
 
+def selector_violations(case: Case) -> list[str]:
+    """A ``ground_truth`` selector must parse, and must be spelled canonically.
+
+    Two reasons, both about finding the problem early. A selector that does not
+    parse aborts a run during prefetch, which is a slow way to learn about a
+    typo. And the uid hashes the selector exactly as the file carries it, so two
+    spellings of one selector are two versions of the same test —
+    ``canonical()`` re-spells it for the ledger but cannot undo that.
+    """
+    problems = []
+    for expected in _expected_maps(case):
+        raw = str(expected.get("ground_truth") or "").strip()
+        if not raw:
+            continue
+        try:
+            canonical = parse_selector(raw).canonical()
+        except SelectorError as exc:
+            problems.append(f"{case.id}: {exc}")
+            continue
+        if raw != canonical:
+            problems.append(
+                f"{case.id}: ground_truth {raw!r} is not spelled canonically; "
+                f"use {canonical!r}"
+            )
+    return problems
+
+
 def audit(cases: list[Case]) -> dict:
     active = [c for c in cases if c.status.lower() not in EXCLUDED_STATUSES]
     group_counts = Counter(c.group for c in active)
@@ -161,6 +195,7 @@ def audit(cases: list[Case]) -> dict:
         "parked": len(cases) - len(active),
         "depth": [v for c in active if (v := depth_violation(c))],
         "donts": [p for c in active for p in dont_violations(c)],
+        "selectors": [p for c in active for p in selector_violations(c)],
         "thin_groups": {
             g: n for g, n in sorted(group_counts.items()) if n < COVERAGE_FLOOR
         },
@@ -186,6 +221,9 @@ def render(report: dict) -> str:
         f"## DON'T violations ({len(report['donts'])})",
         *_section([f"- {v}" for v in report["donts"]]),
         "",
+        f"## Selector violations ({len(report['selectors'])})",
+        *_section([f"- {v}" for v in report["selectors"]]),
+        "",
         f"## Groups below the floor of {COVERAGE_FLOOR}",
         *_section([f"- {g}: {n}" for g, n in report["thin_groups"].items()]),
         "",
@@ -201,15 +239,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--strict", action="store_true",
-                        help="exit 1 on depth or DON'T violations (CI runs this). "
-                             "Coverage floors stay report-only: clearing them "
-                             "means authoring new cases, not fixing existing ones.")
+                        help="exit 1 on depth, DON'T or selector violations (CI "
+                             "runs this). Coverage floors stay report-only: "
+                             "clearing them means authoring new cases, not fixing "
+                             "existing ones.")
     args = parser.parse_args(argv)
 
     cases = [case for _p, case, _u in load_store(args.cases_dir)]
     report = audit(cases)
     print(render(report))
-    if args.strict and (report["depth"] or report["donts"]):
+    if args.strict and (report["depth"] or report["donts"] or report["selectors"]):
         return 1
     return 0
 

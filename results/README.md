@@ -32,7 +32,7 @@ Trimmed from `results/runs/20260831T163347Z_prod.json`:
   "build": "baseline",                   // the --build label (default "unknown")
   "ff": null,                            // agent tool profile; null = default
   "harness": {"repo": "gnw-gold-evals", "sha": "28941a8"},
-  "judge_model": "claude-haiku-4-5",
+  "judge_model": "claude-haiku-4-5",     // or "typesafe/jev-1.13" (--judge-backend)
   "num_trials": 3,
   "workers": 10,                         // concurrency, to trace timeouts to load
   "trial_timeout": 900.0,                // per-trial wall-clock limit, seconds
@@ -75,6 +75,37 @@ Trimmed from `results/runs/20260831T163347Z_prod.json`:
 }
 ```
 
+A ground-truth case (one with `expected.ground_truth`) adds an object to
+its entry, and the run gains a summary:
+
+```jsonc
+// on the entry
+"ground_truth": {
+  "selector": "sum(carbon_emissions_MgCO2e) WHERE tree_cover_loss_year=2019",
+  "values": [658496.56],            // fetched at run start, one fetch per run
+  "digest": "…",                    // absent when `unresolved` is set
+  "dataset_id": "4",
+  "content_date_fixed": false,
+  "resource_id": "09272a7f-…",
+  "fetched_at": "2026-09-14T12:00:05Z",
+  "request": {"endpoint": "/v0/land_change/tree_cover_loss/analytics",
+              "payload": {"aoi": {"type": "admin", "ids": ["MDG.3.4"]}}},
+  "metadata": {"aoi": {"provider": "gadm", "version": "4.1"}},  // the server's echo
+  "agent_values": [[658496.56]],    // per trial, aligned with `trials`: the agent's
+                                    // own pulled figure for each value; null where
+                                    // its pull lacked one
+  "unresolved": "column 'x' not in the response"  // only when the selector missed
+}
+
+// on the run, present when any entry has one
+"ground_truth": {
+  "base_url": "https://analytics.globalnaturewatch.org",
+  "cases": 1,
+  "prefetch_seconds": 3.4,          // summed across sessions on a resumed run
+  "tolerance": 0.02                 // relative tolerance the run graded with
+}
+```
+
 `validate_run` in `src/goldset/ledger.py` requires `run_id`, `started`,
 `environment`, `build`, `ff`, `harness`, `judge_model`, `num_trials`,
 `caseset_version` and `results`. Runs before 2026-08-04 lack `workers`,
@@ -90,6 +121,8 @@ Optional fields, written only when they apply:
 | `error` | entry | The agent call failed or timed out, or the harness hit an error. The row verdict is `error`, never `fail`. |
 | `judge_errors` | entry | Checks whose judge call failed. They stay `null` and the row verdict is `error`. |
 | `info` | entry | `{"slow": true, "threshold_s": 180.0}` when the case took longer than `--slow-threshold`. Never scored. |
+| `ground_truth` | run | Present when any case carried `expected.ground_truth`: the analytics host, the number of cases fetched, the fetch time and the grading tolerance. |
+| `ground_truth` | entry | What was fetched for a ground-truth case and how (shape above). See "Ground truth is recorded, not trusted" below. |
 | `turns_detail` | entry | Multi-turn cases only: each turn's query, reasons, latency and trace URL. Their checks sit in `checks` as `t<N>.<check>`. |
 | `stale_case`, `drift`, `joined_by` | entry | Written only by `tools/ingest_run.py`; see "Stale means stale" below. |
 
@@ -137,6 +170,17 @@ Optional fields, written only when they apply:
   `{"checks": {...}, "latency_s": ...}`. `error` and `judge_errors` collect
   the errors of every trial; `reasons`, `actuals`, `latency_s`, `trace_url`
   and `turns_detail` come from the last trial.
+- **Ground truth is recorded, not trusted.** A case carrying
+  `expected.ground_truth` is graded against values fetched from the
+  production analytics API before any trial, and its entry records what was
+  fetched and how. The API exposes no data-version field, so `digest` (a hash
+  of the values the selector picked, not of the whole response) is the only
+  sign that data moved: a digest that differs between two runs means that
+  case's data changed. It is omitted on an unresolved selector, where it
+  would be the same constant for every such case and prove nothing.
+  `tools/diff_runs.py` reads it to file data bumps (see
+  [Comparing two runs](#comparing-two-runs)), and reads `agent_values` to
+  flag a bump that may hide a real agent break.
 - **No fabricated or backfilled runs.** A run file is written by
   `gold run` (or, for legacy runs, `tools/ingest_run.py`) from real harness
   output, never by hand.
@@ -145,8 +189,8 @@ Optional fields, written only when they apply:
 
 `tools/diff_runs.py <older> <newer>` compares two runs check by check, on
 every case both runs scored, and reports regressions (pass to fail),
-recoveries (fail to pass) and coverage changes (a check that started or
-stopped being evaluated). The count means something only when the two runs
+recoveries (fail to pass), data bumps (below) and coverage changes (a check
+that started or stopped being evaluated). The count means something only when the two runs
 are comparable. Check these before you diff, and before you trust a count
 someone else produced:
 
@@ -169,6 +213,12 @@ number of shared cases with the result, because a small overlap makes a
 weak verdict. Pass `--strict` to refuse any pair whose `caseset_version`
 differs.
 
+To pick a baseline, `tools/find_baseline.py <new run>` prints the newest
+run in `results/runs/` that meets all three conditions and also loaded the
+same store (`caseset`), and exits non-zero with the reason when none does.
+The CI release gate uses it. Runs from before 2026-08-04 record no
+`caseset`, so they never match.
+
 **Why 3 trials.** Two trials of the same run (same build, same cases,
 nothing changed) differ by 18 to 29 spurious regressions. That is more than
 the 15 real regressions measured between two different builds, so a
@@ -177,10 +227,25 @@ run diffed against a 3-trial baseline is worse. Comparing the three trials
 stored in `20260831T163347Z_prod` pairwise gives the same band.
 
 **Info-only checks never gate.** Checks in `buckets.INFO_ONLY` (see
-[Info-only checks](../src/goldset/evaluators/README.md#info-only-checks))
-appear in the diff, but `--fail-on-regression` and `--fail-on-coverage-loss`
-ignore them. If the newer run carries a `methodology_note`, movement on the
+[Info-only checks](../src/goldset/evaluators/README.md#info-only-checks)),
+including multi-turn ones under a `t<N>.` prefix, appear in the diff, but
+`--fail-on-regression` and `--fail-on-coverage-loss` ignore them. The
+headline splits regressions and lost checks into gating and info-only
+counts, and the JSON report's `gating_regressions` and
+`gating_coverage_lost` are what the two flags read. If the newer run carries a `methodology_note`, movement on the
 checks it names comes from a harness change, not from the agent.
+
+**Data bumps are not regressions.** A ground-truth case is graded against
+values fetched when the run starts, so a data release can flip it with no
+agent change. When a ground-truth check flips and the case's `digest` moved,
+the diff lists it as a data bump with its cause: `data` (same request,
+different numbers), `request` (GOLD's own request changed, so a harness
+change) or `fixed_dataset` (a dataset declared never to change has changed).
+Bumps are never counted as regressions or recoveries and never gate. A
+`ground_truth_match` bump whose agent figure matches neither run's values,
+or that has no figure, is flagged `possible_hidden_regression`: review it
+before trusting the regression count, because a break that lands in the
+same run as a data change would otherwise never be counted.
 
 ## Composing a current picture across runs
 

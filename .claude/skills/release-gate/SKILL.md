@@ -38,22 +38,37 @@ uv run python tools/diff_runs.py results/runs/<old>.json results/runs/<new>.json
   checks count (section 3).
 - **Recoveries:** fail to pass. Report them, but recoveries never offset
   regressions in the verdict.
+- **Data bumps:** a ground-truth check flipped, either way, while the digest
+  of the values it was graded against moved: a dataset update served by the
+  analytics API, not agent movement. Bumps never count and never gate. Read
+  the cause: `data` is expected; `request` means GOLD's own request builder
+  changed between the runs (a harness change to explain); `fixed_dataset`
+  means a dataset declared never to change has moved (raise it with the
+  analytics team).
+- **Possible hidden regressions:** a data bump whose agent figure matches
+  neither run's values, or that has no figure. A real break that lands in the
+  same run as a data change is filed as a bump, and if the agent stays broken
+  no later diff will count it (0.0 -> 0.0). Treat each flagged bump as a
+  regression until its evidence says otherwise.
 - **Coverage loss:** checks that silently stopped evaluating
   (`--fail-on-coverage-loss`). A check that vanished is not a check that
   passed.
 
 ## 3. The verdict
 
-Report as: **N regressions / M recoveries / K coverage losses over I shared
-uids**. Count gating checks only: take N from the entries under
-`regressions` in `scratch/gate.json` with `"info_only": false` (exactly what
-`--fail-on-regression` gates on), and M and K the same way from `recoveries`
-and `coverage_lost`. Info-only checks never count towards N, M or K, whatever
-total the printed headline shows.
+Report as: **N regressions / D data bumps (F flagged) / M recoveries / K
+coverage losses over I shared uids**. Count gating checks only: N is
+`gating_regressions` in `scratch/gate.json` (exactly what
+`--fail-on-regression` gates on), K is `gating_coverage_lost`, and M counts
+the entries under `recoveries` with `"info_only": false`. D is the number of
+entries under `data_bumps`, and F those carrying
+`possible_hidden_regression`. Info-only checks never count towards N, M or
+K; the printed headline shows the gating and info-only split.
 
-Then give the row-level evidence for each regression (check, expected versus
-actual, per-trial pattern). Cross-check suspicious regressions against
-`flakiness.py --per-case` on the new run before calling them real: a
+Then give the row-level evidence for each regression and each flagged data
+bump (check, expected versus actual, per-trial pattern). Cross-check
+suspicious regressions against `flakiness.py --per-case` on the new run
+before calling them real: a
 flapping check is a flake finding, not a release blocker, unless it flapped
 into consistent failure.
 
