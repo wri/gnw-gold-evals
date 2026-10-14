@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/wri/gnw-gold-evals/schema/case.schema.json",
   "title": "GOLD case",
-  "description": "One capability smoke-test case: single-turn (query + expected) or multi-turn (turns). The uid is a truncated SHA-256 over the canonical serialisation of the queries + non-empty expected values — order-sensitive across turns (see src/goldset/canonical.py); tools/check.py enforces that it is truthful.",
+  "description": "One capability smoke-test case: single-turn (query + expected) or multi-turn (turns). The uid is a truncated SHA-256 over the canonical serialisation of the queries + non-empty expected values, plus each turn's non-empty deltas in stores whose MANIFEST.json sets uid_includes_deltas (cases/v2) — order-sensitive across turns (see src/goldset/canonical.py); tools/check.py enforces that it is truthful.",
   "type": "object",
   "required": ["id", "uid", "status", "group"],
   "additionalProperties": false,
@@ -15,7 +15,7 @@
     "uid": {
       "type": "string",
       "pattern": "^[0-9a-f]{16}$",
-      "description": "Content hash of query/queries + expectations. Changes on every semantic edit; results are keyed on it."
+      "description": "Content hash of query/queries + expectations. In cases/v2 (MANIFEST.json uid_includes_deltas: true) it also covers each multi-turn turn's non-empty deltas, canonicalised so key and list order never matter; in cases/v1 (flag absent, frozen baseline) deltas do not participate. Changes on every semantic edit; results are keyed on it."
     },
     "status": {
       "type": "string",

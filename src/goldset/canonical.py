@@ -51,21 +51,54 @@ def case_uid(query: str, expected: Mapping[str, object]) -> str:
     return digest[:UID_LENGTH]
 
 
-def conversation_uid(turns: Iterable[Mapping[str, object]]) -> str:
+def canonical_deltas(deltas: object) -> dict[str, list[str]]:
+    """A turn's delta assertions in canonical form: each kind's field names
+    normalised, de-duplicated and sorted, empty kinds dropped. Key order,
+    list order and repeats never change what ``evaluate_deltas`` scores, so
+    they must never mint a version either."""
+    if not isinstance(deltas, Mapping):
+        return {}
+    clean = {}
+    for kind, fields in deltas.items():
+        if not isinstance(fields, (list, tuple)):
+            fields = [fields]
+        names = sorted({normalize_text(name) for name in fields} - {""})
+        if names:
+            clean[str(kind)] = names
+    return clean
+
+
+def conversation_uid(
+    turns: Iterable[Mapping[str, object]], include_deltas: bool = False
+) -> str:
     """uid for a multi-turn case: hash over every turn's query + expected,
     **in order** — turn order is test content, so reordering turns mints a
-    new version. Delta assertions and metadata do not participate, matching
-    the single-turn rule that annotations never mint versions."""
-    payload = json.dumps(
-        [
-            json.loads(
-                canonical_payload(
-                    str(turn.get("query", "")),
-                    turn.get("expected") or {},  # type: ignore[arg-type]
-                )
+    new version. Metadata never participates.
+
+    What else the uid covers depends on the store, via its MANIFEST.json
+    ``uid_includes_deltas`` flag (``include_deltas`` here):
+
+    - cases/v1 (flag absent, False): queries + expected only. Delta
+      assertions are scored but do not participate; v1 is a frozen baseline,
+      so its uids stay as imported.
+    - cases/v2 (flag True): each turn's non-empty ``deltas`` participate too,
+      in ``canonical_deltas`` form, so editing a delta assertion mints a new
+      version while reordering its keys or field lists does not.
+    """
+    turn_payloads = []
+    for turn in turns:
+        payload = json.loads(
+            canonical_payload(
+                str(turn.get("query", "")),
+                turn.get("expected") or {},  # type: ignore[arg-type]
             )
-            for turn in turns
-        ],
+        )
+        deltas = canonical_deltas(turn.get("deltas")) if include_deltas else {}
+        if deltas:
+            payload["deltas"] = deltas
+        turn_payloads.append(payload)
+    payload = json.dumps(
+        turn_payloads,
         sort_keys=True,
         ensure_ascii=False,
         separators=(",", ":"),

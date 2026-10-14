@@ -30,6 +30,10 @@ from goldset.canonical import (
 from goldset.runner.multiturn import SNAPSHOT_FIELDS
 
 MANIFEST_NAME = "MANIFEST.json"
+# Per-store identity rule, recorded in MANIFEST.json: when true, multi-turn
+# uids also hash each turn's deltas (see canonical.conversation_uid). Absent
+# means false, which keeps the frozen cases/v1 uids exactly as imported.
+UID_INCLUDES_DELTAS = "uid_includes_deltas"
 
 _SLUG_RE = re.compile(r"[^a-z0-9-]+")
 
@@ -45,6 +49,10 @@ class Case:
     (PR-07) carry ``turns`` instead: a list of ``{query, expected, deltas}``
     dicts, where ``deltas`` (turn >= 2 only) asserts state transitions
     between turns (``changed`` / ``retain`` / ``absent`` field lists).
+
+    ``uid_includes_deltas`` is the owning store's identity rule (its
+    manifest flag), not case content: it is never written to the YAML, and
+    ``load_store`` sets it from the store's manifest.
     """
 
     id: str
@@ -54,6 +62,7 @@ class Case:
     expected: dict[str, str] = field(default_factory=dict)
     notes: dict[str, str] = field(default_factory=dict)
     turns: tuple = ()
+    uid_includes_deltas: bool = False
 
     @property
     def is_multiturn(self) -> bool:
@@ -62,7 +71,9 @@ class Case:
     @property
     def uid(self) -> str:
         if self.is_multiturn:
-            return conversation_uid(self.turns)
+            return conversation_uid(
+                self.turns, include_deltas=self.uid_includes_deltas
+            )
         return case_uid(self.query, self.expected)
 
     def _validate_turns(self) -> list[str]:
@@ -170,10 +181,11 @@ def write_case(root: Path, case: Case) -> Path:
     return path
 
 
-def read_case(path: Path) -> tuple[Case, str]:
+def read_case(path: Path, uid_includes_deltas: bool = False) -> tuple[Case, str]:
     """Load a case file. Returns (case, stored_uid) — the stored uid is what
     the file claims; ``case.uid`` is what the content hashes to. A mismatch
-    means the file was edited without running ``check.py --fix``."""
+    means the file was edited without running ``check.py --fix``.
+    ``uid_includes_deltas`` is the owning store's identity rule."""
     raw = yaml.safe_load(path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
         raise ValueError(f"{path}: not a mapping")
@@ -201,31 +213,65 @@ def read_case(path: Path) -> tuple[Case, str]:
         expected={str(k): str(v) for k, v in (raw.get("expected") or {}).items()},
         notes={str(k): str(v) for k, v in (raw.get("notes") or {}).items()},
         turns=turns,
+        uid_includes_deltas=uid_includes_deltas,
     )
     return case, str(raw.get("uid", ""))
 
 
-def load_store(root: Path) -> list[tuple[Path, Case, str]]:
-    """All cases under ``root``, sorted by path for determinism."""
+def store_uid_includes_deltas(root: Path) -> bool:
+    """The store's ``uid_includes_deltas`` manifest flag; absent is False."""
+    value = (read_manifest(root) or {}).get(UID_INCLUDES_DELTAS, False)
+    if not isinstance(value, bool):
+        raise ValueError(
+            f"{root / MANIFEST_NAME}: {UID_INCLUDES_DELTAS} must be true or "
+            f"false, not {value!r}"
+        )
+    return value
+
+
+def load_store(
+    root: Path, uid_includes_deltas: bool | None = None
+) -> list[tuple[Path, Case, str]]:
+    """All cases under ``root``, sorted by path for determinism. Their uids
+    follow the store's manifest flag unless ``uid_includes_deltas`` is given
+    (``check.py --fix --uid-includes-deltas`` turning the rule on)."""
+    if uid_includes_deltas is None:
+        uid_includes_deltas = store_uid_includes_deltas(root)
     entries = []
     for path in sorted(root.rglob("*.yaml")):
-        case, stored_uid = read_case(path)
+        case, stored_uid = read_case(path, uid_includes_deltas)
         entries.append((path, case, stored_uid))
     return entries
 
 
-def build_manifest(cases: list[Case], source: str) -> dict:
-    """Deterministic manifest: set version + per-case index, sorted by id."""
+def build_manifest(
+    cases: list[Case], source: str, uid_includes_deltas: bool = False
+) -> dict:
+    """Deterministic manifest: set version + per-case index, sorted by id.
+    The ``uid_includes_deltas`` key is written only when true, so a store
+    without the rule (cases/v1) keeps a byte-identical manifest."""
+    mismatched = sorted(
+        c.id for c in cases if c.uid_includes_deltas != uid_includes_deltas
+    )
+    if mismatched:
+        raise ValueError(
+            f"cases {mismatched} were loaded with a different "
+            f"{UID_INCLUDES_DELTAS} rule than this manifest records "
+            f"({uid_includes_deltas}); their uids would not match"
+        )
     ordered = sorted(cases, key=lambda c: c.id)
-    return {
+    manifest: dict = {
         "caseset_version": caseset_version(c.uid for c in ordered),
         "case_count": len(ordered),
         "source": source,
-        "cases": [
-            {"id": c.id, "uid": c.uid, "group": c.group, "status": c.status}
-            for c in ordered
-        ],
     }
+    if uid_includes_deltas:
+        manifest[UID_INCLUDES_DELTAS] = True
+    manifest["cases"] = [
+        {"id": c.id, "uid": c.uid, "group": c.group, "status": c.status}
+        for c in ordered
+    ]
+    return manifest
 
 
 def write_manifest(root: Path, manifest: dict) -> Path:

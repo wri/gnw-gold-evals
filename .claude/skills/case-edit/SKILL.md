@@ -14,6 +14,9 @@ with the same ritual; skipping it fails CI.
   That is versioning, not an error — but say it out loud: results keyed to
   the old uid become `stale_case` in future comparisons, and the case needs
   re-verification at its new uid before it can be trusted (or stay `done`).
+  In cases/v2, editing a multi-turn turn's `deltas` mints one too (its
+  MANIFEST.json sets `uid_includes_deltas`); reordering delta keys or field
+  lists does not.
 - **`status`, `group`, `notes`, formatting, key order never affect the uid.**
   Triage annotations are free.
 - The uid hashes **all** expected fields, scored or not — do not "optimise"

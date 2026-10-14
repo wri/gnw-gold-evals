@@ -121,9 +121,9 @@ def render(report: dict) -> str:
         lines += [
             "",
             f"> ⚠ **Sources disagree on `ff`** ({', '.join(str(f) for f in sorted(ff_values, key=str))}). "
-            "`ff` gates dashboards and satellite imagery, so only compose across it "
-            "when the rows taken from the unflagged run do not exercise those "
-            "capabilities.",
+            "Different `ff` values expose different agent tools, so rows from "
+            "runs with differing `ff` must never be composed: re-run the "
+            "supplements with the primary's `ff`.",
         ]
 
     total = report["measured"]

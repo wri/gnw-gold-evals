@@ -6,6 +6,11 @@
 The editing workflow this enables: edit a case YAML by hand -> run
 ``check.py --fix`` -> commit. The uid then truthfully identifies the new
 version of the case, and the manifest's caseset_version moves with it.
+
+uids follow the store's ``uid_includes_deltas`` manifest flag (multi-turn
+deltas hashed into the uid; set for cases/v2, absent for the frozen
+cases/v1). ``--fix --uid-includes-deltas`` turns it on for a store and
+rewrites its uids; ``--fix`` alone preserves whatever the manifest records.
 """
 
 from __future__ import annotations
@@ -20,6 +25,7 @@ from goldset.store import (
     build_manifest,
     load_store,
     read_manifest,
+    store_uid_includes_deltas,
     write_case,
     write_manifest,
 )
@@ -30,9 +36,20 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--fix", action="store_true")
+    parser.add_argument(
+        "--uid-includes-deltas", action="store_true",
+        help="with --fix: record uid_includes_deltas in this store's manifest "
+             "and rehash its multi-turn uids over each turn's deltas (one-way; "
+             "never use on the frozen cases/v1)",
+    )
     args = parser.parse_args()
+    if args.uid_includes_deltas and not args.fix:
+        parser.error("--uid-includes-deltas changes identities; it needs --fix")
 
-    entries = load_store(args.cases_dir)
+    uid_includes_deltas = (
+        args.uid_includes_deltas or store_uid_includes_deltas(args.cases_dir)
+    )
+    entries = load_store(args.cases_dir, uid_includes_deltas)
     if not entries:
         print(f"no cases found under {args.cases_dir}")
         return 1
@@ -62,7 +79,7 @@ def main() -> int:
     cases = [case for _p, case, _u in entries]
     manifest_on_disk = read_manifest(args.cases_dir)
     source = (manifest_on_disk or {}).get("source", "unknown")
-    manifest = build_manifest(cases, source)
+    manifest = build_manifest(cases, source, uid_includes_deltas)
     if manifest_on_disk != manifest:
         if args.fix:
             write_manifest(args.cases_dir, manifest)
