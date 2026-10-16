@@ -67,6 +67,34 @@ def test_f3_legacy_flat_text_key_still_accepted():
         "dashboard_widgets_valid_score"] == 1.0
 
 
+# --- the live alerts widget (PZB-1468) persists an area and a layer snapshot
+
+def _alerts_widget(**config):
+    return {"widget_type": "alerts", "config": config}
+
+
+def test_alerts_widget_valid_with_area_and_layer():
+    dashboard = {"widgets": [_alerts_widget(
+        alerts={"aoi": {"source": "gadm", "src_id": "BRA.16_1",
+                        "subtype": "state-province", "name": "Paraná"},
+                "days": 30},
+        dataset={"dataset_id": 11, "tile_url": "https://tiles/{z}/{x}/{y}.png"},
+    )]}
+    result = evaluate_dashboard_widgets(dashboard, ["alerts"])
+    assert result["dashboard_widgets_valid_score"] == 1.0
+    assert result["dashboard_widgets_match_score"] == 1.0
+
+
+def test_alerts_widget_invalid_without_area_or_layer():
+    no_area = {"widgets": [_alerts_widget(
+        dataset={"tile_url": "https://tiles/{z}/{x}/{y}.png"})]}
+    no_layer = {"widgets": [_alerts_widget(
+        alerts={"aoi": {"src_id": "BRA.16_1"}}, dataset={})]}
+    for dashboard in (no_area, no_layer):
+        assert evaluate_dashboard_widgets(dashboard, ["alerts"])[
+            "dashboard_widgets_valid_score"] == 0.0
+
+
 def test_f3_empty_dashboard_fails_validity_when_widgets_were_expected():
     """An empty dashboard fails validity only when the case expected widgets.
 
