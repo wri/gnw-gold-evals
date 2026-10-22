@@ -120,6 +120,14 @@ def _widget_is_valid(widget: dict[str, Any]) -> bool:
         config = widget.get("config") or {}
         snapshot = config.get("dataset") or config.get("imagery") or {}
         return bool(snapshot.get("tile_url"))
+    if widget_type == "alerts":
+        # The live alerts list (project-zeno PZB-1468, Stage 1): the widget
+        # persists its area and a map-layer snapshot, never rows. Valid when
+        # both are there to render from.
+        config = widget.get("config") or {}
+        aoi = (config.get("alerts") or {}).get("aoi") or {}
+        snapshot = config.get("dataset") or {}
+        return bool(aoi.get("src_id")) and bool(snapshot.get("tile_url"))
     return False
 
 
