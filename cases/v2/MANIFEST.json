@@ -1,6 +1,6 @@
 {
-  "caseset_version": "ad7fd6e591baf19b",
-  "case_count": 143,
+  "caseset_version": "295e4a6f3b7f8f11",
+  "case_count": 145,
   "source": "gold-live.csv",
   "uid_includes_deltas": true,
   "cases": [
@@ -789,6 +789,18 @@
       "uid": "9237ca294507119f",
       "group": "context-layer",
       "status": "done"
+    },
+    {
+      "id": "1-138",
+      "uid": "b99f918a3a730013",
+      "group": "refusal",
+      "status": "todo"
+    },
+    {
+      "id": "1-139",
+      "uid": "3114d208350601e7",
+      "group": "context-layer",
+      "status": "todo"
     },
     {
       "id": "mt-001",
