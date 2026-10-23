@@ -13,15 +13,9 @@ expected:
 notes:
   difficulty: medium
   behaviour: answer with data
-  benchmark_id: bm26-046
   lineage: benchmark v2026 proposed set (bm26-046); USY-001399 Olam PA monitoring
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
-  benchmark_type: comparison
-  jtbd: 5,7
-  impact_pathway: 1 Local stewardship
-  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
-    Field staff; Journalists
   user_story_refs: USY-001399 Olam PA monitoring

@@ -13,14 +13,15 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with data; annualise correctly
-  benchmark_id: bm26-049
   lineage: benchmark v2026 proposed set (bm26-049); Rainforest Foundation UK vs CAFI
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  user_story_refs: 'Impact-pathway PDF: Rainforest Foundation UK vs CAFI (not in story CSV)'
+  benchmark_id: bm26-199
   benchmark_type: comparison
-  jtbd: 1,9
-  impact_pathway: 5 Finance for nature
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    All direct-connect groups
-  user_story_refs: Rainforest Foundation UK vs CAFI
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue

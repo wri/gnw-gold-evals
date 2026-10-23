@@ -13,13 +13,15 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with fire + driver data
-  benchmark_id: bm26-141
   lineage: benchmark v2026 proposed set (bm26-141); USY-001217 Bolivia fires
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  user_story_refs: USY-001555 Bolivia fires documentary
+  benchmark_id: bm26-144
   benchmark_type: causal
-  jtbd: '1'
-  impact_pathway: 1 Local stewardship
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators
-  user_story_refs: USY-001217 Bolivia fires
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story

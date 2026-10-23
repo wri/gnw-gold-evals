@@ -13,14 +13,15 @@ expected:
 notes:
   difficulty: hard
   behaviour: check premise against trend; drivers; caveat on causality
-  benchmark_id: bm26-146
   lineage: benchmark v2026 proposed set (bm26-146); Brazilian enforcement users
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  user_story_refs: USY-001601 Financial Transparency Coalition (analogue)
+  benchmark_id: bm26-148
   benchmark_type: causal
-  jtbd: 1,7
-  impact_pathway: 4 Commitments & accountability
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    Field staff; Supply chain; Sustainable finance; Service providers
-  user_story_refs: Brazilian enforcement users
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Story analogue

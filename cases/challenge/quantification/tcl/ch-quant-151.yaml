@@ -14,15 +14,16 @@ expected:
 notes:
   difficulty: medium
   behaviour: answer with data
-  benchmark_id: bm26-001
   lineage: benchmark v2026 proposed set (bm26-001); USY-000852
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  user_story_refs: USY-001120 Indigenous-land loss thesis; USY-001433 (analogue)
+  benchmark_id: bm26-120
   benchmark_type: quantification
-  jtbd: 5,7
-  impact_pathway: 1 Local stewardship
-  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
-    Field staff; Journalists
-  user_story_refs: USY-000852
+  use_cases: UC3
+  engagement: First look
+  aoi_type: Indigenous / community territory
+  capability: Supported
+  grounding: Story analogue

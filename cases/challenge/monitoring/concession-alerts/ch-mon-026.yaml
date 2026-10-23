@@ -16,7 +16,6 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with data, or state concession layer is not available
-  benchmark_id: bm26-135
   lineage: benchmark v2026 proposed set (bm26-135); USY-000591 TuK concessions; USY-001404
     Mars
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
@@ -25,9 +24,11 @@ notes:
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
     confirm concession layer support
+  user_story_refs: USY-001417 Wilmar concessions; USY-001298 Tesso Nilo
+  benchmark_id: bm26-075
   benchmark_type: monitoring
-  jtbd: 3,5,7
-  impact_pathway: 2 Commodity supply chains
-  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
-    Journalists; Sustainable finance
-  user_story_refs: USY-000591 TuK concessions; USY-001404 Mars
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: Direct from story

@@ -14,11 +14,13 @@ notes:
   lineage: explicit primary forest
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
   source_tab: challenge-dataset-v1
-  benchmark_id: bm26-182
-  benchmark_type: spatial
-  jtbd: 10,11
-  impact_pathway: 'Cross-cutting: dataset discovery'
-  user_groups: All direct-connect groups
   synthetic: 'FALSE'
-  user_story_refs: —
+  user_story_refs: USY-001275 Suriname primary forest
   refresh_risk: Low
+  benchmark_id: bm26-285
+  benchmark_type: spatial
+  use_cases: UC3;UC5;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Verified Challenge case

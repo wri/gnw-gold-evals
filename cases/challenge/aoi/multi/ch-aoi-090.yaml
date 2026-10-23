@@ -13,11 +13,13 @@ notes:
   verify_query: Pará|Paraná
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
-  benchmark_id: bm26-170
-  benchmark_type: spatial
-  jtbd: '8'
-  impact_pathway: 'Cross-cutting: right place'
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Supply chain
   synthetic: 'FALSE'
-  user_story_refs: —
+  user_story_refs: USY-001250 jurisdictional comparison (analogue)
   refresh_risk: Low
+  benchmark_id: bm26-111
+  benchmark_type: spatial
+  use_cases: UC2;UC3;UC5
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case

@@ -21,3 +21,12 @@ notes:
     needs a seeded test account with saved AOIs
   status_reason: needs a seeded test account with saved areas (portfolio triage); not runnable
     yet
+  benchmark_id: bm26-077
+  benchmark_type: monitoring
+  synthetic: 'TRUE'
+  use_cases: UC2
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001400 TRACT; USY-001570 Conservation Allies

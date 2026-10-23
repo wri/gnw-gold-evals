@@ -15,7 +15,6 @@ expected:
 notes:
   difficulty: medium
   behaviour: answer with data
-  benchmark_id: bm26-139
   lineage: benchmark v2026 proposed set (bm26-139); USY-000591 TuK (Riau fires)
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
@@ -23,9 +22,12 @@ notes:
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   unscored_params: confidence=high
   build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  user_story_refs: USY-001298 Tesso Nilo palm oil
+  benchmark_id: bm26-017
   benchmark_type: monitoring
-  jtbd: 3,7
-  impact_pathway: 1 Local stewardship
-  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
-    Journalists; Sustainable finance
-  user_story_refs: USY-000591 TuK (Riau fires)
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  refresh_risk: Alert confidence can upgrade

@@ -1,0 +1,4908 @@
+{
+  "schema_version": 1,
+  "version": "2026-draft-3",
+  "status": "draft",
+  "created": "2026-10-23",
+  "frozen": null,
+  "source": {
+    "cases_dir": "cases/challenge",
+    "caseset_version": "a25ea96aa7dc5330"
+  },
+  "sampling": {
+    "tool": "tools/benchmark_from_sheet.py",
+    "method": "curated: one member per sheet row",
+    "seed_file": "seeds/benchmark-v2026-bef-2026-10-22.csv",
+    "excluded": [
+      {
+        "benchmark_id": "bm26-001",
+        "id": "ch-mon-031",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-026",
+        "id": "ch-mon-050",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-027",
+        "id": "ch-mon-051",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-077",
+        "id": "ch-mon-028",
+        "status": "todo",
+        "reason": "needs a seeded test account with saved areas (portfolio triage); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-081",
+        "id": "ch-port-002",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-083",
+        "id": "ch-port-004",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-084",
+        "id": "ch-port-005",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-085",
+        "id": "ch-port-006",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-086",
+        "id": "ch-port-007",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-087",
+        "id": "ch-port-008",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-088",
+        "id": "ch-port-009",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-091",
+        "id": "ch-port-012",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-092",
+        "id": "ch-port-013",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-093",
+        "id": "ch-port-014",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-098",
+        "id": "ch-port-019",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-099",
+        "id": "ch-port-020",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-100",
+        "id": "ch-port-021",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-101",
+        "id": "ch-port-022",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-102",
+        "id": "ch-port-023",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-103",
+        "id": "ch-port-024",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-114",
+        "id": "ch-port-025",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-115",
+        "id": "ch-port-026",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-116",
+        "id": "ch-quant-158",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-169",
+        "id": "ch-comp-167",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-170",
+        "id": "ch-mon-065",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-175",
+        "id": "ch-trend-077",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-203",
+        "id": "ch-comp-172",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-224",
+        "id": "ch-trend-084",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-240",
+        "id": "ch-quant-181",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+      },
+      {
+        "benchmark_id": "bm26-273",
+        "id": "ch-quant-195",
+        "status": "todo",
+        "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+      }
+    ]
+  },
+  "stage_order": [
+    "scope",
+    "retrieval",
+    "analysis",
+    "explanation",
+    "output"
+  ],
+  "types": [
+    {
+      "key": "refusal",
+      "label": "Refusal",
+      "sets": [],
+      "measured": true
+    },
+    {
+      "key": "identification",
+      "label": "Identification",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "geospatial",
+      "label": "Geospatial",
+      "sets": [
+        "aoi"
+      ],
+      "measured": true
+    },
+    {
+      "key": "dataset",
+      "label": "Dataset",
+      "sets": [
+        "dataset"
+      ],
+      "measured": true
+    },
+    {
+      "key": "quantification",
+      "label": "Quantification",
+      "sets": [
+        "quantification"
+      ],
+      "measured": true
+    },
+    {
+      "key": "monitoring",
+      "label": "Monitoring",
+      "sets": [
+        "monitoring"
+      ],
+      "measured": true
+    },
+    {
+      "key": "portfolio",
+      "label": "Portfolio",
+      "sets": [
+        "portfolio"
+      ],
+      "measured": true
+    },
+    {
+      "key": "comparison",
+      "label": "Comparison",
+      "sets": [
+        "comparison"
+      ],
+      "measured": true
+    },
+    {
+      "key": "trend",
+      "label": "Trend",
+      "sets": [
+        "trend"
+      ],
+      "measured": true
+    },
+    {
+      "key": "conceptual",
+      "label": "Conceptual",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "risk",
+      "label": "Risk",
+      "sets": [],
+      "measured": false
+    },
+    {
+      "key": "causal",
+      "label": "Causal",
+      "sets": [
+        "causal"
+      ],
+      "measured": true
+    },
+    {
+      "key": "feasibility",
+      "label": "Feasibility",
+      "sets": [],
+      "measured": false
+    }
+  ],
+  "members": [
+    {
+      "uid": "ede7057e94722f43",
+      "id": "ch-mon-032",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-002",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "03447c1627dfed0e",
+      "id": "ch-mon-033",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-003",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8ff0ac2565b78c2e",
+      "id": "ch-mon-034",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-004",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3650733264b003d9",
+      "id": "ch-mon-035",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "ytd",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-005",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "6c9766755bdd3fdb",
+      "id": "ch-mon-005",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-006",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "463c50b6f62b0beb",
+      "id": "ch-mon-008",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_default",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-007",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "6c6ef67e03fb8a92",
+      "id": "ch-mon-036",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_vs_prior",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-008",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2eb50e8d3ed2582e",
+      "id": "ch-mon-011",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_default",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-009",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8fed4fdeb47f2a0f",
+      "id": "ch-mon-014",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-010",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2e615fbd7c3c969b",
+      "id": "ch-mon-037",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "monthly_recent",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-011",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "946afe2d1c33686d",
+      "id": "ch-mon-038",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_vs_prior",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-012",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e44f5d68f260f739",
+      "id": "ch-mon-039",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_presence",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-013",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5b6dad6ea65d7c3d",
+      "id": "ch-mon-024",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "no_aoi",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-014",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3bc22313e229e0ec",
+      "id": "ch-mon-040",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "unsupported_action",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-015",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "851a2a35603d2224",
+      "id": "ch-mon-041",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_area",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-016",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b82229cc0f550e34",
+      "id": "ch-mon-030",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "by_confidence",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-017",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d585774f2f838d4a",
+      "id": "ch-mon-042",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "active_fire",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-018",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "14a55a95fcc8c506",
+      "id": "ch-mon-043",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_followup",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-019",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7b77caf65ac6b1ac",
+      "id": "ch-mon-044",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_followup",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-020",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "76a07bcad065a09f",
+      "id": "ch-mon-045",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_followup",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-021",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d31fe631c6cc71cc",
+      "id": "ch-mon-046",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "unsupported_action",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-022",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "6b154e65529f5125",
+      "id": "ch-mon-047",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "unsupported_action",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-023",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "65221241b2f7fc3f",
+      "id": "ch-mon-048",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_summary",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-024",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1208e016f44647dd",
+      "id": "ch-mon-049",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_followup",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-025",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8440eba7f5646bb3",
+      "id": "ch-mon-052",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "unsupported_action",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-028",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8dc21d392dd752a3",
+      "id": "ch-mon-053",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "active_fire",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-029",
+      "use_cases": [
+        "UC1"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5c44b5d00b6bbcdf",
+      "id": "ch-mon-054",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "concession_alerts",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-030",
+      "use_cases": [
+        "UC1",
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "122d136e53e8a864",
+      "id": "ch-causal-019",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "alert_cause",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-031",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e4d7f51b04b4924e",
+      "id": "ch-causal-020",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_territory",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-032",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ae93508ff5cd6eff",
+      "id": "ch-causal-021",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_vs_fire",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-033",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3d4a049d71a44090",
+      "id": "ch-causal-022",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_subnational",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-034",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "4d461cbb8d731201",
+      "id": "ch-comp-078",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-035",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "d80e089a55148d43",
+      "id": "ch-comp-085",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-036",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8d74e90d571dc42d",
+      "id": "ch-comp-149",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-037",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1053347129e153ba",
+      "id": "ch-mon-055",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_context",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-038",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2a62d1a67c1bf3b1",
+      "id": "ch-quant-080",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-039",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c51f3daa0e435286",
+      "id": "ch-quant-082",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-040",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "aa11a9d863a7d267",
+      "id": "ch-quant-083",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-041",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "771e41ae922b2798",
+      "id": "ch-trend-076",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-042",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "49ebf23dfed7c5fb",
+      "id": "ch-aoi-026",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-043",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "fcb95a4dd5613562",
+      "id": "ch-aoi-034",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-044",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "4ff8b2b6f8174510",
+      "id": "ch-aoi-056",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multilingual",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-045",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b4a6aa9cad673d8e",
+      "id": "ch-aoi-138",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-046",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "57d4f544edbdc2d8",
+      "id": "ch-aoi-151",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-047",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "db4264643c069768",
+      "id": "ch-aoi-152",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "designations",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-048",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "76fc1c6f5f34a5e8",
+      "id": "ch-trend-050",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-049",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2fbce8db0984c0a3",
+      "id": "ch-trend-052",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-050",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "d8dae01a3ac29eb3",
+      "id": "ch-trend-053",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-051",
+      "use_cases": [
+        "UC1",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b326ad938c69f1b4",
+      "id": "ch-mon-056",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_context",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-052",
+      "use_cases": [
+        "UC1",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "93a21c8a33efe6b9",
+      "id": "ch-mon-057",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "buffer_unsupported",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-053",
+      "use_cases": [
+        "UC1",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "76622b15ec56ec59",
+      "id": "ch-mon-058",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_context",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-054",
+      "use_cases": [
+        "UC1",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9c5ca1052ef1c4c8",
+      "id": "ch-aoi-028",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "sources",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-055",
+      "use_cases": [
+        "UC1",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5c858d8ce22ca408",
+      "id": "ch-mon-059",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "by_confidence",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-056",
+      "use_cases": [
+        "UC1",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a119f0a9f7dda34e",
+      "id": "ch-mon-060",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-057",
+      "use_cases": [
+        "UC1",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "acc2e7386e13e9ae",
+      "id": "ch-mon-061",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-058",
+      "use_cases": [
+        "UC1",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "df01a1a55a13434a",
+      "id": "ch-mon-062",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-059",
+      "use_cases": [
+        "UC1",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "26e69e27bed0e9c7",
+      "id": "ch-aoi-128",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-060",
+      "use_cases": [
+        "UC1",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c6b0c97f65c83d9f",
+      "id": "ch-dataset-119",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "integrated-alerts",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-061",
+      "use_cases": [
+        "UC1",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "81c1013d410493a0",
+      "id": "ch-comp-150",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-062",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5f8761bfc2ee3dca",
+      "id": "ch-comp-151",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-063",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "72c4d0c7d106015d",
+      "id": "ch-comp-152",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-064",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "f9f88a8a8db58962",
+      "id": "ch-comp-153",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-065",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "43da5d35146ececc",
+      "id": "ch-comp-154",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-066",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "72c3f1aad13aaf90",
+      "id": "ch-comp-155",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-067",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8807a703a563b38e",
+      "id": "ch-comp-156",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-068",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ac9eaf5b6542cd6a",
+      "id": "ch-comp-157",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-069",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "68657efd985da114",
+      "id": "ch-comp-158",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-070",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "045726c2564f7820",
+      "id": "ch-comp-159",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-071",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "4ceb86fbac13e777",
+      "id": "ch-comp-160",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-072",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "41171d69ae22b4f0",
+      "id": "ch-comp-161",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-073",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "c1eee5e7dbd5a086",
+      "id": "ch-comp-162",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-074",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "96201c7230b3ccea",
+      "id": "ch-mon-026",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "concession_alerts",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-075",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "0fb54475e69a2505",
+      "id": "ch-mon-027",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "buffer_unsupported",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-076",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b5078a4c1fa903b5",
+      "id": "ch-mon-022",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_rank",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-078",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "104911008bea8e0a",
+      "id": "ch-mon-063",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "compare_areas",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-079",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "0683ed56963b9e56",
+      "id": "ch-port-001",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-080",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1a75c444b70b2404",
+      "id": "ch-port-003",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-082",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "10a7d2d67bcc7e7a",
+      "id": "ch-port-010",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-089",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "347723a2be57541a",
+      "id": "ch-port-011",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-090",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8cbfb2d26d2e7cd1",
+      "id": "ch-port-015",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-094",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "359f355fd212e2e7",
+      "id": "ch-port-016",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-095",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "091de03b125e87e8",
+      "id": "ch-port-017",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-096",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ed60b6a099b4ae08",
+      "id": "ch-port-018",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-097",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ec4eb4c06a1b0dda",
+      "id": "ch-quant-153",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-104",
+      "use_cases": [
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d8cec4e2061931b1",
+      "id": "ch-comp-163",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-105",
+      "use_cases": [
+        "UC1",
+        "UC2"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e9758565aa3a5ac9",
+      "id": "ch-comp-122",
+      "type": "causal",
+      "set": "comparison",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-106",
+      "use_cases": [
+        "UC2",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "162f06d067628063",
+      "id": "ch-comp-124",
+      "type": "causal",
+      "set": "comparison",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-107",
+      "use_cases": [
+        "UC2",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b019988329f6b802",
+      "id": "ch-comp-125",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-108",
+      "use_cases": [
+        "UC2",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "088216452a0e63b7",
+      "id": "ch-aoi-091",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-109",
+      "use_cases": [
+        "UC2",
+        "UC3"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "db4676ee2aaba4ab",
+      "id": "ch-aoi-088",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-110",
+      "use_cases": [
+        "UC2",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7e726b01090b9c3a",
+      "id": "ch-aoi-090",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "multi",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-111",
+      "use_cases": [
+        "UC2",
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "6097de262a7af1b7",
+      "id": "ch-comp-147",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-112",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1471fed50817ef7c",
+      "id": "ch-comp-164",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-113",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ce70b654e936515b",
+      "id": "ch-quant-100",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-117",
+      "use_cases": [
+        "UC2",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "366679d8d79ddbaa",
+      "id": "ch-causal-023",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "commodity_overclaim",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-118",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "69f1fc62c0f0c38e",
+      "id": "ch-comp-165",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-119",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "209e1a802bcb1924",
+      "id": "ch-quant-151",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-120",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "608fcb141a490040",
+      "id": "ch-quant-156",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-121",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "728eca34212b86ff",
+      "id": "ch-quant-159",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-122",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "cda2b8f393e474a2",
+      "id": "ch-quant-160",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-123",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b1ded03727952d34",
+      "id": "ch-quant-161",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-124",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "474e49265cff6964",
+      "id": "ch-quant-162",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-125",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "06dc3fc4468e9469",
+      "id": "ch-quant-163",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-126",
+      "use_cases": [
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d025cb1b2b629b99",
+      "id": "ch-mon-064",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "many_areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-127",
+      "use_cases": [
+        "UC1",
+        "UC3"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7dc436f77bfb062f",
+      "id": "ch-causal-008",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "commodity_overclaim",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-128",
+      "use_cases": [
+        "UC2",
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "afd7b97b8917d335",
+      "id": "ch-causal-024",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_share",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-129",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7587643048ef8a9b",
+      "id": "ch-quant-007",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-130",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "01f4547696dba49e",
+      "id": "ch-quant-009",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-131",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "bce1a479c172dea3",
+      "id": "ch-quant-010",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-132",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "898370a268152afb",
+      "id": "ch-quant-164",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-133",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9015f40f05fe0dcb",
+      "id": "ch-comp-001",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-134",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8a92fc69cd23bf4b",
+      "id": "ch-comp-002",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-135",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "970fb685b7da35fd",
+      "id": "ch-quant-001",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-136",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "558567bca6e94783",
+      "id": "ch-quant-003",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-137",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "559aebf17d01e03c",
+      "id": "ch-quant-021",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-138",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "9764ad150cf74869",
+      "id": "ch-quant-002",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-139",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "690b48011d1721ce",
+      "id": "ch-quant-011",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-140",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "34d2239d87854110",
+      "id": "ch-quant-127",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-141",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "aebe454fbd95b5f8",
+      "id": "ch-quant-134",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-142",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "cf1f0b0010e55a2d",
+      "id": "ch-causal-001",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_subnational",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-143",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "468bf9d2f37d4b7f",
+      "id": "ch-causal-002",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "spike_attribution",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-144",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "c0572f500eb91739",
+      "id": "ch-causal-003",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "spike_attribution",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-145",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1ef6956e43bc6543",
+      "id": "ch-causal-005",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "commodity_overclaim",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-146",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8ba0dc23c0c5852b",
+      "id": "ch-causal-006",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "fire_share_pa",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-147",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2ce17ee541a91ffc",
+      "id": "ch-causal-007",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "premise_check",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-148",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d8240a8fed94afbb",
+      "id": "ch-causal-011",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "commodity_overclaim",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-149",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7336be5865c26f1f",
+      "id": "ch-causal-015",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_vs_fire",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-150",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5ae80608fefea167",
+      "id": "ch-causal-018",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_pa",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-151",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a76971f72970e138",
+      "id": "ch-causal-025",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "why_country",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-152",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9cdbe6cb52a79068",
+      "id": "ch-quant-146",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-153",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "fd567abb56f6e22e",
+      "id": "ch-aoi-155",
+      "type": "geospatial",
+      "set": "aoi",
+      "cohort": "ambiguity",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-154",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3cd15590e93cce9d",
+      "id": "ch-trend-067",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-155",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "b7dd536d8ce4f51b",
+      "id": "ch-quant-133",
+      "type": "causal",
+      "set": "quantification",
+      "cohort": "tcl-drivers",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-156",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7bb3b6cc9e049b64",
+      "id": "ch-comp-133",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-157",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ac8da816fb8dd16f",
+      "id": "ch-comp-144",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-158",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "24650753464b7689",
+      "id": "ch-quant-139",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-159",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "64fb1908b38a4417",
+      "id": "ch-quant-142",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-160",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a902daaf2dc8304a",
+      "id": "ch-quant-145",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-161",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1c5bb28fe57e595a",
+      "id": "ch-aoi-116",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-162",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5cd2fb1d2bbffb08",
+      "id": "ch-aoi-118",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-163",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ec7df4648226bad3",
+      "id": "ch-aoi-119",
+      "type": "refusal",
+      "set": "aoi",
+      "cohort": "concepts",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-164",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "065f791e7da78838",
+      "id": "ch-quant-165",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-165",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "87c710181f1a29f2",
+      "id": "ch-quant-166",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-166",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "e3bc598abce89d54",
+      "id": "ch-causal-017",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_share",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-167",
+      "use_cases": [
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "fc1fcf59cfb18eb6",
+      "id": "ch-comp-166",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-168",
+      "use_cases": [
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "bb05c7f222f0e6fc",
+      "id": "ch-quant-167",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-171",
+      "use_cases": [
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "80392166e13a3965",
+      "id": "ch-quant-168",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-172",
+      "use_cases": [
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b60a1144f3a67b3f",
+      "id": "ch-quant-169",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-173",
+      "use_cases": [
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1abf501a7df3b2ff",
+      "id": "ch-quant-170",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-174",
+      "use_cases": [
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b8f939d55d3911a1",
+      "id": "ch-trend-078",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-176",
+      "use_cases": [
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "57b0195a0674e71a",
+      "id": "ch-comp-031",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-177",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8f6602721943d315",
+      "id": "ch-comp-034",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-178",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "305f50bd72eb6f7b",
+      "id": "ch-comp-038",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-179",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7632f81d9c3d10eb",
+      "id": "ch-comp-168",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-180",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "49a8d29a6204e323",
+      "id": "ch-port-027",
+      "type": "portfolio",
+      "set": "portfolio",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-181",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7198724ef06a3691",
+      "id": "ch-quant-036",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-182",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "762c1af13b6f7d1d",
+      "id": "ch-quant-039",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-183",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "558db117eb3a110c",
+      "id": "ch-quant-171",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-184",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "4b422abbbaa8f9b9",
+      "id": "ch-quant-172",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-185",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "73895657cabb96d8",
+      "id": "ch-quant-173",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-186",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "adc00c0a76396f1a",
+      "id": "ch-quant-174",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-187",
+      "use_cases": [
+        "UC2",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "28c14ff5e8ef7827",
+      "id": "ch-trend-029",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-188",
+      "use_cases": [
+        "UC2",
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "2d1d3edefdf829a4",
+      "id": "ch-trend-032",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-189",
+      "use_cases": [
+        "UC2",
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e41084774d3e510f",
+      "id": "ch-trend-037",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-190",
+      "use_cases": [
+        "UC2",
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "74d5eb38dc9754ed",
+      "id": "ch-quant-033",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "sluc",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-191",
+      "use_cases": [
+        "UC2",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "db8171d7d561fbbf",
+      "id": "ch-causal-010",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "caveat_required",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-192",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a452f89a685dbe1b",
+      "id": "ch-causal-012",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "premise_check",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-193",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1736d22d0730e66e",
+      "id": "ch-causal-013",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "caveat_required",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-194",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2e8b94ec55788318",
+      "id": "ch-comp-043",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-195",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ab0dd4cacab53e95",
+      "id": "ch-comp-047",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-196",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "666e2112f9410727",
+      "id": "ch-comp-048",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-197",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "0c5b2651ff7d72cb",
+      "id": "ch-comp-053",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-198",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "48ca942a9b2eef49",
+      "id": "ch-comp-148",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "hard",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-199",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2d55b65dd87b05a4",
+      "id": "ch-comp-169",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-200",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a2c44e0f62a74cb6",
+      "id": "ch-comp-170",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-201",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9184ef24c50c940b",
+      "id": "ch-comp-171",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-202",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b40000f040d6eb9c",
+      "id": "ch-comp-173",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-204",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9dea31eeae90b0d6",
+      "id": "ch-quant-055",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-205",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "976ac91a0909c36c",
+      "id": "ch-quant-031",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-206",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "6140badee8e63e89",
+      "id": "ch-trend-079",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-207",
+      "use_cases": [
+        "UC3",
+        "UC4"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "c687b0f8df880733",
+      "id": "ch-trend-080",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-208",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8b80ead730a494d1",
+      "id": "ch-comp-005",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-209",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e19508a08b37ef52",
+      "id": "ch-comp-006",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-210",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "dc9c71e0d39e6096",
+      "id": "ch-quant-047",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-211",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "8bab87862df62af1",
+      "id": "ch-quant-050",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-212",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a7eff4f0bc836cae",
+      "id": "ch-trend-001",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-213",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "aaad1a1d4bb4843c",
+      "id": "ch-trend-004",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-214",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a645e33258d22184",
+      "id": "ch-trend-007",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-215",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "f292fbd71589af61",
+      "id": "ch-comp-110",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-216",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1a861ccd29a3f623",
+      "id": "ch-comp-112",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-217",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "f44bac3f10838f85",
+      "id": "ch-quant-175",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-218",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ddf89312398553e7",
+      "id": "ch-quant-176",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-219",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "4ba03dca9e726ff1",
+      "id": "ch-trend-074",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "easy",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-220",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "be1c94fb2a057ea9",
+      "id": "ch-trend-081",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-221",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "16e874eacef69f47",
+      "id": "ch-trend-082",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-222",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "798d90b18de6f4f6",
+      "id": "ch-trend-083",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-223",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "0575c3ca87120b32",
+      "id": "ch-trend-085",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-225",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "4d7c92b164e23b9e",
+      "id": "ch-comp-174",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-226",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "c769733e47d2a4c1",
+      "id": "ch-quant-029",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-227",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "85d55c29021f8ac1",
+      "id": "ch-causal-026",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_share",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-228",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "10e0ce11fc05bc4c",
+      "id": "ch-comp-055",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-229",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c4b64f46c1ed288c",
+      "id": "ch-comp-175",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-230",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7fb81e36713aece8",
+      "id": "ch-comp-176",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-231",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "24cd43eb05d179bc",
+      "id": "ch-quant-061",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-232",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "a8ca83872928692d",
+      "id": "ch-quant-064",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-233",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "3901049c955c6521",
+      "id": "ch-quant-177",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-234",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3181be0e993e4f47",
+      "id": "ch-quant-155",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-235",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "1b0156b2a2284214",
+      "id": "ch-quant-157",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-236",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "b88fa097189b1345",
+      "id": "ch-quant-178",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-237",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d20fa2256653f086",
+      "id": "ch-quant-179",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-238",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "7ca120b9009b2b2f",
+      "id": "ch-quant-180",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-239",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8c4bec6fd513ed40",
+      "id": "ch-quant-182",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "land-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-241",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2e6fb5eba3dbed52",
+      "id": "ch-quant-183",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-242",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a3d7e9ff4cff7455",
+      "id": "ch-quant-184",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-243",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "d1c5ceb6d43c2e70",
+      "id": "ch-quant-185",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-244",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2047f1c76b6fb088",
+      "id": "ch-trend-072",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl",
+      "difficulty": "medium",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-245",
+      "use_cases": [
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "faa71d61983f8590",
+      "id": "ch-quant-186",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-246",
+      "use_cases": [
+        "UC1",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "a4a9a59df81d84be",
+      "id": "ch-trend-086",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-247",
+      "use_cases": [
+        "UC1",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3a990c1342688cfb",
+      "id": "ch-causal-027",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "many_areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-248",
+      "use_cases": [
+        "UC3",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8ce507f087019cc9",
+      "id": "ch-comp-066",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-249",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ad36cecdb04bc0d1",
+      "id": "ch-comp-076",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-250",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "9a9a874e541c9818",
+      "id": "ch-comp-090",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-251",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "26262d065c49f7f2",
+      "id": "ch-comp-093",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-252",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e41aaf5300c3d3fc",
+      "id": "ch-comp-100",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-253",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "f33817a4ff26af2f",
+      "id": "ch-quant-068",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-254",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "fe08bbad2f99e15a",
+      "id": "ch-quant-072",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-255",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5e2b62bc275b83ad",
+      "id": "ch-quant-092",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-256",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ce16479824493350",
+      "id": "ch-quant-096",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-257",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "5b17f53bca85cbe8",
+      "id": "ch-quant-103",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-258",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "7824a9476a0dc246",
+      "id": "ch-quant-110",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-259",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "ddbe4aac1ca1be55",
+      "id": "ch-quant-115",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-260",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "05a6c6adc2167dbf",
+      "id": "ch-quant-118",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tc-gain",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-261",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "111f028d72a8708a",
+      "id": "ch-quant-187",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-262",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2db3c297ced20f08",
+      "id": "ch-quant-188",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "ghg-flux",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-263",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "30089ff2a8838732",
+      "id": "ch-trend-045",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "grasslands",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-264",
+      "use_cases": [
+        "UC4",
+        "UC5"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c061c972dec04129",
+      "id": "ch-quant-107",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tree-cover",
+      "difficulty": "",
+      "stages": [
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-265",
+      "use_cases": [
+        "UC4",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "0ed0cba3cb328fc0",
+      "id": "ch-comp-177",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "tcl",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-266",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "2d20b87297cce5ee",
+      "id": "ch-quant-189",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "many-areas",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-267",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "95f7637df2759e76",
+      "id": "ch-quant-190",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-268",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "78b700a2d01a5b94",
+      "id": "ch-quant-191",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-269",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "752c76801df3e227",
+      "id": "ch-quant-192",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-270",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "52caefe83d4be7be",
+      "id": "ch-quant-193",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-271",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8cbc4d68c511f635",
+      "id": "ch-quant-194",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-272",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "66a298dccadfe3ee",
+      "id": "ch-quant-196",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-274",
+      "use_cases": [
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "67e7a9c812e06403",
+      "id": "ch-mon-066",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "alert_method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-275",
+      "use_cases": [
+        "UC1",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "0204cf797f493a76",
+      "id": "ch-quant-197",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-276",
+      "use_cases": [
+        "UC2",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "9975fe90e72a47fc",
+      "id": "ch-causal-028",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-277",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "cf4d75fb979f8a75",
+      "id": "ch-causal-029",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "caveat_required",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-278",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "f074b56c8ebee2c5",
+      "id": "ch-comp-178",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-279",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5a9291e5c7795d8c",
+      "id": "ch-comp-179",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-280",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3c227b222e46a7ad",
+      "id": "ch-quant-198",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-281",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "61f2ca81c6515c85",
+      "id": "ch-quant-199",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "tcl-fires",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-282",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "5eaa0f906eeaf0c2",
+      "id": "ch-trend-087",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-283",
+      "use_cases": [
+        "UC3",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "30c74cafa2cf4310",
+      "id": "ch-comp-180",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-284",
+      "use_cases": [
+        "UC3",
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "0bb8c8d53882a68d",
+      "id": "ch-dataset-157",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "context-layer",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-285",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "55163127c4ca5d38",
+      "id": "ch-dataset-162",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "context-layer",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-286",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "70fbaf7e974c13f3",
+      "id": "ch-dataset-171",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "ambiguous",
+      "difficulty": "hard",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-287",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1a4ef643e4094ecb",
+      "id": "ch-dataset-156",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "context-layer",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-288",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "1c42289b10530b79",
+      "id": "ch-dataset-040",
+      "type": "dataset",
+      "set": "dataset",
+      "cohort": "tcl",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval"
+      ],
+      "benchmark_id": "bm26-289",
+      "use_cases": [
+        "UC3",
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "e2559b979bedf060",
+      "id": "ch-comp-181",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-290",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "cd81b6b9e2690822",
+      "id": "ch-quant-200",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-291",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "02f1b063aeb5f2f6",
+      "id": "ch-quant-201",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "unavailable",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-292",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "8f2d627de19480f7",
+      "id": "ch-quant-202",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-293",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "03099cba0ca96b29",
+      "id": "ch-quant-203",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-294",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "ff0965aa9c3d11f2",
+      "id": "ch-dataset-186",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "easy",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-295",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "68388ad5237e0c52",
+      "id": "ch-dataset-187",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-296",
+      "use_cases": [
+        "UC4",
+        "UC6"
+      ],
+      "synthetic": false
+    },
+    {
+      "uid": "c17c6c02a31e1cfe",
+      "id": "ch-quant-204",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-297",
+      "use_cases": [
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "18198c0a7b0a14a6",
+      "id": "ch-quant-205",
+      "type": "quantification",
+      "set": "quantification",
+      "cohort": "method",
+      "difficulty": "",
+      "stages": [
+        "explanation"
+      ],
+      "benchmark_id": "bm26-298",
+      "use_cases": [
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": true
+    },
+    {
+      "uid": "3385322c4d5c5f7c",
+      "id": "ch-dataset-193",
+      "type": "refusal",
+      "set": "dataset",
+      "cohort": "unmappable",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ],
+      "benchmark_id": "bm26-299",
+      "use_cases": [
+        "UC5",
+        "UC6"
+      ],
+      "synthetic": false
+    }
+  ],
+  "errata": []
+}

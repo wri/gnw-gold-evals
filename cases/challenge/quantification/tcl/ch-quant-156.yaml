@@ -13,15 +13,16 @@ expected:
 notes:
   difficulty: easy
   behaviour: answer with data
-  benchmark_id: bm26-006
   lineage: benchmark v2026 proposed set (bm26-006); USY-001284 Indian Express / National Green
     Tribunal
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  user_story_refs: USY-001284 Indian Express / tribunal
+  benchmark_id: bm26-121
   benchmark_type: quantification
-  jtbd: 1,9
-  impact_pathway: 4 Commitments & accountability
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    All direct-connect groups
-  user_story_refs: USY-001284 Indian Express / National Green Tribunal
+  use_cases: UC3
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story

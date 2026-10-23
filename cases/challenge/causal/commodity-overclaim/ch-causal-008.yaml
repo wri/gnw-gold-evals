@@ -12,14 +12,15 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with drivers + sLUC cocoa data; caveat on attribution
-  benchmark_id: bm26-147
   lineage: benchmark v2026 proposed set (bm26-147); USY-001399 Olam; Mars
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  user_story_refs: USY-001399 Olam; USY-001515
+  benchmark_id: bm26-128
   benchmark_type: causal
-  jtbd: 5,9
-  impact_pathway: 2 Commodity supply chains
-  user_groups: Policy/planning; GIS analysts; Supply chain; Sustainable finance; Service providers;
-    All direct-connect groups
-  user_story_refs: USY-001399 Olam; Mars
+  use_cases: UC2;UC3;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue

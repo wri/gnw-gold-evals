@@ -13,15 +13,16 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with drivers data; caveat that drivers ≠ proof of cause
-  benchmark_id: bm26-140
   lineage: benchmark v2026 proposed set (bm26-140); USY-001392 Ghana Cocoa Belt (mining)
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  user_story_refs: USY-001392 Ghana Cocoa Belt
+  benchmark_id: bm26-143
   benchmark_type: causal
-  jtbd: 1,7
-  impact_pathway: 5 Finance for nature
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    Field staff; Supply chain; Sustainable finance; Service providers
-  user_story_refs: USY-001392 Ghana Cocoa Belt (mining)
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story

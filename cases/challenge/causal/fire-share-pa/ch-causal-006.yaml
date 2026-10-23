@@ -14,15 +14,16 @@ expected:
 notes:
   difficulty: medium
   behaviour: answer with data
-  benchmark_id: bm26-145
   lineage: benchmark v2026 proposed set (bm26-145); USY-001516 UNESCO (fire share in WH forests)
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  user_story_refs: USY-001516 UNESCO
+  benchmark_id: bm26-147
   benchmark_type: causal
-  jtbd: 1,7
-  impact_pathway: 3 Policy & planning
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    Field staff; Supply chain; Sustainable finance; Service providers
-  user_story_refs: USY-001516 UNESCO (fire share in WH forests)
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story

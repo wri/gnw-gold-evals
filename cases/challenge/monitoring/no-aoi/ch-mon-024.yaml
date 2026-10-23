@@ -10,15 +10,17 @@ expected:
 notes:
   difficulty: medium
   behaviour: 'clarify: ask which area'
-  benchmark_id: bm26-133
   lineage: benchmark v2026 proposed set (bm26-133); —
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
   build_notes: Scope row; info-only until clarification validator stable
-  benchmark_type: monitoring
-  jtbd: '3'
-  impact_pathway: 'Cross-cutting: trust'
-  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
-    Journalists
   user_story_refs: —
+  benchmark_id: bm26-014
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Direct from story
+  refresh_risk: Low

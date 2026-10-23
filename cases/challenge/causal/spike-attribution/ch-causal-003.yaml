@@ -16,14 +16,15 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with data; fire share; no invented causes
-  benchmark_id: bm26-142
   lineage: benchmark v2026 proposed set (bm26-142); USY-001330 FDA primary loss
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  user_story_refs: USY-001330 Forest Declaration Assessment
+  benchmark_id: bm26-145
   benchmark_type: causal
-  jtbd: 1,9
-  impact_pathway: 4 Commitments & accountability
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    All direct-connect groups
-  user_story_refs: USY-001330 FDA primary loss
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue

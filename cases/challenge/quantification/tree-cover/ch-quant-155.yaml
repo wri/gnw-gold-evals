@@ -12,14 +12,15 @@ expected:
 notes:
   difficulty: medium
   behaviour: answer with data
-  benchmark_id: bm26-005
   lineage: benchmark v2026 proposed set (bm26-005); USY-001364 El Salvador compensation baseline
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
+  user_story_refs: USY-001296 El Salvador compensation policy; USY-001364 20x20
+  benchmark_id: bm26-235
   benchmark_type: quantification
-  jtbd: 1,2
-  impact_pathway: 3 Policy & planning
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    Field staff; Service providers
-  user_story_refs: USY-001364 El Salvador compensation baseline
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue

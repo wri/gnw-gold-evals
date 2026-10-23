@@ -15,16 +15,10 @@ expected:
 notes:
   difficulty: medium
   behaviour: answer with data (in Portuguese)
-  benchmark_id: bm26-127
   lineage: benchmark v2026 proposed set (bm26-127); Brazilian state/municipal enforcement
     users
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth
-  benchmark_type: monitoring
-  jtbd: '3'
-  impact_pathway: 1 Local stewardship
-  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
-    Journalists
   user_story_refs: Brazilian state/municipal enforcement users

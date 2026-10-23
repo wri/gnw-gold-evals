@@ -20,12 +20,6 @@ notes:
     terms = place + canonical only) the shipped scorer loses by 0.0013 to ''Maria, National
     Park, AUS'' (311947); the live geocoder''s extra alternatives are what carry it on prod,
     so this row is a margin case, not a solid pass'
-  benchmark_id: bm26-174
-  benchmark_type: spatial
-  jtbd: 7,5
-  impact_pathway: 1 Local stewardship; 2 Supply chains
-  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Sustainable finance;
-    Service providers; Journalists
   synthetic: 'FALSE'
   user_story_refs: USY-000852 IWRM territories; USY-001399 Olam PAs
   refresh_risk: Low

@@ -13,11 +13,13 @@ notes:
   lineage: coordinates unsupported
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
-  benchmark_id: bm26-192
-  benchmark_type: scope
-  jtbd: '10'
-  impact_pathway: 'Cross-cutting: trust (no misleading answers)'
-  user_groups: All direct-connect groups
   synthetic: 'FALSE'
-  user_story_refs: —
+  user_story_refs: USY-001286 Mongabay airstrip coordinates (analogue)
   refresh_risk: Low
+  benchmark_id: bm26-060
+  benchmark_type: scope
+  use_cases: UC1;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Verified Challenge case

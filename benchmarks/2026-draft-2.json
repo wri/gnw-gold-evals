@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "2026-draft-2",
-  "status": "draft",
+  "status": "retired",
   "created": "2026-10-01",
   "frozen": null,
   "source": {
@@ -5995,5 +5995,10 @@
       "synthetic": false
     }
   ],
-  "errata": []
+  "errata": [],
+  "retired": {
+    "date": "2026-10-23",
+    "reason": "replaced by 2026-draft-3, the curated v2026 BEF set (seeds/benchmark-v2026-bef-2026-10-22.csv)",
+    "superseded_by": "2026-draft-3"
+  }
 }

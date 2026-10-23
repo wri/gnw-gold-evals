@@ -12,16 +12,18 @@ expected:
 notes:
   difficulty: hard
   behaviour: answer with data; state window used
-  benchmark_id: bm26-120
   lineage: benchmark v2026 proposed set (bm26-120); USY-001392 Ghana Cocoa Belt
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  user_story_refs: USY-001582 Western North community monitoring
+  benchmark_id: bm26-009
   benchmark_type: monitoring
-  jtbd: 3,5
-  impact_pathway: 5 Finance for nature
-  user_groups: Policy/planning; GIS analysts; Field staff; Supply chain; Service providers;
-    Journalists; Sustainable finance
-  user_story_refs: USY-001392 Ghana Cocoa Belt
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  refresh_risk: Alert confidence can upgrade

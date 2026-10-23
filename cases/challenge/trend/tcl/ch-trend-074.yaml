@@ -14,14 +14,15 @@ expected:
 notes:
   difficulty: easy
   behaviour: answer with data
-  benchmark_id: bm26-080
   lineage: benchmark v2026 proposed set (bm26-080); USY-001330 FDA; USY-001383 GEF-9
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
-  benchmark_type: trend
-  jtbd: 1,9
-  impact_pathway: 4 Commitments & accountability
-  user_groups: Policy/planning; Program mgrs; GIS analysts; Journalists; Public/educators;
-    All direct-connect groups
   user_story_refs: USY-001330 FDA; USY-001383 GEF-9
+  benchmark_id: bm26-220
+  benchmark_type: trend
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
