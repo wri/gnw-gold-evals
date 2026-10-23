@@ -16,7 +16,9 @@ Benchmark runs (``results/benchmark/``) additionally carry their
 run is a North Star trend point only when it is prod, default profile (no
 ff), 3 trials, and covers every active member of its manifest *as the
 manifest stands now* (a member voided by a later erratum is not required).
-The top-level ``benchmarks`` section lists each manifest under
+A benchmark run whose page data is committed
+(``results/benchmark/pages/<run_id>.json``, ``tools/benchmark_page.py``)
+also carries its ``page`` path. The top-level ``benchmarks`` section lists each manifest under
 ``benchmarks/`` with its status and its runs, so the FE can draw the trend
 from one fetch.
 
@@ -75,7 +77,22 @@ def glob_run_paths(results_dir: Path, set_name: str) -> list[Path]:
     return sorted((results_dir / set_name / "runs").glob("*.json"))
 
 
-def run_entry(path: Path, results_dir: Path) -> dict:
+def committed_page_paths(results_dir: Path) -> set[str]:
+    """Tracked benchmark page files, as repo-relative paths."""
+    proc = subprocess.run(
+        ["git", "ls-files", "--", f"{results_dir.name}/benchmark/pages/*.json"],
+        cwd=results_dir.resolve().parent, capture_output=True, text=True, check=True,
+    )
+    return {line for line in proc.stdout.splitlines() if line.strip()}
+
+
+def glob_page_paths(results_dir: Path) -> set[str]:
+    root = results_dir.resolve().parent
+    return {p.resolve().relative_to(root).as_posix()
+            for p in (results_dir / "benchmark" / "pages").glob("*.json")}
+
+
+def run_entry(path: Path, results_dir: Path, pages: frozenset[str] = frozenset()) -> dict:
     run = json.loads(path.read_text(encoding="utf-8"))
     run_id = run.get("run_id")
     if run_id != path.stem:
@@ -92,6 +109,9 @@ def run_entry(path: Path, results_dir: Path) -> dict:
         reasons = canonical_reasons(run, results_dir.resolve().parent)
         entry["canonical"] = not reasons
         entry["canonical_reasons"] = reasons
+        page = f"{results_dir.name}/benchmark/pages/{run_id}.json"
+        if page in pages:
+            entry["page"] = page
     return entry
 
 
@@ -132,10 +152,11 @@ def benchmark_versions(repo_root: Path, runs: list[dict]) -> dict:
 
 def build_index(results_dir: Path, use_glob: bool = False) -> dict:
     enumerate_paths = glob_run_paths if use_glob else committed_run_paths
+    pages = frozenset(glob_page_paths(results_dir) if use_glob else committed_page_paths(results_dir))
     sets = {}
     for set_name in SETS:
         entries = [
-            run_entry(path, results_dir)
+            run_entry(path, results_dir, pages)
             for path in enumerate_paths(results_dir, set_name)
         ]
         sets[set_name] = sorted(entries, key=lambda e: e["run_id"])

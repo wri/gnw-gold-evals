@@ -91,11 +91,15 @@ it is **canonical**: prod, default profile (no `ff`), 3 trials, every active
 member measured or errored (none missing). `results/index.json` lists
 benchmark runs with that flag and the reasons for any failure.
 
-## Metrics (computed by consumers for now)
+## Metrics
 
-The FE `/evals` page computes these from the manifest plus runs; a
-precomputed scorecard will follow once the outputs settle.
-`tools/challenge_rollup.py --benchmark` computes the same numbers in Python.
+`tools/challenge_rollup.py --benchmark` computes these in Python. The FE
+accuracy-benchmarks page reads them precomputed: `tools/benchmark_page.py`
+writes `results/benchmark/pages/<run_id>.json` after each run (the numbers
+below plus per-type, per-use-case and per-question detail, including a
+summary of what the agent did on each attempt), and `results/index.json`
+points each run at its page. The page's headline is the share of questions
+right on **every** trial (`every_time`); `majority` is the North Star below.
 
 - **North Star**: majority-verdict complete rate (a question counts when
   every applicable non-info check passed in the majority of trials) over

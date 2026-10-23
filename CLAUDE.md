@@ -71,6 +71,11 @@ a case store: read `benchmarks/README.md` first. Key rules:
   (no ff); results go to `results/benchmark/`. Only canonical runs are trend
   points (`results/index.json` flags them). Roll up with
   `tools/challenge_rollup.py --benchmark benchmarks/<v>.json <run>.json`.
+- Then write the page data the FE accuracy-benchmarks page reads:
+  `tools/benchmark_page.py results/benchmark/runs/<run_id>.json` writes
+  `results/benchmark/pages/<run_id>.json`. It needs the run's local agent
+  artifacts (gitignored), so do it on the machine that ran the run, and
+  commit it with the run before regenerating `results/index.json`.
 - After an erratum or a freeze, regenerate `results/index.json`.
 
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR

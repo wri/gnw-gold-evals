@@ -119,6 +119,9 @@ currently active member present) and `canonical_reasons`. The top-level
 `benchmarks` object maps each version to `{path, status, frozen, members,
 voided, runs, canonical_runs}`. Because it reads `benchmarks/*.json`, adding
 an erratum or freezing a version also requires regenerating the index.
+A benchmark run whose page data is committed
+(`results/benchmark/pages/<run_id>.json`, written by `tools/benchmark_page.py`
+for the FE accuracy-benchmarks page) also carries `page`, that file's path.
 
 ## Composing a current picture across runs
 
