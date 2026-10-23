@@ -1,0 +1,26 @@
+id: ch-quant-190
+uid: 95f7637df2759e76
+status: ready
+set: quantification
+group: method
+query: Which version of the tree cover loss data should I cite, and what changed from the
+  previous version?
+expected:
+  text: Names the current tree cover loss version and how to cite it accurately, and describes
+    changes from the previous version without inventing details.
+notes:
+  behaviour: Name current version and key changes accurately; give citation
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-268); USY-001176 Yale index (citation
+    needs)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-268
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Story analogue
+  user_story_refs: USY-001176 Yale index (citation needs)
+  refresh_risk: Low

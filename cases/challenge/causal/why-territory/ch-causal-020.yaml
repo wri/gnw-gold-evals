@@ -1,0 +1,33 @@
+id: ch-causal-020
+uid: e4d7f51b04b4924e
+status: ready
+set: causal
+group: why_territory
+query: The alerts in the Wampis territory this month — is this new clearing or has that area
+  been losing forest for years?
+expected:
+  aoi_ids: '555721646'
+  dataset_id: 11;4
+  data_pull: 'TRUE'
+  text: Compares this month's alerts with the territory's annual tree cover loss history to
+    say whether the clearing looks new or continues a longer pattern.
+notes:
+  behaviour: Combine recent alerts with annual loss history for the area
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-032); USY-001576 Wampis; GFW Advisory
+    Council focus groups (historical analysis when prioritizing)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; Wampis territory pinned to WDPA 555721646
+    ''Iña Wampisti Nunke''; verify'
+  build_notes: AOI id to verify
+  benchmark_id: bm26-032
+  benchmark_type: causal
+  use_cases: UC1;UC3
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Indigenous / community territory
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001576 Wampis; GFW Advisory Council focus groups (historical analysis
+    when prioritizing)
+  refresh_risk: Alert confidence can upgrade

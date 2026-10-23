@@ -1,0 +1,31 @@
+id: ch-quant-162
+uid: 474e49265cff6964
+status: ready
+set: quantification
+group: tcl
+query: Is the loss around Tesso Nilo inside the national park boundary or in the surrounding
+  area?
+expected:
+  aoi_ids: '317197'
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Gives tree cover loss inside Tesso Nilo National Park and either compares it with
+    the surrounding area or explains that it cannot analyse the surroundings; does not guess.
+notes:
+  behaviour: Answer for the park; explain if surroundings or concessions are unavailable
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-125); USY-001298 Tesso Nilo palm oil
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: AOI id to verify
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-125
+  benchmark_type: quantification
+  use_cases: UC3
+  engagement: Returning user
+  aoi_type: Protected area
+  capability: Confirm with engineering
+  grounding: Direct from story
+  user_story_refs: USY-001298 Tesso Nilo palm oil
+  refresh_risk: Low

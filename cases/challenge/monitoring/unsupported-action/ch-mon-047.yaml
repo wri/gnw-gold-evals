@@ -1,0 +1,29 @@
+id: ch-mon-047
+uid: 6b154e65529f5125
+status: ready
+set: monitoring
+group: unsupported_action
+query: Make a map of this month's alerts in the Aru Islands that I can print for the community
+  meeting.
+expected:
+  text: Either produces a printable map of this month's alerts in the Aru Islands, or says
+    that printable map exports are not supported yet and suggests an alternative; does not
+    claim to have produced a file it did not.
+notes:
+  behaviour: Produce or point to a printable map export, or say not supported yet
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-023); USY-000960 Aru; GFW Advisory Council
+    focus groups (map exports for community meetings)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-023
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: 'Not yet: expect clear redirect'
+  grounding: From user research
+  user_story_refs: USY-000960 Aru; GFW Advisory Council focus groups (map exports for community
+    meetings)
+  refresh_risk: Alert confidence can upgrade

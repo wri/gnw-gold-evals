@@ -1,0 +1,27 @@
+id: ch-quant-161
+uid: b1ded03727952d34
+status: ready
+set: quantification
+group: unavailable
+query: Has the area around the Lobé iron project lost forest since the mining permit was granted
+  in 2012?
+expected:
+  text: Asks for the Lobé iron project's boundary (or an upload) rather than guessing an area,
+    or explains that it does not have the project's boundary.
+notes:
+  behaviour: Clarify boundary or ask for upload; then answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-124); USY-001591 Lobé iron project
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: AOI id to verify
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-124
+  benchmark_type: quantification
+  use_cases: UC3
+  engagement: Returning user
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: Direct from story
+  user_story_refs: USY-001591 Lobé iron project
+  refresh_risk: Low

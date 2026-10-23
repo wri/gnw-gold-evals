@@ -1,0 +1,32 @@
+id: ch-trend-079
+uid: 6140badee8e63e89
+status: ready
+set: trend
+group: tcl
+query: How much tree cover has Salonga National Park lost each year since 2015? We report
+  on its condition to UNESCO.
+expected:
+  aoi_ids: '555697863'
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with annual series
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-207); USY-001516 UNESCO World Heritage
+    forests
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  benchmark_id: bm26-207
+  benchmark_type: trend
+  use_cases: UC3;UC4
+  engagement: Returning user
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001516 UNESCO World Heritage forests
+  refresh_risk: Low

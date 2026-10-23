@@ -1,0 +1,30 @@
+id: ch-quant-171
+uid: 558db117eb3a110c
+status: ready
+set: quantification
+group: sluc
+query: We're building a corporate GHG inventory. What are the land-use change emissions per
+  tonne of soy sourced from Mato Grosso?
+expected:
+  aoi_ids: BRA.12
+  dataset_id: '9'
+  data_pull: 'TRUE'
+  text: Gives the land-use change emission factor for soy for Mato Grosso, or Brazil's national
+    value with a caveat that it is not specific to Mato Grosso.
+notes:
+  behaviour: answer with data if subnational sLUC exists; else national value with caveat
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-184); USY-001649 Blonk; USY-001650 AdAstra
+    corporate inventories
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-184
+  benchmark_type: quantification
+  use_cases: UC2;UC4
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001649 Blonk; USY-001650 AdAstra corporate inventories
+  refresh_risk: Low

@@ -1,0 +1,27 @@
+id: ch-quant-166
+uid: 87c710181f1a29f2
+status: ready
+set: quantification
+group: method
+query: How confident can I be in the DRC's 2024 tree cover loss number? Is there a margin
+  of error?
+expected:
+  text: Explains honestly what is known about the accuracy and uncertainty of the tree cover
+    loss data, without inventing a margin of error for the DRC's 2024 figure.
+notes:
+  behaviour: Explain accuracy assessment and uncertainty honestly; no invented error bars
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-166); USY-001602 Guardian Ebola; GFW
+    Advisory Council focus groups (journalists fear wrong information)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-166
+  benchmark_type: quantification
+  use_cases: UC3;UC6
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001602 Guardian Ebola; GFW Advisory Council focus groups (journalists
+    fear wrong information)
+  refresh_risk: Low

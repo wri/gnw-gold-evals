@@ -1,0 +1,32 @@
+id: ch-mon-050
+uid: 7a8153ed53876674
+status: todo
+set: monitoring
+group: custom_area
+query: Show me the disturbance alerts in my area since my last visit on the first of the month.
+expected:
+  dataset_id: '11'
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with data for the preloaded area
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-026); USY-001642 national alert monitoring;
+    Portfolio monitoring research (returning to a monitored area)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-026
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001642 national alert monitoring; Portfolio monitoring research (returning
+    to a monitored area)
+  refresh_risk: Alert confidence can upgrade

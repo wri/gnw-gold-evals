@@ -1,0 +1,30 @@
+id: ch-causal-026
+uid: 85d55c29021f8ac1
+status: ready
+set: causal
+group: driver_share
+query: Which areas of the Ghana Cocoa Belt lost tree cover to permanent agriculture rather
+  than shifting cultivation, so we can target restoration?
+expected:
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Uses the drivers data to separate loss from permanent agriculture and from shifting
+    cultivation at a scale the data support (for example by region within Ghana's cocoa belt),
+    and notes that the cocoa belt is not a defined boundary.
+notes:
+  behaviour: answer with drivers data at supported scale; caveat
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-228); USY-001392 Ghana Cocoa Belt restoration
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; ''Ghana Cocoa Belt'' is not a unit in
+    the AOI index; unpinned'
+  benchmark_id: bm26-228
+  benchmark_type: causal
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Other (concession, project area, landscape)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001392 Ghana Cocoa Belt restoration
+  refresh_risk: Low

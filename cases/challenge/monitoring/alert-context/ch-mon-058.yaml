@@ -1,0 +1,36 @@
+id: ch-mon-058
+uid: 76622b15ec56ec59
+status: ready
+set: monitoring
+group: alert_context
+query: Did the alerts in Padre Abad province this month fall in natural forest or on land
+  that was already farmed?
+expected:
+  aoi_ids: PER.26.3
+  dataset_id: '11'
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  text: Either uses the natural lands layer to say how much of this month's alert area in
+    Padre Abad fell on natural land rather than already-converted land, or says it cannot
+    break alerts down by land cover; does not guess the split.
+notes:
+  behaviour: Answer with alerts intersected with natural lands or land cover
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-054); USY-001248 Kakataibo; GFW Advisory
+    Council focus groups (local context to understand alerts)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-054
+  benchmark_type: monitoring
+  use_cases: UC1;UC5
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: USY-001248 Kakataibo; GFW Advisory Council focus groups (local context
+    to understand alerts)
+  refresh_risk: Alert confidence can upgrade

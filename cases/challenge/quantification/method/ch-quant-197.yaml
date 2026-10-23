@@ -1,0 +1,27 @@
+id: ch-quant-197
+uid: 0204cf797f493a76
+status: ready
+set: quantification
+group: method
+query: Which dataset should I use to check for deforestation under the EUDR?
+expected:
+  text: Names relevant datasets for an EUDR check (for example a 2020 forest or natural lands
+    baseline and post-2020 tree cover loss) and says that tree cover loss is not the same
+    as deforestation under the EUDR definition.
+notes:
+  behaviour: Name relevant datasets (2020 baseline, post-2020 loss); say tree cover loss is
+    not deforestation; no compliance certification
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-276); USY-001381 ITC EUDR handbook;
+    USY-001598
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-276
+  benchmark_type: quantification
+  use_cases: UC2;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001381 ITC EUDR handbook; USY-001598
+  refresh_risk: Low

@@ -1,0 +1,28 @@
+id: ch-quant-179
+uid: d20fa2256653f086
+status: ready
+set: quantification
+group: tc-gain
+query: How much tree cover did El Salvador gain between 2000 and 2020?
+expected:
+  aoi_ids: SLV
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-238); USY-001364 El Salvador 20x20
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-238
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001364 El Salvador 20x20
+  refresh_risk: Low

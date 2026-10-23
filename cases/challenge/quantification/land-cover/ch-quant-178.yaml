@@ -1,0 +1,28 @@
+id: ch-quant-178
+uid: b88fa097189b1345
+status: ready
+set: quantification
+group: land-cover
+query: What is the land cover of Sinjajevina in Montenegro? We want to show it is grazing
+  land, not empty land.
+expected:
+  text: Either gives the land cover of Sinjajevina, or explains that it has no boundary for
+    Sinjajevina and asks for one (or offers the enclosing municipality); does not present
+    land cover for a different area as if it were Sinjajevina.
+notes:
+  behaviour: answer with land cover data, or clarify boundary
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-237); USY-001430 Save Sinjajevina
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; Sinjajevina is not in the AOI index (searched
+    2026-10-23)'
+  benchmark_id: bm26-237
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001430 Save Sinjajevina
+  refresh_risk: Low

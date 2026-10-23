@@ -1,0 +1,28 @@
+id: ch-quant-184
+uid: a3d7e9ff4cff7455
+status: ready
+set: quantification
+group: unavailable
+query: How much forest is in production forest areas in Peru?
+expected:
+  text: Either reports tree cover within Peru's production forests, or says production-forest
+    boundaries are not available and offers tree cover or primary forest for Peru instead;
+    does not invent a figure.
+notes:
+  behaviour: Say production-forest boundaries are not available; offer tree cover or primary
+    forest
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-243); Map exploration research ("ver
+    extensión de bosques de producción en Perú")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-243
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: Map exploration research ("ver extensión de bosques de producción en Perú")
+  refresh_risk: Low

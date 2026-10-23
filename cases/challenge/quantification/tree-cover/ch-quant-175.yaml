@@ -1,0 +1,30 @@
+id: ch-quant-175
+uid: f44bac3f10838f85
+status: ready
+set: quantification
+group: tree-cover
+query: How much primary and secondary vegetation does Brazil have, for our biodiversity framework
+  reporting?
+expected:
+  aoi_ids: BRA
+  dataset_id: 7;3
+  data_pull: 'TRUE'
+  text: Gives the closest available data (for example tree cover or natural lands) and explains
+    that primary versus secondary vegetation is not mapped as such.
+notes:
+  behaviour: answer with closest data (tree cover / natural lands); explain secondary vegetation
+    not separated
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-218); USY-001369 Brazil MMA GBF reporting
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-218
+  benchmark_type: quantification
+  use_cases: UC4;UC5
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001369 Brazil MMA GBF reporting
+  refresh_risk: Low

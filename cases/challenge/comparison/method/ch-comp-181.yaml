@@ -1,0 +1,25 @@
+id: ch-comp-181
+uid: e2559b979bedf060
+status: ready
+set: comparison
+group: method
+query: How does the grassland data compare with the land cover data for measuring pasture
+  in Brazil?
+expected:
+  text: Explains how the grassland dataset and the land cover dataset differ in what they
+    map, and how each can or cannot measure pasture in Brazil.
+notes:
+  behaviour: Explain differences between datasets
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-290); USY-001638 Embrapa; USY-001315
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-290
+  benchmark_type: comparison
+  use_cases: UC4;UC6
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001638 Embrapa; USY-001315
+  refresh_risk: Low

@@ -250,3 +250,41 @@ GFW/LCL user stories rather than observed traffic, so every one is tagged
 - Protected-area (WDPA) analytics fail upstream while PZB-1406 is open;
   those rows count as failures, as any user would see them.
 
+## Batch 5: the v2026 BEF sheet (`portfolio` set, plus monitoring, numeric and causal rows)
+
+168 cases from the BEF benchmark sheet of 2026-10-22
+(`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows): the rows that no
+existing case answers. The sheet's other 131 rows reuse existing cases (98
+real-traffic cases by `challenge_id`, 33 earlier synthetic cases by query
+text). Every new case is synthetic and its expectations are **drafted, not
+reviewed** (`notes.expectations`); AOI ids were resolved against prod
+`/api/aois` on 2026-10-23, with doubtful or unpinned ones explained in
+`notes.verified`. Review them before the November freeze.
+
+| set | new | what it adds |
+|---|---|---|
+| `portfolio` (new) | 27 | many areas at once (ranking every state, screening uploaded sites, saved-area triage); expected to redirect to one to three named areas, judged by `text`; `notes.reclassify_when` says when the expectation flips to "answer with data" |
+| `monitoring` | 36 | alert follow-up (imagery, clusters, coordinates, prioritising), alert context (natural lands, primary forest, mangroves, park buffers), alert method questions, unsupported actions and fixture rows |
+| `quantification` / `comparison` / `trend` | 93 | subnational, protected-area and Indigenous-territory analyses, two-to-three-area comparisons, and data or method questions (`method` cohort, `text` only), unavailable data (`unavailable`) and many-area redirects (`many-areas`) |
+| `causal` | 11 | alert causes, driver shares, commodity over-claims and premise checks |
+| `aoi` | 1 | an ambiguous Amazon question |
+
+- **Fixture rows are `todo`.** 29 new rows (plus `ch-mon-028`) need a seeded
+  test account with a custom area or a 25-polygon portfolio; their
+  `status_reason` names the fixture, and BENCHMARK `2026-draft-3` lists them
+  as excluded (AJ, 2026-10-23).
+- **Unconfirmed capabilities run now.** Rows the sheet marks "Confirm with
+  engineering" (imagery, alert clusters, coordinate export, VIIRS, concession
+  and buffer analysis, production forests) carry an either/or `text`
+  expectation that accepts a correct answer or an honest "not available";
+  `notes.capability_check` marks them for engineering to confirm (AJ,
+  2026-10-23). Concession areas (logging, mining, oil palm) are in the AOI
+  index, so the Lomié and mining-overlay rows may deserve a firmer
+  expectation once confirmed.
+- **Open-ended windows end in 2025.** Tree cover loss, fires, drivers and
+  flux run to 2025 (catalog `content_date`), so "since 2021" expects
+  2021-01-01 to 2025-12-31 where the sheet wrote 2024-12-31; each case says
+  so in `notes.build_notes`. Questions that name no window carry none, as in
+  Batch 4.
+- Each member's sheet facets (use cases, engagement, AOI type, capability,
+  grounding) are case notes written by `tools/benchmark_from_sheet.py`.

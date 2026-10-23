@@ -1,0 +1,26 @@
+id: ch-quant-189
+uid: 2d20b87297cce5ee
+status: ready
+set: quantification
+group: many-areas
+query: Give me tree cover loss and fire-driven loss for every department in Bolivia, 2001–2024,
+  as a table.
+expected:
+  text: Explains that it cannot produce a per-department table for all nine Bolivian departments
+    at once and offers a few named departments or points to downloads or the API; does not
+    invent figures.
+notes:
+  behaviour: 'Redirect: many areas; offer a few departments or point to downloads/API'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-267); USY-001513 health-impact study
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-267
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001513 health-impact study
+  refresh_risk: Low

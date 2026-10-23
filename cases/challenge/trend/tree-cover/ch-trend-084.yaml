@@ -1,0 +1,27 @@
+id: ch-trend-084
+uid: baa77455c3ed29a6
+status: todo
+set: trend
+group: tree-cover
+query: How has tree cover changed on our restoration site since our 2020 baseline?
+expected:
+  dataset_id: 7;4;5
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data for the preloaded custom area; caveat on gain data period
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-224); USY-001379 Wells for Zoé parcel
+    baselines
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-224
+  benchmark_type: trend
+  use_cases: UC4;UC5
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001379 Wells for Zoé parcel baselines
+  refresh_risk: Low

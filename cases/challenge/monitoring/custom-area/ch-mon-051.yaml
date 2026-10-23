@@ -1,0 +1,27 @@
+id: ch-mon-051
+uid: d569d040d4ae651d
+status: todo
+set: monitoring
+group: custom_area
+query: Mark the alert cluster in the north of my area as a false positive.
+expected:
+  text: Says it cannot mark alerts as false positives and suggests how the user could record
+    it instead; does not claim to have marked anything.
+notes:
+  behaviour: Say marking false positives is not supported; suggest how to record it
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-027); Alerts JTBD (Miro) (mark and report
+    false positives)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-027
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: 'Not yet: expect clear redirect'
+  grounding: From user research
+  user_story_refs: Alerts JTBD (Miro) (mark and report false positives)
+  refresh_risk: Low

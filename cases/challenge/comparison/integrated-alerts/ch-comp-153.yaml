@@ -1,0 +1,32 @@
+id: ch-comp-153
+uid: f9f88a8a8db58962
+status: ready
+set: comparison
+group: integrated-alerts
+query: Compare disturbance alerts this year in Masoala and Makira — two of the protected areas
+  we patrol.
+expected:
+  aoi_ids: 303695;352249
+  dataset_id: '11'
+  start_date: '{current_year}-01-01'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-065); USY-001570 Conservation Allies
+    PA enforcement
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-065
+  benchmark_type: comparison
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001570 Conservation Allies PA enforcement
+  refresh_risk: Alert confidence can upgrade

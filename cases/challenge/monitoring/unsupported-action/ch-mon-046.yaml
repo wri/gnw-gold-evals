@@ -1,0 +1,27 @@
+id: ch-mon-046
+uid: d31fe631c6cc71cc
+status: ready
+set: monitoring
+group: unsupported_action
+query: Download the alerts in Charagua Iyambae from the last 30 days as a CSV.
+expected:
+  text: Either provides a CSV download of the last 30 days of alerts in Charagua Iyambae,
+    or explains that it cannot produce one here and says how to get one (for example a download
+    from Global Forest Watch or the API); does not claim to have produced a file.
+notes:
+  behaviour: Provide a download if supported; otherwise explain how to get one
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-022); USY-001218 Charagua MODIF; Alerts
+    JTBD (Miro) (download alert points)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-022
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: 'Not yet: expect clear redirect'
+  grounding: From user research
+  user_story_refs: USY-001218 Charagua MODIF; Alerts JTBD (Miro) (download alert points)
+  refresh_risk: Alert confidence can upgrade

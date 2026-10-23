@@ -1,0 +1,29 @@
+id: ch-port-025
+uid: 6f0779d8f90a989e
+status: todo
+set: portfolio
+group: saved-areas
+query: Export a table of tree cover loss per site since 2020 for our ESG report.
+expected:
+  text: Does not produce or invent per-area results for the whole list; explains that it can
+    analyse one to three named areas at a time and offers to do that, and may point to bulk
+    downloads or the API for screening many areas.
+notes:
+  behaviour: Redirect until portfolio monitoring ships; point to downloads/API
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-114); Portfolio monitoring research
+    (67% export, 42% reports)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: becomes a data answer when portfolio monitoring ships'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-114
+  benchmark_type: portfolio
+  use_cases: UC2;UC4
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: From user research
+  user_story_refs: Portfolio monitoring research (67% export, 42% reports)
+  refresh_risk: Low

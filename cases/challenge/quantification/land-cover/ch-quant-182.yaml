@@ -1,0 +1,28 @@
+id: ch-quant-182
+uid: 8c4bec6fd513ed40
+status: ready
+set: quantification
+group: land-cover
+query: What land cover types make up the Kakataibo landscape in Padre Abad?
+expected:
+  aoi_ids: PER.26.3
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with land cover breakdown
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-241); USY-001248 Kakataibo
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; pinned to Padre Abad province as the
+    sheet does; Landmark has Kakataibo Norte/Sur reserves (PER8623, PER8624)'
+  build_notes: AOI id to verify
+  benchmark_id: bm26-241
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001248 Kakataibo
+  refresh_risk: Low

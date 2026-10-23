@@ -1,0 +1,28 @@
+id: ch-quant-194
+uid: 8cbc4d68c511f635
+status: ready
+set: quantification
+group: unavailable
+query: Is there canopy height data I can use?
+expected:
+  text: Says whether canopy height data are available in Horizon and, if not, points to where
+    they can be found (for example Land & Carbon Lab or Global Forest Watch), without inventing
+    a canopy height layer.
+notes:
+  behaviour: Explain whether canopy height is available in Horizon; point to Land & Carbon
+    Lab if not
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-272); USY-001368 One Acre Fund; USY-001343
+    Meta canopy height
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-272
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Confirm with engineering
+  grounding: Direct from story
+  user_story_refs: USY-001368 One Acre Fund; USY-001343 Meta canopy height
+  refresh_risk: Low

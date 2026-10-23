@@ -1,0 +1,29 @@
+id: ch-mon-045
+uid: 76a07bcad065a09f
+status: ready
+set: monitoring
+group: alert_followup
+query: Give me the coordinates and dates of the high-confidence alerts in Offinso Forest District
+  from the last two weeks so my team can go verify them.
+expected:
+  text: Either lists coordinates and dates of the high-confidence alerts in Offinso from the
+    last two weeks, or explains that it cannot export alert coordinates and says how to get
+    them (for example a download from Global Forest Watch or the API); does not invent coordinates.
+notes:
+  behaviour: List or export coordinates and dates, or explain how to get them
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-021); USY-001249 Offinso; Alerts JTBD
+    (Miro) (navigate to alerts in the field)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-021
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: USY-001249 Offinso; Alerts JTBD (Miro) (navigate to alerts in the field)
+  refresh_risk: Alert confidence can upgrade

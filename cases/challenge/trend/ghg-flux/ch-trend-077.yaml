@@ -1,0 +1,34 @@
+id: ch-trend-077
+uid: 96810b35e55fa44d
+status: todo
+set: trend
+group: ghg-flux
+query: Track the net carbon flux in our project area each year since the project started in
+  2018.
+expected:
+  dataset_id: '6'
+  start_date: '2018-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with annual flux for the preloaded area, or totals with caveat if annual
+    not available
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-175); USY-001563 WWF-US landscapes;
+    Portfolio monitoring research (carbon/restoration projects)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-175
+  benchmark_type: trend
+  use_cases: UC4
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001563 WWF-US landscapes; Portfolio monitoring research (carbon/restoration
+    projects)
+  refresh_risk: Low

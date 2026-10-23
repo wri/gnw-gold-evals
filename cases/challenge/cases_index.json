@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "124f96526065f24a",
-  "case_count": 781,
+  "caseset_version": "a25ea96aa7dc5330",
+  "case_count": 949,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -2930,6 +2930,24 @@
       "subtype": "designations"
     },
     {
+      "id": "ch-aoi-155",
+      "uid": "fd567abb56f6e22e",
+      "set": "aoi",
+      "group": "ambiguity",
+      "status": "ready",
+      "behaviour": "Clarify which Amazon boundary or offer country-level breakdown",
+      "query": "Describe the pattern of deforestation in the Amazon.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "ambiguity"
+    },
+    {
       "id": "ch-causal-001",
       "uid": "cf1f0b0010e55a2d",
       "set": "causal",
@@ -3441,6 +3459,264 @@
       "dataset_ids": [
         "8"
       ]
+    },
+    {
+      "id": "ch-causal-019",
+      "uid": "122d136e53e8a864",
+      "set": "causal",
+      "group": "alert_cause",
+      "status": "ready",
+      "behaviour": "Use alerts with land cover and historical drivers as context; say that alert-level driver data is not available yet; no invented cause",
+      "query": "I got an alert email about new high-confidence alerts in the Matsés Native Community. What's likely causing them?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "1",
+        "11",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-020",
+      "uid": "e4d7f51b04b4924e",
+      "set": "causal",
+      "group": "why_territory",
+      "status": "ready",
+      "behaviour": "Combine recent alerts with annual loss history for the area",
+      "query": "The alerts in the Wampis territory this month — is this new clearing or has that area been losing forest for years?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "11",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-causal-021",
+      "uid": "ae93508ff5cd6eff",
+      "set": "causal",
+      "group": "driver_vs_fire",
+      "status": "ready",
+      "behaviour": "Answer with available fire information, or explain fire attribution limits for recent alerts",
+      "query": "Were any of last week's alerts in Maranhão caused by fire?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-causal-022",
+      "uid": "3d4a049d71a44090",
+      "set": "causal",
+      "group": "why_subnational",
+      "status": "ready",
+      "behaviour": "Answer with fire-driven loss and drivers; caveat on causes",
+      "query": "Why are our forests in Riau being burned?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "10",
+        "11",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-023",
+      "uid": "366679d8d79ddbaa",
+      "set": "causal",
+      "group": "commodity_overclaim",
+      "status": "ready",
+      "behaviour": "Answer with driver class; state that commodity is not identified",
+      "query": "Does the drivers data support linking loss in Boquerón to new cattle ranches, and what can it not tell me?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-024",
+      "uid": "afd7b97b8917d335",
+      "set": "causal",
+      "group": "driver_share",
+      "status": "ready",
+      "behaviour": "answer with flux + drivers; caveat",
+      "query": "How do forestry emissions compare with other causes of forest emissions in British Columbia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "6",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-025",
+      "uid": "a76971f72970e138",
+      "set": "causal",
+      "group": "why_country",
+      "status": "ready",
+      "behaviour": "answer with data; drivers; caveat on linking to disease outbreaks",
+      "query": "How much tree cover did the DRC lose in 2024, and what was driving it?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-026",
+      "uid": "85d55c29021f8ac1",
+      "set": "causal",
+      "group": "driver_share",
+      "status": "ready",
+      "behaviour": "answer with drivers data at supported scale; caveat",
+      "query": "Which areas of the Ghana Cocoa Belt lost tree cover to permanent agriculture rather than shifting cultivation, so we can target restoration?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-027",
+      "uid": "3a990c1342688cfb",
+      "set": "causal",
+      "group": "many_areas",
+      "status": "ready",
+      "behaviour": "Redirect: ranking many districts; drivers data has no mining-specific class at district level — explain",
+      "query": "Which districts of Madre de Dios have the most loss from mining?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-causal-028",
+      "uid": "9975fe90e72a47fc",
+      "set": "causal",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain driver classes and what they can and cannot distinguish",
+      "query": "Can the drivers data separate subsistence shifting cultivation from commodity-driven loss?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-causal-029",
+      "uid": "cf4d75fb979f8a75",
+      "set": "causal",
+      "group": "caveat_required",
+      "status": "ready",
+      "behaviour": "Explain what the data can support; no causal claim from overlap; note outbreak data is not in the catalog",
+      "query": "Is there a relationship between forest loss and Ebola outbreak sites in West Africa?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": []
     },
     {
       "id": "ch-comp-001",
@@ -7327,6 +7603,846 @@
       "dataset_ids": [
         "4"
       ]
+    },
+    {
+      "id": "ch-comp-149",
+      "uid": "8d74e90d571dc42d",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "behaviour": "Compare same month across years with data",
+      "query": "My email said there were about 40 hectares of new alerts in the Western North region. How does that compare with the same month last year?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-comp-150",
+      "uid": "81c1013d410493a0",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Compare tree cover loss since 2021 in Ghana's Western North and Ashanti regions — those are our main cocoa sourcing regions.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-151",
+      "uid": "5f8761bfc2ee3dca",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Which had more tree cover loss in 2023: Riau, Jambi or West Kalimantan?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-152",
+      "uid": "72c4d0c7d106015d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Has deforestation since 2021 been worse in Rondônia or Mato Grosso? We source beef from both.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-153",
+      "uid": "f9f88a8a8db58962",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Compare disturbance alerts this year in Masoala and Makira — two of the protected areas we patrol.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-comp-154",
+      "uid": "43da5d35146ececc",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Has any natural land been converted since 2021 in San Martín or Junín, where our cocoa cooperatives are?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-155",
+      "uid": "72c3f1aad13aaf90",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Is palm-related deforestation risk higher in Sabah or Sarawak?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-comp-156",
+      "uid": "8807a703a563b38e",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Compare tree cover loss in Boquerón and Alto Paraguay since 2021 for our beef sourcing policy.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-157",
+      "uid": "ac9eaf5b6542cd6a",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Which of Maranhão, Tocantins and Piauí had the most natural vegetation conversion since 2021?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-158",
+      "uid": "68657efd985da114",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Compare natural grassland loss in Mato Grosso do Sul and Goiás since 2015.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
+      "id": "ch-comp-159",
+      "uid": "045726c2564f7820",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "How does tree cover loss since 2021 compare in Cusco and Madre de Dios? Our loan portfolio covers both.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-160",
+      "uid": "4ceb86fbac13e777",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Compare fire-driven tree cover loss in Santa Cruz and Beni in 2024.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-comp-161",
+      "uid": "41171d69ae22b4f0",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Which lost more primary forest from 2021 to 2024: the Kayapó or the Yanomami Indigenous Territory?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-162",
+      "uid": "c1eee5e7dbd5a086",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "For EUDR due diligence, was there tree cover loss after 31 December 2020 in Côte d'Ivoire's Nawa and Cavally regions?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-163",
+      "uid": "d8cec4e2061931b1",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "behaviour": "Answer for three named areas",
+      "query": "Compare this month's alerts across the three districts we patrol: Offinso, Ahafo Ano South and Atwima Nwabiagya.",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-comp-164",
+      "uid": "1471fed50817ef7c",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "Answer for two named areas",
+      "query": "Compare net carbon flux in our two project landscapes, Odzala-Kokoua and Lopé national parks.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-comp-165",
+      "uid": "69f1fc62c0f0c38e",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "How much tree cover was lost to fires in Sinaloa in 2024, and was that more than in 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-comp-166",
+      "uid": "fc1fcf59cfb18eb6",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer at country/PA-network level if supported; else redirect",
+      "query": "How much tree cover did Madagascar's protected areas lose in 2024 compared with 2023?",
+      "expected_fields": [
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-167",
+      "uid": "6de338a01715b96c",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "todo",
+      "behaviour": "Answer with data for the preloaded area",
+      "query": "Our baseline was 2020. How much tree cover has our project area lost since then?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-comp-168",
+      "uid": "7632f81d9c3d10eb",
+      "set": "comparison",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: ranking many countries not supported; offer 2–3 country comparison",
+      "query": "Which African countries had the largest increase in tree cover loss between 2020 and 2024?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-169",
+      "uid": "2d55b65dd87b05a4",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer with data; annualize baseline correctly",
+      "query": "What was Indonesia's primary forest loss in 2024 compared with its 2016–2020 average?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-170",
+      "uid": "a2c44e0f62a74cb6",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer with two-period comparison; annualize correctly",
+      "query": "Has the Kayapó Indigenous Territory lost less forest since 2019 than in the five years before?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-171",
+      "uid": "9184ef24c50c940b",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "Give GFW figures and method differences; no verdict on the official number; Do not suggest the data can set payment amounts; it can serve as an informal cross-check; explain method differences from official monitoring",
+      "query": "Do GFW's numbers on emissions from tree cover loss in Cambodia look consistent with Cambodia's REDD+ reference level?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "id": "ch-comp-172",
+      "uid": "7f46ed78c7415c5e",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "todo",
+      "behaviour": "Compare pre/post-2020 loss for the preloaded area; Do not suggest the data can set payment amounts; it can serve as an informal cross-check; explain method differences from official monitoring",
+      "query": "A project developer says deforestation in our project area fell by half after 2020. Does the tree cover loss data look consistent with that?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-173",
+      "uid": "b40000f040d6eb9c",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer with data; Do not suggest the data can set payment amounts; it can serve as an informal cross-check; explain method differences from official monitoring",
+      "query": "Ghana's results report shows lower forest loss in 2022–2023. How does GFW's tree cover loss for those years compare with 2018–2021?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-174",
+      "uid": "4d7c92b164e23b9e",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "answer with data (3 areas)",
+      "query": "What are the net forest GHG fluxes for Peru, Colombia and Brazil, for a forest reference emission level comparison?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-comp-175",
+      "uid": "c4b64f46c1ed288c",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "How much natural land vs cropland is there in Mato Grosso? We want to steer new soy onto already-converted land.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-comp-176",
+      "uid": "7fb81e36713aece8",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "How much land in Antioquia is natural forest versus pasture? We are planning where to densify livestock.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-comp-177",
+      "uid": "0ed0cba3cb328fc0",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer for three countries; provide table/download or explain how",
+      "query": "Give me annual tree cover loss for Peru, Bolivia and Ecuador from 2001 to 2024 as a table I can download.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-178",
+      "uid": "f074b56c8ebee2c5",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain the conceptual difference correctly",
+      "query": "How does tree cover loss from fires differ from burned area data?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-179",
+      "uid": "5a9291e5c7795d8c",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain both definitions correctly",
+      "query": "What's the difference between natural lands and primary forest?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-180",
+      "uid": "30c74cafa2cf4310",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain definitional and method differences; no claim that either is wrong",
+      "query": "Why do GFW's numbers for Brazil differ from PRODES?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-181",
+      "uid": "e2559b979bedf060",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain differences between datasets",
+      "query": "How does the grassland data compare with the land cover data for measuring pasture in Brazil?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
     },
     {
       "id": "ch-dataset-001",
@@ -12697,6 +13813,1284 @@
       ]
     },
     {
+      "id": "ch-mon-031",
+      "uid": "4066fb04217ac32c",
+      "set": "monitoring",
+      "group": "custom_area",
+      "status": "todo",
+      "behaviour": "answer with data for the preloaded custom area",
+      "query": "Any new deforestation alerts in my area in the last week?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-032",
+      "uid": "ede7057e94722f43",
+      "set": "monitoring",
+      "group": "recent_presence",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Have there been any new deforestation alerts in Équateur province in the last month?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-033",
+      "uid": "03447c1627dfed0e",
+      "set": "monitoring",
+      "group": "recent_area",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "How many hectares of disturbance alerts were detected in the Guarayos Indigenous Territory over the past 3 months?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-034",
+      "uid": "8ff0ac2565b78c2e",
+      "set": "monitoring",
+      "group": "recent_presence",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Any fire-related disturbance alerts in Maranhão this week? Looking for escaped fires.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-035",
+      "uid": "3650733264b003d9",
+      "set": "monitoring",
+      "group": "ytd",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Any alerts in the Wampis territory since January?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-036",
+      "uid": "6c6ef67e03fb8a92",
+      "set": "monitoring",
+      "group": "recent_vs_prior",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Are deforestation alerts in Kerinci Seblat National Park higher this month than last month?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-037",
+      "uid": "2e615fbd7c3c969b",
+      "set": "monitoring",
+      "group": "monthly_recent",
+      "status": "ready",
+      "behaviour": "answer with data + monthly chart",
+      "query": "Summarize disturbance alerts in Padre Abad province over the last 6 months, month by month",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-038",
+      "uid": "946afe2d1c33686d",
+      "set": "monitoring",
+      "group": "recent_vs_prior",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Did alert area in Ituri go up in the last 30 days compared with the 30 days before?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-039",
+      "uid": "e44f5d68f260f739",
+      "set": "monitoring",
+      "group": "recent_presence",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Have there been any deforestation alerts in Boumba Bek National Park this month?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-040",
+      "uid": "3bc22313e229e0ec",
+      "set": "monitoring",
+      "group": "unsupported_action",
+      "status": "ready",
+      "behaviour": "redirect to alert subscriptions; must not claim to have set one up",
+      "query": "Can you send me an alert whenever there's new deforestation in the Saamaka territory?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-041",
+      "uid": "851a2a35603d2224",
+      "set": "monitoring",
+      "group": "recent_area",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Summarize alerts in Offinso Forest District over the last two weeks",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-042",
+      "uid": "d585774f2f838d4a",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready",
+      "behaviour": "answer with data, or say if active-fire alerts are not available",
+      "query": "Are there any fire alerts near Isiolo right now? Our scouts need to know where to go.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-043",
+      "uid": "14a55a95fcc8c506",
+      "set": "monitoring",
+      "group": "alert_followup",
+      "status": "ready",
+      "behaviour": "Show imagery if available; otherwise say so and suggest where to get it",
+      "query": "Can you show me satellite imagery for last week's alerts in Kerinci Seblat National Park so I can check whether they are real before sending a team?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-044",
+      "uid": "7b77caf65ac6b1ac",
+      "set": "monitoring",
+      "group": "alert_followup",
+      "status": "ready",
+      "behaviour": "Describe spatial pattern and largest cluster location, or say clustering is not available",
+      "query": "Are this month's alerts in the Guarayos Indigenous Territory clustered or scattered? Where is the biggest cluster?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-045",
+      "uid": "76a07bcad065a09f",
+      "set": "monitoring",
+      "group": "alert_followup",
+      "status": "ready",
+      "behaviour": "List or export coordinates and dates, or explain how to get them",
+      "query": "Give me the coordinates and dates of the high-confidence alerts in Offinso Forest District from the last two weeks so my team can go verify them.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-046",
+      "uid": "d31fe631c6cc71cc",
+      "set": "monitoring",
+      "group": "unsupported_action",
+      "status": "ready",
+      "behaviour": "Provide a download if supported; otherwise explain how to get one",
+      "query": "Download the alerts in Charagua Iyambae from the last 30 days as a CSV.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-047",
+      "uid": "6b154e65529f5125",
+      "set": "monitoring",
+      "group": "unsupported_action",
+      "status": "ready",
+      "behaviour": "Produce or point to a printable map export, or say not supported yet",
+      "query": "Make a map of this month's alerts in the Aru Islands that I can print for the community meeting.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-048",
+      "uid": "65221241b2f7fc3f",
+      "set": "monitoring",
+      "group": "recent_summary",
+      "status": "ready",
+      "behaviour": "Short, accurate summary with numbers and dates",
+      "query": "Summarize what changed in Antioquia since I last checked two weeks ago, in a few sentences I can send to the environmental authority.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-049",
+      "uid": "1208e016f44647dd",
+      "set": "monitoring",
+      "group": "alert_followup",
+      "status": "ready",
+      "behaviour": "Suggest prioritization using size, recency, confidence and context; defer final choice to local knowledge",
+      "query": "Which alerts in the Okapi Wildlife Reserve should we investigate first?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-050",
+      "uid": "7a8153ed53876674",
+      "set": "monitoring",
+      "group": "custom_area",
+      "status": "todo",
+      "behaviour": "Answer with data for the preloaded area",
+      "query": "Show me the disturbance alerts in my area since my last visit on the first of the month.",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-051",
+      "uid": "d569d040d4ae651d",
+      "set": "monitoring",
+      "group": "custom_area",
+      "status": "todo",
+      "behaviour": "Say marking false positives is not supported; suggest how to record it",
+      "query": "Mark the alert cluster in the north of my area as a false positive.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-052",
+      "uid": "8440eba7f5646bb3",
+      "set": "monitoring",
+      "group": "unsupported_action",
+      "status": "ready",
+      "behaviour": "Say WhatsApp delivery is not supported; must not claim to have set it up",
+      "query": "Send me these alerts on WhatsApp instead of email.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-053",
+      "uid": "8dc21d392dd752a3",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready",
+      "behaviour": "Say active-fire alerts are not available; offer disturbance alerts or fire-driven loss",
+      "query": "Show me the latest VIIRS fire alerts in Santa Cruz, Bolivia.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-054",
+      "uid": "5c44b5d00b6bbcdf",
+      "set": "monitoring",
+      "group": "concession_alerts",
+      "status": "ready",
+      "behaviour": "Say concession boundaries are not available; offer alerts for the named area",
+      "query": "Are there alerts in or near the logging concessions around Lomié this month?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-055",
+      "uid": "1053347129e153ba",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready",
+      "behaviour": "Answer with alerts intersected with primary forest",
+      "query": "Which of this month's alerts in Tesso Nilo National Park are inside primary forest?",
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-056",
+      "uid": "b326ad938c69f1b4",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready",
+      "behaviour": "answer with data; clarify mangrove context if unsupported",
+      "query": "Have there been disturbance alerts in mangrove areas of the Mahakam Delta this year?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-057",
+      "uid": "93a21c8a33efe6b9",
+      "set": "monitoring",
+      "group": "buffer_unsupported",
+      "status": "ready",
+      "behaviour": "Answer with buffer analysis, or say buffers are not supported and offer the in-park total",
+      "query": "Are any of this month's alerts in Boumba Bek National Park within 5 km of the park boundary?",
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-058",
+      "uid": "76622b15ec56ec59",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready",
+      "behaviour": "Answer with alerts intersected with natural lands or land cover",
+      "query": "Did the alerts in Padre Abad province this month fall in natural forest or on land that was already farmed?",
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-059",
+      "uid": "5c858d8ce22ca408",
+      "set": "monitoring",
+      "group": "by_confidence",
+      "status": "ready",
+      "behaviour": "Explain confidence levels accurately; give the low vs high split for the area; no field-safety guarantee",
+      "query": "What does 'high confidence' mean for these alerts, and is it worth sending a patrol for the low-confidence ones in Guarayos?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-060",
+      "uid": "a119f0a9f7dda34e",
+      "set": "monitoring",
+      "group": "alert_method",
+      "status": "ready",
+      "behaviour": "Explain known false-positive sources and seasonality; do not dismiss or confirm without evidence",
+      "query": "Could the alerts in Lampung this month be caused by flooding or cloud cover rather than clearing?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-061",
+      "uid": "acc2e7386e13e9ae",
+      "set": "monitoring",
+      "group": "alert_method",
+      "status": "ready",
+      "behaviour": "Explain alert coverage, vegetation types and detection limits",
+      "query": "We saw clearing in the field near Isiolo last month but got no alerts. Why might the alerts have missed it?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-062",
+      "uid": "df01a1a55a13434a",
+      "set": "monitoring",
+      "group": "alert_method",
+      "status": "ready",
+      "behaviour": "Explain detection lag, revisit time and date meaning",
+      "query": "The alert date says March but our rangers saw machines there in February. How soon after clearing does an alert appear?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-063",
+      "uid": "104911008bea8e0a",
+      "set": "monitoring",
+      "group": "compare_areas",
+      "status": "ready",
+      "behaviour": "answer with data (2–3 named areas: supported)",
+      "query": "Compare alert area in the last 30 days across our two conservation concessions in Madre de Dios and Loreto.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-064",
+      "uid": "d025cb1b2b629b99",
+      "set": "monitoring",
+      "group": "many_areas",
+      "status": "ready",
+      "behaviour": "Redirect: many areas; offer a named park",
+      "query": "Have any important clusters of alerts appeared in national parks in Peru this month?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-065",
+      "uid": "7c0ce4fdc697fae9",
+      "set": "monitoring",
+      "group": "custom_area",
+      "status": "todo",
+      "behaviour": "answer with data for the preloaded custom area",
+      "query": "Is the net forest carbon flux in our project landscape getting better or worse?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-mon-066",
+      "uid": "67e7a9c812e06403",
+      "set": "monitoring",
+      "group": "alert_method",
+      "status": "ready",
+      "behaviour": "Answer accurately",
+      "query": "What time period do the disturbance alerts cover and how often are they updated?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-001",
+      "uid": "0683ed56963b9e56",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Here are 150 mills from the Universal Mill List. Which have deforestation within 50 km since 2020?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-002",
+      "uid": "f75e7919da8f42f1",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "I've uploaded a shapefile of our cocoa farm plots — check each one for loss after December 31, 2020.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-003",
+      "uid": "1a75c444b70b2404",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Rank every Brazilian state by soy-driven conversion since 2020.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-004",
+      "uid": "56d443f16f6a7358",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Give me a monthly report of alerts across our oil palm concessions.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-005",
+      "uid": "9721c2736bbcc675",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Which of our suppliers are in high deforestation-risk areas?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-006",
+      "uid": "21849311b6d865e5",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Calculate our deforestation liability across our palm sourcing regions through 2025.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-007",
+      "uid": "a7d46288fbed7890",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Classify our cocoa cooperatives' areas as low, medium or high deforestation risk.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-008",
+      "uid": "0365c4447b8deb3e",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Verify whether palm oil from our mills' supply areas is deforestation-free.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-009",
+      "uid": "876d118134a098b0",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Score the farmer locations I uploaded for deforestation risk.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-010",
+      "uid": "10a7d2d67bcc7e7a",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Set up weekly alert summaries for all protected areas in Madagascar.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-011",
+      "uid": "347723a2be57541a",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Compare tree cover loss across all World Heritage forest sites and rank the worst 10.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-012",
+      "uid": "65ec49894d28d4b8",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Evaluate tree cover change on the farmer plots in our regeneration program.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-013",
+      "uid": "6e212b4fe96f3c08",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Track loss across all our project landscapes since 2020 and tell me which are off track.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-014",
+      "uid": "f74e41affe4c85e4",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "For each loan applicant parcel I uploaded, has there been deforestation in the last five years?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-015",
+      "uid": "8cbfb2d26d2e7cd1",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Rank all Indigenous territories in Peru by tree cover loss in 2024.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-016",
+      "uid": "359f355fd212e2e7",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Which oil palm concessions in Indonesia had fires in 2023?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-017",
+      "uid": "091de03b125e87e8",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Show me which cocoa-growing districts in Côte d'Ivoire and Ghana had the most loss — all of them, ranked.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-018",
+      "uid": "ed60b6a099b4ae08",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Give me a table of tree cover loss for every municipality in Pará since 2015.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-019",
+      "uid": "75890973a353dc89",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Every quarter, compare our restoration sites against their baseline tree cover.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-020",
+      "uid": "a4674f37fc75c64f",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "For each of my saved areas, flag any loss on natural land after 2020.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-021",
+      "uid": "ae5b8aeb7b161f33",
+      "set": "portfolio",
+      "group": "uploaded-sites",
+      "status": "todo",
+      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "query": "Screen our supplier farms in Mato Grosso for EUDR compliance.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-022",
+      "uid": "0298a1c271a0eea7",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "Redirect until portfolio monitoring ships; offer to look at 1–3 sites",
+      "query": "Which of my sites needs attention first this week?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-023",
+      "uid": "79cd0b6d24b0262d",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "Redirect until portfolio monitoring ships",
+      "query": "What's changed across my saved areas since last month?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-024",
+      "uid": "e63d35c7da915e29",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "Redirect until portfolio monitoring ships",
+      "query": "Group my sites by region and summarize tree cover loss for each group.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-025",
+      "uid": "6f0779d8f90a989e",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "Redirect until portfolio monitoring ships; point to downloads/API",
+      "query": "Export a table of tree cover loss per site since 2020 for our ESG report.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-026",
+      "uid": "49fcb2b0bed70a43",
+      "set": "portfolio",
+      "group": "saved-areas",
+      "status": "todo",
+      "behaviour": "Redirect until portfolio monitoring ships",
+      "query": "Are things getting better or worse across our restoration sites since 2020?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-027",
+      "uid": "49a8d29a6204e323",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "Redirect: many areas; offer national total or a named PA",
+      "query": "Prepare a table of tree cover loss in each of Madagascar's protected areas every year since 2015 for our annual report.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-quant-001",
       "uid": "970fb685b7da35fd",
       "set": "quantification",
@@ -16917,6 +19311,1033 @@
       ]
     },
     {
+      "id": "ch-quant-158",
+      "uid": "61ded8af5a8a4360",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "todo",
+      "behaviour": "answer with data for the preloaded custom area",
+      "query": "What share of our sourcing area had tree cover loss in 2023?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-159",
+      "uid": "728eca34212b86ff",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "How much primary forest does Suriname have, and how much of it was lost between 2015 and 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-160",
+      "uid": "cda2b8f393e474a2",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "How much tree cover loss has Boquerón in the Paraguayan Chaco had from 2015 to 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-161",
+      "uid": "b1ded03727952d34",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "Clarify boundary or ask for upload; then answer with data",
+      "query": "Has the area around the Lobé iron project lost forest since the mining permit was granted in 2012?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-162",
+      "uid": "474e49265cff6964",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer for the park; explain if surroundings or concessions are unavailable",
+      "query": "Is the loss around Tesso Nilo inside the national park boundary or in the surrounding area?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-163",
+      "uid": "06dc3fc4468e9469",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "Decline point lookup or ask for an area; must not guess",
+      "query": "What's the story behind this coordinate: 3.8°S, 73.2°W? Has there been loss there recently?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-164",
+      "uid": "898370a268152afb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer with primary forest extent and loss (dashboard-style stats)",
+      "query": "How much primary forest does Malaysia have left, and how much has it lost since 2001?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-165",
+      "uid": "065f791e7da78838",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer with full annual series; flag method changes over time",
+      "query": "Can I say Bolivia's 2024 tree cover loss was a record? How does it compare with every year since 2001?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-166",
+      "uid": "87c710181f1a29f2",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain accuracy assessment and uncertainty honestly; no invented error bars",
+      "query": "How confident can I be in the DRC's 2024 tree cover loss number? Is there a margin of error?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-167",
+      "uid": "bb05c7f222f0e6fc",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "Are forests in Yasuní National Park a net carbon sink or source?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-168",
+      "uid": "80392166e13a3965",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "What are the gross emissions and removals from forests in Salonga National Park?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-169",
+      "uid": "b60a1144f3a67b3f",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "Answer with data; caveat on national inventory methods",
+      "query": "What were gross emissions from forest loss in Colombia in 2023? We need it for NDC tracking.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-170",
+      "uid": "1abf501a7df3b2ff",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Do not suggest the data can set payment amounts; it can serve as an informal cross-check; explain method differences from official monitoring; point to official MRV systems",
+      "query": "Can we use GFW tree cover loss to calculate how much our province should be paid under a jurisdictional REDD+ program?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-171",
+      "uid": "558db117eb3a110c",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready",
+      "behaviour": "answer with data if subnational sLUC exists; else national value with caveat",
+      "query": "We're building a corporate GHG inventory. What are the land-use change emissions per tonne of soy sourced from Mato Grosso?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ]
+    },
+    {
+      "id": "ch-quant-172",
+      "uid": "4b422abbbaa8f9b9",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready",
+      "behaviour": "answer with data + methodology caveat; no accounting advice beyond data",
+      "query": "What emission factor should we use for cocoa from Ghana in our Scope 3 land-use change accounting?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ]
+    },
+    {
+      "id": "ch-quant-173",
+      "uid": "73895657cabb96d8",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready",
+      "behaviour": "answer if cattle in sLUC crops; else decline and say which commodities are covered",
+      "query": "What are the land-use change emissions linked to beef production in Brazil?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-174",
+      "uid": "adc00c0a76396f1a",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "redirect or clarify: many territories; offer a named territory",
+      "query": "How much of Peru’s Indigenous territories lost tree cover in 2024, for 30x30 reporting?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-175",
+      "uid": "f44bac3f10838f85",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "behaviour": "answer with closest data (tree cover / natural lands); explain secondary vegetation not separated",
+      "query": "How much primary and secondary vegetation does Brazil have, for our biodiversity framework reporting?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-176",
+      "uid": "ddf89312398553e7",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready",
+      "behaviour": "answer with data; note indicator definition caveat",
+      "query": "What share of Spain is natural grassland, for indicator B1 of the Global Biodiversity Framework?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
+      "id": "ch-quant-177",
+      "uid": "3901049c955c6521",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "What was tree cover loss in Antioquia, Colombia in 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-178",
+      "uid": "b88fa097189b1345",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "behaviour": "answer with land cover data, or clarify boundary",
+      "query": "What is the land cover of Sinjajevina in Montenegro? We want to show it is grazing land, not empty land.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-179",
+      "uid": "d20fa2256653f086",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "behaviour": "answer with data",
+      "query": "How much tree cover did El Salvador gain between 2000 and 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-quant-180",
+      "uid": "7ca120b9009b2b2f",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "behaviour": "Answer with land cover / natural lands; note restoration suitability needs local data",
+      "query": "Where in the Ashanti region is there cropland or degraded land rather than natural forest, that could be restored?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-181",
+      "uid": "490b637a7d75d022",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "todo",
+      "behaviour": "Answer with data for the preloaded area",
+      "query": "How much of my area is natural land and how much is cropland?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-182",
+      "uid": "8c4bec6fd513ed40",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "behaviour": "Answer with land cover breakdown",
+      "query": "What land cover types make up the Kakataibo landscape in Padre Abad?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-183",
+      "uid": "2e6fb5eba3dbed52",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready",
+      "behaviour": "Answer with grassland / natural land extent",
+      "query": "Is there still natural grassland in Mato Grosso that we should prioritize for protection?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-184",
+      "uid": "a3d7e9ff4cff7455",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "Say production-forest boundaries are not available; offer tree cover or primary forest",
+      "query": "How much forest is in production forest areas in Peru?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-185",
+      "uid": "d1c5ceb6d43c2e70",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "Say crop maps are not available; offer cropland from land cover",
+      "query": "Which areas of Guatemala had coffee planted in 2020?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-186",
+      "uid": "faa71d61983f8590",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer for the park; explain if buffer-zone analysis is not supported",
+      "query": "Which parts of the area around Taï National Park have had the most recent loss? We want to target buffer-zone work.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-187",
+      "uid": "111f028d72a8708a",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "Say social forestry boundaries are not available",
+      "query": "How much social forestry area in Indonesia has been deforested?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-188",
+      "uid": "2db3c297ced20f08",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "Answer with flux for the state; explain if within-state hotspots are not supported",
+      "query": "Which forests in Pará remove the most carbon? We want to prioritize protection to keep the carbon sink.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-189",
+      "uid": "2d20b87297cce5ee",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "behaviour": "Redirect: many areas; offer a few departments or point to downloads/API",
+      "query": "Give me tree cover loss and fire-driven loss for every department in Bolivia, 2001–2024, as a table.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-190",
+      "uid": "95f7637df2759e76",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Name current version and key changes accurately; give citation",
+      "query": "Which version of the tree cover loss data should I cite, and what changed from the previous version?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-191",
+      "uid": "78b700a2d01a5b94",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Answer accurately (30 m pixels; detection limits)",
+      "query": "What is the spatial resolution of tree cover loss, and what is the smallest clearing it can detect?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-192",
+      "uid": "752c76801df3e227",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "Say these layers are not available; suggest alternatives honestly",
+      "query": "Is there data on roads or mining concessions I can overlay with the alerts?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-193",
+      "uid": "52caefe83d4be7be",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain API access; point to documentation; no fabricated endpoints",
+      "query": "Can I get the disturbance alerts through an API for my own monitoring app?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-194",
+      "uid": "8cbc4d68c511f635",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "Explain whether canopy height is available in Horizon; point to Land & Carbon Lab if not",
+      "query": "Is there canopy height data I can use?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-195",
+      "uid": "bd78e4cd53191491",
+      "set": "quantification",
+      "group": "custom-area",
+      "status": "todo",
+      "behaviour": "Explain upload support and portfolio limits",
+      "query": "Can I upload a KML of my study areas and run the same analysis on each?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-196",
+      "uid": "66a298dccadfe3ee",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain the gain layer correctly (binary/fraction as documented); no invented semantics",
+      "query": "What does a value of 0.8 in the tree cover gain layer mean?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-197",
+      "uid": "0204cf797f493a76",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Name relevant datasets (2020 baseline, post-2020 loss); say tree cover loss is not deforestation; no compliance certification",
+      "query": "Which dataset should I use to check for deforestation under the EUDR?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-198",
+      "uid": "3c227b222e46a7ad",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Name source and method accurately",
+      "query": "What data sources and models are behind the tree cover loss numbers you just gave me?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-199",
+      "uid": "61f2ca81c6515c85",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "behaviour": "Answer with data and explain method",
+      "query": "How many hectares of tree cover loss in Indonesia came from fires in 2015, and how was \"fire-driven\" determined?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-200",
+      "uid": "cd81b6b9e2690822",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "decline: soil carbon not available; suggest related datasets",
+      "query": "Can you estimate soil carbon change in pastoral lands in Mongolia?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-201",
+      "uid": "02f1b063aeb5f2f6",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "behaviour": "decline or redirect: pasture carbon not in catalog",
+      "query": "What is the carbon stored in pastures in Mato Grosso do Sul?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-202",
+      "uid": "8f2d627de19480f7",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain uncertainty sources accurately; point to documentation",
+      "query": "What is the uncertainty in the forest carbon flux model, and how should I report it?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-203",
+      "uid": "03099cba0ca96b29",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain method accurately; point to documentation",
+      "query": "How is the sLUC emission factor for cocoa calculated?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-204",
+      "uid": "c17c6c02a31e1cfe",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain resolution and recommended scale",
+      "query": "At what scale should I analyze the land cover data? Is it reliable at district level?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-205",
+      "uid": "18198c0a7b0a14a6",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Say what is and is not available; no fabricated biodiversity layers",
+      "query": "Which datasets in Horizon could help me assess biodiversity risk?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-trend-001",
       "uid": "a7eff4f0bc836cae",
       "set": "trend",
@@ -19024,6 +22445,309 @@
       "dataset_ids": [
         "4"
       ]
+    },
+    {
+      "id": "ch-trend-076",
+      "uid": "771e41ae922b2798",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "behaviour": "Answer with data",
+      "query": "Have alerts in Équateur province been rising over the last three months compared with the three months before?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-trend-077",
+      "uid": "96810b35e55fa44d",
+      "set": "trend",
+      "group": "ghg-flux",
+      "status": "todo",
+      "behaviour": "Answer with annual flux for the preloaded area, or totals with caveat if annual not available",
+      "query": "Track the net carbon flux in our project area each year since the project started in 2018.",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-trend-078",
+      "uid": "b8f939d55d3911a1",
+      "set": "trend",
+      "group": "ghg-flux",
+      "status": "ready",
+      "behaviour": "Answer with data",
+      "query": "How much did emissions from tree cover loss in Brazil change between 2020 and 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-trend-079",
+      "uid": "6140badee8e63e89",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "Answer with annual series",
+      "query": "How much tree cover has Salonga National Park lost each year since 2015? We report on its condition to UNESCO.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-080",
+      "uid": "c687b0f8df880733",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready",
+      "behaviour": "Answer with data; check the premise",
+      "query": "Has fire-driven tree cover loss in Bolivia gone down since the 2019 fire season?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-trend-081",
+      "uid": "be1c94fb2a057ea9",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with trend; must not project beyond data without caveat",
+      "query": "Is Madagascar on track for zero forest loss in protected areas by 2030?",
+      "expected_fields": [
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-082",
+      "uid": "16e874eacef69f47",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with trend data; must not make the EUDR risk classification itself",
+      "query": "Has Malaysia reduced its forest loss enough to be considered low risk under the EUDR?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-083",
+      "uid": "798d90b18de6f4f6",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "behaviour": "answer with global data; caveat on target definition",
+      "query": "Are global targets for halting deforestation by 2030 being met? Show primary forest loss since 2021.",
+      "expected_fields": [
+        "context_layer",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "context_layer_match",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-084",
+      "uid": "baa77455c3ed29a6",
+      "set": "trend",
+      "group": "tree-cover",
+      "status": "todo",
+      "behaviour": "answer with data for the preloaded custom area; caveat on gain data period",
+      "query": "How has tree cover changed on our restoration site since our 2020 baseline?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4",
+        "5",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-trend-085",
+      "uid": "0575c3ca87120b32",
+      "set": "trend",
+      "group": "tc-gain",
+      "status": "ready",
+      "behaviour": "Answer with gain/cover data; caveat that gain data period ends 2020 and is not a pledge tracker",
+      "query": "Is El Salvador making progress on its 20x20 restoration pledge? What does the tree cover gain data show?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "5",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-trend-086",
+      "uid": "a4a9a59df81d84be",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready",
+      "behaviour": "Answer with fire-driven loss trend; note sub-area targeting limits",
+      "query": "Where should we focus fire prevention in Santa Cruz based on fire-driven loss in recent years?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-trend-087",
+      "uid": "5eaa0f906eeaf0c2",
+      "set": "trend",
+      "group": "method",
+      "status": "ready",
+      "behaviour": "Explain method change and comparison caveats",
+      "query": "Can I compare tree cover loss before and after 2015, given the changes in methods?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": []
     }
   ]
 }

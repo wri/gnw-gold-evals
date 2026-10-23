@@ -1,0 +1,29 @@
+id: ch-comp-158
+uid: 68657efd985da114
+status: ready
+set: comparison
+group: grasslands
+query: Compare natural grassland loss in Mato Grosso do Sul and Goiás since 2015.
+expected:
+  aoi_ids: BRA.11;BRA.9
+  dataset_id: '2'
+  start_date: '2015-01-01'
+  end_date: '2022-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-070); USY-001313 LDC; USY-001293 Sicredi
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: grassland data end in 2022 (catalog content_date 2000-2022)
+  benchmark_id: bm26-070
+  benchmark_type: comparison
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001313 LDC; USY-001293 Sicredi
+  refresh_risk: Low

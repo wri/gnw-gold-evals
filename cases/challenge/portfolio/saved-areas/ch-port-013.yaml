@@ -1,0 +1,30 @@
+id: ch-port-013
+uid: 6e212b4fe96f3c08
+status: todo
+set: portfolio
+group: saved-areas
+query: Track loss across all our project landscapes since 2020 and tell me which are off track.
+expected:
+  text: Does not produce or invent per-area results for the whole list; explains that it can
+    analyse one to three named areas at a time and offers to do that, and may point to bulk
+    downloads or the API for screening many areas.
+notes:
+  behaviour: 'redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas;
+    point to self-serve monitoring datasets / API for bulk screening'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-092); USY-001563 WWF-US landscapes
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
+    ships'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-092
+  benchmark_type: portfolio
+  use_cases: UC2
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001563 WWF-US landscapes
+  refresh_risk: Low

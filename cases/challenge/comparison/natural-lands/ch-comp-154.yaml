@@ -1,0 +1,32 @@
+id: ch-comp-154
+uid: 43da5d35146ececc
+status: ready
+set: comparison
+group: natural-lands
+query: Has any natural land been converted since 2021 in San Martín or Junín, where our cocoa
+  cooperatives are?
+expected:
+  aoi_ids: PER.23;PER.12
+  dataset_id: 3;4
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-066); USY-001510 Peru coffee & cocoa
+    producer orgs; USY-001402 Helvetas
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  benchmark_id: bm26-066
+  benchmark_type: comparison
+  use_cases: UC2
+  engagement: Returning user
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001510 Peru coffee & cocoa producer orgs; USY-001402 Helvetas
+  refresh_risk: Low

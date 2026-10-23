@@ -1,0 +1,28 @@
+id: ch-trend-078
+uid: b8f939d55d3911a1
+status: ready
+set: trend
+group: ghg-flux
+query: How much did emissions from tree cover loss in Brazil change between 2020 and 2024?
+expected:
+  aoi_ids: BRA
+  dataset_id: '6'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-176); USY-001123 IPCC; USY-001180
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-176
+  benchmark_type: trend
+  use_cases: UC4
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
+  user_story_refs: USY-001123 IPCC; USY-001180
+  refresh_risk: Low

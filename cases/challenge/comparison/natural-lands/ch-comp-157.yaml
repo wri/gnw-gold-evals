@@ -1,0 +1,32 @@
+id: ch-comp-157
+uid: ac9eaf5b6542cd6a
+status: ready
+set: comparison
+group: natural-lands
+query: Which of Maranhão, Tocantins and Piauí had the most natural vegetation conversion since
+  2021?
+expected:
+  aoi_ids: BRA.10;BRA.27;BRA.18
+  dataset_id: 3;4
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-069); USY-001313 Louis Dreyfus soy conversion
+    hotspots
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  benchmark_id: bm26-069
+  benchmark_type: comparison
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001313 Louis Dreyfus soy conversion hotspots
+  refresh_risk: Low

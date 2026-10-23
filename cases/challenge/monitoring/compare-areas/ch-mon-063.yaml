@@ -1,0 +1,32 @@
+id: ch-mon-063
+uid: 104911008bea8e0a
+status: ready
+set: monitoring
+group: compare_areas
+query: Compare alert area in the last 30 days across our two conservation concessions in Madre
+  de Dios and Loreto.
+expected:
+  aoi_ids: PER.18;PER.17
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-079); USY-001639 AMPA conservation concessions
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; pinned to the regions as the sheet names
+    them; the concessions themselves are not in the AOI index'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-079
+  benchmark_type: monitoring
+  use_cases: UC2
+  engagement: Returning user
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001639 AMPA conservation concessions
+  refresh_risk: Alert confidence can upgrade

@@ -1,0 +1,25 @@
+id: ch-comp-168
+uid: 7632f81d9c3d10eb
+status: ready
+set: comparison
+group: many-areas
+query: Which African countries had the largest increase in tree cover loss between 2020 and
+  2024?
+expected:
+  text: Explains that it cannot rank every African country at once and offers to compare two
+    or three named countries; does not invent a ranking.
+notes:
+  behaviour: 'redirect: ranking many countries not supported; offer 2–3 country comparison'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-180); USY-000508 IIAG governance index
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-180
+  benchmark_type: comparison
+  use_cases: UC2;UC4
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-000508 IIAG governance index
+  refresh_risk: Low

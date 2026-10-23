@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "124f96526065f24a",
-  "case_count": 781,
+  "caseset_version": "a25ea96aa7dc5330",
+  "case_count": 949,
   "statuses": {
-    "ready": 775,
-    "todo": 6
+    "ready": 914,
+    "todo": 35
   },
-  "active_count": 781,
+  "active_count": 949,
   "groups": [
     {
       "group": "acronyms",
@@ -18,11 +18,51 @@
       }
     },
     {
-      "group": "ambiguity",
-      "cases": 10,
-      "active": 10,
+      "group": "active_fire",
+      "cases": 2,
+      "active": 2,
       "statuses": {
-        "ready": 10
+        "ready": 2
+      }
+    },
+    {
+      "group": "alert_cause",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
+      "group": "alert_context",
+      "cases": 3,
+      "active": 3,
+      "statuses": {
+        "ready": 3
+      }
+    },
+    {
+      "group": "alert_followup",
+      "cases": 4,
+      "active": 4,
+      "statuses": {
+        "ready": 4
+      }
+    },
+    {
+      "group": "alert_method",
+      "cases": 4,
+      "active": 4,
+      "statuses": {
+        "ready": 4
+      }
+    },
+    {
+      "group": "ambiguity",
+      "cases": 11,
+      "active": 11,
+      "statuses": {
+        "ready": 11
       }
     },
     {
@@ -35,22 +75,6 @@
     },
     {
       "group": "buffer_unsupported",
-      "cases": 1,
-      "active": 1,
-      "statuses": {
-        "ready": 1
-      }
-    },
-    {
-      "group": "by_confidence",
-      "cases": 4,
-      "active": 4,
-      "statuses": {
-        "ready": 4
-      }
-    },
-    {
-      "group": "caveat_required",
       "cases": 2,
       "active": 2,
       "statuses": {
@@ -58,11 +82,35 @@
       }
     },
     {
-      "group": "commodity_overclaim",
+      "group": "by_confidence",
+      "cases": 5,
+      "active": 5,
+      "statuses": {
+        "ready": 5
+      }
+    },
+    {
+      "group": "caveat_required",
       "cases": 3,
       "active": 3,
       "statuses": {
         "ready": 3
+      }
+    },
+    {
+      "group": "commodity_overclaim",
+      "cases": 4,
+      "active": 4,
+      "statuses": {
+        "ready": 4
+      }
+    },
+    {
+      "group": "compare_areas",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
       }
     },
     {
@@ -75,10 +123,10 @@
     },
     {
       "group": "concession_alerts",
-      "cases": 1,
-      "active": 1,
+      "cases": 2,
+      "active": 2,
       "statuses": {
-        "ready": 1
+        "ready": 2
       }
     },
     {
@@ -87,6 +135,22 @@
       "active": 15,
       "statuses": {
         "ready": 15
+      }
+    },
+    {
+      "group": "custom-area",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "todo": 1
+      }
+    },
+    {
+      "group": "custom_area",
+      "cases": 4,
+      "active": 4,
+      "statuses": {
+        "todo": 4
       }
     },
     {
@@ -123,18 +187,18 @@
     },
     {
       "group": "driver_share",
-      "cases": 1,
-      "active": 1,
+      "cases": 3,
+      "active": 3,
       "statuses": {
-        "ready": 1
+        "ready": 3
       }
     },
     {
       "group": "driver_vs_fire",
-      "cases": 1,
-      "active": 1,
+      "cases": 2,
+      "active": 2,
       "statuses": {
-        "ready": 1
+        "ready": 2
       }
     },
     {
@@ -156,10 +220,11 @@
     },
     {
       "group": "ghg-flux",
-      "cases": 36,
-      "active": 36,
+      "cases": 45,
+      "active": 45,
       "statuses": {
-        "ready": 36
+        "ready": 44,
+        "todo": 1
       }
     },
     {
@@ -172,34 +237,58 @@
     },
     {
       "group": "grasslands",
-      "cases": 48,
-      "active": 48,
+      "cases": 51,
+      "active": 51,
       "statuses": {
-        "ready": 48
+        "ready": 51
       }
     },
     {
       "group": "integrated-alerts",
-      "cases": 48,
-      "active": 48,
+      "cases": 52,
+      "active": 52,
       "statuses": {
-        "ready": 48
+        "ready": 52
       }
     },
     {
       "group": "land-cover",
-      "cases": 37,
-      "active": 37,
+      "cases": 41,
+      "active": 41,
       "statuses": {
-        "ready": 37
+        "ready": 41
+      }
+    },
+    {
+      "group": "many-areas",
+      "cases": 12,
+      "active": 12,
+      "statuses": {
+        "ready": 12
+      }
+    },
+    {
+      "group": "many_areas",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "method",
+      "cases": 18,
+      "active": 18,
+      "statuses": {
+        "ready": 18
       }
     },
     {
       "group": "monthly_recent",
-      "cases": 1,
-      "active": 1,
+      "cases": 2,
+      "active": 2,
       "statuses": {
-        "ready": 1
+        "ready": 2
       }
     },
     {
@@ -220,10 +309,11 @@
     },
     {
       "group": "natural-lands",
-      "cases": 36,
-      "active": 36,
+      "cases": 40,
+      "active": 40,
       "statuses": {
-        "ready": 36
+        "ready": 39,
+        "todo": 1
       }
     },
     {
@@ -252,10 +342,10 @@
     },
     {
       "group": "recent_area",
-      "cases": 9,
-      "active": 9,
+      "cases": 11,
+      "active": 11,
       "statuses": {
-        "ready": 9
+        "ready": 11
       }
     },
     {
@@ -268,10 +358,10 @@
     },
     {
       "group": "recent_presence",
-      "cases": 4,
-      "active": 4,
+      "cases": 7,
+      "active": 7,
       "statuses": {
-        "ready": 4
+        "ready": 7
       }
     },
     {
@@ -283,19 +373,35 @@
       }
     },
     {
-      "group": "recent_vs_prior",
-      "cases": 2,
-      "active": 2,
+      "group": "recent_summary",
+      "cases": 1,
+      "active": 1,
       "statuses": {
-        "ready": 2
+        "ready": 1
+      }
+    },
+    {
+      "group": "recent_vs_prior",
+      "cases": 4,
+      "active": 4,
+      "statuses": {
+        "ready": 4
+      }
+    },
+    {
+      "group": "saved-areas",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "todo": 8
       }
     },
     {
       "group": "sluc",
-      "cases": 33,
-      "active": 33,
+      "cases": 36,
+      "active": 36,
       "statuses": {
-        "ready": 33
+        "ready": 36
       }
     },
     {
@@ -316,42 +422,52 @@
     },
     {
       "group": "tc-gain",
-      "cases": 37,
-      "active": 37,
+      "cases": 39,
+      "active": 39,
       "statuses": {
-        "ready": 37
+        "ready": 39
       }
     },
     {
       "group": "tcl",
-      "cases": 112,
-      "active": 112,
+      "cases": 138,
+      "active": 138,
       "statuses": {
-        "ready": 112
+        "ready": 135,
+        "todo": 3
       }
     },
     {
       "group": "tcl-drivers",
-      "cases": 37,
-      "active": 37,
+      "cases": 38,
+      "active": 38,
       "statuses": {
-        "ready": 37
+        "ready": 38
       }
     },
     {
       "group": "tcl-fires",
-      "cases": 50,
-      "active": 50,
+      "cases": 55,
+      "active": 55,
       "statuses": {
-        "ready": 50
+        "ready": 55
       }
     },
     {
       "group": "tree-cover",
-      "cases": 36,
-      "active": 36,
+      "cases": 38,
+      "active": 38,
       "statuses": {
-        "ready": 36
+        "ready": 37,
+        "todo": 1
+      }
+    },
+    {
+      "group": "unavailable",
+      "cases": 9,
+      "active": 9,
+      "statuses": {
+        "ready": 9
       }
     },
     {
@@ -364,10 +480,18 @@
     },
     {
       "group": "unsupported_action",
-      "cases": 1,
-      "active": 1,
+      "cases": 5,
+      "active": 5,
       "statuses": {
-        "ready": 1
+        "ready": 5
+      }
+    },
+    {
+      "group": "uploaded-sites",
+      "cases": 10,
+      "active": 10,
+      "statuses": {
+        "todo": 10
       }
     },
     {
@@ -380,6 +504,14 @@
       }
     },
     {
+      "group": "why_country",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "ready": 1
+      }
+    },
+    {
       "group": "why_pa",
       "cases": 2,
       "active": 2,
@@ -389,32 +521,32 @@
     },
     {
       "group": "why_subnational",
-      "cases": 1,
-      "active": 1,
-      "statuses": {
-        "ready": 1
-      }
-    },
-    {
-      "group": "why_territory",
-      "cases": 1,
-      "active": 1,
-      "statuses": {
-        "ready": 1
-      }
-    },
-    {
-      "group": "ytd",
       "cases": 2,
       "active": 2,
       "statuses": {
         "ready": 2
       }
+    },
+    {
+      "group": "why_territory",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "ytd",
+      "cases": 3,
+      "active": 3,
+      "statuses": {
+        "ready": 3
+      }
     }
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 732,
+      "dedicated": 820,
       "shared_only": 0
     },
     "analysis": {
@@ -422,7 +554,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 67,
+      "dedicated": 191,
       "shared_only": 0
     },
     "output": {
@@ -437,27 +569,27 @@
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 621,
+      "cases": 709,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 533,
+      "cases": 605,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 425,
+      "cases": 507,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
       "field": "end_date",
-      "cases": 272,
+      "cases": 325,
       "switches_on": "date_extraction (with start_date)"
     },
     {
       "field": "start_date",
-      "cases": 272,
+      "cases": 325,
       "switches_on": "date_extraction (with end_date)"
     },
     {
@@ -466,14 +598,14 @@
       "switches_on": "forbidden_tools_absent"
     },
     {
-      "field": "context_layer",
-      "cases": 168,
-      "switches_on": "context_layer_match"
+      "field": "text",
+      "cases": 191,
+      "switches_on": "expected_text_match"
     },
     {
-      "field": "text",
-      "cases": 67,
-      "switches_on": "expected_text_match"
+      "field": "context_layer",
+      "cases": 173,
+      "switches_on": "context_layer_match"
     },
     {
       "field": "dataset_parameters",
@@ -557,8 +689,8 @@
         "dataset_id": "1",
         "dataset_name": "Global land cover",
         "missing_instructions": [],
-        "cases": 45,
-        "answer_graded": 0,
+        "cases": 51,
+        "answer_graded": 3,
         "parameters": [],
         "context_layers": []
       },
@@ -566,8 +698,8 @@
         "dataset_id": "2",
         "dataset_name": "Global natural/semi-natural grassland extent",
         "missing_instructions": [],
-        "cases": 51,
-        "answer_graded": 0,
+        "cases": 54,
+        "answer_graded": 1,
         "parameters": [],
         "context_layers": []
       },
@@ -575,8 +707,8 @@
         "dataset_id": "3",
         "dataset_name": "SBTN Natural Lands Map",
         "missing_instructions": [],
-        "cases": 44,
-        "answer_graded": 0,
+        "cases": 51,
+        "answer_graded": 2,
         "parameters": [],
         "context_layers": []
       },
@@ -584,8 +716,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 133,
-        "answer_graded": 4,
+        "cases": 166,
+        "answer_graded": 20,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -595,7 +727,7 @@
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 24
+            "cases": 29
           },
           {
             "name": "intact_forest",
@@ -607,8 +739,8 @@
         "dataset_id": "5",
         "dataset_name": "Tree cover gain",
         "missing_instructions": [],
-        "cases": 39,
-        "answer_graded": 0,
+        "cases": 42,
+        "answer_graded": 1,
         "parameters": [],
         "context_layers": []
       },
@@ -616,8 +748,8 @@
         "dataset_id": "6",
         "dataset_name": "Forest greenhouse gas net flux",
         "missing_instructions": [],
-        "cases": 39,
-        "answer_graded": 0,
+        "cases": 50,
+        "answer_graded": 4,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -630,8 +762,8 @@
         "dataset_id": "7",
         "dataset_name": "Tree cover",
         "missing_instructions": [],
-        "cases": 42,
-        "answer_graded": 0,
+        "cases": 48,
+        "answer_graded": 2,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -641,7 +773,7 @@
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 6
+            "cases": 8
           }
         ]
       },
@@ -649,8 +781,8 @@
         "dataset_id": "8",
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
-        "cases": 57,
-        "answer_graded": 11,
+        "cases": 64,
+        "answer_graded": 18,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -663,8 +795,8 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 38,
-        "answer_graded": 5,
+        "cases": 40,
+        "answer_graded": 7,
         "parameters": [],
         "context_layers": []
       },
@@ -672,8 +804,8 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 64,
-        "answer_graded": 2,
+        "cases": 70,
+        "answer_graded": 6,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -695,8 +827,8 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 80,
-        "answer_graded": 8,
+        "cases": 107,
+        "answer_graded": 23,
         "parameters": [],
         "context_layers": []
       },
@@ -749,10 +881,184 @@
       "reason": null
     },
     {
+      "id": "ch-comp-167",
+      "status": "todo",
+      "group": "tcl",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-comp-172",
+      "status": "todo",
+      "group": "tcl",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
       "id": "ch-mon-028",
       "status": "todo",
       "group": "portfolio_rank",
       "reason": "needs a seeded test account with saved areas (portfolio triage); not runnable yet"
+    },
+    {
+      "id": "ch-mon-031",
+      "status": "todo",
+      "group": "custom_area",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-mon-050",
+      "status": "todo",
+      "group": "custom_area",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-mon-051",
+      "status": "todo",
+      "group": "custom_area",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-mon-065",
+      "status": "todo",
+      "group": "custom_area",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-002",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-004",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-005",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-006",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-007",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-008",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-009",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-012",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-013",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-014",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-019",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-020",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-021",
+      "status": "todo",
+      "group": "uploaded-sites",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-022",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-023",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-024",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-025",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-port-026",
+      "status": "todo",
+      "group": "saved-areas",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-quant-158",
+      "status": "todo",
+      "group": "tcl",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-quant-181",
+      "status": "todo",
+      "group": "natural-lands",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-quant-195",
+      "status": "todo",
+      "group": "custom-area",
+      "reason": "needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-trend-077",
+      "status": "todo",
+      "group": "ghg-flux",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
+    },
+    {
+      "id": "ch-trend-084",
+      "status": "todo",
+      "group": "tree-cover",
+      "reason": "needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not runnable yet"
     }
   ],
   "known_gaps": {

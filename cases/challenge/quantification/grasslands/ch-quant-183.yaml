@@ -1,0 +1,27 @@
+id: ch-quant-183
+uid: 2e6fb5eba3dbed52
+status: ready
+set: quantification
+group: grasslands
+query: Is there still natural grassland in Mato Grosso that we should prioritize for protection?
+expected:
+  aoi_ids: BRA.12
+  dataset_id: 2;3
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with grassland / natural land extent
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-242); USY-001313 LDC; USY-001293 Sicredi
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: AOI id to verify
+  benchmark_id: bm26-242
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001313 LDC; USY-001293 Sicredi
+  refresh_risk: Low

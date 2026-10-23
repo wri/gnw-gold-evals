@@ -1,0 +1,32 @@
+id: ch-mon-034
+uid: 8ff0ac2565b78c2e
+status: ready
+set: monitoring
+group: recent_presence
+query: Any fire-related disturbance alerts in Maranhão this week? Looking for escaped fires.
+expected:
+  aoi_ids: BRA.10
+  dataset_id: '11'
+  start_date: '{run-7d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Reports disturbance alerts in Maranhão for the past week and is clear that the alerts
+    do not record which were caused by fire, rather than calling alerts fires without evidence.
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-004); USY-000194 Maranhão forest manager
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-004
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-000194 Maranhão forest manager
+  refresh_risk: Alert confidence can upgrade

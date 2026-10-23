@@ -1,0 +1,29 @@
+id: ch-mon-053
+uid: 8dc21d392dd752a3
+status: ready
+set: monitoring
+group: active_fire
+query: Show me the latest VIIRS fire alerts in Santa Cruz, Bolivia.
+expected:
+  text: Either shows recent VIIRS active-fire alerts for Santa Cruz, Bolivia, or says they
+    are not available here and offers disturbance alerts or fire-driven tree cover loss instead;
+    does not present other data as VIIRS fire alerts.
+notes:
+  behaviour: Say active-fire alerts are not available; offer disturbance alerts or fire-driven
+    loss
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-029); Map exploration research (latest
+    VIIRS fire alerts); USY-001332 IBIF
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-029
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: Map exploration research (latest VIIRS fire alerts); USY-001332 IBIF
+  refresh_risk: Low

@@ -1,0 +1,29 @@
+id: ch-port-015
+uid: 8cbfb2d26d2e7cd1
+status: ready
+set: portfolio
+group: many-areas
+query: Rank all Indigenous territories in Peru by tree cover loss in 2024.
+expected:
+  text: Does not produce or invent per-area results for the whole list; explains that it can
+    analyse one to three named areas at a time and offers to do that, and may point to bulk
+    downloads or the API for screening many areas.
+notes:
+  behaviour: 'redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas;
+    point to self-serve monitoring datasets / API for bulk screening'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-094); USY-001633 Matsés; USY-001576
+    Wampis (network view)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
+    ships'
+  benchmark_id: bm26-094
+  benchmark_type: portfolio
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001633 Matsés; USY-001576 Wampis (network view)
+  refresh_risk: Low

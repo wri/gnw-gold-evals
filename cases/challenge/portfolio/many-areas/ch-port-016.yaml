@@ -1,0 +1,28 @@
+id: ch-port-016
+uid: 359f355fd212e2e7
+status: ready
+set: portfolio
+group: many-areas
+query: Which oil palm concessions in Indonesia had fires in 2023?
+expected:
+  text: Does not produce or invent per-area results for the whole list; explains that it can
+    analyse one to three named areas at a time and offers to do that, and may point to bulk
+    downloads or the API for screening many areas.
+notes:
+  behaviour: 'redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas;
+    point to self-serve monitoring datasets / API for bulk screening'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-095); USY-001298 Tesso Nilo palm; USY-001417
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
+    ships'
+  benchmark_id: bm26-095
+  benchmark_type: portfolio
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001298 Tesso Nilo palm; USY-001417
+  refresh_risk: Low

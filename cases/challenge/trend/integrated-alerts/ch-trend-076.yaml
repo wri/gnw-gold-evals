@@ -1,0 +1,31 @@
+id: ch-trend-076
+uid: 771e41ae922b2798
+status: ready
+set: trend
+group: integrated-alerts
+query: Have alerts in Équateur province been rising over the last three months compared with
+  the three months before?
+expected:
+  aoi_ids: COD.2
+  dataset_id: '11'
+  start_date: '{run-180d}'
+  end_date: '{run}'
+  date_tolerance_days: '7'
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-042); USY-001580 Équateur
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-042
+  benchmark_type: trend
+  use_cases: UC1;UC3
+  engagement: Returning user
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001580 Équateur
+  refresh_risk: Alert confidence can upgrade
