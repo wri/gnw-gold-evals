@@ -193,3 +193,16 @@ def test_erratum_after_a_run_does_not_uncanonicalise_it(tmp_path):
     index = build_index(results_dir, use_glob=True)
     assert index["sets"]["benchmark"][0]["canonical"] is True
     assert index["benchmarks"]["t-draft"]["voided"] == 1
+
+
+def test_benchmark_runs_carry_their_page_when_one_exists(tmp_path):
+    results_dir = make_results_tree(tmp_path)
+    write_bench(tmp_path, ["a" * 16])
+    write_run(results_dir, "benchmark", bench_run("20260929T100000Z_prod", ["a" * 16]))
+    write_run(results_dir, "benchmark", bench_run("20260929T110000Z_prod", ["a" * 16]))
+    pages = results_dir / "benchmark" / "pages"
+    pages.mkdir(parents=True)
+    (pages / "20260929T110000Z_prod.json").write_text("{}", encoding="utf-8")
+    runs = {e["run_id"]: e for e in build_index(results_dir, use_glob=True)["sets"]["benchmark"]}
+    assert "page" not in runs["20260929T100000Z_prod"]
+    assert runs["20260929T110000Z_prod"]["page"] == "results/benchmark/pages/20260929T110000Z_prod.json"
