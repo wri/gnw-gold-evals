@@ -46,6 +46,7 @@ assert set(STAGE_ORDER) == set(BUCKETS)
 # into Geospatial (find the place) and Dataset (find the data) — two
 # separate types, never pooled (AJ, 2026-09-29). A type with no sets is
 # listed so reports can say "not yet measured" rather than omit it.
+# Portfolio (many areas at once) came with the v2026 BEF sheet (AJ, 2026-10-23).
 QUERY_TYPES: tuple[dict[str, Any], ...] = (
     {"key": "refusal", "label": "Refusal", "sets": []},
     {"key": "identification", "label": "Identification", "sets": []},
@@ -53,6 +54,7 @@ QUERY_TYPES: tuple[dict[str, Any], ...] = (
     {"key": "dataset", "label": "Dataset", "sets": ["dataset"]},
     {"key": "quantification", "label": "Quantification", "sets": ["quantification"]},
     {"key": "monitoring", "label": "Monitoring", "sets": ["monitoring"]},
+    {"key": "portfolio", "label": "Portfolio", "sets": ["portfolio"]},
     {"key": "comparison", "label": "Comparison", "sets": ["comparison"]},
     {"key": "trend", "label": "Trend", "sets": ["trend"]},
     {"key": "conceptual", "label": "Conceptual", "sets": []},
@@ -64,8 +66,19 @@ QUERY_TYPES: tuple[dict[str, Any], ...] = (
 MEMBER_FIELDS = ("uid", "id", "type", "set", "cohort", "difficulty", "stages")
 # Optional use-case facets (curated versions imported from a sheet): the
 # sheet row id, Jobs-to-be-Done numbers, impact pathway numbers ("x" =
-# cross-cutting), user groups, and whether the question is synthetic.
-OPTIONAL_LIST_FIELDS = ("jobs", "pathways", "user_groups")
+# cross-cutting), user groups (2026-draft-2), priority use cases (from
+# 2026-draft-3), and whether the question is synthetic.
+OPTIONAL_LIST_FIELDS = ("jobs", "pathways", "user_groups", "use_cases")
+
+# Priority use cases of the v2026 BEF sheet (AJ, 2026-10-23).
+USE_CASES = {
+    "UC1": "Alert monitoring and response",
+    "UC2": "Supply chain and sourcing",
+    "UC3": "Investigating causes",
+    "UC4": "Reporting and accountability",
+    "UC5": "Landscape context",
+    "UC6": "Understanding the data",
+}
 
 IMPACT_PATHWAYS = {
     "1": "Local stewardship",
@@ -101,6 +114,7 @@ class Member:
     jobs: tuple[str, ...] = ()
     pathways: tuple[str, ...] = ()
     user_groups: tuple[str, ...] = ()
+    use_cases: tuple[str, ...] = ()
     synthetic: bool = False
 
     def to_dict(self) -> dict[str, Any]:
@@ -185,6 +199,9 @@ class Benchmark:
             bad = [j for j in m.jobs if j not in JOBS]
             if bad:
                 problems.append(f"{m.id}: unknown jobs {bad}")
+            bad = [u for u in m.use_cases if u not in USE_CASES]
+            if bad:
+                problems.append(f"{m.id}: unknown use cases {bad}")
         for e in self.errata:
             if e.uid not in seen:
                 problems.append(f"erratum {e.uid} does not name a member")
@@ -218,6 +235,7 @@ def from_dict(data: dict[str, Any]) -> Benchmark:
             jobs=tuple(raw.get("jobs", ())),
             pathways=tuple(raw.get("pathways", ())),
             user_groups=tuple(raw.get("user_groups", ())),
+            use_cases=tuple(raw.get("use_cases", ())),
             synthetic=bool(raw.get("synthetic", False)),
         ))
     errata = tuple(

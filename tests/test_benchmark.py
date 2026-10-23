@@ -36,13 +36,13 @@ def manifest(**kw):
 
 def test_query_types_split_geospatial_and_dataset():
     keys = [t["key"] for t in QUERY_TYPES]
-    assert len(keys) == 12 and "spatial" not in keys
+    assert len(keys) == 13 and "spatial" not in keys
     by_key = {t["key"]: t for t in QUERY_TYPES}
     assert by_key["geospatial"]["sets"] == ["aoi"]
     assert by_key["dataset"]["sets"] == ["dataset"]
     measured = {k for k, t in by_key.items() if t["sets"]}
     assert measured == {"geospatial", "dataset", "quantification", "comparison", "trend",
-                        "monitoring", "causal"}
+                        "monitoring", "causal", "portfolio"}
 
 
 def test_round_trip_and_member_uids():
