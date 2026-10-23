@@ -62,6 +62,7 @@ from goldset.benchmark import (  # noqa: E402
     IMPACT_PATHWAYS,
     JOBS,
     STAGE_ORDER,
+    USE_CASES,
     Benchmark,
     load_benchmark,
 )
@@ -589,6 +590,7 @@ def rollup_benchmark(run: dict[str, Any], bench: Benchmark) -> dict[str, Any]:
         "version": bench.version,
         "pathways": by_facet("pathways", IMPACT_PATHWAYS),
         "jobs": by_facet("jobs", JOBS),
+        "use_cases": by_facet("use_cases", USE_CASES),
         "status": bench.status,
         "members": len(members),
         "voided": len(bench.errata),
@@ -623,7 +625,8 @@ def render_benchmark_markdown(rollups: list[dict[str, Any]]) -> str:
                 f"{_pct(t['ci_low'])}-{_pct(t['ci_high'])} | "
                 + " | ".join(str(fm[s]) for s in ATTRIBUTION) + " |"
             )
-        for facet, title in (("pathways", "impact pathway"), ("jobs", "job")):
+        for facet, title in (("use_cases", "use case"), ("pathways", "impact pathway"),
+                             ("jobs", "job")):
             if r.get(facet):
                 lines += ["", f"By {title} (members can sit in several):", "",
                           "| group | n | complete |", "|---|---|---|"]

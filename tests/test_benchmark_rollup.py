@@ -85,3 +85,23 @@ def test_rollup_groups_by_pathway_and_job():
     assert (pw["4"]["passed"], pw["4"]["n"]) == (1, 2)
     assert {g["key"] for g in r["jobs"]} == {"1", "3"}
     assert "By impact pathway" in cr.render_benchmark_markdown([r])
+
+
+def test_rollup_groups_by_use_case():
+    b = from_dict({
+        "schema_version": SCHEMA_VERSION, "version": "t", "status": "draft", "frozen": None,
+        "source": {}, "sampling": {}, "types": list(QUERY_TYPES), "errata": [],
+        "members": [
+            {"uid": "a", "id": "a", "type": "portfolio", "set": "portfolio", "cohort": "c",
+             "difficulty": "", "stages": ["explanation"], "use_cases": ["UC2", "UC4"]},
+            {"uid": "b", "id": "b", "type": "monitoring", "set": "monitoring", "cohort": "c",
+             "difficulty": "", "stages": ["retrieval"], "use_cases": ["UC1"]},
+        ],
+    })
+    run = {"run_id": "r", "results": [entry("a", {"dataset_id_match": 1.0}),
+                                      entry("b", {"dataset_id_match": 0.0})]}
+    r = cr.rollup_benchmark(run, b)
+    uc = {g["key"]: g for g in r["use_cases"]}
+    assert set(uc) == {"UC1", "UC2", "UC4"}
+    assert (uc["UC2"]["passed"], uc["UC1"]["passed"]) == (1, 0)
+    assert r["pathways"] == [] and "By use case" in cr.render_benchmark_markdown([r])
