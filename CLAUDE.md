@@ -26,7 +26,8 @@ set. The short version:
   `generation/README.md`), and `dataset` (dataset-selection prompts, phrased as
   "show X on the map", that should run `pick_dataset` alone; hand-authored in
   `seeds/challenge-dataset-v1.csv`), plus `monitoring` and `causal` (benchmark
-  v2026 cases, `seeds/benchmark-v2026-proposed.csv`; Batch 4 in the README).
+  v2026 cases, `seeds/benchmark-v2026-proposed.csv`; Batch 4 in the README)
+  and `portfolio` (many areas at once, from the v2026 BEF sheet; Batch 5).
   Run one set with `gold run --set <name>`. Like
   `group`, `set` is never hashed into the uid.
 - Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
@@ -59,8 +60,9 @@ a case store: read `benchmarks/README.md` first. Key rules:
 - Build a version by sampling (`tools/benchmark_sample.py --version <v>`:
   20 per measured type; aoi and dataset easy+medium only) or by curating
   from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv>
-  --version <v>`: one member per row, with jobs, impact pathways and user
-  groups). Current draft: `2026-draft-2` (curated, 199). Regeneration is
+  --version <v>`: one member per row, with its use cases UC1–UC6, or jobs,
+  impact pathways and user groups for the older sheet layout). Current
+  draft: `2026-draft-3` (curated from the BEF sheet, 269). Regeneration is
   deliberate, never CI's. Frozen manifests are never regenerated.
 - Rolling-window questions use run-relative date tokens in expected values
   (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`,
