@@ -1489,6 +1489,98 @@
         },
         "canonical": true,
         "canonical_reasons": []
+      },
+      {
+        "run_id": "20261023T094447Z_prod",
+        "path": "results/benchmark/runs/20261023T094447Z_prod.json",
+        "started": "2026-10-23T09:44:47Z",
+        "environment": "prod",
+        "build": "prod 2026-10-23",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "5d081a8"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "First run of curated BENCHMARK 2026-draft-3 (v2026 BEF sheet, 2026-10-22); 139 drafted expectations unreviewed; 30 fixture rows excluded",
+        "caseset": "challenge",
+        "caseset_version": "a25ea96aa7dc5330",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 826,
+              "evaluated": 1015
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 201
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 160,
+              "evaluated": 162
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 162
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 368,
+              "evaluated": 459
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 256
+          },
+          "output": {
+            "dedicated": {
+              "passed": 163,
+              "evaluated": 163
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 162
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 14,
+              "evaluated": 15
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 16
+          },
+          "rows_total": 269,
+          "verdicts": {
+            "pass": 170,
+            "fail": 99,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-3.json",
+          "version": "2026-draft-3",
+          "status": "draft",
+          "manifest_sha": "c21d6c4d8f7dad87",
+          "members": 269
+        },
+        "canonical": true,
+        "canonical_reasons": []
       }
     ]
   },
@@ -1512,8 +1604,12 @@
       "frozen": null,
       "members": 269,
       "voided": 0,
-      "runs": [],
-      "canonical_runs": []
+      "runs": [
+        "20261023T094447Z_prod"
+      ],
+      "canonical_runs": [
+        "20261023T094447Z_prod"
+      ]
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",
