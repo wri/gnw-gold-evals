@@ -18,7 +18,11 @@ ff), 3 trials, and covers every active member of its manifest *as the
 manifest stands now* (a member voided by a later erratum is not required).
 A benchmark run whose page data is committed
 (``results/benchmark/pages/<run_id>.json``, ``tools/benchmark_page.py``)
-also carries its ``page`` path. The top-level ``benchmarks`` section lists each manifest under
+also carries its ``page`` path. When that page combines the run with an
+earlier base run (a rerun of revised members, ``benchmark_page.py --base``),
+the entry carries ``composed_with`` (the base run ids) and is judged
+canonical over the runs together: each must be prod, default profile and 3
+trials, and between them they must cover every active member. The top-level ``benchmarks`` section lists each manifest under
 ``benchmarks/`` with its status and its runs, so the FE can draw the trend
 from one fetch.
 
@@ -92,43 +96,75 @@ def glob_page_paths(results_dir: Path) -> set[str]:
             for p in (results_dir / "benchmark" / "pages").glob("*.json")}
 
 
-def run_entry(path: Path, results_dir: Path, pages: frozenset[str] = frozenset()) -> dict:
+def load_run(path: Path) -> dict:
     run = json.loads(path.read_text(encoding="utf-8"))
-    run_id = run.get("run_id")
-    if run_id != path.stem:
+    if run.get("run_id") != path.stem:
         raise SystemExit(
-            f"{path}: run_id {run_id!r} does not match the filename — "
+            f"{path}: run_id {run.get('run_id')!r} does not match the filename — "
             "the ledger contract names files <run_id>.json"
         )
+    return run
+
+
+def run_entry(path: Path, results_dir: Path, pages: frozenset[str] = frozenset(),
+              runs_by_id: dict[str, dict] | None = None) -> dict:
+    run = load_run(path)
+    run_id = run["run_id"]
     rel = path.resolve().relative_to(results_dir.resolve().parent)
     entry: dict = {"run_id": run_id, "path": rel.as_posix()}
     entry.update({k: run[k] for k in HEADER_FIELDS if k in run})
     entry["buckets"] = run.get("buckets")
     if "benchmark" in run:
         entry["benchmark"] = run["benchmark"]
-        reasons = canonical_reasons(run, results_dir.resolve().parent)
+        page = f"{results_dir.name}/benchmark/pages/{run_id}.json"
+        base_ids = page_bases(results_dir.resolve().parent / page, run_id) if page in pages else []
+        if base_ids:
+            entry["composed_with"] = base_ids
+        reasons = canonical_reasons(run, results_dir.resolve().parent,
+                                    base_ids, runs_by_id or {})
         entry["canonical"] = not reasons
         entry["canonical_reasons"] = reasons
-        page = f"{results_dir.name}/benchmark/pages/{run_id}.json"
         if page in pages:
             entry["page"] = page
     return entry
 
 
-def canonical_reasons(run: dict, repo_root: Path) -> list[str]:
-    """Why a benchmark run is not a trend point; empty means canonical."""
+def page_bases(page_path: Path, run_id: str) -> list[str]:
+    """The base runs a combined page draws on (its ``run.sources`` other
+    than the run itself); empty for a single-run page."""
+    sources = json.loads(page_path.read_text(encoding="utf-8"))["run"].get("sources") or []
+    return [s["run_id"] for s in sources if s["run_id"] != run_id]
+
+
+def canonical_reasons(run: dict, repo_root: Path, base_ids: list[str] = (),
+                      runs_by_id: dict[str, dict] | None = None) -> list[str]:
+    """Why a benchmark run (with the base runs its page combines it with)
+    is not a trend point; empty means canonical."""
+    runs_by_id = runs_by_id or {}
     reasons = [
         f"{field} is {run.get(field)!r}, canonical is {want!r}"
         for field, want in CANONICAL.items()
         if run.get(field) != want
     ]
+    measured = {e.get("uid") for e in run.get("results", [])}
+    for base_id in base_ids:
+        base = runs_by_id.get(base_id)
+        if base is None:
+            reasons.append(f"base run {base_id} is not committed")
+            continue
+        reasons += [
+            f"base {base_id}: {field} is {base.get(field)!r}, canonical is {want!r}"
+            for field, want in CANONICAL.items()
+            if base.get(field) != want
+        ]
+        measured |= {e.get("uid") for e in base.get("results", [])}
     manifest = repo_root / run["benchmark"]["path"]
     if not manifest.exists():
         return reasons + [f"manifest {run['benchmark']['path']} not found"]
-    active = load_benchmark(manifest).member_uids
-    missing = active - {e.get("uid") for e in run.get("results", [])}
+    missing = load_benchmark(manifest).member_uids - measured
     if missing:
-        reasons.append(f"{len(missing)} active member(s) not in the run")
+        where = "the run and its base" if base_ids else "the run"
+        reasons.append(f"{len(missing)} active member(s) not in {where}")
     return reasons
 
 
@@ -155,9 +191,13 @@ def build_index(results_dir: Path, use_glob: bool = False) -> dict:
     pages = frozenset(glob_page_paths(results_dir) if use_glob else committed_page_paths(results_dir))
     sets = {}
     for set_name in SETS:
+        paths = enumerate_paths(results_dir, set_name)
+        # A combined benchmark page's base is another committed run of the set.
+        runs_by_id = ({p.stem: load_run(p) for p in paths}
+                      if set_name == "benchmark" else {})
         entries = [
-            run_entry(path, results_dir, pages)
-            for path in enumerate_paths(results_dir, set_name)
+            run_entry(path, results_dir, pages, runs_by_id)
+            for path in paths
         ]
         sets[set_name] = sorted(entries, key=lambda e: e["run_id"])
     return {
