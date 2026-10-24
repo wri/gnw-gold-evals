@@ -524,10 +524,12 @@ def main() -> int:
                           "--cases-dir and --results-dir results/benchmark, and "
                           "cannot be combined with --group/--set (--id and "
                           "--missing-from narrow it to some members)")
-    run.add_argument("--missing-from", type=Path, default=None, metavar="RUN",
+    run.add_argument("--missing-from", type=Path, action="append", default=None,
+                     metavar="RUN",
                      help="with --benchmark: run only the active members this "
                           "earlier run did not measure, e.g. cases revised since "
-                          "(combine them with tools/benchmark_page.py --base)")
+                          "(combine them with tools/benchmark_page.py --base); "
+                          "repeatable: members none of the runs measured")
     run.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     run.add_argument("--results-dir", type=Path, default=None,
                      help="default results/gold (results/benchmark with --benchmark)")
@@ -573,13 +575,14 @@ def main() -> int:
         bench = load_benchmark(Path(args.benchmark["path"]))
         args.cases_dir = Path(bench.source.get("cases_dir", "cases/challenge"))
         if args.missing_from:
-            measured = {e.get("uid") for e in
-                        json.loads(args.missing_from.read_text(encoding="utf-8"))["results"]}
+            measured = {e.get("uid") for path in args.missing_from for e in
+                        json.loads(path.read_text(encoding="utf-8"))["results"]}
+            names = ", ".join(path.name for path in args.missing_from)
             unmeasured = sorted(m.id for m in bench.active_members if m.uid not in measured)
             if not unmeasured:
-                print(f"{args.missing_from} measured every active member; nothing to run")
+                print(f"{names} measured every active member; nothing to run")
                 return 1
-            print(f"{len(unmeasured)} active member(s) not measured by {args.missing_from.name}")
+            print(f"{len(unmeasured)} active member(s) not measured by {names}")
             args.id = [*(args.id or []), *unmeasured]
         if args.id:
             unknown = sorted({i.lower() for i in args.id}

@@ -247,5 +247,5 @@ def test_combined_page_names_what_breaks_canonical(tmp_path):
     assert rerun["canonical_reasons"] == [
         "base 20261023T100000Z_prod: num_trials is 1, canonical is 3",
         "base run 20261022T100000Z_prod is not committed",
-        "1 active member(s) not in the run and its base",
+        "1 active member(s) not in the run and its bases",
     ]

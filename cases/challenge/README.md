@@ -319,3 +319,8 @@ case's `notes.review` gives its evidence:
   answers failed on an optional detail (`ch-quant-194`, `-197`, `-205`), and
   `ch-quant-184`'s premise was fixed. Printable maps (`ch-mon-047`) stay
   strict: a dashboard is not a printable map.
+- **After the first rerun** (`20261024T133644Z_prod`), two texts were
+  reworded again: `ch-quant-194` drops its optional "may point to" clause,
+  which the judge read as required, and `ch-port-011` accepts either an
+  honest "cannot select these sites as a group" or a ranking cited from
+  published research.

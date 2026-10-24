@@ -1,5 +1,5 @@
 {
-  "caseset_version": "7addf595495181bb",
+  "caseset_version": "b0df4721464461ce",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -4485,7 +4485,7 @@
     },
     {
       "id": "ch-port-011",
-      "uid": "874a5c5781b8b22d",
+      "uid": "76a90b4e2ee08e8c",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
@@ -5955,7 +5955,7 @@
     },
     {
       "id": "ch-quant-194",
-      "uid": "06d99fac9d2964c8",
+      "uid": "dda13d644bc10370",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready"

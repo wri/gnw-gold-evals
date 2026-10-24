@@ -30,14 +30,15 @@ a stricter standard only adds questions. Keys follow ``ATTRIBUTION``; zero
 counts are left out. Each standard's counts sum to the scored questions
 less that standard's accurate ones.
 
-**Combined pages** (``--base <earlier run>``): after a few members' cases are
-revised, rerun only those members (``gold run --benchmark <v> --missing-from
-<earlier run>``) and write the page from the rerun plus the earlier run's
-results for every other member, matched by uid. The two runs must share
-environment, ff and trial count, and together cover every active member.
-The page's ``run`` block describes the rerun and adds ``sources`` (each
-run's id, start time and question count, the base first); every question
-carries the ``run_id`` it came from. ``tools/build_run_index.py`` reads
+**Combined pages** (``--base <earlier run>``, repeatable): after a few
+members' cases are revised, rerun only those members (``gold run --benchmark
+<v> --missing-from <earlier run>``) and write the page from the rerun plus
+the earlier runs' results for every other member, matched by uid; a newer
+run wins where two measured the same uid. All runs must share environment,
+ff and trial count, and together cover every active member. The page's
+``run`` block describes the rerun and adds ``sources`` (each run's id, start
+time and question count, oldest first); every question carries the
+``run_id`` it came from. ``tools/build_run_index.py`` reads
 ``sources`` to judge the combination canonical.
 """
 
@@ -235,28 +236,28 @@ def stage_checks(members, by_uid) -> dict[str, dict[str, int]]:
     return out
 
 
-def combine(run: dict[str, Any], artifacts: Path, base: dict[str, Any] | None,
-            base_artifacts: Path | None) -> tuple[dict[str, dict], dict[str, tuple[str, Path]]]:
-    """Results by uid, and each uid's (run_id, artifacts dir). The rerun wins
-    where both runs measured a uid: it is the newer measurement."""
+def combine(run: dict[str, Any], artifacts: Path, bases: list[tuple[dict[str, Any], Path]]
+            ) -> tuple[dict[str, dict], dict[str, tuple[str, Path]]]:
+    """Results by uid, and each uid's (run_id, artifacts dir). The newest
+    run that measured a uid wins: bases oldest first, then the rerun."""
     by_uid: dict[str, dict] = {}
     source: dict[str, tuple[str, Path]] = {}
-    for r, art in ((base, base_artifacts), (run, artifacts)):
-        for e in (r or {}).get("results", []):
+    for r, art in (*sorted(bases, key=lambda b: b[0]["started"]), (run, artifacts)):
+        for e in r.get("results", []):
             by_uid[e["uid"]] = e
             source[e["uid"]] = (r["run_id"], art)
     return by_uid, source
 
 
 def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
-               artifacts: Path, base: dict[str, Any] | None = None,
-               base_artifacts: Path | None = None) -> dict[str, Any]:
-    by_uid, source = combine(run, artifacts, base, base_artifacts)
-    if base is not None:
+               artifacts: Path, bases: list[tuple[dict[str, Any], Path]] = ()) -> dict[str, Any]:
+    by_uid, source = combine(run, artifacts, bases)
+    if bases:
         uncovered = [m.id for m in bench.active_members if m.uid not in by_uid]
         if uncovered:
-            raise SystemExit(f"{len(uncovered)} active member(s) in neither {base['run_id']} "
-                             f"nor {run['run_id']}: {uncovered[:5]}")
+            runs = ", ".join(r["run_id"] for r, _ in bases)
+            raise SystemExit(f"{len(uncovered)} active member(s) in neither {run['run_id']} "
+                             f"nor its bases ({runs}): {uncovered[:5]}")
     members = [m for m in bench.active_members if m.uid in by_uid]
     missing = [m.id for m in members if m.uid not in cases]
     if missing:
@@ -321,10 +322,11 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
     run_block = {"run_id": run["run_id"], "started": run["started"],
                  "environment": run.get("environment"), "ff": run.get("ff"),
                  "num_trials": trials, "harness_sha": (run.get("harness") or {}).get("sha")}
-    if base is not None:
+    if bases:
         counts = collections.Counter(source[m.uid][0] for m in members)
+        ordered = [*sorted((b for b, _ in bases), key=lambda b: b["started"]), run]
         run_block["sources"] = [{"run_id": r["run_id"], "started": r["started"],
-                                 "questions": counts[r["run_id"]]} for r in (base, run)]
+                                 "questions": counts[r["run_id"]]} for r in ordered]
     return {
         "schema_version": SCHEMA_VERSION,
         "generated_by": "tools/benchmark_page.py",
@@ -374,9 +376,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("run", type=Path, help="results/benchmark/runs/<run_id>.json")
-    parser.add_argument("--base", type=Path, default=None, metavar="RUN",
+    parser.add_argument("--base", type=Path, action="append", default=[], metavar="RUN",
                         help="an earlier benchmark run whose results fill every member "
-                             "this run did not measure (a combined page)")
+                             "this run did not measure (a combined page); repeatable, "
+                             "the newest run wins where two measured a member")
     parser.add_argument("--repo-root", type=Path, default=Path("."))
     args = parser.parse_args()
 
@@ -389,14 +392,14 @@ def main() -> int:
         raise SystemExit(f"{manifest} changed since run {run['run_id']} (manifest_sha differs); "
                          "its member facets may no longer describe the run")
     artifacts = run_artifacts(root, run)
-    base = base_artifacts = None
-    if args.base:
-        base = json.loads(args.base.read_text(encoding="utf-8"))
+    bases = []
+    for path in args.base:
+        base = json.loads(path.read_text(encoding="utf-8"))
         check_base(base, run)
-        base_artifacts = run_artifacts(root, base)
+        bases.append((base, run_artifacts(root, base)))
     bench = load_benchmark(manifest)
     cases = {uid: c for _p, c, uid in load_store(root / bench.source["cases_dir"])}
-    page = build_page(run, bench, cases, artifacts, base, base_artifacts)
+    page = build_page(run, bench, cases, artifacts, bases)
 
     out = root / "results" / "benchmark" / "pages" / f"{run['run_id']}.json"
     out.parent.mkdir(parents=True, exist_ok=True)

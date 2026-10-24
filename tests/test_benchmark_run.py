@@ -168,3 +168,15 @@ def test_missing_from_with_nothing_missing_or_no_benchmark(tmp_path, monkeypatch
     assert "nothing to run" in capsys.readouterr().out
     assert run_main(monkeypatch, "--missing-from", str(earlier)) == 1
     assert "--missing-from needs --benchmark" in capsys.readouterr().out
+
+
+def test_missing_from_repeats_as_a_union(tmp_path, monkeypatch, capsys):
+    path = make_bench(tmp_path, CASES)
+    first, second = tmp_path / "first.json", tmp_path / "second.json"
+    first.write_text(json.dumps({"results": [{"uid": CASES[0].uid}]}))
+    second.write_text(json.dumps({"results": [{"uid": CASES[1].uid}]}))
+    assert run_main(monkeypatch, "--benchmark", str(path), "--missing-from", str(first),
+                    "--missing-from", str(second), "--dry-run") == 0
+    out = capsys.readouterr().out
+    assert "1 active member(s) not measured by first.json, second.json" in out
+    assert "ch-aoi-003" in out and "1 cases selected" in out

@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "7addf595495181bb"
+    "caseset_version": "b0df4721464461ce"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -1612,7 +1612,7 @@
       "synthetic": true
     },
     {
-      "uid": "874a5c5781b8b22d",
+      "uid": "76a90b4e2ee08e8c",
       "id": "ch-port-011",
       "type": "portfolio",
       "set": "portfolio",
@@ -4433,7 +4433,7 @@
       "synthetic": true
     },
     {
-      "uid": "06d99fac9d2964c8",
+      "uid": "dda13d644bc10370",
       "id": "ch-quant-194",
       "type": "quantification",
       "set": "quantification",

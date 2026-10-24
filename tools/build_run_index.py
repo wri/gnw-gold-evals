@@ -163,7 +163,8 @@ def canonical_reasons(run: dict, repo_root: Path, base_ids: list[str] = (),
         return reasons + [f"manifest {run['benchmark']['path']} not found"]
     missing = load_benchmark(manifest).member_uids - measured
     if missing:
-        where = "the run and its base" if base_ids else "the run"
+        where = ("the run" if not base_ids else
+                 "the run and its base" if len(base_ids) == 1 else "the run and its bases")
         reasons.append(f"{len(missing)} active member(s) not in {where}")
     return reasons
 

@@ -1,13 +1,12 @@
 id: ch-quant-194
-uid: 06d99fac9d2964c8
+uid: dda13d644bc10370
 status: ready
 set: quantification
 group: unavailable
 query: Is there canopy height data I can use?
 expected:
   text: Says whether canopy height data are available in Horizon without inventing a canopy
-    height layer; it may point to where they can be found (for example Land & Carbon Lab or
-    Global Forest Watch).
+    height layer.
 notes:
   behaviour: Explain whether canopy height is available in Horizon; point to Land & Carbon
     Lab if not
@@ -26,4 +25,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001368 One Acre Fund; USY-001343 Meta canopy height
   refresh_risk: Low
-  review: '2026-10-24 (AJ): relaxed; pointing to outside sources is optional.'
+  review: '2026-10-24 (AJ): relaxed; pointing to outside sources is optional. Reworded again
+    after 20261024T133644Z_prod (AJ, 2026-10-24): the judge read ''may point to'' outside
+    sources as required and failed 2 of 3 honest answers, so the optional clause is gone.'
