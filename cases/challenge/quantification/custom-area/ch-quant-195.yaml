@@ -1,0 +1,28 @@
+id: ch-quant-195
+uid: bd78e4cd53191491
+status: todo
+set: quantification
+group: custom-area
+query: Can I upload a KML of my study areas and run the same analysis on each?
+expected:
+  text: Explains what area uploads are supported and the limits on analysing many areas at
+    once.
+notes:
+  behaviour: Explain upload support and portfolio limits
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-273); Map exploration research (KML
+    support; upload shapes)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  status_reason: 'needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-273
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: Map exploration research (KML support; upload shapes)
+  refresh_risk: Low

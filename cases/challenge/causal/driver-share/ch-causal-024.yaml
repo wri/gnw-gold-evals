@@ -1,0 +1,30 @@
+id: ch-causal-024
+uid: afd7b97b8917d335
+status: ready
+set: causal
+group: driver_share
+query: How do forestry emissions compare with other causes of forest emissions in British
+  Columbia?
+expected:
+  aoi_ids: CAN.2
+  dataset_id: 6;8
+  data_pull: 'TRUE'
+  text: Compares emissions linked to forestry (logging) with other drivers of forest emissions
+    in British Columbia using the flux and drivers data, with a caveat on how emissions are
+    attributed to drivers.
+notes:
+  behaviour: answer with flux + drivers; caveat
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-129); USY-001324 British Columbia emissions
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-129
+  benchmark_type: causal
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001324 British Columbia emissions
+  refresh_risk: Low

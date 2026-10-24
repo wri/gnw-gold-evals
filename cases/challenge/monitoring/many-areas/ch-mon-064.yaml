@@ -1,0 +1,26 @@
+id: ch-mon-064
+uid: d025cb1b2b629b99
+status: ready
+set: monitoring
+group: many_areas
+query: Have any important clusters of alerts appeared in national parks in Peru this month?
+expected:
+  text: Explains that it cannot scan every national park in Peru at once and offers to look
+    at one or a few named parks; does not invent alert clusters.
+notes:
+  behaviour: 'Redirect: many areas; offer a named park'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-127); GFW Advisory Council focus groups
+    (journalists target parks for new alerts)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-127
+  benchmark_type: monitoring
+  use_cases: UC1;UC3
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: From user research
+  user_story_refs: GFW Advisory Council focus groups (journalists target parks for new alerts)
+  refresh_risk: Alert confidence can upgrade

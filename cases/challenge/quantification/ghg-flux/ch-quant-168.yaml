@@ -1,0 +1,28 @@
+id: ch-quant-168
+uid: a83888a9bb8fee76
+status: ready
+set: quantification
+group: ghg-flux
+query: What are the gross emissions and removals from forests in Salonga National Park?
+expected:
+  aoi_ids: 555697863|10906|6060
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-172); USY-001328 UNESCO WH GHG report
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-172
+  benchmark_type: quantification
+  use_cases: UC4
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001328 UNESCO WH GHG report
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): any of the three Salonga records, as ch-trend-079. 20261023T094447Z_prod:
+    all 3 attempts used 10906, then asked which dataset to use.'

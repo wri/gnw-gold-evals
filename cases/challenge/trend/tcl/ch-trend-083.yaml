@@ -1,0 +1,31 @@
+id: ch-trend-083
+uid: 798d90b18de6f4f6
+status: ready
+set: trend
+group: tcl
+query: Are global targets for halting deforestation by 2030 being met? Show primary forest
+  loss since 2021.
+expected:
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  context_layer: primary_forest
+  text: Shows primary forest loss since 2021 at global (or tropical) scale and caveats that
+    whether the 2030 targets are being met depends on how the target is defined.
+notes:
+  behaviour: answer with global data; caveat on target definition
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-223); USY-001383 GEF-9; USY-001330 FDA
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  benchmark_id: bm26-223
+  benchmark_type: trend
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Global / regional / biome
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001383 GEF-9; USY-001330 FDA
+  refresh_risk: Low

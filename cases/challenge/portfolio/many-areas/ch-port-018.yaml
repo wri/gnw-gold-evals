@@ -1,0 +1,39 @@
+id: ch-port-018
+uid: 84b6ad8f3c1d434e
+status: ready
+set: portfolio
+group: many-areas
+query: Give me a table of tree cover loss for every municipality in Pará since 2015.
+expected:
+  aoi_ids: BRA.14.100_2;BRA.14.101_2;BRA.14.102_2;BRA.14.103_2;BRA.14.104_2;BRA.14.105_2;BRA.14.106_2;BRA.14.107_2;BRA.14.108_2;BRA.14.109_2;BRA.14.10_2;BRA.14.110_2;BRA.14.111_2;BRA.14.112_2;BRA.14.113_2;BRA.14.114_2;BRA.14.115_2;BRA.14.116_2;BRA.14.117_2;BRA.14.118_2;BRA.14.119_2;BRA.14.11_2;BRA.14.120_2;BRA.14.121_2;BRA.14.122_2;BRA.14.123_2;BRA.14.124_2;BRA.14.125_2;BRA.14.126_2;BRA.14.127_2;BRA.14.128_2;BRA.14.129_2;BRA.14.12_2;BRA.14.130_2;BRA.14.131_2;BRA.14.132_2;BRA.14.133_2;BRA.14.134_2;BRA.14.135_2;BRA.14.136_2;BRA.14.137_2;BRA.14.138_2;BRA.14.139_2;BRA.14.13_2;BRA.14.140_2;BRA.14.141_2;BRA.14.142_2;BRA.14.143_2;BRA.14.144_2;BRA.14.14_2;BRA.14.15_2;BRA.14.16_2;BRA.14.17_2;BRA.14.18_2;BRA.14.19_2;BRA.14.1_2;BRA.14.20_2;BRA.14.21_2;BRA.14.22_2;BRA.14.23_2;BRA.14.24_2;BRA.14.25_2;BRA.14.26_2;BRA.14.27_2;BRA.14.28_2;BRA.14.29_2;BRA.14.2_2;BRA.14.30_2;BRA.14.31_2;BRA.14.32_2;BRA.14.33_2;BRA.14.34_2;BRA.14.35_2;BRA.14.36_2;BRA.14.37_2;BRA.14.38_2;BRA.14.39_2;BRA.14.3_2;BRA.14.40_2;BRA.14.41_2;BRA.14.42_2;BRA.14.43_2;BRA.14.44_2;BRA.14.45_2;BRA.14.46_2;BRA.14.47_2;BRA.14.48_2;BRA.14.49_2;BRA.14.4_2;BRA.14.50_2;BRA.14.51_2;BRA.14.52_2;BRA.14.53_2;BRA.14.54_2;BRA.14.55_2;BRA.14.56_2;BRA.14.57_2;BRA.14.58_2;BRA.14.59_2;BRA.14.5_2;BRA.14.60_2;BRA.14.61_2;BRA.14.62_2;BRA.14.63_2;BRA.14.64_2;BRA.14.65_2;BRA.14.66_2;BRA.14.67_2;BRA.14.68_2;BRA.14.69_2;BRA.14.6_2;BRA.14.70_2;BRA.14.71_2;BRA.14.72_2;BRA.14.73_2;BRA.14.74_2;BRA.14.75_2;BRA.14.76_2;BRA.14.77_2;BRA.14.78_2;BRA.14.79_2;BRA.14.7_2;BRA.14.80_2;BRA.14.81_2;BRA.14.82_2;BRA.14.83_2;BRA.14.84_2;BRA.14.85_2;BRA.14.86_2;BRA.14.87_2;BRA.14.88_2;BRA.14.89_2;BRA.14.8_2;BRA.14.90_2;BRA.14.91_2;BRA.14.92_2;BRA.14.93_2;BRA.14.94_2;BRA.14.95_2;BRA.14.96_2;BRA.14.97_2;BRA.14.98_2;BRA.14.99_2;BRA.14.9_2
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  text: Gives tree cover loss since 2015 for each of Pará's municipalities as a table, from
+    the data; does not invent figures.
+notes:
+  behaviour: 'answer with data: per-municipality table for Pará'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-097); USY-001228 Mighty Earth (municipal
+    screening); USY-001513 admin-level stats request
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
+    ships'
+  benchmark_id: bm26-097
+  benchmark_type: portfolio
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001228 Mighty Earth (municipal screening); USY-001513 admin-level stats
+    request
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): redirect -> answer with data. All 3 attempts of 20261023T094447Z_prod
+    pulled tree cover loss for all 144 municipalities. pick_aoi takes up to 1,000 admin sub-units
+    of one GADM parent, but only 50 protected areas, KBAs, Indigenous lands or concessions
+    (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).
+    aoi_ids are the 144 GADM children of BRA.14 that pick_aoi returned on every attempt. Open-ended
+    window ends 2025-12-31 (Batch 5 rule).'

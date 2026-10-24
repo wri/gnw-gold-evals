@@ -1,0 +1,31 @@
+id: ch-causal-025
+uid: a76971f72970e138
+status: ready
+set: causal
+group: why_country
+query: How much tree cover did the DRC lose in 2024, and what was driving it?
+expected:
+  aoi_ids: COD
+  dataset_id: 4;8
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Gives the DRC's 2024 tree cover loss and its main driver classes, without attributing
+    the loss to causes the data do not cover.
+notes:
+  behaviour: answer with data; drivers; caveat on linking to disease outbreaks
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-152); USY-001602 Guardian Ebola / Congo
+    Basin loss
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-152
+  benchmark_type: causal
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001602 Guardian Ebola / Congo Basin loss
+  refresh_risk: Low

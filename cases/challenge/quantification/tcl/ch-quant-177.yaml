@@ -1,0 +1,28 @@
+id: ch-quant-177
+uid: 3901049c955c6521
+status: ready
+set: quantification
+group: tcl
+query: What was tree cover loss in Antioquia, Colombia in 2023?
+expected:
+  aoi_ids: COL.2
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-234); USY-001250 Antioquia
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-234
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001250 Antioquia
+  refresh_risk: Low

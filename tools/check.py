@@ -44,8 +44,12 @@ def main() -> int:
             [turn["query"] for turn in case.turns]
             if case.is_multiturn else [case.query]
         )
-        for query in queries:
-            for issue in validate_templates(query):
+        expecteds = (
+            [turn.get("expected") or {} for turn in case.turns]
+            if case.is_multiturn else [case.expected]
+        )
+        for text in queries + [v for e in expecteds for v in e.values()]:
+            for issue in validate_templates(text):
                 problems.append(f"{path}: {issue}")
         if stored_uid != case.uid:
             if args.fix:

@@ -19,3 +19,13 @@ notes:
   manifest_id: m-tcl-trend-01
   lineage: gnw-evals eval-metrics-slice-1 gt-trend-01
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001330 Forest Declaration Assessment; USY-001383 GEF-9
+  refresh_risk: Low
+  benchmark_id: bm26-213
+  benchmark_type: trend
+  use_cases: UC3;UC4;UC5;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case

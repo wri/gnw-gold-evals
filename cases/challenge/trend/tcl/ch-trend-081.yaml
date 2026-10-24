@@ -1,0 +1,25 @@
+id: ch-trend-081
+uid: be1c94fb2a057ea9
+status: ready
+set: trend
+group: tcl
+query: Is Madagascar on track for zero forest loss in protected areas by 2030?
+expected:
+  dataset_id: '4'
+  text: Uses loss data for Madagascar's protected areas (or says it can only give national
+    figures) to describe the recent trend, and does not project to 2030 without a clear caveat.
+notes:
+  behaviour: answer with trend; must not project beyond data without caveat
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-221); USY-001586 zero-loss-by-2030 commitment
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-221
+  benchmark_type: trend
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001586 zero-loss-by-2030 commitment
+  refresh_risk: Low

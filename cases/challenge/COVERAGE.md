@@ -5,40 +5,80 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 72fafbb2ec30afd2` · 718 cases · ready 713 · todo 5 · **718 active** (everything but `not doing` runs by default)
+`caseset_version b0df4721464461ce` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-29_
+_Last updated: 2026-10-24_
 
 ## Groups
 
 | group | cases | active | statuses |
 |---|---|---|---|
 | acronyms | 13 | 13 | ready 13 |
-| ambiguity | 10 | 10 | ready 10 |
+| active_fire | 2 | 2 | ready 2 |
+| alert_cause | 1 | 1 | ready 1 |
+| alert_context | 3 | 3 | ready 3 |
+| alert_followup | 4 | 4 | ready 4 |
+| alert_method | 4 | 4 | ready 4 |
+| ambiguity | 11 | 11 | ready 11 |
 | ambiguous | 15 | 15 | ready 15 |
+| buffer_unsupported | 2 | 2 | ready 2 |
+| by_confidence | 5 | 5 | ready 5 |
+| caveat_required | 3 | 3 | ready 3 |
+| commodity_overclaim | 4 | 4 | ready 4 |
+| compare_areas | 1 | 1 | ready 1 |
 | concepts | 16 | 16 | ready 16 |
+| concession_alerts | 2 | 2 | ready 2 |
 | context-layer | 15 | 15 | ready 15 |
+| custom-area | 1 | 1 | todo 1 |
+| custom_area | 4 | 4 | todo 4 |
 | data-quality | 8 | 8 | ready 8 |
 | designations | 22 | 22 | ready 22 |
 | direct | 20 | 20 | ready 20 |
+| driver_check | 1 | 1 | ready 1 |
+| driver_share | 3 | 3 | ready 3 |
+| driver_vs_fire | 2 | 2 | ready 2 |
 | expansion | 10 | 10 | ready 6, todo 4 |
-| ghg-flux | 36 | 36 | ready 36 |
+| fire_share_pa | 1 | 1 | ready 1 |
+| ghg-flux | 45 | 45 | ready 44, todo 1 |
 | global | 6 | 6 | ready 6 |
-| grasslands | 48 | 48 | ready 48 |
-| integrated-alerts | 48 | 48 | ready 48 |
-| land-cover | 37 | 37 | ready 37 |
+| grasslands | 51 | 51 | ready 51 |
+| integrated-alerts | 52 | 52 | ready 52 |
+| land-cover | 41 | 41 | ready 41 |
+| many-areas | 12 | 12 | ready 12 |
+| many_areas | 2 | 2 | ready 2 |
+| method | 18 | 18 | ready 18 |
+| monthly_recent | 2 | 2 | ready 2 |
 | multi | 10 | 10 | ready 10 |
 | multilingual | 40 | 40 | ready 40 |
-| natural-lands | 34 | 34 | ready 34 |
-| sluc | 33 | 33 | ready 33 |
+| natural-lands | 40 | 40 | ready 39, todo 1 |
+| no_aoi | 1 | 1 | ready 1 |
+| portfolio_rank | 1 | 1 | todo 1 |
+| premise_check | 2 | 2 | ready 2 |
+| recent_area | 11 | 11 | ready 11 |
+| recent_default | 2 | 2 | ready 2 |
+| recent_presence | 7 | 7 | ready 7 |
+| recent_rank | 1 | 1 | ready 1 |
+| recent_summary | 1 | 1 | ready 1 |
+| recent_vs_prior | 4 | 4 | ready 4 |
+| saved-areas | 8 | 8 | todo 8 |
+| sluc | 36 | 36 | ready 36 |
 | sources | 15 | 15 | ready 15 |
-| tc-gain | 37 | 37 | ready 37 |
-| tcl | 101 | 101 | ready 101 |
-| tcl-drivers | 37 | 37 | ready 37 |
-| tcl-fires | 49 | 49 | ready 49 |
-| tree-cover | 35 | 35 | ready 35 |
+| spike_attribution | 3 | 3 | ready 3 |
+| tc-gain | 39 | 39 | ready 39 |
+| tcl | 138 | 138 | ready 135, todo 3 |
+| tcl-drivers | 38 | 38 | ready 38 |
+| tcl-fires | 55 | 55 | ready 55 |
+| tree-cover | 38 | 38 | ready 37, todo 1 |
+| unavailable | 9 | 9 | ready 9 |
 | unmappable | 15 | 15 | ready 15 |
+| unsupported_action | 5 | 5 | ready 5 |
+| uploaded-sites | 10 | 10 | todo 10 |
 | vague | 8 | 8 | ready 7, todo 1 |
+| why_country | 1 | 1 | ready 1 |
+| why_pa | 2 | 2 | ready 2 |
+| why_subnational | 2 | 2 | ready 2 |
+| why_territory | 2 | 2 | ready 2 |
+| ytd | 3 | 3 | ready 3 |
 
 ## Bucket coverage (active cases)
 
@@ -49,26 +89,26 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 671 | 0 | 671 | 93% |
+| retrieval | 824 | 0 | 824 | 87% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 45 | 0 | 45 | 6% |
+| explanation | 191 | 0 | 191 | 20% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 226 | 0 | 226 | 31% |
+| scope | 227 | 0 | 227 | 24% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 561 | dataset_id_match |
-| aoi_ids | 475 | aoi_id_match |
-| data_pull | 365 | data_pull_exists, answered_without_data |
-| end_date | 226 | date_extraction (with start_date) |
-| start_date | 226 | date_extraction (with end_date) |
+| dataset_id | 711 | dataset_id_match |
+| aoi_ids | 607 | aoi_id_match |
+| data_pull | 513 | data_pull_exists, answered_without_data |
+| end_date | 326 | date_extraction (with start_date) |
+| start_date | 326 | date_extraction (with end_date) |
 | forbidden_tools | 200 | forbidden_tools_absent |
-| context_layer | 163 | context_layer_match |
-| text | 45 | expected_text_match |
-| dataset_parameters | 36 | dataset_parameter_match |
-| clarification | 18 | clarification_requested |
+| text | 191 | expected_text_match |
+| context_layer | 174 | context_layer_match |
+| dataset_parameters | 37 | dataset_parameter_match |
+| clarification | 19 | clarification_requested |
 | nudge_type | 12 | nudge_match |
 | nudge_options | 6 | nudge_match |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
@@ -81,9 +121,11 @@ friends) run on top of it whenever their trigger state exists.
 | scope | 0 ← unused | scope_match |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
+Fields present but not recognised here: date_tolerance_days
+
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@e2fb83f (origin/main, synced 2026-09-25), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@fa78c81 (origin/main, synced 2026-10-24), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -93,17 +135,17 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 1 | Global land cover | 45 | 0 | — | — |
-| 2 | Global natural/semi-natural grassland extent | 51 | 0 | — | — |
-| 3 | SBTN Natural Lands Map | 42 | 0 | — | — |
-| 4 | Tree cover loss | 117 | 0 | canopy_cover ×14 | primary_forest ×20, intact_forest ×4 |
-| 5 | Tree cover gain | 39 | 0 | — | — |
-| 6 | Forest greenhouse gas net flux | 39 | 0 | canopy_cover ×5 | — |
-| 7 | Tree cover | 41 | 0 | canopy_cover ×9 | primary_forest ×6 |
-| 8 | Tree cover loss by dominant driver | 40 | 0 | canopy_cover ×4 | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 37 | 4 | — | — |
-| 10 | Tree cover loss due to fires | 57 | 0 | canopy_cover ×4 | primary_forest ×6, intact_forest ×3 |
-| 11 | Integrated alerts | 53 | 0 | — | — |
+| 1 | Global land cover | 51 | 3 | — | — |
+| 2 | Global natural/semi-natural grassland extent | 54 | 1 | — | — |
+| 3 | SBTN Natural Lands Map | 52 | 3 | — | — |
+| 4 | Tree cover loss | 172 | 25 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4, natural_forest ×0 ← gap |
+| 5 | Tree cover gain | 42 | 1 | — | — |
+| 6 | Forest greenhouse gas net flux | 50 | 4 | canopy_cover ×5 | — |
+| 7 | Tree cover | 48 | 2 | canopy_cover ×10 | primary_forest ×8 |
+| 8 | Tree cover loss by dominant driver | 65 | 19 | canopy_cover ×4 | — |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 40 | 7 | — | — |
+| 10 | Tree cover loss due to fires | 71 | 7 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
+| 11 | Integrated alerts | 105 | 21 | — | natural_lands ×1 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
@@ -119,6 +161,36 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | ch-aoi-099 | todo | expansion | — |
 | ch-aoi-101 | todo | expansion | — |
 | ch-aoi-108 | todo | vague | — |
+| ch-comp-167 | todo | tcl | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-comp-172 | todo | tcl | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-mon-028 | todo | portfolio_rank | needs a seeded test account with saved areas (portfolio triage); not runnable yet |
+| ch-mon-031 | todo | custom_area | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-mon-050 | todo | custom_area | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-mon-051 | todo | custom_area | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-mon-065 | todo | custom_area | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-port-002 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-004 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-005 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-006 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-007 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-008 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-009 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-012 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-013 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-014 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-019 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-020 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-021 | todo | uploaded-sites | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-022 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-023 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-024 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-025 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-port-026 | todo | saved-areas | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-quant-158 | todo | tcl | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-quant-181 | todo | natural-lands | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-quant-195 | todo | custom-area | needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons, preloaded in test account)); not ... |
+| ch-trend-077 | todo | ghg-flux | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
+| ch-trend-084 | todo | tree-cover | needs a seeded test account (FIXTURE: Test Area A (single custom polygon, preloaded in test account)); not ... |
 
 ## Known gaps
 
@@ -128,4 +200,5 @@ answer-graded cases (`answer` or `text` expected) actually check.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
 - Catalog datasets with no active case: 12.
+- Catalog features no active case exercises — context layers: natural_forest (4).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

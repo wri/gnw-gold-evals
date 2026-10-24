@@ -1,0 +1,30 @@
+id: ch-trend-086
+uid: a4a9a59df81d84be
+status: ready
+set: trend
+group: tcl-fires
+query: Where should we focus fire prevention in Santa Cruz based on fire-driven loss in recent
+  years?
+expected:
+  aoi_ids: BOL.8
+  dataset_id: '10'
+  data_pull: 'TRUE'
+  text: Uses the trend in fire-driven loss in Santa Cruz to suggest where to focus prevention,
+    and notes the limits of targeting within the department from these data.
+notes:
+  behaviour: Answer with fire-driven loss trend; note sub-area targeting limits
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-247); USY-001332 IBIF; USY-001559 Lomerío
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: AOI id to verify
+  benchmark_id: bm26-247
+  benchmark_type: trend
+  use_cases: UC1;UC5
+  engagement: Returning user
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001332 IBIF; USY-001559 Lomerío
+  refresh_risk: Low

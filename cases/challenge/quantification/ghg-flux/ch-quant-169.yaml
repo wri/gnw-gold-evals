@@ -1,0 +1,34 @@
+id: ch-quant-169
+uid: aa56996f8c9ee6c9
+status: ready
+set: quantification
+group: ghg-flux
+query: What were gross emissions from forest loss in Colombia in 2023? We need it for NDC
+  tracking.
+expected:
+  aoi_ids: COL
+  dataset_id: 6;4
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  text: Gives Colombia's 2023 gross emissions from forest loss and caveats that the method
+    differs from the national inventory used for NDC tracking.
+notes:
+  behaviour: Answer with data; caveat on national inventory methods
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-173); USY-001625 CONAFOR (analogue);
+    USY-001330
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-173
+  benchmark_type: quantification
+  use_cases: UC4
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
+  user_story_refs: USY-001625 CONAFOR (analogue); USY-001330
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): dataset 4 accepted with 6; the tree cover loss dataset reports
+    emissions from loss. 20261023T094447Z_prod: all 3 attempts used 4 with the right figures.'

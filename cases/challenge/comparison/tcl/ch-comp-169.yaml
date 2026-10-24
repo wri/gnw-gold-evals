@@ -1,0 +1,32 @@
+id: ch-comp-169
+uid: 2d55b65dd87b05a4
+status: ready
+set: comparison
+group: tcl
+query: What was Indonesia's primary forest loss in 2024 compared with its 2016–2020 average?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2024-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  text: Compares Indonesia's 2024 primary forest loss with the yearly average for 2016–2020
+    (an average per year, not the five-year total).
+notes:
+  behaviour: Answer with data; annualize baseline correctly
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-200); USY-001330 Forest Declaration
+    Assessment
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-200
+  benchmark_type: comparison
+  use_cases: UC3;UC4
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001330 Forest Declaration Assessment
+  refresh_risk: Low

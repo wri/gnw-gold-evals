@@ -123,7 +123,7 @@ class TestResult(BaseModel):
     dashboard_widgets_valid_score: float | None = None
 
     # Expected data fields
-    expected_aoi_ids: list[str] | None = None
+    expected_aoi_ids: list[list[str]] | None = None
     expected_aoi_source: str = ""
     expected_dataset_id: str = ""
     expected_dataset_name: str = ""
@@ -179,7 +179,9 @@ class ExpectedData(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    expected_aoi_ids: list[str] | None = None
+    # Alternatives, each a set of ids the selection must equal exactly
+    # (``split_aoi_ids``).
+    expected_aoi_ids: list[list[str]] | None = None
     expected_aoi_source: str = ""
     expected_dataset_id: str = ""
     expected_dataset_name: str = ""
@@ -187,6 +189,9 @@ class ExpectedData(BaseModel):
     expected_context_layer: str = ""
     expected_start_date: str = ""
     expected_end_date: str = ""
+    # Days either side a date_extraction bound may miss by (rolling windows:
+    # "last month" can fairly be 30 days or the calendar month). 0 = exact.
+    expected_date_tolerance_days: int = 0
     expected_answer: str = ""
     expected_text: str = ""
     expected_clarification: bool | None = None
@@ -237,13 +242,24 @@ class ExpectedData(BaseModel):
 
     @field_validator("expected_aoi_ids", mode="before")
     @classmethod
-    def split_aoi_ids(cls, v: str | list[str]) -> list[str]:
-        """Split string input into a list of strings."""
+    def split_aoi_ids(cls, v: str | list[str] | list[list[str]]) -> list[list[str]]:
+        """Parse ``aoi_ids`` into alternatives: ``|`` separates alternatives
+        and ``;`` joins the ids of one alternative, so ``A;B|C`` accepts the
+        selection {A, B} or {C}. ``|`` binds looser than ``;`` because
+        ``;`` already means "all of these" here, unlike ``dataset_id``.
+        Some places have more than one defensible area (a national park and
+        its World Heritage listing), and a single all-of set fails the
+        other one. A flat list is one alternative."""
         if isinstance(v, list):
-            return v
+            if v and all(isinstance(item, list) for item in v):
+                return v
+            return [v] if v else []
         if isinstance(v, str):
-            # Split by comma and strip whitespace, filter out empty strings
-            return [item.strip() for item in v.split(";") if item.strip()]
+            alternatives = [
+                [item.strip() for item in alt.split(";") if item.strip()]
+                for alt in v.split("|")
+            ]
+            return [alt for alt in alternatives if alt]
         return []
 
     @field_validator("expected_nudge_options", mode="before")

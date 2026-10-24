@@ -1,0 +1,30 @@
+id: ch-quant-176
+uid: ddf89312398553e7
+status: ready
+set: quantification
+group: grasslands
+query: What share of Spain is natural grassland, for indicator B1 of the Global Biodiversity
+  Framework?
+expected:
+  aoi_ids: ESP
+  dataset_id: '2'
+  data_pull: 'TRUE'
+  text: Gives the share of Spain that is natural or semi-natural grassland and notes how the
+    dataset's definition relates to the biodiversity framework indicator.
+notes:
+  behaviour: answer with data; note indicator definition caveat
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-219); USY-001523 Spain GBF indicator
+    B1
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-219
+  benchmark_type: quantification
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001523 Spain GBF indicator B1
+  refresh_risk: Low

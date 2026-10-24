@@ -1,0 +1,26 @@
+id: ch-causal-028
+uid: 9975fe90e72a47fc
+status: ready
+set: causal
+group: method
+query: Can the drivers data separate subsistence shifting cultivation from commodity-driven
+  loss?
+expected:
+  text: Explains the driver classes accurately, including that shifting cultivation is separate
+    from permanent agriculture, and what the data cannot distinguish (for example which commodity,
+    or who cleared).
+notes:
+  behaviour: Explain driver classes and what they can and cannot distinguish
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-277); USY-001446 Wageningen rebuttal
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-277
+  benchmark_type: causal
+  use_cases: UC3;UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001446 Wageningen rebuttal
+  refresh_risk: Low

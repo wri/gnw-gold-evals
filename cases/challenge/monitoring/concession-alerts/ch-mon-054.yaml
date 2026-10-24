@@ -1,0 +1,29 @@
+id: ch-mon-054
+uid: 5c44b5d00b6bbcdf
+status: ready
+set: monitoring
+group: concession_alerts
+query: Are there alerts in or near the logging concessions around Lomié this month?
+expected:
+  text: Either reports this month's alerts in or near the logging concessions around Lomié,
+    or says it cannot use concession boundaries and offers alerts for the Lomié area instead;
+    does not invent concession names or alert figures.
+notes:
+  behaviour: Say concession boundaries are not available; offer alerts for the named area
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-030); GFW Advisory Council focus groups
+    (concessions most valued; land use allocation context); USY-001606 IFI Cameroon
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-030
+  benchmark_type: monitoring
+  use_cases: UC1;UC2
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: GFW Advisory Council focus groups (concessions most valued; land use allocation
+    context); USY-001606 IFI Cameroon
+  refresh_risk: Alert confidence can upgrade

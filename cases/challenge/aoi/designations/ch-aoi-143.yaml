@@ -16,3 +16,6 @@ notes:
   verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=wdpa)
   origin: 2026-09-15 Land & Carbon Lab session traces + scorer replay
   observed: 'prod smoke 2026-09-15 (1 trial): resolved to Yanga, National Park, AUS (555625705)'
+  synthetic: 'FALSE'
+  user_story_refs: USY-000852 IWRM territories; USY-001399 Olam PAs
+  refresh_risk: Low

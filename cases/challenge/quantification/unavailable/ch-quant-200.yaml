@@ -1,0 +1,25 @@
+id: ch-quant-200
+uid: cd81b6b9e2690822
+status: ready
+set: quantification
+group: unavailable
+query: Can you estimate soil carbon change in pastoral lands in Mongolia?
+expected:
+  text: Says soil carbon change data are not available and suggests related datasets; does
+    not invent soil carbon figures for Mongolia.
+notes:
+  behaviour: 'decline: soil carbon not available; suggest related datasets'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-291); USY-001653 International Land
+    Coalition
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-291
+  benchmark_type: quantification
+  use_cases: UC4;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Direct from story
+  user_story_refs: USY-001653 International Land Coalition
+  refresh_risk: Low

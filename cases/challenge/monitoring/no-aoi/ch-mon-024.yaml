@@ -1,0 +1,26 @@
+id: ch-mon-024
+uid: 5b6dad6ea65d7c3d
+status: ready
+set: monitoring
+group: no_aoi
+query: Any new alerts in my area?
+expected:
+  clarification: 'TRUE'
+  text: Asks which area the user means instead of guessing one.
+notes:
+  difficulty: medium
+  behaviour: 'clarify: ask which area'
+  lineage: benchmark v2026 proposed set (bm26-133); —
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review'
+  synthetic: 'TRUE'
+  build_notes: Scope row; info-only until clarification validator stable
+  user_story_refs: —
+  benchmark_id: bm26-014
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Direct from story
+  refresh_risk: Low

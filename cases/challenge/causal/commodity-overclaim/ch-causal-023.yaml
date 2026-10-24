@@ -1,0 +1,32 @@
+id: ch-causal-023
+uid: 366679d8d79ddbaa
+status: ready
+set: causal
+group: commodity_overclaim
+query: Does the drivers data support linking loss in Boquerón to new cattle ranches, and what
+  can it not tell me?
+expected:
+  aoi_ids: PRY.5
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Reports the dominant driver classes for loss in Boquerón and states that the drivers
+    data do not identify the commodity, so they cannot on their own link the loss to new cattle
+    ranches.
+notes:
+  behaviour: Answer with driver class; state that commodity is not identified
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-118); USY-001271 Mongabay Mennonite
+    expansion; USY-001561
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: AOI id to verify
+  benchmark_id: bm26-118
+  benchmark_type: causal
+  use_cases: UC3
+  engagement: Returning user
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001271 Mongabay Mennonite expansion; USY-001561
+  refresh_risk: Low

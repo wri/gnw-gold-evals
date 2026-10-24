@@ -1,0 +1,32 @@
+id: ch-causal-027
+uid: 56c2a4b5fb63797a
+status: ready
+set: causal
+group: many_areas
+query: Which districts of Madre de Dios have the most loss from mining?
+expected:
+  text: Explains what the drivers data can say about mining (the closest class is hard commodities,
+    which covers mining and energy infrastructure) and either ranks Madre de Dios's districts
+    by that class from the data or offers the regional figure; does not invent figures.
+notes:
+  behaviour: 'Redirect: ranking many districts; drivers data has no mining-specific class
+    at district level — explain'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-248); USY-001401 Caja Cusco; USY-001286
+    Mongabay Peru
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-248
+  benchmark_type: causal
+  use_cases: UC3;UC5
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: Confirm with engineering
+  grounding: Story analogue
+  user_story_refs: USY-001401 Caja Cusco; USY-001286 Mongabay Peru
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded; ranking every district with real data is within pick_aoi
+    takes up to 1,000 admin sub-units of one GADM parent, but only 50 protected areas, KBAs,
+    Indigenous lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py
+    SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).'

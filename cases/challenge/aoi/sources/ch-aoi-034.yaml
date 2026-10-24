@@ -13,3 +13,13 @@ notes:
   verify_query: Kayapo
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
+  synthetic: 'FALSE'
+  user_story_refs: 'USY-001433 (analogue: Indigenous territory)'
+  refresh_risk: Low
+  benchmark_id: bm26-044
+  benchmark_type: spatial
+  use_cases: UC1;UC3;UC5
+  engagement: First look
+  aoi_type: Indigenous / community territory
+  capability: Supported
+  grounding: Verified Challenge case

@@ -17,3 +17,13 @@ notes:
   manifest_id: m-lc-quant-05
   lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-05a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001250 Antioquia land-use planning (analogue)
+  refresh_risk: Low
+  benchmark_id: bm26-232
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case

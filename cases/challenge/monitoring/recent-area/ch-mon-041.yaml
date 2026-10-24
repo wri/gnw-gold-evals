@@ -1,0 +1,31 @@
+id: ch-mon-041
+uid: 851a2a35603d2224
+status: ready
+set: monitoring
+group: recent_area
+query: Summarize alerts in Offinso Forest District over the last two weeks
+expected:
+  aoi_ids: GHA2.34
+  dataset_id: '11'
+  start_date: '{run-14d}'
+  end_date: '{run}'
+  date_tolerance_days: '2'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-016); USY-001249 Offinso ATEM project
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; ''Offinso Forest District'' is a Forestry
+    Commission unit; pinned to GADM district Offinso (GHA2.34_2); Offinso North is GHA2.35'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-016
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001249 Offinso ATEM project
+  refresh_risk: Alert confidence can upgrade

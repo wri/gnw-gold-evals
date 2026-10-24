@@ -1,0 +1,26 @@
+id: ch-quant-196
+uid: 66a298dccadfe3ee
+status: ready
+set: quantification
+group: method
+query: What does a value of 0.8 in the tree cover gain layer mean?
+expected:
+  text: Explains what values in the tree cover gain layer mean as documented, without inventing
+    a meaning for a 0.8 value.
+notes:
+  behaviour: Explain the gain layer correctly (binary/fraction as documented); no invented
+    semantics
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-274); GFW Advisory Council focus groups
+    ("what does the pixel mean?")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-274
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: GFW Advisory Council focus groups ("what does the pixel mean?")
+  refresh_risk: Low

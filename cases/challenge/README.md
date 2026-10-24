@@ -112,9 +112,12 @@ on 2026-09-15.
 
 Known scoring gaps accepted for batch 1 (candidates for future evaluators):
 
-- `aoi_ids` is all-of exact set match; there is no any-of. Cases with more
-  than one defensible answer either expect a nudge or pin the most defensible
-  id, with the alternative recorded in `notes.lineage`.
+- `aoi_ids` is all-of exact set match. Until 2026-10-24 there was no any-of,
+  so cases with more than one defensible answer either expect a nudge or pin
+  the most defensible id, with the alternative recorded in `notes.lineage`.
+  `|` now separates alternative sets (`555697863|10906`; see
+  `src/goldset/evaluators/README.md`, `aoi_id_match`); batch 1 rows keep
+  their pinned ids.
 - No `aoi_absent` check: "must not substitute a wrong area" is approximated
   with `clarification` and `text` judges.
 - The scope classifier has no class for "resolved an AOI and stopped", so
@@ -227,3 +230,97 @@ Latency is half of that verdict, so:
 - **Prod latency is reference only.** It includes internet round-trips and
   prod infrastructure (autoscaling, other users' load), so a prod vs local
   gap says nothing about the selector.
+
+## Batch 4: the benchmark v2026 cases (`monitoring`, `causal`, AOI-level)
+
+63 cases from the proposed BENCHMARK v2026 set
+(`seeds/benchmark-v2026-proposed.csv`, rows marked NEW), written from
+GFW/LCL user stories rather than observed traffic, so every one is tagged
+`notes.synthetic: TRUE`. Expectations were **drafted, not reviewed**
+(`notes.expectations`); AOI ids were resolved against prod `/api/aois` on
+2026-10-01. Review them before the November freeze.
+
+| set | n | what it adds |
+|---|---|---|
+| `monitoring` (new) | 30 | near-real-time integrated alerts (dataset 11) for parks, Indigenous territories, states and districts; rolling windows use run-relative date tokens (`{run-30d}`, `{last_month_start}`, `{current_year}-01-01`) with `date_tolerance_days`; 4 non-English; 3 scope rows (no area given, email subscription, coordinate buffer) judged by `text` |
+| `causal` (new) | 18 | driver and fire attribution; judged `text` checks for not over-claiming a commodity, checking the question's premise, and the selective-logging caveat |
+| quantification / comparison / trend | 15 | the same analyses at protected-area, Indigenous-territory and sub-national level (every earlier analytic row is country-level) |
+
+- Questions that name no dates carry no expected window: the window is
+  the agent's call, and an expected one would fail correct answers.
+- `ch-mon-028` (triage across a user's saved areas) is `todo`: it needs a
+  seeded test account.
+- Protected-area (WDPA) analytics fail upstream while PZB-1406 is open;
+  those rows count as failures, as any user would see them.
+
+## Batch 5: the v2026 BEF sheet (`portfolio` set, plus monitoring, numeric and causal rows)
+
+168 cases from the BEF benchmark sheet of 2026-10-22
+(`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows): the rows that no
+existing case answers. The sheet's other 131 rows reuse existing cases (98
+real-traffic cases by `challenge_id`, 33 earlier synthetic cases by query
+text). Every new case is synthetic and its expectations are **drafted, not
+reviewed** (`notes.expectations`); AOI ids were resolved against prod
+`/api/aois` on 2026-10-23, with doubtful or unpinned ones explained in
+`notes.verified`. Review them before the November freeze.
+
+| set | new | what it adds |
+|---|---|---|
+| `portfolio` (new) | 27 | many areas at once (ranking every state, screening uploaded sites, saved-area triage), judged by `text`; drafted as redirects to one to three named areas, revised 2026-10-24 to the real limits (below); `notes.reclassify_when` says when the fixture rows flip to "answer with data" |
+| `monitoring` | 36 | alert follow-up (imagery, clusters, coordinates, prioritising), alert context (natural lands, primary forest, mangroves, park buffers), alert method questions, unsupported actions and fixture rows |
+| `quantification` / `comparison` / `trend` | 93 | subnational, protected-area and Indigenous-territory analyses, two-to-three-area comparisons, and data or method questions (`method` cohort, `text` only), unavailable data (`unavailable`) and many-area redirects (`many-areas`) |
+| `causal` | 11 | alert causes, driver shares, commodity over-claims and premise checks |
+| `aoi` | 1 | an ambiguous Amazon question |
+
+- **Fixture rows are `todo`.** 29 new rows (plus `ch-mon-028`) need a seeded
+  test account with a custom area or a 25-polygon portfolio; their
+  `status_reason` names the fixture, and BENCHMARK `2026-draft-3` lists them
+  as excluded (AJ, 2026-10-23).
+- **Unconfirmed capabilities run now.** Rows the sheet marks "Confirm with
+  engineering" (imagery, alert clusters, coordinate export, VIIRS, concession
+  and buffer analysis, production forests) carry an either/or `text`
+  expectation that accepts a correct answer or an honest "not available";
+  `notes.capability_check` marks them for engineering to confirm (AJ,
+  2026-10-23). Concession areas (logging, mining, oil palm) are in the AOI
+  index, so the Lomié and mining-overlay rows may deserve a firmer
+  expectation once confirmed.
+- **Open-ended windows end in 2025.** Tree cover loss, fires, drivers and
+  flux run to 2025 (catalog `content_date`), so "since 2021" expects
+  2021-01-01 to 2025-12-31 where the sheet wrote 2024-12-31; each case says
+  so in `notes.build_notes`. Questions that name no window carry none, as in
+  Batch 4.
+- Each member's sheet facets (use cases, engagement, AOI type, capability,
+  grounding) are case notes written by `tools/benchmark_from_sheet.py`.
+
+### Expectation review after the first draft-3 run (2026-10-24)
+
+The first `2026-draft-3` run (`20261023T094447Z_prod`; recommendations in
+`results/benchmark/recommendations/`) showed some drafted expectations were
+wrong. AJ's decisions, applied to 44 cases (26 run, 18 fixture rows); each
+case's `notes.review` gives its evidence:
+
+- **Many areas: the real limits.** `pick_aoi` takes up to 1,000 admin
+  sub-units of one GADM parent, but only 50 protected areas, KBAs,
+  Indigenous lands or concessions (project-zeno
+  `src/agent/subagents/pick_aoi/tool.py`). Rows within the limit now expect
+  an answer with data (every municipality of Pará, every department of
+  Bolivia, African countries, Brazilian states, districts of two countries);
+  the rest keep a redirect worded to the real limit, never "one to three
+  named areas". The sheet's `capability` facet still says "Not yet" for the
+  reclassified rows; fix it in the sheet before the next curation.
+- **Either/or rows** whose decline branch selects no dataset carry no
+  dataset or date checks.
+- **Defensible alternatives:** emissions from loss accept tree cover loss
+  (`6;4`), land cover accepts natural lands (`1;3`), and four AOIs use the
+  `|` any-of syntax (Salonga, Kakataibo, Mahakam Delta).
+- **Confirmed capability:** alerts on natural lands (`ch-mon-058`) now expect
+  data with `context_layer: natural_lands`.
+- **Method questions:** three judged texts were relaxed where careful
+  answers failed on an optional detail (`ch-quant-194`, `-197`, `-205`), and
+  `ch-quant-184`'s premise was fixed. Printable maps (`ch-mon-047`) stay
+  strict: a dashboard is not a printable map.
+- **After the first rerun** (`20261024T133644Z_prod`), two texts were
+  reworded again: `ch-quant-194` drops its optional "may point to" clause,
+  which the judge read as required, and `ch-port-011` accepts either an
+  honest "cannot select these sites as a group" or a ranking cited from
+  published research.

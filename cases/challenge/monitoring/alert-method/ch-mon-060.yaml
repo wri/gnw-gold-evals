@@ -1,0 +1,29 @@
+id: ch-mon-060
+uid: a119f0a9f7dda34e
+status: ready
+set: monitoring
+group: alert_method
+query: Could the alerts in Lampung this month be caused by flooding or cloud cover rather
+  than clearing?
+expected:
+  text: Explains known sources of false or seasonal alerts such as flooding, cloud and vegetation
+    change, and neither dismisses nor confirms this month's Lampung alerts without evidence.
+notes:
+  behaviour: Explain known false-positive sources and seasonality; do not dismiss or confirm
+    without evidence
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-057); USY-001579 IFCAS Lampung; Alerts
+    JTBD (Miro) (clouds, seasonality, false positives)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-057
+  benchmark_type: monitoring
+  use_cases: UC1;UC6
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001579 IFCAS Lampung; Alerts JTBD (Miro) (clouds, seasonality, false
+    positives)
+  refresh_risk: Alert confidence can upgrade

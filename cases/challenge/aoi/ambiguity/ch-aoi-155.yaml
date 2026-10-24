@@ -1,0 +1,25 @@
+id: ch-aoi-155
+uid: fd567abb56f6e22e
+status: ready
+set: aoi
+group: ambiguity
+query: Describe the pattern of deforestation in the Amazon.
+expected:
+  text: Either asks which definition of the Amazon is meant or offers a breakdown by country,
+    rather than silently picking one boundary.
+notes:
+  behaviour: Clarify which Amazon boundary or offer country-level breakdown
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-154); Map exploration research (map
+    exploration question)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-154
+  benchmark_type: spatial
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Global / regional / biome
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Map exploration research (map exploration question)
+  refresh_risk: Low

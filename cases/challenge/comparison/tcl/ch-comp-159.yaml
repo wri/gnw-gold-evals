@@ -1,0 +1,31 @@
+id: ch-comp-159
+uid: 045726c2564f7820
+status: ready
+set: comparison
+group: tcl
+query: How does tree cover loss since 2021 compare in Cusco and Madre de Dios? Our loan portfolio
+  covers both.
+expected:
+  aoi_ids: PER.8;PER.18
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-071); USY-001386 Caja Cusco green credit
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  benchmark_id: bm26-071
+  benchmark_type: comparison
+  use_cases: UC2
+  engagement: Returning user
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001386 Caja Cusco green credit
+  refresh_risk: Low

@@ -16,6 +16,7 @@ arguments consistently reflect what the agent was actually asked to look for, wh
 is why extraction is the scored check and coverage is reported for diagnosis.
 """
 
+from datetime import date
 from typing import Any
 
 from goldset.evaluators.utils import normalize_end_date, normalize_start_date
@@ -60,10 +61,24 @@ def _preferred_windows(
     return windows
 
 
+def _within(actual: str, expected: str, tolerance_days: int) -> bool:
+    """Exact match, or within tolerance_days when one is set."""
+    if actual == expected:
+        return True
+    if not tolerance_days or not actual:
+        return False
+    try:
+        delta = date.fromisoformat(actual) - date.fromisoformat(expected)
+    except ValueError:
+        return False
+    return abs(delta.days) <= tolerance_days
+
+
 def evaluate_date_extraction(
     agent_state: dict[str, Any],
     expected_start_date: str | None = None,
     expected_end_date: str | None = None,
+    tolerance_days: int = 0,
 ) -> dict[str, Any]:
     """Check the agent extracted the requested period from the prompt.
 
@@ -125,9 +140,13 @@ def evaluate_date_extraction(
         # unconstrained and left to date_coverage. Requiring both would fail a
         # legitimately open-ended pull.
         start_ok = (
-            normalize_start_date(start) == expected_start if start.strip() else True
+            _within(normalize_start_date(start), expected_start, tolerance_days)
+            if start.strip() else True
         )
-        end_ok = normalize_end_date(end) == expected_end if end.strip() else True
+        end_ok = (
+            _within(normalize_end_date(end), expected_end, tolerance_days)
+            if end.strip() else True
+        )
         if start_ok and end_ok:
             result.update(
                 {

@@ -25,7 +25,7 @@ def test_prefixing_and_validator_parsing():
     assert expected.expected_dataset_id == "11"
     assert expected.expected_answer == "1,319,600 hectares"
     # ExpectedData's own validators apply, identically to gnw-evals:
-    assert expected.expected_aoi_ids == ["BRA.25_1", "BRA.14_1"]
+    assert expected.expected_aoi_ids == [["BRA.25_1", "BRA.14_1"]]  # one all-of alternative
     assert expected.expected_clarification is False
     assert expected.expected_suggested_datasets == ["0", "11"]
     assert expected.expected_dashboard_widgets == ["insight", "map"]

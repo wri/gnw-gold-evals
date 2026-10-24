@@ -1,0 +1,30 @@
+id: ch-mon-032
+uid: ede7057e94722f43
+status: ready
+set: monitoring
+group: recent_presence
+query: Have there been any new deforestation alerts in Équateur province in the last month?
+expected:
+  aoi_ids: COD.2
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-002); USY-001580 Équateur storytelling
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-002
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001580 Équateur storytelling
+  refresh_risk: Alert confidence can upgrade

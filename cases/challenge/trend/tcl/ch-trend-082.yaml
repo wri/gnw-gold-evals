@@ -1,0 +1,29 @@
+id: ch-trend-082
+uid: 16e874eacef69f47
+status: ready
+set: trend
+group: tcl
+query: Has Malaysia reduced its forest loss enough to be considered low risk under the EUDR?
+expected:
+  aoi_ids: MYS
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Describes Malaysia's tree cover loss trend from the data and does not make the EUDR
+    country risk classification itself.
+notes:
+  behaviour: answer with trend data; must not make the EUDR risk classification itself
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-222); USY-001512 New Straits Times EUDR
+    op-ed
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-222
+  benchmark_type: trend
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001512 New Straits Times EUDR op-ed
+  refresh_risk: Low

@@ -1,0 +1,30 @@
+id: ch-quant-194
+uid: dda13d644bc10370
+status: ready
+set: quantification
+group: unavailable
+query: Is there canopy height data I can use?
+expected:
+  text: Says whether canopy height data are available in Horizon without inventing a canopy
+    height layer.
+notes:
+  behaviour: Explain whether canopy height is available in Horizon; point to Land & Carbon
+    Lab if not
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-272); USY-001368 One Acre Fund; USY-001343
+    Meta canopy height
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-272
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Confirm with engineering
+  grounding: Direct from story
+  user_story_refs: USY-001368 One Acre Fund; USY-001343 Meta canopy height
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): relaxed; pointing to outside sources is optional. Reworded again
+    after 20261024T133644Z_prod (AJ, 2026-10-24): the judge read ''may point to'' outside
+    sources as required and failed 2 of 3 honest answers, so the optional clause is gone.'

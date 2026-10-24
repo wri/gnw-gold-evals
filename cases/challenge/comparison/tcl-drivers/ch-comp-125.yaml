@@ -18,3 +18,13 @@ notes:
   manifest_id: m-driver-comp-03
   lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-03a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-108
+  benchmark_type: comparison
+  synthetic: 'FALSE'
+  use_cases: UC2;UC3
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  user_story_refs: USY-001569 Sucden cocoa-area screening; USY-001515
+  refresh_risk: Re-verify at annual refresh (open-ended, categorical)

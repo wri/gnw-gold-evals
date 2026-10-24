@@ -106,6 +106,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             state,
             expected_start_date=expected.expected_start_date,
             expected_end_date=expected.expected_end_date,
+            tolerance_days=expected.expected_date_tolerance_days,
         ),
     ),
     EvaluatorSpec(

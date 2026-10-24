@@ -1,0 +1,30 @@
+id: ch-quant-172
+uid: 4b422abbbaa8f9b9
+status: ready
+set: quantification
+group: sluc
+query: What emission factor should we use for cocoa from Ghana in our Scope 3 land-use change
+  accounting?
+expected:
+  aoi_ids: GHA
+  dataset_id: '9'
+  data_pull: 'TRUE'
+  text: Gives the emission factor for cocoa from Ghana with a caveat on the method, without
+    giving accounting advice beyond what the data say.
+notes:
+  behaviour: answer with data + methodology caveat; no accounting advice beyond data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-185); USY-001650 AdAstra; USY-001651
+    Olam
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-185
+  benchmark_type: quantification
+  use_cases: UC2;UC4
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001650 AdAstra; USY-001651 Olam
+  refresh_risk: Low

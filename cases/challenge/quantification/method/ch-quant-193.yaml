@@ -1,0 +1,25 @@
+id: ch-quant-193
+uid: 52caefe83d4be7be
+status: ready
+set: quantification
+group: method
+query: Can I get the disturbance alerts through an API for my own monitoring app?
+expected:
+  text: Explains how to access the alerts programmatically (for example the GFW Data API)
+    and points to documentation, without inventing endpoints.
+notes:
+  behaviour: Explain API access; point to documentation; no fabricated endpoints
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-271); USY-000455 CI Firecast API; Alerts
+    JTBD (Miro)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-271
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-000455 CI Firecast API; Alerts JTBD (Miro)
+  refresh_risk: Alert confidence can upgrade

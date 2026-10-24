@@ -1,0 +1,26 @@
+id: ch-mon-042
+uid: d585774f2f838d4a
+status: ready
+set: monitoring
+group: active_fire
+query: Are there any fire alerts near Isiolo right now? Our scouts need to know where to go.
+expected:
+  text: Either reports recent disturbance alerts for Isiolo with the dates covered, or says
+    that near-real-time active-fire alerts are not available here; does not present disturbance
+    alerts or annual fire-driven loss as live fire detections.
+notes:
+  behaviour: answer with data, or say if active-fire alerts are not available
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-018); USY-001634 Save Beisa Oryx scouts
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-018
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001634 Save Beisa Oryx scouts
+  refresh_risk: Low

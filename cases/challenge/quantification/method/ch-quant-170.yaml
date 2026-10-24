@@ -1,0 +1,29 @@
+id: ch-quant-170
+uid: 1abf501a7df3b2ff
+status: ready
+set: quantification
+group: method
+query: Can we use GFW tree cover loss to calculate how much our province should be paid under
+  a jurisdictional REDD+ program?
+expected:
+  text: Does not suggest that tree cover loss data can set payment amounts under a jurisdictional
+    REDD+ program; may say they can serve as an informal cross-check alongside the official
+    monitoring system.
+notes:
+  behaviour: Do not suggest the data can set payment amounts; it can serve as an informal
+    cross-check; explain method differences from official monitoring; point to official MRV
+    systems
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-174); USY-001339 Forests, People, Climate
+    donors (analogue)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-174
+  benchmark_type: quantification
+  use_cases: UC4
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Story analogue
+  user_story_refs: USY-001339 Forests, People, Climate donors (analogue)
+  refresh_risk: Low

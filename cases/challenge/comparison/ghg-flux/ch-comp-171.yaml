@@ -1,0 +1,32 @@
+id: ch-comp-171
+uid: 9184ef24c50c940b
+status: ready
+set: comparison
+group: ghg-flux
+query: Do GFW's numbers on emissions from tree cover loss in Cambodia look consistent with
+  Cambodia's REDD+ reference level?
+expected:
+  aoi_ids: KHM
+  dataset_id: 6;4
+  data_pull: 'TRUE'
+  text: Gives GFW's emissions figures for Cambodia and explains how their method differs from
+    a national REDD+ reference level, without judging whether the official number is right.
+notes:
+  behaviour: Give GFW figures and method differences; no verdict on the official number; Do
+    not suggest the data can set payment amounts; it can serve as an informal cross-check;
+    explain method differences from official monitoring
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-202); USY-001534 Climate Home News Cambodia
+    REDD+ check
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-202
+  benchmark_type: comparison
+  use_cases: UC3;UC4
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001534 Climate Home News Cambodia REDD+ check
+  refresh_risk: Low

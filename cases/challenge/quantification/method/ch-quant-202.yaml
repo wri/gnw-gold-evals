@@ -1,0 +1,24 @@
+id: ch-quant-202
+uid: 8f2d627de19480f7
+status: ready
+set: quantification
+group: method
+query: What is the uncertainty in the forest carbon flux model, and how should I report it?
+expected:
+  text: Explains the main sources of uncertainty in the forest carbon flux model accurately
+    and points to the documentation on how to report it, without inventing error ranges.
+notes:
+  behaviour: Explain uncertainty sources accurately; point to documentation
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-293); USY-000517 FREL analysis
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-293
+  benchmark_type: quantification
+  use_cases: UC4;UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-000517 FREL analysis
+  refresh_risk: Low

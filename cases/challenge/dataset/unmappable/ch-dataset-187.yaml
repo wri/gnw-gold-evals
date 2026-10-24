@@ -16,3 +16,13 @@ notes:
   lineage: 'sLUC: tabular only; crop, no place'
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
   source_tab: challenge-dataset-v1
+  synthetic: 'FALSE'
+  user_story_refs: USY-001651 Olam
+  refresh_risk: Low
+  benchmark_id: bm26-296
+  benchmark_type: scope
+  use_cases: UC4;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Verified Challenge case

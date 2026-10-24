@@ -1,0 +1,34 @@
+id: ch-mon-048
+uid: 65221241b2f7fc3f
+status: ready
+set: monitoring
+group: recent_summary
+query: Summarize what changed in Antioquia since I last checked two weeks ago, in a few sentences
+  I can send to the environmental authority.
+expected:
+  aoi_ids: COL.2
+  dataset_id: '11'
+  start_date: '{run-14d}'
+  end_date: '{run}'
+  date_tolerance_days: '2'
+  data_pull: 'TRUE'
+  text: Gives a short summary, in a few sentences, of the alerts in Antioquia over the last
+    two weeks, with the alert area or count and the dates covered, suitable to send on.
+notes:
+  behaviour: Short, accurate summary with numbers and dates
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-024); USY-001250 Antioquia; Alerts JTBD
+    (Miro) (report and share alerts)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-024
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user
+  aoi_type: Subnational
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001250 Antioquia; Alerts JTBD (Miro) (report and share alerts)
+  refresh_risk: Alert confidence can upgrade

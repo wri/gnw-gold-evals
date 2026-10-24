@@ -1,0 +1,33 @@
+id: ch-quant-165
+uid: 065f791e7da78838
+status: ready
+set: quantification
+group: tcl
+query: Can I say Bolivia's 2024 tree cover loss was a record? How does it compare with every
+  year since 2001?
+expected:
+  aoi_ids: BOL
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Gives the annual series so 2024 can be compared with every year since 2001, and flags
+    that method changes over time make some year-to-year comparisons less reliable.
+notes:
+  behaviour: Answer with full annual series; flag method changes over time
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-165); USY-001555 Bolivia fires documentary;
+    GFW Advisory Council focus groups ("what can I say about it?")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-165
+  benchmark_type: quantification
+  use_cases: UC3;UC6
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001555 Bolivia fires documentary; GFW Advisory Council focus groups
+    ("what can I say about it?")
+  refresh_risk: Low

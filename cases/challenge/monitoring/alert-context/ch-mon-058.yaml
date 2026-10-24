@@ -1,0 +1,41 @@
+id: ch-mon-058
+uid: 2a6b4d20f1b17c60
+status: ready
+set: monitoring
+group: alert_context
+query: Did the alerts in Padre Abad province this month fall in natural forest or on land
+  that was already farmed?
+expected:
+  aoi_ids: PER.26.3
+  dataset_id: '11'
+  context_layer: natural_lands
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Uses the alerts' natural lands layer to say how much of this month's alert area in
+    Padre Abad fell on natural land and how much on land already converted (for example farmed);
+    does not guess the split.
+notes:
+  behaviour: answer with alerts restricted to natural lands
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-054); USY-001248 Kakataibo; GFW Advisory
+    Council focus groups (local context to understand alerts)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  capability_check: 'confirmed 2026-10-24: integrated alerts carries a natural_lands context
+    layer (zeno catalog integrated_alerts.yml)'
+  benchmark_id: bm26-054
+  benchmark_type: monitoring
+  use_cases: UC1;UC5
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: USY-001248 Kakataibo; GFW Advisory Council focus groups (local context
+    to understand alerts)
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-24 (AJ): either/or -> answer with data. 20261023T094447Z_prod: all 3 attempts
+    asked which dataset to use although the natural lands layer answers it.'

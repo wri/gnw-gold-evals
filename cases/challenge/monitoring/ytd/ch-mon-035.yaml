@@ -1,0 +1,31 @@
+id: ch-mon-035
+uid: 3650733264b003d9
+status: ready
+set: monitoring
+group: ytd
+query: Any alerts in the Wampis territory since January?
+expected:
+  aoi_ids: '555721646'
+  dataset_id: '11'
+  start_date: '{current_year}-01-01'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-005); USY-001576 Wampis Territory
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; Wampis territory pinned to WDPA 555721646
+    ''Iña Wampisti Nunke'' (no Landmark row matches ''Wampis''); verify'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-005
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Indigenous / community territory
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001576 Wampis Territory
+  refresh_risk: Alert confidence can upgrade

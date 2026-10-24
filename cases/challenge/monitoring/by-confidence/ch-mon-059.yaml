@@ -1,0 +1,34 @@
+id: ch-mon-059
+uid: 5c858d8ce22ca408
+status: ready
+set: monitoring
+group: by_confidence
+query: What does 'high confidence' mean for these alerts, and is it worth sending a patrol
+  for the low-confidence ones in Guarayos?
+expected:
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: Explains accurately what high- and low-confidence alerts mean, gives the split between
+    them for Guarayos, and leaves the decision on sending a patrol to the user rather than
+    making it.
+notes:
+  behaviour: Explain confidence levels accurately; give the low vs high split for the area;
+    no field-safety guarantee
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-056); USY-001247 Guarayos; Alerts JTBD
+    (Miro) (understand confidence levels)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; AOI unpinned: the index has two Landmark
+    ''Guarayo'' TIOC rows (BOL277, BOL290) and the GADM province Guarayos (BOL.8.7); aoi_ids
+    has no any-of'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-056
+  benchmark_type: monitoring
+  use_cases: UC1;UC6
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Indigenous / community territory
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001247 Guarayos; Alerts JTBD (Miro) (understand confidence levels)
+  refresh_risk: Alert confidence can upgrade
