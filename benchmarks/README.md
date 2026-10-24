@@ -91,6 +91,30 @@ it is **canonical**: prod, default profile (no `ff`), 3 trials, every active
 member measured or errored (none missing). `results/index.json` lists
 benchmark runs with that flag and the reasons for any failure.
 
+### Rerunning revised members only
+
+After an expectation review revises a few members (new uids, often a new
+draft version), rerun just those members and combine them with the earlier
+run instead of rerunning the whole set:
+
+```bash
+uv run gold run --env prod --trials 3 --benchmark benchmarks/<v>.json \
+  --missing-from results/benchmark/runs/<earlier>.json --build "<label>"
+uv run python tools/benchmark_page.py results/benchmark/runs/<rerun>.json \
+  --base results/benchmark/runs/<earlier>.json
+```
+
+`--missing-from` runs the active members the earlier run did not measure
+(`--id` names members directly). On its own the rerun is not canonical. The
+page combines it with the earlier run's results for every other member,
+matched by uid, and records both runs under `run.sources` and on each
+question (`run_id`). The index then judges the **combination**: canonical
+when both runs are prod, default profile and 3 trials and together cover
+every active member; the entry names its base in `composed_with`. The
+results come from two dates, so agent changes in between show up only in
+the rerun members; say so in the rerun's recommendations doc, and prefer a
+full run before a freeze.
+
 ## Metrics
 
 `tools/challenge_rollup.py --benchmark` computes these in Python. The FE

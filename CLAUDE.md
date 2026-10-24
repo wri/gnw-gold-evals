@@ -76,6 +76,11 @@ a case store: read `benchmarks/README.md` first. Key rules:
   `results/benchmark/pages/<run_id>.json`. It needs the run's local agent
   artifacts (gitignored), so do it on the machine that ran the run, and
   commit it with the run before regenerating `results/index.json`.
+- To rerun only members revised since a run, add `--missing-from
+  <run>.json` to `gold run --benchmark`, then write the page with
+  `benchmark_page.py <rerun>.json --base <run>.json`; the index judges the
+  combination canonical (`benchmarks/README.md`, "Rerunning revised
+  members only").
 - After an erratum or a freeze, regenerate `results/index.json`.
 
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR
