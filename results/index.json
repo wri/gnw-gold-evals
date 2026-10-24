@@ -1601,7 +1601,7 @@
     },
     "2026-draft-3": {
       "path": "benchmarks/2026-draft-3.json",
-      "status": "draft",
+      "status": "retired",
       "frozen": null,
       "members": 269,
       "voided": 0,
@@ -1611,6 +1611,15 @@
       "canonical_runs": [
         "20261023T094447Z_prod"
       ]
+    },
+    "2026-draft-4": {
+      "path": "benchmarks/2026-draft-4.json",
+      "status": "draft",
+      "frozen": null,
+      "members": 269,
+      "voided": 0,
+      "runs": [],
+      "canonical_runs": []
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",

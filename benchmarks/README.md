@@ -33,15 +33,16 @@ North Star.
 
 | Version | Status | Members | Notes |
 |---|---|---|---|
-| `2026-draft-3` | draft | 269 (quantification 84, comparison 57, monitoring 41, causal 31, trend 23, geospatial 9, refusal 9, portfolio 9, dataset 6) | curated from the v2026 BEF sheet of 2026-10-22 (`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows); members carry priority use cases UC1–UC6; 30 rows that need a seeded test account are excluded; 139 new cases have drafted, unreviewed expectations (`cases/challenge/README.md`, Batch 5) |
+| `2026-draft-4` | draft | 269 (as `2026-draft-3`) | `2026-draft-3` with 26 expectations revised after its first run (`cases/challenge/README.md`, expectation review 2026-10-24): many-area rows reworded to the real `pick_aoi` limits or moved to answer-with-data, either/or rows without dataset checks, defensible alternative datasets and AOIs; of the 139 cases drafted on 2026-10-23, 26 were revised from run evidence and 113 are unchanged, and none is human-reviewed yet |
+| `2026-draft-3` | retired | 269 (quantification 84, comparison 57, monitoring 41, causal 31, trend 23, geospatial 9, refusal 9, portfolio 9, dataset 6) | curated from the v2026 BEF sheet of 2026-10-22 (`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows); members carry priority use cases UC1–UC6; 30 rows that need a seeded test account are excluded; replaced by `2026-draft-4` on 2026-10-24; keeps its 23 Oct run as history |
 | `2026-draft-2` | retired | 199 (quantification 45, comparison 32, trend 32, monitoring 29, causal 24, geospatial 15, refusal 15, dataset 7) | curated from the proposed v2026 set (`seeds/benchmark-v2026-proposed.csv`); members carry JTBD jobs, impact pathways and user groups; replaced by `2026-draft-3` on 2026-10-23; keeps its 1 Oct run as history |
 | `2026-draft` | retired | 100 (20 each: geospatial, dataset, quantification, comparison, trend) | sampled 2026-09-29; replaced by `2026-draft-2`; keeps its 29 Sep run as history |
-| `2026` | not yet frozen | | freeze planned November 2026, from `2026-draft-3` once the drafted expectations are reviewed |
+| `2026` | not yet frozen | | freeze planned November 2026, from `2026-draft-4` once the drafted expectations are reviewed |
 
 Use cases (`USE_CASES` in `goldset.benchmark`; a question can carry several):
 UC1 Alert monitoring and response, UC2 Supply chain and sourcing, UC3
 Investigating causes, UC4 Reporting and accountability, UC5 Landscape context,
-UC6 Understanding the data. `2026-draft-3` also adds the **Portfolio** type
+UC6 Understanding the data. `2026-draft-3` (and `-4`) also adds the **Portfolio** type
 (many areas at once; the `portfolio` CHALLENGE set), so the type axis has 13
 types.
 
@@ -81,7 +82,7 @@ only comparable within a version.
 
 ```bash
 uv run gold run --env prod --trials 3 --workers 5 \
-  --benchmark benchmarks/2026-draft-3.json --build "<label>"
+  --benchmark benchmarks/2026-draft-4.json --build "<label>"
 ```
 
 `--benchmark` selects the manifest's active members from its source store,

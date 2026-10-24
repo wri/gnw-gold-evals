@@ -62,7 +62,8 @@ a case store: read `benchmarks/README.md` first. Key rules:
   from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv>
   --version <v>`: one member per row, with its use cases UC1–UC6, or jobs,
   impact pathways and user groups for the older sheet layout). Current
-  draft: `2026-draft-3` (curated from the BEF sheet, 269). Regeneration is
+  draft: `2026-draft-4` (curated from the BEF sheet, 269; draft-3 with
+  26 expectations revised on 2026-10-24). Regeneration is
   deliberate, never CI's. Frozen manifests are never regenerated.
 - Rolling-window questions use run-relative date tokens in expected values
   (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`,
