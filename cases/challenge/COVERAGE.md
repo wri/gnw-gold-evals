@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version a25ea96aa7dc5330` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version 7addf595495181bb` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-10-23_
+_Last updated: 2026-10-24_
 
 ## Groups
 
@@ -89,7 +89,7 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 820 | 0 | 820 | 86% |
+| retrieval | 824 | 0 | 824 | 87% |
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 191 | 0 | 191 | 20% |
 | output | 0 | 0 | 0 | 0% |
@@ -99,14 +99,14 @@ friends) run on top of it whenever their trigger state exists.
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 709 | dataset_id_match |
-| aoi_ids | 605 | aoi_id_match |
-| data_pull | 507 | data_pull_exists, answered_without_data |
-| end_date | 325 | date_extraction (with start_date) |
-| start_date | 325 | date_extraction (with end_date) |
+| dataset_id | 711 | dataset_id_match |
+| aoi_ids | 607 | aoi_id_match |
+| data_pull | 513 | data_pull_exists, answered_without_data |
+| end_date | 326 | date_extraction (with start_date) |
+| start_date | 326 | date_extraction (with end_date) |
 | forbidden_tools | 200 | forbidden_tools_absent |
 | text | 191 | expected_text_match |
-| context_layer | 173 | context_layer_match |
+| context_layer | 174 | context_layer_match |
 | dataset_parameters | 37 | dataset_parameter_match |
 | clarification | 19 | clarification_requested |
 | nudge_type | 12 | nudge_match |
@@ -125,7 +125,7 @@ Fields present but not recognised here: date_tolerance_days
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@e2fb83f (origin/main, synced 2026-09-25), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@fa78c81 (origin/main, synced 2026-10-24), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -137,15 +137,15 @@ answer-graded cases (`answer` or `text` expected) actually check.
 |---|---|---|---|---|---|
 | 1 | Global land cover | 51 | 3 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 54 | 1 | — | — |
-| 3 | SBTN Natural Lands Map | 51 | 2 | — | — |
-| 4 | Tree cover loss | 166 | 20 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4 |
+| 3 | SBTN Natural Lands Map | 52 | 3 | — | — |
+| 4 | Tree cover loss | 172 | 25 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4, natural_forest ×0 ← gap |
 | 5 | Tree cover gain | 42 | 1 | — | — |
 | 6 | Forest greenhouse gas net flux | 50 | 4 | canopy_cover ×5 | — |
 | 7 | Tree cover | 48 | 2 | canopy_cover ×10 | primary_forest ×8 |
-| 8 | Tree cover loss by dominant driver | 64 | 18 | canopy_cover ×4 | — |
+| 8 | Tree cover loss by dominant driver | 65 | 19 | canopy_cover ×4 | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 40 | 7 | — | — |
-| 10 | Tree cover loss due to fires | 70 | 6 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
-| 11 | Integrated alerts | 107 | 23 | — | — |
+| 10 | Tree cover loss due to fires | 71 | 7 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
+| 11 | Integrated alerts | 105 | 21 | — | natural_lands ×1 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
@@ -200,4 +200,5 @@ answer-graded cases (`answer` or `text` expected) actually check.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
 - Catalog datasets with no active case: 12.
+- Catalog features no active case exercises — context layers: natural_forest (4).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

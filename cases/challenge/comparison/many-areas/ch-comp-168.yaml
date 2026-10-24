@@ -1,18 +1,23 @@
 id: ch-comp-168
-uid: 7632f81d9c3d10eb
+uid: 7bb73a80cd1bfb98
 status: ready
 set: comparison
 group: many-areas
 query: Which African countries had the largest increase in tree cover loss between 2020 and
   2024?
 expected:
-  text: Explains that it cannot rank every African country at once and offers to compare two
-    or three named countries; does not invent a ranking.
+  dataset_id: '4'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Ranks African countries by the change in annual tree cover loss between 2020 and 2024,
+    from the data, naming the countries with the largest increases; does not rank or name
+    countries outside Africa.
 notes:
-  behaviour: 'redirect: ranking many countries not supported; offer 2–3 country comparison'
+  behaviour: 'answer with data: rank African countries by the increase'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-180); USY-000508 IIAG governance index
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   benchmark_id: bm26-180
   benchmark_type: comparison
@@ -23,3 +28,8 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-000508 IIAG governance index
   refresh_risk: Low
+  review: '2026-10-24 (AJ): redirect -> answer with data. All 3 attempts of 20261023T094447Z_prod
+    pulled data and ranked DRC, Zambia and Mozambique first. AOI unpinned: the agent selected
+    all 254 countries (pick_aoi has no Africa parent, a known defect), and the right selection
+    would be the 54 African countries. The ranking''s numbers are not checked (no numeric-fidelity
+    evaluator).'

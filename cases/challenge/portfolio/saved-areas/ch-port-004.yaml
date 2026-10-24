@@ -1,19 +1,19 @@
 id: ch-port-004
-uid: 56d443f16f6a7358
+uid: 3aa2d1b1339003f2
 status: todo
 set: portfolio
 group: saved-areas
 query: Give me a monthly report of alerts across our oil palm concessions.
 expected:
-  text: Does not produce or invent per-area results for the whole list; explains that it can
-    analyse one to three named areas at a time and offers to do that, and may point to bulk
-    downloads or the API for screening many areas.
+  text: Does not produce or invent per-site results; either analyses the user's areas with
+    data, or explains what it cannot do across many of the user's areas at once and offers
+    a workable alternative (one area, or bulk downloads or the API).
 notes:
-  behaviour: 'redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas;
-    point to self-serve monitoring datasets / API for bulk screening'
+  behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
+    areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-083); USY-001417 Wilmar
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
     ships'
@@ -28,3 +28,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001417 Wilmar
   refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded; the old text claimed a one-to-three-area limit the code
+    does not have. Fixture row: not run until a test account is seeded.'

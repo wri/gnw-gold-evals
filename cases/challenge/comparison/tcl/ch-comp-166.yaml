@@ -1,11 +1,10 @@
 id: ch-comp-166
-uid: fc1fcf59cfb18eb6
+uid: 9f92f470783342b1
 status: ready
 set: comparison
 group: tcl
 query: How much tree cover did Madagascar's protected areas lose in 2024 compared with 2023?
 expected:
-  dataset_id: '4'
   text: Either compares 2024 and 2023 tree cover loss inside Madagascar's protected areas
     as a group, or explains that it cannot total every protected area and offers the national
     figure or a named protected area; does not invent a protected-area total.
@@ -14,7 +13,7 @@ notes:
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-168); USY-001586 Madagascar PA Outlook;
     USY-001429
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   benchmark_id: bm26-168
   benchmark_type: comparison
@@ -25,3 +24,8 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001586 Madagascar PA Outlook; USY-001429
   refresh_risk: Low
+  review: '2026-10-24 (AJ): dropped the dataset check, which an honest decline never satisfies.
+    20261023T094447Z_prod: all 3 attempts found 154 protected areas and asked to narrow down.
+    pick_aoi takes up to 1,000 admin sub-units of one GADM parent, but only 50 protected areas,
+    KBAs, Indigenous lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py
+    SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).'

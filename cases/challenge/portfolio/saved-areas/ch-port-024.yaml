@@ -1,19 +1,19 @@
 id: ch-port-024
-uid: e63d35c7da915e29
+uid: 93704196e92ed205
 status: todo
 set: portfolio
 group: saved-areas
 query: Group my sites by region and summarize tree cover loss for each group.
 expected:
-  text: Does not produce or invent per-area results for the whole list; explains that it can
-    analyse one to three named areas at a time and offers to do that, and may point to bulk
-    downloads or the API for screening many areas.
+  text: Does not produce or invent per-site results; either analyses the user's areas with
+    data, or explains what it cannot do across many of the user's areas at once and offers
+    a workable alternative (one area, or bulk downloads or the API).
 notes:
   behaviour: Redirect until portfolio monitoring ships
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-103); Portfolio monitoring research
     (multi-group organization)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: becomes a data answer when portfolio monitoring ships'
   status_reason: 'needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons,
@@ -27,3 +27,5 @@ notes:
   grounding: From user research
   user_story_refs: Portfolio monitoring research (multi-group organization)
   refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded; the old text claimed a one-to-three-area limit the code
+    does not have. Fixture row: not run until a test account is seeded.'

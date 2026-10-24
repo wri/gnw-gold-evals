@@ -1,5 +1,5 @@
 id: ch-comp-176
-uid: 7fb81e36713aece8
+uid: d177335e75c1802f
 status: ready
 set: comparison
 group: land-cover
@@ -7,7 +7,7 @@ query: How much land in Antioquia is natural forest versus pasture? We are plann
   to densify livestock.
 expected:
   aoi_ids: COL.2
-  dataset_id: '1'
+  dataset_id: 1;3
   data_pull: 'TRUE'
   text: Gives the areas of natural forest and of pasture-like land in Antioquia from the land
     cover data, and is clear which land cover class it treats as pasture.
@@ -15,7 +15,7 @@ notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-231); USY-000456 GANSO landowner transitions
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-231
@@ -27,3 +27,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-000456 GANSO landowner transitions
   refresh_risk: Low
+  review: '2026-10-24 (AJ): natural lands (3) accepted with land cover (1). 20261023T094447Z_prod:
+    one attempt pulled 3 and passed the text; two asked back.'

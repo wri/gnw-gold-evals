@@ -1,19 +1,19 @@
 id: ch-port-016
-uid: 359f355fd212e2e7
+uid: cf43e9eec74533ae
 status: ready
 set: portfolio
 group: many-areas
 query: Which oil palm concessions in Indonesia had fires in 2023?
 expected:
-  text: Does not produce or invent per-area results for the whole list; explains that it can
-    analyse one to three named areas at a time and offers to do that, and may point to bulk
-    downloads or the API for screening many areas.
+  text: Does not name or count concessions it did not analyse; explains that Indonesia has
+    too many oil palm concessions to analyse at once and offers a smaller area (a province
+    or district) or a single concession.
 notes:
-  behaviour: 'redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas;
-    point to self-serve monitoring datasets / API for bulk screening'
+  behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
+    areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-095); USY-001298 Tesso Nilo palm; USY-001417
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
     ships'
@@ -26,3 +26,7 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001298 Tesso Nilo palm; USY-001417
   refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded to the real limits. pick_aoi takes up to 1,000 admin
+    sub-units of one GADM parent, but only 50 protected areas, KBAs, Indigenous lands or concessions
+    (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).
+    The agent prompt relays pick_aoi''s too-many-concessions message and stops.'
