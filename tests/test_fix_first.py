@@ -25,7 +25,7 @@ JUDGES_SOURCE = (
 # --- F1: expected AOIs + none resolved -> 0.0, not silence
 
 def test_f1_missing_aoi_fails_when_expected():
-    result = evaluate_aoi_selection({}, ["BRA.25_1"], "query")
+    result = evaluate_aoi_selection({}, [["BRA.25_1"]], "query")
     assert result["aoi_id_match_score"] == 0.0
 
 

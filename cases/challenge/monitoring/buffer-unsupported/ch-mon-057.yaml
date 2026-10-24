@@ -1,5 +1,5 @@
 id: ch-mon-057
-uid: 93a21c8a33efe6b9
+uid: 32ba43930d8e96aa
 status: ready
 set: monitoring
 group: buffer_unsupported
@@ -7,10 +7,6 @@ query: Are any of this month's alerts in Boumba Bek National Park within 5 km of
   boundary?
 expected:
   aoi_ids: '308624'
-  dataset_id: '11'
-  start_date: '{month_start}'
-  end_date: '{run}'
-  date_tolerance_days: '3'
   text: Either answers how many of this month's alerts lie within 5 km of the Boumba Bek park
     boundary, or says that buffer analysis is not supported and offers the in-park alert total;
     does not guess.
@@ -20,7 +16,7 @@ notes:
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-053); USY-001572 Boumba Bek; Alerts
     JTBD (Miro) (alerts in buffer zones)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
@@ -34,3 +30,5 @@ notes:
   grounding: From user research
   user_story_refs: USY-001572 Boumba Bek; Alerts JTBD (Miro) (alerts in buffer zones)
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-24 (AJ): dropped the dataset and date checks, which an honest decline never
+    satisfies (same rule as ch-mon-055).'

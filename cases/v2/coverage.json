@@ -288,9 +288,9 @@
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",
       "ref": "origin/main",
-      "sha": "e2fb83f89469eda483830257f9b40c7ef21a6ebd",
+      "sha": "fa78c816186461dab120523ccad75fe274e6058c",
       "path": "src/agent/datasets/catalog",
-      "synced": "2026-09-25"
+      "synced": "2026-10-24"
     },
     "datasets": [
       {
@@ -340,6 +340,10 @@
           {
             "name": "intact_forest",
             "cases": 4
+          },
+          {
+            "name": "natural_forest",
+            "cases": 0
           }
         ]
       },
@@ -438,7 +442,12 @@
         "cases": 7,
         "answer_graded": 5,
         "parameters": [],
-        "context_layers": []
+        "context_layers": [
+          {
+            "name": "natural_lands",
+            "cases": 0
+          }
+        ]
       },
       {
         "dataset_id": "12",
@@ -686,12 +695,18 @@
       ]
     },
     "uncovered_context_layers": {
+      "natural_forest": [
+        "4"
+      ],
       "primary_forest": [
         "7",
         "10"
       ],
       "intact_forest": [
         "10"
+      ],
+      "natural_lands": [
+        "11"
       ]
     }
   },

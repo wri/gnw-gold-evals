@@ -1582,6 +1582,102 @@
         "canonical": true,
         "canonical_reasons": [],
         "page": "results/benchmark/pages/20261023T094447Z_prod.json"
+      },
+      {
+        "run_id": "20261024T133644Z_prod",
+        "path": "results/benchmark/runs/20261024T133644Z_prod.json",
+        "started": "2026-10-24T13:36:44Z",
+        "environment": "prod",
+        "build": "prod 2026-10-24 draft-4 rerun of revised members",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "321c9c8"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 26 members of 2026-draft-4 revised on 2026-10-24; combined with 20261023T094447Z_prod for every other member. Check semantics changed: aoi_ids accepts | alternatives (any-of).",
+        "caseset": "challenge",
+        "caseset_version": "7addf595495181bb",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 55,
+              "evaluated": 68
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 15
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 11,
+              "evaluated": 11
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 11
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 33,
+              "evaluated": 45
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 26
+          },
+          "output": {
+            "dedicated": {
+              "passed": 11,
+              "evaluated": 11
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 11
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 26,
+          "verdicts": {
+            "pass": 18,
+            "fail": 8,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "4fa85615b7ef7aa0",
+          "members": 269
+        },
+        "composed_with": [
+          "20261023T094447Z_prod"
+        ],
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261024T133644Z_prod.json"
       }
     ]
   },
@@ -1601,7 +1697,7 @@
     },
     "2026-draft-3": {
       "path": "benchmarks/2026-draft-3.json",
-      "status": "draft",
+      "status": "retired",
       "frozen": null,
       "members": 269,
       "voided": 0,
@@ -1610,6 +1706,19 @@
       ],
       "canonical_runs": [
         "20261023T094447Z_prod"
+      ]
+    },
+    "2026-draft-4": {
+      "path": "benchmarks/2026-draft-4.json",
+      "status": "draft",
+      "frozen": null,
+      "members": 269,
+      "voided": 0,
+      "runs": [
+        "20261024T133644Z_prod"
+      ],
+      "canonical_runs": [
+        "20261024T133644Z_prod"
       ]
     },
     "2026-draft": {

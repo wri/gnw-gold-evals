@@ -33,15 +33,16 @@ North Star.
 
 | Version | Status | Members | Notes |
 |---|---|---|---|
-| `2026-draft-3` | draft | 269 (quantification 84, comparison 57, monitoring 41, causal 31, trend 23, geospatial 9, refusal 9, portfolio 9, dataset 6) | curated from the v2026 BEF sheet of 2026-10-22 (`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows); members carry priority use cases UC1–UC6; 30 rows that need a seeded test account are excluded; 139 new cases have drafted, unreviewed expectations (`cases/challenge/README.md`, Batch 5) |
+| `2026-draft-4` | draft | 269 (as `2026-draft-3`) | `2026-draft-3` with 26 expectations revised after its first run (`cases/challenge/README.md`, expectation review 2026-10-24): many-area rows reworded to the real `pick_aoi` limits or moved to answer-with-data, either/or rows without dataset checks, defensible alternative datasets and AOIs; of the 139 cases drafted on 2026-10-23, 26 were revised from run evidence and 113 are unchanged, and none is human-reviewed yet |
+| `2026-draft-3` | retired | 269 (quantification 84, comparison 57, monitoring 41, causal 31, trend 23, geospatial 9, refusal 9, portfolio 9, dataset 6) | curated from the v2026 BEF sheet of 2026-10-22 (`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows); members carry priority use cases UC1–UC6; 30 rows that need a seeded test account are excluded; replaced by `2026-draft-4` on 2026-10-24; keeps its 23 Oct run as history |
 | `2026-draft-2` | retired | 199 (quantification 45, comparison 32, trend 32, monitoring 29, causal 24, geospatial 15, refusal 15, dataset 7) | curated from the proposed v2026 set (`seeds/benchmark-v2026-proposed.csv`); members carry JTBD jobs, impact pathways and user groups; replaced by `2026-draft-3` on 2026-10-23; keeps its 1 Oct run as history |
 | `2026-draft` | retired | 100 (20 each: geospatial, dataset, quantification, comparison, trend) | sampled 2026-09-29; replaced by `2026-draft-2`; keeps its 29 Sep run as history |
-| `2026` | not yet frozen | | freeze planned November 2026, from `2026-draft-3` once the drafted expectations are reviewed |
+| `2026` | not yet frozen | | freeze planned November 2026, from `2026-draft-4` once the drafted expectations are reviewed |
 
 Use cases (`USE_CASES` in `goldset.benchmark`; a question can carry several):
 UC1 Alert monitoring and response, UC2 Supply chain and sourcing, UC3
 Investigating causes, UC4 Reporting and accountability, UC5 Landscape context,
-UC6 Understanding the data. `2026-draft-3` also adds the **Portfolio** type
+UC6 Understanding the data. `2026-draft-3` (and `-4`) also adds the **Portfolio** type
 (many areas at once; the `portfolio` CHALLENGE set), so the type axis has 13
 types.
 
@@ -81,7 +82,7 @@ only comparable within a version.
 
 ```bash
 uv run gold run --env prod --trials 3 --workers 5 \
-  --benchmark benchmarks/2026-draft-3.json --build "<label>"
+  --benchmark benchmarks/2026-draft-4.json --build "<label>"
 ```
 
 `--benchmark` selects the manifest's active members from its source store,
@@ -90,6 +91,30 @@ manifest_sha, members}` on the run. A run is a **trend point** only when
 it is **canonical**: prod, default profile (no `ff`), 3 trials, every active
 member measured or errored (none missing). `results/index.json` lists
 benchmark runs with that flag and the reasons for any failure.
+
+### Rerunning revised members only
+
+After an expectation review revises a few members (new uids, often a new
+draft version), rerun just those members and combine them with the earlier
+run instead of rerunning the whole set:
+
+```bash
+uv run gold run --env prod --trials 3 --benchmark benchmarks/<v>.json \
+  --missing-from results/benchmark/runs/<earlier>.json --build "<label>"
+uv run python tools/benchmark_page.py results/benchmark/runs/<rerun>.json \
+  --base results/benchmark/runs/<earlier>.json
+```
+
+`--missing-from` runs the active members the earlier run did not measure
+(`--id` names members directly). On its own the rerun is not canonical. The
+page combines it with the earlier run's results for every other member,
+matched by uid, and records both runs under `run.sources` and on each
+question (`run_id`). The index then judges the **combination**: canonical
+when both runs are prod, default profile and 3 trials and together cover
+every active member; the entry names its base in `composed_with`. The
+results come from two dates, so agent changes in between show up only in
+the rerun members; say so in the rerun's recommendations doc, and prefer a
+full run before a freeze.
 
 ## Metrics
 
@@ -111,6 +136,15 @@ right on **every** trial (`every_time`); `majority` is the North Star below.
   attribution: each failed member goes to its earliest failing dedicated
   stage in `stage_order`; failures only on shared checks are `unattributed`.
   Pass + stages + unattributed = 100% of measured.
+- **Failure modes by standard** (page data only, `failure_modes_by_standard`
+  on every group): the same breakdown for each accuracy standard the page
+  can show. A question is wrong under `every_time` when any trial is wrong,
+  under `majority` when its verdict fails (identical to the failure modes
+  above), and under `any_time` when no trial is right. A failed verdict
+  counts at its primary failure; a passed verdict that was wrong on some
+  trials counts at the earliest dedicated stage that failed on any trial
+  (`challenge_rollup.failure_stage`). Each question sits at one stage under
+  every standard, so a stricter standard only adds questions.
 - **Coverage matrix**: type × stage, from `members[].stages`.
 
 ### Known limit of 2026-draft

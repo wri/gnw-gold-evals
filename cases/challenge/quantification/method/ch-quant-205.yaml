@@ -1,17 +1,17 @@
 id: ch-quant-205
-uid: 18198c0a7b0a14a6
+uid: 6e8dd39b0b006835
 status: ready
 set: quantification
 group: method
 query: Which datasets in Horizon could help me assess biodiversity risk?
 expected:
-  text: Says which datasets in Horizon could help assess biodiversity risk and which are not
-    available, without inventing biodiversity layers.
+  text: Names datasets in Horizon that could help assess biodiversity risk without inventing
+    biodiversity layers; it may say which kinds of biodiversity data are not available.
 notes:
   behaviour: Say what is and is not available; no fabricated biodiversity layers
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-298); USY-001523 GBF indicator; USY-001636
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   benchmark_id: bm26-298
   benchmark_type: quantification
@@ -22,3 +22,4 @@ notes:
   grounding: Story analogue
   user_story_refs: USY-001523 GBF indicator; USY-001636
   refresh_risk: Low
+  review: '2026-10-24 (AJ): relaxed; saying which data are not available is optional.'

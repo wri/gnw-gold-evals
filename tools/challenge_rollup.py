@@ -531,6 +531,28 @@ def primary_failure(entry: dict[str, Any]) -> str:
     return next((s for s in STAGE_ORDER if s in stages), "unattributed")
 
 
+def failure_stage(entry: dict[str, Any]) -> str:
+    """The stage a question counts at when it is wrong under any accuracy
+    standard (right every time, most of the time, or at least once).
+
+    A failed verdict keeps ``primary_failure``, so the majority standard
+    matches the rollup. A question that passed on the verdict but failed on
+    some trials has no failing final check, so it goes to the earliest
+    dedicated stage among gating checks that scored 0.0 on any trial
+    (``unattributed`` when only shared or unbucketed checks did). Each
+    question therefore sits at one stage under every standard, and a
+    stricter standard only adds questions to a stage, never moves them."""
+    if row_verdict(entry) == "fail":
+        return primary_failure(entry)
+    stages = {
+        DEDICATED[base_check_name(name)]
+        for trial in entry.get("trials") or []
+        for name, value in (trial.get("checks") or {}).items()
+        if value == 0.0 and not is_info_only(name) and base_check_name(name) in DEDICATED
+    }
+    return next((s for s in STAGE_ORDER if s in stages), "unattributed")
+
+
 def _rate(passed: int, n: int) -> dict[str, Any]:
     lo, hi = wilson(passed, n)
     return {"n": n, "passed": passed, "rate": passed / n if n else None,

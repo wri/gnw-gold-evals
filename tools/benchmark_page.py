@@ -17,6 +17,28 @@ headline is the share right on **every** trial (``every_time``), with
 denominator. Failures are attributed to their earliest failing stage
 (``tools/challenge_rollup.py``). Groups by type and use case come from the
 manifest's frozen member facets, never the live case.
+
+Every group (``summary``, ``types[]``, ``use_cases[]``) carries
+``failure_modes`` (where the questions that fail the majority verdict went
+wrong) and ``failure_modes_by_standard``: the same counts for each accuracy
+standard, ``every_time``, ``majority`` and ``any_time``. A question is wrong
+under ``every_time`` when not every trial is right, under ``majority`` when
+its verdict is fail (so ``majority`` equals ``failure_modes``), and under
+``any_time`` when no trial is right. It counts at
+``challenge_rollup.failure_stage``, the same stage under every standard, so
+a stricter standard only adds questions. Keys follow ``ATTRIBUTION``; zero
+counts are left out. Each standard's counts sum to the scored questions
+less that standard's accurate ones.
+
+**Combined pages** (``--base <earlier run>``): after a few members' cases are
+revised, rerun only those members (``gold run --benchmark <v> --missing-from
+<earlier run>``) and write the page from the rerun plus the earlier run's
+results for every other member, matched by uid. The two runs must share
+environment, ff and trial count, and together cover every active member.
+The page's ``run`` block describes the rerun and adds ``sources`` (each
+run's id, start time and question count, the base first); every question
+carries the ``run_id`` it came from. ``tools/build_run_index.py`` reads
+``sources`` to judge the combination canonical.
 """
 
 from __future__ import annotations
@@ -94,6 +116,15 @@ def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
     every = sum(1 for e in scored if all(trial_ok(t) for t in e["trials"]))
     any_ = sum(1 for e in scored if any(trial_ok(t) for t in e["trials"]))
     modes = collections.Counter(cr.primary_failure(e) for e, v in zip(entries, verdicts) if v == "fail")
+    wrong = {
+        "every_time": lambda e: not all(trial_ok(t) for t in e["trials"]),
+        "majority": lambda e: row_verdict(e) == "fail",
+        "any_time": lambda e: not any(trial_ok(t) for t in e["trials"]),
+    }
+    by_standard = {}
+    for standard, is_wrong in wrong.items():
+        stages = collections.Counter(cr.failure_stage(e) for e in scored if is_wrong(e))
+        by_standard[standard] = {s: stages[s] for s in ATTRIBUTION if stages[s]}
     return {
         "scored": n,
         "errors": verdicts.count("error"),
@@ -102,13 +133,16 @@ def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
         "every_time": every / n if n else None,
         "any_time": any_ / n if n else None,
         "failure_modes": {s: modes[s] for s in ATTRIBUTION if modes[s]},
+        "failure_modes_by_standard": by_standard,
     }
 
 
 def place_kind(case: Case) -> str:
     if case.notes.get("aoi_type"):
         return PLACES[case.notes["aoi_type"]]
-    ids = [i.strip() for i in (case.expected.get("aoi_ids") or "").split(";") if i.strip()]
+    # The first alternative stands for the place (``|`` separates alternatives).
+    first_alternative = (case.expected.get("aoi_ids") or "").split("|")[0]
+    ids = [i.strip() for i in first_alternative.split(";") if i.strip()]
     if not ids:
         return "No place named"
     first = ids[0]
@@ -201,9 +235,28 @@ def stage_checks(members, by_uid) -> dict[str, dict[str, int]]:
     return out
 
 
+def combine(run: dict[str, Any], artifacts: Path, base: dict[str, Any] | None,
+            base_artifacts: Path | None) -> tuple[dict[str, dict], dict[str, tuple[str, Path]]]:
+    """Results by uid, and each uid's (run_id, artifacts dir). The rerun wins
+    where both runs measured a uid: it is the newer measurement."""
+    by_uid: dict[str, dict] = {}
+    source: dict[str, tuple[str, Path]] = {}
+    for r, art in ((base, base_artifacts), (run, artifacts)):
+        for e in (r or {}).get("results", []):
+            by_uid[e["uid"]] = e
+            source[e["uid"]] = (r["run_id"], art)
+    return by_uid, source
+
+
 def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
-               artifacts: Path) -> dict[str, Any]:
-    by_uid = {e["uid"]: e for e in run["results"]}
+               artifacts: Path, base: dict[str, Any] | None = None,
+               base_artifacts: Path | None = None) -> dict[str, Any]:
+    by_uid, source = combine(run, artifacts, base, base_artifacts)
+    if base is not None:
+        uncovered = [m.id for m in bench.active_members if m.uid not in by_uid]
+        if uncovered:
+            raise SystemExit(f"{len(uncovered)} active member(s) in neither {base['run_id']} "
+                             f"nor {run['run_id']}: {uncovered[:5]}")
     members = [m for m in bench.active_members if m.uid in by_uid]
     missing = [m.id for m in members if m.uid not in cases]
     if missing:
@@ -257,19 +310,25 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
             "failed_checks": failed_checks(entry),
             "expected": expected,
             "drafted": "draft" in case.notes.get("expectations", ""),
-            "attempts": load_attempts(artifacts, m.uid, trials),
+            "run_id": source[m.uid][0],
+            "attempts": load_attempts(source[m.uid][1], m.uid, trials),
             "trace_url": entry.get("trace_url"),
             "place": place_kind(case),
             "use_cases": list(m.use_cases),
             "synthetic": m.synthetic,
         })
 
+    run_block = {"run_id": run["run_id"], "started": run["started"],
+                 "environment": run.get("environment"), "ff": run.get("ff"),
+                 "num_trials": trials, "harness_sha": (run.get("harness") or {}).get("sha")}
+    if base is not None:
+        counts = collections.Counter(source[m.uid][0] for m in members)
+        run_block["sources"] = [{"run_id": r["run_id"], "started": r["started"],
+                                 "questions": counts[r["run_id"]]} for r in (base, run)]
     return {
         "schema_version": SCHEMA_VERSION,
         "generated_by": "tools/benchmark_page.py",
-        "run": {"run_id": run["run_id"], "started": run["started"],
-                "environment": run.get("environment"), "ff": run.get("ff"),
-                "num_trials": trials, "harness_sha": (run.get("harness") or {}).get("sha")},
+        "run": run_block,
         "benchmark": {"version": bench.version, "status": bench.status,
                       "manifest_sha": run["benchmark"]["manifest_sha"],
                       "members": len(bench.active_members),
@@ -291,10 +350,33 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
     }
 
 
+def run_artifacts(root: Path, run: dict[str, Any]) -> Path:
+    artifacts = root / "results" / "benchmark" / "artifacts" / run["run_id"]
+    if not artifacts.is_dir():
+        raise SystemExit(f"{artifacts} not found: write the page on the machine that ran the run")
+    return artifacts
+
+
+def check_base(base: dict[str, Any], run: dict[str, Any]) -> None:
+    """A base run may only fill in for the rerun when the two measured the
+    same way; it may come from an earlier manifest, since results match by uid."""
+    if "benchmark" not in base:
+        raise SystemExit(f"base {base.get('run_id')} is not a benchmark run")
+    for field in ("environment", "ff", "num_trials"):
+        if base.get(field) != run.get(field):
+            raise SystemExit(f"base {base['run_id']} has {field}={base.get(field)!r}, "
+                             f"the rerun {run.get(field)!r}: they cannot be combined")
+    if base["started"] >= run["started"]:
+        raise SystemExit(f"base {base['run_id']} must be older than {run['run_id']}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("run", type=Path, help="results/benchmark/runs/<run_id>.json")
+    parser.add_argument("--base", type=Path, default=None, metavar="RUN",
+                        help="an earlier benchmark run whose results fill every member "
+                             "this run did not measure (a combined page)")
     parser.add_argument("--repo-root", type=Path, default=Path("."))
     args = parser.parse_args()
 
@@ -306,12 +388,15 @@ def main() -> int:
     if manifest_sha(manifest) != run["benchmark"]["manifest_sha"]:
         raise SystemExit(f"{manifest} changed since run {run['run_id']} (manifest_sha differs); "
                          "its member facets may no longer describe the run")
-    artifacts = root / "results" / "benchmark" / "artifacts" / run["run_id"]
-    if not artifacts.is_dir():
-        raise SystemExit(f"{artifacts} not found: write the page on the machine that ran the run")
+    artifacts = run_artifacts(root, run)
+    base = base_artifacts = None
+    if args.base:
+        base = json.loads(args.base.read_text(encoding="utf-8"))
+        check_base(base, run)
+        base_artifacts = run_artifacts(root, base)
     bench = load_benchmark(manifest)
     cases = {uid: c for _p, c, uid in load_store(root / bench.source["cases_dir"])}
-    page = build_page(run, bench, cases, artifacts)
+    page = build_page(run, bench, cases, artifacts, base, base_artifacts)
 
     out = root / "results" / "benchmark" / "pages" / f"{run['run_id']}.json"
     out.parent.mkdir(parents=True, exist_ok=True)

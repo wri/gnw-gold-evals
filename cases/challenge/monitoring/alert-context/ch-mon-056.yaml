@@ -1,11 +1,11 @@
 id: ch-mon-056
-uid: b326ad938c69f1b4
+uid: a4e0355d9e640e70
 status: ready
 set: monitoring
 group: alert_context
 query: Have there been disturbance alerts in mangrove areas of the Mahakam Delta this year?
 expected:
-  aoi_ids: '15913'
+  aoi_ids: 15913|IDN.34.6
   dataset_id: '11'
   start_date: '{current_year}-01-01'
   end_date: '{run}'
@@ -17,7 +17,7 @@ notes:
   behaviour: answer with data; clarify mangrove context if unsupported
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-052); USY-001538 IOJI mangrove enforcement
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23; Mahakam Delta pinned to KBA 15913 ''Delta
     Mahakam''; no GADM unit matches; verify'
@@ -31,3 +31,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001538 IOJI mangrove enforcement
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-24 (AJ): the KBA or Kutai Kartanegara regency (IDN.34.6, which contains
+    the delta; prod /api/aois 2026-10-24); the text check still needs clarity on mangroves.
+    20261023T094447Z_prod: one attempt used the regency, two could not find the delta.'

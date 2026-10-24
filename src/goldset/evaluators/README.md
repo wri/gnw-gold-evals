@@ -200,10 +200,15 @@ expected area-of-interest ids. Compares the *set* of `src_id`s in
 (`aoi_evaluator.py:60-69`).
 
 **Fires on** `aoi_ids`. The value splits on `;` into a **set compared by set
-equality** (`eval_types.py:229-238`) — `;` here means "all of these", the
-opposite of the `dataset_id` and `scope` convention where `;` means
-"either of these". `cases/v2/imagery/1-104.yaml`'s `notes.rewrite` records the
-consequence: a two-level either-or AOI expectation is simply unexpressable.
+equality** (`eval_types.py`, `split_aoi_ids`). `;` here means "all of these",
+the opposite of the `dataset_id` and `scope` convention where `;` means
+"either of these". Since 2026-10-24, `|` separates **alternatives**, each its
+own `;` set, and the check passes when the selection equals any one of them:
+`555697863|10906|6060` accepts any one of the Salonga national park, World
+Heritage site or KBA, and `PER.26.3|PER8623;PER8624` accepts the province, or
+both Kakataibo reserves together. `|` binds looser than `;`. Before that,
+an either-or AOI expectation could not be expressed
+(`cases/v2/imagery/1-104.yaml`'s `notes.rewrite`).
 
 **`null` vs `0.0`**: `null` only when no `aoi_ids` expectation exists. An
 expectation with **no resolved AOI is `0.0`** (`aoi_evaluator.py:52-58`, PR-04

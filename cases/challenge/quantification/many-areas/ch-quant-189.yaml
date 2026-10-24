@@ -1,19 +1,23 @@
 id: ch-quant-189
-uid: 2d20b87297cce5ee
+uid: 7a9183789a02617e
 status: ready
 set: quantification
 group: many-areas
 query: Give me tree cover loss and fire-driven loss for every department in Bolivia, 2001–2024,
   as a table.
 expected:
-  text: Explains that it cannot produce a per-department table for all nine Bolivian departments
-    at once and offers a few named departments or points to downloads or the API; does not
-    invent figures.
+  aoi_ids: BOL.1;BOL.2;BOL.3;BOL.4;BOL.5;BOL.6;BOL.7;BOL.8;BOL.9
+  dataset_id: 10;4
+  start_date: '2001-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Gives total tree cover loss and fire-driven loss for 2001–2024 for each of Bolivia's
+    nine departments as a table, from the data; does not invent figures.
 notes:
-  behaviour: 'Redirect: many areas; offer a few departments or point to downloads/API'
+  behaviour: 'answer with data: per-department table'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-267); USY-001513 health-impact study
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   benchmark_id: bm26-267
   benchmark_type: quantification
@@ -24,3 +28,8 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001513 health-impact study
   refresh_risk: Low
+  review: '2026-10-24 (AJ): redirect -> answer with data. All 3 attempts of 20261023T094447Z_prod
+    pulled dataset 10 for the 9 departments and reported both totals. pick_aoi takes up to
+    1,000 admin sub-units of one GADM parent, but only 50 protected areas, KBAs, Indigenous
+    lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN
+    / SUBREGION_LIMIT). Dataset 4 is accepted too; the text check needs the fire share.'

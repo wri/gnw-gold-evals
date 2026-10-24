@@ -62,7 +62,8 @@ a case store: read `benchmarks/README.md` first. Key rules:
   from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv>
   --version <v>`: one member per row, with its use cases UC1–UC6, or jobs,
   impact pathways and user groups for the older sheet layout). Current
-  draft: `2026-draft-3` (curated from the BEF sheet, 269). Regeneration is
+  draft: `2026-draft-4` (curated from the BEF sheet, 269; draft-3 with
+  26 expectations revised on 2026-10-24). Regeneration is
   deliberate, never CI's. Frozen manifests are never regenerated.
 - Rolling-window questions use run-relative date tokens in expected values
   (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`,
@@ -76,6 +77,11 @@ a case store: read `benchmarks/README.md` first. Key rules:
   `results/benchmark/pages/<run_id>.json`. It needs the run's local agent
   artifacts (gitignored), so do it on the machine that ran the run, and
   commit it with the run before regenerating `results/index.json`.
+- To rerun only members revised since a run, add `--missing-from
+  <run>.json` to `gold run --benchmark`, then write the page with
+  `benchmark_page.py <rerun>.json --base <run>.json`; the index judges the
+  combination canonical (`benchmarks/README.md`, "Rerunning revised
+  members only").
 - After an erratum or a freeze, regenerate `results/index.json`.
 
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR

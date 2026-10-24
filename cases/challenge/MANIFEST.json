@@ -1,5 +1,5 @@
 {
-  "caseset_version": "a25ea96aa7dc5330",
+  "caseset_version": "7addf595495181bb",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -1265,7 +1265,7 @@
     },
     {
       "id": "ch-causal-027",
-      "uid": "3a990c1342688cfb",
+      "uid": "56c2a4b5fb63797a",
       "set": "causal",
       "group": "many_areas",
       "status": "ready"
@@ -2441,7 +2441,7 @@
     },
     {
       "id": "ch-comp-166",
-      "uid": "fc1fcf59cfb18eb6",
+      "uid": "9f92f470783342b1",
       "set": "comparison",
       "group": "tcl",
       "status": "ready"
@@ -2455,7 +2455,7 @@
     },
     {
       "id": "ch-comp-168",
-      "uid": "7632f81d9c3d10eb",
+      "uid": "7bb73a80cd1bfb98",
       "set": "comparison",
       "group": "many-areas",
       "status": "ready"
@@ -2511,7 +2511,7 @@
     },
     {
       "id": "ch-comp-176",
-      "uid": "7fb81e36713aece8",
+      "uid": "d177335e75c1802f",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready"
@@ -4331,28 +4331,28 @@
     },
     {
       "id": "ch-mon-055",
-      "uid": "1053347129e153ba",
+      "uid": "bb015ea9d11ae8f9",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready"
     },
     {
       "id": "ch-mon-056",
-      "uid": "b326ad938c69f1b4",
+      "uid": "a4e0355d9e640e70",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready"
     },
     {
       "id": "ch-mon-057",
-      "uid": "93a21c8a33efe6b9",
+      "uid": "32ba43930d8e96aa",
       "set": "monitoring",
       "group": "buffer_unsupported",
       "status": "ready"
     },
     {
       "id": "ch-mon-058",
-      "uid": "76622b15ec56ec59",
+      "uid": "2a6b4d20f1b17c60",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready"
@@ -4415,182 +4415,182 @@
     },
     {
       "id": "ch-port-001",
-      "uid": "0683ed56963b9e56",
+      "uid": "d79a9346a214cabf",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-002",
-      "uid": "f75e7919da8f42f1",
+      "uid": "2c2e85e1134b1805",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-003",
-      "uid": "1a75c444b70b2404",
+      "uid": "ab6ff2de4807dae0",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-004",
-      "uid": "56d443f16f6a7358",
+      "uid": "3aa2d1b1339003f2",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
     },
     {
       "id": "ch-port-005",
-      "uid": "9721c2736bbcc675",
+      "uid": "9a114e7588b01e3d",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-006",
-      "uid": "21849311b6d865e5",
+      "uid": "b543019e3ed6f930",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-007",
-      "uid": "a7d46288fbed7890",
+      "uid": "163dd7c4aa5cbb6d",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-008",
-      "uid": "0365c4447b8deb3e",
+      "uid": "0d64f9dad207191b",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-009",
-      "uid": "876d118134a098b0",
+      "uid": "8bb64276ced60903",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-010",
-      "uid": "10a7d2d67bcc7e7a",
+      "uid": "06c338a0d7dbdd4a",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-011",
-      "uid": "347723a2be57541a",
+      "uid": "874a5c5781b8b22d",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-012",
-      "uid": "65ec49894d28d4b8",
+      "uid": "15eee414c32d6758",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-013",
-      "uid": "6e212b4fe96f3c08",
+      "uid": "febc2727555068b5",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
     },
     {
       "id": "ch-port-014",
-      "uid": "f74e41affe4c85e4",
+      "uid": "4384f67a359bb03d",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-015",
-      "uid": "8cbfb2d26d2e7cd1",
+      "uid": "fb558956d0f92418",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-016",
-      "uid": "359f355fd212e2e7",
+      "uid": "cf43e9eec74533ae",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-017",
-      "uid": "091de03b125e87e8",
+      "uid": "ca4ef882e997f926",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-018",
-      "uid": "ed60b6a099b4ae08",
+      "uid": "84b6ad8f3c1d434e",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-port-019",
-      "uid": "75890973a353dc89",
+      "uid": "9aec90fea0e8aebd",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-020",
-      "uid": "a4674f37fc75c64f",
+      "uid": "b89d1aca81123ca5",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
     },
     {
       "id": "ch-port-021",
-      "uid": "ae5b8aeb7b161f33",
+      "uid": "a5e3f61607393dad",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo"
     },
     {
       "id": "ch-port-022",
-      "uid": "0298a1c271a0eea7",
+      "uid": "a00becfc602248ab",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
     },
     {
       "id": "ch-port-023",
-      "uid": "79cd0b6d24b0262d",
+      "uid": "18a9ca560ca79313",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
     },
     {
       "id": "ch-port-024",
-      "uid": "e63d35c7da915e29",
+      "uid": "93704196e92ed205",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
     },
     {
       "id": "ch-port-025",
-      "uid": "6f0779d8f90a989e",
+      "uid": "93663c54959357b9",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
     },
     {
       "id": "ch-port-026",
-      "uid": "49fcb2b0bed70a43",
+      "uid": "eb3844a02a9ba52b",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo"
@@ -5773,14 +5773,14 @@
     },
     {
       "id": "ch-quant-168",
-      "uid": "80392166e13a3965",
+      "uid": "a83888a9bb8fee76",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready"
     },
     {
       "id": "ch-quant-169",
-      "uid": "b60a1144f3a67b3f",
+      "uid": "aa56996f8c9ee6c9",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready"
@@ -5871,7 +5871,7 @@
     },
     {
       "id": "ch-quant-182",
-      "uid": "8c4bec6fd513ed40",
+      "uid": "5018d52f4962c6fb",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready"
@@ -5885,7 +5885,7 @@
     },
     {
       "id": "ch-quant-184",
-      "uid": "a3d7e9ff4cff7455",
+      "uid": "6b20500cc28224c5",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready"
@@ -5920,7 +5920,7 @@
     },
     {
       "id": "ch-quant-189",
-      "uid": "2d20b87297cce5ee",
+      "uid": "7a9183789a02617e",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready"
@@ -5955,7 +5955,7 @@
     },
     {
       "id": "ch-quant-194",
-      "uid": "8cbc4d68c511f635",
+      "uid": "06d99fac9d2964c8",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready"
@@ -5976,7 +5976,7 @@
     },
     {
       "id": "ch-quant-197",
-      "uid": "0204cf797f493a76",
+      "uid": "dc08464051c97655",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -6032,7 +6032,7 @@
     },
     {
       "id": "ch-quant-205",
-      "uid": "18198c0a7b0a14a6",
+      "uid": "6e8dd39b0b006835",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -6578,14 +6578,14 @@
     },
     {
       "id": "ch-trend-078",
-      "uid": "b8f939d55d3911a1",
+      "uid": "65851ec1fc81e3f2",
       "set": "trend",
       "group": "ghg-flux",
       "status": "ready"
     },
     {
       "id": "ch-trend-079",
-      "uid": "6140badee8e63e89",
+      "uid": "4fa177ef1d107037",
       "set": "trend",
       "group": "tcl",
       "status": "ready"

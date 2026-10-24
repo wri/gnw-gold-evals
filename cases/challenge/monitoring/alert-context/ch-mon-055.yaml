@@ -1,15 +1,11 @@
 id: ch-mon-055
-uid: 1053347129e153ba
+uid: bb015ea9d11ae8f9
 status: ready
 set: monitoring
 group: alert_context
 query: Which of this month's alerts in Tesso Nilo National Park are inside primary forest?
 expected:
   aoi_ids: '317197'
-  dataset_id: '11'
-  start_date: '{month_start}'
-  end_date: '{run}'
-  date_tolerance_days: '3'
   text: Either reports how much of this month's alert area in Tesso Nilo National Park falls
     inside primary forest, or says it cannot intersect alerts with primary forest and offers
     the park's alert total instead; does not guess the split.
@@ -18,7 +14,7 @@ notes:
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-038); USY-001298 Tesso Nilo; Alerts
     JTBD (Miro) (what forest types are affected)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
@@ -32,3 +28,7 @@ notes:
   grounding: From user research
   user_story_refs: USY-001298 Tesso Nilo; Alerts JTBD (Miro) (what forest types are affected)
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-24 (AJ): dropped the dataset and date checks, which an honest decline never
+    satisfies. 20261023T094447Z_prod: the judged text passed on all 3 attempts. Integrated
+    alerts has no primary-forest context layer (zeno catalog, 2026-10-24), so the decline
+    is the right answer today.'

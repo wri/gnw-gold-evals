@@ -112,9 +112,12 @@ on 2026-09-15.
 
 Known scoring gaps accepted for batch 1 (candidates for future evaluators):
 
-- `aoi_ids` is all-of exact set match; there is no any-of. Cases with more
-  than one defensible answer either expect a nudge or pin the most defensible
-  id, with the alternative recorded in `notes.lineage`.
+- `aoi_ids` is all-of exact set match. Until 2026-10-24 there was no any-of,
+  so cases with more than one defensible answer either expect a nudge or pin
+  the most defensible id, with the alternative recorded in `notes.lineage`.
+  `|` now separates alternative sets (`555697863|10906`; see
+  `src/goldset/evaluators/README.md`, `aoi_id_match`); batch 1 rows keep
+  their pinned ids.
 - No `aoi_absent` check: "must not substitute a wrong area" is approximated
   with `clarification` and `text` judges.
 - The scope classifier has no class for "resolved an AOI and stopped", so
@@ -263,7 +266,7 @@ reviewed** (`notes.expectations`); AOI ids were resolved against prod
 
 | set | new | what it adds |
 |---|---|---|
-| `portfolio` (new) | 27 | many areas at once (ranking every state, screening uploaded sites, saved-area triage); expected to redirect to one to three named areas, judged by `text`; `notes.reclassify_when` says when the expectation flips to "answer with data" |
+| `portfolio` (new) | 27 | many areas at once (ranking every state, screening uploaded sites, saved-area triage), judged by `text`; drafted as redirects to one to three named areas, revised 2026-10-24 to the real limits (below); `notes.reclassify_when` says when the fixture rows flip to "answer with data" |
 | `monitoring` | 36 | alert follow-up (imagery, clusters, coordinates, prioritising), alert context (natural lands, primary forest, mangroves, park buffers), alert method questions, unsupported actions and fixture rows |
 | `quantification` / `comparison` / `trend` | 93 | subnational, protected-area and Indigenous-territory analyses, two-to-three-area comparisons, and data or method questions (`method` cohort, `text` only), unavailable data (`unavailable`) and many-area redirects (`many-areas`) |
 | `causal` | 11 | alert causes, driver shares, commodity over-claims and premise checks |
@@ -288,3 +291,31 @@ reviewed** (`notes.expectations`); AOI ids were resolved against prod
   Batch 4.
 - Each member's sheet facets (use cases, engagement, AOI type, capability,
   grounding) are case notes written by `tools/benchmark_from_sheet.py`.
+
+### Expectation review after the first draft-3 run (2026-10-24)
+
+The first `2026-draft-3` run (`20261023T094447Z_prod`; recommendations in
+`results/benchmark/recommendations/`) showed some drafted expectations were
+wrong. AJ's decisions, applied to 44 cases (26 run, 18 fixture rows); each
+case's `notes.review` gives its evidence:
+
+- **Many areas: the real limits.** `pick_aoi` takes up to 1,000 admin
+  sub-units of one GADM parent, but only 50 protected areas, KBAs,
+  Indigenous lands or concessions (project-zeno
+  `src/agent/subagents/pick_aoi/tool.py`). Rows within the limit now expect
+  an answer with data (every municipality of Pará, every department of
+  Bolivia, African countries, Brazilian states, districts of two countries);
+  the rest keep a redirect worded to the real limit, never "one to three
+  named areas". The sheet's `capability` facet still says "Not yet" for the
+  reclassified rows; fix it in the sheet before the next curation.
+- **Either/or rows** whose decline branch selects no dataset carry no
+  dataset or date checks.
+- **Defensible alternatives:** emissions from loss accept tree cover loss
+  (`6;4`), land cover accepts natural lands (`1;3`), and four AOIs use the
+  `|` any-of syntax (Salonga, Kakataibo, Mahakam Delta).
+- **Confirmed capability:** alerts on natural lands (`ch-mon-058`) now expect
+  data with `context_layer: natural_lands`.
+- **Method questions:** three judged texts were relaxed where careful
+  answers failed on an optional detail (`ch-quant-194`, `-197`, `-205`), and
+  `ch-quant-184`'s premise was fixed. Printable maps (`ch-mon-047`) stay
+  strict: a dashboard is not a printable map.

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "a25ea96aa7dc5330",
+  "caseset_version": "7addf595495181bb",
   "case_count": 949,
   "cases": [
     {
@@ -3669,7 +3669,7 @@
     },
     {
       "id": "ch-causal-027",
-      "uid": "3a990c1342688cfb",
+      "uid": "56c2a4b5fb63797a",
       "set": "causal",
       "group": "many_areas",
       "status": "ready",
@@ -8067,24 +8067,20 @@
     },
     {
       "id": "ch-comp-166",
-      "uid": "fc1fcf59cfb18eb6",
+      "uid": "9f92f470783342b1",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
       "behaviour": "answer at country/PA-network level if supported; else redirect",
       "query": "How much tree cover did Madagascar's protected areas lose in 2024 compared with 2023?",
       "expected_fields": [
-        "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "comparison",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-comp-167",
@@ -8114,20 +8110,30 @@
     },
     {
       "id": "ch-comp-168",
-      "uid": "7632f81d9c3d10eb",
+      "uid": "7bb73a80cd1bfb98",
       "set": "comparison",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: ranking many countries not supported; offer 2–3 country comparison",
+      "behaviour": "answer with data: rank African countries by the increase",
       "query": "Which African countries had the largest increase in tree cover loss between 2020 and 2024?",
       "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
         "expected_text_match"
       ],
       "intent": "comparison",
-      "dataset_ids": []
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-comp-169",
@@ -8323,7 +8329,7 @@
     },
     {
       "id": "ch-comp-176",
-      "uid": "7fb81e36713aece8",
+      "uid": "d177335e75c1802f",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready",
@@ -8344,7 +8350,8 @@
       ],
       "intent": "comparison",
       "dataset_ids": [
-        "1"
+        "1",
+        "3"
       ]
     },
     {
@@ -14363,7 +14370,7 @@
     },
     {
       "id": "ch-mon-055",
-      "uid": "1053347129e153ba",
+      "uid": "bb015ea9d11ae8f9",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready",
@@ -14371,26 +14378,18 @@
       "query": "Which of this month's alerts in Tesso Nilo National Park are inside primary forest?",
       "expected_fields": [
         "aoi_ids",
-        "dataset_id",
-        "date_tolerance_days",
-        "end_date",
-        "start_date",
         "text"
       ],
       "implied_checks": [
         "aoi_id_match",
-        "dataset_id_match",
-        "date_extraction",
         "expected_text_match"
       ],
       "intent": "monitoring",
-      "dataset_ids": [
-        "11"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-mon-056",
-      "uid": "b326ad938c69f1b4",
+      "uid": "a4e0355d9e640e70",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready",
@@ -14420,7 +14419,7 @@
     },
     {
       "id": "ch-mon-057",
-      "uid": "93a21c8a33efe6b9",
+      "uid": "32ba43930d8e96aa",
       "set": "monitoring",
       "group": "buffer_unsupported",
       "status": "ready",
@@ -14428,33 +14427,27 @@
       "query": "Are any of this month's alerts in Boumba Bek National Park within 5 km of the park boundary?",
       "expected_fields": [
         "aoi_ids",
-        "dataset_id",
-        "date_tolerance_days",
-        "end_date",
-        "start_date",
         "text"
       ],
       "implied_checks": [
         "aoi_id_match",
-        "dataset_id_match",
-        "date_extraction",
         "expected_text_match"
       ],
       "intent": "monitoring",
-      "dataset_ids": [
-        "11"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-mon-058",
-      "uid": "76622b15ec56ec59",
+      "uid": "2a6b4d20f1b17c60",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready",
-      "behaviour": "Answer with alerts intersected with natural lands or land cover",
+      "behaviour": "answer with alerts restricted to natural lands",
       "query": "Did the alerts in Padre Abad province this month fall in natural forest or on land that was already farmed?",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
+        "data_pull",
         "dataset_id",
         "date_tolerance_days",
         "end_date",
@@ -14462,7 +14455,10 @@
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
         "expected_text_match"
@@ -14633,11 +14629,11 @@
     },
     {
       "id": "ch-port-001",
-      "uid": "0683ed56963b9e56",
+      "uid": "d79a9346a214cabf",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Here are 150 mills from the Universal Mill List. Which have deforestation within 50 km since 2020?",
       "expected_fields": [
         "text"
@@ -14650,11 +14646,11 @@
     },
     {
       "id": "ch-port-002",
-      "uid": "f75e7919da8f42f1",
+      "uid": "2c2e85e1134b1805",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "I've uploaded a shapefile of our cocoa farm plots — check each one for loss after December 31, 2020.",
       "expected_fields": [
         "text"
@@ -14667,28 +14663,36 @@
     },
     {
       "id": "ch-port-003",
-      "uid": "1a75c444b70b2404",
+      "uid": "ab6ff2de4807dae0",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "answer with the closest measure for the 27 states; say soy cannot be isolated",
       "query": "Rank every Brazilian state by soy-driven conversion since 2020.",
       "expected_fields": [
+        "data_pull",
+        "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "portfolio",
-      "dataset_ids": []
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
     },
     {
       "id": "ch-port-004",
-      "uid": "56d443f16f6a7358",
+      "uid": "3aa2d1b1339003f2",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Give me a monthly report of alerts across our oil palm concessions.",
       "expected_fields": [
         "text"
@@ -14701,11 +14705,11 @@
     },
     {
       "id": "ch-port-005",
-      "uid": "9721c2736bbcc675",
+      "uid": "9a114e7588b01e3d",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Which of our suppliers are in high deforestation-risk areas?",
       "expected_fields": [
         "text"
@@ -14718,11 +14722,11 @@
     },
     {
       "id": "ch-port-006",
-      "uid": "21849311b6d865e5",
+      "uid": "b543019e3ed6f930",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Calculate our deforestation liability across our palm sourcing regions through 2025.",
       "expected_fields": [
         "text"
@@ -14735,11 +14739,11 @@
     },
     {
       "id": "ch-port-007",
-      "uid": "a7d46288fbed7890",
+      "uid": "163dd7c4aa5cbb6d",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Classify our cocoa cooperatives' areas as low, medium or high deforestation risk.",
       "expected_fields": [
         "text"
@@ -14752,11 +14756,11 @@
     },
     {
       "id": "ch-port-008",
-      "uid": "0365c4447b8deb3e",
+      "uid": "0d64f9dad207191b",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Verify whether palm oil from our mills' supply areas is deforestation-free.",
       "expected_fields": [
         "text"
@@ -14769,11 +14773,11 @@
     },
     {
       "id": "ch-port-009",
-      "uid": "876d118134a098b0",
+      "uid": "8bb64276ced60903",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Score the farmer locations I uploaded for deforestation risk.",
       "expected_fields": [
         "text"
@@ -14786,11 +14790,11 @@
     },
     {
       "id": "ch-port-010",
-      "uid": "10a7d2d67bcc7e7a",
+      "uid": "06c338a0d7dbdd4a",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Set up weekly alert summaries for all protected areas in Madagascar.",
       "expected_fields": [
         "text"
@@ -14803,11 +14807,11 @@
     },
     {
       "id": "ch-port-011",
-      "uid": "347723a2be57541a",
+      "uid": "874a5c5781b8b22d",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Compare tree cover loss across all World Heritage forest sites and rank the worst 10.",
       "expected_fields": [
         "text"
@@ -14820,11 +14824,11 @@
     },
     {
       "id": "ch-port-012",
-      "uid": "65ec49894d28d4b8",
+      "uid": "15eee414c32d6758",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Evaluate tree cover change on the farmer plots in our regeneration program.",
       "expected_fields": [
         "text"
@@ -14837,11 +14841,11 @@
     },
     {
       "id": "ch-port-013",
-      "uid": "6e212b4fe96f3c08",
+      "uid": "febc2727555068b5",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Track loss across all our project landscapes since 2020 and tell me which are off track.",
       "expected_fields": [
         "text"
@@ -14854,11 +14858,11 @@
     },
     {
       "id": "ch-port-014",
-      "uid": "f74e41affe4c85e4",
+      "uid": "4384f67a359bb03d",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "For each loan applicant parcel I uploaded, has there been deforestation in the last five years?",
       "expected_fields": [
         "text"
@@ -14871,11 +14875,11 @@
     },
     {
       "id": "ch-port-015",
-      "uid": "8cbfb2d26d2e7cd1",
+      "uid": "fb558956d0f92418",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Rank all Indigenous territories in Peru by tree cover loss in 2024.",
       "expected_fields": [
         "text"
@@ -14888,11 +14892,11 @@
     },
     {
       "id": "ch-port-016",
-      "uid": "359f355fd212e2e7",
+      "uid": "cf43e9eec74533ae",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Which oil palm concessions in Indonesia had fires in 2023?",
       "expected_fields": [
         "text"
@@ -14905,45 +14909,64 @@
     },
     {
       "id": "ch-port-017",
-      "uid": "091de03b125e87e8",
+      "uid": "ca4ef882e997f926",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "answer with data for both countries' districts; say there is no cocoa filter",
       "query": "Show me which cocoa-growing districts in Côte d'Ivoire and Ghana had the most loss — all of them, ranked.",
       "expected_fields": [
+        "data_pull",
+        "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "portfolio",
-      "dataset_ids": []
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-port-018",
-      "uid": "ed60b6a099b4ae08",
+      "uid": "84b6ad8f3c1d434e",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "answer with data: per-municipality table for Pará",
       "query": "Give me a table of tree cover loss for every municipality in Pará since 2015.",
       "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
         "expected_text_match"
       ],
       "intent": "portfolio",
-      "dataset_ids": []
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-port-019",
-      "uid": "75890973a353dc89",
+      "uid": "9aec90fea0e8aebd",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Every quarter, compare our restoration sites against their baseline tree cover.",
       "expected_fields": [
         "text"
@@ -14956,11 +14979,11 @@
     },
     {
       "id": "ch-port-020",
-      "uid": "a4674f37fc75c64f",
+      "uid": "b89d1aca81123ca5",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "For each of my saved areas, flag any loss on natural land after 2020.",
       "expected_fields": [
         "text"
@@ -14973,11 +14996,11 @@
     },
     {
       "id": "ch-port-021",
-      "uid": "ae5b8aeb7b161f33",
+      "uid": "a5e3f61607393dad",
       "set": "portfolio",
       "group": "uploaded-sites",
       "status": "todo",
-      "behaviour": "redirect: do not fabricate a portfolio answer; offer to analyse 1–3 named areas; point to self-serve monitoring datasets / API for bulk screening",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Screen our supplier farms in Mato Grosso for EUDR compliance.",
       "expected_fields": [
         "text"
@@ -14990,11 +15013,11 @@
     },
     {
       "id": "ch-port-022",
-      "uid": "0298a1c271a0eea7",
+      "uid": "a00becfc602248ab",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
-      "behaviour": "Redirect until portfolio monitoring ships; offer to look at 1–3 sites",
+      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Which of my sites needs attention first this week?",
       "expected_fields": [
         "text"
@@ -15007,7 +15030,7 @@
     },
     {
       "id": "ch-port-023",
-      "uid": "79cd0b6d24b0262d",
+      "uid": "18a9ca560ca79313",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
@@ -15024,7 +15047,7 @@
     },
     {
       "id": "ch-port-024",
-      "uid": "e63d35c7da915e29",
+      "uid": "93704196e92ed205",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
@@ -15041,7 +15064,7 @@
     },
     {
       "id": "ch-port-025",
-      "uid": "6f0779d8f90a989e",
+      "uid": "93663c54959357b9",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
@@ -15058,7 +15081,7 @@
     },
     {
       "id": "ch-port-026",
-      "uid": "49fcb2b0bed70a43",
+      "uid": "eb3844a02a9ba52b",
       "set": "portfolio",
       "group": "saved-areas",
       "status": "todo",
@@ -19555,7 +19578,7 @@
     },
     {
       "id": "ch-quant-168",
-      "uid": "80392166e13a3965",
+      "uid": "a83888a9bb8fee76",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -19579,7 +19602,7 @@
     },
     {
       "id": "ch-quant-169",
-      "uid": "b60a1144f3a67b3f",
+      "uid": "aa56996f8c9ee6c9",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -19603,6 +19626,7 @@
       ],
       "intent": "quantification",
       "dataset_ids": [
+        "4",
         "6"
       ]
     },
@@ -19885,7 +19909,7 @@
     },
     {
       "id": "ch-quant-182",
-      "uid": "8c4bec6fd513ed40",
+      "uid": "5018d52f4962c6fb",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
@@ -19934,7 +19958,7 @@
     },
     {
       "id": "ch-quant-184",
-      "uid": "a3d7e9ff4cff7455",
+      "uid": "6b20500cc28224c5",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready",
@@ -20038,20 +20062,33 @@
     },
     {
       "id": "ch-quant-189",
-      "uid": "2d20b87297cce5ee",
+      "uid": "7a9183789a02617e",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "Redirect: many areas; offer a few departments or point to downloads/API",
+      "behaviour": "answer with data: per-department table",
       "query": "Give me tree cover loss and fire-driven loss for every department in Bolivia, 2001–2024, as a table.",
       "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
         "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": []
+      "dataset_ids": [
+        "10",
+        "4"
+      ]
     },
     {
       "id": "ch-quant-190",
@@ -20123,7 +20160,7 @@
     },
     {
       "id": "ch-quant-194",
-      "uid": "8cbc4d68c511f635",
+      "uid": "06d99fac9d2964c8",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready",
@@ -20174,7 +20211,7 @@
     },
     {
       "id": "ch-quant-197",
-      "uid": "0204cf797f493a76",
+      "uid": "dc08464051c97655",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -20322,7 +20359,7 @@
     },
     {
       "id": "ch-quant-205",
-      "uid": "18198c0a7b0a14a6",
+      "uid": "6e8dd39b0b006835",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -22501,7 +22538,7 @@
     },
     {
       "id": "ch-trend-078",
-      "uid": "b8f939d55d3911a1",
+      "uid": "65851ec1fc81e3f2",
       "set": "trend",
       "group": "ghg-flux",
       "status": "ready",
@@ -22523,12 +22560,13 @@
       ],
       "intent": "trend",
       "dataset_ids": [
+        "4",
         "6"
       ]
     },
     {
       "id": "ch-trend-079",
-      "uid": "6140badee8e63e89",
+      "uid": "4fa177ef1d107037",
       "set": "trend",
       "group": "tcl",
       "status": "ready",

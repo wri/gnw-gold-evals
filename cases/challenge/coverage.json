@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "a25ea96aa7dc5330",
+  "caseset_version": "7addf595495181bb",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -546,7 +546,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 820,
+      "dedicated": 824,
       "shared_only": 0
     },
     "analysis": {
@@ -569,27 +569,27 @@
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 709,
+      "cases": 711,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 605,
+      "cases": 607,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 507,
+      "cases": 513,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
       "field": "end_date",
-      "cases": 325,
+      "cases": 326,
       "switches_on": "date_extraction (with start_date)"
     },
     {
       "field": "start_date",
-      "cases": 325,
+      "cases": 326,
       "switches_on": "date_extraction (with end_date)"
     },
     {
@@ -604,7 +604,7 @@
     },
     {
       "field": "context_layer",
-      "cases": 173,
+      "cases": 174,
       "switches_on": "context_layer_match"
     },
     {
@@ -680,9 +680,9 @@
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",
       "ref": "origin/main",
-      "sha": "e2fb83f89469eda483830257f9b40c7ef21a6ebd",
+      "sha": "fa78c816186461dab120523ccad75fe274e6058c",
       "path": "src/agent/datasets/catalog",
-      "synced": "2026-09-25"
+      "synced": "2026-10-24"
     },
     "datasets": [
       {
@@ -707,8 +707,8 @@
         "dataset_id": "3",
         "dataset_name": "SBTN Natural Lands Map",
         "missing_instructions": [],
-        "cases": 51,
-        "answer_graded": 2,
+        "cases": 52,
+        "answer_graded": 3,
         "parameters": [],
         "context_layers": []
       },
@@ -716,8 +716,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 166,
-        "answer_graded": 20,
+        "cases": 172,
+        "answer_graded": 25,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -732,6 +732,10 @@
           {
             "name": "intact_forest",
             "cases": 4
+          },
+          {
+            "name": "natural_forest",
+            "cases": 0
           }
         ]
       },
@@ -781,8 +785,8 @@
         "dataset_id": "8",
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
-        "cases": 64,
-        "answer_graded": 18,
+        "cases": 65,
+        "answer_graded": 19,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -804,8 +808,8 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 70,
-        "answer_graded": 6,
+        "cases": 71,
+        "answer_graded": 7,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -827,10 +831,15 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 107,
-        "answer_graded": 23,
+        "cases": 105,
+        "answer_graded": 21,
         "parameters": [],
-        "context_layers": []
+        "context_layers": [
+          {
+            "name": "natural_lands",
+            "cases": 1
+          }
+        ]
       },
       {
         "dataset_id": "12",
@@ -1083,7 +1092,11 @@
       "12"
     ],
     "uncovered_parameters": {},
-    "uncovered_context_layers": {}
+    "uncovered_context_layers": {
+      "natural_forest": [
+        "4"
+      ]
+    }
   },
   "targets": {
     "sets": {
