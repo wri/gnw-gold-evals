@@ -47,7 +47,7 @@ def evaluate_dashboard_created(
 
 def evaluate_dashboard_aoi(
     dashboard: dict[str, Any] | None,
-    expected_aoi_ids: list[str] | None,
+    expected_aoi_ids: list[list[str]] | None,
     expected_aoi_source: str = "",
 ) -> dict[str, Any]:
     """Check the dashboard has exactly one AOI, matching the expected AOI.
@@ -59,7 +59,8 @@ def evaluate_dashboard_aoi(
     Args:
         dashboard: Fetched dashboard payload (GET /api/dashboards/{id}), or None
             if no dashboard was created / the fetch failed
-        expected_aoi_ids: Expected AOI IDs (reused from the AOI-selection check)
+        expected_aoi_ids: Alternative expected AOI id sets (reused from the
+            AOI-selection check); the dashboard's AOI may match any of them
         expected_aoi_source: Expected AOI source (e.g. "gadm", "kba", "wdpa")
 
     Returns:
@@ -94,12 +95,13 @@ def evaluate_dashboard_aoi(
 
     aoi = aois[0]
     actual_source = aoi.get("source", "")
-    normalized_actual, normalized_expected = _normalize_aoi_ids(
-        [aoi.get("src_id", "")],
-        expected_aoi_ids,
-        actual_source,
+    id_match = any(
+        set(normalized_actual) == set(normalized_expected)
+        for normalized_actual, normalized_expected in (
+            _normalize_aoi_ids([aoi.get("src_id", "")], alternative, actual_source)
+            for alternative in expected_aoi_ids
+        )
     )
-    id_match = set(normalized_actual) == set(normalized_expected)
     source_match = (
         not expected_aoi_source or actual_source.lower() == expected_aoi_source.lower()
     )
