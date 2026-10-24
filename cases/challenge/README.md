@@ -112,9 +112,12 @@ on 2026-09-15.
 
 Known scoring gaps accepted for batch 1 (candidates for future evaluators):
 
-- `aoi_ids` is all-of exact set match; there is no any-of. Cases with more
-  than one defensible answer either expect a nudge or pin the most defensible
-  id, with the alternative recorded in `notes.lineage`.
+- `aoi_ids` is all-of exact set match. Until 2026-10-24 there was no any-of,
+  so cases with more than one defensible answer either expect a nudge or pin
+  the most defensible id, with the alternative recorded in `notes.lineage`.
+  `|` now separates alternative sets (`555697863|10906`; see
+  `src/goldset/evaluators/README.md`, `aoi_id_match`); batch 1 rows keep
+  their pinned ids.
 - No `aoi_absent` check: "must not substitute a wrong area" is approximated
   with `clarification` and `text` judges.
 - The scope classifier has no class for "resolved an AOI and stopped", so
