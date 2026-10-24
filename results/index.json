@@ -1675,8 +1675,10 @@
         "composed_with": [
           "20261023T094447Z_prod"
         ],
-        "canonical": true,
-        "canonical_reasons": [],
+        "canonical": false,
+        "canonical_reasons": [
+          "2 active member(s) not in the run and its base"
+        ],
         "page": "results/benchmark/pages/20261024T133644Z_prod.json"
       }
     ]
@@ -1717,9 +1719,7 @@
       "runs": [
         "20261024T133644Z_prod"
       ],
-      "canonical_runs": [
-        "20261024T133644Z_prod"
-      ]
+      "canonical_runs": []
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",

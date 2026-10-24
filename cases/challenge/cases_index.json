@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "7addf595495181bb",
+  "caseset_version": "b0df4721464461ce",
   "case_count": 949,
   "cases": [
     {
@@ -14807,11 +14807,11 @@
     },
     {
       "id": "ch-port-011",
-      "uid": "874a5c5781b8b22d",
+      "uid": "76a90b4e2ee08e8c",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
-      "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
+      "behaviour": "redirect, or a cited ranking from published research: do not invent a ranking",
       "query": "Compare tree cover loss across all World Heritage forest sites and rank the worst 10.",
       "expected_fields": [
         "text"
@@ -20160,7 +20160,7 @@
     },
     {
       "id": "ch-quant-194",
-      "uid": "06d99fac9d2964c8",
+      "uid": "dda13d644bc10370",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready",

@@ -1,15 +1,15 @@
 id: ch-port-011
-uid: 874a5c5781b8b22d
+uid: 76a90b4e2ee08e8c
 status: ready
 set: portfolio
 group: many-areas
 query: Compare tree cover loss across all World Heritage forest sites and rank the worst 10.
 expected:
-  text: Does not invent a ranking; explains that there are too many World Heritage forest
-    sites to compare in one request and offers to compare a few named sites.
+  text: 'Does not invent a ranking: either explains that it cannot select or compare every
+    World Heritage forest site in one request and offers a workable alternative (a few named
+    sites, or countries), or gives a ranking from published research and cites it.'
 notes:
-  behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
-    areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
+  behaviour: 'redirect, or a cited ranking from published research: do not invent a ranking'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-090); USY-001516 UNESCO risk tool
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'
@@ -27,4 +27,8 @@ notes:
   refresh_risk: Low
   review: '2026-10-24 (AJ): reworded to the real limits. pick_aoi takes up to 1,000 admin
     sub-units of one GADM parent, but only 50 protected areas, KBAs, Indigenous lands or concessions
-    (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).'
+    (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).
+    Reworded again after 20261024T133644Z_prod (AJ, 2026-10-24): pick_aoi cannot select World
+    Heritage sites as a group (the limit is not their number), and a ranking cited from published
+    UNESCO/WRI/IUCN research counts as right. Two of three attempts gave one; the ''too many
+    sites'' text failed all three.'
