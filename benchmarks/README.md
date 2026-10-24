@@ -106,7 +106,10 @@ uv run python tools/benchmark_page.py results/benchmark/runs/<rerun>.json \
 ```
 
 `--missing-from` runs the active members the earlier run did not measure
-(`--id` names members directly). On its own the rerun is not canonical. The
+(`--id` names members directly). Both `--missing-from` and `--base` repeat,
+so a second round of revisions chains on the first: rerun what none of the
+earlier runs measured, then pass every earlier run as a base (the newest
+measurement of each member wins). On its own the rerun is not canonical. The
 page combines it with the earlier run's results for every other member,
 matched by uid, and records both runs under `run.sources` and on each
 question (`run_id`). The index then judges the **combination**: canonical

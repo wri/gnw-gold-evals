@@ -79,8 +79,8 @@ a case store: read `benchmarks/README.md` first. Key rules:
   commit it with the run before regenerating `results/index.json`.
 - To rerun only members revised since a run, add `--missing-from
   <run>.json` to `gold run --benchmark`, then write the page with
-  `benchmark_page.py <rerun>.json --base <run>.json`; the index judges the
-  combination canonical (`benchmarks/README.md`, "Rerunning revised
+  `benchmark_page.py <rerun>.json --base <run>.json` (both flags repeat for
+  a chain of reruns); the index judges the combination canonical (`benchmarks/README.md`, "Rerunning revised
   members only").
 - After an erratum or a freeze, regenerate `results/index.json`.
 
