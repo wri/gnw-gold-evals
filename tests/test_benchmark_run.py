@@ -77,7 +77,7 @@ def test_main_dry_run_and_selector_conflict(tmp_path, monkeypatch, capsys):
     assert run_main(monkeypatch, "--benchmark", str(path), "--dry-run") == 0
     assert "3 cases selected" in capsys.readouterr().out
     assert run_main(monkeypatch, "--benchmark", str(path), "--set", "aoi") == 1
-    assert "drop --id/--group/--set" in capsys.readouterr().out
+    assert "drop --group/--set" in capsys.readouterr().out
 
 
 def test_run_record_and_results_dir(tmp_path, monkeypatch):
@@ -131,3 +131,40 @@ def test_resume_refuses_changed_manifest(tmp_path, monkeypatch, capsys):
 @pytest.fixture(autouse=True)
 def _no_git(monkeypatch):
     monkeypatch.setattr(cli, "_harness_sha", lambda: "test")
+
+
+def test_id_narrows_a_benchmark_run_to_some_members(tmp_path, monkeypatch, capsys):
+    path = make_bench(tmp_path, CASES)
+    assert run_main(monkeypatch, "--benchmark", str(path), "--id", "ch-aoi-002",
+                    "--dry-run") == 0
+    out = capsys.readouterr().out
+    assert "ch-aoi-002" in out and "ch-aoi-001" not in out
+    assert "1 cases selected" in out
+
+
+def test_id_must_name_an_active_member(tmp_path, monkeypatch, capsys):
+    path = make_bench(tmp_path, CASES[:2])
+    assert run_main(monkeypatch, "--benchmark", str(path), "--id", "ch-aoi-003",
+                    "--dry-run") == 1
+    assert "not active members of t-draft: ['ch-aoi-003']" in capsys.readouterr().out
+
+
+def test_missing_from_runs_only_unmeasured_members(tmp_path, monkeypatch, capsys):
+    path = make_bench(tmp_path, CASES)
+    earlier = tmp_path / "earlier.json"
+    earlier.write_text(json.dumps({"results": [{"uid": CASES[0].uid}, {"uid": CASES[2].uid}]}))
+    assert run_main(monkeypatch, "--benchmark", str(path), "--missing-from", str(earlier),
+                    "--dry-run") == 0
+    out = capsys.readouterr().out
+    assert "1 active member(s) not measured by earlier.json" in out
+    assert "1 cases selected" in out and "ch-aoi-002" in out
+
+
+def test_missing_from_with_nothing_missing_or_no_benchmark(tmp_path, monkeypatch, capsys):
+    path = make_bench(tmp_path, CASES[:1])
+    earlier = tmp_path / "earlier.json"
+    earlier.write_text(json.dumps({"results": [{"uid": CASES[0].uid}]}))
+    assert run_main(monkeypatch, "--benchmark", str(path), "--missing-from", str(earlier)) == 1
+    assert "nothing to run" in capsys.readouterr().out
+    assert run_main(monkeypatch, "--missing-from", str(earlier)) == 1
+    assert "--missing-from needs --benchmark" in capsys.readouterr().out

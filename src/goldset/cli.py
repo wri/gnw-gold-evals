@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import os
 import subprocess
 import sys
@@ -210,10 +211,15 @@ def benchmark_meta(path: Path) -> dict:
 
 def select_benchmark_cases(args: argparse.Namespace) -> list[Case]:
     """A benchmark run's cases are exactly the manifest's active members,
-    whatever their status (the integrity check owns readiness). Members
-    missing from the store are reported, never silently dropped."""
+    whatever their status (the integrity check owns readiness), or the ones
+    ``--id`` names. Members missing from the store are reported, never
+    silently dropped."""
     bench = load_benchmark(Path(args.benchmark["path"]))
-    wanted = bench.member_uids
+    members = bench.active_members
+    if getattr(args, "id", None):
+        ids = {i.lower() for i in args.id}
+        members = tuple(m for m in members if m.id.lower() in ids)
+    wanted = {m.uid for m in members}
     cases = [case for _path, case, uid in load_store(args.cases_dir) if uid in wanted]
     missing = wanted - {c.uid for c in cases}
     if missing:
@@ -516,7 +522,12 @@ def main() -> int:
                      help="run exactly a BENCHMARK manifest's active members "
                           "(benchmarks/<version>.json); implies its source "
                           "--cases-dir and --results-dir results/benchmark, and "
-                          "cannot be combined with --id/--group/--set")
+                          "cannot be combined with --group/--set (--id and "
+                          "--missing-from narrow it to some members)")
+    run.add_argument("--missing-from", type=Path, default=None, metavar="RUN",
+                     help="with --benchmark: run only the active members this "
+                          "earlier run did not measure, e.g. cases revised since "
+                          "(combine them with tools/benchmark_page.py --base)")
     run.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     run.add_argument("--results-dir", type=Path, default=None,
                      help="default results/gold (results/benchmark with --benchmark)")
@@ -550,16 +561,35 @@ def main() -> int:
         return prune_artifacts(args.results_dir, args.keep_runs)
 
     if args.benchmark:
-        if args.id or args.group or args.set:
-            print("--benchmark selects its own cases; drop --id/--group/--set")
+        if args.group or args.set:
+            print("--benchmark selects its own cases; drop --group/--set "
+                  "(--id or --missing-from narrow it to some members)")
             return 1
         try:
             args.benchmark = benchmark_meta(args.benchmark)
         except (OSError, ValueError) as exc:
             print(f"cannot load benchmark: {exc}")
             return 1
-        args.cases_dir = Path(load_benchmark(Path(args.benchmark["path"]))
-                              .source.get("cases_dir", "cases/challenge"))
+        bench = load_benchmark(Path(args.benchmark["path"]))
+        args.cases_dir = Path(bench.source.get("cases_dir", "cases/challenge"))
+        if args.missing_from:
+            measured = {e.get("uid") for e in
+                        json.loads(args.missing_from.read_text(encoding="utf-8"))["results"]}
+            unmeasured = sorted(m.id for m in bench.active_members if m.uid not in measured)
+            if not unmeasured:
+                print(f"{args.missing_from} measured every active member; nothing to run")
+                return 1
+            print(f"{len(unmeasured)} active member(s) not measured by {args.missing_from.name}")
+            args.id = [*(args.id or []), *unmeasured]
+        if args.id:
+            unknown = sorted({i.lower() for i in args.id}
+                             - {m.id.lower() for m in bench.active_members})
+            if unknown:
+                print(f"not active members of {bench.version}: {unknown}")
+                return 1
+    elif args.missing_from:
+        print("--missing-from needs --benchmark")
+        return 1
     if args.results_dir is None:
         args.results_dir = Path("results/benchmark" if args.benchmark else "results/gold")
 
