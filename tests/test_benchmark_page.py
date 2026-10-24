@@ -195,7 +195,7 @@ def rerun_setup(tmp_path):
 
 def test_combined_page_takes_unmeasured_members_from_the_base(tmp_path):
     base, base_art, rerun, rerun_art, bench, cases = rerun_setup(tmp_path)
-    page = bp.build_page(rerun, bench, cases, rerun_art, base, base_art)
+    page = bp.build_page(rerun, bench, cases, rerun_art, [(base, base_art)])
     qs = {q["id"]: q for q in page["questions"]}
     assert qs["ch-mon-001"]["run_id"] == "base"
     assert qs["ch-mon-001"]["attempts"][0]["aoi_ids"] == ["BRA.14_1"]  # base artifacts
@@ -220,7 +220,7 @@ def test_combined_page_refuses_an_uncovered_member(tmp_path):
     base, base_art, rerun, rerun_art, bench, cases = rerun_setup(tmp_path)
     rerun["results"] = []
     with pytest.raises(SystemExit, match="1 active member"):
-        bp.build_page(rerun, bench, cases, rerun_art, base, base_art)
+        bp.build_page(rerun, bench, cases, rerun_art, [(base, base_art)])
 
 
 @pytest.mark.parametrize(("field", "value", "message"), [
@@ -235,3 +235,24 @@ def test_base_must_match_the_rerun(field, value, message):
     base = {**rerun, "run_id": "base", "started": "2026-10-23T09:00:00Z", field: value}
     with pytest.raises(SystemExit, match=message):
         bp.check_base(base, rerun)
+
+
+def test_combined_page_chains_bases_newest_wins(tmp_path):
+    """A second rerun on top of the first: each member comes from the newest
+    run that measured it, and sources list the runs oldest first."""
+    base, base_art, rerun, rerun_art, bench, cases = rerun_setup(tmp_path)
+    b_uid = rerun["results"][0]["uid"]
+    b_case = cases[b_uid]
+    second = {**rerun, "run_id": "second", "started": "2026-10-25T09:00:00Z",
+              "results": [entry(b_case, [FAIL_RETRIEVAL, FAIL_RETRIEVAL, PASS])]}
+    second_art = tmp_path / "second-artifacts"
+    second_art.mkdir()
+    # Bases given newest first still apply oldest first.
+    page = bp.build_page(second, bench, cases, second_art,
+                         [(rerun, rerun_art), (base, base_art)])
+    qs = {q["id"]: q for q in page["questions"]}
+    assert qs["ch-mon-001"]["run_id"] == "base"
+    assert qs["ch-mon-002"]["run_id"] == "second"
+    assert qs["ch-mon-002"]["verdict"] == "fail"
+    assert [s["run_id"] for s in page["run"]["sources"]] == ["base", "rerun", "second"]
+    assert [s["questions"] for s in page["run"]["sources"]] == [1, 0, 1]
