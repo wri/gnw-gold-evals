@@ -17,6 +17,18 @@ headline is the share right on **every** trial (``every_time``), with
 denominator. Failures are attributed to their earliest failing stage
 (``tools/challenge_rollup.py``). Groups by type and use case come from the
 manifest's frozen member facets, never the live case.
+
+Every group (``summary``, ``types[]``, ``use_cases[]``) carries
+``failure_modes`` (where the questions that fail the majority verdict went
+wrong) and ``failure_modes_by_standard``: the same counts for each accuracy
+standard, ``every_time``, ``majority`` and ``any_time``. A question is wrong
+under ``every_time`` when not every trial is right, under ``majority`` when
+its verdict is fail (so ``majority`` equals ``failure_modes``), and under
+``any_time`` when no trial is right. It counts at
+``challenge_rollup.failure_stage``, the same stage under every standard, so
+a stricter standard only adds questions. Keys follow ``ATTRIBUTION``; zero
+counts are left out. Each standard's counts sum to the scored questions
+less that standard's accurate ones.
 """
 
 from __future__ import annotations
@@ -94,6 +106,15 @@ def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
     every = sum(1 for e in scored if all(trial_ok(t) for t in e["trials"]))
     any_ = sum(1 for e in scored if any(trial_ok(t) for t in e["trials"]))
     modes = collections.Counter(cr.primary_failure(e) for e, v in zip(entries, verdicts) if v == "fail")
+    wrong = {
+        "every_time": lambda e: not all(trial_ok(t) for t in e["trials"]),
+        "majority": lambda e: row_verdict(e) == "fail",
+        "any_time": lambda e: not any(trial_ok(t) for t in e["trials"]),
+    }
+    by_standard = {}
+    for standard, is_wrong in wrong.items():
+        stages = collections.Counter(cr.failure_stage(e) for e in scored if is_wrong(e))
+        by_standard[standard] = {s: stages[s] for s in ATTRIBUTION if stages[s]}
     return {
         "scored": n,
         "errors": verdicts.count("error"),
@@ -102,6 +123,7 @@ def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
         "every_time": every / n if n else None,
         "any_time": any_ / n if n else None,
         "failure_modes": {s: modes[s] for s in ATTRIBUTION if modes[s]},
+        "failure_modes_by_standard": by_standard,
     }
 
 

@@ -1,6 +1,7 @@
 """tools/benchmark_page.py: the page data behind the FE accuracy-benchmarks page."""
 
 import gzip
+import itertools
 import json
 import sys
 from pathlib import Path
@@ -10,6 +11,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 import benchmark_page as bp  # noqa: E402
 
 from goldset.benchmark import QUERY_TYPES, SCHEMA_VERSION, from_dict  # noqa: E402
+from goldset.buckets import row_verdict  # noqa: E402
 from goldset.store import Case  # noqa: E402
 
 PASS = {"aoi_id_match": 1.0, "dataset_id_match": 1.0}
@@ -89,3 +91,83 @@ def test_page_questions_carry_attempts_and_failed_checks(tmp_path):
     assert b["verdict"] == "fail" and b["primary_failure"] == "retrieval"
     [failed] = b["failed_checks"]
     assert failed["check"] == "aoi_id_match" and failed["per_trial"] == [False, False, True]
+
+
+# --- failure modes by accuracy standard --------------------------------------
+
+TEXT_PASS = {"aoi_id_match": 1.0, "expected_text_match": 1.0, "agent_answer": 1.0}
+TEXT_FAIL_EXPLANATION = {"aoi_id_match": 1.0, "expected_text_match": 0.0, "agent_answer": 1.0}
+TEXT_FAIL_RETRIEVAL = {"aoi_id_match": 0.0, "expected_text_match": 1.0, "agent_answer": 1.0}
+TEXT_FAIL_SHARED = {"aoi_id_match": 1.0, "expected_text_match": 1.0, "agent_answer": 0.0}
+
+
+def by_standard(*entries):
+    return bp.group_stats(list(entries))["failure_modes_by_standard"]
+
+
+def test_verdict_pass_with_one_wrong_trial_counts_under_every_time_only():
+    c = case("ch-mon-010", "q10")
+    modes = by_standard(entry(c, [TEXT_PASS, TEXT_PASS, TEXT_FAIL_RETRIEVAL]))
+    assert modes == {"every_time": {"retrieval": 1}, "majority": {}, "any_time": {}}
+
+
+def test_verdict_fail_keeps_its_primary_failure_under_every_standard():
+    # Explanation fails on two trials, retrieval on the other, so no trial is
+    # right and the verdict fails at explanation.
+    c = case("ch-mon-011", "q11")
+    e = entry(c, [TEXT_FAIL_EXPLANATION, TEXT_FAIL_EXPLANATION, TEXT_FAIL_RETRIEVAL])
+    assert row_verdict(e) == "fail"
+    assert by_standard(e) == {s: {"explanation": 1} for s in ("every_time", "majority", "any_time")}
+
+
+def test_only_a_shared_check_failing_is_unattributed():
+    c = case("ch-mon-012", "q12")
+    modes = by_standard(entry(c, [TEXT_FAIL_SHARED, TEXT_FAIL_SHARED, TEXT_PASS]))
+    assert modes == {s: {"unattributed": 1} for s in ("every_time", "majority")} | {"any_time": {}}
+    passing = by_standard(entry(c, [TEXT_PASS, TEXT_PASS, TEXT_FAIL_SHARED]))
+    assert passing["every_time"] == {"unattributed": 1} and passing["majority"] == {}
+
+
+def mixed_entries():
+    trials = [TEXT_PASS, TEXT_FAIL_EXPLANATION, TEXT_FAIL_RETRIEVAL, TEXT_FAIL_SHARED]
+    out = []
+    for i, combo in enumerate(itertools.product(trials, repeat=3)):
+        out.append(entry(case(f"ch-mon-{100 + i}", f"q{i}"), list(combo)))
+    # One errored row, which must stay out of every count.
+    out.append({**entry(case("ch-mon-999", "err"), [TEXT_PASS] * 3), "error": "ReadTimeout"})
+    return out
+
+
+def test_majority_standard_equals_failure_modes():
+    stats = bp.group_stats(mixed_entries())
+    assert stats["failure_modes_by_standard"]["majority"] == stats["failure_modes"]
+
+
+def test_each_standard_counts_every_wrong_scored_question_once():
+    entries = mixed_entries()
+    stats = bp.group_stats(entries)
+    scored = [e for e in entries if row_verdict(e) in ("pass", "fail")]
+    accurate = {
+        "every_time": sum(all(bp.trial_ok(t) for t in e["trials"]) for e in scored),
+        "majority": stats["passed"],
+        "any_time": sum(any(bp.trial_ok(t) for t in e["trials"]) for e in scored),
+    }
+    for standard, counts in stats["failure_modes_by_standard"].items():
+        assert sum(counts.values()) == stats["scored"] - accurate[standard], standard
+        assert all(counts.values()), "zero counts are left out"
+
+
+def test_every_time_is_at_least_majority_at_every_stage():
+    modes = bp.group_stats(mixed_entries())["failure_modes_by_standard"]
+    for stage in bp.ATTRIBUTION:
+        assert modes["every_time"].get(stage, 0) >= modes["majority"].get(stage, 0), stage
+
+
+def test_page_groups_carry_failure_modes_by_standard(tmp_path):
+    run, bench, cases, art = setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art)
+    assert page["schema_version"] == 1
+    assert page["summary"]["failure_modes_by_standard"] == {
+        "every_time": {"retrieval": 2}, "majority": {"retrieval": 1}, "any_time": {}}
+    assert all("failure_modes_by_standard" in g for g in page["types"] if g["measured"])
+    assert all("failure_modes_by_standard" in g for g in page["use_cases"])

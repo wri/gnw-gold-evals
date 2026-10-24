@@ -111,6 +111,15 @@ right on **every** trial (`every_time`); `majority` is the North Star below.
   attribution: each failed member goes to its earliest failing dedicated
   stage in `stage_order`; failures only on shared checks are `unattributed`.
   Pass + stages + unattributed = 100% of measured.
+- **Failure modes by standard** (page data only, `failure_modes_by_standard`
+  on every group): the same breakdown for each accuracy standard the page
+  can show. A question is wrong under `every_time` when any trial is wrong,
+  under `majority` when its verdict fails (identical to the failure modes
+  above), and under `any_time` when no trial is right. A failed verdict
+  counts at its primary failure; a passed verdict that was wrong on some
+  trials counts at the earliest dedicated stage that failed on any trial
+  (`challenge_rollup.failure_stage`). Each question sits at one stage under
+  every standard, so a stricter standard only adds questions.
 - **Coverage matrix**: type × stage, from `members[].stages`.
 
 ### Known limit of 2026-draft
