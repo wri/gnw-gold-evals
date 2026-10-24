@@ -6,6 +6,8 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 import benchmark_page as bp  # noqa: E402
@@ -171,3 +173,65 @@ def test_page_groups_carry_failure_modes_by_standard(tmp_path):
         "every_time": {"retrieval": 2}, "majority": {"retrieval": 1}, "any_time": {}}
     assert all("failure_modes_by_standard" in g for g in page["types"] if g["measured"])
     assert all("failure_modes_by_standard" in g for g in page["use_cases"])
+
+
+def rerun_setup(tmp_path):
+    """The base run measured both members; member b was then revised (new
+    uid) and rerun alone."""
+    run, bench, cases, art = setup(tmp_path)
+    a, b_old = (cases[e["uid"]] for e in run["results"])
+    b_new = Case(id=b_old.id, status="ready", group="g", set="monitoring", query=b_old.query,
+                 expected={"aoi_ids": "BRA.14|BRA.15", "dataset_id": "11"})
+    raw = {**bench.raw, "members": [bench.raw["members"][0],
+                                    {**bench.raw["members"][1], "uid": b_new.uid}]}
+    new_bench = from_dict(raw)
+    base = {**run, "run_id": "base", "started": "2026-10-23T09:00:00Z"}
+    rerun = {**run, "run_id": "rerun", "started": "2026-10-24T09:00:00Z",
+             "results": [entry(b_new, [PASS, PASS, PASS])]}
+    rerun_art = tmp_path / "rerun-artifacts"
+    rerun_art.mkdir()
+    return base, art, rerun, rerun_art, new_bench, {a.uid: a, b_new.uid: b_new}
+
+
+def test_combined_page_takes_unmeasured_members_from_the_base(tmp_path):
+    base, base_art, rerun, rerun_art, bench, cases = rerun_setup(tmp_path)
+    page = bp.build_page(rerun, bench, cases, rerun_art, base, base_art)
+    qs = {q["id"]: q for q in page["questions"]}
+    assert qs["ch-mon-001"]["run_id"] == "base"
+    assert qs["ch-mon-001"]["attempts"][0]["aoi_ids"] == ["BRA.14_1"]  # base artifacts
+    assert qs["ch-mon-002"]["run_id"] == "rerun"
+    assert qs["ch-mon-002"]["trials_right"] == [True, True, True]
+    assert page["run"]["run_id"] == "rerun"
+    assert page["run"]["sources"] == [
+        {"run_id": "base", "started": "2026-10-23T09:00:00Z", "questions": 1},
+        {"run_id": "rerun", "started": "2026-10-24T09:00:00Z", "questions": 1},
+    ]
+    assert page["summary"]["scored"] == 2 and page["summary"]["passed"] == 2
+
+
+def test_single_run_page_has_no_sources(tmp_path):
+    run, bench, cases, art = setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art)
+    assert "sources" not in page["run"]
+    assert {q["run_id"] for q in page["questions"]} == {"r"}
+
+
+def test_combined_page_refuses_an_uncovered_member(tmp_path):
+    base, base_art, rerun, rerun_art, bench, cases = rerun_setup(tmp_path)
+    rerun["results"] = []
+    with pytest.raises(SystemExit, match="1 active member"):
+        bp.build_page(rerun, bench, cases, rerun_art, base, base_art)
+
+
+@pytest.mark.parametrize(("field", "value", "message"), [
+    ("ff", "experimental", "cannot be combined"),
+    ("num_trials", 1, "cannot be combined"),
+    ("environment", "staging", "cannot be combined"),
+    ("started", "2026-10-25T00:00:00Z", "must be older"),
+])
+def test_base_must_match_the_rerun(field, value, message):
+    rerun = {"run_id": "rerun", "started": "2026-10-24T09:00:00Z", "environment": "prod",
+             "ff": None, "num_trials": 3, "benchmark": {}}
+    base = {**rerun, "run_id": "base", "started": "2026-10-23T09:00:00Z", field: value}
+    with pytest.raises(SystemExit, match=message):
+        bp.check_base(base, rerun)
