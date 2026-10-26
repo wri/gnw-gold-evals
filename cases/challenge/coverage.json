@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "b19649d7fbf3b71a",
+  "caseset_version": "e465ae337a5fb9a5",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -546,7 +546,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 824,
+      "dedicated": 829,
       "shared_only": 0
     },
     "analysis": {
@@ -554,7 +554,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 191,
+      "dedicated": 192,
       "shared_only": 0
     },
     "output": {
@@ -569,17 +569,17 @@
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 711,
+      "cases": 716,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 607,
+      "cases": 609,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 513,
+      "cases": 518,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
@@ -631,6 +631,11 @@
       "field": "nudge_options",
       "cases": 6,
       "switches_on": "nudge_match"
+    },
+    {
+      "field": "accept_blog_sources",
+      "cases": 3,
+      "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
     },
     {
       "field": "accept_aoi_nudge_offering",
@@ -726,8 +731,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 172,
-        "answer_graded": 25,
+        "cases": 176,
+        "answer_graded": 29,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -809,8 +814,8 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 40,
-        "answer_graded": 7,
+        "cases": 41,
+        "answer_graded": 8,
         "parameters": [],
         "context_layers": []
       },

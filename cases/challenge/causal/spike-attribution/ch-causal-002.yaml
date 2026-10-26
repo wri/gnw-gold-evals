@@ -1,5 +1,5 @@
 id: ch-causal-002
-uid: 468bf9d2f37d4b7f
+uid: 0a6a1565222c67c2
 status: ready
 set: causal
 group: spike_attribution
@@ -10,12 +10,13 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  accept_blog_sources: amazon-forest-fires-2024;forest-carbon-sink-shrinking-fires-deforestation;global-trends-forest-fires;climate-fire-feedback-loop-explained
 notes:
   difficulty: hard
   behaviour: answer with fire + driver data
   lineage: benchmark v2026 proposed set (bm26-141); USY-001217 Bolivia fires
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; expectations revised 2026-10-26 (AJ, why-questions review)'
   synthetic: 'TRUE'
   user_story_refs: USY-001555 Bolivia fires documentary
   benchmark_id: bm26-144
@@ -25,3 +26,7 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Direct from story
+  review: '2026-10-26 (AJ): a blog post fairly answers this; an answer from search_blogs passes
+    when it links one of accept_blog_sources, and a correct pull still passes. 20261023T094447Z_prod:
+    attempt 1 answered from blogs citing amazon-forest-fires-2024; attempt 2 stopped after
+    pick_dataset; attempt 3 pulled the wrong dataset.'

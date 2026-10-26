@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "b19649d7fbf3b71a",
+  "caseset_version": "e465ae337a5fb9a5",
   "case_count": 949,
   "cases": [
     {
@@ -2931,20 +2931,27 @@
     },
     {
       "id": "ch-aoi-155",
-      "uid": "fd567abb56f6e22e",
+      "uid": "7757cd8b3c77ba8b",
       "set": "aoi",
       "group": "ambiguity",
       "status": "ready",
       "behaviour": "Clarify which Amazon boundary or offer country-level breakdown",
       "query": "Describe the pattern of deforestation in the Amazon.",
       "expected_fields": [
+        "data_pull",
+        "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "spatial",
-      "dataset_ids": [],
+      "dataset_ids": [
+        "4"
+      ],
       "subtype": "ambiguity"
     },
     {
@@ -2976,7 +2983,7 @@
     },
     {
       "id": "ch-causal-002",
-      "uid": "468bf9d2f37d4b7f",
+      "uid": "0a6a1565222c67c2",
       "set": "causal",
       "group": "spike_attribution",
       "status": "ready",
@@ -2984,6 +2991,7 @@
       "behaviour": "answer with fire + driver data",
       "query": "What caused the spike in Bolivia's tree cover loss in 2024?",
       "expected_fields": [
+        "accept_blog_sources",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -2991,6 +2999,7 @@
         "start_date"
       ],
       "implied_checks": [
+        "accepted_blog_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -3005,7 +3014,7 @@
     },
     {
       "id": "ch-causal-003",
-      "uid": "c0572f500eb91739",
+      "uid": "21c059271c31b16e",
       "set": "causal",
       "group": "spike_attribution",
       "status": "ready",
@@ -3013,6 +3022,7 @@
       "behaviour": "answer with data; fire share; no invented causes",
       "query": "Why did Brazil lose so much primary forest in 2016?",
       "expected_fields": [
+        "accept_blog_sources",
         "aoi_ids",
         "context_layer",
         "data_pull",
@@ -3022,6 +3032,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_blog_match",
         "answered_without_data",
         "aoi_id_match",
         "context_layer_match",
@@ -3538,19 +3549,21 @@
     },
     {
       "id": "ch-causal-022",
-      "uid": "3d4a049d71a44090",
+      "uid": "f020f0edc3509f36",
       "set": "causal",
       "group": "why_subnational",
       "status": "ready",
       "behaviour": "Answer with fire-driven loss and drivers; caveat on causes",
       "query": "Why are our forests in Riau being burned?",
       "expected_fields": [
+        "accept_blog_sources",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_blog_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -3711,20 +3724,27 @@
     },
     {
       "id": "ch-causal-029",
-      "uid": "cf4d75fb979f8a75",
+      "uid": "d96f912b43ce3c50",
       "set": "causal",
       "group": "caveat_required",
       "status": "ready",
       "behaviour": "Explain what the data can support; no causal claim from overlap; note outbreak data is not in the catalog",
       "query": "Is there a relationship between forest loss and Ebola outbreak sites in West Africa?",
       "expected_fields": [
+        "data_pull",
+        "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "causal",
-      "dataset_ids": []
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-comp-001",
@@ -19563,20 +19583,29 @@
     },
     {
       "id": "ch-quant-166",
-      "uid": "87c710181f1a29f2",
+      "uid": "cf60f31df6349750",
       "set": "quantification",
       "group": "method",
       "status": "ready",
       "behaviour": "Explain accuracy assessment and uncertainty honestly; no invented error bars",
       "query": "How confident can I be in the DRC's 2024 tree cover loss number? Is there a margin of error?",
       "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": []
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-quant-167",
@@ -19729,20 +19758,29 @@
     },
     {
       "id": "ch-quant-173",
-      "uid": "73895657cabb96d8",
+      "uid": "c5b424c9969d2ffc",
       "set": "quantification",
       "group": "sluc",
       "status": "ready",
       "behaviour": "answer if cattle in sLUC crops; else decline and say which commodities are covered",
       "query": "What are the land-use change emissions linked to beef production in Brazil?",
       "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": []
+      "dataset_ids": [
+        "9"
+      ]
     },
     {
       "id": "ch-quant-174",
@@ -20126,20 +20164,24 @@
     },
     {
       "id": "ch-quant-190",
-      "uid": "95f7637df2759e76",
+      "uid": "4f2d6a66074b5e28",
       "set": "quantification",
       "group": "method",
       "status": "ready",
       "behaviour": "Name current version and key changes accurately; give citation",
       "query": "Which version of the tree cover loss data should I cite, and what changed from the previous version?",
       "expected_fields": [
+        "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": []
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-quant-191",
@@ -22656,17 +22698,20 @@
     },
     {
       "id": "ch-trend-081",
-      "uid": "be1c94fb2a057ea9",
+      "uid": "03476f14940be55a",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
       "behaviour": "answer with trend; must not project beyond data without caveat",
       "query": "Is Madagascar on track for zero forest loss in protected areas by 2030?",
       "expected_fields": [
+        "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
         "dataset_id_match",
         "expected_text_match"
       ],

@@ -1,5 +1,5 @@
 id: ch-causal-003
-uid: c0572f500eb91739
+uid: 21c059271c31b16e
 status: ready
 set: causal
 group: spike_attribution
@@ -13,12 +13,13 @@ expected:
   data_pull: 'TRUE'
   text: Explains the 2016 loss from the data, including the role of fire, without inventing
     causes the data does not show.
+  accept_blog_sources: global-tree-cover-loss-rose-51-percent-2016;2017-was-second-worst-year-record-tropical-tree-cover-loss;we-lost-football-pitch-primary-rainforest-every-6-seconds-2019;10-big-changes-forests-over-last-decade;world-lost-belgium-sized-area-primary-rainforests-last-year
 notes:
   difficulty: hard
   behaviour: answer with data; fire share; no invented causes
   lineage: benchmark v2026 proposed set (bm26-142); USY-001330 FDA primary loss
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; expectations revised 2026-10-26 (AJ, why-questions review)'
   synthetic: 'TRUE'
   user_story_refs: USY-001330 Forest Declaration Assessment
   benchmark_id: bm26-145
@@ -28,3 +29,7 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Story analogue
+  review: '2026-10-26 (AJ): a blog post fairly answers this; an answer from search_blogs passes
+    when it links one of accept_blog_sources, and a correct pull still passes. 20261023T094447Z_prod:
+    attempts 1 and 3 answered from blogs citing listed posts (fire-driven 2016 spike); attempt
+    2 pulled the wrong dataset.'

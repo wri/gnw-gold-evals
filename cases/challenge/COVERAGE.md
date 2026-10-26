@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version b19649d7fbf3b71a` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version e465ae337a5fb9a5` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-26_
 
@@ -89,9 +89,9 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 824 | 0 | 824 | 87% |
+| retrieval | 829 | 0 | 829 | 87% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 191 | 0 | 191 | 20% |
+| explanation | 192 | 0 | 192 | 20% |
 | output | 0 | 0 | 0 | 0% |
 | scope | 243 | 0 | 243 | 26% |
 
@@ -99,9 +99,9 @@ friends) run on top of it whenever their trigger state exists.
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 711 | dataset_id_match |
-| aoi_ids | 607 | aoi_id_match |
-| data_pull | 513 | data_pull_exists, answered_without_data |
+| dataset_id | 716 | dataset_id_match |
+| aoi_ids | 609 | aoi_id_match |
+| data_pull | 518 | data_pull_exists, answered_without_data |
 | end_date | 326 | date_extraction (with start_date) |
 | start_date | 326 | date_extraction (with end_date) |
 | forbidden_tools | 200 | forbidden_tools_absent |
@@ -112,6 +112,7 @@ friends) run on top of it whenever their trigger state exists.
 | accept_nudge_offering | 16 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | nudge_type | 12 | nudge_match |
 | nudge_options | 6 | nudge_match |
+| accept_blog_sources | 3 | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
 | accept_aoi_nudge_offering | 1 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
 | aoi_source | 0 ← unused | reference only (dashboard AOI source) |
@@ -140,12 +141,12 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 51 | 3 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 54 | 1 | — | — |
 | 3 | SBTN Natural Lands Map | 52 | 3 | — | — |
-| 4 | Tree cover loss | 172 | 25 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4, natural_forest ×0 ← gap |
+| 4 | Tree cover loss | 176 | 29 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4, natural_forest ×0 ← gap |
 | 5 | Tree cover gain | 42 | 1 | — | — |
 | 6 | Forest greenhouse gas net flux | 50 | 4 | canopy_cover ×5 | — |
 | 7 | Tree cover | 48 | 2 | canopy_cover ×10 | primary_forest ×8 |
 | 8 | Tree cover loss by dominant driver | 65 | 19 | canopy_cover ×4 | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 40 | 7 | — | — |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 41 | 8 | — | — |
 | 10 | Tree cover loss due to fires | 71 | 7 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
 | 11 | Integrated alerts | 105 | 21 | — | natural_lands ×1 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |

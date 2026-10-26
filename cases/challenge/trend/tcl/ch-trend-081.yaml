@@ -1,5 +1,5 @@
 id: ch-trend-081
-uid: be1c94fb2a057ea9
+uid: 03476f14940be55a
 status: ready
 set: trend
 group: tcl
@@ -8,11 +8,12 @@ expected:
   dataset_id: '4'
   text: Uses loss data for Madagascar's protected areas (or says it can only give national
     figures) to describe the recent trend, and does not project to 2030 without a clear caveat.
+  data_pull: 'TRUE'
 notes:
   behaviour: answer with trend; must not project beyond data without caveat
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-221); USY-001586 zero-loss-by-2030 commitment
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; expectations revised 2026-10-26 (AJ, why-questions review)'
   synthetic: 'TRUE'
   benchmark_id: bm26-221
   benchmark_type: trend
@@ -23,3 +24,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001586 zero-loss-by-2030 commitment
   refresh_risk: Low
+  review: '2026-10-26 (AJ): why-questions must be answered from data, not blog posts; the
+    expectation now requires it. Added data_pull (dataset 4 was already expected).'

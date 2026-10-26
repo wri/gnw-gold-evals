@@ -1,5 +1,5 @@
 {
-  "caseset_version": "b19649d7fbf3b71a",
+  "caseset_version": "e465ae337a5fb9a5",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -1076,7 +1076,7 @@
     },
     {
       "id": "ch-aoi-155",
-      "uid": "fd567abb56f6e22e",
+      "uid": "7757cd8b3c77ba8b",
       "set": "aoi",
       "group": "ambiguity",
       "status": "ready"
@@ -1090,14 +1090,14 @@
     },
     {
       "id": "ch-causal-002",
-      "uid": "468bf9d2f37d4b7f",
+      "uid": "0a6a1565222c67c2",
       "set": "causal",
       "group": "spike_attribution",
       "status": "ready"
     },
     {
       "id": "ch-causal-003",
-      "uid": "c0572f500eb91739",
+      "uid": "21c059271c31b16e",
       "set": "causal",
       "group": "spike_attribution",
       "status": "ready"
@@ -1230,7 +1230,7 @@
     },
     {
       "id": "ch-causal-022",
-      "uid": "3d4a049d71a44090",
+      "uid": "f020f0edc3509f36",
       "set": "causal",
       "group": "why_subnational",
       "status": "ready"
@@ -1279,7 +1279,7 @@
     },
     {
       "id": "ch-causal-029",
-      "uid": "cf4d75fb979f8a75",
+      "uid": "d96f912b43ce3c50",
       "set": "causal",
       "group": "caveat_required",
       "status": "ready"
@@ -5759,7 +5759,7 @@
     },
     {
       "id": "ch-quant-166",
-      "uid": "87c710181f1a29f2",
+      "uid": "cf60f31df6349750",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -5808,7 +5808,7 @@
     },
     {
       "id": "ch-quant-173",
-      "uid": "73895657cabb96d8",
+      "uid": "c5b424c9969d2ffc",
       "set": "quantification",
       "group": "sluc",
       "status": "ready"
@@ -5927,7 +5927,7 @@
     },
     {
       "id": "ch-quant-190",
-      "uid": "95f7637df2759e76",
+      "uid": "4f2d6a66074b5e28",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -6599,7 +6599,7 @@
     },
     {
       "id": "ch-trend-081",
-      "uid": "be1c94fb2a057ea9",
+      "uid": "03476f14940be55a",
       "set": "trend",
       "group": "tcl",
       "status": "ready"

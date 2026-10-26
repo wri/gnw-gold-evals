@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "b19649d7fbf3b71a"
+    "caseset_version": "e465ae337a5fb9a5"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -795,7 +795,7 @@
       "synthetic": true
     },
     {
-      "uid": "3d4a049d71a44090",
+      "uid": "f020f0edc3509f36",
       "id": "ch-causal-022",
       "type": "causal",
       "set": "causal",
@@ -2337,14 +2337,15 @@
       "synthetic": true
     },
     {
-      "uid": "468bf9d2f37d4b7f",
+      "uid": "0a6a1565222c67c2",
       "id": "ch-causal-002",
       "type": "causal",
       "set": "causal",
       "cohort": "spike_attribution",
       "difficulty": "hard",
       "stages": [
-        "retrieval"
+        "retrieval",
+        "explanation"
       ],
       "benchmark_id": "bm26-144",
       "use_cases": [
@@ -2354,7 +2355,7 @@
       "synthetic": true
     },
     {
-      "uid": "c0572f500eb91739",
+      "uid": "21c059271c31b16e",
       "id": "ch-causal-003",
       "type": "causal",
       "set": "causal",
@@ -2515,13 +2516,14 @@
       "synthetic": false
     },
     {
-      "uid": "fd567abb56f6e22e",
+      "uid": "7757cd8b3c77ba8b",
       "id": "ch-aoi-155",
       "type": "geospatial",
       "set": "aoi",
       "cohort": "ambiguity",
       "difficulty": "",
       "stages": [
+        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-154",
@@ -2732,13 +2734,14 @@
       "synthetic": true
     },
     {
-      "uid": "87c710181f1a29f2",
+      "uid": "cf60f31df6349750",
       "id": "ch-quant-166",
       "type": "quantification",
       "set": "quantification",
       "cohort": "method",
       "difficulty": "",
       "stages": [
+        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-166",
@@ -3019,13 +3022,14 @@
       "synthetic": true
     },
     {
-      "uid": "73895657cabb96d8",
+      "uid": "c5b424c9969d2ffc",
       "id": "ch-quant-173",
       "type": "quantification",
       "set": "quantification",
       "cohort": "sluc",
       "difficulty": "",
       "stages": [
+        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-186",
@@ -3623,7 +3627,7 @@
       "synthetic": true
     },
     {
-      "uid": "be1c94fb2a057ea9",
+      "uid": "03476f14940be55a",
       "id": "ch-trend-081",
       "type": "trend",
       "set": "trend",
@@ -4385,13 +4389,14 @@
       "synthetic": true
     },
     {
-      "uid": "95f7637df2759e76",
+      "uid": "4f2d6a66074b5e28",
       "id": "ch-quant-190",
       "type": "quantification",
       "set": "quantification",
       "cohort": "method",
       "difficulty": "",
       "stages": [
+        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-268",
@@ -4532,13 +4537,14 @@
       "synthetic": true
     },
     {
-      "uid": "cf4d75fb979f8a75",
+      "uid": "d96f912b43ce3c50",
       "id": "ch-causal-029",
       "type": "causal",
       "set": "causal",
       "cohort": "caveat_required",
       "difficulty": "",
       "stages": [
+        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-278",
