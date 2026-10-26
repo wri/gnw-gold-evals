@@ -20,7 +20,7 @@ import re
 from typing import Any
 
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
-from goldset.evaluators.utils import normalize_value
+from goldset.evaluators.utils import link_slug, normalize_value, parse_slugs
 
 # Substantive prose (vs a bare refusal/greeting): anything this long that
 # arrives with no data behind it is an answer the user will believe.
@@ -74,6 +74,7 @@ def evaluate_guards(
     expects_data_pull: bool,
     expected_answer: str,
     expected_dataset_id: str,
+    accepted_blog_sources: str = "",
 ) -> dict[str, Any]:
     result: dict[str, Any] = {
         "chart_produced_score": None,
@@ -105,12 +106,15 @@ def evaluate_guards(
         result["answered_without_data_score"] = 0.0 if violated else 1.0
 
     # G2 — web_fallback: external citations in a data-pull answer signal the
-    # answer came from web knowledge, not the pulled data.
+    # answer came from web knowledge, not the pulled data. Posts the case
+    # accepts as an answer (accept_blog_sources) are not a fallback.
     if expects_data_pull and answer_text:
+        accepted = parse_slugs(accepted_blog_sources)
         links = [
             link
             for link in _LINK_RE.findall(answer_text)
             if not any(domain in link.lower() for domain in _OWN_DOMAINS)
+            and link_slug(link) not in accepted
         ]
         result["web_fallback_score"] = 0.0 if links else 1.0
         if links:

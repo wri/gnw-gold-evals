@@ -1,9 +1,12 @@
-"""The accepted-nudge path: a nudge offering every listed dataset (or area)
-passes, and the pull checks are not applicable on that attempt.
+"""The accepted alternative paths: a nudge offering every listed dataset (or
+area), or an answer from search_blogs citing an accepted post, passes, and the
+pull checks are not applicable on that attempt.
 
 Usage
 $ uv run pytest tests/test_accepted_nudge.py -v
 """
+
+from types import SimpleNamespace
 
 from goldset.buckets import (
     PULL_PATH_CHECKS,
@@ -12,10 +15,12 @@ from goldset.buckets import (
     row_verdict,
 )
 from goldset.eval_types import ExpectedData
+from goldset.evaluators.accepted_blog import blog_path, evaluate_accepted_blog
 from goldset.evaluators.accepted_nudge import (
     evaluate_accepted_nudge,
     nudge_path,
 )
+from goldset.evaluators.guards import evaluate_guards
 from goldset.registry import EVALUATORS
 from goldset.runner.base import BaseTestRunner
 
@@ -202,4 +207,82 @@ def test_reconcile_excuses_the_area_check_on_an_area_choice():
                 "accept_aoi_nudge_offering": "BRA.14"}
     row = {"uid": "u", "id": "c", "checks": {"accepted_nudge_match": 1.0,
            "aoi_id_match": None}}
+    assert reconcile([row], {"u": expected})["missing"] == []
+
+
+# --- accepted blog path ---------------------------------------------------
+
+RIAU = "https://www.wri.org/insights/preventing-forest-fires-indonesia-focus-riau-province-peatland-and-illegal-burning"
+OTHER = "https://www.wri.org/insights/some-other-post"
+ACCEPTED = "preventing-forest-fires-indonesia-focus-riau-province-peatland-and-illegal-burning;peering-through-haze-what-data-can-tell-us-about-fires-indonesia"
+
+
+def _blog_state(answer, pulled=False):
+    """Agent state answering from search_blogs, shaped like ch-causal-022's."""
+    state = {
+        "messages": [
+            SimpleNamespace(tool_calls=[{"name": "search_blogs", "args": {}}], content=""),
+            SimpleNamespace(tool_calls=None, content=answer),
+        ],
+        "charts_data": [],
+    }
+    if pulled:
+        state["statistics"] = [{"source_url": "https://x/analytics", "dataset_id": 10}]
+    return state
+
+
+def test_a_blog_answer_citing_an_accepted_post_passes():
+    result = evaluate_accepted_blog(_blog_state(f"Peat fires ([source]({RIAU}#p3))."), ACCEPTED)
+    assert result["accepted_blog_match_score"] == 1.0
+    assert "preventing-forest-fires" in result["actual_blog_sources_cited"]
+
+
+def test_a_blog_answer_citing_only_other_posts_or_nothing_fails():
+    assert evaluate_accepted_blog(_blog_state(f"See {OTHER}"), ACCEPTED)[
+        "accepted_blog_match_score"] == 0.0
+    assert evaluate_accepted_blog(_blog_state("Fires burn peat."), ACCEPTED)[
+        "accepted_blog_match_score"] == 0.0
+
+
+def test_the_blog_path_needs_search_blogs_and_no_pull():
+    assert not blog_path(_blog_state(RIAU, pulled=True), ACCEPTED)
+    assert not blog_path({"messages": [SimpleNamespace(tool_calls=None, content=RIAU)]}, ACCEPTED)
+    assert not blog_path(_blog_state(RIAU), "")
+
+
+def test_runner_skips_pull_and_area_checks_on_the_blog_path():
+    expected = ExpectedData(
+        expected_aoi_ids="IDN.24", expected_dataset_id="10;8;11",
+        expected_data_pull="TRUE", expected_accept_blog_sources=ACCEPTED,
+    )
+    evaluations = _Probe()._run_evaluations(_blog_state(f"[x]({RIAU})"), expected, "q", None)
+    assert evaluations["accepted_blog_match_score"] == 1.0
+    assert evaluations["aoi_id_match_score"] is None
+    for check in PULL_PATH_CHECKS:
+        assert evaluations[f"{check}_score"] is None, check
+
+
+def test_web_fallback_ignores_accepted_posts_on_the_pull_path():
+    state = {"messages": [SimpleNamespace(content=f"Loss rose ([a]({RIAU})).")],
+             "statistics": [{"source_url": "https://x", "dataset_id": 10}], "charts_data": []}
+    allowed = evaluate_guards(state, True, "", "10", accepted_blog_sources=ACCEPTED)
+    assert allowed["web_fallback_score"] == 1.0
+    state["messages"][0].content += f" See {OTHER}."
+    assert evaluate_guards(state, True, "", "10", accepted_blog_sources=ACCEPTED)[
+        "web_fallback_score"] == 0.0
+
+
+def test_rows_on_the_blog_path_are_judged_by_attempt_majority():
+    blog_ok = {"accepted_blog_match": 1.0, "data_pull_exists": None}
+    pull_fail = {"accepted_blog_match": None, "data_pull_exists": 0.0}
+    entry = {"checks": {"accepted_blog_match": 1.0, "data_pull_exists": 0.0},
+             "trials": [{"checks": pull_fail}, {"checks": blog_ok}, {"checks": blog_ok}]}
+    assert row_verdict(entry) == "pass"
+
+
+def test_reconcile_owes_a_blog_row_only_its_path_checks():
+    expected = {"aoi_ids": "IDN.24", "dataset_id": "10", "data_pull": "TRUE",
+                "accept_blog_sources": ACCEPTED}
+    assert "accepted_blog_match" in implied_checks(expected)
+    row = {"uid": "u", "id": "c", "checks": {"accepted_blog_match": 1.0, "aoi_id_match": None}}
     assert reconcile([row], {"u": expected})["missing"] == []

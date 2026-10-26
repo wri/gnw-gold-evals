@@ -129,11 +129,12 @@ const BUCKET_INFO = {
   scope:       ["Doing the right amount", "Did it answer, suggest, ask for clarification, or refuse — whichever was appropriate?"],
 };
 
-// Mirrors buckets.row_verdict: a row whose attempts took the accepted-nudge
-// path is judged by the majority of its attempt verdicts.
+// Mirrors buckets.row_verdict: a row whose attempts took an accepted
+// alternative path (nudge or blog) is judged by the majority of its attempt
+// verdicts.
 function tookNudgePath(checks) {
   return Object.entries(checks || {})
-    .some(([n, v]) => baseName(n) === "accepted_nudge_match" && v !== null);
+    .some(([n, v]) => ["accepted_nudge_match", "accepted_blog_match"].includes(baseName(n)) && v !== null);
 }
 
 function verdictOf(entry, infoOnly) {
@@ -243,6 +244,7 @@ const CHECK_EXPECTED_FIELDS = {
   chart_type_match: ["chart_type"], scope_match: ["scope"],
   forbidden_tools_absent: ["forbidden_tools"],
   accepted_nudge_match: ["accept_nudge_offering", "accept_aoi_nudge_offering"],
+  accepted_blog_match: ["accept_blog_sources"],
   class_value_match: ["class_values"],
   dashboard_created: ["dashboard_created"],
   dashboard_aoi_match: ["aoi_ids"],

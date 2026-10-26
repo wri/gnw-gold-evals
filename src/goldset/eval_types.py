@@ -213,6 +213,9 @@ class ExpectedData(BaseModel):
     expected_accept_nudge_offering: str = ""
     # The same for an aoi_choice nudge: area ids (;-separated) it must offer.
     expected_accept_aoi_nudge_offering: str = ""
+    # Insights article slugs (;-separated) an answer from search_blogs may
+    # cite instead of pulling data (evaluators/accepted_blog.py).
+    expected_accept_blog_sources: str = ""
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""

@@ -173,7 +173,7 @@ const GROUPS = [
     "context_layer_match","date_extraction","data_pull_exists","pull_source_match",
     "answered_without_data","state_delta"]],
   ["analysis", ["chart_integrity"]],
-  ["explanation", ["expected_text_match","web_fallback"]],
+  ["explanation", ["expected_text_match","web_fallback","accepted_blog_match"]],
   ["output", ["chart_produced","chart_well_formed","chart_type_match",
     "dashboard_aoi_match","dashboard_widgets_match","dashboard_widgets_valid"]],
   ["scope", ["scope_match","clarification_requested","suggested_datasets_match","nudge_match","forbidden_tools_absent","accepted_nudge_match"]],
@@ -192,6 +192,7 @@ const EXPECTED_FIELD = {
   chart_type_match:["chart_type"], scope_match:["scope"],
   forbidden_tools_absent:["forbidden_tools"],
   accepted_nudge_match:["accept_nudge_offering","accept_aoi_nudge_offering"],
+  accepted_blog_match:["accept_blog_sources"],
 };
 const GUARD_NOTE = {
   chart_produced:"implied by expected.answer", data_pull_exists:"implied by the expectations",
@@ -238,11 +239,12 @@ function flakySet(entry) {
   return flaky;
 }
 
-// Mirrors buckets.row_verdict: a row whose attempts took the accepted-nudge
-// path is judged by the majority of its attempt verdicts.
+// Mirrors buckets.row_verdict: a row whose attempts took an accepted
+// alternative path (nudge or blog) is judged by the majority of its attempt
+// verdicts.
 function tookNudgePath(checks) {
   return Object.entries(checks || {})
-    .some(([n, v]) => base(n) === "accepted_nudge_match" && v !== null);
+    .some(([n, v]) => ["accepted_nudge_match", "accepted_blog_match"].includes(base(n)) && v !== null);
 }
 
 function verdict(entry, infoOnly) {

@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Any
 
 from goldset.eval_types import ExpectedData, TestResult
+from goldset.evaluators.accepted_blog import blog_path
 from goldset.evaluators.accepted_nudge import AOI_CHOICE, nudge_path
 from goldset.registry import EVALUATORS
 
@@ -137,8 +138,9 @@ class BaseTestRunner(ABC):
         — identical order and merge semantics to the hand-written sequence
         this replaces (later evaluators win key collisions).
 
-        An attempt judged on the accepted-nudge path skips the evaluators
-        that presume a pull (and, at an area choice, a chosen area) and
+        An attempt judged on an accepted alternative path (a nudge, or an
+        answer from accepted blog posts) skips the evaluators that presume a
+        pull (and, at an area choice or on the blog path, a chosen area) and
         records their checks as null: not applicable, rather than failed for
         a step the case did not require.
         """
@@ -148,10 +150,13 @@ class BaseTestRunner(ABC):
             agent_state,
             expected_data.expected_accept_nudge_offering,
             expected_data.expected_accept_aoi_nudge_offering,
-        )
+        ) or ("blog" if blog_path(
+            agent_state, expected_data.expected_accept_blog_sources
+        ) else None)
         for spec in EVALUATORS:
             if path and (
-                spec.presumes_pull or (path == AOI_CHOICE and spec.presumes_area)
+                spec.presumes_pull
+                or (path in (AOI_CHOICE, "blog") and spec.presumes_area)
             ):
                 evaluations.update(dict.fromkeys(spec.score_fields))
                 continue

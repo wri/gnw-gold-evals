@@ -178,6 +178,7 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`scope_match`](#scope_match) | scope | deterministic | gates | `scope` | `scope_checks.py:54` |
 | [`forbidden_tools_absent`](#forbidden_tools_absent) | scope | deterministic | gates | `forbidden_tools` | `tool_checks.py` |
 | [`accepted_nudge_match`](#accepted_nudge_match) | scope | deterministic | gates (nudge path only) | `accept_nudge_offering` and/or `accept_aoi_nudge_offering` | `accepted_nudge.py` |
+| [`accepted_blog_match`](#accepted_blog_match) | explanation | deterministic | gates (blog path only) | `accept_blog_sources` | `accepted_blog.py` |
 
 Two expected fields drive **no** check of their own: `aoi_source` is read only by
 `dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
@@ -839,7 +840,8 @@ cites the web — the second half of the 1-030 signal (`guards.py:107-117`).
 
 **`null` vs `0.0`**: `null` when no pull was expected or the answer is empty.
 `0.0` when the answer contains **any** link (`https?://…` or `www.…`) outside the
-product's own domains (`guards.py:37-38`, `109-115`).
+product's own domains (`guards.py:37-38`, `109-115`), other than a post the case
+lists in `accept_blog_sources` (see [`accepted_blog_match`](#accepted_blog_match)).
 
 **Reason**: none; `actuals.web_fallback` = `actual_web_links`, up to five
 deduplicated sorted links.
@@ -1267,6 +1269,36 @@ ids (the offer is unreadable, so the check abstains; the pull checks stay
 
 **Reason**: none; `actuals.accepted_nudge_match` = the nudge kind and the ids
 offered.
+
+## `accepted_blog_match`
+
+**Measures** whether an answer given from `search_blogs` links at least one of
+the Insights posts the case lists in `accept_blog_sources` (`accepted_blog.py`).
+Posts are listed by slug, the last segment of their URL, so the WRI and LCL
+copies of one post match alike.
+
+**Why it exists**: AJ decided on 2026-10-26, reviewing the 19 BENCHMARK "why"
+questions answered from blogs, that three are fairly answered by named posts
+(Bolivia's 2024 fires, Brazil's 2016 fires, burning in Riau) and the rest must
+be answered from data. Like the accepted nudge, it is a second path:
+
+- **Blog path**: the attempt called `search_blogs` and pulled no data. This
+  check scores the citation; the `presumes_pull` evaluators and `aoi_id_match`
+  are skipped and recorded `null`, since a blog answer needs neither.
+- **Pull path**: anything else. This check is `null`, and `web_fallback` does
+  not count links to the listed posts.
+
+Rows with an attempt on either alternative path are judged by attempt
+majority (`buckets.row_verdict`).
+
+**Fires on** `accept_blog_sources`. Opt-in, so no GOLD row fires it.
+
+**`null` vs `0.0`**: `null` when no posts are listed and on the pull path.
+`0.0` on the blog path when the answer links none of the listed posts,
+including when it links nothing: an unattributed blog answer cannot be told
+apart from an invented one.
+
+**Reason**: none; `actuals.accepted_blog_match` = the slugs the answer linked.
 
 ---
 

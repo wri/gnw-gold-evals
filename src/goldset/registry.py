@@ -28,6 +28,7 @@ from goldset.evaluators import (
     evaluate_nudge,
     evaluate_suggested_datasets,
 )
+from goldset.evaluators.accepted_blog import evaluate_accepted_blog
 from goldset.evaluators.accepted_nudge import evaluate_accepted_nudge
 from goldset.evaluators.analysis_checks import (
     evaluate_chart_integrity,
@@ -200,6 +201,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expects_data_pull=expected.expects_data_pull(),
             expected_answer=expected.expected_answer,
             expected_dataset_id=expected.expected_dataset_id,
+            accepted_blog_sources=expected.expected_accept_blog_sources,
         ),
         presumes_pull=True,
     ),
@@ -248,6 +250,14 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             state,
             expected.expected_accept_nudge_offering,
             expected.expected_accept_aoi_nudge_offering,
+        ),
+    ),
+    EvaluatorSpec(
+        name="accepted_blog",
+        kind="deterministic",
+        score_fields=("accepted_blog_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_accepted_blog(
+            state, expected.expected_accept_blog_sources
         ),
     ),
     EvaluatorSpec(

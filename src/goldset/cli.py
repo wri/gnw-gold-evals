@@ -82,6 +82,7 @@ ACTUALS_FOR_CHECK = {
     "scope_match": ("actual_scope",),
     "forbidden_tools_absent": ("actual_forbidden_tools_called",),
     "accepted_nudge_match": ("actual_nudge_offered",),
+    "accepted_blog_match": ("actual_blog_sources_cited",),
     "class_value_match": ("actual_class_values",),
     "answer_traceability": ("actual_traceability_claim",),
     "dashboard_created": ("actual_dashboard_created",),

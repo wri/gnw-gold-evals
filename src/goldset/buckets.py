@@ -58,6 +58,8 @@ DEDICATED: dict[str, str] = {
     "forbidden_tools_absent": SCOPE,
     # Opt-in: a dataset_choice nudge offering every listed dataset passes
     "accepted_nudge_match": SCOPE,
+    # Opt-in: an answer from search_blogs citing an accepted post passes
+    "accepted_blog_match": EXPLANATION,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,
 }
@@ -121,6 +123,9 @@ PULL_PATH_CHECKS: frozenset[str] = frozenset(
     }
 )
 ACCEPTED_NUDGE = "accepted_nudge_match"
+# One check per accepted alternative path; an attempt that took one leaves
+# the pull-path checks null (see row_verdict).
+ALTERNATIVE_PATH_CHECKS: frozenset[str] = frozenset({ACCEPTED_NUDGE, "accepted_blog_match"})
 
 
 _TURN_PREFIX = re.compile(r"^t\d+\.")
@@ -143,9 +148,9 @@ def buckets_for(check: str) -> tuple[str, ...]:
     return SHARED.get(check, ())
 
 
-def _took_nudge_path(checks: dict[str, Any]) -> bool:
+def _took_alternative_path(checks: dict[str, Any]) -> bool:
     return any(
-        base_check_name(name) == ACCEPTED_NUDGE and value is not None
+        base_check_name(name) in ALTERNATIVE_PATH_CHECKS and value is not None
         for name, value in checks.items()
     )
 
@@ -153,8 +158,8 @@ def _took_nudge_path(checks: dict[str, Any]) -> bool:
 def row_verdict(entry: dict[str, Any]) -> str:
     """pass | fail | error | uncovered, per the rules above.
 
-    A row whose case accepts a nudge can pass by either path, and its
-    attempts may take different ones; each path leaves the other's checks
+    A row whose case accepts a nudge or a blog answer can pass by either
+    path, and its attempts may take different ones; each path leaves the other's checks
     null, so a per-check majority would let a check measured on one attempt
     decide the row. Such rows pass when the majority of their scored
     attempts pass (ties fail, as in ``ledger.majority``).
@@ -166,7 +171,7 @@ def row_verdict(entry: dict[str, Any]) -> str:
     if isinstance(trials, dict):
         trials = list(trials.values())
     trials = [trial for trial in trials if isinstance(trial, dict)]
-    if any(_took_nudge_path(trial.get("checks") or {}) for trial in trials):
+    if any(_took_alternative_path(trial.get("checks") or {}) for trial in trials):
         verdicts = [row_verdict({"checks": trial.get("checks") or {}}) for trial in trials]
         scored = [verdict for verdict in verdicts if verdict in ("pass", "fail")]
         if not scored:
@@ -290,21 +295,27 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("forbidden_tools_absent")
     if expected.get("accept_nudge_offering") or expected.get("accept_aoi_nudge_offering"):
         implied.add(ACCEPTED_NUDGE)
+    if expected.get("accept_blog_sources"):
+        implied.add("accepted_blog_match")
     return implied
 
 
 def _implied_for_entry(implied: set[str], checks: dict[str, Any]) -> set[str]:
-    """A case that accepts a nudge implies both paths' checks; a row only
-    owes the checks of the path it took (see ``row_verdict``)."""
-    if not any(base_check_name(check) == ACCEPTED_NUDGE for check in implied):
+    """A case that accepts a nudge or a blog answer implies every path's
+    checks; a row only owes the checks of the path it took (see
+    ``row_verdict``)."""
+    if not any(base_check_name(check) in ALTERNATIVE_PATH_CHECKS for check in implied):
         return implied
-    if _took_nudge_path(checks):
-        # An area-choice nudge also leaves aoi_id_match null: no area yet.
+    if _took_alternative_path(checks):
+        # An area-choice nudge or a blog answer also leaves aoi_id_match
+        # null: no area is chosen on those paths.
         skipped = PULL_PATH_CHECKS | (
             {"aoi_id_match"} if checks.get("aoi_id_match") is None else set()
         )
+        taken = {name for name in ALTERNATIVE_PATH_CHECKS if checks.get(name) is not None}
+        skipped |= ALTERNATIVE_PATH_CHECKS - taken
         return {c for c in implied if base_check_name(c) not in skipped}
-    return {c for c in implied if base_check_name(c) != ACCEPTED_NUDGE}
+    return {c for c in implied if base_check_name(c) not in ALTERNATIVE_PATH_CHECKS}
 
 
 def implied_checks_for_case(case: Any) -> set[str]:

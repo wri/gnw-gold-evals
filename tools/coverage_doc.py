@@ -78,6 +78,7 @@ FIELD_CHECKS = {
     "forbidden_tools": "forbidden_tools_absent",
     "accept_nudge_offering": "accepted_nudge_match (nudge path; pull-path checks n/a there)",
     "accept_aoi_nudge_offering": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)",
+    "accept_blog_sources": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts",
     "aoi_source": "reference only (dashboard AOI source)",
     "dataset_name": "reference only",
 }

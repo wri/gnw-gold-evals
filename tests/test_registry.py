@@ -29,6 +29,7 @@ EXPECTED_ORDER = (
     "output_checks",
     "scope",
     "accepted_nudge",
+    "accepted_blog",
     "tool_scope",
 )
 
@@ -42,7 +43,8 @@ def test_every_known_score_field_is_owned_exactly_once():
     # companion to charts_answer_score (H5).
     # 29 from 2026-09-25: forbidden_tools_absent_score (CHALLENGE dataset set).
     # 30 from 2026-10-26: accepted_nudge_match_score (BENCHMARK nudge path).
-    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 30
+    # 31 from 2026-10-26: accepted_blog_match_score (BENCHMARK blog path).
+    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 31
 
 
 def test_run_evaluations_with_no_expectations_scores_nothing():
