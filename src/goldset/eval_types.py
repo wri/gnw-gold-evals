@@ -207,6 +207,10 @@ class ExpectedData(BaseModel):
     # Tools the agent must not call (;-separated; CHALLENGE dataset set). Opt-in:
     # empty means no check (tool_checks.evaluate_forbidden_tools).
     expected_forbidden_tools: str = ""
+    # Dataset ids (;-separated) a dataset_choice nudge must all offer for the
+    # attempt to pass on the nudge path (evaluators/accepted_nudge.py).
+    # Opt-in: empty means a nudge is judged like any other non-pull.
+    expected_accept_nudge_offering: str = ""
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""

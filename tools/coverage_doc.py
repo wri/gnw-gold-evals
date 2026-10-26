@@ -76,6 +76,7 @@ FIELD_CHECKS = {
     "chart_type": "chart_type_match",
     "scope": "scope_match",
     "forbidden_tools": "forbidden_tools_absent",
+    "accept_nudge_offering": "accepted_nudge_match (nudge path; pull-path checks n/a there)",
     "aoi_source": "reference only (dashboard AOI source)",
     "dataset_name": "reference only",
 }

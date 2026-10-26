@@ -56,6 +56,8 @@ DEDICATED: dict[str, str] = {
     "scope_match": SCOPE,
     # CHALLENGE dataset set: opt-in tool-scope isolation
     "forbidden_tools_absent": SCOPE,
+    # Opt-in: a dataset_choice nudge offering every listed dataset passes
+    "accepted_nudge_match": SCOPE,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,
 }
@@ -92,6 +94,35 @@ INFO_ONLY: frozenset[str] = frozenset(
 )
 
 
+# Checks that presuppose a data pull: the evaluators the registry marks
+# ``presumes_pull``. On an attempt judged on the accepted-nudge path they
+# are null (not applicable), and accepted_nudge_match speaks instead.
+PULL_PATH_CHECKS: frozenset[str] = frozenset(
+    {
+        "dataset_id_match",
+        "dataset_parameter_match",
+        "context_layer_match",
+        "date_coverage",
+        "date_extraction",
+        "data_pull_exists",
+        "charts_answer",
+        "charts_answer_judge",
+        "agent_answer",
+        "expected_text_match",
+        "chart_produced",
+        "answered_without_data",
+        "web_fallback",
+        "pull_source_match",
+        "class_value_match",
+        "chart_integrity",
+        "answer_traceability",
+        "chart_well_formed",
+        "chart_type_match",
+    }
+)
+ACCEPTED_NUDGE = "accepted_nudge_match"
+
+
 _TURN_PREFIX = re.compile(r"^t\d+\.")
 
 
@@ -112,10 +143,36 @@ def buckets_for(check: str) -> tuple[str, ...]:
     return SHARED.get(check, ())
 
 
+def _took_nudge_path(checks: dict[str, Any]) -> bool:
+    return any(
+        base_check_name(name) == ACCEPTED_NUDGE and value is not None
+        for name, value in checks.items()
+    )
+
+
 def row_verdict(entry: dict[str, Any]) -> str:
-    """pass | fail | error | uncovered, per the rules above."""
+    """pass | fail | error | uncovered, per the rules above.
+
+    A row whose case accepts a nudge can pass by either path, and its
+    attempts may take different ones; each path leaves the other's checks
+    null, so a per-check majority would let a check measured on one attempt
+    decide the row. Such rows pass when the majority of their scored
+    attempts pass (ties fail, as in ``ledger.majority``).
+    """
     if entry.get("error") or entry.get("judge_errors"):
         return "error"
+    # The ledger writes a list (cli.merge_trials); older fixtures a dict.
+    trials = entry.get("trials") or []
+    if isinstance(trials, dict):
+        trials = list(trials.values())
+    trials = [trial for trial in trials if isinstance(trial, dict)]
+    if any(_took_nudge_path(trial.get("checks") or {}) for trial in trials):
+        verdicts = [row_verdict({"checks": trial.get("checks") or {}}) for trial in trials]
+        scored = [verdict for verdict in verdicts if verdict in ("pass", "fail")]
+        if not scored:
+            return "uncovered"
+        passes = sum(1 for verdict in scored if verdict == "pass")
+        return "pass" if passes * 2 > len(scored) else "fail"
     evaluated = {
         name: value
         for name, value in entry.get("checks", {}).items()
@@ -231,7 +288,19 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("scope_match")
     if expected.get("forbidden_tools"):
         implied.add("forbidden_tools_absent")
+    if expected.get("accept_nudge_offering"):
+        implied.add(ACCEPTED_NUDGE)
     return implied
+
+
+def _implied_for_entry(implied: set[str], checks: dict[str, Any]) -> set[str]:
+    """A case that accepts a nudge implies both paths' checks; a row only
+    owes the checks of the path it took (see ``row_verdict``)."""
+    if not any(base_check_name(check) == ACCEPTED_NUDGE for check in implied):
+        return implied
+    if _took_nudge_path(checks):
+        return {c for c in implied if base_check_name(c) not in PULL_PATH_CHECKS}
+    return {c for c in implied if base_check_name(c) != ACCEPTED_NUDGE}
 
 
 def implied_checks_for_case(case: Any) -> set[str]:
@@ -267,6 +336,7 @@ def reconcile(
             unmatched_rows += 1
             continue
         implied = expected if isinstance(expected, set) else implied_checks(expected)
+        implied = _implied_for_entry(implied, entry.get("checks", {}))
         for check in sorted(implied):
             implied_total += 1
             if entry.get("checks", {}).get(check) is not None:

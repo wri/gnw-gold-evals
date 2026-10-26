@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Any
 
 from goldset.eval_types import ExpectedData, TestResult
+from goldset.evaluators.accepted_nudge import takes_nudge_path
 from goldset.registry import EVALUATORS
 
 
@@ -135,10 +136,20 @@ class BaseTestRunner(ABC):
         Iterates the registry in its declared order and merges result dicts
         — identical order and merge semantics to the hand-written sequence
         this replaces (later evaluators win key collisions).
+
+        An attempt judged on the accepted-nudge path skips the evaluators
+        that presume a pull and records their checks as null: not applicable,
+        rather than failed for a pull the case did not require.
         """
         evaluations: dict[str, Any] = {}
         judge_errors: list[str] = []
+        nudge_path = takes_nudge_path(
+            agent_state, expected_data.expected_accept_nudge_offering
+        )
         for spec in EVALUATORS:
+            if nudge_path and spec.presumes_pull:
+                evaluations.update(dict.fromkeys(spec.score_fields))
+                continue
             result = spec.run(agent_state, expected_data, query, dashboard)
             judge_errors.extend(result.pop("judge_errors", []) or [])
             evaluations.update(result)

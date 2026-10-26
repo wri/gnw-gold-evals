@@ -176,7 +176,7 @@ const GROUPS = [
   ["explanation", ["expected_text_match","web_fallback"]],
   ["output", ["chart_produced","chart_well_formed","chart_type_match",
     "dashboard_aoi_match","dashboard_widgets_match","dashboard_widgets_valid"]],
-  ["scope", ["scope_match","clarification_requested","suggested_datasets_match","nudge_match","forbidden_tools_absent"]],
+  ["scope", ["scope_match","clarification_requested","suggested_datasets_match","nudge_match","forbidden_tools_absent","accepted_nudge_match"]],
   ["shared", ["charts_answer","agent_answer","dashboard_created"]],
   ["info", ["date_coverage","answer_traceability","class_value_match"]],
 ];
@@ -191,6 +191,7 @@ const EXPECTED_FIELD = {
   dashboard_aoi_match:["aoi_ids"], class_value_match:["class_values"],
   chart_type_match:["chart_type"], scope_match:["scope"],
   forbidden_tools_absent:["forbidden_tools"],
+  accepted_nudge_match:["accept_nudge_offering"],
 };
 const GUARD_NOTE = {
   chart_produced:"implied by expected.answer", data_pull_exists:"implied by the expectations",
@@ -237,8 +238,23 @@ function flakySet(entry) {
   return flaky;
 }
 
+// Mirrors buckets.row_verdict: a row whose attempts took the accepted-nudge
+// path is judged by the majority of its attempt verdicts.
+function tookNudgePath(checks) {
+  return Object.entries(checks || {})
+    .some(([n, v]) => base(n) === "accepted_nudge_match" && v !== null);
+}
+
 function verdict(entry, infoOnly) {
   if (entry.error || (entry.judge_errors || []).length) return "error";
+  const trials = entry.trials || [];
+  if (trials.some(t => tookNudgePath(t.checks))) {
+    const scoredTrials = trials.map(t => verdict({ checks: t.checks }, infoOnly))
+      .filter(v => v === "pass" || v === "fail");
+    if (!scoredTrials.length) return "uncovered";
+    const passes = scoredTrials.filter(v => v === "pass").length;
+    return passes * 2 > scoredTrials.length ? "pass" : "fail";
+  }
   const gating = Object.entries(entry.checks || {})
     .filter(([n, v]) => v !== null && !infoOnly.has(base(n)));
   if (!gating.length) return "uncovered";

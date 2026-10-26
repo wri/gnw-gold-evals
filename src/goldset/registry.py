@@ -28,6 +28,7 @@ from goldset.evaluators import (
     evaluate_nudge,
     evaluate_suggested_datasets,
 )
+from goldset.evaluators.accepted_nudge import evaluate_accepted_nudge
 from goldset.evaluators.analysis_checks import (
     evaluate_chart_integrity,
     evaluate_class_values,
@@ -53,6 +54,9 @@ class EvaluatorSpec:
     kind: str  # "deterministic" | "llm_judge" | "mixed"
     score_fields: tuple[str, ...]
     run: EvaluatorFn
+    # Its checks only make sense after a data pull, so an attempt judged on
+    # the accepted-nudge path skips it and records null (accepted_nudge.py).
+    presumes_pull: bool = False
 
 
 EVALUATORS: tuple[EvaluatorSpec, ...] = (
@@ -87,6 +91,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected.expected_context_layer,
             query,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="date_coverage",
@@ -97,6 +102,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected_start_date=expected.expected_start_date,
             expected_end_date=expected.expected_end_date,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="date_extraction",
@@ -108,6 +114,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected_end_date=expected.expected_end_date,
             tolerance_days=expected.expected_date_tolerance_days,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="data_pull",
@@ -116,6 +123,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_data_pull(
             state, expects_data_pull=expected.expects_data_pull(), query=query
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="answer",
@@ -129,6 +137,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_final_answer(
             state, expected.expected_answer, expected.expected_text, query
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="suggested_datasets",
@@ -188,6 +197,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected_answer=expected.expected_answer,
             expected_dataset_id=expected.expected_dataset_id,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="analysis_checks",
@@ -197,6 +207,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             **evaluate_class_values(state, expected.expected_class_values),
             **evaluate_chart_integrity(state),
         },
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="traceability",
@@ -205,6 +216,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: (
             evaluate_answer_traceability(state)
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="output_checks",
@@ -214,6 +226,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             **evaluate_chart_well_formed(state),
             **evaluate_chart_type(state, expected.expected_chart_type),
         },
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="scope",
@@ -221,6 +234,14 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         score_fields=("scope_match_score",),
         run=lambda state, expected, query, dashboard: evaluate_scope(
             state, expected.expected_scope
+        ),
+    ),
+    EvaluatorSpec(
+        name="accepted_nudge",
+        kind="deterministic",
+        score_fields=("accepted_nudge_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_accepted_nudge(
+            state, expected.expected_accept_nudge_offering
         ),
     ),
     EvaluatorSpec(

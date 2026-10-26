@@ -129,8 +129,23 @@ const BUCKET_INFO = {
   scope:       ["Doing the right amount", "Did it answer, suggest, ask for clarification, or refuse — whichever was appropriate?"],
 };
 
+// Mirrors buckets.row_verdict: a row whose attempts took the accepted-nudge
+// path is judged by the majority of its attempt verdicts.
+function tookNudgePath(checks) {
+  return Object.entries(checks || {})
+    .some(([n, v]) => baseName(n) === "accepted_nudge_match" && v !== null);
+}
+
 function verdictOf(entry, infoOnly) {
   if (entry.error || (entry.judge_errors || []).length) return "error";
+  const trials = entry.trials || [];
+  if (trials.some(t => tookNudgePath(t.checks))) {
+    const scoredTrials = trials.map(t => checksVerdict(t.checks, infoOnly))
+      .filter(v => v === "pass" || v === "fail");
+    if (!scoredTrials.length) return "uncovered";
+    const passes = scoredTrials.filter(v => v === "pass").length;
+    return passes * 2 > scoredTrials.length ? "pass" : "fail";
+  }
   const scored = Object.entries(entry.checks || {})
     .filter(([n, v]) => v !== null && !infoOnly.includes(baseName(n)));
   if (!scored.length) return "uncovered";
@@ -227,6 +242,7 @@ const CHECK_EXPECTED_FIELDS = {
   nudge_match: ["nudge_type", "nudge_options"],
   chart_type_match: ["chart_type"], scope_match: ["scope"],
   forbidden_tools_absent: ["forbidden_tools"],
+  accepted_nudge_match: ["accept_nudge_offering"],
   class_value_match: ["class_values"],
   dashboard_created: ["dashboard_created"],
   dashboard_aoi_match: ["aoi_ids"],
