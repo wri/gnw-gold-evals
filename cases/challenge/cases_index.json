@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "e465ae337a5fb9a5",
+  "caseset_version": "c936492a6b5e56bd",
   "case_count": 949,
   "cases": [
     {
@@ -2931,27 +2931,20 @@
     },
     {
       "id": "ch-aoi-155",
-      "uid": "7757cd8b3c77ba8b",
+      "uid": "fd567abb56f6e22e",
       "set": "aoi",
       "group": "ambiguity",
       "status": "ready",
       "behaviour": "Clarify which Amazon boundary or offer country-level breakdown",
       "query": "Describe the pattern of deforestation in the Amazon.",
       "expected_fields": [
-        "data_pull",
-        "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "data_pull_exists",
-        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "spatial",
-      "dataset_ids": [
-        "4"
-      ],
+      "dataset_ids": [],
       "subtype": "ambiguity"
     },
     {
@@ -3724,27 +3717,20 @@
     },
     {
       "id": "ch-causal-029",
-      "uid": "d96f912b43ce3c50",
+      "uid": "cf4d75fb979f8a75",
       "set": "causal",
       "group": "caveat_required",
       "status": "ready",
       "behaviour": "Explain what the data can support; no causal claim from overlap; note outbreak data is not in the catalog",
       "query": "Is there a relationship between forest loss and Ebola outbreak sites in West Africa?",
       "expected_fields": [
-        "data_pull",
-        "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "data_pull_exists",
-        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "causal",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-comp-001",
@@ -19583,29 +19569,20 @@
     },
     {
       "id": "ch-quant-166",
-      "uid": "cf60f31df6349750",
+      "uid": "87c710181f1a29f2",
       "set": "quantification",
       "group": "method",
       "status": "ready",
       "behaviour": "Explain accuracy assessment and uncertainty honestly; no invented error bars",
       "query": "How confident can I be in the DRC's 2024 tree cover loss number? Is there a margin of error?",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-167",
@@ -20164,24 +20141,20 @@
     },
     {
       "id": "ch-quant-190",
-      "uid": "4f2d6a66074b5e28",
+      "uid": "95f7637df2759e76",
       "set": "quantification",
       "group": "method",
       "status": "ready",
       "behaviour": "Name current version and key changes accurately; give citation",
       "query": "Which version of the tree cover loss data should I cite, and what changed from the previous version?",
       "expected_fields": [
-        "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-191",

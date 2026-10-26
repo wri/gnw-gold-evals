@@ -1,20 +1,18 @@
 id: ch-aoi-155
-uid: 7757cd8b3c77ba8b
+uid: fd567abb56f6e22e
 status: ready
 set: aoi
 group: ambiguity
 query: Describe the pattern of deforestation in the Amazon.
 expected:
-  text: Pulls tree cover loss and describes the pattern by Amazon country, or for a boundary
-    it names, rather than silently picking one boundary or answering from blog posts.
-  dataset_id: '4'
-  data_pull: 'TRUE'
+  text: Either asks which definition of the Amazon is meant or offers a breakdown by country,
+    rather than silently picking one boundary.
 notes:
   behaviour: Clarify which Amazon boundary or offer country-level breakdown
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-154); Map exploration research (map
     exploration question)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review; expectations revised 2026-10-26 (AJ, why-questions review)'
+    needs human review'
   synthetic: 'TRUE'
   benchmark_id: bm26-154
   benchmark_type: spatial
@@ -25,6 +23,4 @@ notes:
   grounding: From user research
   user_story_refs: Map exploration research (map exploration question)
   refresh_risk: Low
-  review: '2026-10-26 (AJ): why-questions must be answered from data, not blog posts; the
-    expectation now requires it. Added tree cover loss (4) and a pull, and reworded the text:
-    asking which Amazon is meant no longer passes on its own.'
+  review: '2026-10-26 (AJ): kept as is in the why-questions review; no data requirement added.'

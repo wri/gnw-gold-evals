@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "e465ae337a5fb9a5",
+  "caseset_version": "c936492a6b5e56bd",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -546,7 +546,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 829,
+      "dedicated": 825,
       "shared_only": 0
     },
     "analysis": {
@@ -569,17 +569,17 @@
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 716,
+      "cases": 712,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 609,
+      "cases": 608,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 518,
+      "cases": 515,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
@@ -731,8 +731,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 176,
-        "answer_graded": 29,
+        "cases": 172,
+        "answer_graded": 25,
         "parameters": [
           {
             "name": "canopy_cover",

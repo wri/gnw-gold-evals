@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "e465ae337a5fb9a5"
+    "caseset_version": "c936492a6b5e56bd"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -2516,14 +2516,13 @@
       "synthetic": false
     },
     {
-      "uid": "7757cd8b3c77ba8b",
+      "uid": "fd567abb56f6e22e",
       "id": "ch-aoi-155",
       "type": "geospatial",
       "set": "aoi",
       "cohort": "ambiguity",
       "difficulty": "",
       "stages": [
-        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-154",
@@ -2734,14 +2733,13 @@
       "synthetic": true
     },
     {
-      "uid": "cf60f31df6349750",
+      "uid": "87c710181f1a29f2",
       "id": "ch-quant-166",
       "type": "quantification",
       "set": "quantification",
       "cohort": "method",
       "difficulty": "",
       "stages": [
-        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-166",
@@ -4389,14 +4387,13 @@
       "synthetic": true
     },
     {
-      "uid": "4f2d6a66074b5e28",
+      "uid": "95f7637df2759e76",
       "id": "ch-quant-190",
       "type": "quantification",
       "set": "quantification",
       "cohort": "method",
       "difficulty": "",
       "stages": [
-        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-268",
@@ -4537,14 +4534,13 @@
       "synthetic": true
     },
     {
-      "uid": "d96f912b43ce3c50",
+      "uid": "cf4d75fb979f8a75",
       "id": "ch-causal-029",
       "type": "causal",
       "set": "causal",
       "cohort": "caveat_required",
       "difficulty": "",
       "stages": [
-        "retrieval",
         "explanation"
       ],
       "benchmark_id": "bm26-278",

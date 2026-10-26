@@ -355,16 +355,16 @@ Nineteen members answered from `search_blogs` instead of the data. A search of
 the corpus the tool reads (WRI and Land & Carbon Lab Insights; the list is in
 the GNW workspace, `experiments/2026-10-26-search-blogs-corpus/`) found posts
 that fairly answer three of them. AJ decided those three may pass on a blog
-answer and the rest must be answered from data:
+answer and the rest must be answered from data, then kept four as they
+were:
 
 - `ch-causal-002` (Bolivia 2024), `ch-causal-003` (Brazil 2016) and
   `ch-causal-022` (Riau) carry `accept_blog_sources`, the slugs of the posts
   that answer them; an answer from `search_blogs` that links one passes, and
   `web_fallback` ignores those posts on a pull (`accepted_blog_match` in
   `src/goldset/evaluators/README.md`).
-- Ten of the other 16 already required a pull. Six now do: `ch-trend-081`
-  (pull flag added), `ch-causal-029`, `ch-quant-166` and `ch-quant-173` (a
-  dataset and a pull), `ch-aoi-155` (a pull, and its text no longer accepts
-  asking which Amazon on its own), and `ch-quant-190` (tree cover loss
-  selected, since the version and citation live in its catalogue entry; no
-  pull).
+- Ten of the other 16 already required a pull. Two now do: `ch-trend-081`
+  (pull flag added) and `ch-quant-173` (Brazil, sLUC and a pull). AJ kept
+  `ch-causal-029`, `ch-quant-166`, `ch-aoi-155` and `ch-quant-190` as they
+  were (text expectations only); a data requirement was drafted for each and
+  dropped in review.

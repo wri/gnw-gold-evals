@@ -1,5 +1,5 @@
 {
-  "caseset_version": "e465ae337a5fb9a5",
+  "caseset_version": "c936492a6b5e56bd",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -1076,7 +1076,7 @@
     },
     {
       "id": "ch-aoi-155",
-      "uid": "7757cd8b3c77ba8b",
+      "uid": "fd567abb56f6e22e",
       "set": "aoi",
       "group": "ambiguity",
       "status": "ready"
@@ -1279,7 +1279,7 @@
     },
     {
       "id": "ch-causal-029",
-      "uid": "d96f912b43ce3c50",
+      "uid": "cf4d75fb979f8a75",
       "set": "causal",
       "group": "caveat_required",
       "status": "ready"
@@ -5759,7 +5759,7 @@
     },
     {
       "id": "ch-quant-166",
-      "uid": "cf60f31df6349750",
+      "uid": "87c710181f1a29f2",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -5927,7 +5927,7 @@
     },
     {
       "id": "ch-quant-190",
-      "uid": "4f2d6a66074b5e28",
+      "uid": "95f7637df2759e76",
       "set": "quantification",
       "group": "method",
       "status": "ready"

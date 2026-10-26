@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version e465ae337a5fb9a5` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version c936492a6b5e56bd` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-26_
 
@@ -89,7 +89,7 @@ friends) run on top of it whenever their trigger state exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 829 | 0 | 829 | 87% |
+| retrieval | 825 | 0 | 825 | 87% |
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 192 | 0 | 192 | 20% |
 | output | 0 | 0 | 0 | 0% |
@@ -99,9 +99,9 @@ friends) run on top of it whenever their trigger state exists.
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 716 | dataset_id_match |
-| aoi_ids | 609 | aoi_id_match |
-| data_pull | 518 | data_pull_exists, answered_without_data |
+| dataset_id | 712 | dataset_id_match |
+| aoi_ids | 608 | aoi_id_match |
+| data_pull | 515 | data_pull_exists, answered_without_data |
 | end_date | 326 | date_extraction (with start_date) |
 | start_date | 326 | date_extraction (with end_date) |
 | forbidden_tools | 200 | forbidden_tools_absent |
@@ -141,7 +141,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 51 | 3 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 54 | 1 | — | — |
 | 3 | SBTN Natural Lands Map | 52 | 3 | — | — |
-| 4 | Tree cover loss | 176 | 29 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4, natural_forest ×0 ← gap |
+| 4 | Tree cover loss | 172 | 25 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4, natural_forest ×0 ← gap |
 | 5 | Tree cover gain | 42 | 1 | — | — |
 | 6 | Forest greenhouse gas net flux | 50 | 4 | canopy_cover ×5 | — |
 | 7 | Tree cover | 48 | 2 | canopy_cover ×10 | primary_forest ×8 |
