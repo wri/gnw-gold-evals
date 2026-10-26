@@ -2048,17 +2048,205 @@
           "manifest_sha": "875d68283fbcd215",
           "members": 269
         },
+        "canonical": false,
+        "canonical_reasons": [
+          "264 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T182653Z_prod",
+        "path": "results/benchmark/runs/20261026T182653Z_prod.json",
+        "started": "2026-10-26T18:26:53Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of 8 Ghana questions moved to Cote d'Ivoire",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "d0c88d0"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 8 members of 2026-draft-4 moved from Ghana to similar areas in Cote d'Ivoire on 2026-10-26 while PZB-1408 (Ghana sub-national GADM ids rejected by the analytics API) is open. Combined with 20261023T094447Z_prod, 20261024T133644Z_prod, 20261024T140135Z_prod, 20261026T152452Z_prod and 20261026T170459Z_prod for every other member. No check semantics changed.",
+        "caseset": "challenge",
+        "caseset_version": "fcc36e990adc633a",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 31,
+              "evaluated": 35
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 7
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 15,
+              "evaluated": 18
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 7
+          },
+          "output": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 8,
+          "verdicts": {
+            "pass": 5,
+            "fail": 2,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "43d7d6208e0bc8f6",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "261 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T183522Z_prod",
+        "path": "results/benchmark/runs/20261026T183522Z_prod.json",
+        "started": "2026-10-26T18:35:22Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of ch-mon-045 after a ReadTimeout",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "d0c88d0"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 3,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns ch-mon-045, which errored (ReadTimeout) in 20261026T182653Z_prod; combined with that run and its bases for every other member. No check semantics changed.",
+        "caseset": "challenge",
+        "caseset_version": "fcc36e990adc633a",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "output": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 1,
+          "verdicts": {
+            "pass": 0,
+            "fail": 0,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "43d7d6208e0bc8f6",
+          "members": 269
+        },
         "composed_with": [
           "20261023T094447Z_prod",
           "20261024T133644Z_prod",
           "20261024T140135Z_prod",
-          "20261026T152452Z_prod"
+          "20261026T152452Z_prod",
+          "20261026T170459Z_prod",
+          "20261026T182653Z_prod"
         ],
-        "canonical": false,
-        "canonical_reasons": [
-          "8 active member(s) not in the run and its bases"
-        ],
-        "page": "results/benchmark/pages/20261026T170459Z_prod.json"
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261026T183522Z_prod.json"
       }
     ]
   },
@@ -2100,9 +2288,13 @@
         "20261024T140135Z_prod",
         "20261026T152452Z_prod",
         "20261026T161639Z_prod",
-        "20261026T170459Z_prod"
+        "20261026T170459Z_prod",
+        "20261026T182653Z_prod",
+        "20261026T183522Z_prod"
       ],
-      "canonical_runs": []
+      "canonical_runs": [
+        "20261026T183522Z_prod"
+      ]
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",
