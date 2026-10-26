@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "9c8ad46746843126",
+  "caseset_version": "b19649d7fbf3b71a",
   "case_count": 949,
   "cases": [
     {
@@ -3353,7 +3353,7 @@
     },
     {
       "id": "ch-causal-015",
-      "uid": "7336be5865c26f1f",
+      "uid": "509d5eba94d28fea",
       "set": "causal",
       "group": "driver_vs_fire",
       "status": "ready",
@@ -3361,6 +3361,7 @@
       "behaviour": "answer with drivers + fire data",
       "query": "Are fires or agriculture the bigger cause of tree cover loss in Madre de Dios, 2015–2023?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -3368,6 +3369,7 @@
         "start_date"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -3619,13 +3621,14 @@
     },
     {
       "id": "ch-causal-025",
-      "uid": "a76971f72970e138",
+      "uid": "d15e315ec573b7be",
       "set": "causal",
       "group": "why_country",
       "status": "ready",
       "behaviour": "answer with data; drivers; caveat on linking to disease outbreaks",
       "query": "How much tree cover did the DRC lose in 2024, and what was driving it?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -3634,6 +3637,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -20064,19 +20068,21 @@
     },
     {
       "id": "ch-quant-188",
-      "uid": "2db3c297ced20f08",
+      "uid": "fd566d8bbece10cb",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
       "behaviour": "Answer with flux for the state; explain if within-state hotspots are not supported",
       "query": "Which forests in Pará remove the most carbon? We want to prioritize protection to keep the carbon sink.",
       "expected_fields": [
+        "accept_aoi_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",

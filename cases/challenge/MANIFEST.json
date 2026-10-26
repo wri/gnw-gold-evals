@@ -1,5 +1,5 @@
 {
-  "caseset_version": "9c8ad46746843126",
+  "caseset_version": "b19649d7fbf3b71a",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -1181,7 +1181,7 @@
     },
     {
       "id": "ch-causal-015",
-      "uid": "7336be5865c26f1f",
+      "uid": "509d5eba94d28fea",
       "set": "causal",
       "group": "driver_vs_fire",
       "status": "ready"
@@ -1251,7 +1251,7 @@
     },
     {
       "id": "ch-causal-025",
-      "uid": "a76971f72970e138",
+      "uid": "d15e315ec573b7be",
       "set": "causal",
       "group": "why_country",
       "status": "ready"
@@ -5913,7 +5913,7 @@
     },
     {
       "id": "ch-quant-188",
-      "uid": "2db3c297ced20f08",
+      "uid": "fd566d8bbece10cb",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready"

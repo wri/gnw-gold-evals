@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version 9c8ad46746843126` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version b19649d7fbf3b71a` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-26_
 
@@ -93,7 +93,7 @@ friends) run on top of it whenever their trigger state exists.
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 191 | 0 | 191 | 20% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 240 | 0 | 240 | 25% |
+| scope | 243 | 0 | 243 | 26% |
 
 ## Expected-field census (active cases)
 
@@ -109,9 +109,10 @@ friends) run on top of it whenever their trigger state exists.
 | context_layer | 174 | context_layer_match |
 | dataset_parameters | 37 | dataset_parameter_match |
 | clarification | 19 | clarification_requested |
-| accept_nudge_offering | 14 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| accept_nudge_offering | 16 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | nudge_type | 12 | nudge_match |
 | nudge_options | 6 | nudge_match |
+| accept_aoi_nudge_offering | 1 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
 | aoi_source | 0 ← unused | reference only (dashboard AOI source) |
 | chart_type | 0 ← unused | chart_type_match |

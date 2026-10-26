@@ -1,5 +1,5 @@
 id: ch-quant-188
-uid: 2db3c297ced20f08
+uid: fd566d8bbece10cb
 status: ready
 set: quantification
 group: ghg-flux
@@ -11,12 +11,13 @@ expected:
   data_pull: 'TRUE'
   text: Gives the forest carbon flux (removals) for Pará and either identifies where within
     the state removals are highest or explains that within-state hotspots are not supported.
+  accept_aoi_nudge_offering: BRA.14
 notes:
   behaviour: Answer with flux for the state; explain if within-state hotspots are not supported
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-263); USY-000473 Economist Amazon flux
     (analogue)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; accept_aoi_nudge_offering added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
@@ -29,3 +30,6 @@ notes:
   grounding: Story analogue
   user_story_refs: USY-000473 Economist Amazon flux (analogue)
   refresh_risk: Low
+  review: '2026-10-26 (AJ): asking which Pará is meant is acceptable as long as Pará, Brazil
+    (BRA.14) is offered; a correct pull still passes. 20261023T094447Z_prod: attempt 1 offered
+    Pará, Brazil and Para, Suriname; attempts 2 and 3 pulled (2 failed on WRI links).'

@@ -1,5 +1,5 @@
 id: ch-causal-025
-uid: a76971f72970e138
+uid: d15e315ec573b7be
 status: ready
 set: causal
 group: why_country
@@ -12,12 +12,13 @@ expected:
   data_pull: 'TRUE'
   text: Gives the DRC's 2024 tree cover loss and its main driver classes, without attributing
     the loss to causes the data do not cover.
+  accept_nudge_offering: 4;8
 notes:
   behaviour: answer with data; drivers; caveat on linking to disease outbreaks
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-152); USY-001602 Guardian Ebola / Congo
     Basin loss
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-152
@@ -29,3 +30,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001602 Guardian Ebola / Congo Basin loss
   refresh_risk: Low
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: attempts
+    1 and 3 nudged with loss (4) and drivers (8); attempt 2 pulled drivers.'

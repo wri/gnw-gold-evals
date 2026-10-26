@@ -340,3 +340,11 @@ Replayed on their 23 and 24 Oct attempts, 9 of the 14 would pass; the 5 that
 still fail never offered SBTN Natural Lands (`ch-comp-154`, `-157`,
 `ch-quant-175`, `-180`) or offered only the sLUC emission factors
 (`ch-comp-155`). The members' new uids are unmeasured until rerun.
+
+AJ then reviewed the 18 members that pulled on some attempts and asked on
+others, and opted in three more: `ch-causal-025` (`4;8`) and `ch-causal-015`
+(`8;10`) accept a dataset choice, and `ch-quant-188` accepts an area choice
+through `accept_aoi_nudge_offering` (`BRA.14`): asking which Pará is meant is
+fine as long as Pará, Brazil is offered. Replayed, `ch-causal-025` would pass
+(it failed) and the other two still pass. The other 15 keep their
+expectations: their failures are agent fixes or correct as they stand.

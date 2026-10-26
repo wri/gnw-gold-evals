@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "9c8ad46746843126"
+    "caseset_version": "b19649d7fbf3b71a"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -2444,13 +2444,14 @@
       "synthetic": true
     },
     {
-      "uid": "7336be5865c26f1f",
+      "uid": "509d5eba94d28fea",
       "id": "ch-causal-015",
       "type": "causal",
       "set": "causal",
       "cohort": "driver_vs_fire",
       "difficulty": "medium",
       "stages": [
+        "scope",
         "retrieval"
       ],
       "benchmark_id": "bm26-150",
@@ -2478,13 +2479,14 @@
       "synthetic": true
     },
     {
-      "uid": "a76971f72970e138",
+      "uid": "d15e315ec573b7be",
       "id": "ch-causal-025",
       "type": "causal",
       "set": "causal",
       "cohort": "why_country",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -4295,13 +4297,14 @@
       "synthetic": true
     },
     {
-      "uid": "2db3c297ced20f08",
+      "uid": "fd566d8bbece10cb",
       "id": "ch-quant-188",
       "type": "quantification",
       "set": "quantification",
       "cohort": "ghg-flux",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],

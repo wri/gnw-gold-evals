@@ -1,5 +1,5 @@
 id: ch-causal-015
-uid: 7336be5865c26f1f
+uid: 509d5eba94d28fea
 status: ready
 set: causal
 group: driver_vs_fire
@@ -10,12 +10,13 @@ expected:
   start_date: '2015-01-01'
   end_date: '2023-12-31'
   data_pull: 'TRUE'
+  accept_nudge_offering: 8;10
 notes:
   difficulty: medium
   behaviour: answer with drivers + fire data
   lineage: benchmark v2026 proposed set (bm26-154); USY-001401 Caja Cusco
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; accept_nudge_offering added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   user_story_refs: USY-001401 Caja Cusco
@@ -26,3 +27,6 @@ notes:
   aoi_type: Subnational
   capability: Supported
   grounding: Story analogue
+  review: '2026-10-26 (AJ): accept a dataset-choice nudge offering drivers (8) and fire loss
+    (10), extras allowed; a correct pull still passes. 20261023T094447Z_prod: attempt 2 nudged
+    with 8, 10 and loss (4); attempts 1 and 3 pulled.'
