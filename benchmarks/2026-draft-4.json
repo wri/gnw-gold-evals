@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "b0df4721464461ce"
+    "caseset_version": "9c8ad46746843126"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -332,13 +332,14 @@
       "synthetic": true
     },
     {
-      "uid": "8ff0ac2565b78c2e",
+      "uid": "f14e21ab171499cd",
       "id": "ch-mon-034",
       "type": "monitoring",
       "set": "monitoring",
       "cohort": "recent_presence",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -381,13 +382,14 @@
       "synthetic": true
     },
     {
-      "uid": "463c50b6f62b0beb",
+      "uid": "393185cac179819c",
       "id": "ch-mon-008",
       "type": "monitoring",
       "set": "monitoring",
       "cohort": "recent_default",
       "difficulty": "hard",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -1352,13 +1354,14 @@
       "synthetic": true
     },
     {
-      "uid": "43da5d35146ececc",
+      "uid": "1a6dcceadf750500",
       "id": "ch-comp-154",
       "type": "comparison",
       "set": "comparison",
       "cohort": "natural-lands",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval"
       ],
       "benchmark_id": "bm26-066",
@@ -1368,13 +1371,14 @@
       "synthetic": true
     },
     {
-      "uid": "72c3f1aad13aaf90",
+      "uid": "6b1ebb48e82cc358",
       "id": "ch-comp-155",
       "type": "comparison",
       "set": "comparison",
       "cohort": "tcl-drivers",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -1401,13 +1405,14 @@
       "synthetic": true
     },
     {
-      "uid": "ac9eaf5b6542cd6a",
+      "uid": "9f61b74c2627e040",
       "id": "ch-comp-157",
       "type": "comparison",
       "set": "comparison",
       "cohort": "natural-lands",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval"
       ],
       "benchmark_id": "bm26-069",
@@ -1579,13 +1584,14 @@
       "synthetic": true
     },
     {
-      "uid": "ab6ff2de4807dae0",
+      "uid": "1abb3ffd4f05a1d1",
       "id": "ch-port-003",
       "type": "portfolio",
       "set": "portfolio",
       "cohort": "many-areas",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -1762,13 +1768,14 @@
       "synthetic": false
     },
     {
-      "uid": "b019988329f6b802",
+      "uid": "447cc085b29f48cd",
       "id": "ch-comp-125",
       "type": "comparison",
       "set": "comparison",
       "cohort": "tcl-drivers",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval"
       ],
       "benchmark_id": "bm26-108",
@@ -2066,13 +2073,14 @@
       "synthetic": true
     },
     {
-      "uid": "afd7b97b8917d335",
+      "uid": "c26bb0ed80e0553a",
       "id": "ch-causal-024",
       "type": "causal",
       "set": "causal",
       "cohort": "driver_share",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -2417,13 +2425,14 @@
       "synthetic": true
     },
     {
-      "uid": "d8240a8fed94afbb",
+      "uid": "1178303a5f2b1baa",
       "id": "ch-causal-011",
       "type": "causal",
       "set": "causal",
       "cohort": "commodity_overclaim",
       "difficulty": "hard",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -2786,13 +2795,14 @@
       "synthetic": true
     },
     {
-      "uid": "a83888a9bb8fee76",
+      "uid": "45252d91268a33b8",
       "id": "ch-quant-168",
       "type": "quantification",
       "set": "quantification",
       "cohort": "ghg-flux",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval"
       ],
       "benchmark_id": "bm26-172",
@@ -3557,13 +3567,14 @@
       "synthetic": false
     },
     {
-      "uid": "f44bac3f10838f85",
+      "uid": "68b591d20f7a6a7e",
       "id": "ch-quant-175",
       "type": "quantification",
       "set": "quantification",
       "cohort": "tree-cover",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -3782,13 +3793,14 @@
       "synthetic": true
     },
     {
-      "uid": "24cd43eb05d179bc",
+      "uid": "514403d5e5e01289",
       "id": "ch-quant-061",
       "type": "quantification",
       "set": "quantification",
       "cohort": "land-cover",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval"
       ],
       "benchmark_id": "bm26-232",
@@ -3894,13 +3906,14 @@
       "synthetic": true
     },
     {
-      "uid": "7ca120b9009b2b2f",
+      "uid": "0d5a76da36f81e90",
       "id": "ch-quant-180",
       "type": "quantification",
       "set": "quantification",
       "cohort": "land-cover",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -4675,7 +4688,7 @@
       "synthetic": false
     },
     {
-      "uid": "70fbaf7e974c13f3",
+      "uid": "801bbfbda2079741",
       "id": "ch-dataset-171",
       "type": "dataset",
       "set": "dataset",

@@ -1674,7 +1674,7 @@
         },
         "canonical": false,
         "canonical_reasons": [
-          "245 active member(s) not in the run"
+          "247 active member(s) not in the run"
         ]
       },
       {
@@ -1770,8 +1770,10 @@
           "20261023T094447Z_prod",
           "20261024T133644Z_prod"
         ],
-        "canonical": true,
-        "canonical_reasons": [],
+        "canonical": false,
+        "canonical_reasons": [
+          "14 active member(s) not in the run and its bases"
+        ],
         "page": "results/benchmark/pages/20261024T140135Z_prod.json"
       }
     ]
@@ -1813,9 +1815,7 @@
         "20261024T133644Z_prod",
         "20261024T140135Z_prod"
       ],
-      "canonical_runs": [
-        "20261024T140135Z_prod"
-      ]
+      "canonical_runs": []
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",
