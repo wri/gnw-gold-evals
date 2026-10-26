@@ -1,5 +1,5 @@
 id: ch-comp-157
-uid: ac9eaf5b6542cd6a
+uid: 9f61b74c2627e040
 status: ready
 set: comparison
 group: natural-lands
@@ -11,12 +11,13 @@ expected:
   start_date: '2021-01-01'
   end_date: '2025-12-31'
   data_pull: 'TRUE'
+  accept_nudge_offering: 3;4
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-069); USY-001313 Louis Dreyfus soy conversion
     hotspots
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
@@ -30,3 +31,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001313 Louis Dreyfus soy conversion hotspots
   refresh_risk: Low
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 nudges
+    offered tree cover loss (4), never SBTN Natural Lands (3).'

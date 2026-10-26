@@ -1,5 +1,5 @@
 id: ch-comp-155
-uid: 72c3f1aad13aaf90
+uid: 6b1ebb48e82cc358
 status: ready
 set: comparison
 group: tcl-drivers
@@ -10,11 +10,12 @@ expected:
   data_pull: 'TRUE'
   text: Compares loss in Sabah and Sarawak from the data and is clear that it shows past loss
     rather than palm-specific risk, since the drivers data do not identify oil palm.
+  accept_nudge_offering: 4;8
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-067); USY-001512 Malaysia EUDR
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-067
@@ -26,3 +27,7 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001512 Malaysia EUDR
   refresh_risk: Low
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: attempts
+    1 and 3 nudged with sLUC emission factors (9) only; attempt 2 offered drivers, loss and
+    alerts.'

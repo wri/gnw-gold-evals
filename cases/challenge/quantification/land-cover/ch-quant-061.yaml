@@ -1,5 +1,5 @@
 id: ch-quant-061
-uid: 24cd43eb05d179bc
+uid: 514403d5e5e01289
 status: ready
 set: quantification
 group: land-cover
@@ -8,6 +8,7 @@ expected:
   aoi_ids: IND
   dataset_id: '1'
   data_pull: 'TRUE'
+  accept_nudge_offering: '1'
 notes:
   land_cover_classes: 'cropland;cultivated grasslands (unscored: no evaluator surface yet)'
   judge_instruction: The user asks about agricultural land generically, so per the catalog
@@ -27,3 +28,7 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
+    nudged with land cover (1) and SBTN Natural Lands (3).'
+  expectations: accept_nudge_offering added 2026-10-26 (AJ)

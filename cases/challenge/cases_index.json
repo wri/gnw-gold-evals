@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "b0df4721464461ce",
+  "caseset_version": "9c8ad46746843126",
   "case_count": 949,
   "cases": [
     {
@@ -3232,7 +3232,7 @@
     },
     {
       "id": "ch-causal-011",
-      "uid": "d8240a8fed94afbb",
+      "uid": "1178303a5f2b1baa",
       "set": "causal",
       "group": "commodity_overclaim",
       "status": "ready",
@@ -3240,6 +3240,7 @@
       "behaviour": "answer with drivers data; must not name a commodity the data does not identify",
       "query": "Is soy or cattle driving tree cover loss in Mato Grosso since 2015?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -3248,6 +3249,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -3588,19 +3590,21 @@
     },
     {
       "id": "ch-causal-024",
-      "uid": "afd7b97b8917d335",
+      "uid": "c26bb0ed80e0553a",
       "set": "causal",
       "group": "driver_share",
       "status": "ready",
       "behaviour": "answer with flux + drivers; caveat",
       "query": "How do forestry emissions compare with other causes of forest emissions in British Columbia?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -6958,17 +6962,19 @@
     },
     {
       "id": "ch-comp-125",
-      "uid": "b019988329f6b802",
+      "uid": "447cc085b29f48cd",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready",
       "query": "I'm curious - between Peru and Bolivia, which one has lost more tree cover to permanent agriculture since 2001?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -7741,13 +7747,14 @@
     },
     {
       "id": "ch-comp-154",
-      "uid": "43da5d35146ececc",
+      "uid": "1a6dcceadf750500",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Has any natural land been converted since 2021 in San Martín or Junín, where our cocoa cooperatives are?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -7755,6 +7762,7 @@
         "start_date"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -7769,19 +7777,21 @@
     },
     {
       "id": "ch-comp-155",
-      "uid": "72c3f1aad13aaf90",
+      "uid": "6b1ebb48e82cc358",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Is palm-related deforestation risk higher in Sabah or Sarawak?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -7823,13 +7833,14 @@
     },
     {
       "id": "ch-comp-157",
-      "uid": "ac9eaf5b6542cd6a",
+      "uid": "9f61b74c2627e040",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Which of Maranhão, Tocantins and Piauí had the most natural vegetation conversion since 2021?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -7837,6 +7848,7 @@
         "start_date"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -12279,7 +12291,7 @@
     },
     {
       "id": "ch-dataset-171",
-      "uid": "70fbaf7e974c13f3",
+      "uid": "801bbfbda2079741",
       "set": "dataset",
       "group": "ambiguous",
       "status": "ready",
@@ -12287,10 +12299,12 @@
       "behaviour": "select",
       "query": "Show me deforestation",
       "expected_fields": [
+        "accept_nudge_offering",
         "dataset_id",
         "forbidden_tools"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "dataset_id_match",
         "forbidden_tools_absent"
       ],
@@ -13185,7 +13199,7 @@
     },
     {
       "id": "ch-mon-008",
-      "uid": "463c50b6f62b0beb",
+      "uid": "393185cac179819c",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
@@ -13193,12 +13207,14 @@
       "behaviour": "answer with data; state window used",
       "query": "Show me recent fire and deforestation alerts around Puerto Suárez, Bolivia",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -13901,13 +13917,14 @@
     },
     {
       "id": "ch-mon-034",
-      "uid": "8ff0ac2565b78c2e",
+      "uid": "f14e21ab171499cd",
       "set": "monitoring",
       "group": "recent_presence",
       "status": "ready",
       "behaviour": "answer with data",
       "query": "Any fire-related disturbance alerts in Maranhão this week? Looking for escaped fires.",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -13917,6 +13934,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -14663,18 +14681,20 @@
     },
     {
       "id": "ch-port-003",
-      "uid": "ab6ff2de4807dae0",
+      "uid": "1abb3ffd4f05a1d1",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
       "behaviour": "answer with the closest measure for the 27 states; say soy cannot be isolated",
       "query": "Rank every Brazilian state by soy-driven conversion since 2020.",
       "expected_fields": [
+        "accept_nudge_offering",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "data_pull_exists",
         "dataset_id_match",
@@ -16772,17 +16792,19 @@
     },
     {
       "id": "ch-quant-061",
-      "uid": "24cd43eb05d179bc",
+      "uid": "514403d5e5e01289",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "How much of India's land area is classified as agricultural land?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -19578,18 +19600,20 @@
     },
     {
       "id": "ch-quant-168",
-      "uid": "a83888a9bb8fee76",
+      "uid": "45252d91268a33b8",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
       "behaviour": "answer with data",
       "query": "What are the gross emissions and removals from forests in Salonga National Park?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -19735,19 +19759,21 @@
     },
     {
       "id": "ch-quant-175",
-      "uid": "f44bac3f10838f85",
+      "uid": "68b591d20f7a6a7e",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready",
       "behaviour": "answer with closest data (tree cover / natural lands); explain secondary vegetation not separated",
       "query": "How much primary and secondary vegetation does Brazil have, for our biodiversity framework reporting?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -19859,19 +19885,21 @@
     },
     {
       "id": "ch-quant-180",
-      "uid": "7ca120b9009b2b2f",
+      "uid": "0d5a76da36f81e90",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "behaviour": "Answer with land cover / natural lands; note restoration suitability needs local data",
       "query": "Where in the Ashanti region is there cropland or degraded land rather than natural forest, that could be restored?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",

@@ -1,5 +1,5 @@
 {
-  "caseset_version": "b0df4721464461ce",
+  "caseset_version": "9c8ad46746843126",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -1153,7 +1153,7 @@
     },
     {
       "id": "ch-causal-011",
-      "uid": "d8240a8fed94afbb",
+      "uid": "1178303a5f2b1baa",
       "set": "causal",
       "group": "commodity_overclaim",
       "status": "ready"
@@ -1244,7 +1244,7 @@
     },
     {
       "id": "ch-causal-024",
-      "uid": "afd7b97b8917d335",
+      "uid": "c26bb0ed80e0553a",
       "set": "causal",
       "group": "driver_share",
       "status": "ready"
@@ -2154,7 +2154,7 @@
     },
     {
       "id": "ch-comp-125",
-      "uid": "b019988329f6b802",
+      "uid": "447cc085b29f48cd",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready"
@@ -2357,14 +2357,14 @@
     },
     {
       "id": "ch-comp-154",
-      "uid": "43da5d35146ececc",
+      "uid": "1a6dcceadf750500",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready"
     },
     {
       "id": "ch-comp-155",
-      "uid": "72c3f1aad13aaf90",
+      "uid": "6b1ebb48e82cc358",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready"
@@ -2378,7 +2378,7 @@
     },
     {
       "id": "ch-comp-157",
-      "uid": "ac9eaf5b6542cd6a",
+      "uid": "9f61b74c2627e040",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready"
@@ -3743,7 +3743,7 @@
     },
     {
       "id": "ch-dataset-171",
-      "uid": "70fbaf7e974c13f3",
+      "uid": "801bbfbda2079741",
       "set": "dataset",
       "group": "ambiguous",
       "status": "ready"
@@ -4002,7 +4002,7 @@
     },
     {
       "id": "ch-mon-008",
-      "uid": "463c50b6f62b0beb",
+      "uid": "393185cac179819c",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready"
@@ -4184,7 +4184,7 @@
     },
     {
       "id": "ch-mon-034",
-      "uid": "8ff0ac2565b78c2e",
+      "uid": "f14e21ab171499cd",
       "set": "monitoring",
       "group": "recent_presence",
       "status": "ready"
@@ -4429,7 +4429,7 @@
     },
     {
       "id": "ch-port-003",
-      "uid": "ab6ff2de4807dae0",
+      "uid": "1abb3ffd4f05a1d1",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
@@ -5024,7 +5024,7 @@
     },
     {
       "id": "ch-quant-061",
-      "uid": "24cd43eb05d179bc",
+      "uid": "514403d5e5e01289",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready"
@@ -5773,7 +5773,7 @@
     },
     {
       "id": "ch-quant-168",
-      "uid": "a83888a9bb8fee76",
+      "uid": "45252d91268a33b8",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready"
@@ -5822,7 +5822,7 @@
     },
     {
       "id": "ch-quant-175",
-      "uid": "f44bac3f10838f85",
+      "uid": "68b591d20f7a6a7e",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready"
@@ -5857,7 +5857,7 @@
     },
     {
       "id": "ch-quant-180",
-      "uid": "7ca120b9009b2b2f",
+      "uid": "0d5a76da36f81e90",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready"

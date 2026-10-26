@@ -324,3 +324,19 @@ case's `notes.review` gives its evidence:
   which the judge read as required, and `ch-port-011` accepts either an
   honest "cannot select these sites as a group" or a ranking cited from
   published research.
+
+### Clarifying dataset choices (2026-10-26)
+
+Reviewing the draft-4 failures, AJ decided that asking which dataset to use
+is a right answer when the choice offered is the right one. Sixteen members
+asked back on every attempt. Fourteen of them now carry
+`accept_nudge_offering` (their `dataset_id` set): an attempt that ends in a
+`dataset_choice` nudge offering every listed dataset passes, extra options
+allowed, and a correct pull still passes. The check and the attempt-majority
+verdict are documented in `src/goldset/evaluators/README.md`
+(`accepted_nudge_match`). The other two are not dataset choices and are
+unchanged: `ch-aoi-090` asks which Pará and `ch-mon-027` never nudges.
+Replayed on their 23 and 24 Oct attempts, 9 of the 14 would pass; the 5 that
+still fail never offered SBTN Natural Lands (`ch-comp-154`, `-157`,
+`ch-quant-175`, `-180`) or offered only the sLUC emission factors
+(`ch-comp-155`). The members' new uids are unmeasured until rerun.

@@ -1,5 +1,5 @@
 id: ch-comp-125
-uid: b019988329f6b802
+uid: 447cc085b29f48cd
 status: ready
 set: comparison
 group: tcl-drivers
@@ -9,6 +9,7 @@ expected:
   aoi_ids: PER;BOL
   dataset_id: '8'
   data_pull: 'TRUE'
+  accept_nudge_offering: '8'
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'driver (unscored: no evaluator surface yet)'
@@ -28,3 +29,7 @@ notes:
   grounding: Verified Challenge case
   user_story_refs: USY-001569 Sucden cocoa-area screening; USY-001515
   refresh_risk: Re-verify at annual refresh (open-ended, categorical)
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
+    nudged with drivers (8) and tree cover loss (4).'
+  expectations: accept_nudge_offering added 2026-10-26 (AJ)

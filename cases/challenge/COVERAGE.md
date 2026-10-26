@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version b0df4721464461ce` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version 9c8ad46746843126` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-10-24_
+_Last updated: 2026-10-26_
 
 ## Groups
 
@@ -93,7 +93,7 @@ friends) run on top of it whenever their trigger state exists.
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 191 | 0 | 191 | 20% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 227 | 0 | 227 | 24% |
+| scope | 240 | 0 | 240 | 25% |
 
 ## Expected-field census (active cases)
 
@@ -109,6 +109,7 @@ friends) run on top of it whenever their trigger state exists.
 | context_layer | 174 | context_layer_match |
 | dataset_parameters | 37 | dataset_parameter_match |
 | clarification | 19 | clarification_requested |
+| accept_nudge_offering | 14 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | nudge_type | 12 | nudge_match |
 | nudge_options | 6 | nudge_match |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |

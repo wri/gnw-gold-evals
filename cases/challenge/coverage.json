@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "b0df4721464461ce",
+  "caseset_version": "9c8ad46746843126",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -562,7 +562,7 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 227,
+      "dedicated": 240,
       "shared_only": 0
     }
   },
@@ -616,6 +616,11 @@
       "field": "clarification",
       "cases": 19,
       "switches_on": "clarification_requested"
+    },
+    {
+      "field": "accept_nudge_offering",
+      "cases": 14,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {
       "field": "nudge_type",

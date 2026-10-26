@@ -1,5 +1,5 @@
 id: ch-port-003
-uid: ab6ff2de4807dae0
+uid: 1abb3ffd4f05a1d1
 status: ready
 set: portfolio
 group: many-areas
@@ -10,11 +10,13 @@ expected:
   text: Ranks Brazil's states by conversion using the closest available data (loss from permanent
     agriculture in the drivers data, or natural forest loss since 2021) and says the data
     cannot isolate soy; does not invent soy-specific figures.
+  accept_nudge_offering: 8;4
 notes:
   behaviour: answer with the closest measure for the 27 states; say soy cannot be isolated
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-082); USY-001313 Louis Dreyfus
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; accept_nudge_offering
+    added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
     ships'
@@ -31,4 +33,7 @@ notes:
     well within pick_aoi takes up to 1,000 admin sub-units of one GADM parent, but only 50
     protected areas, KBAs, Indigenous lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py
     SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT)). 20261023T094447Z_prod: all 3 attempts selected
-    the 27 states, explained there is no soy layer and asked which dataset to use.'
+    the 27 states, explained there is no soy layer and asked which dataset to use. 2026-10-26
+    (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering passes
+    (extras allowed); a correct pull still passes. 20261024T133644Z_prod: attempts 1 and 3
+    nudged with drivers (8) and loss (4); attempt 2 left out loss.'

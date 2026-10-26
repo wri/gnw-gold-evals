@@ -1,5 +1,5 @@
 id: ch-mon-008
-uid: 463c50b6f62b0beb
+uid: 393185cac179819c
 status: ready
 set: monitoring
 group: recent_default
@@ -9,12 +9,13 @@ expected:
   dataset_id: '11'
   data_pull: 'TRUE'
   text: States the time window the alerts it reports cover.
+  accept_nudge_offering: '11'
 notes:
   difficulty: hard
   behaviour: answer with data; state window used
   lineage: benchmark v2026 proposed set (bm26-117); USY-001217 Puerto Suárez monitoring system
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; accept_nudge_offering added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
@@ -28,3 +29,6 @@ notes:
   capability: Supported
   grounding: Direct from story
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
+    nudged with Integrated alerts (11) and fire loss (10).'

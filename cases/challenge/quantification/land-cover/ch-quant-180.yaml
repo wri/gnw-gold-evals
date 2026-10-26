@@ -1,5 +1,5 @@
 id: ch-quant-180
-uid: 7ca120b9009b2b2f
+uid: 0d5a76da36f81e90
 status: ready
 set: quantification
 group: land-cover
@@ -11,12 +11,13 @@ expected:
   data_pull: 'TRUE'
   text: Uses land cover or natural lands data to show where in Ashanti there is cropland or
     non-natural land, and notes that restoration suitability needs local assessment.
+  accept_nudge_offering: 1;3
 notes:
   behaviour: Answer with land cover / natural lands; note restoration suitability needs local
     data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-239); USY-001392 Ghana Cocoa Belt restoration
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ)'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: AOI id to verify
@@ -29,3 +30,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001392 Ghana Cocoa Belt restoration
   refresh_risk: Low
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: no nudge
+    offered SBTN Natural Lands (3).'
