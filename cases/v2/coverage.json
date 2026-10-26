@@ -268,6 +268,11 @@
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
     },
     {
+      "field": "accept_blog_sources",
+      "cases": 0,
+      "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
+    },
+    {
       "field": "accept_nudge_offering",
       "cases": 0,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
@@ -683,6 +688,7 @@
   "known_gaps": {
     "unused_expected_fields": [
       "accept_aoi_nudge_offering",
+      "accept_blog_sources",
       "accept_nudge_offering",
       "chart_type",
       "data_pull",

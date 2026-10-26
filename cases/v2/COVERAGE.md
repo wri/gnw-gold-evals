@@ -67,6 +67,7 @@ friends) run on top of it whenever their trigger state exists.
 | nudge_type | 3 | nudge_match |
 | dataset_parameters | 1 | dataset_parameter_match |
 | accept_aoi_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
+| accept_blog_sources | 0 ← unused | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
 | accept_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | chart_type | 0 ← unused | chart_type_match |
 | data_pull | 0 ← unused | data_pull_exists, answered_without_data |
@@ -142,7 +143,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: accept_aoi_nudge_offering, accept_nudge_offering, chart_type, data_pull, forbidden_tools, suggested_datasets —
+- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_nudge_offering, chart_type, data_pull, forbidden_tools, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
