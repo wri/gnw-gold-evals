@@ -1766,15 +1766,108 @@
           "manifest_sha": "9506f761de8a1a09",
           "members": 269
         },
-        "composed_with": [
-          "20261023T094447Z_prod",
-          "20261024T133644Z_prod"
-        ],
         "canonical": false,
         "canonical_reasons": [
-          "17 active member(s) not in the run and its bases"
+          "267 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T152452Z_prod",
+        "path": "results/benchmark/runs/20261026T152452Z_prod.json",
+        "started": "2026-10-26T15:24:52Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of 17 nudge-accepting members",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "47d59b0"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 17 members of 2026-draft-4 that gained accept_nudge_offering or accept_aoi_nudge_offering on 2026-10-26; combined with 20261023T094447Z_prod, 20261024T133644Z_prod and 20261024T140135Z_prod for every other member. Check semantics changed: accepted_nudge_match scores attempts that stop at an accepted nudge (pull-path checks null there), and rows with such attempts are judged by attempt majority.",
+        "caseset": "challenge",
+        "caseset_version": "b19649d7fbf3b71a",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 40,
+              "evaluated": 44
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 15
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 12,
+              "evaluated": 15
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 7
+          },
+          "output": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 12,
+              "evaluated": 18
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 17
+          },
+          "rows_total": 17,
+          "verdicts": {
+            "pass": 12,
+            "fail": 5,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "843d6f6207e9805a",
+          "members": 269
+        },
+        "composed_with": [
+          "20261023T094447Z_prod",
+          "20261024T133644Z_prod",
+          "20261024T140135Z_prod"
         ],
-        "page": "results/benchmark/pages/20261024T140135Z_prod.json"
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261026T152452Z_prod.json"
       }
     ]
   },
@@ -1813,9 +1906,12 @@
       "voided": 0,
       "runs": [
         "20261024T133644Z_prod",
-        "20261024T140135Z_prod"
+        "20261024T140135Z_prod",
+        "20261026T152452Z_prod"
       ],
-      "canonical_runs": []
+      "canonical_runs": [
+        "20261026T152452Z_prod"
+      ]
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",
