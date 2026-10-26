@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "c936492a6b5e56bd",
+  "caseset_version": "fcc36e990adc633a",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -574,7 +574,7 @@
     },
     {
       "field": "aoi_ids",
-      "cases": 608,
+      "cases": 609,
       "switches_on": "aoi_id_match"
     },
     {

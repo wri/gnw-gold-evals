@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "c936492a6b5e56bd",
+  "caseset_version": "fcc36e990adc633a",
   "case_count": 949,
   "cases": [
     {
@@ -2949,13 +2949,13 @@
     },
     {
       "id": "ch-causal-001",
-      "uid": "cf1f0b0010e55a2d",
+      "uid": "df05d764db35ee50",
       "set": "causal",
       "group": "why_subnational",
       "status": "ready",
       "difficulty": "hard",
       "behaviour": "answer with drivers data; caveat that drivers ≠ proof of cause",
-      "query": "Why has tree cover loss been so high in Ghana's Western region?",
+      "query": "Why has tree cover loss been so high in Côte d'Ivoire's Cavally region?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -3659,12 +3659,12 @@
     },
     {
       "id": "ch-causal-026",
-      "uid": "85d55c29021f8ac1",
+      "uid": "11daa37eab20033c",
       "set": "causal",
       "group": "driver_share",
       "status": "ready",
       "behaviour": "answer with drivers data at supported scale; caveat",
-      "query": "Which areas of the Ghana Cocoa Belt lost tree cover to permanent agriculture rather than shifting cultivation, so we can target restoration?",
+      "query": "Which areas of Côte d'Ivoire's cocoa belt lost tree cover to permanent agriculture rather than shifting cultivation, so we can target restoration?",
       "expected_fields": [
         "data_pull",
         "dataset_id",
@@ -7622,12 +7622,12 @@
     },
     {
       "id": "ch-comp-149",
-      "uid": "8d74e90d571dc42d",
+      "uid": "91cac21846b54b34",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready",
       "behaviour": "Compare same month across years with data",
-      "query": "My email said there were about 40 hectares of new alerts in the Western North region. How does that compare with the same month last year?",
+      "query": "My email said there were about 40 hectares of new alerts in Côte d'Ivoire's Nawa region. How does that compare with the same month last year?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -7648,12 +7648,12 @@
     },
     {
       "id": "ch-comp-150",
-      "uid": "81c1013d410493a0",
+      "uid": "cd25015bf257b356",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
-      "query": "Compare tree cover loss since 2021 in Ghana's Western North and Ashanti regions — those are our main cocoa sourcing regions.",
+      "query": "Compare tree cover loss since 2021 in Côte d'Ivoire's Nawa and Haut-Sassandra regions — those are our main cocoa sourcing regions.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -8010,13 +8010,14 @@
     },
     {
       "id": "ch-comp-163",
-      "uid": "d8cec4e2061931b1",
+      "uid": "08114801dfbdb292",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready",
       "behaviour": "Answer for three named areas",
-      "query": "Compare this month's alerts across the three districts we patrol: Offinso, Ahafo Ano South and Atwima Nwabiagya.",
+      "query": "Compare this month's alerts across the three regions we patrol in Côte d'Ivoire: Cavally, Guémon and Tonkpi.",
       "expected_fields": [
+        "aoi_ids",
         "data_pull",
         "dataset_id",
         "date_tolerance_days",
@@ -8026,6 +8027,7 @@
       ],
       "implied_checks": [
         "answered_without_data",
+        "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
@@ -13292,13 +13294,13 @@
     },
     {
       "id": "ch-mon-011",
-      "uid": "2eb50e8d3ed2582e",
+      "uid": "5c1f51b573a0213a",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
       "difficulty": "hard",
       "behaviour": "answer with data; state window used",
-      "query": "Have there been any disturbance alerts in Ghana's Western North region recently?",
+      "query": "Have there been any disturbance alerts in Côte d'Ivoire's Nawa region recently?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -14118,12 +14120,12 @@
     },
     {
       "id": "ch-mon-041",
-      "uid": "851a2a35603d2224",
+      "uid": "cc1e88b05a13d354",
       "set": "monitoring",
       "group": "recent_area",
       "status": "ready",
       "behaviour": "answer with data",
-      "query": "Summarize alerts in Offinso Forest District over the last two weeks",
+      "query": "Summarize alerts in Côte d'Ivoire's San-Pédro region over the last two weeks",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -14197,12 +14199,12 @@
     },
     {
       "id": "ch-mon-045",
-      "uid": "76a07bcad065a09f",
+      "uid": "773686f5de054722",
       "set": "monitoring",
       "group": "alert_followup",
       "status": "ready",
       "behaviour": "List or export coordinates and dates, or explain how to get them",
-      "query": "Give me the coordinates and dates of the high-confidence alerts in Offinso Forest District from the last two weeks so my team can go verify them.",
+      "query": "Give me the coordinates and dates of the high-confidence alerts in Côte d'Ivoire's San-Pédro region from the last two weeks so my team can go verify them.",
       "expected_fields": [
         "text"
       ],

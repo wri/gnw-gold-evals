@@ -368,3 +368,19 @@ were:
   `ch-causal-029`, `ch-quant-166`, `ch-aoi-155` and `ch-quant-190` as they
   were (text expectations only); a data requirement was drafted for each and
   dropped in review.
+
+### Ghana questions moved to Côte d'Ivoire (2026-10-26)
+
+The analytics API rejects every Ghana sub-national GADM id: GADM 4.1 writes
+them without the dot (`GHA15_2`), and the fix is PZB-1408, planned for the
+next sprint. Until then AJ moved the eight Ghana members to similar areas in
+Côte d'Ivoire, Ghana's cocoa-belt neighbour: Western region to Cavally
+(`ch-causal-001`), Western North to Nawa (`ch-comp-149`, `ch-mon-011`),
+Western North and Ashanti to Nawa and Haut-Sassandra (`ch-comp-150`), the
+Offinso districts to Cavally, Guémon and Tonkpi (`ch-comp-163`) and to
+San-Pédro (`ch-mon-041`, `ch-mon-045`), and the Ghana Cocoa Belt to Côte
+d'Ivoire's cocoa belt (`ch-causal-026`). Each case keeps its Ghana version
+in `notes.ghana_original`. The benchmark sheet matches these rows by query
+text, so `seeds/benchmark-v2026-bef-2026-10-26.csv` is the 22 October export
+with those eight queries substituted, and `2026-draft-4` is built from it.
+Restore the Ghana versions, and the 22 October seed, once PZB-1408 is fixed.

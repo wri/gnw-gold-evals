@@ -1,12 +1,12 @@
 id: ch-comp-150
-uid: 81c1013d410493a0
+uid: cd25015bf257b356
 status: ready
 set: comparison
 group: tcl
-query: Compare tree cover loss since 2021 in Ghana's Western North and Ashanti regions — those
-  are our main cocoa sourcing regions.
+query: Compare tree cover loss since 2021 in Côte d'Ivoire's Nawa and Haut-Sassandra regions
+  — those are our main cocoa sourcing regions.
 expected:
-  aoi_ids: GHA16;GHA2
+  aoi_ids: CIV.2.2;CIV.9.1
   dataset_id: '4'
   start_date: '2021-01-01'
   end_date: '2025-12-31'
@@ -18,7 +18,7 @@ notes:
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
     2024-12-31
   benchmark_id: bm26-062
@@ -30,3 +30,10 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001382 ECOM cocoa; USY-001399 Olam
   refresh_risk: Low
+  ghana_original: '{"query": "Compare tree cover loss since 2021 in Ghana''s Western North
+    and Ashanti regions — those are our main cocoa sourcing regions.", "expected": {"aoi_ids":
+    "GHA16;GHA2", "dataset_id": "4", "start_date": "2021-01-01", "end_date": "2025-12-31",
+    "data_pull": "TRUE"}}'
+  review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
+    is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
+    version (notes.ghana_original) once it is fixed.'

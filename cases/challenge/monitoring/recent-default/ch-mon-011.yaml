@@ -1,11 +1,11 @@
 id: ch-mon-011
-uid: 2eb50e8d3ed2582e
+uid: 5c1f51b573a0213a
 status: ready
 set: monitoring
 group: recent_default
-query: Have there been any disturbance alerts in Ghana's Western North region recently?
+query: Have there been any disturbance alerts in Côte d'Ivoire's Nawa region recently?
 expected:
-  aoi_ids: GHA16
+  aoi_ids: CIV.2.2
   dataset_id: '11'
   data_pull: 'TRUE'
   text: States the time window the alerts it reports cover.
@@ -16,7 +16,7 @@ notes:
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth
   user_story_refs: USY-001582 Western North community monitoring
   benchmark_id: bm26-009
@@ -27,3 +27,9 @@ notes:
   capability: Supported
   grounding: Direct from story
   refresh_risk: Alert confidence can upgrade
+  ghana_original: '{"query": "Have there been any disturbance alerts in Ghana''s Western North
+    region recently?", "expected": {"aoi_ids": "GHA16", "dataset_id": "11", "data_pull": "TRUE",
+    "text": "States the time window the alerts it reports cover."}}'
+  review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
+    is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
+    version (notes.ghana_original) once it is fixed.'

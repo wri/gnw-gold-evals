@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version c936492a6b5e56bd` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version fcc36e990adc633a` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-26_
 
@@ -100,7 +100,7 @@ friends) run on top of it whenever their trigger state exists.
 | field | cases | switches on |
 |---|---|---|
 | dataset_id | 712 | dataset_id_match |
-| aoi_ids | 608 | aoi_id_match |
+| aoi_ids | 609 | aoi_id_match |
 | data_pull | 515 | data_pull_exists, answered_without_data |
 | end_date | 326 | date_extraction (with start_date) |
 | start_date | 326 | date_extraction (with end_date) |

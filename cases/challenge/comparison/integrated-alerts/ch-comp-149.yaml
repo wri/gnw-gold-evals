@@ -1,16 +1,16 @@
 id: ch-comp-149
-uid: 8d74e90d571dc42d
+uid: 91cac21846b54b34
 status: ready
 set: comparison
 group: integrated-alerts
-query: My email said there were about 40 hectares of new alerts in the Western North region.
+query: My email said there were about 40 hectares of new alerts in Côte d'Ivoire's Nawa region.
   How does that compare with the same month last year?
 expected:
-  aoi_ids: GHA16
+  aoi_ids: CIV.2.2
   dataset_id: '11'
   data_pull: 'TRUE'
-  text: Compares this month's alert area in Western North with the same month last year using
-    the alert data, rather than repeating the emailed 40 hectares without checking it.
+  text: Compares this month's alert area in Nawa with the same month last year using the alert
+    data, rather than repeating the emailed 40 hectares without checking it.
 notes:
   behaviour: Compare same month across years with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-037); USY-001582 Western North; Alerts
@@ -18,7 +18,7 @@ notes:
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
   benchmark_id: bm26-037
   benchmark_type: comparison
@@ -29,3 +29,11 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001582 Western North; Alerts JTBD (Miro)
   refresh_risk: Alert confidence can upgrade
+  ghana_original: '{"query": "My email said there were about 40 hectares of new alerts in
+    the Western North region. How does that compare with the same month last year?", "expected":
+    {"aoi_ids": "GHA16", "dataset_id": "11", "data_pull": "TRUE", "text": "Compares this month''s
+    alert area in Western North with the same month last year using the alert data, rather
+    than repeating the emailed 40 hectares without checking it."}}'
+  review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
+    is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
+    version (notes.ghana_original) once it is fixed.'

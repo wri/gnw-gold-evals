@@ -1,11 +1,11 @@
 id: ch-mon-041
-uid: 851a2a35603d2224
+uid: cc1e88b05a13d354
 status: ready
 set: monitoring
 group: recent_area
-query: Summarize alerts in Offinso Forest District over the last two weeks
+query: Summarize alerts in Côte d'Ivoire's San-Pédro region over the last two weeks
 expected:
-  aoi_ids: GHA2.34
+  aoi_ids: CIV.2.3
   dataset_id: '11'
   start_date: '{run-14d}'
   end_date: '{run}'
@@ -17,8 +17,7 @@ notes:
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-23; ''Offinso Forest District'' is a Forestry
-    Commission unit; pinned to GADM district Offinso (GHA2.34_2); Offinso North is GHA2.35'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: 'Relative dates: resolve window at run time'
   benchmark_id: bm26-016
   benchmark_type: monitoring
@@ -29,3 +28,9 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001249 Offinso ATEM project
   refresh_risk: Alert confidence can upgrade
+  ghana_original: '{"query": "Summarize alerts in Offinso Forest District over the last two
+    weeks", "expected": {"aoi_ids": "GHA2.34", "dataset_id": "11", "start_date": "{run-14d}",
+    "end_date": "{run}", "date_tolerance_days": "2", "data_pull": "TRUE"}}'
+  review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
+    is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
+    version (notes.ghana_original) once it is fixed.'

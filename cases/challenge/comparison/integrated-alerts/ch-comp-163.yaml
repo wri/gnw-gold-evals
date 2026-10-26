@@ -1,18 +1,18 @@
 id: ch-comp-163
-uid: d8cec4e2061931b1
+uid: 08114801dfbdb292
 status: ready
 set: comparison
 group: integrated-alerts
-query: 'Compare this month''s alerts across the three districts we patrol: Offinso, Ahafo
-  Ano South and Atwima Nwabiagya.'
+query: 'Compare this month''s alerts across the three regions we patrol in Côte d''Ivoire:
+  Cavally, Guémon and Tonkpi.'
 expected:
   dataset_id: '11'
   start_date: '{month_start}'
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
-  text: Compares this month's alerts across the three named districts, and if a district is
-    split into parts in the boundary data, says how it handled that.
+  text: Compares this month's alerts across the three named regions.
+  aoi_ids: CIV.8.1;CIV.8.2;CIV.8.3
 notes:
   behaviour: Answer for three named areas
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-105); USY-001249 Offinso; Portfolio
@@ -20,8 +20,7 @@ notes:
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-23; unpinned: GADM splits Ahafo Ano South
-    (GHA2.8, GHA2.9) and Atwima Nwabiagya (GHA2.20, GHA2.21); Offinso is GHA2.34'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
   benchmark_id: bm26-105
   benchmark_type: comparison
@@ -32,3 +31,11 @@ notes:
   grounding: Story analogue
   user_story_refs: USY-001249 Offinso; Portfolio monitoring research
   refresh_risk: Alert confidence can upgrade
+  ghana_original: '{"query": "Compare this month''s alerts across the three districts we patrol:
+    Offinso, Ahafo Ano South and Atwima Nwabiagya.", "expected": {"dataset_id": "11", "start_date":
+    "{month_start}", "end_date": "{run}", "date_tolerance_days": "3", "data_pull": "TRUE",
+    "text": "Compares this month''s alerts across the three named districts, and if a district
+    is split into parts in the boundary data, says how it handled that."}}'
+  review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
+    is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
+    version (notes.ghana_original) once it is fixed.'

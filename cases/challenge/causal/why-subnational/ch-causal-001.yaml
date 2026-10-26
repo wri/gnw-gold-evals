@@ -1,11 +1,11 @@
 id: ch-causal-001
-uid: cf1f0b0010e55a2d
+uid: df05d764db35ee50
 status: ready
 set: causal
 group: why_subnational
-query: Why has tree cover loss been so high in Ghana's Western region?
+query: Why has tree cover loss been so high in Côte d'Ivoire's Cavally region?
 expected:
-  aoi_ids: GHA15
+  aoi_ids: CIV.8.1
   dataset_id: '8'
   data_pull: 'TRUE'
   text: Grounds the explanation in the tree cover loss driver data, and notes that driver
@@ -17,7 +17,7 @@ notes:
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
     human review'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   user_story_refs: USY-001392 Ghana Cocoa Belt
   benchmark_id: bm26-143
   benchmark_type: causal
@@ -26,3 +26,10 @@ notes:
   aoi_type: Subnational
   capability: Supported
   grounding: Direct from story
+  ghana_original: '{"query": "Why has tree cover loss been so high in Ghana''s Western region?",
+    "expected": {"aoi_ids": "GHA15", "dataset_id": "8", "data_pull": "TRUE", "text": "Grounds
+    the explanation in the tree cover loss driver data, and notes that driver categories show
+    association, not proof of cause."}}'
+  review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
+    is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
+    version (notes.ghana_original) once it is fixed.'

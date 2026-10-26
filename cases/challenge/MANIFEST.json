@@ -1,5 +1,5 @@
 {
-  "caseset_version": "c936492a6b5e56bd",
+  "caseset_version": "fcc36e990adc633a",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -1083,7 +1083,7 @@
     },
     {
       "id": "ch-causal-001",
-      "uid": "cf1f0b0010e55a2d",
+      "uid": "df05d764db35ee50",
       "set": "causal",
       "group": "why_subnational",
       "status": "ready"
@@ -1258,7 +1258,7 @@
     },
     {
       "id": "ch-causal-026",
-      "uid": "85d55c29021f8ac1",
+      "uid": "11daa37eab20033c",
       "set": "causal",
       "group": "driver_share",
       "status": "ready"
@@ -2322,14 +2322,14 @@
     },
     {
       "id": "ch-comp-149",
-      "uid": "8d74e90d571dc42d",
+      "uid": "91cac21846b54b34",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready"
     },
     {
       "id": "ch-comp-150",
-      "uid": "81c1013d410493a0",
+      "uid": "cd25015bf257b356",
       "set": "comparison",
       "group": "tcl",
       "status": "ready"
@@ -2420,7 +2420,7 @@
     },
     {
       "id": "ch-comp-163",
-      "uid": "d8cec4e2061931b1",
+      "uid": "08114801dfbdb292",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready"
@@ -4023,7 +4023,7 @@
     },
     {
       "id": "ch-mon-011",
-      "uid": "2eb50e8d3ed2582e",
+      "uid": "5c1f51b573a0213a",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready"
@@ -4233,7 +4233,7 @@
     },
     {
       "id": "ch-mon-041",
-      "uid": "851a2a35603d2224",
+      "uid": "cc1e88b05a13d354",
       "set": "monitoring",
       "group": "recent_area",
       "status": "ready"
@@ -4261,7 +4261,7 @@
     },
     {
       "id": "ch-mon-045",
-      "uid": "76a07bcad065a09f",
+      "uid": "773686f5de054722",
       "set": "monitoring",
       "group": "alert_followup",
       "status": "ready"

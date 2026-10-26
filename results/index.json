@@ -2054,8 +2054,10 @@
           "20261024T140135Z_prod",
           "20261026T152452Z_prod"
         ],
-        "canonical": true,
-        "canonical_reasons": [],
+        "canonical": false,
+        "canonical_reasons": [
+          "8 active member(s) not in the run and its bases"
+        ],
         "page": "results/benchmark/pages/20261026T170459Z_prod.json"
       }
     ]
@@ -2100,9 +2102,7 @@
         "20261026T161639Z_prod",
         "20261026T170459Z_prod"
       ],
-      "canonical_runs": [
-        "20261026T170459Z_prod"
-      ]
+      "canonical_runs": []
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",
