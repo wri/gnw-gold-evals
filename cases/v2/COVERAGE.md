@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-10-24_
+_Last updated: 2026-10-26_
 
 ## Groups
 
@@ -66,6 +66,7 @@ friends) run on top of it whenever their trigger state exists.
 | clarification | 3 | clarification_requested |
 | nudge_type | 3 | nudge_match |
 | dataset_parameters | 1 | dataset_parameter_match |
+| accept_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | chart_type | 0 ← unused | chart_type_match |
 | data_pull | 0 ← unused | data_pull_exists, answered_without_data |
 | forbidden_tools | 0 ← unused | forbidden_tools_absent |
@@ -140,7 +141,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: chart_type, data_pull, forbidden_tools, suggested_datasets —
+- Expected fields no active case uses: accept_nudge_offering, chart_type, data_pull, forbidden_tools, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission

@@ -263,6 +263,11 @@
       "switches_on": "dataset_parameter_match"
     },
     {
+      "field": "accept_nudge_offering",
+      "cases": 0,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
+    },
+    {
       "field": "chart_type",
       "cases": 0,
       "switches_on": "chart_type_match"
@@ -672,6 +677,7 @@
   ],
   "known_gaps": {
     "unused_expected_fields": [
+      "accept_nudge_offering",
       "chart_type",
       "data_pull",
       "forbidden_tools",
