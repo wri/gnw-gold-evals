@@ -211,6 +211,8 @@ class ExpectedData(BaseModel):
     # attempt to pass on the nudge path (evaluators/accepted_nudge.py).
     # Opt-in: empty means a nudge is judged like any other non-pull.
     expected_accept_nudge_offering: str = ""
+    # The same for an aoi_choice nudge: area ids (;-separated) it must offer.
+    expected_accept_aoi_nudge_offering: str = ""
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""

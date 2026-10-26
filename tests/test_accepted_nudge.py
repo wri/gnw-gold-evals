@@ -1,5 +1,5 @@
-"""The accepted-nudge path: a dataset_choice nudge offering every listed
-dataset passes, and the pull checks are not applicable on that attempt.
+"""The accepted-nudge path: a nudge offering every listed dataset (or area)
+passes, and the pull checks are not applicable on that attempt.
 
 Usage
 $ uv run pytest tests/test_accepted_nudge.py -v
@@ -14,7 +14,7 @@ from goldset.buckets import (
 from goldset.eval_types import ExpectedData
 from goldset.evaluators.accepted_nudge import (
     evaluate_accepted_nudge,
-    takes_nudge_path,
+    nudge_path,
 )
 from goldset.registry import EVALUATORS
 from goldset.runner.base import BaseTestRunner
@@ -44,10 +44,24 @@ def _nudge_state(*dataset_ids, pulled=False):
     return state
 
 
+def _aoi_nudge_state(*src_ids):
+    """Agent state ending in an aoi_choice nudge, shaped like ch-quant-188's."""
+    src_ids = src_ids or ("BRA.14_1", "SUR.6_1")
+    return {
+        "messages": [],
+        "charts_data": [],
+        "nudge": {
+            "type": "aoi_choice",
+            "options": list(src_ids),
+            "data": [{"source": "gadm", "src_id": i, "name": i} for i in src_ids],
+        },
+    }
+
+
 def test_every_listed_dataset_offered_passes_and_extras_are_allowed():
     result = evaluate_accepted_nudge(_nudge_state(8, 4), "8")
     assert result["accepted_nudge_match_score"] == 1.0
-    assert result["actual_nudge_dataset_ids"] == "4; 8"
+    assert result["actual_nudge_offered"] == "dataset_choice: 4; 8"
 
 
 def test_a_listed_dataset_missing_from_the_nudge_fails():
@@ -62,16 +76,17 @@ def test_abstains_without_the_expectation_or_off_the_nudge_path():
     # A pull makes it the pull path, whatever else the state carries.
     assert evaluate_accepted_nudge(_nudge_state(8, pulled=True), "8")[
         "accepted_nudge_match_score"] is None
-    aoi_nudge = {"nudge": {"type": "aoi_choice", "options": ["Pará", "Para"]}}
-    assert evaluate_accepted_nudge(aoi_nudge, "8")["accepted_nudge_match_score"] is None
-    assert not takes_nudge_path(aoi_nudge, "8")
+    # An area choice is not accepted by a dataset list alone.
+    assert evaluate_accepted_nudge(_aoi_nudge_state(), "8")[
+        "accepted_nudge_match_score"] is None
+    assert nudge_path(_aoi_nudge_state(), "8", "") is None
 
 
 def test_a_nudge_without_dataset_ids_abstains_loudly():
     state = {"nudge": {"type": "dataset_choice", "options": ["Tree cover loss"]}}
     result = evaluate_accepted_nudge(state, "4")
     assert result["accepted_nudge_match_score"] is None
-    assert "abstained" in result["actual_nudge_dataset_ids"]
+    assert "abstained" in result["actual_nudge_offered"]
 
 
 def test_pull_path_checks_are_exactly_the_presumes_pull_evaluators():
@@ -150,3 +165,41 @@ def test_reconcile_owes_only_the_checks_of_the_path_taken():
         "answered_without_data": 1.0, "accepted_nudge_match": None}}
     result = reconcile([nudge_row, pull_row], {"u1": expected, "u2": expected})
     assert result["missing"] == []
+
+
+def test_an_area_choice_offering_the_listed_area_passes():
+    # ch-quant-188: Pará, Brazil (BRA.14) must be offered; Suriname's Para may be too.
+    result = evaluate_accepted_nudge(_aoi_nudge_state(), "", "BRA.14")
+    assert result["accepted_nudge_match_score"] == 1.0
+    assert result["actual_nudge_offered"] == "aoi_choice: bra.14; sur.6"
+    assert evaluate_accepted_nudge(_aoi_nudge_state("SUR.6_1"), "", "BRA.14")[
+        "accepted_nudge_match_score"] == 0.0
+
+
+def test_runner_skips_the_area_check_at_an_area_choice():
+    expected = ExpectedData(
+        expected_aoi_ids="BRA.14", expected_dataset_id="6",
+        expected_data_pull="TRUE", expected_accept_aoi_nudge_offering="BRA.14",
+    )
+    evaluations = _Probe()._run_evaluations(_aoi_nudge_state(), expected, "q", None)
+    assert evaluations["accepted_nudge_match_score"] == 1.0
+    assert evaluations["aoi_id_match_score"] is None
+    assert evaluations["data_pull_exists_score"] is None
+
+
+def test_a_dataset_choice_keeps_the_area_check():
+    expected = ExpectedData(
+        expected_aoi_ids="PER", expected_accept_nudge_offering="8",
+        expected_accept_aoi_nudge_offering="PER",
+    )
+    evaluations = _Probe()._run_evaluations(_nudge_state(8), expected, "q", None)
+    assert evaluations["accepted_nudge_match_score"] == 1.0
+    assert evaluations["aoi_id_match_score"] == 1.0
+
+
+def test_reconcile_excuses_the_area_check_on_an_area_choice():
+    expected = {"aoi_ids": "BRA.14", "dataset_id": "6", "data_pull": "TRUE",
+                "accept_aoi_nudge_offering": "BRA.14"}
+    row = {"uid": "u", "id": "c", "checks": {"accepted_nudge_match": 1.0,
+           "aoi_id_match": None}}
+    assert reconcile([row], {"u": expected})["missing"] == []

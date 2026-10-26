@@ -57,6 +57,9 @@ class EvaluatorSpec:
     # Its checks only make sense after a data pull, so an attempt judged on
     # the accepted-nudge path skips it and records null (accepted_nudge.py).
     presumes_pull: bool = False
+    # Its checks only make sense once an area is chosen, so an attempt that
+    # stopped at an accepted aoi_choice nudge skips it too.
+    presumes_area: bool = False
 
 
 EVALUATORS: tuple[EvaluatorSpec, ...] = (
@@ -75,6 +78,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_aoi_selection(
             state, expected.expected_aoi_ids, query
         ),
+        presumes_area=True,
     ),
     EvaluatorSpec(
         name="dataset",
@@ -241,7 +245,9 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         kind="deterministic",
         score_fields=("accepted_nudge_match_score",),
         run=lambda state, expected, query, dashboard: evaluate_accepted_nudge(
-            state, expected.expected_accept_nudge_offering
+            state,
+            expected.expected_accept_nudge_offering,
+            expected.expected_accept_aoi_nudge_offering,
         ),
     ),
     EvaluatorSpec(

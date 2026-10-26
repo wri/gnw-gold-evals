@@ -288,7 +288,7 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("scope_match")
     if expected.get("forbidden_tools"):
         implied.add("forbidden_tools_absent")
-    if expected.get("accept_nudge_offering"):
+    if expected.get("accept_nudge_offering") or expected.get("accept_aoi_nudge_offering"):
         implied.add(ACCEPTED_NUDGE)
     return implied
 
@@ -299,7 +299,11 @@ def _implied_for_entry(implied: set[str], checks: dict[str, Any]) -> set[str]:
     if not any(base_check_name(check) == ACCEPTED_NUDGE for check in implied):
         return implied
     if _took_nudge_path(checks):
-        return {c for c in implied if base_check_name(c) not in PULL_PATH_CHECKS}
+        # An area-choice nudge also leaves aoi_id_match null: no area yet.
+        skipped = PULL_PATH_CHECKS | (
+            {"aoi_id_match"} if checks.get("aoi_id_match") is None else set()
+        )
+        return {c for c in implied if base_check_name(c) not in skipped}
     return {c for c in implied if base_check_name(c) != ACCEPTED_NUDGE}
 
 

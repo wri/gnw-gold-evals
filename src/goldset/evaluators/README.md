@@ -177,7 +177,7 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`nudge_match`](#nudge_match) | scope | deterministic | gates | `nudge_type` and/or `nudge_options` | `nudge_evaluator.py:35` |
 | [`scope_match`](#scope_match) | scope | deterministic | gates | `scope` | `scope_checks.py:54` |
 | [`forbidden_tools_absent`](#forbidden_tools_absent) | scope | deterministic | gates | `forbidden_tools` | `tool_checks.py` |
-| [`accepted_nudge_match`](#accepted_nudge_match) | scope | deterministic | gates (nudge path only) | `accept_nudge_offering` | `accepted_nudge.py` |
+| [`accepted_nudge_match`](#accepted_nudge_match) | scope | deterministic | gates (nudge path only) | `accept_nudge_offering` and/or `accept_aoi_nudge_offering` | `accepted_nudge.py` |
 
 Two expected fields drive **no** check of their own: `aoi_source` is read only by
 `dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
@@ -1223,24 +1223,28 @@ earlier turns' calls. Use it on single-turn rows or turn 1 only.
 ## `accepted_nudge_match`
 
 **Measures** whether a `dataset_choice` nudge offered every dataset the case
-lists in `accept_nudge_offering` (`accepted_nudge.py`). Extra options are
-allowed. Datasets are matched by the `dataset_id` in the nudge's `data`
-entries, not by label: labels overlap ("Tree cover loss" is a substring of
+lists in `accept_nudge_offering`, or an `aoi_choice` nudge every area it lists
+in `accept_aoi_nudge_offering` (`accepted_nudge.py`). Extra options are
+allowed. Items are matched by id from the nudge's `data` entries
+(`dataset_id`, or `src_id` with the GADM suffix dropped, as `aoi_id_match`
+does), not by label: labels overlap ("Tree cover loss" is a substring of
 "Tree cover loss by dominant driver"), which is why `nudge_match` cannot
 express the rule.
 
 **Why it exists**: AJ decided on 2026-10-26, reviewing the BENCHMARK draft-4
 failures, that a clarifying dataset choice is a right answer when it offers the
-right datasets. Sixteen questions asked back on every attempt; for them the
-case can pass on either of two paths, and each attempt is judged on the one
-it took:
+right datasets, and later that asking which Pará is meant is fine as long as
+Pará, Brazil is offered (ch-quant-188). The case can pass on either of two
+paths, and each attempt is judged on the one it took:
 
-- **Nudge path**: the attempt ended in a `dataset_choice` nudge and pulled no
-  data. This check scores the offer, and the evaluators the registry marks
-  `presumes_pull` are skipped and recorded `null` (`PULL_PATH_CHECKS` in
-  `buckets.py`: the dataset, date, pull, answer, guard, analysis,
-  traceability and output checks). `aoi_id_match` and the other scope checks
-  still score, so a nudge for the wrong place fails.
+- **Nudge path**: the attempt ended in a nudge of a kind the case accepts and
+  pulled no data. This check scores the offer, and the evaluators the
+  registry marks `presumes_pull` are skipped and recorded `null`
+  (`PULL_PATH_CHECKS` in `buckets.py`: the dataset, date, pull, answer, guard,
+  analysis, traceability and output checks). At a `dataset_choice` nudge
+  `aoi_id_match` still scores, so a dataset choice for the wrong place fails;
+  at an `aoi_choice` nudge no area is chosen yet, so the evaluator marked
+  `presumes_area` (`aoi_id_match`) is skipped too.
 - **Pull path**: anything else. This check is `null` and every other check
   scores as before; a prose ask-back with no nudge still fails
   `data_pull_exists`.
@@ -1252,15 +1256,17 @@ its attempt verdicts instead (`buckets.row_verdict`, ties fail; mirrored in
 both report templates). Reconciliation owes a row only the checks of the path
 its merged checks show.
 
-**Fires on** `accept_nudge_offering`, `;`-separated dataset ids, all of which
-must be offered. It is opt-in, so no GOLD row fires it.
+**Fires on** `accept_nudge_offering` (`;`-separated dataset ids) and
+`accept_aoi_nudge_offering` (`;`-separated area ids); every listed id must be
+offered. It is opt-in, so no GOLD row fires it.
 
-**`null` vs `0.0`**: `null` when no list is set, on the pull path, and when a
-`dataset_choice` nudge carries no dataset ids (the offer is unreadable, so the
-check abstains; the pull checks stay `null` on that attempt). `0.0` when any
-listed dataset is missing from the offer.
+**`null` vs `0.0`**: `null` when the case accepts no nudge of the kind the
+attempt stopped at, on the pull path, and when an accepted nudge carries no
+ids (the offer is unreadable, so the check abstains; the pull checks stay
+`null` on that attempt). `0.0` when any listed id is missing from the offer.
 
-**Reason**: none; `actuals.accepted_nudge_match` = the dataset ids offered.
+**Reason**: none; `actuals.accepted_nudge_match` = the nudge kind and the ids
+offered.
 
 ---
 

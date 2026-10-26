@@ -1,30 +1,39 @@
-"""Accepted-nudge validator: a clarifying dataset choice can be a right answer.
+"""Accepted-nudge validator: a clarifying choice can be a right answer.
 
-Some questions are fairly answered by asking which dataset to use, as long
-as the choice offered is the right one. AJ decided on 2026-10-26 (BENCHMARK
-draft-4 review, the 16 questions that asked back on every attempt) that such
-a case passes when the agent's ``dataset_choice`` nudge offers **every**
-dataset the case lists; extra options are allowed. A correct direct pull
-still passes, so the case has two paths and each attempt is judged on the
-one it took:
+Some questions are fairly answered by asking which dataset or which area is
+meant, as long as the choice offered is the right one. AJ decided on
+2026-10-26 (BENCHMARK draft-4 review) that such a case passes when the
+agent's nudge offers **every** item the case lists; extra options are
+allowed. A case opts in per nudge kind:
 
-- **nudge path**: the attempt ended in a ``dataset_choice`` nudge and pulled
-  no data. ``accepted_nudge_match`` scores the offered datasets, and the
-  checks that presuppose a pull (``PULL_PATH_CHECKS`` in ``buckets.py``) are
-  not applicable, so the runner skips their evaluators and records ``null``.
+- ``accept_nudge_offering``: dataset ids a ``dataset_choice`` nudge must offer;
+- ``accept_aoi_nudge_offering``: area ids an ``aoi_choice`` nudge must offer
+  (ch-quant-188: asking whether Pará means Brazil or Suriname is fine, as
+  long as Pará, Brazil is on the list).
+
+A correct direct pull still passes, so the case has two paths and each
+attempt is judged on the one it took:
+
+- **nudge path**: the attempt ended in a nudge of an accepted kind and pulled
+  no data. ``accepted_nudge_match`` scores the offer, and the checks that
+  presuppose a pull (``PULL_PATH_CHECKS`` in ``buckets.py``) are not
+  applicable, so the runner skips their evaluators and records ``null``. On
+  an ``aoi_choice`` nudge no area is chosen yet, so ``aoi_id_match`` is not
+  applicable either.
 - **pull path**: anything else. ``accepted_nudge_match`` is ``null`` and the
   usual checks score as before, so a prose ask-back without a nudge still
   fails ``data_pull_exists``.
 
-Datasets are matched by the ``dataset_id`` in the nudge's ``data`` entries,
-not by option label: labels overlap ("Tree cover loss" is a substring of
-"Tree cover loss by dominant driver"), which is why ``nudge_match`` cannot
-express this rule.
+Items are matched by id from the nudge's ``data`` entries (``dataset_id``,
+or ``src_id`` with the GADM suffix dropped, as ``aoi_id_match`` does), never
+by option label: labels overlap ("Tree cover loss" is a substring of "Tree
+cover loss by dominant driver"), which is why ``nudge_match`` cannot express
+this rule.
 
-Opt-in: it fires only on rows that set ``accept_nudge_offering``
-(``;``-separated dataset ids, hashed into the uid), so GOLD is unaffected.
-Because attempts can take different paths, ``buckets.row_verdict`` judges
-these rows by the majority of attempt verdicts, not by per-check majority.
+Opt-in: it fires only on rows that set one of the two fields (``;``-separated
+ids, hashed into the uid), so GOLD is unaffected. Because attempts can take
+different paths, ``buckets.row_verdict`` judges these rows by the majority of
+attempt verdicts, not by per-check majority.
 """
 
 from __future__ import annotations
@@ -32,64 +41,75 @@ from __future__ import annotations
 from typing import Any
 
 from goldset.evaluators.guards import _data_was_pulled
-from goldset.evaluators.utils import normalize_value
+from goldset.evaluators.utils import normalize_gadm_id, normalize_value
+
+DATASET_CHOICE = "dataset_choice"
+AOI_CHOICE = "aoi_choice"
 
 
 def _parse_ids(value: Any) -> set[str]:
     if not value:
         return set()
     return {
-        normalize_value(item)
+        normalize_gadm_id(normalize_value(item))
         for item in str(value).split(";")
         if normalize_value(item)
     }
 
 
-def ended_in_dataset_nudge(agent_state: dict[str, Any]) -> bool:
-    """True when the attempt stopped at a dataset_choice nudge with no pull."""
+def _offered_ids(nudge: dict[str, Any]) -> set[str]:
+    field = "dataset_id" if nudge.get("type") == DATASET_CHOICE else "src_id"
+    return {
+        normalize_gadm_id(normalize_value(entry.get(field)))
+        for entry in nudge.get("data") or []
+        if isinstance(entry, dict) and normalize_value(entry.get(field))
+    }
+
+
+def nudge_path(
+    agent_state: dict[str, Any],
+    dataset_offering: Any,
+    aoi_offering: Any,
+) -> str | None:
+    """The accepted nudge kind this attempt stopped at with no pull, if any."""
     nudge = agent_state.get("nudge")
-    if not isinstance(nudge, dict) or nudge.get("type") != "dataset_choice":
-        return False
-    return not _data_was_pulled(agent_state)
-
-
-def takes_nudge_path(agent_state: dict[str, Any], expected_offering: Any) -> bool:
-    """Whether this attempt is judged on the nudge path (see module doc)."""
-    return bool(_parse_ids(expected_offering)) and ended_in_dataset_nudge(agent_state)
+    if not isinstance(nudge, dict) or _data_was_pulled(agent_state):
+        return None
+    accepted = {
+        DATASET_CHOICE: bool(_parse_ids(dataset_offering)),
+        AOI_CHOICE: bool(_parse_ids(aoi_offering)),
+    }
+    kind = nudge.get("type")
+    return kind if accepted.get(kind) else None
 
 
 def evaluate_accepted_nudge(
     agent_state: dict[str, Any],
-    expected_offering: Any,
+    dataset_offering: Any,
+    aoi_offering: Any = "",
 ) -> dict[str, Any]:
-    """Score 1.0 when the nudge offers every listed dataset, 0.0 otherwise.
+    """Score 1.0 when the nudge offers every listed item, 0.0 otherwise.
 
-    ``null`` when the row sets no ``accept_nudge_offering`` and when the
-    attempt took the pull path (the pull checks speak for it). Also ``null``
-    when a dataset_choice nudge carries no dataset ids at all: the harness
-    cannot tell what was offered, and an unreadable signal must abstain
-    rather than pass or fail (guards.py convention).
+    ``null`` when the row accepts no nudge of the kind the attempt stopped
+    at, and on the pull path (the pull checks speak for it). Also ``null``
+    when an accepted nudge carries no ids at all: the harness cannot tell
+    what was offered, and an unreadable signal must abstain rather than pass
+    or fail (guards.py convention).
     """
     result: dict[str, Any] = {
         "accepted_nudge_match_score": None,
-        "actual_nudge_dataset_ids": None,
+        "actual_nudge_offered": None,
     }
-    expected = _parse_ids(expected_offering)
-    if not expected or not ended_in_dataset_nudge(agent_state):
+    kind = nudge_path(agent_state, dataset_offering, aoi_offering)
+    if kind is None:
         return result
 
-    entries = agent_state["nudge"].get("data") or []
-    offered = {
-        normalize_value(entry.get("dataset_id"))
-        for entry in entries
-        if isinstance(entry, dict) and normalize_value(entry.get("dataset_id"))
-    }
+    offered = _offered_ids(agent_state["nudge"])
     if not offered:
-        result["actual_nudge_dataset_ids"] = (
-            "dataset_choice nudge carries no dataset ids; abstained"
-        )
+        result["actual_nudge_offered"] = f"{kind} nudge carries no ids; abstained"
         return result
 
-    result["actual_nudge_dataset_ids"] = "; ".join(sorted(offered))
+    expected = _parse_ids(dataset_offering if kind == DATASET_CHOICE else aoi_offering)
+    result["actual_nudge_offered"] = f"{kind}: " + "; ".join(sorted(offered))
     result["accepted_nudge_match_score"] = 1.0 if expected <= offered else 0.0
     return result
