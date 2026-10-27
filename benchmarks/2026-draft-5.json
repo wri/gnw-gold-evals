@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "f8c630e9a236f2c8"
+    "caseset_version": "003ec8939c01da39"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -4026,14 +4026,13 @@
       "synthetic": true
     },
     {
-      "uid": "208487ee19bcda5b",
+      "uid": "d5a5fd7d37f819ab",
       "id": "ch-trend-086",
       "type": "trend",
       "set": "trend",
       "cohort": "tcl-fires",
       "difficulty": "",
       "stages": [
-        "scope",
         "retrieval",
         "explanation"
       ],

@@ -1,17 +1,16 @@
 id: ch-trend-086
-uid: 208487ee19bcda5b
+uid: d5a5fd7d37f819ab
 status: ready
 set: trend
 group: tcl-fires
-query: Where should we focus fire prevention in Santa Cruz based on fire-driven loss in recent
-  years?
+query: Where should we focus fire prevention in Santa Cruz, Bolivia, based on fire-driven
+  loss in recent years?
 expected:
   aoi_ids: BOL.8
   dataset_id: '10'
   data_pull: 'TRUE'
   text: Bases the suggestion on fire-driven loss data for Santa Cruz, Bolivia, by department
     trend or by province, and does not point to sub-areas the data do not cover.
-  accept_aoi_nudge_offering: BOL.8
 notes:
   behaviour: Answer with fire-driven loss trend; note sub-area targeting limits
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-247); USY-001332 IBIF; USY-001559 Lomerío
@@ -31,4 +30,8 @@ notes:
   refresh_risk: Low
   review: '2026-10-27 draft-5 review (AJ asked to apply the review): accept_aoi_nudge_offering
     BOL.8 added (the prompt names no country, so asking which Santa Cruz is fair when Bolivia
-    is offered); text reworded to accept a province breakdown'
+    is offered); text reworded to accept a province breakdown; AJ 2026-10-27: name Bolivia
+    in the question (was ''Santa Cruz'' alone, which fairly needed a clarifying question),
+    so the area nudge is no longer accepted'
+  query_original: Where should we focus fire prevention in Santa Cruz based on fire-driven
+    loss in recent years?

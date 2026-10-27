@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "f8c630e9a236f2c8",
+  "caseset_version": "003ec8939c01da39",
   "case_count": 949,
   "cases": [
     {
@@ -23059,21 +23059,19 @@
     },
     {
       "id": "ch-trend-086",
-      "uid": "208487ee19bcda5b",
+      "uid": "d5a5fd7d37f819ab",
       "set": "trend",
       "group": "tcl-fires",
       "status": "ready",
       "behaviour": "Answer with fire-driven loss trend; note sub-area targeting limits",
-      "query": "Where should we focus fire prevention in Santa Cruz based on fire-driven loss in recent years?",
+      "query": "Where should we focus fire prevention in Santa Cruz, Bolivia, based on fire-driven loss in recent years?",
       "expected_fields": [
-        "accept_aoi_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",

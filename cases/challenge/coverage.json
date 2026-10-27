@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "f8c630e9a236f2c8",
+  "caseset_version": "003ec8939c01da39",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -562,7 +562,7 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 244,
+      "dedicated": 243,
       "shared_only": 0
     }
   },
@@ -649,7 +649,7 @@
     },
     {
       "field": "accept_aoi_nudge_offering",
-      "cases": 5,
+      "cases": 4,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
     },
     {

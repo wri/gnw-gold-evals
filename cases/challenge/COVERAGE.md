@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version f8c630e9a236f2c8` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version 003ec8939c01da39` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-27_
 
@@ -93,7 +93,7 @@ friends) run on top of it whenever their trigger state exists.
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 195 | 0 | 195 | 21% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 244 | 0 | 244 | 26% |
+| scope | 243 | 0 | 243 | 26% |
 
 ## Expected-field census (active cases)
 
@@ -115,7 +115,7 @@ friends) run on top of it whenever their trigger state exists.
 | clarification | 15 | clarification_requested |
 | nudge_type | 12 | nudge_match |
 | nudge_options | 6 | nudge_match |
-| accept_aoi_nudge_offering | 5 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
+| accept_aoi_nudge_offering | 4 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | accept_blog_sources | 3 | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
 | aoi_source | 0 ← unused | reference only (dashboard AOI source) |
