@@ -50,6 +50,22 @@ def _tool_call_date_windows(
     return windows
 
 
+def _pulled_windows(agent_state: dict[str, Any]) -> list[tuple[str, str, str]]:
+    """``("pulled", start, end)`` for each statistics entry that records one."""
+    statistics = agent_state.get("statistics") or []
+    if isinstance(statistics, dict):
+        statistics = [statistics]
+    windows = []
+    for entry in statistics:
+        if not isinstance(entry, dict):
+            continue
+        start = str(entry.get("start_date") or "").strip()
+        end = str(entry.get("end_date") or "").strip()
+        if start or end:
+            windows.append(("pulled", start, end))
+    return windows
+
+
 def _preferred_windows(
     windows: list[tuple[str, str, str]],
 ) -> list[tuple[str, str, str]]:
@@ -120,6 +136,12 @@ def evaluate_date_extraction(
 
     """
     windows = _preferred_windows(_tool_call_date_windows(agent_state))
+    if not windows:
+        # Some pulls take no dates (sLUC returns every reporting year): judge
+        # the window that was actually pulled, as each statistics entry
+        # records it. AJ, 2026-10-27: accept as long as the data includes
+        # the asked period.
+        windows = _pulled_windows(agent_state)
     all_windows = (
         "; ".join(f"{name}:{start}..{end}" for name, start, end in windows) or None
     )
@@ -145,8 +167,9 @@ def evaluate_date_extraction(
     ):
         return result
 
-    # Dates were expected but the agent never scoped a request - it did not look for
-    # a period at all, which is a failure rather than an absent check.
+    # Dates were expected but the agent neither scoped a request nor pulled a dated
+    # table - it did not look for a period at all, which is a failure rather than
+    # an absent check.
     if not windows:
         result["date_extraction_score"] = 0.0
         return result

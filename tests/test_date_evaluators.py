@@ -263,3 +263,18 @@ def test_extraction_checks_only_the_bounds_a_case_names():
         )["date_extraction_score"]
         == 0.0
     )
+
+
+def test_extraction_judges_the_pulled_window_when_no_call_carries_dates():
+    # ch-quant-033 (AJ, 2026-10-27): the sLUC pull takes no dates and returns
+    # 2020 to 2024; accept it as long as the data includes 2024.
+    state = {
+        "messages": [StubMessage([{"name": "pull_data", "args": {"query": "soy"}, "id": "c"}])],
+        "statistics": [{"start_date": "2020-01-01", "end_date": "2024-12-31"}],
+    }
+    result = evaluate_date_extraction(state, "2024-01-01", "2024-12-31")
+    assert result["date_extraction_score"] == 1.0
+    assert result["date_extraction_source"] == "pulled"
+    narrow = {**state, "statistics": [{"start_date": "2020-01-01", "end_date": "2023-12-31"}]}
+    assert evaluate_date_extraction(narrow, "2024-01-01", "2024-12-31")[
+        "date_extraction_score"] == 0.0
