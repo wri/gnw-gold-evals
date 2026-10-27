@@ -487,7 +487,7 @@ class FigureResult:
 
 # A zero figure is often stated in words ("no loss was recorded").
 _ZERO_WORDS = re.compile(
-    r"\b(zero|none|no (recorded |detected |measurable )?"
+    r"\b(zero|none|no (?:[\w-]+ ){0,2}"
     r"(loss|alerts?|change|gain|emissions|disturbances?|deforestation))\b",
     re.I,
 )

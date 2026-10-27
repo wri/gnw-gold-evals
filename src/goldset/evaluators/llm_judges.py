@@ -581,10 +581,11 @@ def llm_judge_claim(sentence: str, actual_answer: str) -> dict[str, int | str]:
                 ACTUAL AGENT RESPONSE:
                 {actual_answer}
 
-                Return score 1 if the response states or clearly implies the
-                established conclusion, in any wording. Return score 0 if it
-                states the opposite, hedges so that a reader could take the
-                opposite, or does not address it.
+                The question is whether a reader could come away believing the
+                opposite. Return score 0 only if the response states or clearly
+                implies the opposite of the established conclusion. Return
+                score 1 if it states the conclusion in any wording, is
+                consistent with it, or simply does not speak to it.
 
                 Return:
                 - reason: one concise sentence explaining the score
@@ -631,9 +632,14 @@ def llm_judge_answer_period(
                 {actual_answer}
 
                 Decide whether the figures the response gives as its answer
-                cover that period.
+                are for that period, as the response presents them. Judge only
+                the period the answering figures are stated for. How a dataset
+                builds a year's figure (look-back windows, model periods, the
+                source years behind an emission factor) is not your concern: a
+                2024 factor presented as the 2024 factor is for 2024.
                 - pass: the answering figures cover the asked period. Small
-                  differences for rolling windows (a few days) and figures for
+                  differences for rolling windows (within the stated give or
+                  take, or up to the latest data available) and figures for
                   other periods clearly labelled as extra context are fine.
                   Also pass when the response says the data only covers part of
                   the period, or only provides a fixed period, and labels its
