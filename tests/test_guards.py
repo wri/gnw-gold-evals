@@ -106,9 +106,9 @@ def test_g3_latency_info_threshold():
     assert latency_info(None, 180.0) is None  # no recorded latency
 
 
-def test_g2_web_fallback_flags_external_links_only():
+def test_g2_web_fallback_flags_external_links_only_without_a_pull():
     external = evaluate_guards(
-        state(answer=LONG_ANSWER, stats=PULL, dataset_id="3"),
+        state(answer=LONG_ANSWER, dataset_id="3"),
         expects_data_pull=True, expected_answer="x", expected_dataset_id="3",
     )
     assert external["web_fallback_score"] == 0.0
@@ -116,10 +116,21 @@ def test_g2_web_fallback_flags_external_links_only():
 
     own = evaluate_guards(
         state(answer="See https://app.globalnaturewatch.org/threads/x for the map. "
-                     + "A" * 60, stats=PULL, dataset_id="3"),
+                     + "A" * 60, dataset_id="3"),
         expects_data_pull=True, expected_answer="x", expected_dataset_id="3",
     )
     assert own["web_fallback_score"] == 1.0
+
+
+def test_g2_web_fallback_abstains_once_data_was_pulled():
+    # AJ, 2026-10-27: a cited article beside pulled figures misleads no one;
+    # the links are still recorded for the report.
+    pulled = evaluate_guards(
+        state(answer=LONG_ANSWER, stats=PULL, dataset_id="3"),
+        expects_data_pull=True, expected_answer="x", expected_dataset_id="3",
+    )
+    assert pulled["web_fallback_score"] is None
+    assert "wri.org" in pulled["actual_web_links"]
 
 
 def test_g4_pull_source_match_and_abstention():

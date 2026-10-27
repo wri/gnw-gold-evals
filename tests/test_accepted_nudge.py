@@ -262,9 +262,10 @@ def test_runner_skips_pull_and_area_checks_on_the_blog_path():
         assert evaluations[f"{check}_score"] is None, check
 
 
-def test_web_fallback_ignores_accepted_posts_on_the_pull_path():
+def test_web_fallback_ignores_accepted_posts():
+    # Without a pull (after one, web_fallback abstains altogether).
     state = {"messages": [SimpleNamespace(content=f"Loss rose ([a]({RIAU})).")],
-             "statistics": [{"source_url": "https://x", "dataset_id": 10}], "charts_data": []}
+             "statistics": [], "charts_data": []}
     allowed = evaluate_guards(state, True, "", "10", accepted_blog_sources=ACCEPTED)
     assert allowed["web_fallback_score"] == 1.0
     state["messages"][0].content += f" See {OTHER}."

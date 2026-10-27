@@ -105,9 +105,11 @@ def evaluate_guards(
         violated = answered and not pulled and not dataset_selected
         result["answered_without_data_score"] = 0.0 if violated else 1.0
 
-    # G2 — web_fallback: external citations in a data-pull answer signal the
-    # answer came from web knowledge, not the pulled data. Posts the case
-    # accepts as an answer (accept_blog_sources) are not a fallback.
+    # G2 — web_fallback: external citations in an answer that pulled no data
+    # signal it came from web knowledge instead. Once data was pulled, a cited
+    # article beside the figures misleads no one (AJ, 2026-10-27), and the
+    # figure checks speak for the figures, so the check abstains; the links are
+    # still recorded. Posts the case accepts (accept_blog_sources) never count.
     if expects_data_pull and answer_text:
         accepted = parse_slugs(accepted_blog_sources)
         links = [
@@ -116,7 +118,8 @@ def evaluate_guards(
             if not any(domain in link.lower() for domain in _OWN_DOMAINS)
             and link_slug(link) not in accepted
         ]
-        result["web_fallback_score"] = 0.0 if links else 1.0
+        if not pulled:
+            result["web_fallback_score"] = 0.0 if links else 1.0
         if links:
             result["actual_web_links"] = "; ".join(sorted(set(links))[:5])
 

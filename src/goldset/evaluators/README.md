@@ -840,9 +840,12 @@ decimals is a `null`, never a guess. 0.90 ±0.05 over 86 rows in
 **Measures** whether an answer that was supposed to come from a data pull instead
 cites the web — the second half of the 1-030 signal (`guards.py:107-117`).
 
-**Fires on** the derived data-pull expectation **and** a non-empty answer.
+**Fires on** the derived data-pull expectation **and** a non-empty answer, **only
+when the attempt pulled no data** (AJ, 2026-10-27): a cited article beside pulled
+figures misleads no one, and the figure checks speak for the figures.
 
-**`null` vs `0.0`**: `null` when no pull was expected or the answer is empty.
+**`null` vs `0.0`**: `null` when no pull was expected, the answer is empty or data
+was pulled (links are still recorded).
 `0.0` when the answer contains **any** link (`https?://…` or `www.…`) outside the
 product's own domains (`guards.py:37-38`, `109-115`), other than a post the case
 lists in `accept_blog_sources` (see [`accepted_blog_match`](#accepted_blog_match)).
