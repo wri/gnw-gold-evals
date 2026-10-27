@@ -47,3 +47,19 @@ def test_missing_dataset_without_sentinel_still_fails():
 def test_coverage_ignores_the_sentinel():
     assert split_dataset_ids("9;no_selection") == {"9"}
     assert split_dataset_ids("no_selection") == set()
+
+
+def test_context_layer_alternatives():
+    # ch-quant-009 (draft-5 review): either deforestation proxy layer is fair.
+    def layer(actual, expected):
+        state = {"dataset": {"dataset_id": 4, "context_layer": actual}}
+        return _score(state, "4", expected)["context_layer_match_score"]
+
+    either = "primary_forest | natural_forest"
+    assert layer("natural_forest", either) == 1.0
+    assert layer("primary_forest", either) == 1.0
+    assert layer("intact_forest", either) == 0.0
+    assert layer(None, either) == 0.0
+    assert layer(None, "no_selection") == 1.0
+    assert layer("primary_forest", "no_selection") == 0.0
+    assert layer(None, "") is None

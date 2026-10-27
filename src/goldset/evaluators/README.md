@@ -308,7 +308,8 @@ normalised projections, so any mismatch is `0.0`.
 intersecting layer, e.g. a land-cover or driver overlay).
 
 **Fires on** `context_layer`, again **only when `dataset_id` is set**
-(`dataset_evaluator.py:69-81`).
+(`dataset_evaluator.py:69-81`). Fair alternatives are separated by `|`
+(`primary_forest | natural_forest`, draft-5 review 2026-10-27); any one passes.
 
 **`null` vs `0.0`**: `null` with no expectation or no selected dataset. There is
 one sentinel: `context_layer: no_selection` inverts the check — it passes when

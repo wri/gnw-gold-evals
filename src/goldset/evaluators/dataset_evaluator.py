@@ -138,13 +138,18 @@ def evaluate_dataset_selection(
             1.0 if expected_parameters_str == actual_parameters_str else 0.0
         )
 
-    # Context layer matching: if expected is empty, return None (not evaluated)
+    # Context layer matching: if expected is empty, return None (not evaluated).
+    # Fair alternatives are separated by "|" ("primary_forest | natural_forest",
+    # draft-5 review 2026-10-27); "no_selection" means no layer at all.
     if not expected_context_str:
         context_layer_match_score = None
-    elif expected_context_str == "no_selection":
-        context_layer_match_score = 1.0 if not actual_context_str else 0.0
     else:
-        context_layer_match = expected_context_str == actual_context_str
+        alternatives = {
+            normalize_value(alt) for alt in str(expected_context_layer).split("|")
+        } - {""}
+        context_layer_match = (
+            not actual_context_str if "no_selection" in alternatives else False
+        ) or (bool(actual_context_str) and actual_context_str in alternatives)
         context_layer_match_score = 1.0 if context_layer_match else 0.0
 
     return {
