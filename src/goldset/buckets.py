@@ -60,6 +60,11 @@ DEDICATED: dict[str, str] = {
     "accepted_nudge_match": SCOPE,
     # Opt-in: an answer from search_blogs citing an accepted post passes
     "accepted_blog_match": EXPLANATION,
+    # Draft-5: the maths on the agent's own pull, the period the answer uses,
+    # and the conclusion the data supports (evaluators/figures.py)
+    "figure_match": ANALYSIS,
+    "answer_period_match": ANALYSIS,
+    "figure_claim_match": EXPLANATION,
     # Multi-turn conversation-level checks (PR-07)
     "state_delta": RETRIEVAL,
 }
@@ -120,6 +125,9 @@ PULL_PATH_CHECKS: frozenset[str] = frozenset(
         "answer_traceability",
         "chart_well_formed",
         "chart_type_match",
+        "figure_match",
+        "figure_claim_match",
+        "answer_period_match",
     }
 )
 ACCEPTED_NUDGE = "accepted_nudge_match"

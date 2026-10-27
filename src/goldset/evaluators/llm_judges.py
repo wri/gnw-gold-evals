@@ -553,3 +553,109 @@ def llm_judge_expected_text(
         }
 
     return judgement.score
+
+
+def llm_judge_claim(sentence: str, actual_answer: str) -> dict[str, int | str]:
+    """Whether the reply states a claim the data has already decided.
+
+    The harness works out from the pulled table which sentence is true
+    (``figures.claim_sentence``), so the reviewer only reads the reply and
+    never compares numbers itself.
+    """
+
+    class ClaimScore(BaseModel):
+        reason: str
+        score: int
+
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "user",
+                """
+                You are checking whether an AI assistant's reply states a
+                conclusion that has already been established from the data.
+
+                ESTABLISHED CONCLUSION:
+                {sentence}
+
+                ACTUAL AGENT RESPONSE:
+                {actual_answer}
+
+                Return score 1 if the response states or clearly implies the
+                established conclusion, in any wording. Return score 0 if it
+                states the opposite, hedges so that a reader could take the
+                opposite, or does not address it.
+
+                Return:
+                - reason: one concise sentence explaining the score
+                - score: 1 or 0
+                """,
+            ),
+        ],
+    )
+    judgement = (prompt | HAIKU.with_structured_output(ClaimScore)).invoke(
+        {"sentence": sentence, "actual_answer": actual_answer}
+    )
+    return {"score": judgement.score, "reason": judgement.reason}
+
+
+def llm_judge_answer_period(
+    query: str, period: str, actual_answer: str
+) -> dict[str, str]:
+    """Whether the reply's figures are computed over exactly the asked period.
+
+    AJ's rule (2026-10-27): pulling a wider window is fine, but the answer
+    must use the asked period. The reviewer reads which period the reply's
+    figures cover; it does no arithmetic.
+    """
+
+    class PeriodVerdict(BaseModel):
+        reason: str
+        verdict: str  # "pass", "fail" or "not_applicable"
+
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "user",
+                """
+                You are checking whether an AI assistant answered over the
+                period the user asked about.
+
+                USER QUESTION:
+                {query}
+
+                PERIOD THE ANSWER MUST USE:
+                {period}
+
+                ACTUAL AGENT RESPONSE:
+                {actual_answer}
+
+                Decide whether the figures the response gives as its answer
+                cover that period.
+                - pass: the answering figures cover the asked period. Small
+                  differences for rolling windows (a few days) and figures for
+                  other periods clearly labelled as extra context are fine.
+                  Also pass when the response says the data only covers part of
+                  the period, or only provides a fixed period, and labels its
+                  figures with the period they cover.
+                - fail: the answering figures cover a wider or narrower period
+                  than asked (for example an average over 2001 to 2025 when
+                  2018 to 2022 was asked, or a total that stops early), or the
+                  response presents another period's figure as the asked one.
+                - not_applicable: the response gives no figures (it declines,
+                  asks a question, or says the data could not be fetched).
+
+                Return:
+                - reason: one concise sentence naming the period the figures cover
+                - verdict: pass, fail or not_applicable
+                """,
+            ),
+        ],
+    )
+    judgement = (prompt | HAIKU.with_structured_output(PeriodVerdict)).invoke(
+        {"query": query, "period": period, "actual_answer": actual_answer}
+    )
+    verdict = judgement.verdict.strip().lower().replace(" ", "_")
+    if verdict not in ("pass", "fail", "not_applicable"):
+        raise ValueError(f"answer_period verdict {judgement.verdict!r}")
+    return {"verdict": verdict, "reason": judgement.reason}

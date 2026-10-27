@@ -240,12 +240,12 @@
     {
       "field": "end_date",
       "cases": 5,
-      "switches_on": "date_extraction (a pulled window containing the period passes)"
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "start_date",
       "cases": 5,
-      "switches_on": "date_extraction (a pulled window containing the period passes)"
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "clarification",
@@ -291,6 +291,16 @@
       "field": "date_tolerance_days",
       "cases": 0,
       "switches_on": "date_extraction (days a window may fall short of a bound)"
+    },
+    {
+      "field": "figure",
+      "cases": 0,
+      "switches_on": "figure_match (computed from the agent's own pulled table)"
+    },
+    {
+      "field": "figure_claim",
+      "cases": 0,
+      "switches_on": "figure_claim_match (the conclusion the pulled data supports)"
     },
     {
       "field": "forbidden_tools",
@@ -698,6 +708,8 @@
       "chart_type",
       "data_pull",
       "date_tolerance_days",
+      "figure",
+      "figure_claim",
       "forbidden_tools",
       "suggested_datasets"
     ],

@@ -193,6 +193,10 @@ class ExpectedData(BaseModel):
     # Days a pulled window may fall short of an expected bound (rolling windows:
     # "last month" can fairly be 30 days or the calendar month). 0 = none.
     expected_date_tolerance_days: int = 0
+    # The asked figure(s) as formulas over the pulled table, and the claim the
+    # data must support (evaluators/figures.py; draft-5, 2026-10-27).
+    expected_figure: str = ""
+    expected_figure_claim: str = ""
     expected_answer: str = ""
     expected_text: str = ""
     expected_clarification: bool | None = None

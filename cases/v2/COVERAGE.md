@@ -61,8 +61,8 @@ friends) run on top of it whenever their trigger state exists.
 | class_values | 6 | class_value_match (info-only) |
 | nudge_options | 6 | nudge_match |
 | dashboard_widgets | 5 | dashboard_widgets_match, dashboard_widgets_valid |
-| end_date | 5 | date_extraction (a pulled window containing the period passes) |
-| start_date | 5 | date_extraction (a pulled window containing the period passes) |
+| end_date | 5 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| start_date | 5 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | clarification | 3 | clarification_requested |
 | nudge_type | 3 | nudge_match |
 | dataset_parameters | 1 | dataset_parameter_match |
@@ -72,6 +72,8 @@ friends) run on top of it whenever their trigger state exists.
 | chart_type | 0 ← unused | chart_type_match |
 | data_pull | 0 ← unused | data_pull_exists, answered_without_data |
 | date_tolerance_days | 0 ← unused | date_extraction (days a window may fall short of a bound) |
+| figure | 0 ← unused | figure_match (computed from the agent's own pulled table) |
+| figure_claim | 0 ← unused | figure_claim_match (the conclusion the pulled data supports) |
 | forbidden_tools | 0 ← unused | forbidden_tools_absent |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
@@ -144,7 +146,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_nudge_offering, chart_type, data_pull, date_tolerance_days, forbidden_tools, suggested_datasets —
+- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_nudge_offering, chart_type, data_pull, date_tolerance_days, figure, figure_claim, forbidden_tools, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission

@@ -35,6 +35,11 @@ from goldset.evaluators.analysis_checks import (
     evaluate_class_values,
 )
 from goldset.evaluators.explanation_checks import evaluate_answer_traceability
+from goldset.evaluators.figures import (
+    evaluate_answer_period,
+    evaluate_figure_claim,
+    evaluate_figures,
+)
 from goldset.evaluators.guards import evaluate_guards
 from goldset.evaluators.output_checks import (
     evaluate_chart_type,
@@ -267,6 +272,40 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_forbidden_tools(
             state, expected.expected_forbidden_tools
         ),
+    ),
+    # Draft-5 (AJ, 2026-10-27): the asked figure, recomputed from the agent's
+    # own pulled table; the conclusion the data supports; and the period the
+    # answer's figures cover. Data quality itself is out of scope.
+    EvaluatorSpec(
+        name="figures",
+        kind="deterministic",
+        score_fields=("figure_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_figures(
+            state, expected.expected_figure
+        ),
+        presumes_pull=True,
+    ),
+    EvaluatorSpec(
+        name="figure_claim",
+        kind="llm_judge",
+        score_fields=("figure_claim_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_figure_claim(
+            state, expected.expected_figure, expected.expected_figure_claim
+        ),
+        presumes_pull=True,
+    ),
+    EvaluatorSpec(
+        name="answer_period",
+        kind="llm_judge",
+        score_fields=("answer_period_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_answer_period(
+            state,
+            query,
+            expected.expected_start_date,
+            expected.expected_end_date,
+            expected.expected_date_tolerance_days,
+        ),
+        presumes_pull=True,
     ),
 )
 

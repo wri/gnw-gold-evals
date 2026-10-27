@@ -179,6 +179,9 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`forbidden_tools_absent`](#forbidden_tools_absent) | scope | deterministic | gates | `forbidden_tools` | `tool_checks.py` |
 | [`accepted_nudge_match`](#accepted_nudge_match) | scope | deterministic | gates (nudge path only) | `accept_nudge_offering` and/or `accept_aoi_nudge_offering` | `accepted_nudge.py` |
 | [`accepted_blog_match`](#accepted_blog_match) | explanation | deterministic | gates (blog path only) | `accept_blog_sources` | `accepted_blog.py` |
+| [`figure_match`](#figure_match) | analysis | deterministic | gates | `figure` | `figures.py` |
+| [`figure_claim_match`](#figure_claim_match) | explanation | judged (no arithmetic) | gates | `figure` **and** `figure_claim` | `figures.py` |
+| [`answer_period_match`](#answer_period_match) | analysis | judged (no arithmetic) | gates (AJ, 2026-10-27) | `start_date` and/or `end_date` | `figures.py` |
 
 Two expected fields drive **no** check of their own: `aoi_source` is read only by
 `dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
@@ -1351,6 +1354,76 @@ knowing before you read a bucket table:
   `tools/coverage_doc.py:76` strips info-only checks before reporting coverage —
   so the reconciliation line and the coverage doc are counting slightly
   different populations.
+
+## `figure_match`
+
+**Measures** whether the reply states the asked figure, recomputed from the
+data the agent itself pulled (`figures.py`). AJ's rule for BENCHMARK draft-5
+(2026-10-27): whether the underlying data is right is out of scope; the check
+scores whether the agent did the right maths on its own table and reported
+it. The case names the figure by formula (`figure`), never by value, so it
+survives data releases.
+
+**The formula.** `figure` holds figures separated by `;`, each with fair
+alternatives separated by `|`; `ref:` marks a figure only `figure_claim` uses.
+A figure is `AGG(EXPR) [by COLUMN] [where COND [and COND]...]`: AGG is `sum`,
+`mean`, `max`, `min` or `count`; EXPR a column or columns joined with `+`;
+`by` sums EXPR per value of COLUMN before AGG runs across the groups (so
+`mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in
+2018..2022` is the average annual loss); COND is `=`, `!=`, `in A..B` or
+`in (V1, V2)`. `ratio`, `change` (second minus first) and `pct_change` combine
+two figures. Run tokens work in values. `tools/check.py` rejects a formula
+that does not parse.
+
+**The data.** Agent state carries no rows (`statistics[*].data` is empty), so
+each statistics entry's `source_url` is fetched (cached per URL). A figure is
+computed on each pulled table and on their de-duplicated union, and any
+computable candidate counts: one formula then covers a single pull and a
+comparison split over two pulls, without summing two datasets together.
+
+**The reply.** Every number in the final answer is read with the word after it
+(`thousand`, `million`, `Mha`, `Mt`, `km²` and so on); a four-digit year with
+no unit is skipped. A number matches within 2%, or within the rounding it
+states ("1.8 million" covers 1.75 to 1.85 million); shares match as a
+fraction or a percentage; signs are ignored (`figure_claim` speaks for them).
+
+**`null` vs `0.0`**: `null` with no `figure`, no readable pulled table, or no
+asked figure computable from it (a column the table lacks). `0.0` when a
+computable asked figure is not in the reply; `1.0` when all are.
+
+**Reason**: per figure, the expected value and the reply's matching number, or
+the closest one and its difference (`actual_figures`).
+
+## `figure_claim_match`
+
+**Measures** whether the reply states the conclusion the pulled data supports:
+a direction, a record or a sign. `figure_claim` is `CONDITION :: sentence if
+true || sentence if false`, CONDITION comparing figures by position
+(`#1 > #2`, `#1 < 0`). The harness computes the figures on the union of the
+pulled tables, picks the true sentence, and an AI reviewer checks that the
+reply states it; the reviewer never compares numbers.
+
+**`null` vs `0.0`**: `null` with no claim, no readable pull, or a compared
+figure that is not computable. `0.0` when the reply states the opposite,
+hedges or does not address it.
+
+## `answer_period_match`
+
+**Measures** whether the figures the reply gives as its answer cover exactly
+the asked period. AJ's rule (2026-10-27): pulling a wider window is fine
+(`date_extraction` passes it), but the answer must use the asked period. An
+AI reviewer reads which period the reply's figures cover; it does no
+arithmetic. Labelled context for other periods passes, and so does a reply
+that says the data only covers part of the period, or a fixed period, and
+labels its figures accordingly.
+
+**Fires on** `start_date`, `end_date` or both (a missing bound reads as "to
+the latest data" or "up to"), with `date_tolerance_days` passed on as "give or
+take N days". It counts toward the score from its first run, by AJ's choice
+(2026-10-27), although judged checks normally start info-only.
+
+**`null` vs `0.0`**: `null` with no dates or no reply, and when the reviewer
+finds no figures to judge (a decline or a question).
 
 ## Adding or changing a check
 
