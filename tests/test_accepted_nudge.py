@@ -75,6 +75,17 @@ def test_a_listed_dataset_missing_from_the_nudge_fails():
         "accepted_nudge_match_score"] == 0.0
 
 
+def test_any_one_alternative_offer_passes():
+    # ch-comp-155 (draft-5 review): drivers with tree cover loss, or sLUC alone.
+    def score(*offered):
+        return evaluate_accepted_nudge(_nudge_state(*offered), "4;8 | 9")[
+            "accepted_nudge_match_score"]
+
+    assert score(9) == 1.0
+    assert score(8, 4, 1) == 1.0
+    assert score(8, 1) == 0.0  # half of the first offer is not enough
+
+
 def test_abstains_without_the_expectation_or_off_the_nudge_path():
     assert evaluate_accepted_nudge(_nudge_state(8), "")[
         "accepted_nudge_match_score"] is None

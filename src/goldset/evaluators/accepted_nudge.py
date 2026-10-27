@@ -31,7 +31,9 @@ cover loss by dominant driver"), which is why ``nudge_match`` cannot express
 this rule.
 
 Opt-in: it fires only on rows that set one of the two fields (``;``-separated
-ids, hashed into the uid), so GOLD is unaffected. Because attempts can take
+ids, hashed into the uid), so GOLD is unaffected. Fair alternative offers are
+separated by ``|`` (``4;8 | 9``): the nudge must cover one of them in full
+(draft-5 review, 2026-10-27). Because attempts can take
 different paths, ``buckets.row_verdict`` judges these rows by the majority of
 attempt verdicts, not by per-check majority.
 """
@@ -57,6 +59,14 @@ def _parse_ids(value: Any) -> set[str]:
     }
 
 
+def _parse_offer_sets(value: Any) -> list[set[str]]:
+    """Fair offers, separated by ``|``: each is a ``;``-set the nudge must
+    cover in full; any one passes (``4;8 | 9``). Without ``|``, one set."""
+    if not value:
+        return []
+    return [ids for part in str(value).split("|") if (ids := _parse_ids(part))]
+
+
 def _offered_ids(nudge: dict[str, Any]) -> set[str]:
     field = "dataset_id" if nudge.get("type") == DATASET_CHOICE else "src_id"
     return {
@@ -76,8 +86,8 @@ def nudge_path(
     if not isinstance(nudge, dict) or _data_was_pulled(agent_state):
         return None
     accepted = {
-        DATASET_CHOICE: bool(_parse_ids(dataset_offering)),
-        AOI_CHOICE: bool(_parse_ids(aoi_offering)),
+        DATASET_CHOICE: bool(_parse_offer_sets(dataset_offering)),
+        AOI_CHOICE: bool(_parse_offer_sets(aoi_offering)),
     }
     kind = nudge.get("type")
     return kind if accepted.get(kind) else None
@@ -88,7 +98,8 @@ def evaluate_accepted_nudge(
     dataset_offering: Any,
     aoi_offering: Any = "",
 ) -> dict[str, Any]:
-    """Score 1.0 when the nudge offers every listed item, 0.0 otherwise.
+    """Score 1.0 when the nudge offers every item of one listed offer, 0.0
+    otherwise.
 
     ``null`` when the row accepts no nudge of the kind the attempt stopped
     at, and on the pull path (the pull checks speak for it). Also ``null``
@@ -109,7 +120,11 @@ def evaluate_accepted_nudge(
         result["actual_nudge_offered"] = f"{kind} nudge carries no ids; abstained"
         return result
 
-    expected = _parse_ids(dataset_offering if kind == DATASET_CHOICE else aoi_offering)
+    offers = _parse_offer_sets(
+        dataset_offering if kind == DATASET_CHOICE else aoi_offering
+    )
     result["actual_nudge_offered"] = f"{kind}: " + "; ".join(sorted(offered))
-    result["accepted_nudge_match_score"] = 1.0 if expected <= offered else 0.0
+    result["accepted_nudge_match_score"] = (
+        1.0 if any(offer <= offered for offer in offers) else 0.0
+    )
     return result

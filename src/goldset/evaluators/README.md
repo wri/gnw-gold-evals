@@ -1234,7 +1234,8 @@ earlier turns' calls. Use it on single-turn rows or turn 1 only.
 **Measures** whether a `dataset_choice` nudge offered every dataset the case
 lists in `accept_nudge_offering`, or an `aoi_choice` nudge every area it lists
 in `accept_aoi_nudge_offering` (`accepted_nudge.py`). Extra options are
-allowed. Items are matched by id from the nudge's `data` entries
+allowed. Fair alternative offers are separated by `|` (`4;8 | 9`): covering any
+one of them in full passes (draft-5 review, 2026-10-27). Items are matched by id from the nudge's `data` entries
 (`dataset_id`, or `src_id` with the GADM suffix dropped, as `aoi_id_match`
 does), not by label: labels overlap ("Tree cover loss" is a substring of
 "Tree cover loss by dominant driver"), which is why `nudge_match` cannot
