@@ -1,5 +1,5 @@
 id: ch-quant-047
-uid: dc9c71e0d39e6096
+uid: 99a01b58f5501ed5
 status: ready
 set: quantification
 group: ghg-flux
@@ -9,6 +9,9 @@ expected:
   aoi_ids: COD
   dataset_id: '6'
   data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e)
+  figure_claim: '#1 < 0 :: DRC''s forests were a net carbon sink over 2001 to 2025 || DRC''s
+    forests were a net carbon source over 2001 to 2025'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -29,3 +32,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and sink-or-source
+    claim added'

@@ -1,5 +1,5 @@
 id: ch-quant-189
-uid: 7a9183789a02617e
+uid: ddf490a6fde38112
 status: ready
 set: quantification
 group: many-areas
@@ -11,13 +11,30 @@ expected:
   start_date: '2001-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
-  text: Gives total tree cover loss and fire-driven loss for 2001–2024 for each of Bolivia's
-    nine departments as a table, from the data; does not invent figures.
+  figure: sum(area_ha) where aoi_id = 'BOL.1' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.1' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.2' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.2' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.3' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.3' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.4' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.4' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.5' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.5' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.6' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.6' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.7' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.7' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.8' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.8' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.9' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.9' and tree_cover_loss_year in 2001..2024
 notes:
   behaviour: 'answer with data: per-department table'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-267); USY-001513 health-impact study
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   benchmark_id: bm26-267
   benchmark_type: quantification
@@ -32,4 +49,7 @@ notes:
     pulled dataset 10 for the 9 departments and reported both totals. pick_aoi takes up to
     1,000 admin sub-units of one GADM parent, but only 50 protected areas, KBAs, Indigenous
     lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN
-    / SUBREGION_LIMIT). Dataset 4 is accepted too; the text check needs the fire share.'
+    / SUBREGION_LIMIT). Dataset 4 is accepted too; the text check needs the fire share.; 2026-10-27
+    draft-5 review (AJ asked to apply the review): text dropped: the figure check verifies
+    the total and fire-driven loss per department (a TCL-only pull has no fires column and
+    fails it); 18 figures added'

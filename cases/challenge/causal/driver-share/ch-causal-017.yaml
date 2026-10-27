@@ -1,5 +1,5 @@
 id: ch-causal-017
-uid: e3bc598abce89d54
+uid: d50067a5a601e831
 status: ready
 set: causal
 group: driver_share
@@ -8,15 +8,20 @@ query: How much of the DRC's tree cover loss from 2015 to 2024 came from shiftin
 expected:
   aoi_ids: COD
   dataset_id: '8'
-  start_date: '2015-01-01'
-  end_date: '2024-12-31'
   data_pull: 'TRUE'
+  text: Gives the shifting cultivation and permanent agriculture shares from the driver data
+    and states that they cover 2001 to 2025 as a whole.
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Shifting cultivation', sum(area_ha)
+    where tree_cover_loss_driver != 'Unknown') | sum(area_ha) where tree_cover_loss_driver
+    = 'Shifting cultivation' ; ratio(sum(area_ha) where tree_cover_loss_driver = 'Permanent
+    agriculture', sum(area_ha) where tree_cover_loss_driver != 'Unknown') | sum(area_ha) where
+    tree_cover_loss_driver = 'Permanent agriculture'
 notes:
   difficulty: medium
   behaviour: answer with data
   lineage: benchmark v2026 proposed set (bm26-156); USY-001330 FDA drivers
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   user_story_refs: USY-001330 FDA drivers
   benchmark_id: bm26-167
@@ -26,3 +31,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): expected dates dropped
+    (drivers have one 2001 to 2025 window); text added requiring the period label; figures
+    added (the two shares)'

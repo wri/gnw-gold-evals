@@ -1,5 +1,5 @@
 id: ch-quant-159
-uid: 728eca34212b86ff
+uid: 21f09c2202fbd961
 status: ready
 set: quantification
 group: tcl
@@ -12,12 +12,13 @@ expected:
   end_date: '2024-12-31'
   context_layer: primary_forest
   data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2015..2024
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-122); USY-001275 Suriname land deal
     halted
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-122
@@ -29,3 +30,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001275 Suriname land deal halted
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added for the
+    loss half only (the extent half has no filter column to isolate its table; the proposed
+    split was not applied)'

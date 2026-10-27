@@ -1,5 +1,5 @@
 id: ch-causal-020
-uid: e4d7f51b04b4924e
+uid: e462a0bc0a996653
 status: ready
 set: causal
 group: why_territory
@@ -8,15 +8,20 @@ query: The alerts in the Wampis territory this month — is this new clearing or
 expected:
   aoi_ids: '555721646'
   dataset_id: 11;4
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
   data_pull: 'TRUE'
-  text: Compares this month's alerts with the territory's annual tree cover loss history to
-    say whether the clearing looks new or continues a longer pattern.
+  text: States this month's alert area and the territory's annual tree cover loss figures
+    for recent years from the data, and says whether the clearing is new or continues a longer
+    pattern.
+  figure: sum(area_ha) where alert_date in {month_start}..{run}
 notes:
   behaviour: Combine recent alerts with annual loss history for the area
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-032); USY-001576 Wampis; GFW Advisory
     Council focus groups (historical analysis when prioritizing)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23; Wampis territory pinned to WDPA 555721646
     ''Iña Wampisti Nunke''; verify'
@@ -31,3 +36,6 @@ notes:
   user_story_refs: USY-001576 Wampis; GFW Advisory Council focus groups (historical analysis
     when prioritizing)
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text now requires stated
+    figures (the judge had passed answers that merely said they could compare); run-relative
+    window added for this month''s alerts; figure added (this month''s alert area)'

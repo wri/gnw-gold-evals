@@ -1,5 +1,5 @@
 id: ch-quant-115
-uid: ddbe4aac1ca1be55
+uid: 33ae2cadb410f8db
 status: ready
 set: quantification
 group: tc-gain
@@ -10,6 +10,8 @@ expected:
   start_date: '2000-01-01'
   end_date: '2020-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_gain_period in ('2000-2005', '2005-2010', '2010-2015',
+    '2015-2020')
 notes:
   judge_instruction: Cumulative tree cover gain over the full 2000-2020 period; the headline
     is the cumulative gain area in hectares. Gain is not restoration; the answer must avoid
@@ -28,3 +30,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (the API
+    returns four five-year periods, summed)'

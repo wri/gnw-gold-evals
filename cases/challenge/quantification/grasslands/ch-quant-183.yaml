@@ -1,5 +1,5 @@
 id: ch-quant-183
-uid: 2e6fb5eba3dbed52
+uid: c9b87ce29bd646df
 status: ready
 set: quantification
 group: grasslands
@@ -8,11 +8,14 @@ expected:
   aoi_ids: BRA.12
   dataset_id: 2;3
   data_pull: 'TRUE'
+  accept_nudge_offering: '2'
+  figure: sum(area_ha) where year = 2022 | sum(area_ha) where natural_lands_class = 'Natural
+    short vegetation'
 notes:
   behaviour: Answer with grassland / natural land extent
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-242); USY-001313 LDC; USY-001293 Sicredi
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: AOI id to verify
@@ -25,3 +28,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001313 LDC; USY-001293 Sicredi
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): accept_nudge_offering
+    2 (a nudge offering the grassland dataset is a fair question); figure added (2022 grassland
+    area, or natural short vegetation)'

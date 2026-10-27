@@ -1,5 +1,5 @@
 id: ch-comp-175
-uid: c4b64f46c1ed288c
+uid: 98209fa396f952a6
 status: ready
 set: comparison
 group: natural-lands
@@ -9,12 +9,17 @@ expected:
   aoi_ids: BRA.12
   dataset_id: 3;1
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA.12' and natural_lands_class in ('Natural forests',
+    'Natural peat forests', 'Natural peat short vegetation', 'Natural short vegetation', 'Natural
+    water', 'Wetland natural forests', 'Wetland natural short vegetation', 'Bare') ; sum(area_ha)
+    where aoi_id = 'BRA.12' and natural_lands_class = 'Cropland' | sum(area_ha) where aoi_id
+    = 'BRA.12' and land_cover_class in ('Cropland', 'Cultivated grasslands')
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-230); USY-001293 Sicredi degraded-land
     lending
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-230
@@ -26,3 +31,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001293 Sicredi degraded-land lending
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure check added (natural
+    land total from the natural classes; cropland from the SBTN Cropland class or land cover
+    cropland plus cultivated grasslands)'

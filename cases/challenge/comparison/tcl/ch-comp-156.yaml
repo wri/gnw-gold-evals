@@ -1,5 +1,5 @@
 id: ch-comp-156
-uid: 8807a703a563b38e
+uid: 0efc8695e94edd8d
 status: ready
 set: comparison
 group: tcl
@@ -11,12 +11,16 @@ expected:
   start_date: '2021-01-01'
   end_date: '2025-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'PRY.5' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'PRY.1' and tree_cover_loss_year in 2021..2025
+  figure_claim: '#1 > #2 :: Boquerón lost more tree cover than Alto Paraguay since 2021 ||
+    Alto Paraguay lost more tree cover than Boquerón since 2021'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-068); USY-001561 Paraguay deforestation-free
     beef policy
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
@@ -30,3 +34,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001561 Paraguay deforestation-free beef policy
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure check added (loss
+    per department 2021 to 2025, direction claim)'

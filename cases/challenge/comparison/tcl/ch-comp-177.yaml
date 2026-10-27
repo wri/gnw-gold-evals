@@ -1,5 +1,5 @@
 id: ch-comp-177
-uid: 0ed0cba3cb328fc0
+uid: 699616c418b7c943
 status: ready
 set: comparison
 group: tcl
@@ -11,14 +11,14 @@ expected:
   start_date: '2001-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
-  text: Gives annual tree cover loss for Peru, Bolivia and Ecuador from 2001 to 2024 and either
-    provides a downloadable table or explains how to get one; does not claim to have produced
-    a file it did not.
+  text: Gives annual tree cover loss for Peru, Bolivia and Ecuador from 2001 to 2024 as a
+    table in the reply, or creates an insight whose provenance drawer downloads the CSV; names
+    no button, panel, file or link that does not exist.
 notes:
   behaviour: Answer for three countries; provide table/download or explain how
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-266); USY-001514 MapMe threat assessments
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
@@ -31,3 +31,5 @@ notes:
   grounding: Story analogue
   user_story_refs: USY-001514 MapMe threat assessments
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text tightened: the only
+    CSV download is on an insight widget, so invented buttons, files or links fail'

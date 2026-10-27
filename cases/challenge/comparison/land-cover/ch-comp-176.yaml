@@ -1,5 +1,5 @@
 id: ch-comp-176
-uid: d177335e75c1802f
+uid: 24d7088da1295387
 status: ready
 set: comparison
 group: land-cover
@@ -11,11 +11,17 @@ expected:
   data_pull: 'TRUE'
   text: Gives the areas of natural forest and of pasture-like land in Antioquia from the land
     cover data, and is clear which land cover class it treats as pasture.
+  figure: sum(area_ha) where aoi_id = 'COL.2' and natural_lands_class in ('Natural forests',
+    'Natural peat forests', 'Wetland natural forests', 'Mangroves') | sum(area_ha) where aoi_id
+    = 'COL.2' and land_cover_class = 'Tree cover' ; sum(area_ha) where aoi_id = 'COL.2' and
+    land_cover_class = 'Cultivated grasslands' | sum(area_ha) where aoi_id = 'COL.2' and natural_lands_class
+    = 'Cropland'
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-231); USY-000456 GANSO landowner transitions
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-231
@@ -28,4 +34,7 @@ notes:
   user_story_refs: USY-000456 GANSO landowner transitions
   refresh_risk: Low
   review: '2026-10-24 (AJ): natural lands (3) accepted with land cover (1). 20261023T094447Z_prod:
-    one attempt pulled 3 and passed the text; two asked back.'
+    one attempt pulled 3 and passed the text; two asked back.; 2026-10-27 draft-5 review (AJ
+    asked to apply the review): figure check added (natural forest from the SBTN forest classes
+    or land cover tree cover; pasture-like area from land cover cultivated grasslands or the
+    SBTN Cropland class, which holds Antioquia pasture)'

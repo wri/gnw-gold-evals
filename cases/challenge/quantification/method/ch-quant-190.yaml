@@ -1,19 +1,21 @@
 id: ch-quant-190
-uid: 95f7637df2759e76
+uid: 58deeac33d423978
 status: ready
 set: quantification
 group: method
 query: Which version of the tree cover loss data should I cite, and what changed from the
   previous version?
 expected:
-  text: Names the current tree cover loss version and how to cite it accurately, and describes
-    changes from the previous version without inventing details.
+  text: Names the current tree cover loss version (version 1.13, the 2025 update covering
+    2001 to 2025) and how to cite it (Hansen et al. 2013, accessed through Global Forest Watch),
+    and describes the change from the previous version (1.12, which ran to 2024) without inventing
+    details.
 notes:
   behaviour: Name current version and key changes accurately; give citation
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-268); USY-001176 Yale index (citation
     needs)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   benchmark_id: bm26-268
   benchmark_type: quantification
@@ -24,4 +26,7 @@ notes:
   grounding: Story analogue
   user_story_refs: USY-001176 Yale index (citation needs)
   refresh_risk: Low
-  review: '2026-10-26 (AJ): kept as is in the why-questions review; no data requirement added.'
+  review: '2026-10-26 (AJ): kept as is in the why-questions review; no data requirement added.;
+    2026-10-27 draft-5 review (AJ asked to apply the review): text names the facts to judge
+    against: version 1.13 (2001 to 2025, per the zeno catalogue), the Hansen et al. 2013 citation,
+    previous version 1.12 to 2024'

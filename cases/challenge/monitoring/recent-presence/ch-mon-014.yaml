@@ -1,5 +1,5 @@
 id: ch-mon-014
-uid: 8fed4fdeb47f2a0f
+uid: ea8f19c0898f52ba
 status: ready
 set: monitoring
 group: recent_presence
@@ -11,12 +11,13 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {month_start}..{run}
 notes:
   difficulty: medium
   behaviour: answer with data
   lineage: benchmark v2026 proposed set (bm26-123); USY-000852
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth
@@ -29,3 +30,5 @@ notes:
   capability: Supported
   grounding: Direct from story
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (month-to-date
+    alert area from the pulled table)'

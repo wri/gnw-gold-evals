@@ -1,5 +1,5 @@
 id: ch-trend-086
-uid: a4a9a59df81d84be
+uid: 208487ee19bcda5b
 status: ready
 set: trend
 group: tcl-fires
@@ -9,13 +9,14 @@ expected:
   aoi_ids: BOL.8
   dataset_id: '10'
   data_pull: 'TRUE'
-  text: Uses the trend in fire-driven loss in Santa Cruz to suggest where to focus prevention,
-    and notes the limits of targeting within the department from these data.
+  text: Bases the suggestion on fire-driven loss data for Santa Cruz, Bolivia, by department
+    trend or by province, and does not point to sub-areas the data do not cover.
+  accept_aoi_nudge_offering: BOL.8
 notes:
   behaviour: Answer with fire-driven loss trend; note sub-area targeting limits
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-247); USY-001332 IBIF; USY-001559 Lomerío
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: AOI id to verify
@@ -28,3 +29,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001332 IBIF; USY-001559 Lomerío
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): accept_aoi_nudge_offering
+    BOL.8 added (the prompt names no country, so asking which Santa Cruz is fair when Bolivia
+    is offered); text reworded to accept a province breakdown'

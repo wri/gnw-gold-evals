@@ -1,5 +1,5 @@
 id: ch-quant-110
-uid: 7824a9476a0dc246
+uid: 4ee9788120192321
 status: ready
 set: quantification
 group: tree-cover
@@ -9,6 +9,8 @@ expected:
   dataset_id: '7'
   context_layer: primary_forest
   data_pull: 'TRUE'
+  figure: sum(area_ha)
+  text: States the figure is the year 2000 baseline.
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: Fixed 2000 snapshot at the default 30% threshold with the primary forest
@@ -28,3 +30,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added; text requires
+    the year 2000 baseline to be stated'

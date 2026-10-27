@@ -1,5 +1,5 @@
 id: ch-trend-083
-uid: 798d90b18de6f4f6
+uid: 119fd4c15e91ea36
 status: ready
 set: trend
 group: tcl
@@ -12,11 +12,14 @@ expected:
   context_layer: primary_forest
   text: Shows primary forest loss since 2021 at global (or tropical) scale and caveats that
     whether the 2030 targets are being met depends on how the target is defined.
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2021..2025 | max(area_ha) by tree_cover_loss_year
+    where tree_cover_loss_year in 2021..2025
 notes:
   behaviour: answer with global data; caveat on target definition
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-223); USY-001383 GEF-9; USY-001330 FDA
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
     2024-12-31
@@ -29,3 +32,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001383 GEF-9; USY-001330 FDA
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): data_pull TRUE added
+    (a dataset selected without a pull passed); figure added (2021 to 2025 total or peak year
+    value from the pulled table)'

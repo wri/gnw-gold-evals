@@ -1,19 +1,26 @@
 id: ch-mon-054
-uid: 5c44b5d00b6bbcdf
+uid: fc373401ce357c77
 status: ready
 set: monitoring
 group: concession_alerts
 query: Are there alerts in or near the logging concessions around Lomié this month?
 expected:
+  dataset_id: '11'
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
   text: Either reports this month's alerts in or near the logging concessions around Lomié,
     or says it cannot use concession boundaries and offers alerts for the Lomié area instead;
-    does not invent concession names or alert figures.
+    does not invent concession names or alert figures, and does not present Lomié-wide alerts
+    as concession alerts.
+  figure: sum(area_ha) where alert_date in {month_start}..{run}
 notes:
   behaviour: Say concession boundaries are not available; offer alerts for the named area
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-030); GFW Advisory Council focus groups
     (concessions most valued; land use allocation context); USY-001606 IFI Cameroon
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
   capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
@@ -27,3 +34,7 @@ notes:
   user_story_refs: GFW Advisory Council focus groups (concessions most valued; land use allocation
     context); USY-001606 IFI Cameroon
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): dataset_id 11, month-to-date
+    dates and data_pull TRUE added (concessions resolve, so a confident answer with no pull
+    no longer passes); text adds ''does not present Lomié-wide alerts as concession alerts'';
+    figure added (month-to-date alert area over the selected concessions); AOI left unpinned'

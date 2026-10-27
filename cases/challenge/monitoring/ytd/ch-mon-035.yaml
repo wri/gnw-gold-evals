@@ -1,5 +1,5 @@
 id: ch-mon-035
-uid: 3650733264b003d9
+uid: e1f68b0e426c9837
 status: ready
 set: monitoring
 group: ytd
@@ -11,14 +11,17 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {current_year}-01-01..{run}
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-005); USY-001576 Wampis Territory
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23; Wampis territory pinned to WDPA 555721646
-    ''Iña Wampisti Nunke'' (no Landmark row matches ''Wampis''); verify'
+    ''Iña Wampisti Nunke'' (no Landmark row matches ''Wampis''); verify; re-checked 2026-10-27
+    (draft-5): prod /api/aois name search ''Wampis'' returns only 555721646, so the pin is
+    reachable and kept'
   build_notes: 'Relative dates: resolve window at run time'
   benchmark_id: bm26-005
   benchmark_type: monitoring
@@ -29,3 +32,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001576 Wampis Territory
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): pin kept (prod name search
+    ''Wampis'' returns 555721646); figure added (year-to-date alert area)'

@@ -1,5 +1,5 @@
 id: ch-comp-124
-uid: 162f06d067628063
+uid: 0e04ef3cd74bf6ea
 status: ready
 set: comparison
 group: tcl-drivers
@@ -9,6 +9,12 @@ expected:
   aoi_ids: COD;COL
   dataset_id: '8'
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where aoi_id = ''COD'' and tree_cover_loss_driver = ''Shifting
+    cultivation'' ; ref: sum(area_ha) where aoi_id = ''COL'' and tree_cover_loss_driver =
+    ''Shifting cultivation'''
+  figure_claim: '#1 > #2 :: the Democratic Republic of the Congo lost more tree cover to shifting
+    cultivation than Colombia || Colombia lost more tree cover to shifting cultivation than
+    the Democratic Republic of the Congo'
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'driver (unscored: no evaluator surface yet)'
@@ -28,3 +34,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figures and claim added
+    (shifting cultivation loss per country)'

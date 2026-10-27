@@ -1,5 +1,5 @@
 id: ch-quant-083
-uid: aa11a9d863a7d267
+uid: 777185e572ffe4f3
 status: ready
 set: quantification
 group: integrated-alerts
@@ -11,6 +11,9 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_confidence = 'low' and alert_date in 2024-01-01..2024-12-31
+    ; sum(area_ha) where alert_confidence = 'high' and alert_date in 2024-01-01..2024-12-31
+    ; sum(area_ha) where alert_confidence = 'highest' and alert_date in 2024-01-01..2024-12-31
 notes:
   judge_instruction: Split total alert area (area_ha) by confidence tier (low/high/highest)
     over 2024; 'highest' may be absent where only one system covered the area, which is not
@@ -29,3 +32,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figures added, one per
+    confidence tier'

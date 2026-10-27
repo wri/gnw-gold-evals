@@ -1,14 +1,17 @@
 id: ch-quant-061
-uid: 514403d5e5e01289
+uid: b755e343b1cdb233
 status: ready
 set: quantification
 group: land-cover
 query: How much of India's land area is classified as agricultural land?
 expected:
   aoi_ids: IND
-  dataset_id: '1'
+  dataset_id: 1;3
   data_pull: 'TRUE'
   accept_nudge_offering: '1'
+  figure: ratio(sum(area_ha) where land_cover_class in ('Cropland', 'Cultivated grasslands'),
+    sum(area_ha)) | sum(area_ha) where land_cover_class in ('Cropland', 'Cultivated grasslands')
+    | sum(area_ha) where natural_lands_class = 'Cropland'
 notes:
   land_cover_classes: 'cropland;cultivated grasslands (unscored: no evaluator surface yet)'
   judge_instruction: The user asks about agricultural land generically, so per the catalog
@@ -30,5 +33,7 @@ notes:
   grounding: Verified Challenge case
   review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
     passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
-    nudged with land cover (1) and SBTN Natural Lands (3).'
-  expectations: accept_nudge_offering added 2026-10-26 (AJ)
+    nudged with land cover (1) and SBTN Natural Lands (3); 2026-10-27 draft-5 review (AJ asked
+    to apply the review): figure added (share or area, land cover or SBTN cropland); dataset_id
+    eased to 1;3 since the accepted nudge offers both'
+  expectations: accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27

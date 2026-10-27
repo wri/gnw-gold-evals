@@ -1,5 +1,5 @@
 id: ch-quant-134
-uid: aebe454fbd95b5f8
+uid: 800ab120ac271e99
 status: ready
 set: quantification
 group: tcl-drivers
@@ -9,6 +9,8 @@ expected:
   aoi_ids: PER
   dataset_id: '8'
   data_pull: 'TRUE'
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver in ('Permanent agriculture', 'Shifting
+    cultivation'), sum(area_ha) where tree_cover_loss_driver != 'Unknown')
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'driver (unscored: no evaluator surface yet)'
@@ -28,3 +30,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (agriculture
+    classes share, unknown excluded)'

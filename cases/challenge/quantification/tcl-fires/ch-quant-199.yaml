@@ -1,5 +1,5 @@
 id: ch-quant-199
-uid: 61f2ca81c6515c85
+uid: e78a2004a8264762
 status: ready
 set: quantification
 group: tcl-fires
@@ -11,14 +11,17 @@ expected:
   start_date: '2015-01-01'
   end_date: '2015-12-31'
   data_pull: 'TRUE'
-  text: Gives Indonesia's 2015 tree cover loss due to fires and explains how loss is attributed
-    to fire.
+  text: Gives Indonesia's 2015 tree cover loss due to fires and explains fire attribution
+    as the dataset documents it (loss classified as fire versus other drivers from Landsat
+    at 30 m), without inventing a method.
+  context_layer: no_selection
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2015
 notes:
   behaviour: Answer with data and explain method
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-282); USY-001169 CNN Indonesia; USY-001391
     Smithsonian review
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-282
@@ -30,3 +33,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001169 CNN Indonesia; USY-001391 Smithsonian review
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): context_layer no_selection
+    (all tree cover); text eased on the method half; figure added (2015 fire-driven loss)'

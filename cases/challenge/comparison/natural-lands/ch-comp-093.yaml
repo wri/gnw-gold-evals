@@ -1,5 +1,5 @@
 id: ch-comp-093
-uid: 26262d065c49f7f2
+uid: 78350dc4fa67df54
 status: ready
 set: comparison
 group: natural-lands
@@ -9,6 +9,15 @@ expected:
   aoi_ids: GBR;CRI
   dataset_id: '3'
   data_pull: 'TRUE'
+  figure: ratio(sum(area_ha) where aoi_id = 'CRI' and natural_lands_class in ('Natural forests',
+    'Mangroves', 'Natural peat forests', 'Wetland natural forests', 'Natural short vegetation',
+    'Natural peat short vegetation', 'Wetland natural short vegetation', 'Natural water',
+    'Bare'), sum(area_ha) where aoi_id = 'CRI') ; ratio(sum(area_ha) where aoi_id = 'GBR'
+    and natural_lands_class in ('Natural forests', 'Mangroves', 'Natural peat forests', 'Wetland
+    natural forests', 'Natural short vegetation', 'Natural peat short vegetation', 'Wetland
+    natural short vegetation', 'Natural water', 'Bare'), sum(area_ha) where aoi_id = 'GBR')
+  figure_claim: '#1 > #2 :: Costa Rica has the larger share of its land that is natural ||
+    The United Kingdom has the larger share of its land that is natural'
 notes:
   judge_instruction: 'Proportional comparison: for each country compute Natural / (Natural
     + Non-natural) area_ha from the fixed 2020 two-row is_natural grouping and compare the
@@ -27,3 +36,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

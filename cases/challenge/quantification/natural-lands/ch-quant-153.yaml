@@ -1,21 +1,25 @@
 id: ch-quant-153
-uid: ec4eb4c06a1b0dda
+uid: 6fd40a85d6ee70a4
 status: ready
 set: quantification
 group: natural-lands
 query: How much natural land in Mato Grosso was lost after 2020?
 expected:
   aoi_ids: BRA.12
-  dataset_id: 3;4
+  dataset_id: '4'
   start_date: '2021-01-01'
-  end_date: '2024-12-31'
+  end_date: '2025-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2021..2025
+  context_layer: natural_forest
+  text: States the figure covers natural forest only (SBTN 2020 baseline), not all natural
+    land.
 notes:
   difficulty: hard
   behaviour: answer with data or explain limits; EUDR cutoff framing
   lineage: benchmark v2026 proposed set (bm26-003); Trase EUDR; USY-001293 Sicredi
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   build_notes: Confirm natural-lands × loss intersection is supported
@@ -27,3 +31,6 @@ notes:
   aoi_type: Subnational
   capability: Confirm with engineering
   grounding: Direct from story
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added; dataset
+    4 with natural_forest (SBTN alone cannot show loss); end_date 2025-12-31 (data runs to
+    2025); text requires the forest-only scope to be stated'

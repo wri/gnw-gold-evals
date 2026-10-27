@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "fcc36e990adc633a",
+  "caseset_version": "f8c630e9a236f2c8",
   "case_count": 949,
   "cases": [
     {
@@ -519,7 +519,7 @@
     },
     {
       "id": "ch-aoi-028",
-      "uid": "9c5ca1052ef1c4c8",
+      "uid": "ec76924ff13d7a88",
       "set": "aoi",
       "group": "sources",
       "status": "ready",
@@ -527,11 +527,9 @@
       "behaviour": "clarify",
       "query": "Show me the Sundarbans",
       "expected_fields": [
-        "clarification",
         "text"
       ],
       "implied_checks": [
-        "clarification_requested",
         "expected_text_match"
       ],
       "intent": "spatial",
@@ -1720,7 +1718,7 @@
     },
     {
       "id": "ch-aoi-091",
-      "uid": "088216452a0e63b7",
+      "uid": "f1417ef4b03dc5e3",
       "set": "aoi",
       "group": "multi",
       "status": "ready",
@@ -1728,11 +1726,9 @@
       "behaviour": "clarify",
       "query": "Show me Sumatra and Borneo",
       "expected_fields": [
-        "clarification",
         "text"
       ],
       "implied_checks": [
-        "clarification_requested",
         "expected_text_match"
       ],
       "intent": "spatial",
@@ -2185,7 +2181,7 @@
     },
     {
       "id": "ch-aoi-116",
-      "uid": "1c5bb28fe57e595a",
+      "uid": "c5f4e693731ac237",
       "set": "aoi",
       "group": "concepts",
       "status": "ready",
@@ -2193,11 +2189,9 @@
       "behaviour": "clarify",
       "query": "Show me the Amazon",
       "expected_fields": [
-        "clarification",
         "text"
       ],
       "implied_checks": [
-        "clarification_requested",
         "expected_text_match"
       ],
       "intent": "spatial",
@@ -2227,7 +2221,7 @@
     },
     {
       "id": "ch-aoi-118",
-      "uid": "5cd2fb1d2bbffb08",
+      "uid": "b4f464052b04941b",
       "set": "aoi",
       "group": "concepts",
       "status": "ready",
@@ -2235,11 +2229,9 @@
       "behaviour": "clarify",
       "query": "Show me the Cerrado",
       "expected_fields": [
-        "clarification",
         "text"
       ],
       "implied_checks": [
-        "clarification_requested",
         "expected_text_match"
       ],
       "intent": "spatial",
@@ -2248,7 +2240,7 @@
     },
     {
       "id": "ch-aoi-119",
-      "uid": "ec7df4648226bad3",
+      "uid": "429cff193679e584",
       "set": "aoi",
       "group": "concepts",
       "status": "ready",
@@ -2256,11 +2248,9 @@
       "behaviour": "clarify",
       "query": "Take me to the Congo Basin",
       "expected_fields": [
-        "clarification",
         "text"
       ],
       "implied_checks": [
-        "clarification_requested",
         "expected_text_match"
       ],
       "intent": "spatial",
@@ -2627,7 +2617,7 @@
     },
     {
       "id": "ch-aoi-138",
-      "uid": "b4a6aa9cad673d8e",
+      "uid": "9c57aa9477094034",
       "set": "aoi",
       "group": "designations",
       "status": "ready",
@@ -2931,7 +2921,7 @@
     },
     {
       "id": "ch-aoi-155",
-      "uid": "fd567abb56f6e22e",
+      "uid": "7fa6d4f365c3c2c8",
       "set": "aoi",
       "group": "ambiguity",
       "status": "ready",
@@ -2949,7 +2939,7 @@
     },
     {
       "id": "ch-causal-001",
-      "uid": "df05d764db35ee50",
+      "uid": "e25dbe217b87e7ec",
       "set": "causal",
       "group": "why_subnational",
       "status": "ready",
@@ -2960,6 +2950,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -2976,7 +2967,7 @@
     },
     {
       "id": "ch-causal-002",
-      "uid": "0a6a1565222c67c2",
+      "uid": "2a77f12faf134f8e",
       "set": "causal",
       "group": "spike_attribution",
       "status": "ready",
@@ -2989,6 +2980,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -3001,13 +2993,12 @@
       ],
       "intent": "causal",
       "dataset_ids": [
-        "10",
-        "8"
+        "10"
       ]
     },
     {
       "id": "ch-causal-003",
-      "uid": "21c059271c31b16e",
+      "uid": "103f8900e3a2ddb9",
       "set": "causal",
       "group": "spike_attribution",
       "status": "ready",
@@ -3021,6 +3012,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
@@ -3036,8 +3028,7 @@
       ],
       "intent": "causal",
       "dataset_ids": [
-        "10",
-        "8"
+        "10"
       ]
     },
     {
@@ -3069,7 +3060,7 @@
     },
     {
       "id": "ch-causal-005",
-      "uid": "1ef6956e43bc6543",
+      "uid": "b55b73817a71eb47",
       "set": "causal",
       "group": "commodity_overclaim",
       "status": "ready",
@@ -3080,6 +3071,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -3096,7 +3088,7 @@
     },
     {
       "id": "ch-causal-006",
-      "uid": "8ba0dc23c0c5852b",
+      "uid": "62cb9fb26220627a",
       "set": "causal",
       "group": "fire_share_pa",
       "status": "ready",
@@ -3108,6 +3100,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -3124,7 +3117,7 @@
     },
     {
       "id": "ch-causal-007",
-      "uid": "2ce17ee541a91ffc",
+      "uid": "c2f302cfd91911ff",
       "set": "causal",
       "group": "premise_check",
       "status": "ready",
@@ -3135,6 +3128,8 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
+        "figure_claim",
         "text"
       ],
       "implied_checks": [
@@ -3152,7 +3147,7 @@
     },
     {
       "id": "ch-causal-008",
-      "uid": "7dc436f77bfb062f",
+      "uid": "ccaec31601123ec6",
       "set": "causal",
       "group": "commodity_overclaim",
       "status": "ready",
@@ -3163,6 +3158,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -3205,7 +3201,7 @@
     },
     {
       "id": "ch-causal-010",
-      "uid": "db8171d7d561fbbf",
+      "uid": "92e8f497775edd01",
       "set": "causal",
       "group": "caveat_required",
       "status": "ready",
@@ -3217,6 +3213,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date",
         "text"
       ],
@@ -3236,7 +3234,7 @@
     },
     {
       "id": "ch-causal-011",
-      "uid": "1178303a5f2b1baa",
+      "uid": "70e7c4590828689f",
       "set": "causal",
       "group": "commodity_overclaim",
       "status": "ready",
@@ -3248,8 +3246,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
-        "end_date",
-        "start_date",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -3258,7 +3255,6 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction",
         "expected_text_match"
       ],
       "intent": "causal",
@@ -3268,7 +3264,7 @@
     },
     {
       "id": "ch-causal-012",
-      "uid": "a452f89a685dbe1b",
+      "uid": "ffd059ecf4779715",
       "set": "causal",
       "group": "premise_check",
       "status": "ready",
@@ -3281,6 +3277,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date",
         "text"
       ],
@@ -3295,13 +3293,12 @@
       ],
       "intent": "causal",
       "dataset_ids": [
-        "4",
-        "8"
+        "4"
       ]
     },
     {
       "id": "ch-causal-013",
-      "uid": "1736d22d0730e66e",
+      "uid": "da94db99f8be9cc2",
       "set": "causal",
       "group": "caveat_required",
       "status": "ready",
@@ -3312,6 +3309,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -3357,7 +3355,7 @@
     },
     {
       "id": "ch-causal-015",
-      "uid": "509d5eba94d28fea",
+      "uid": "c1a7d9e0c7761ec4",
       "set": "causal",
       "group": "driver_vs_fire",
       "status": "ready",
@@ -3370,6 +3368,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -3417,7 +3417,7 @@
     },
     {
       "id": "ch-causal-017",
-      "uid": "e3bc598abce89d54",
+      "uid": "d50067a5a601e831",
       "set": "causal",
       "group": "driver_share",
       "status": "ready",
@@ -3428,15 +3428,15 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
-        "end_date",
-        "start_date"
+        "figure",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction"
+        "expected_text_match"
       ],
       "intent": "causal",
       "dataset_ids": [
@@ -3445,7 +3445,7 @@
     },
     {
       "id": "ch-causal-018",
-      "uid": "5ae80608fefea167",
+      "uid": "9eff4bd32471f9b3",
       "set": "causal",
       "group": "why_pa",
       "status": "ready",
@@ -3455,13 +3455,16 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
-        "dataset_id_match"
+        "dataset_id_match",
+        "expected_text_match"
       ],
       "intent": "causal",
       "dataset_ids": [
@@ -3470,7 +3473,7 @@
     },
     {
       "id": "ch-causal-019",
-      "uid": "122d136e53e8a864",
+      "uid": "89f9b92fcbd7846c",
       "set": "causal",
       "group": "alert_cause",
       "status": "ready",
@@ -3498,7 +3501,7 @@
     },
     {
       "id": "ch-causal-020",
-      "uid": "e4d7f51b04b4924e",
+      "uid": "e462a0bc0a996653",
       "set": "causal",
       "group": "why_territory",
       "status": "ready",
@@ -3508,6 +3511,10 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
         "text"
       ],
       "implied_checks": [
@@ -3515,6 +3522,7 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
+        "date_extraction",
         "expected_text_match"
       ],
       "intent": "causal",
@@ -3525,7 +3533,7 @@
     },
     {
       "id": "ch-causal-021",
-      "uid": "ae93508ff5cd6eff",
+      "uid": "cfebd2ebb4f7ad99",
       "set": "causal",
       "group": "driver_vs_fire",
       "status": "ready",
@@ -3572,7 +3580,7 @@
     },
     {
       "id": "ch-causal-023",
-      "uid": "366679d8d79ddbaa",
+      "uid": "00930c69f619fc71",
       "set": "causal",
       "group": "commodity_overclaim",
       "status": "ready",
@@ -3582,6 +3590,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -3598,7 +3607,7 @@
     },
     {
       "id": "ch-causal-024",
-      "uid": "c26bb0ed80e0553a",
+      "uid": "8f1284b3ed4e4fd4",
       "set": "causal",
       "group": "driver_share",
       "status": "ready",
@@ -3609,6 +3618,8 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
+        "figure_claim",
         "text"
       ],
       "implied_checks": [
@@ -3621,13 +3632,12 @@
       ],
       "intent": "causal",
       "dataset_ids": [
-        "6",
         "8"
       ]
     },
     {
       "id": "ch-causal-025",
-      "uid": "d15e315ec573b7be",
+      "uid": "a721cf33e90ab1ee",
       "set": "causal",
       "group": "why_country",
       "status": "ready",
@@ -3639,6 +3649,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
@@ -3683,20 +3694,30 @@
     },
     {
       "id": "ch-causal-027",
-      "uid": "56c2a4b5fb63797a",
+      "uid": "633eb6ad958a67e0",
       "set": "causal",
       "group": "many_areas",
       "status": "ready",
       "behaviour": "Redirect: ranking many districts; drivers data has no mining-specific class at district level — explain",
       "query": "Which districts of Madre de Dios have the most loss from mining?",
       "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "causal",
-      "dataset_ids": []
+      "dataset_ids": [
+        "8"
+      ]
     },
     {
       "id": "ch-causal-028",
@@ -3734,7 +3755,7 @@
     },
     {
       "id": "ch-comp-001",
-      "uid": "9015f40f05fe0dcb",
+      "uid": "2df7ba15d33ebb71",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -3745,6 +3766,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -3763,7 +3786,7 @@
     },
     {
       "id": "ch-comp-002",
-      "uid": "8a92fc69cd23bf4b",
+      "uid": "1da12d1099d45aa5",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -3774,6 +3797,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -3850,7 +3875,7 @@
     },
     {
       "id": "ch-comp-005",
-      "uid": "8b80ead730a494d1",
+      "uid": "3ce4e54ea7bccaf6",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -3859,7 +3884,9 @@
         "aoi_ids",
         "context_layer",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -3876,7 +3903,7 @@
     },
     {
       "id": "ch-comp-006",
-      "uid": "e19508a08b37ef52",
+      "uid": "fcd5235c64258ab6",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -3885,7 +3912,9 @@
         "aoi_ids",
         "context_layer",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -4572,7 +4601,7 @@
     },
     {
       "id": "ch-comp-031",
-      "uid": "57b0195a0674e71a",
+      "uid": "deb4f78ed2c5a47e",
       "set": "comparison",
       "group": "sluc",
       "status": "ready",
@@ -4582,6 +4611,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -4653,7 +4684,7 @@
     },
     {
       "id": "ch-comp-034",
-      "uid": "8f6602721943d315",
+      "uid": "65e604df30a5eaf7",
       "set": "comparison",
       "group": "sluc",
       "status": "ready",
@@ -4663,6 +4694,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -4761,7 +4794,7 @@
     },
     {
       "id": "ch-comp-038",
-      "uid": "305f50bd72eb6f7b",
+      "uid": "f5e2f290a208dc5a",
       "set": "comparison",
       "group": "sluc",
       "status": "ready",
@@ -4769,7 +4802,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -4890,7 +4925,7 @@
     },
     {
       "id": "ch-comp-043",
-      "uid": "2e8b94ec55788318",
+      "uid": "75472cb3813f9346",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready",
@@ -4898,7 +4933,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -4986,7 +5023,7 @@
     },
     {
       "id": "ch-comp-047",
-      "uid": "ab0dd4cacab53e95",
+      "uid": "98c631c67134457a",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready",
@@ -4994,7 +5031,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -5010,7 +5049,7 @@
     },
     {
       "id": "ch-comp-048",
-      "uid": "666e2112f9410727",
+      "uid": "cabbb8b761cf920e",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready",
@@ -5018,7 +5057,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -5134,7 +5175,7 @@
     },
     {
       "id": "ch-comp-053",
-      "uid": "0c5b2651ff7d72cb",
+      "uid": "0f427b374d13b515",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready",
@@ -5142,7 +5183,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -5182,7 +5225,7 @@
     },
     {
       "id": "ch-comp-055",
-      "uid": "10e0ce11fc05bc4c",
+      "uid": "d2051fa985ecb061",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready",
@@ -5190,7 +5233,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -5200,7 +5245,8 @@
       ],
       "intent": "comparison",
       "dataset_ids": [
-        "1"
+        "1",
+        "7"
       ],
       "subtype": "two_country"
     },
@@ -5446,7 +5492,7 @@
     },
     {
       "id": "ch-comp-066",
-      "uid": "8ce507f087019cc9",
+      "uid": "ac1c0d9cfbaf332b",
       "set": "comparison",
       "group": "grasslands",
       "status": "ready",
@@ -5456,6 +5502,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -5707,7 +5755,7 @@
     },
     {
       "id": "ch-comp-076",
-      "uid": "ad36cecdb04bc0d1",
+      "uid": "7c307853a940e649",
       "set": "comparison",
       "group": "grasslands",
       "status": "ready",
@@ -5715,7 +5763,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -5758,7 +5808,7 @@
     },
     {
       "id": "ch-comp-078",
-      "uid": "4d461cbb8d731201",
+      "uid": "1a0083d5a0ba6273",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready",
@@ -5768,6 +5818,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -5941,7 +5993,7 @@
     },
     {
       "id": "ch-comp-085",
-      "uid": "d80e089a55148d43",
+      "uid": "646ed6b1385e1900",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready",
@@ -5949,7 +6001,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -6070,7 +6124,7 @@
     },
     {
       "id": "ch-comp-090",
-      "uid": "9a9a874e541c9818",
+      "uid": "84219951f56b9748",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
@@ -6078,7 +6132,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -6142,7 +6198,7 @@
     },
     {
       "id": "ch-comp-093",
-      "uid": "26262d065c49f7f2",
+      "uid": "78350dc4fa67df54",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
@@ -6150,7 +6206,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -6310,26 +6368,27 @@
     },
     {
       "id": "ch-comp-100",
-      "uid": "e41aaf5300c3d3fc",
+      "uid": "2938047081a6486b",
       "set": "comparison",
       "group": "tree-cover",
       "status": "ready",
       "query": "Which has more tree cover: Brazil or the Democratic Republic of the Congo?",
       "expected_fields": [
         "aoi_ids",
-        "context_layer",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
-        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match"
       ],
       "intent": "comparison",
       "dataset_ids": [
+        "1",
         "7"
       ],
       "subtype": "two_country"
@@ -6576,7 +6635,7 @@
     },
     {
       "id": "ch-comp-110",
-      "uid": "f292fbd71589af61",
+      "uid": "4c7aae4277ad39e6",
       "set": "comparison",
       "group": "tc-gain",
       "status": "ready",
@@ -6586,6 +6645,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -6630,7 +6691,7 @@
     },
     {
       "id": "ch-comp-112",
-      "uid": "1a861ccd29a3f623",
+      "uid": "15f90076865589fc",
       "set": "comparison",
       "group": "tc-gain",
       "status": "ready",
@@ -6640,6 +6701,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -6900,7 +6963,7 @@
     },
     {
       "id": "ch-comp-122",
-      "uid": "e9758565aa3a5ac9",
+      "uid": "ae320d328f6d25e0",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready",
@@ -6908,7 +6971,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -6948,7 +7012,7 @@
     },
     {
       "id": "ch-comp-124",
-      "uid": "162f06d067628063",
+      "uid": "0e04ef3cd74bf6ea",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready",
@@ -6956,7 +7020,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -6972,7 +7038,7 @@
     },
     {
       "id": "ch-comp-125",
-      "uid": "447cc085b29f48cd",
+      "uid": "cd7c818896855ce0",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready",
@@ -6981,7 +7047,9 @@
         "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "accepted_nudge_match",
@@ -7170,7 +7238,7 @@
     },
     {
       "id": "ch-comp-133",
-      "uid": "7bb3b6cc9e049b64",
+      "uid": "dd7b82ccb41b673e",
       "set": "comparison",
       "group": "tcl-fires",
       "status": "ready",
@@ -7181,6 +7249,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7482,7 +7552,7 @@
     },
     {
       "id": "ch-comp-144",
-      "uid": "ac8da816fb8dd16f",
+      "uid": "3920ccb55dd9ca9c",
       "set": "comparison",
       "group": "tcl-fires",
       "status": "ready",
@@ -7491,7 +7561,9 @@
         "aoi_ids",
         "context_layer",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -7564,7 +7636,7 @@
     },
     {
       "id": "ch-comp-147",
-      "uid": "6097de262a7af1b7",
+      "uid": "205b5abebbcfaf8c",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7577,6 +7649,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7594,7 +7668,7 @@
     },
     {
       "id": "ch-comp-148",
-      "uid": "48ca942a9b2eef49",
+      "uid": "d985f7043f9664b8",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7606,6 +7680,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7622,7 +7698,7 @@
     },
     {
       "id": "ch-comp-149",
-      "uid": "91cac21846b54b34",
+      "uid": "e1d8440ce1f35fb0",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready",
@@ -7648,7 +7724,7 @@
     },
     {
       "id": "ch-comp-150",
-      "uid": "cd25015bf257b356",
+      "uid": "884f9499b15d8217",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7659,6 +7735,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7675,7 +7753,7 @@
     },
     {
       "id": "ch-comp-151",
-      "uid": "5f8761bfc2ee3dca",
+      "uid": "9320615f8c859e81",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7686,6 +7764,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7702,7 +7782,7 @@
     },
     {
       "id": "ch-comp-152",
-      "uid": "72c4d0c7d106015d",
+      "uid": "2f8c4b89e9c45ff9",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7713,6 +7793,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7729,7 +7811,7 @@
     },
     {
       "id": "ch-comp-153",
-      "uid": "f9f88a8a8db58962",
+      "uid": "452b568c1cc36921",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready",
@@ -7741,6 +7823,8 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7757,7 +7841,7 @@
     },
     {
       "id": "ch-comp-154",
-      "uid": "1a6dcceadf750500",
+      "uid": "e6be088385f5e8f8",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
@@ -7766,28 +7850,30 @@
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
         "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
       ],
       "intent": "comparison",
       "dataset_ids": [
-        "3",
         "4"
       ]
     },
     {
       "id": "ch-comp-155",
-      "uid": "6b1ebb48e82cc358",
+      "uid": "b23a45a0b36f67d7",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready",
@@ -7811,12 +7897,13 @@
       "intent": "comparison",
       "dataset_ids": [
         "4",
-        "8"
+        "8",
+        "9"
       ]
     },
     {
       "id": "ch-comp-156",
-      "uid": "8807a703a563b38e",
+      "uid": "0efc8695e94edd8d",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7827,6 +7914,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7843,7 +7932,7 @@
     },
     {
       "id": "ch-comp-157",
-      "uid": "9f61b74c2627e040",
+      "uid": "38fd71eda156078d",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
@@ -7854,8 +7943,9 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
-        "end_date",
-        "start_date"
+        "figure",
+        "start_date",
+        "text"
       ],
       "implied_checks": [
         "accepted_nudge_match",
@@ -7863,17 +7953,18 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction"
+        "date_extraction",
+        "expected_text_match"
       ],
       "intent": "comparison",
       "dataset_ids": [
-        "3",
+        "2",
         "4"
       ]
     },
     {
       "id": "ch-comp-158",
-      "uid": "68657efd985da114",
+      "uid": "1de243d99d24c772",
       "set": "comparison",
       "group": "grasslands",
       "status": "ready",
@@ -7884,6 +7975,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7900,7 +7993,7 @@
     },
     {
       "id": "ch-comp-159",
-      "uid": "045726c2564f7820",
+      "uid": "8cee46086faf3a28",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7911,6 +8004,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7927,20 +8022,24 @@
     },
     {
       "id": "ch-comp-160",
-      "uid": "4ceb86fbac13e777",
+      "uid": "2fab5352ebf26d94",
       "set": "comparison",
       "group": "tcl-fires",
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Compare fire-driven tree cover loss in Santa Cruz and Beni in 2024.",
       "expected_fields": [
+        "accept_aoi_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -7954,7 +8053,7 @@
     },
     {
       "id": "ch-comp-161",
-      "uid": "41171d69ae22b4f0",
+      "uid": "fc16e3362d1a9844",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7966,6 +8065,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -7983,7 +8084,7 @@
     },
     {
       "id": "ch-comp-162",
-      "uid": "c1eee5e7dbd5a086",
+      "uid": "75fc1cefa4f8c92b",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -7994,34 +8095,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
-        "start_date"
-      ],
-      "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
-      ],
-      "intent": "comparison",
-      "dataset_ids": [
-        "4"
-      ]
-    },
-    {
-      "id": "ch-comp-163",
-      "uid": "08114801dfbdb292",
-      "set": "comparison",
-      "group": "integrated-alerts",
-      "status": "ready",
-      "behaviour": "Answer for three named areas",
-      "query": "Compare this month's alerts across the three regions we patrol in Côte d'Ivoire: Cavally, Guémon and Tonkpi.",
-      "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "date_tolerance_days",
-        "end_date",
+        "figure",
         "start_date",
         "text"
       ],
@@ -8035,23 +8109,56 @@
       ],
       "intent": "comparison",
       "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-163",
+      "uid": "c8d7419b4a3d845b",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "behaviour": "Answer for three named areas",
+      "query": "Compare this month's alerts across the three regions we patrol in Côte d'Ivoire: Cavally, Guémon and Tonkpi.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
         "11"
       ]
     },
     {
       "id": "ch-comp-164",
-      "uid": "1471fed50817ef7c",
+      "uid": "1d015253c38e525b",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready",
       "behaviour": "Answer for two named areas",
       "query": "Compare net carbon flux in our two project landscapes, Odzala-Kokoua and Lopé national parks.",
       "expected_fields": [
+        "accept_aoi_nudge_offering",
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -8064,7 +8171,7 @@
     },
     {
       "id": "ch-comp-165",
-      "uid": "69f1fc62c0f0c38e",
+      "uid": "7b8607186499c9d2",
       "set": "comparison",
       "group": "tcl-fires",
       "status": "ready",
@@ -8075,6 +8182,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -8161,7 +8270,7 @@
     },
     {
       "id": "ch-comp-169",
-      "uid": "2d55b65dd87b05a4",
+      "uid": "b75c4b8446ddfb57",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -8173,8 +8282,9 @@
         "data_pull",
         "dataset_id",
         "end_date",
-        "start_date",
-        "text"
+        "figure",
+        "figure_claim",
+        "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -8182,8 +8292,7 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction",
-        "expected_text_match"
+        "date_extraction"
       ],
       "intent": "comparison",
       "dataset_ids": [
@@ -8192,7 +8301,7 @@
     },
     {
       "id": "ch-comp-170",
-      "uid": "a2c44e0f62a74cb6",
+      "uid": "ae44f88fb4480a0a",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -8203,16 +8312,16 @@
         "data_pull",
         "dataset_id",
         "end_date",
-        "start_date",
-        "text"
+        "figure",
+        "figure_claim",
+        "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction",
-        "expected_text_match"
+        "date_extraction"
       ],
       "intent": "comparison",
       "dataset_ids": [
@@ -8275,7 +8384,7 @@
     },
     {
       "id": "ch-comp-173",
-      "uid": "b40000f040d6eb9c",
+      "uid": "c3d506011b4c437d",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -8286,6 +8395,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date",
         "text"
       ],
@@ -8304,7 +8415,7 @@
     },
     {
       "id": "ch-comp-174",
-      "uid": "4d7c92b164e23b9e",
+      "uid": "3385220543cf26bf",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready",
@@ -8313,7 +8424,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -8328,7 +8441,7 @@
     },
     {
       "id": "ch-comp-175",
-      "uid": "c4b64f46c1ed288c",
+      "uid": "98209fa396f952a6",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
@@ -8337,7 +8450,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -8353,7 +8467,7 @@
     },
     {
       "id": "ch-comp-176",
-      "uid": "d177335e75c1802f",
+      "uid": "24d7088da1295387",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready",
@@ -8363,6 +8477,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -8380,7 +8495,7 @@
     },
     {
       "id": "ch-comp-177",
-      "uid": "0ed0cba3cb328fc0",
+      "uid": "699616c418b7c943",
       "set": "comparison",
       "group": "tcl",
       "status": "ready",
@@ -8426,7 +8541,7 @@
     },
     {
       "id": "ch-comp-179",
-      "uid": "5a9291e5c7795d8c",
+      "uid": "9f5a43a03eb4bfba",
       "set": "comparison",
       "group": "method",
       "status": "ready",
@@ -8460,7 +8575,7 @@
     },
     {
       "id": "ch-comp-181",
-      "uid": "e2559b979bedf060",
+      "uid": "8b3aba97d5af99b9",
       "set": "comparison",
       "group": "method",
       "status": "ready",
@@ -13124,7 +13239,7 @@
     },
     {
       "id": "ch-mon-005",
-      "uid": "6c9766755bdd3fdb",
+      "uid": "54aeb2328319ae47",
       "set": "monitoring",
       "group": "recent_area",
       "status": "ready",
@@ -13137,6 +13252,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -13211,7 +13327,7 @@
     },
     {
       "id": "ch-mon-008",
-      "uid": "393185cac179819c",
+      "uid": "b2e97b229a637777",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
@@ -13294,7 +13410,7 @@
     },
     {
       "id": "ch-mon-011",
-      "uid": "5c1f51b573a0213a",
+      "uid": "956f082f0fd58057",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
@@ -13305,6 +13421,10 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
         "text"
       ],
       "implied_checks": [
@@ -13312,6 +13432,7 @@
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
+        "date_extraction",
         "expected_text_match"
       ],
       "intent": "monitoring",
@@ -13379,7 +13500,7 @@
     },
     {
       "id": "ch-mon-014",
-      "uid": "8fed4fdeb47f2a0f",
+      "uid": "ea8f19c0898f52ba",
       "set": "monitoring",
       "group": "recent_presence",
       "status": "ready",
@@ -13392,6 +13513,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -13619,7 +13741,7 @@
     },
     {
       "id": "ch-mon-022",
-      "uid": "b5078a4c1fa903b5",
+      "uid": "b23ed9bae8e98ee2",
       "set": "monitoring",
       "group": "recent_rank",
       "status": "ready",
@@ -13627,14 +13749,17 @@
       "behaviour": "answer with data; ranked",
       "query": "Which province of the DRC had the most disturbance alert area in the last 30 days?",
       "expected_fields": [
+        "aoi_ids",
         "data_pull",
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
+        "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
@@ -13673,7 +13798,7 @@
     },
     {
       "id": "ch-mon-024",
-      "uid": "5b6dad6ea65d7c3d",
+      "uid": "abe8e4c3398592c8",
       "set": "monitoring",
       "group": "no_aoi",
       "status": "ready",
@@ -13681,12 +13806,10 @@
       "behaviour": "clarify: ask which area",
       "query": "Any new alerts in my area?",
       "expected_fields": [
-        "clarification",
-        "text"
+        "clarification"
       ],
       "implied_checks": [
-        "clarification_requested",
-        "expected_text_match"
+        "clarification_requested"
       ],
       "intent": "monitoring",
       "dataset_ids": []
@@ -13711,7 +13834,7 @@
     },
     {
       "id": "ch-mon-026",
-      "uid": "96201c7230b3ccea",
+      "uid": "a80bef0521c0bbb6",
       "set": "monitoring",
       "group": "concession_alerts",
       "status": "ready",
@@ -13719,26 +13842,13 @@
       "behaviour": "answer with data, or state concession layer is not available",
       "query": "Any deforestation alerts inside oil palm concessions in Riau in the last month?",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "date_tolerance_days",
-        "end_date",
-        "start_date",
         "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction",
         "expected_text_match"
       ],
       "intent": "monitoring",
-      "dataset_ids": [
-        "11"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-mon-027",
@@ -13820,7 +13930,7 @@
     },
     {
       "id": "ch-mon-030",
-      "uid": "b82229cc0f550e34",
+      "uid": "cd3c80817865ed1b",
       "set": "monitoring",
       "group": "by_confidence",
       "status": "ready",
@@ -13833,6 +13943,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -13875,7 +13986,7 @@
     },
     {
       "id": "ch-mon-032",
-      "uid": "ede7057e94722f43",
+      "uid": "e4ea3f70ab2e638f",
       "set": "monitoring",
       "group": "recent_presence",
       "status": "ready",
@@ -13887,6 +13998,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -13903,21 +14015,26 @@
     },
     {
       "id": "ch-mon-033",
-      "uid": "03447c1627dfed0e",
+      "uid": "57a970f4cbd99adf",
       "set": "monitoring",
       "group": "recent_area",
       "status": "ready",
       "behaviour": "answer with data",
       "query": "How many hectares of disturbance alerts were detected in the Guarayos Indigenous Territory over the past 3 months?",
       "expected_fields": [
+        "accept_aoi_nudge_offering",
+        "aoi_ids",
         "data_pull",
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
+        "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
@@ -13929,7 +14046,7 @@
     },
     {
       "id": "ch-mon-034",
-      "uid": "f14e21ab171499cd",
+      "uid": "d9c68e6300654701",
       "set": "monitoring",
       "group": "recent_presence",
       "status": "ready",
@@ -13942,6 +14059,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
@@ -13961,7 +14079,7 @@
     },
     {
       "id": "ch-mon-035",
-      "uid": "3650733264b003d9",
+      "uid": "e1f68b0e426c9837",
       "set": "monitoring",
       "group": "ytd",
       "status": "ready",
@@ -13973,6 +14091,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -13989,7 +14108,7 @@
     },
     {
       "id": "ch-mon-036",
-      "uid": "6c6ef67e03fb8a92",
+      "uid": "39f09b721855c9df",
       "set": "monitoring",
       "group": "recent_vs_prior",
       "status": "ready",
@@ -14001,34 +14120,8 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
-        "start_date"
-      ],
-      "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
-      ],
-      "intent": "monitoring",
-      "dataset_ids": [
-        "11"
-      ]
-    },
-    {
-      "id": "ch-mon-037",
-      "uid": "2e615fbd7c3c969b",
-      "set": "monitoring",
-      "group": "monthly_recent",
-      "status": "ready",
-      "behaviour": "answer with data + monthly chart",
-      "query": "Summarize disturbance alerts in Padre Abad province over the last 6 months, month by month",
-      "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "date_tolerance_days",
-        "end_date",
+        "figure",
+        "figure_claim",
         "start_date",
         "text"
       ],
@@ -14046,8 +14139,37 @@
       ]
     },
     {
+      "id": "ch-mon-037",
+      "uid": "2564a3e75c83e555",
+      "set": "monitoring",
+      "group": "monthly_recent",
+      "status": "ready",
+      "behaviour": "answer with data + monthly chart",
+      "query": "Summarize disturbance alerts in Padre Abad province over the last 6 months, month by month",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-038",
-      "uid": "946afe2d1c33686d",
+      "uid": "247a4d49e98646e1",
       "set": "monitoring",
       "group": "recent_vs_prior",
       "status": "ready",
@@ -14059,6 +14181,8 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -14075,7 +14199,7 @@
     },
     {
       "id": "ch-mon-039",
-      "uid": "e44f5d68f260f739",
+      "uid": "5e8c1cee53474c50",
       "set": "monitoring",
       "group": "recent_presence",
       "status": "ready",
@@ -14087,6 +14211,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -14103,7 +14228,7 @@
     },
     {
       "id": "ch-mon-040",
-      "uid": "3bc22313e229e0ec",
+      "uid": "eb50e91a9742c70b",
       "set": "monitoring",
       "group": "unsupported_action",
       "status": "ready",
@@ -14120,7 +14245,7 @@
     },
     {
       "id": "ch-mon-041",
-      "uid": "cc1e88b05a13d354",
+      "uid": "31caf69fe0680735",
       "set": "monitoring",
       "group": "recent_area",
       "status": "ready",
@@ -14132,6 +14257,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -14182,7 +14308,7 @@
     },
     {
       "id": "ch-mon-044",
-      "uid": "7b77caf65ac6b1ac",
+      "uid": "aea857354ab16486",
       "set": "monitoring",
       "group": "alert_followup",
       "status": "ready",
@@ -14233,7 +14359,7 @@
     },
     {
       "id": "ch-mon-047",
-      "uid": "6b154e65529f5125",
+      "uid": "c480027b7b4e8bf5",
       "set": "monitoring",
       "group": "unsupported_action",
       "status": "ready",
@@ -14250,7 +14376,7 @@
     },
     {
       "id": "ch-mon-048",
-      "uid": "65221241b2f7fc3f",
+      "uid": "a6910b8c6de425c8",
       "set": "monitoring",
       "group": "recent_summary",
       "status": "ready",
@@ -14262,16 +14388,15 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
-        "start_date",
-        "text"
+        "figure",
+        "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction",
-        "expected_text_match"
+        "date_extraction"
       ],
       "intent": "monitoring",
       "dataset_ids": [
@@ -14280,7 +14405,7 @@
     },
     {
       "id": "ch-mon-049",
-      "uid": "1208e016f44647dd",
+      "uid": "ec859fc927ca96a9",
       "set": "monitoring",
       "group": "alert_followup",
       "status": "ready",
@@ -14349,7 +14474,7 @@
     },
     {
       "id": "ch-mon-052",
-      "uid": "8440eba7f5646bb3",
+      "uid": "10b5f5c66a317fe9",
       "set": "monitoring",
       "group": "unsupported_action",
       "status": "ready",
@@ -14383,20 +14508,32 @@
     },
     {
       "id": "ch-mon-054",
-      "uid": "5c44b5d00b6bbcdf",
+      "uid": "fc373401ce357c77",
       "set": "monitoring",
       "group": "concession_alerts",
       "status": "ready",
       "behaviour": "Say concession boundaries are not available; offer alerts for the named area",
       "query": "Are there alerts in or near the logging concessions around Lomié this month?",
       "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
         "expected_text_match"
       ],
       "intent": "monitoring",
-      "dataset_ids": []
+      "dataset_ids": [
+        "11"
+      ]
     },
     {
       "id": "ch-mon-055",
@@ -14419,7 +14556,7 @@
     },
     {
       "id": "ch-mon-056",
-      "uid": "a4e0355d9e640e70",
+      "uid": "29141b29ca439f6b",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready",
@@ -14431,6 +14568,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
@@ -14449,7 +14587,7 @@
     },
     {
       "id": "ch-mon-057",
-      "uid": "32ba43930d8e96aa",
+      "uid": "cfb58f6185790b23",
       "set": "monitoring",
       "group": "buffer_unsupported",
       "status": "ready",
@@ -14457,6 +14595,7 @@
       "query": "Are any of this month's alerts in Boumba Bek National Park within 5 km of the park boundary?",
       "expected_fields": [
         "aoi_ids",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -14468,7 +14607,7 @@
     },
     {
       "id": "ch-mon-058",
-      "uid": "2a6b4d20f1b17c60",
+      "uid": "2b1989a6523a7bdd",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready",
@@ -14481,6 +14620,7 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
@@ -14500,19 +14640,21 @@
     },
     {
       "id": "ch-mon-059",
-      "uid": "5c858d8ce22ca408",
+      "uid": "c174a51bdf6f0c43",
       "set": "monitoring",
       "group": "by_confidence",
       "status": "ready",
       "behaviour": "Explain confidence levels accurately; give the low vs high split for the area; no field-safety guarantee",
       "query": "What does 'high confidence' mean for these alerts, and is it worth sending a patrol for the low-confidence ones in Guarayos?",
       "expected_fields": [
+        "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
         "answered_without_data",
+        "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
         "expected_text_match"
@@ -14524,7 +14666,7 @@
     },
     {
       "id": "ch-mon-060",
-      "uid": "a119f0a9f7dda34e",
+      "uid": "9e4154ca0a40b888",
       "set": "monitoring",
       "group": "alert_method",
       "status": "ready",
@@ -14558,7 +14700,7 @@
     },
     {
       "id": "ch-mon-062",
-      "uid": "df01a1a55a13434a",
+      "uid": "de9d56c029b66f7b",
       "set": "monitoring",
       "group": "alert_method",
       "status": "ready",
@@ -14575,35 +14717,26 @@
     },
     {
       "id": "ch-mon-063",
-      "uid": "104911008bea8e0a",
+      "uid": "fb2954b64d86535a",
       "set": "monitoring",
       "group": "compare_areas",
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Compare alert area in the last 30 days across our two conservation concessions in Madre de Dios and Loreto.",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "date_tolerance_days",
-        "end_date",
-        "start_date"
+        "clarification",
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
+        "clarification_requested",
+        "expected_text_match"
       ],
       "intent": "monitoring",
-      "dataset_ids": [
-        "11"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-mon-064",
-      "uid": "d025cb1b2b629b99",
+      "uid": "355bc17be510d894",
       "set": "monitoring",
       "group": "many_areas",
       "status": "ready",
@@ -14693,7 +14826,7 @@
     },
     {
       "id": "ch-port-003",
-      "uid": "1abb3ffd4f05a1d1",
+      "uid": "e752e2965cb2280a",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
@@ -14701,13 +14834,16 @@
       "query": "Rank every Brazilian state by soy-driven conversion since 2020.",
       "expected_fields": [
         "accept_nudge_offering",
+        "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
         "accepted_nudge_match",
         "answered_without_data",
+        "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
         "expected_text_match"
@@ -14822,7 +14958,7 @@
     },
     {
       "id": "ch-port-010",
-      "uid": "06c338a0d7dbdd4a",
+      "uid": "74f2c3da2a3f9004",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
@@ -14941,19 +15077,22 @@
     },
     {
       "id": "ch-port-017",
-      "uid": "ca4ef882e997f926",
+      "uid": "f65ac5d2d0ac0c12",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
       "behaviour": "answer with data for both countries' districts; say there is no cocoa filter",
-      "query": "Show me which cocoa-growing districts in Côte d'Ivoire and Ghana had the most loss — all of them, ranked.",
+      "query": "Show me which cocoa-growing districts in Côte d'Ivoire had the most loss — all of them, ranked.",
       "expected_fields": [
+        "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
         "answered_without_data",
+        "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
         "expected_text_match"
@@ -14965,7 +15104,7 @@
     },
     {
       "id": "ch-port-018",
-      "uid": "84b6ad8f3c1d434e",
+      "uid": "18c4565dc3b27343",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready",
@@ -14973,15 +15112,18 @@
       "query": "Give me a table of tree cover loss for every municipality in Pará since 2015.",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
@@ -15147,7 +15289,7 @@
     },
     {
       "id": "ch-quant-001",
-      "uid": "970fb685b7da35fd",
+      "uid": "96b8474465f25c5b",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15158,6 +15300,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15176,7 +15319,7 @@
     },
     {
       "id": "ch-quant-002",
-      "uid": "9764ad150cf74869",
+      "uid": "e5efecdd9cd2f9a8",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15187,6 +15330,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15205,7 +15349,7 @@
     },
     {
       "id": "ch-quant-003",
-      "uid": "558567bca6e94783",
+      "uid": "d8bf7c5cad29b0c3",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15216,6 +15360,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15325,7 +15470,7 @@
     },
     {
       "id": "ch-quant-007",
-      "uid": "7587643048ef8a9b",
+      "uid": "2de134d8f847de90",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15336,6 +15481,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15381,7 +15527,7 @@
     },
     {
       "id": "ch-quant-009",
-      "uid": "01f4547696dba49e",
+      "uid": "26a2155805f4379e",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15392,6 +15538,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15410,7 +15557,7 @@
     },
     {
       "id": "ch-quant-010",
-      "uid": "bce1a479c172dea3",
+      "uid": "f43e1c047e9e97b0",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15421,6 +15568,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15439,7 +15587,7 @@
     },
     {
       "id": "ch-quant-011",
-      "uid": "690b48011d1721ce",
+      "uid": "94b8e88f576fd50a",
       "set": "quantification",
       "group": "tcl-fires",
       "status": "ready",
@@ -15450,6 +15598,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15741,7 +15890,7 @@
     },
     {
       "id": "ch-quant-021",
-      "uid": "559aebf17d01e03c",
+      "uid": "a41f2abd7b638aea",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15753,6 +15902,7 @@
         "dataset_id",
         "dataset_parameters",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -15977,7 +16127,7 @@
     },
     {
       "id": "ch-quant-029",
-      "uid": "c769733e47d2a4c1",
+      "uid": "683f6e05ed04c91b",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -15988,6 +16138,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -16035,7 +16186,7 @@
     },
     {
       "id": "ch-quant-031",
-      "uid": "976ac91a0909c36c",
+      "uid": "64a62f11b6a2a680",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -16046,6 +16197,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -16093,7 +16245,7 @@
     },
     {
       "id": "ch-quant-033",
-      "uid": "74d5eb38dc9754ed",
+      "uid": "56d3132c8b3b306a",
       "set": "quantification",
       "group": "sluc",
       "status": "ready",
@@ -16103,6 +16255,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -16174,7 +16327,7 @@
     },
     {
       "id": "ch-quant-036",
-      "uid": "7198724ef06a3691",
+      "uid": "6d8e49dfa3926efa",
       "set": "quantification",
       "group": "sluc",
       "status": "ready",
@@ -16184,6 +16337,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -16255,7 +16409,7 @@
     },
     {
       "id": "ch-quant-039",
-      "uid": "762c1af13b6f7d1d",
+      "uid": "aa18d9e6f61d5ad3",
       "set": "quantification",
       "group": "sluc",
       "status": "ready",
@@ -16265,6 +16419,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -16462,7 +16617,7 @@
     },
     {
       "id": "ch-quant-047",
-      "uid": "dc9c71e0d39e6096",
+      "uid": "99a01b58f5501ed5",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -16470,7 +16625,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -16534,7 +16691,7 @@
     },
     {
       "id": "ch-quant-050",
-      "uid": "8bab87862df62af1",
+      "uid": "0549eaa241490b83",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -16542,7 +16699,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -16660,7 +16819,7 @@
     },
     {
       "id": "ch-quant-055",
-      "uid": "9dea31eeae90b0d6",
+      "uid": "b4160a574705ebce",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -16668,7 +16827,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -16804,7 +16965,7 @@
     },
     {
       "id": "ch-quant-061",
-      "uid": "514403d5e5e01289",
+      "uid": "b755e343b1cdb233",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
@@ -16813,7 +16974,8 @@
         "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "accepted_nudge_match",
@@ -16824,7 +16986,8 @@
       ],
       "intent": "quantification",
       "dataset_ids": [
-        "1"
+        "1",
+        "3"
       ],
       "subtype": "agriculture_combined"
     },
@@ -16878,7 +17041,7 @@
     },
     {
       "id": "ch-quant-064",
-      "uid": "a8ca83872928692d",
+      "uid": "bf811588826bc208",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
@@ -16886,7 +17049,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -16974,7 +17138,7 @@
     },
     {
       "id": "ch-quant-068",
-      "uid": "f33817a4ff26af2f",
+      "uid": "05f978477ed864ac",
       "set": "quantification",
       "group": "grasslands",
       "status": "ready",
@@ -16984,6 +17148,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -17082,7 +17247,7 @@
     },
     {
       "id": "ch-quant-072",
-      "uid": "fe08bbad2f99e15a",
+      "uid": "c06e503df65950d0",
       "set": "quantification",
       "group": "grasslands",
       "status": "ready",
@@ -17092,6 +17257,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -17298,7 +17464,7 @@
     },
     {
       "id": "ch-quant-080",
-      "uid": "2a62d1a67c1bf3b1",
+      "uid": "c905b26cb87c192d",
       "set": "quantification",
       "group": "integrated-alerts",
       "status": "ready",
@@ -17308,6 +17474,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -17352,7 +17519,7 @@
     },
     {
       "id": "ch-quant-082",
-      "uid": "c51f3daa0e435286",
+      "uid": "4098c26b3bdb1353",
       "set": "quantification",
       "group": "integrated-alerts",
       "status": "ready",
@@ -17362,6 +17529,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -17379,7 +17547,7 @@
     },
     {
       "id": "ch-quant-083",
-      "uid": "aa11a9d863a7d267",
+      "uid": "777185e572ffe4f3",
       "set": "quantification",
       "group": "integrated-alerts",
       "status": "ready",
@@ -17389,6 +17557,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -17622,7 +17791,7 @@
     },
     {
       "id": "ch-quant-092",
-      "uid": "5e2b62bc275b83ad",
+      "uid": "e1405ddf77ddc5e2",
       "set": "quantification",
       "group": "natural-lands",
       "status": "ready",
@@ -17630,7 +17799,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -17718,7 +17888,7 @@
     },
     {
       "id": "ch-quant-096",
-      "uid": "ce16479824493350",
+      "uid": "a24784cc1594fb94",
       "set": "quantification",
       "group": "natural-lands",
       "status": "ready",
@@ -17726,7 +17896,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -17814,7 +17985,7 @@
     },
     {
       "id": "ch-quant-100",
-      "uid": "ce70b654e936515b",
+      "uid": "ccdf4fd1703405a9",
       "set": "quantification",
       "group": "natural-lands",
       "status": "ready",
@@ -17822,7 +17993,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -17886,7 +18058,7 @@
     },
     {
       "id": "ch-quant-103",
-      "uid": "5b17f53bca85cbe8",
+      "uid": "dcb490b6605a7219",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready",
@@ -17895,14 +18067,17 @@
         "aoi_ids",
         "context_layer",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "context_layer_match",
         "data_pull_exists",
-        "dataset_id_match"
+        "dataset_id_match",
+        "expected_text_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -17990,7 +18165,7 @@
     },
     {
       "id": "ch-quant-107",
-      "uid": "c061c972dec04129",
+      "uid": "456f89d7df953066",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready",
@@ -18000,7 +18175,9 @@
         "context_layer",
         "data_pull",
         "dataset_id",
-        "dataset_parameters"
+        "dataset_parameters",
+        "figure",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -18008,7 +18185,8 @@
         "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
-        "dataset_parameter_match"
+        "dataset_parameter_match",
+        "expected_text_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -18074,7 +18252,7 @@
     },
     {
       "id": "ch-quant-110",
-      "uid": "7824a9476a0dc246",
+      "uid": "4ee9788120192321",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready",
@@ -18083,14 +18261,17 @@
         "aoi_ids",
         "context_layer",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "context_layer_match",
         "data_pull_exists",
-        "dataset_id_match"
+        "dataset_id_match",
+        "expected_text_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -18206,7 +18387,7 @@
     },
     {
       "id": "ch-quant-115",
-      "uid": "ddbe4aac1ca1be55",
+      "uid": "33ae2cadb410f8db",
       "set": "quantification",
       "group": "tc-gain",
       "status": "ready",
@@ -18216,6 +18397,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -18287,7 +18469,7 @@
     },
     {
       "id": "ch-quant-118",
-      "uid": "05a6c6adc2167dbf",
+      "uid": "cdacf2987bf0dadf",
       "set": "quantification",
       "group": "tc-gain",
       "status": "ready",
@@ -18297,6 +18479,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -18530,7 +18713,7 @@
     },
     {
       "id": "ch-quant-127",
-      "uid": "34d2239d87854110",
+      "uid": "0e6eb9c73710c199",
       "set": "quantification",
       "group": "tcl-drivers",
       "status": "ready",
@@ -18538,7 +18721,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -18674,7 +18858,7 @@
     },
     {
       "id": "ch-quant-133",
-      "uid": "b7dd536d8ce4f51b",
+      "uid": "c0fe2c75140fba23",
       "set": "quantification",
       "group": "tcl-drivers",
       "status": "ready",
@@ -18682,7 +18866,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -18698,7 +18883,7 @@
     },
     {
       "id": "ch-quant-134",
-      "uid": "aebe454fbd95b5f8",
+      "uid": "800ab120ac271e99",
       "set": "quantification",
       "group": "tcl-drivers",
       "status": "ready",
@@ -18706,7 +18891,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -18822,7 +19008,7 @@
     },
     {
       "id": "ch-quant-139",
-      "uid": "24650753464b7689",
+      "uid": "a85a04f1fff6cfb0",
       "set": "quantification",
       "group": "tcl-fires",
       "status": "ready",
@@ -18833,6 +19019,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -18909,7 +19096,7 @@
     },
     {
       "id": "ch-quant-142",
-      "uid": "64fb1908b38a4417",
+      "uid": "9bc5cd4748591013",
       "set": "quantification",
       "group": "tcl-fires",
       "status": "ready",
@@ -18920,6 +19107,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -18998,7 +19186,7 @@
     },
     {
       "id": "ch-quant-145",
-      "uid": "a902daaf2dc8304a",
+      "uid": "53bcf82ca265f148",
       "set": "quantification",
       "group": "tcl-fires",
       "status": "ready",
@@ -19010,6 +19198,7 @@
         "dataset_id",
         "dataset_parameters",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -19029,7 +19218,7 @@
     },
     {
       "id": "ch-quant-146",
-      "uid": "9cdbe6cb52a79068",
+      "uid": "f5443cf1be8f6fcf",
       "set": "quantification",
       "group": "tcl-fires",
       "status": "ready",
@@ -19040,6 +19229,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -19174,7 +19364,7 @@
     },
     {
       "id": "ch-quant-151",
-      "uid": "209e1a802bcb1924",
+      "uid": "aef536cb8724479c",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -19183,14 +19373,17 @@
       "query": "How much tree cover loss happened in the Kayapó Indigenous Territory between 2015 and 2023?",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
@@ -19232,7 +19425,7 @@
     },
     {
       "id": "ch-quant-153",
-      "uid": "ec4eb4c06a1b0dda",
+      "uid": "6fd40a85d6ee70a4",
       "set": "quantification",
       "group": "natural-lands",
       "status": "ready",
@@ -19241,21 +19434,25 @@
       "query": "How much natural land in Mato Grosso was lost after 2020?",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
-        "start_date"
+        "figure",
+        "start_date",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction"
+        "date_extraction",
+        "expected_text_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
-        "3",
         "4"
       ]
     },
@@ -19289,7 +19486,7 @@
     },
     {
       "id": "ch-quant-155",
-      "uid": "3181be0e993e4f47",
+      "uid": "035332f03c044abe",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready",
@@ -19300,14 +19497,17 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
-        "dataset_parameters"
+        "dataset_parameters",
+        "figure",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "dataset_parameter_match"
+        "dataset_parameter_match",
+        "expected_text_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -19316,7 +19516,7 @@
     },
     {
       "id": "ch-quant-156",
-      "uid": "608fcb141a490040",
+      "uid": "af7738be4ece24b9",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -19328,6 +19528,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -19344,7 +19545,7 @@
     },
     {
       "id": "ch-quant-157",
-      "uid": "1b0156b2a2284214",
+      "uid": "e10d12f48e0dee93",
       "set": "quantification",
       "group": "natural-lands",
       "status": "ready",
@@ -19354,7 +19555,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -19394,7 +19596,7 @@
     },
     {
       "id": "ch-quant-159",
-      "uid": "728eca34212b86ff",
+      "uid": "21f09c2202fbd961",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -19406,6 +19608,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -19424,7 +19627,7 @@
     },
     {
       "id": "ch-quant-160",
-      "uid": "cda2b8f393e474a2",
+      "uid": "30e4bc28fc35c8b6",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -19435,6 +19638,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -19468,7 +19672,7 @@
     },
     {
       "id": "ch-quant-162",
-      "uid": "474e49265cff6964",
+      "uid": "8bf6a1396564661e",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -19478,6 +19682,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -19494,7 +19699,7 @@
     },
     {
       "id": "ch-quant-163",
-      "uid": "06dc3fc4468e9469",
+      "uid": "0857eb275c074465",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready",
@@ -19542,7 +19747,7 @@
     },
     {
       "id": "ch-quant-165",
-      "uid": "065f791e7da78838",
+      "uid": "7992f393a603a7ae",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -19550,19 +19755,21 @@
       "query": "Can I say Bolivia's 2024 tree cover loss was a record? How does it compare with every year since 2001?",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
-        "start_date",
-        "text"
+        "figure",
+        "figure_claim",
+        "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction",
-        "expected_text_match"
+        "date_extraction"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -19571,7 +19778,7 @@
     },
     {
       "id": "ch-quant-166",
-      "uid": "87c710181f1a29f2",
+      "uid": "71036c0b96e83439",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -19588,7 +19795,7 @@
     },
     {
       "id": "ch-quant-167",
-      "uid": "bb05c7f222f0e6fc",
+      "uid": "ee8e29242f63d7b4",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -19597,7 +19804,9 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure",
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -19612,7 +19821,7 @@
     },
     {
       "id": "ch-quant-168",
-      "uid": "45252d91268a33b8",
+      "uid": "04f16660228d6185",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -19622,7 +19831,8 @@
         "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "accepted_nudge_match",
@@ -19638,7 +19848,7 @@
     },
     {
       "id": "ch-quant-169",
-      "uid": "aa56996f8c9ee6c9",
+      "uid": "841d4af849e21432",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -19646,15 +19856,18 @@
       "query": "What were gross emissions from forest loss in Colombia in 2023? We need it for NDC tracking.",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
@@ -19662,8 +19875,7 @@
       ],
       "intent": "quantification",
       "dataset_ids": [
-        "4",
-        "6"
+        "4"
       ]
     },
     {
@@ -19685,7 +19897,7 @@
     },
     {
       "id": "ch-quant-171",
-      "uid": "558db117eb3a110c",
+      "uid": "6c3585237aeda84f",
       "set": "quantification",
       "group": "sluc",
       "status": "ready",
@@ -19695,6 +19907,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -19711,7 +19924,7 @@
     },
     {
       "id": "ch-quant-172",
-      "uid": "4b422abbbaa8f9b9",
+      "uid": "43b883c23fed3821",
       "set": "quantification",
       "group": "sluc",
       "status": "ready",
@@ -19721,6 +19934,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -19737,7 +19951,7 @@
     },
     {
       "id": "ch-quant-173",
-      "uid": "c5b424c9969d2ffc",
+      "uid": "7b9b7407bfc3e41a",
       "set": "quantification",
       "group": "sluc",
       "status": "ready",
@@ -19780,7 +19994,7 @@
     },
     {
       "id": "ch-quant-175",
-      "uid": "68b591d20f7a6a7e",
+      "uid": "5a469b6fe061f718",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready",
@@ -19791,6 +20005,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -19809,7 +20024,7 @@
     },
     {
       "id": "ch-quant-176",
-      "uid": "ddf89312398553e7",
+      "uid": "e817a2249c4bc982",
       "set": "quantification",
       "group": "grasslands",
       "status": "ready",
@@ -19819,6 +20034,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -19835,7 +20051,7 @@
     },
     {
       "id": "ch-quant-177",
-      "uid": "3901049c955c6521",
+      "uid": "50c496873b9dd91f",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -19843,14 +20059,17 @@
       "query": "What was tree cover loss in Antioquia, Colombia in 2023?",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction"
@@ -19879,7 +20098,7 @@
     },
     {
       "id": "ch-quant-179",
-      "uid": "d20fa2256653f086",
+      "uid": "ea0cca3029eb1845",
       "set": "quantification",
       "group": "tc-gain",
       "status": "ready",
@@ -19889,15 +20108,13 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
-        "end_date",
-        "start_date"
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
+        "dataset_id_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -19906,17 +20123,18 @@
     },
     {
       "id": "ch-quant-180",
-      "uid": "0d5a76da36f81e90",
+      "uid": "94be109e2bc75ff5",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "behaviour": "Answer with land cover / natural lands; note restoration suitability needs local data",
-      "query": "Where in the Ashanti region is there cropland or degraded land rather than natural forest, that could be restored?",
+      "query": "Where in the Haut-Sassandra region is there cropland or degraded land rather than natural forest, that could be restored?",
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -19958,7 +20176,7 @@
     },
     {
       "id": "ch-quant-182",
-      "uid": "5018d52f4962c6fb",
+      "uid": "a826426cb5e8dabe",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
@@ -19967,7 +20185,8 @@
       "expected_fields": [
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
         "answered_without_data",
@@ -19982,18 +20201,21 @@
     },
     {
       "id": "ch-quant-183",
-      "uid": "2e6fb5eba3dbed52",
+      "uid": "c9b87ce29bd646df",
       "set": "quantification",
       "group": "grasslands",
       "status": "ready",
       "behaviour": "Answer with grassland / natural land extent",
       "query": "Is there still natural grassland in Mato Grosso that we should prioritize for protection?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
-        "dataset_id"
+        "dataset_id",
+        "figure"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -20041,7 +20263,7 @@
     },
     {
       "id": "ch-quant-186",
-      "uid": "faa71d61983f8590",
+      "uid": "ebd81da2acb9a6ba",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
@@ -20051,6 +20273,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -20085,7 +20308,7 @@
     },
     {
       "id": "ch-quant-188",
-      "uid": "fd566d8bbece10cb",
+      "uid": "1d736c80f0a28837",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready",
@@ -20093,9 +20316,11 @@
       "query": "Which forests in Pará remove the most carbon? We want to prioritize protection to keep the carbon sink.",
       "expected_fields": [
         "accept_aoi_nudge_offering",
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -20113,7 +20338,7 @@
     },
     {
       "id": "ch-quant-189",
-      "uid": "7a9183789a02617e",
+      "uid": "ddf490a6fde38112",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready",
@@ -20124,16 +20349,15 @@
         "data_pull",
         "dataset_id",
         "end_date",
-        "start_date",
-        "text"
+        "figure",
+        "start_date"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction",
-        "expected_text_match"
+        "date_extraction"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -20143,7 +20367,7 @@
     },
     {
       "id": "ch-quant-190",
-      "uid": "95f7637df2759e76",
+      "uid": "58deeac33d423978",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -20177,7 +20401,7 @@
     },
     {
       "id": "ch-quant-192",
-      "uid": "752c76801df3e227",
+      "uid": "39b7d113d797e61b",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready",
@@ -20245,7 +20469,7 @@
     },
     {
       "id": "ch-quant-196",
-      "uid": "66a298dccadfe3ee",
+      "uid": "226e874be703c8b4",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -20296,7 +20520,7 @@
     },
     {
       "id": "ch-quant-199",
-      "uid": "61f2ca81c6515c85",
+      "uid": "e78a2004a8264762",
       "set": "quantification",
       "group": "tcl-fires",
       "status": "ready",
@@ -20304,15 +20528,18 @@
       "query": "How many hectares of tree cover loss in Indonesia came from fires in 2015, and how was \"fire-driven\" determined?",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
@@ -20427,7 +20654,7 @@
     },
     {
       "id": "ch-trend-001",
-      "uid": "a7eff4f0bc836cae",
+      "uid": "494e9631d915b59c",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -20438,6 +20665,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -20514,7 +20743,7 @@
     },
     {
       "id": "ch-trend-004",
-      "uid": "aaad1a1d4bb4843c",
+      "uid": "08e83d200c6aa833",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -20525,6 +20754,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -20601,7 +20831,7 @@
     },
     {
       "id": "ch-trend-007",
-      "uid": "a645e33258d22184",
+      "uid": "de6d8512899ab8ea",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -20612,6 +20842,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -21239,7 +21470,7 @@
     },
     {
       "id": "ch-trend-029",
-      "uid": "28c14ff5e8ef7827",
+      "uid": "3c2d4df57e6552cb",
       "set": "trend",
       "group": "sluc",
       "status": "ready",
@@ -21249,6 +21480,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -21320,7 +21553,7 @@
     },
     {
       "id": "ch-trend-032",
-      "uid": "2d1d3edefdf829a4",
+      "uid": "3246b0c9d12604b2",
       "set": "trend",
       "group": "sluc",
       "status": "ready",
@@ -21330,6 +21563,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -21455,7 +21690,7 @@
     },
     {
       "id": "ch-trend-037",
-      "uid": "e41084774d3e510f",
+      "uid": "eea51599747ed75e",
       "set": "trend",
       "group": "sluc",
       "status": "ready",
@@ -21465,6 +21700,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -21671,7 +21907,7 @@
     },
     {
       "id": "ch-trend-045",
-      "uid": "30089ff2a8838732",
+      "uid": "835f05e2d874e479",
       "set": "trend",
       "group": "grasslands",
       "status": "ready",
@@ -21681,6 +21917,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -21806,7 +22044,7 @@
     },
     {
       "id": "ch-trend-050",
-      "uid": "76fc1c6f5f34a5e8",
+      "uid": "8687681a6e823d74",
       "set": "trend",
       "group": "integrated-alerts",
       "status": "ready",
@@ -21816,6 +22054,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -21860,7 +22100,7 @@
     },
     {
       "id": "ch-trend-052",
-      "uid": "2fbce8db0984c0a3",
+      "uid": "4f1d6f90058c88b6",
       "set": "trend",
       "group": "integrated-alerts",
       "status": "ready",
@@ -21870,6 +22110,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -21887,7 +22128,7 @@
     },
     {
       "id": "ch-trend-053",
-      "uid": "d8dae01a3ac29eb3",
+      "uid": "3a9d2de5475c2566",
       "set": "trend",
       "group": "integrated-alerts",
       "status": "ready",
@@ -21897,6 +22138,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -22277,7 +22520,7 @@
     },
     {
       "id": "ch-trend-067",
-      "uid": "3cd15590e93cce9d",
+      "uid": "a349aeabb20e6e7e",
       "set": "trend",
       "group": "tcl-fires",
       "status": "ready",
@@ -22288,6 +22531,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -22422,7 +22667,7 @@
     },
     {
       "id": "ch-trend-072",
-      "uid": "2047f1c76b6fb088",
+      "uid": "b0985c2f71a0f677",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -22434,6 +22679,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -22478,7 +22725,7 @@
     },
     {
       "id": "ch-trend-074",
-      "uid": "4ba03dca9e726ff1",
+      "uid": "7cf0a7b433aa9695",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -22491,6 +22738,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -22536,7 +22785,7 @@
     },
     {
       "id": "ch-trend-076",
-      "uid": "771e41ae922b2798",
+      "uid": "b6e271c402a8fe75",
       "set": "trend",
       "group": "integrated-alerts",
       "status": "ready",
@@ -22548,6 +22797,8 @@
         "dataset_id",
         "date_tolerance_days",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -22589,7 +22840,7 @@
     },
     {
       "id": "ch-trend-078",
-      "uid": "65851ec1fc81e3f2",
+      "uid": "f8db8b312276b9b6",
       "set": "trend",
       "group": "ghg-flux",
       "status": "ready",
@@ -22600,6 +22851,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date"
       ],
       "implied_checks": [
@@ -22611,13 +22864,12 @@
       ],
       "intent": "trend",
       "dataset_ids": [
-        "4",
-        "6"
+        "4"
       ]
     },
     {
       "id": "ch-trend-079",
-      "uid": "4fa177ef1d107037",
+      "uid": "4aaf5144e03026ef",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -22628,6 +22880,7 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date"
       ],
       "implied_checks": [
@@ -22644,7 +22897,7 @@
     },
     {
       "id": "ch-trend-080",
-      "uid": "c687b0f8df880733",
+      "uid": "114265022423b06f",
       "set": "trend",
       "group": "tcl-fires",
       "status": "ready",
@@ -22655,6 +22908,8 @@
         "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
+        "figure_claim",
         "start_date",
         "text"
       ],
@@ -22673,7 +22928,7 @@
     },
     {
       "id": "ch-trend-081",
-      "uid": "03476f14940be55a",
+      "uid": "916b48b5d354b5e3",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -22697,7 +22952,7 @@
     },
     {
       "id": "ch-trend-082",
-      "uid": "16e874eacef69f47",
+      "uid": "14635a9d6b2d4257",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -22723,7 +22978,7 @@
     },
     {
       "id": "ch-trend-083",
-      "uid": "798d90b18de6f4f6",
+      "uid": "119fd4c15e91ea36",
       "set": "trend",
       "group": "tcl",
       "status": "ready",
@@ -22731,13 +22986,17 @@
       "query": "Are global targets for halting deforestation by 2030 being met? Show primary forest loss since 2021.",
       "expected_fields": [
         "context_layer",
+        "data_pull",
         "dataset_id",
         "end_date",
+        "figure",
         "start_date",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
         "context_layer_match",
+        "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
         "expected_text_match"
@@ -22773,7 +23032,7 @@
     },
     {
       "id": "ch-trend-085",
-      "uid": "0575c3ca87120b32",
+      "uid": "d96b3f6899389352",
       "set": "trend",
       "group": "tc-gain",
       "status": "ready",
@@ -22783,6 +23042,7 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
+        "figure",
         "text"
       ],
       "implied_checks": [
@@ -22794,25 +23054,26 @@
       ],
       "intent": "trend",
       "dataset_ids": [
-        "5",
-        "7"
+        "5"
       ]
     },
     {
       "id": "ch-trend-086",
-      "uid": "a4a9a59df81d84be",
+      "uid": "208487ee19bcda5b",
       "set": "trend",
       "group": "tcl-fires",
       "status": "ready",
       "behaviour": "Answer with fire-driven loss trend; note sub-area targeting limits",
       "query": "Where should we focus fire prevention in Santa Cruz based on fire-driven loss in recent years?",
       "expected_fields": [
+        "accept_aoi_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",

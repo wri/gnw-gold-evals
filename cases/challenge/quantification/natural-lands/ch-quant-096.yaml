@@ -1,5 +1,5 @@
 id: ch-quant-096
-uid: ce16479824493350
+uid: a24784cc1594fb94
 status: ready
 set: quantification
 group: natural-lands
@@ -8,6 +8,10 @@ expected:
   aoi_ids: IND
   dataset_id: '3'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where natural_lands_class in ('Cropland', 'Built-up', 'Non-natural
+    tree cover', 'Non-natural short vegetation', 'Non-natural bare', 'Non-natural water',
+    'Non-natural peat tree cover', 'Non-natural peat short vegetation', 'Wetland non-natural
+    tree cover', 'Wetland non-natural short vegetation')
 notes:
   judge_instruction: Fixed 2020 baseline; headline is the Non-natural row's area_ha from the
     two-row is_natural grouping.
@@ -25,3 +29,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (non-natural
+    classes)'

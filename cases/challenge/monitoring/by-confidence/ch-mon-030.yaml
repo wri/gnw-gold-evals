@@ -1,5 +1,5 @@
 id: ch-mon-030
-uid: b82229cc0f550e34
+uid: cd3c80817865ed1b
 status: ready
 set: monitoring
 group: by_confidence
@@ -12,12 +12,15 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-30d}..{run} and alert_confidence in ('high',
+    'highest') | sum(area_ha) where alert_date in {run-30d}..{run} and alert_confidence =
+    'high'
 notes:
   difficulty: medium
   behaviour: answer with data
   lineage: benchmark v2026 proposed set (bm26-139); USY-000591 TuK (Riau fires)
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   unscored_params: confidence=high
@@ -31,3 +34,5 @@ notes:
   capability: Supported
   grounding: Direct from story
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (30-day
+    high-confidence alert area, either reading: high plus highest, or high only)'

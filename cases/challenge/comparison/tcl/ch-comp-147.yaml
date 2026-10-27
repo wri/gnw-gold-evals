@@ -1,25 +1,32 @@
 id: ch-comp-147
-uid: 6097de262a7af1b7
+uid: 205b5abebbcfaf8c
 status: ready
 set: comparison
 group: tcl
 query: 'Which lost more primary forest between 2021 and 2023: Salonga or Virunga National
   Park?'
 expected:
-  aoi_ids: 555697863;166889
+  aoi_ids: 555697863/10906/6060;166889/2017/478291/6066
   dataset_id: '4'
   start_date: '2021-01-01'
   end_date: '2023-12-31'
   context_layer: primary_forest
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id in ('555697863', '10906', '6060') and tree_cover_loss_year
+    in 2021..2023 ; sum(area_ha) where aoi_id in ('166889', '2017', '478291', '6066') and
+    tree_cover_loss_year in 2021..2023
+  figure_claim: '#1 > #2 :: Salonga lost more primary forest than Virunga between 2021 and
+    2023 || Virunga lost more primary forest than Salonga between 2021 and 2023'
 notes:
   difficulty: hard
   behaviour: answer with data
   lineage: benchmark v2026 proposed set (bm26-048); USY-001516
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01; alternative records (Salonga WH 10906,
+    KBA 6060; Virunga WH 2017, Ramsar 478291, KBA 6066): prod-api /api/aois?name=&source=
+    2026-10-27'
   user_story_refs: USY-001516 UNESCO WH network
   benchmark_id: bm26-112
   benchmark_type: comparison
@@ -28,3 +35,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Direct from story
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids accept any record
+    of each park (Salonga national park, World Heritage site or KBA; Virunga national park,
+    World Heritage site, Ramsar site or KBA); figure and figure_claim added'

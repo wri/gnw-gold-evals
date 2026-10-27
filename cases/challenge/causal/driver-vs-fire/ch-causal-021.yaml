@@ -1,20 +1,19 @@
 id: ch-causal-021
-uid: ae93508ff5cd6eff
+uid: cfebd2ebb4f7ad99
 status: ready
 set: causal
 group: driver_vs_fire
 query: Were any of last week's alerts in Maranhão caused by fire?
 expected:
-  text: Either uses fire information to say whether last week's alerts in Maranhão were fire-related,
-    or explains that alerts do not record their cause and that fire attribution exists only
-    in the annual loss data; does not claim a fire cause without evidence.
+  text: Explains that alerts do not record their cause and that fire attribution exists only
+    in the annual tree cover loss data; does not claim any alert was fire-caused.
 notes:
   behaviour: Answer with available fire information, or explain fire attribution limits for
     recent alerts
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-033); USY-000194 Maranhão escaped fires;
     Alerts JTBD (Miro)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
   capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
@@ -27,3 +26,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-000194 Maranhão escaped fires; Alerts JTBD (Miro)
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text: the ''uses fire
+    information'' branch dropped (alerts carry no cause and fire attribution is annual only,
+    so that branch could pass an invented attribution)'

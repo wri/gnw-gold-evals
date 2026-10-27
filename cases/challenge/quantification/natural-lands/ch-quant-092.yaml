@@ -1,5 +1,5 @@
 id: ch-quant-092
-uid: 5e2b62bc275b83ad
+uid: e1405ddf77ddc5e2
 status: ready
 set: quantification
 group: natural-lands
@@ -8,6 +8,9 @@ expected:
   aoi_ids: BRA
   dataset_id: '3'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where natural_lands_class in ('Natural forests', 'Mangroves', 'Natural
+    peat forests', 'Wetland natural forests', 'Natural short vegetation', 'Natural peat short
+    vegetation', 'Wetland natural short vegetation', 'Natural water', 'Bare')
 notes:
   judge_instruction: Fixed 2020 baseline; the prompt names no year. Ground truth groups by
     is_natural into exactly two rows (Natural / Non-natural) summing area_ha; the headline
@@ -27,3 +30,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (natural
+    classes)'

@@ -1,5 +1,5 @@
 id: ch-quant-162
-uid: 474e49265cff6964
+uid: 8bf6a1396564661e
 status: ready
 set: quantification
 group: tcl
@@ -9,13 +9,16 @@ expected:
   aoi_ids: '317197'
   dataset_id: '4'
   data_pull: 'TRUE'
-  text: Gives tree cover loss inside Tesso Nilo National Park and either compares it with
-    the surrounding area or explains that it cannot analyse the surroundings; does not guess.
+  text: Gives tree cover loss inside Tesso Nilo National Park from the data; any statement
+    about the surrounding area comes from a second pulled area (for example the enclosing
+    district) or is declared not analysed; no narrative about the surroundings from general
+    knowledge.
+  figure: sum(area_ha) where aoi_id = '317197'
 notes:
   behaviour: Answer for the park; explain if surroundings or concessions are unavailable
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-125); USY-001298 Tesso Nilo palm oil
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: AOI id to verify
@@ -29,3 +32,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001298 Tesso Nilo palm oil
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text tightened: surroundings
+    claims must come from a second pulled area or be declared not analysed; figure added (in-park
+    loss)'

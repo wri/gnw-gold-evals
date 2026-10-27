@@ -1,5 +1,5 @@
 id: ch-trend-074
-uid: 4ba03dca9e726ff1
+uid: 7cf0a7b433aa9695
 status: ready
 set: trend
 group: tcl
@@ -11,12 +11,18 @@ expected:
   end_date: '2023-12-31'
   context_layer: primary_forest
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where tree_cover_loss_year = 2016 ; ref: sum(area_ha) where tree_cover_loss_year
+    = 2023 ; sum(area_ha) where tree_cover_loss_year in 2016..2023 | max(area_ha) by tree_cover_loss_year
+    where tree_cover_loss_year in 2016..2023 | min(area_ha) by tree_cover_loss_year where
+    tree_cover_loss_year in 2016..2023'
+  figure_claim: '#2 < #1 :: primary forest loss in 2023 was below 2016 || primary forest loss
+    in 2023 was not below 2016'
 notes:
   difficulty: easy
   behaviour: answer with data
   lineage: benchmark v2026 proposed set (bm26-080); USY-001330 FDA; USY-001383 GEF-9
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   user_story_refs: USY-001330 FDA; USY-001383 GEF-9
   benchmark_id: bm26-220
@@ -26,3 +32,5 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (period total or peak or low year value, and 2023 vs 2016, from the pulled table)'

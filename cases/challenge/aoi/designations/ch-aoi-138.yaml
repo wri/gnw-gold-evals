@@ -1,11 +1,11 @@
 id: ch-aoi-138
-uid: b4a6aa9cad673d8e
+uid: 9c57aa9477094034
 status: ready
 set: aoi
 group: designations
 query: Show me Salonga National Park
 expected:
-  aoi_ids: '555697863'
+  aoi_ids: 555697863/10906/6060
 notes:
   difficulty: medium
   behaviour: select
@@ -26,3 +26,7 @@ notes:
   aoi_type: Protected area
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids now accepts the
+    World Heritage (10906) and KBA (6060) Salonga records as ch-trend-079 does; the agent
+    picked 10906 on every attempt and it shows the park under the park''s name'

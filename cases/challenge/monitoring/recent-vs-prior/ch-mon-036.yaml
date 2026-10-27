@@ -1,5 +1,5 @@
 id: ch-mon-036
-uid: 6c6ef67e03fb8a92
+uid: 39f09b721855c9df
 status: ready
 set: monitoring
 group: recent_vs_prior
@@ -12,11 +12,17 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  text: Makes the current month's incompleteness visible (dates covered or month to date)
+    when comparing it with last month.
+  figure: 'ref: sum(area_ha) where alert_date in {month_start}..{run} ; ref: sum(area_ha)
+    where alert_date in {last_month_start}..{last_month_end}'
+  figure_claim: '#1 > #2 :: alert area so far this month is higher than in the whole of last
+    month || alert area so far this month is not higher than last month''s'
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-008); USY-001153 JPIK Kerinci Seblat
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time'
@@ -29,3 +35,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001153 JPIK Kerinci Seblat
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text added (the partial
+    current month made visible); figure and claim added (month to date vs last month from
+    the pulled table)'

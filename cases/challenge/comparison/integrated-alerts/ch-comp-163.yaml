@@ -1,5 +1,5 @@
 id: ch-comp-163
-uid: 08114801dfbdb292
+uid: c8d7419b4a3d845b
 status: ready
 set: comparison
 group: integrated-alerts
@@ -11,14 +11,18 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
-  text: Compares this month's alerts across the three named regions.
   aoi_ids: CIV.8.1;CIV.8.2;CIV.8.3
+  figure: sum(area_ha) where aoi_id = 'CIV.8.1' and alert_date in {month_start}..{run} | count(area_ha)
+    where aoi_id = 'CIV.8.1' and alert_date in {month_start}..{run} ; sum(area_ha) where aoi_id
+    = 'CIV.8.2' and alert_date in {month_start}..{run} | count(area_ha) where aoi_id = 'CIV.8.2'
+    and alert_date in {month_start}..{run} ; sum(area_ha) where aoi_id = 'CIV.8.3' and alert_date
+    in {month_start}..{run} | count(area_ha) where aoi_id = 'CIV.8.3' and alert_date in {month_start}..{run}
 notes:
   behaviour: Answer for three named areas
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-105); USY-001249 Offinso; Portfolio
     monitoring research
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
@@ -38,4 +42,6 @@ notes:
     is split into parts in the boundary data, says how it handled that."}}'
   review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
     is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
-    version (notes.ghana_original) once it is fixed.'
+    version (notes.ghana_original) once it is fixed.; 2026-10-27 draft-5 review (AJ asked
+    to apply the review): text dropped (duplicated the area, date and figure checks); figure
+    check added (alert area or alert rows per region this month)'

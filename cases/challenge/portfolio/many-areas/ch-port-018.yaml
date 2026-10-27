@@ -1,5 +1,5 @@
 id: ch-port-018
-uid: 84b6ad8f3c1d434e
+uid: 18c4565dc3b27343
 status: ready
 set: portfolio
 group: many-areas
@@ -9,15 +9,18 @@ expected:
   dataset_id: '4'
   start_date: '2015-01-01'
   end_date: '2025-12-31'
+  context_layer: no_selection
   data_pull: 'TRUE'
-  text: Gives tree cover loss since 2015 for each of Pará's municipalities as a table, from
-    the data; does not invent figures.
+  text: Gives tree cover loss since 2015 for each of Pará's municipalities from the data (a
+    table or a list of per-municipality figures); does not invent figures.
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2015..2025
 notes:
   behaviour: 'answer with data: per-municipality table for Pará'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-097); USY-001228 Mighty Earth (municipal
     screening); USY-001513 admin-level stats request
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
     ships'
@@ -36,4 +39,7 @@ notes:
     of one GADM parent, but only 50 protected areas, KBAs, Indigenous lands or concessions
     (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).
     aoi_ids are the 144 GADM children of BRA.14 that pick_aoi returned on every attempt. Open-ended
-    window ends 2025-12-31 (Batch 5 rule).'
+    window ends 2025-12-31 (Batch 5 rule); 2026-10-27 draft-5 review (AJ asked to apply the
+    review): context_layer no_selection added (a draft-4 attempt passed with primary-forest
+    figures as tree cover loss); text no longer insists on a table; figure added (top municipality''s
+    2015 to 2025 loss)'

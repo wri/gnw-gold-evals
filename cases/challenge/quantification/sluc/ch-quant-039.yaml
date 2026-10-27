@@ -1,5 +1,5 @@
 id: ch-quant-039
-uid: 762c1af13b6f7d1d
+uid: aa18d9e6f61d5ad3
 status: ready
 set: quantification
 group: sluc
@@ -10,6 +10,7 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: max(production_tonnes) where crop_type = 'Rice' and year = 2024
 notes:
   crop_types: 'Rice (unscored: no evaluator surface yet)'
   judge_instruction: Headline is crop production volume (production_tonnes) in tonnes; tabular;
@@ -28,3 +29,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (production_tonnes
+    repeats on every gas row, so max)'

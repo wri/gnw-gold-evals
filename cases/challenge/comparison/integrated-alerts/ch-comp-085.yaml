@@ -1,5 +1,5 @@
 id: ch-comp-085
-uid: d80e089a55148d43
+uid: 646ed6b1385e1900
 status: ready
 set: comparison
 group: integrated-alerts
@@ -9,6 +9,11 @@ expected:
   aoi_ids: COD
   dataset_id: '11'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in 2024-07-01..2024-12-31 ; sum(area_ha) where alert_date
+    in 2025-01-01..2025-06-30
+  figure_claim: '#1 > #2 :: More area was flagged by alerts in the DRC from July to December
+    2024 than from January to June 2025 || More area was flagged by alerts in the DRC from
+    January to June 2025 than from July to December 2024'
 notes:
   judge_instruction: Compare 2024-07-01..2024-12-31 vs 2025-01-01..2025-06-30 for total alert
     area (area_ha).
@@ -26,3 +31,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

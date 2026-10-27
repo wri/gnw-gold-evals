@@ -1,21 +1,22 @@
 id: ch-comp-155
-uid: 6b1ebb48e82cc358
+uid: b23a45a0b36f67d7
 status: ready
 set: comparison
 group: tcl-drivers
 query: Is palm-related deforestation risk higher in Sabah or Sarawak?
 expected:
   aoi_ids: MYS.13;MYS.14
-  dataset_id: 4;8
+  dataset_id: 4;8;9
   data_pull: 'TRUE'
-  text: Compares loss in Sabah and Sarawak from the data and is clear that it shows past loss
-    rather than palm-specific risk, since the drivers data do not identify oil palm.
-  accept_nudge_offering: 4;8
+  text: Does not present tree cover loss, dominant drivers or crop emission factors as palm-specific
+    deforestation risk, and says what the data used actually measure (past loss, the dominant
+    driver classes, or deforestation-linked emissions per tonne of oil palm).
+  accept_nudge_offering: 4;8 | 9
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-067); USY-001512 Malaysia EUDR
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review; accept_nudge_offering added 2026-10-26 (AJ)'
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-067
@@ -30,4 +31,7 @@ notes:
   review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
     passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: attempts
     1 and 3 nudged with sLUC emission factors (9) only; attempt 2 offered drivers, loss and
-    alerts.'
+    alerts.; 2026-10-27 draft-5 review (AJ asked to apply the review): sLUC emission factors
+    (9) accepted as a pull or nudge alternative (verified 2026-10-27: the analytics API returns
+    Oil Palm factors for MYS.13 and MYS.14, 2024); nudge offer accepts 4 and 8 together or
+    9 alone; text reworded route-neutral'

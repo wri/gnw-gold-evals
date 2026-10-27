@@ -1,5 +1,5 @@
 id: ch-causal-011
-uid: 1178303a5f2b1baa
+uid: 70e7c4590828689f
 status: ready
 set: causal
 group: commodity_overclaim
@@ -7,18 +7,18 @@ query: Is soy or cattle driving tree cover loss in Mato Grosso since 2015?
 expected:
   aoi_ids: BRA.12
   dataset_id: '8'
-  start_date: '2015-01-01'
-  end_date: '2024-12-31'
   data_pull: 'TRUE'
   text: Does not name soy or cattle as the driver, since the driver data does not identify
-    the commodity.
+    the commodity, and states that the driver shares cover 2001 to 2025 as a whole.
   accept_nudge_offering: '8'
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Permanent agriculture', sum(area_ha)
+    where tree_cover_loss_driver != 'Unknown')
 notes:
   difficulty: hard
   behaviour: answer with drivers data; must not name a commodity the data does not identify
   lineage: benchmark v2026 proposed set (bm26-150); Trase EUDR; USY-001293 Sicredi
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review; accept_nudge_offering added 2026-10-26 (AJ)'
+    human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-01'
   user_story_refs: USY-001228 Mighty Earth beef; USY-001313 LDC soy
@@ -31,4 +31,6 @@ notes:
   grounding: Story analogue
   review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
     passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
-    nudged with drivers (8) on offer.'
+    nudged with drivers (8) on offer; 2026-10-27 draft-5 review (AJ asked to apply the review):
+    expected dates dropped (drivers have one 2001 to 2025 window); text now also requires
+    the period label; figure added (permanent agriculture share)'

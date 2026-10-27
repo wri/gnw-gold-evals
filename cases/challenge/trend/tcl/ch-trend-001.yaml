@@ -1,5 +1,5 @@
 id: ch-trend-001
-uid: a7eff4f0bc836cae
+uid: 494e9631d915b59c
 status: ready
 set: trend
 group: tcl
@@ -12,6 +12,11 @@ expected:
   end_date: '2023-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where tree_cover_loss_year = 2015 ; ref: sum(area_ha) where tree_cover_loss_year
+    = 2023'
+  figure_claim: '#2 > #1 :: annual tree cover loss in 2023 was above 2015, so the period shows
+    no downward trend || annual tree cover loss in 2023 was below 2015, so the period shows
+    no upward trend'
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: All forest types, so no forest-type filter should be applied.
@@ -29,3 +34,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (2023 vs 2015 from the pulled table)'

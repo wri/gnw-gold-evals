@@ -1,5 +1,5 @@
 id: ch-comp-005
-uid: 8b80ead730a494d1
+uid: 3ce4e54ea7bccaf6
 status: ready
 set: comparison
 group: tcl
@@ -10,6 +10,10 @@ expected:
   dataset_id: '4'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2011..2015 ; sum(area_ha) where tree_cover_loss_year
+    in 2016..2020
+  figure_claim: '#2 > #1 :: Brazil lost more tree cover in 2016 to 2020 than in 2011 to 2015
+    || Brazil lost more tree cover in 2011 to 2015 than in 2016 to 2020'
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: Compare the all-forest-types totals for 2011-2015 vs 2016-2020; no forest-type
@@ -28,3 +32,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

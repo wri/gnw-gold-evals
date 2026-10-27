@@ -1,5 +1,5 @@
 id: ch-comp-160
-uid: 4ceb86fbac13e777
+uid: 2fab5352ebf26d94
 status: ready
 set: comparison
 group: tcl-fires
@@ -10,12 +10,18 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  accept_aoi_nudge_offering: BOL.8
+  figure: sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'BOL.8' and tree_cover_loss_year
+    = 2024 ; sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'BOL.3' and tree_cover_loss_year
+    = 2024
+  figure_claim: '#1 > #2 :: Santa Cruz lost more tree cover to fires than Beni in 2024 ||
+    Beni lost more tree cover to fires than Santa Cruz in 2024'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-072); USY-001555 Bolivia fires; USY-001332
     IBIF
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-072
@@ -27,3 +33,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001555 Bolivia fires; USY-001332 IBIF
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): an area-choice nudge
+    that offers Santa Cruz, Bolivia (BOL.8) passes; figure check added (fire-driven loss per
+    department in 2024, direction claim)'

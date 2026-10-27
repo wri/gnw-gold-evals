@@ -1,5 +1,5 @@
 id: ch-quant-169
-uid: aa56996f8c9ee6c9
+uid: 841d4af849e21432
 status: ready
 set: quantification
 group: ghg-flux
@@ -7,18 +7,21 @@ query: What were gross emissions from forest loss in Colombia in 2023? We need i
   tracking.
 expected:
   aoi_ids: COL
-  dataset_id: 6;4
+  dataset_id: '4'
   start_date: '2023-01-01'
   end_date: '2023-12-31'
   data_pull: 'TRUE'
   text: Gives Colombia's 2023 gross emissions from forest loss and caveats that the method
     differs from the national inventory used for NDC tracking.
+  context_layer: no_selection
+  figure: sum(carbon_emissions_MgCO2e) where tree_cover_loss_year = 2023
 notes:
   behaviour: Answer with data; caveat on national inventory methods
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-173); USY-001625 CONAFOR (analogue);
     USY-001330
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-173
@@ -31,4 +34,7 @@ notes:
   user_story_refs: USY-001625 CONAFOR (analogue); USY-001330
   refresh_risk: Low
   review: '2026-10-24 (AJ): dataset 4 accepted with 6; the tree cover loss dataset reports
-    emissions from loss. 20261023T094447Z_prod: all 3 attempts used 4 with the right figures.'
+    emissions from loss. 20261023T094447Z_prod: all 3 attempts used 4 with the right figures.;
+    2026-10-27 draft-5 review (AJ asked to apply the review): dataset_id 4 only (net flux
+    is a 2001 to 2025 total and cannot give 2023); context_layer no_selection (all forest
+    loss, not primary only); figure added'

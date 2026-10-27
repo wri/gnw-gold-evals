@@ -385,3 +385,36 @@ in `notes.ghana_original`. The benchmark sheet matches these rows by query
 text, so `seeds/benchmark-v2026-bef-2026-10-26.csv` is the 22 October export
 with those eight queries substituted, and `2026-draft-4` is built from it.
 Restore the Ghana versions, and the 22 October seed, once PZB-1408 is fixed.
+
+### Draft-5 review: could this answer mislead the user? (2026-10-27)
+
+Before the draft-5 run, every draft-4 member was reviewed against one question
+from AJ: could this answer mislead the user? Each case is scored only on the one
+to three things that could mislead for it; a check that fails an answer that
+would mislead no one was eased, and a misleading answer that passed got the
+lightest check that catches it. The per-question findings and decisions are in
+the review doc ("BENCHMARK draft-4 critical review", claude.ai artifact
+68PEmch8CvCEJwgB2xtmTy). Applied to 213 case files:
+
+- **Figures from the agent's own pull.** About 170 members gained a `figure`
+  formula (and some a `figure_claim`), checked by `figure_match` and
+  `figure_claim_match` against the table the agent itself pulled; data quality
+  is out of scope. Column names and values were confirmed against real pulled
+  tables. See `src/goldset/evaluators/README.md`.
+- **Periods.** `date_extraction` passes a pull that contains the asked window;
+  `answer_period_match` checks the answer uses exactly the asked period.
+- **Fair alternatives.** New `/` records per area in `aoi_ids`, `|` alternatives
+  in `context_layer` and in the nudge accept fields, plus the expectations the
+  review proposed (datasets that can answer the question, defensible area
+  records, sharper `text` that writes the fact in, tone and format clauses
+  dropped).
+- **Ghana.** `ch-quant-180` (Ashanti to Haut-Sassandra) and `ch-port-017`
+  (Côte d'Ivoire only) moved like the eight 2026-10-26 Ghana questions;
+  `notes.ghana_original` keeps the old wording.
+- **Not applied, for AJ:** `ch-quant-164` and `ch-aoi-090` (would reverse his
+  calls), `forbidden_tools` on the dataset questions (set-level), the
+  `ch-causal-010` caveat direction and the `ch-aoi-116` branch. Prose
+  ask-backs are not yet accepted (no harness support).
+
+Each edited case records the change in `notes.review` and stamps
+`notes.expectations` with "draft-5 review 2026-10-27".

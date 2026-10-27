@@ -1,5 +1,5 @@
 id: ch-comp-162
-uid: c1eee5e7dbd5a086
+uid: 75fc1cefa4f8c92b
 status: ready
 set: comparison
 group: tcl
@@ -11,12 +11,16 @@ expected:
   start_date: '2021-01-01'
   end_date: '2025-12-31'
   data_pull: 'TRUE'
+  text: Says there was tree cover loss in both regions after 2020 and notes that tree cover
+    loss is not itself EUDR deforestation (or reports loss within natural forest).
+  figure: sum(area_ha) where aoi_id = 'CIV.2.2' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'CIV.8.1' and tree_cover_loss_year in 2021..2025
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-074); USY-001381 ITC EUDR handbook;
     USY-001569 Sucden
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
@@ -30,3 +34,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001381 ITC EUDR handbook; USY-001569 Sucden
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text added for the EUDR
+    caveat (tree cover loss is not deforestation unless the natural forest layer is used);
+    figure check added (loss per region from 2021)'

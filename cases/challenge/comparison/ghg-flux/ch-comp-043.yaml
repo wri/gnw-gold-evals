@@ -1,5 +1,5 @@
 id: ch-comp-043
-uid: 2e8b94ec55788318
+uid: 75472cb3813f9346
 status: ready
 set: comparison
 group: ghg-flux
@@ -9,6 +9,10 @@ expected:
   aoi_ids: BRA;IDN
   dataset_id: '6'
   data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'BRA' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'IDN'
+  figure_claim: '#2 > #1 :: Indonesia''s forests are the larger net source of greenhouse gas
+    emissions || Brazil''s forests are the larger net source of greenhouse gas emissions'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -28,3 +32,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

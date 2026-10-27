@@ -1,5 +1,5 @@
 id: ch-quant-155
-uid: 3181be0e993e4f47
+uid: 035332f03c044abe
 status: ready
 set: quantification
 group: tree-cover
@@ -9,12 +9,14 @@ expected:
   dataset_id: '7'
   dataset_parameters: '[{"name":"canopy_cover","values":[10]}]'
   data_pull: 'TRUE'
+  figure: sum(area_ha)
+  text: States the figure is the year 2000 baseline.
 notes:
   difficulty: medium
   behaviour: answer with data
   lineage: benchmark v2026 proposed set (bm26-005); USY-001364 El Salvador compensation baseline
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   user_story_refs: USY-001296 El Salvador compensation policy; USY-001364 20x20
   benchmark_id: bm26-235
@@ -24,3 +26,5 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added; text requires
+    the year 2000 baseline to be stated'

@@ -1,5 +1,5 @@
 id: ch-mon-038
-uid: 946afe2d1c33686d
+uid: 247a4d49e98646e1
 status: ready
 set: monitoring
 group: recent_vs_prior
@@ -11,11 +11,15 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where alert_date in {run-30d}..{run} ; ref: sum(area_ha) where
+    alert_date in {run-60d}..{run-31d}'
+  figure_claim: '#1 > #2 :: alert area went up in the last 30 days compared with the 30 days
+    before || alert area did not go up in the last 30 days compared with the 30 days before'
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-012); USY-001596 SPAVOM Ituri
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time'
@@ -28,3 +32,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001596 SPAVOM Ituri
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (last 30 days vs the 30 days before from the pulled table)'

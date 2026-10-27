@@ -1,5 +1,5 @@
 id: ch-comp-133
-uid: 7bb3b6cc9e049b64
+uid: dd7b82ccb41b673e
 status: ready
 set: comparison
 group: tcl-fires
@@ -12,6 +12,11 @@ expected:
   end_date: '2023-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'BRA' and tree_cover_loss_year
+    = 2023 ; sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'IDN' and tree_cover_loss_year
+    = 2023
+  figure_claim: '#1 > #2 :: Brazil lost more tree cover to fires than Indonesia in 2023 ||
+    Indonesia lost more tree cover to fires than Brazil in 2023'
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'fire (unscored: no evaluator surface yet)'
@@ -32,3 +37,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

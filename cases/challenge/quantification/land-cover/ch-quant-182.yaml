@@ -1,5 +1,5 @@
 id: ch-quant-182
-uid: 5018d52f4962c6fb
+uid: a826426cb5e8dabe
 status: ready
 set: quantification
 group: land-cover
@@ -8,11 +8,14 @@ expected:
   aoi_ids: PER.26.3|PER8623|PER8624|PER8623;PER8624
   dataset_id: '1'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class = 'Tree cover' | ratio(sum(area_ha) where land_cover_class
+    = 'Tree cover', sum(area_ha))
 notes:
   behaviour: Answer with land cover breakdown
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-241); USY-001248 Kakataibo
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23; pinned to Padre Abad province as the
     sheet does; Landmark has Kakataibo Norte/Sur reserves (PER8623, PER8624)'
@@ -28,4 +31,5 @@ notes:
   refresh_risk: Low
   review: '2026-10-24 (AJ): the province, either Kakataibo reserve, or both (PER.26.3 | PER8623
     | PER8624 | PER8623;PER8624; prod /api/aois 2026-10-24). 20261023T094447Z_prod: two attempts
-    used Kakataibo Sur, one 18 Indigenous lands.'
+    used Kakataibo Sur, one 18 Indigenous lands.; 2026-10-27 draft-5 review (AJ asked to apply
+    the review): figure added (tree cover class area, or its share of the area)'

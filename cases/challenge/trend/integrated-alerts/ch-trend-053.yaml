@@ -1,5 +1,5 @@
 id: ch-trend-053
-uid: d8dae01a3ac29eb3
+uid: 3a9d2de5475c2566
 status: ready
 set: trend
 group: integrated-alerts
@@ -11,6 +11,10 @@ expected:
   start_date: '2024-03-01'
   end_date: '2024-08-31'
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where alert_date in 2024-03-01..2024-05-31 ; ref: sum(area_ha)
+    where alert_date in 2024-06-01..2024-08-31'
+  figure_claim: '#2 > #1 :: alerts trended up over the period (June to August above March
+    to May) || alerts trended down over the period (June to August below March to May)'
 notes:
   judge_instruction: Direction of monthly alert area (area_ha) for 1 Mar to 31 Aug 2024.
   eval_subtype: direction
@@ -27,3 +31,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (June to August vs March to May from the pulled table)'

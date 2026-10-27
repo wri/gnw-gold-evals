@@ -1,20 +1,19 @@
 id: ch-mon-047
-uid: 6b154e65529f5125
+uid: c480027b7b4e8bf5
 status: ready
 set: monitoring
 group: unsupported_action
 query: Make a map of this month's alerts in the Aru Islands that I can print for the community
   meeting.
 expected:
-  text: Either produces a printable map of this month's alerts in the Aru Islands, or says
-    that printable map exports are not supported yet and suggests an alternative; does not
-    claim to have produced a file it did not.
+  text: Does not claim to have produced a printable map or file it did not; says plainly what
+    it produced instead.
 notes:
   behaviour: Produce or point to a printable map export, or say not supported yet
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-023); USY-000960 Aru; GFW Advisory Council
     focus groups (map exports for community meetings)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
   benchmark_id: bm26-023
@@ -27,3 +26,6 @@ notes:
   user_story_refs: USY-000960 Aru; GFW Advisory Council focus groups (map exports for community
     meetings)
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text reworded to the
+    misleading risk (no claim of a printable map or file it did not produce). The dashboard_created
+    opt-out is a harness change, not applied'

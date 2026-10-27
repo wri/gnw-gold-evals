@@ -1,5 +1,5 @@
 id: ch-quant-107
-uid: c061c972dec04129
+uid: 456f89d7df953066
 status: ready
 set: quantification
 group: tree-cover
@@ -10,6 +10,8 @@ expected:
   dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(area_ha)
+  text: States the figure is the year 2000 baseline.
 notes:
   judge_instruction: Fixed 2000 snapshot; the stated 75% canopy threshold must be applied.
     Headline is tree cover area_ha, never a percentage.
@@ -27,3 +29,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added; text requires
+    the year 2000 baseline to be stated'

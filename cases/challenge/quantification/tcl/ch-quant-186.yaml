@@ -1,5 +1,5 @@
 id: ch-quant-186
-uid: faa71d61983f8590
+uid: ebd81da2acb9a6ba
 status: ready
 set: quantification
 group: tcl
@@ -9,14 +9,18 @@ expected:
   aoi_ids: '721'
   dataset_id: 4;11
   data_pull: 'TRUE'
-  text: Gives recent loss for Taï National Park and either analyses the surrounding buffer
-    zone or explains that it cannot, offering the in-park figure; does not guess.
+  text: Gives recent loss or alerts inside Taï National Park from the data; any statement
+    about the surrounding buffer zone comes from a second pulled area or is declared not analysed;
+    no narrative about the surroundings from general knowledge or articles.
+  figure: sum(area_ha) where aoi_id = '721' | sum(area_ha) where aoi_id = '721' and alert_confidence
+    in ('high', 'highest') | sum(area_ha) where aoi_id = '721' and tree_cover_loss_year =
+    2025
 notes:
   behaviour: Answer for the park; explain if buffer-zone analysis is not supported
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-246); USY-001399 Olam PA monitoring;
     USY-001515
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: AOI id to verify
@@ -30,3 +34,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001399 Olam PA monitoring; USY-001515
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text tightened as ch-quant-162
+    (surroundings from a second pulled area or declared not analysed); figure added (alerts
+    in the park, confident alerts, or latest-year loss)'

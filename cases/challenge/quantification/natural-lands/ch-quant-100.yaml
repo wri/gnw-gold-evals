@@ -1,5 +1,5 @@
 id: ch-quant-100
-uid: ce70b654e936515b
+uid: ccdf4fd1703405a9
 status: ready
 set: quantification
 group: natural-lands
@@ -9,6 +9,10 @@ expected:
   aoi_ids: MYS
   dataset_id: '3'
   data_pull: 'TRUE'
+  figure: ratio(sum(area_ha) where natural_lands_class in ('Natural forests', 'Mangroves',
+    'Natural peat forests', 'Wetland natural forests', 'Natural short vegetation', 'Natural
+    peat short vegetation', 'Wetland natural short vegetation', 'Natural water', 'Bare'),
+    sum(area_ha))
 notes:
   judge_instruction: Fixed 2020 baseline; expected value is Natural area_ha / (Natural + Non-natural
     area_ha) from the two-row is_natural grouping, expressed as a percentage or fraction.
@@ -26,3 +30,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (natural
+    share)'

@@ -1,5 +1,5 @@
 id: ch-trend-050
-uid: 76fc1c6f5f34a5e8
+uid: 8687681a6e823d74
 status: ready
 set: trend
 group: integrated-alerts
@@ -11,6 +11,10 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where alert_date in 2024-01-01..2024-06-30 ; ref: sum(area_ha)
+    where alert_date in 2024-07-01..2024-12-31'
+  figure_claim: '#2 > #1 :: alert area was higher in the second half of 2024 than in the first
+    half || alert area was lower in the second half of 2024 than in the first half'
 notes:
   judge_instruction: Direction of monthly alert area (area_ha) over 2024; expected as a line
     chart, optionally one line per confidence tier.
@@ -28,3 +32,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (second half of 2024 vs first half from the pulled table; a peak month is not expressible)'

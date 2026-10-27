@@ -1,5 +1,5 @@
 id: ch-mon-041
-uid: cc1e88b05a13d354
+uid: 31caf69fe0680735
 status: ready
 set: monitoring
 group: recent_area
@@ -11,11 +11,12 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '2'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-14d}..{run}
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-016); USY-001249 Offinso ATEM project
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: 'Relative dates: resolve window at run time'
@@ -33,4 +34,5 @@ notes:
     "end_date": "{run}", "date_tolerance_days": "2", "data_pull": "TRUE"}}'
   review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
     is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
-    version (notes.ghana_original) once it is fixed.'
+    version (notes.ghana_original) once it is fixed.; 2026-10-27 draft-5 review (AJ asked
+    to apply the review): figure added (14-day alert area from the pulled table)'

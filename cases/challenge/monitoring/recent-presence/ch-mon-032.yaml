@@ -1,5 +1,5 @@
 id: ch-mon-032
-uid: ede7057e94722f43
+uid: e4ea3f70ab2e638f
 status: ready
 set: monitoring
 group: recent_presence
@@ -11,11 +11,12 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-30d}..{run}
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-002); USY-001580 Équateur storytelling
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time'
@@ -28,3 +29,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001580 Équateur storytelling
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (30-day
+    alert area from the pulled table)'

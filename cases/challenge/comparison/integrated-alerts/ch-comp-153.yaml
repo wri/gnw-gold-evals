@@ -1,5 +1,5 @@
 id: ch-comp-153
-uid: f9f88a8a8db58962
+uid: 452b568c1cc36921
 status: ready
 set: comparison
 group: integrated-alerts
@@ -12,12 +12,16 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = '303695' and alert_date in {current_year}-01-01..{run}
+    ; sum(area_ha) where aoi_id = '352249' and alert_date in {current_year}-01-01..{run}
+  figure_claim: '#1 > #2 :: Masoala recorded a larger alert area than Makira this year ||
+    Makira recorded a larger alert area than Masoala this year'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-065); USY-001570 Conservation Allies
     PA enforcement
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time'
@@ -30,3 +34,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001570 Conservation Allies PA enforcement
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure check added (alert
+    area per park this year, direction claim)'

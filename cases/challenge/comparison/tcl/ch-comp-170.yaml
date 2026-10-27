@@ -1,24 +1,29 @@
 id: ch-comp-170
-uid: a2c44e0f62a74cb6
+uid: ae44f88fb4480a0a
 status: ready
 set: comparison
 group: tcl
 query: Has the Kayapó Indigenous Territory lost less forest since 2019 than in the five years
   before?
 expected:
-  aoi_ids: BRA1507
+  aoi_ids: BRA1507/34004
   dataset_id: '4'
   start_date: '2014-01-01'
   end_date: '2025-12-31'
   data_pull: 'TRUE'
-  text: Compares the yearly average loss since 2019 with the yearly average for the five years
-    before, accounting for the different period lengths.
+  figure: mean(area_ha) by tree_cover_loss_year where aoi_id = 'BRA1507' and tree_cover_loss_year
+    in 2019..2025 | mean(area_ha) by tree_cover_loss_year where aoi_id = '34004' and tree_cover_loss_year
+    in 2019..2025 ; mean(area_ha) by tree_cover_loss_year where aoi_id = 'BRA1507' and tree_cover_loss_year
+    in 2014..2018 | mean(area_ha) by tree_cover_loss_year where aoi_id = '34004' and tree_cover_loss_year
+    in 2014..2018
+  figure_claim: '#1 < #2 :: Kayapó has lost less tree cover per year since 2019 than in 2014
+    to 2018 || Kayapó has not lost less tree cover per year since 2019 than in 2014 to 2018'
 notes:
   behaviour: Answer with two-period comparison; annualize correctly
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-201); USY-001633 / USY-001587 Indigenous
     territory monitoring (analogue)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
@@ -32,3 +37,6 @@ notes:
   grounding: Story analogue
   user_story_refs: USY-001633 / USY-001587 Indigenous territory monitoring (analogue)
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): WDPA record 34004 accepted
+    as an alternative to Landmark BRA1507; text dropped (the figure check now requires per-year
+    averages); figure check added (annual mean since 2019 vs 2014 to 2018, direction claim)'

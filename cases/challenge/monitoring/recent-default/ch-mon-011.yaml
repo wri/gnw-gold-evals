@@ -1,5 +1,5 @@
 id: ch-mon-011
-uid: 5c1f51b573a0213a
+uid: 956f082f0fd58057
 status: ready
 set: monitoring
 group: recent_default
@@ -7,14 +7,19 @@ query: Have there been any disturbance alerts in Côte d'Ivoire's Nawa region re
 expected:
   aoi_ids: CIV.2.2
   dataset_id: '11'
+  start_date: '{run-90d}'
+  end_date: '{run}'
+  date_tolerance_days: '62'
   data_pull: 'TRUE'
   text: States the time window the alerts it reports cover.
+  figure: sum(area_ha) where alert_date in {run-30d}..{run} | sum(area_ha) where alert_date
+    in {run-90d}..{run}
 notes:
   difficulty: hard
   behaviour: answer with data; state window used
   lineage: benchmark v2026 proposed set (bm26-120); USY-001392 Ghana Cocoa Belt
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth
@@ -32,4 +37,8 @@ notes:
     "text": "States the time window the alerts it reports cover."}}'
   review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
     is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
-    version (notes.ghana_original) once it is fixed.'
+    version (notes.ghana_original) once it is fixed.; 2026-10-27 draft-5 review (AJ asked
+    to apply the review): start_date {run-90d}, end_date {run}, tolerance 60 days added so
+    the period checks apply to ''recently''; figure added (30-day or 90-day alert area, either
+    passes; a three-year total fails); date_tolerance_days 62, not 60, so a last-30-days pull
+    starting at {run-29d} passes'

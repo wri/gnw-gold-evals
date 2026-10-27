@@ -1,17 +1,18 @@
 id: ch-mon-052
-uid: 8440eba7f5646bb3
+uid: 10b5f5c66a317fe9
 status: ready
 set: monitoring
 group: unsupported_action
 query: Send me these alerts on WhatsApp instead of email.
 expected:
-  text: Says it cannot deliver alerts by WhatsApp; does not claim to have set this up.
+  text: Says it cannot send alerts by WhatsApp and does not claim or imply that WhatsApp delivery
+    exists in the product or that it has set it up.
 notes:
   behaviour: Say WhatsApp delivery is not supported; must not claim to have set it up
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-028); GFW Advisory Council focus groups
     (WhatsApp/SMS notifications)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   benchmark_id: bm26-028
   benchmark_type: monitoring
@@ -22,3 +23,5 @@ notes:
   grounding: From user research
   user_story_refs: GFW Advisory Council focus groups (WhatsApp/SMS notifications)
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text names the invented-capability
+    risk (WhatsApp delivery or settings that do not exist)'

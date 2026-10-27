@@ -1,5 +1,5 @@
 id: ch-quant-172
-uid: 4b422abbbaa8f9b9
+uid: 43b883c23fed3821
 status: ready
 set: quantification
 group: sluc
@@ -9,14 +9,17 @@ expected:
   aoi_ids: GHA
   dataset_id: '9'
   data_pull: 'TRUE'
-  text: Gives the emission factor for cocoa from Ghana with a caveat on the method, without
-    giving accounting advice beyond what the data say.
+  text: Gives the emission factor for cocoa from Ghana with its reporting year and a caveat
+    on the method.
+  figure: sum(emissions_factor_tCO2e_per_tonne_production) where crop_type = 'Cocoa' and gas_type
+    = 'CO2e' and year = 2024 | sum(emissions_factor_tCO2e_per_tonne_production) where crop_type
+    = 'Cocoa' and gas_type = 'CO2e' and year = 2023
 notes:
   behaviour: answer with data + methodology caveat; no accounting advice beyond data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-185); USY-001650 AdAstra; USY-001651
     Olam
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-185
@@ -28,3 +31,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001650 AdAstra; USY-001651 Olam
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text requires the reporting
+    year and drops the accounting-advice clause (not misleading); figure added (cocoa CO2e
+    factor, 2024 or 2023)'

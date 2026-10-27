@@ -1,13 +1,13 @@
 id: ch-aoi-091
-uid: 088216452a0e63b7
+uid: f1417ef4b03dc5e3
 status: ready
 set: aoi
 group: multi
 query: Show me Sumatra and Borneo
 expected:
-  clarification: 'TRUE'
-  text: Explains that Sumatra and Borneo are islands rather than selectable administrative
-    areas, or asks which provinces the user means; does not substitute unrelated areas
+  text: Explains that Sumatra and Borneo are islands rather than selectable areas and asks
+    which provinces or states are meant; does not select any single province or state as either
+    island.
 notes:
   difficulty: hard
   behaviour: clarify
@@ -25,3 +25,7 @@ notes:
   aoi_type: None (data or method question)
   capability: Supported (correct answer is to decline or clarify)
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text now forbids selecting
+    a single province or state as either island (Sabah had passed as Borneo); clarification
+    dropped (the text requires the ask)'

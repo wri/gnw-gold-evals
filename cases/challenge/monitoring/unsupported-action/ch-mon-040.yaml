@@ -1,17 +1,17 @@
 id: ch-mon-040
-uid: 3bc22313e229e0ec
+uid: eb50e91a9742c70b
 status: ready
 set: monitoring
 group: unsupported_action
 query: Can you send me an alert whenever there's new deforestation in the Saamaka territory?
 expected:
-  text: Explains that it cannot set up alerts itself and points the user to the alert subscription
-    feature (for example on Global Forest Watch); does not claim to have set one up.
+  text: Says it cannot set up or send alerts itself and does not claim or imply it has; may
+    point to GFW subscriptions.
 notes:
   behaviour: redirect to alert subscriptions; must not claim to have set one up
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-015); USY-001507 / USY-001245 Saamaka
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   benchmark_id: bm26-015
   benchmark_type: monitoring
@@ -22,3 +22,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001507 / USY-001245 Saamaka
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text reworded to the
+    misleading risk (a false set-up claim); pointing to subscriptions is optional'

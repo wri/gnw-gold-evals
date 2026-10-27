@@ -1,21 +1,23 @@
 id: ch-mon-022
-uid: b5078a4c1fa903b5
+uid: b23ed9bae8e98ee2
 status: ready
 set: monitoring
 group: recent_rank
 query: Which province of the DRC had the most disturbance alert area in the last 30 days?
 expected:
+  aoi_ids: COD.1;COD.2;COD.3;COD.4;COD.5;COD.6;COD.7;COD.8;COD.9;COD.10;COD.11;COD.12;COD.13;COD.14;COD.15;COD.16;COD.17;COD.18;COD.19;COD.20;COD.21;COD.22;COD.23;COD.24;COD.25;COD.26
   dataset_id: '11'
   start_date: '{run-30d}'
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
+  figure: max(area_ha) by aoi_id where alert_date in {run-30d}..{run}
 notes:
   difficulty: hard
   behaviour: answer with data; ranked
   lineage: benchmark v2026 proposed set (bm26-131); USY-000509 hot-spot identification
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
     needs multi-AOI ranking support
@@ -25,5 +27,9 @@ notes:
   use_cases: UC2
   engagement: First look
   aoi_type: Portfolio / many areas
-  capability: 'Not yet: expect clear redirect'
+  capability: Supported
   grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids set to all 26
+    DRC provinces (COD.1 to COD.26, as pick_aoi resolved them in 20261023T094447Z_prod) so
+    a partial scan fails; figure added (the top province''s 30-day alert area; the province
+    name itself is not expressible as a figure); capability Not yet -> Supported'

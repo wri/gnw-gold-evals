@@ -1,5 +1,5 @@
 id: ch-comp-152
-uid: 72c4d0c7d106015d
+uid: 2f8c4b89e9c45ff9
 status: ready
 set: comparison
 group: tcl
@@ -11,12 +11,16 @@ expected:
   start_date: '2021-01-01'
   end_date: '2025-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA.12' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'BRA.22' and tree_cover_loss_year in 2021..2025
+  figure_claim: '#1 > #2 :: Mato Grosso lost more tree cover than Rondônia since 2021 || Rondônia
+    lost more tree cover than Mato Grosso since 2021'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-064); USY-001228 Mighty Earth / JBS
     Rondônia
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
@@ -30,3 +34,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001228 Mighty Earth / JBS Rondônia
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure check added (loss
+    per state 2021 to 2025, direction claim)'

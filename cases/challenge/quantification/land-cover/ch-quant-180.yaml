@@ -1,25 +1,28 @@
 id: ch-quant-180
-uid: 0d5a76da36f81e90
+uid: 94be109e2bc75ff5
 status: ready
 set: quantification
 group: land-cover
-query: Where in the Ashanti region is there cropland or degraded land rather than natural
+query: Where in the Haut-Sassandra region is there cropland or degraded land rather than natural
   forest, that could be restored?
 expected:
-  aoi_ids: GHA2
+  aoi_ids: CIV.9.1
   dataset_id: 1;3
   data_pull: 'TRUE'
-  text: Uses land cover or natural lands data to show where in Ashanti there is cropland or
-    non-natural land, and notes that restoration suitability needs local assessment.
+  text: Uses land cover or natural lands data to give the cropland or non-natural land area
+    in Haut-Sassandra, as a regional total or a district breakdown, and notes that restoration
+    suitability needs local assessment.
   accept_nudge_offering: 1;3
+  figure: sum(area_ha) where land_cover_class = 'Cropland' | sum(area_ha) where natural_lands_class
+    = 'Cropland'
 notes:
   behaviour: Answer with land cover / natural lands; note restoration suitability needs local
     data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-239); USY-001392 Ghana Cocoa Belt restoration
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review; accept_nudge_offering added 2026-10-26 (AJ)'
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'
-  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-27 (Côte d''Ivoire stand-in)'
   build_notes: AOI id to verify
   benchmark_id: bm26-239
   benchmark_type: quantification
@@ -32,4 +35,13 @@ notes:
   refresh_risk: Low
   review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
     passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: no nudge
-    offered SBTN Natural Lands (3).'
+    offered SBTN Natural Lands (3).; 2026-10-27 draft-5 review (AJ asked to apply the review):
+    moved from Ghana''s Ashanti (GHA2) to Côte d''Ivoire''s Haut-Sassandra (CIV.9.1, prod
+    /api/aois 2026-10-27) while PZB-1408 is open, as the eight members moved on 2026-10-26;
+    restore the Ghana version (notes.ghana_original) once fixed; text accepts a regional total
+    or district breakdown; figure added (cropland area)'
+  ghana_original: '{"query": "Where in the Ashanti region is there cropland or degraded land
+    rather than natural forest, that could be restored?", "expected": {"aoi_ids": "GHA2",
+    "dataset_id": "1;3", "data_pull": "TRUE", "text": "Uses land cover or natural lands data
+    to show where in Ashanti there is cropland or non-natural land, and notes that restoration
+    suitability needs local assessment.", "accept_nudge_offering": "1;3"}}'

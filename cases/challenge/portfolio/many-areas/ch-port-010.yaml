@@ -1,19 +1,20 @@
 id: ch-port-010
-uid: 06c338a0d7dbdd4a
+uid: 74f2c3da2a3f9004
 status: ready
 set: portfolio
 group: many-areas
 query: Set up weekly alert summaries for all protected areas in Madagascar.
 expected:
-  text: Does not claim to have set up recurring summaries; explains that it cannot schedule
-    alert summaries or cover all of Madagascar's protected areas in one request, and offers
-    a one-off alert summary for a named protected area or a region instead.
+  text: Says plainly that it cannot set up recurring or scheduled alert summaries (no scheduling
+    exists), then offers a one-off alert summary for a named protected area or region; does
+    not claim a summary was set up.
 notes:
   behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
     areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-089); USY-001570 Conservation Allies
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
     ships'
@@ -29,4 +30,6 @@ notes:
   review: '2026-10-24 (AJ): reworded to the real limits. pick_aoi takes up to 1,000 admin
     sub-units of one GADM parent, but only 50 protected areas, KBAs, Indigenous lands or concessions
     (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).
-    Madagascar has 154 protected areas; there is no scheduling.'
+    Madagascar has 154 protected areas; there is no scheduling; 2026-10-27 draft-5 review
+    (AJ asked to apply the review): text: the no-scheduling statement is now the required
+    clause (all three draft-4 passes implied scheduling exists once narrowed)'

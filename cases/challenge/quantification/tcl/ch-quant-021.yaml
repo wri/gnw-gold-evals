@@ -1,5 +1,5 @@
 id: ch-quant-021
-uid: 559aebf17d01e03c
+uid: a41f2abd7b638aea
 status: ready
 set: quantification
 group: tcl
@@ -13,6 +13,7 @@ expected:
   dataset_parameters: '[{"name":"canopy_cover","values":[25]}]'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2001..2023
 notes:
   judge_instruction: The window crosses the 2011 methodology break; a caution caveat is acceptable.
   eval_subtype: canopy_threshold
@@ -29,3 +30,5 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

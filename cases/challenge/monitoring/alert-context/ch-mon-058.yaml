@@ -1,5 +1,5 @@
 id: ch-mon-058
-uid: 2a6b4d20f1b17c60
+uid: 2b1989a6523a7bdd
 status: ready
 set: monitoring
 group: alert_context
@@ -13,15 +13,16 @@ expected:
   end_date: '{run}'
   date_tolerance_days: '3'
   data_pull: 'TRUE'
-  text: Uses the alerts' natural lands layer to say how much of this month's alert area in
-    Padre Abad fell on natural land and how much on land already converted (for example farmed);
-    does not guess the split.
+  text: Reports the natural-lands figure as natural lands (not forest only) and gives the
+    total or remainder so the split is clear.
+  figure: sum(area_ha) where alert_date in {month_start}..{run}
 notes:
   behaviour: answer with alerts restricted to natural lands
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-054); USY-001248 Kakataibo; GFW Advisory
     Council focus groups (local context to understand alerts)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
@@ -38,4 +39,7 @@ notes:
     to understand alerts)
   refresh_risk: Alert confidence can upgrade
   review: '2026-10-24 (AJ): either/or -> answer with data. 20261023T094447Z_prod: all 3 attempts
-    asked which dataset to use although the natural lands layer answers it.'
+    asked which dataset to use although the natural lands layer answers it.; 2026-10-27 draft-5
+    review (AJ asked to apply the review): text reworded (natural lands named as such, with
+    the total or remainder); figure added (month-to-date alert area, computed per pulled table,
+    so the natural-lands pull gives the natural-lands figure; the share is not expressible)'

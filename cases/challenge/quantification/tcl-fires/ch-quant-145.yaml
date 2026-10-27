@@ -1,5 +1,5 @@
 id: ch-quant-145
-uid: a902daaf2dc8304a
+uid: 53bcf82ca265f148
 status: ready
 set: quantification
 group: tcl-fires
@@ -14,6 +14,8 @@ expected:
   dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2020 ; sum(tree_cover_loss_non_fires_area_ha)
+    where tree_cover_loss_year = 2020
 notes:
   intersections: 'fire (unscored: no evaluator surface yet)'
   judge_instruction: Report fire vs non-fire tree cover loss for the year at a 50% canopy
@@ -32,3 +34,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figures added (fire and
+    non-fire)'

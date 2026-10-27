@@ -1,21 +1,23 @@
 id: ch-port-017
-uid: ca4ef882e997f926
+uid: f65ac5d2d0ac0c12
 status: ready
 set: portfolio
 group: many-areas
-query: Show me which cocoa-growing districts in Côte d'Ivoire and Ghana had the most loss
-  — all of them, ranked.
+query: Show me which cocoa-growing districts in Côte d'Ivoire had the most loss — all of them,
+  ranked.
 expected:
+  aoi_ids: CIV.1_1;CIV.2_1;CIV.3_1;CIV.4_1;CIV.5_1;CIV.6_1;CIV.7_1;CIV.8_1;CIV.9_1;CIV.10_1;CIV.11_1;CIV.12_1;CIV.13_1;CIV.14_1
   dataset_id: '4'
   data_pull: 'TRUE'
-  text: Ranks districts in both Côte d'Ivoire and Ghana by tree cover loss, from the data,
-    and says it cannot restrict the ranking to cocoa-growing districts; does not invent a
-    cocoa filter.
+  text: Ranks Côte d'Ivoire's districts by tree cover loss from the data and says it cannot
+    restrict the ranking to cocoa-growing districts; does not invent a cocoa filter.
+  figure: max(area_ha) by aoi_id
 notes:
   behaviour: answer with data for both countries' districts; say there is no cocoa filter
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-096); USY-001382 ECOM; USY-001569 Sucden
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
     ships'
@@ -32,4 +34,15 @@ notes:
     asked back; two ranked Côte d''Ivoire''s 14 districts only, dropping Ghana and the cocoa
     caveat. pick_aoi takes up to 1,000 admin sub-units of one GADM parent, but only 50 protected
     areas, KBAs, Indigenous lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py
-    SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).'
+    SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT); 2026-10-27 draft-5 review (AJ asked to apply
+    the review): Ghana half moved to Côte d''Ivoire while PZB-1408 is open (every draft-4
+    pull dropped Ghana): the question now ranks Côte d''Ivoire''s 14 districts; aoi_ids pinned;
+    figure added (top district''s loss); restore from notes.ghana_original once PZB-1408 is
+    fixed'
+  ghana_original: '{"query": "Show me which cocoa-growing districts in Côte d''Ivoire and
+    Ghana had the most loss — all of them, ranked.", "expected": {"dataset_id": "4", "data_pull":
+    "TRUE", "text": "Ranks districts in both Côte d''Ivoire and Ghana by tree cover loss,
+    from the data, and says it cannot restrict the ranking to cocoa-growing districts; does
+    not invent a cocoa filter."}}'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-27 (CIV.1 to CIV.14, all 14 district names
+    checked); the same 14 pick_aoi returned on every attempt'

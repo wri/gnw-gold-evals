@@ -1,20 +1,28 @@
 id: ch-trend-078
-uid: 65851ec1fc81e3f2
+uid: f8db8b312276b9b6
 status: ready
 set: trend
 group: ghg-flux
 query: How much did emissions from tree cover loss in Brazil change between 2020 and 2024?
 expected:
   aoi_ids: BRA
-  dataset_id: 6;4
+  dataset_id: '4'
   start_date: '2020-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: 'ref: sum(carbon_emissions_MgCO2e) where tree_cover_loss_year = 2020 ; ref: sum(carbon_emissions_MgCO2e)
+    where tree_cover_loss_year = 2024 ; change(sum(carbon_emissions_MgCO2e) where tree_cover_loss_year
+    = 2020, sum(carbon_emissions_MgCO2e) where tree_cover_loss_year = 2024) | pct_change(sum(carbon_emissions_MgCO2e)
+    where tree_cover_loss_year = 2020, sum(carbon_emissions_MgCO2e) where tree_cover_loss_year
+    = 2024)'
+  figure_claim: '#2 > #1 :: emissions from tree cover loss rose between 2020 and 2024 || emissions
+    from tree cover loss fell between 2020 and 2024'
 notes:
   behaviour: Answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-176); USY-001123 IPCC; USY-001180
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    revised 2026-10-24 from run evidence (see review); needs human review'
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-176
@@ -27,4 +35,7 @@ notes:
   user_story_refs: USY-001123 IPCC; USY-001180
   refresh_risk: Low
   review: '2026-10-24 (AJ): dataset 4 accepted with 6; the tree cover loss dataset reports
-    emissions from loss. 20261023T094447Z_prod: all 3 attempts used 4.'
+    emissions from loss. 20261023T094447Z_prod: all 3 attempts used 4.; 2026-10-27 draft-5
+    review (AJ asked to apply the review): dataset_id 6;4 to 4 (net flux holds only 2001 to
+    2025 totals, so no 2020 to 2024 change can come from it); figure and claim added (annual
+    gross emissions 2024 vs 2020 from the pulled table)'

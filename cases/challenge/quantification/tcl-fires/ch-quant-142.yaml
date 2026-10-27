@@ -1,5 +1,5 @@
 id: ch-quant-142
-uid: 64fb1908b38a4417
+uid: 9bc5cd4748591013
 status: ready
 set: quantification
 group: tcl-fires
@@ -12,6 +12,7 @@ expected:
   end_date: '2020-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2015..2020
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'fire (unscored: no evaluator surface yet)'
@@ -32,3 +33,5 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

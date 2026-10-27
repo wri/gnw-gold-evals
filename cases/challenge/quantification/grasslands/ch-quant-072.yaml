@@ -1,5 +1,5 @@
 id: ch-quant-072
-uid: fe08bbad2f99e15a
+uid: c06e503df65950d0
 status: ready
 set: quantification
 group: grasslands
@@ -11,6 +11,7 @@ expected:
   start_date: '2005-01-01'
   end_date: '2015-12-31'
   data_pull: 'TRUE'
+  figure: change(sum(area_ha) where year = 2015, sum(area_ha) where year = 2005)
 notes:
   judge_instruction: Headline is total natural/semi-natural grassland area lost over the range
     (sum of the annual loss column, hectares); loss is not necessarily permanent conversion;
@@ -29,3 +30,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (net decline
+    in extent, 2005 minus 2015; the API returns per-year extent only)'

@@ -5,7 +5,7 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version fcc36e990adc633a` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version f8c630e9a236f2c8` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-10-27_
 
@@ -91,30 +91,32 @@ friends) run on top of it whenever their trigger state exists.
 |---|---|---|---|---|
 | retrieval | 825 | 0 | 825 | 87% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 192 | 0 | 192 | 20% |
+| explanation | 195 | 0 | 195 | 21% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 243 | 0 | 243 | 26% |
+| scope | 244 | 0 | 244 | 26% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
 | dataset_id | 712 | dataset_id_match |
-| aoi_ids | 609 | aoi_id_match |
-| data_pull | 515 | data_pull_exists, answered_without_data |
-| end_date | 326 | date_extraction (a pulled window containing the period passes) |
-| start_date | 326 | date_extraction (a pulled window containing the period passes) |
+| aoi_ids | 613 | aoi_id_match |
+| data_pull | 516 | data_pull_exists, answered_without_data |
+| start_date | 324 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| end_date | 323 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | forbidden_tools | 200 | forbidden_tools_absent |
-| text | 191 | expected_text_match |
-| context_layer | 174 | context_layer_match |
-| date_tolerance_days | 43 | date_extraction (days a window may fall short of a bound) |
+| text | 194 | expected_text_match |
+| context_layer | 181 | context_layer_match |
+| figure | 172 | figure_match (computed from the agent's own pulled table) |
+| figure_claim | 66 | figure_claim_match (the conclusion the pulled data supports) |
+| date_tolerance_days | 44 | date_extraction (days a window may fall short of a bound) |
 | dataset_parameters | 37 | dataset_parameter_match |
-| clarification | 19 | clarification_requested |
-| accept_nudge_offering | 16 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| accept_nudge_offering | 18 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| clarification | 15 | clarification_requested |
 | nudge_type | 12 | nudge_match |
 | nudge_options | 6 | nudge_match |
+| accept_aoi_nudge_offering | 5 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | accept_blog_sources | 3 | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
-| accept_aoi_nudge_offering | 1 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
 | aoi_source | 0 ← unused | reference only (dashboard AOI source) |
 | chart_type | 0 ← unused | chart_type_match |
@@ -137,17 +139,17 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 1 | Global land cover | 51 | 3 | — | — |
-| 2 | Global natural/semi-natural grassland extent | 54 | 1 | — | — |
-| 3 | SBTN Natural Lands Map | 52 | 3 | — | — |
-| 4 | Tree cover loss | 172 | 25 | canopy_cover ×14 | primary_forest ×29, intact_forest ×4, natural_forest ×0 ← gap |
+| 1 | Global land cover | 52 | 3 | — | — |
+| 2 | Global natural/semi-natural grassland extent | 55 | 2 | — | — |
+| 3 | SBTN Natural Lands Map | 50 | 3 | — | — |
+| 4 | Tree cover loss | 172 | 24 | canopy_cover ×14 | primary_forest ×28, intact_forest ×4, natural_forest ×2 |
 | 5 | Tree cover gain | 42 | 1 | — | — |
-| 6 | Forest greenhouse gas net flux | 50 | 4 | canopy_cover ×5 | — |
-| 7 | Tree cover | 48 | 2 | canopy_cover ×10 | primary_forest ×8 |
-| 8 | Tree cover loss by dominant driver | 65 | 19 | canopy_cover ×4 | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 41 | 8 | — | — |
-| 10 | Tree cover loss due to fires | 71 | 7 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
-| 11 | Integrated alerts | 105 | 21 | — | natural_lands ×1 |
+| 6 | Forest greenhouse gas net flux | 47 | 2 | canopy_cover ×5 | — |
+| 7 | Tree cover | 48 | 5 | canopy_cover ×10 | primary_forest ×8 |
+| 8 | Tree cover loss by dominant driver | 63 | 20 | canopy_cover ×4 | — |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 42 | 9 | — | — |
+| 10 | Tree cover loss due to fires | 71 | 6 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
+| 11 | Integrated alerts | 104 | 19 | — | natural_lands ×1 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
@@ -202,5 +204,4 @@ answer-graded cases (`answer` or `text` expected) actually check.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
 - Catalog datasets with no active case: 12.
-- Catalog features no active case exercises — context layers: natural_forest (4).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

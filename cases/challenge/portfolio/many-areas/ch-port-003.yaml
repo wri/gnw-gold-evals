@@ -1,22 +1,25 @@
 id: ch-port-003
-uid: 1abb3ffd4f05a1d1
+uid: e752e2965cb2280a
 status: ready
 set: portfolio
 group: many-areas
 query: Rank every Brazilian state by soy-driven conversion since 2020.
 expected:
+  aoi_ids: BRA.1_1;BRA.2_1;BRA.3_1;BRA.4_1;BRA.5_1;BRA.6_1;BRA.7_1;BRA.8_1;BRA.9_1;BRA.10_1;BRA.11_1;BRA.12_1;BRA.13_1;BRA.14_1;BRA.15_1;BRA.16_1;BRA.17_1;BRA.18_1;BRA.19_1;BRA.20_1;BRA.21_1;BRA.22_1;BRA.23_1;BRA.24_1;BRA.25_1;BRA.26_1;BRA.27_1
   dataset_id: 8;4
   data_pull: 'TRUE'
   text: Ranks Brazil's states by conversion using the closest available data (loss from permanent
     agriculture in the drivers data, or natural forest loss since 2021) and says the data
     cannot isolate soy; does not invent soy-specific figures.
-  accept_nudge_offering: 8;4
+  accept_nudge_offering: '8'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_driver = 'Permanent agriculture' |
+    max(area_ha) by aoi_id where tree_cover_loss_year in 2021..2025
 notes:
   behaviour: answer with the closest measure for the 27 states; say soy cannot be isolated
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-082); USY-001313 Louis Dreyfus
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review; accept_nudge_offering
-    added 2026-10-26 (AJ)'
+    added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
     ships'
@@ -36,4 +39,9 @@ notes:
     the 27 states, explained there is no soy layer and asked which dataset to use. 2026-10-26
     (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering passes
     (extras allowed); a correct pull still passes. 20261024T133644Z_prod: attempts 1 and 3
-    nudged with drivers (8) and loss (4); attempt 2 left out loss.'
+    nudged with drivers (8) and loss (4); attempt 2 left out loss; 2026-10-27 draft-5 review
+    (AJ asked to apply the review): accept_nudge_offering 8;4 -> 8 (drivers alone is the closest
+    measure; extras allowed); aoi_ids pinned to the 27 states; figure added (top state''s
+    figure)'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-27 (BRA.1 to BRA.27; Acre, Pará, Tocantins
+    and Distrito Federal spot-checked); the same 27 pick_aoi returned on every attempt'

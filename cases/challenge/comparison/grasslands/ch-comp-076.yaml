@@ -1,5 +1,5 @@
 id: ch-comp-076
-uid: ad36cecdb04bc0d1
+uid: 7c307853a940e649
 status: ready
 set: comparison
 group: grasslands
@@ -9,6 +9,12 @@ expected:
   aoi_ids: BOL
   dataset_id: '2'
   data_pull: 'TRUE'
+  figure: change(sum(area_ha) where year = 2015, sum(area_ha) where year = 2010) ; change(sum(area_ha)
+    where year = 2021, sum(area_ha) where year = 2016) | change(sum(area_ha) where year =
+    2021, sum(area_ha) where year = 2015)
+  figure_claim: '#1 > #2 :: Bolivia lost more natural/semi-natural grassland in 2010 to 2015
+    than in 2016 to 2021 || Bolivia lost more natural/semi-natural grassland in 2016 to 2021
+    than in 2010 to 2015'
 notes:
   judge_instruction: Compare grassland loss in the two halves of the window (2010-2015 vs
     2016-2021, sum of the annual loss column).
@@ -26,3 +32,6 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure (net loss of extent
+    per period, literal or contiguous endpoints) and figure_claim added'

@@ -1,5 +1,5 @@
 id: ch-comp-125
-uid: 447cc085b29f48cd
+uid: cd7c818896855ce0
 status: ready
 set: comparison
 group: tcl-drivers
@@ -10,6 +10,11 @@ expected:
   dataset_id: '8'
   data_pull: 'TRUE'
   accept_nudge_offering: '8'
+  figure: sum(area_ha) where aoi_id = 'BOL' and tree_cover_loss_driver = 'Permanent agriculture'
+    ; sum(area_ha) where aoi_id = 'PER' and tree_cover_loss_driver = 'Permanent agriculture'
+  figure_claim: '#1 > #2 :: Bolivia has lost more tree cover to permanent agriculture than
+    Peru since 2001 || Peru has lost more tree cover to permanent agriculture than Bolivia
+    since 2001'
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'driver (unscored: no evaluator surface yet)'
@@ -31,5 +36,7 @@ notes:
   refresh_risk: Re-verify at annual refresh (open-ended, categorical)
   review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
     passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
-    nudged with drivers (8) and tree cover loss (4).'
-  expectations: accept_nudge_offering added 2026-10-26 (AJ)
+    nudged with drivers (8) and tree cover loss (4); 2026-10-27 draft-5 review (AJ asked to
+    apply the review): figure and figure_claim added (direction and the asked figures are
+    checked from the pulled table)'
+  expectations: accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27

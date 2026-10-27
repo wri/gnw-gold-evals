@@ -1,5 +1,5 @@
 id: ch-quant-176
-uid: ddf89312398553e7
+uid: e817a2249c4bc982
 status: ready
 set: quantification
 group: grasslands
@@ -9,14 +9,15 @@ expected:
   aoi_ids: ESP
   dataset_id: '2'
   data_pull: 'TRUE'
-  text: Gives the share of Spain that is natural or semi-natural grassland and notes how the
-    dataset's definition relates to the biodiversity framework indicator.
+  text: Gives the share of Spain that is natural or semi-natural grassland, stating the year
+    and the national area used as the denominator.
+  figure: sum(area_ha) where year = 2022
 notes:
   behaviour: answer with data; note indicator definition caveat
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-219); USY-001523 Spain GBF indicator
     B1
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-219
@@ -28,3 +29,6 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001523 Spain GBF indicator B1
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text eased to the year
+    and denominator (the indicator-definition note is context); figure added (2022 grassland
+    area)'

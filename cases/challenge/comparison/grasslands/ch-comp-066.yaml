@@ -1,5 +1,5 @@
 id: ch-comp-066
-uid: 8ce507f087019cc9
+uid: ac1c0d9cfbaf332b
 status: ready
 set: comparison
 group: grasslands
@@ -10,6 +10,10 @@ expected:
   start_date: '2020-01-01'
   end_date: '2020-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and year = 2020 ; sum(area_ha) where aoi_id =
+    'MEX' and year = 2020
+  figure_claim: '#1 > #2 :: Brazil had more natural/semi-natural grassland than Mexico in
+    2020 || Mexico had more natural/semi-natural grassland than Brazil in 2020'
 notes:
   judge_instruction: Compare natural/semi-natural grassland extent (area_ha, hectares) between
     the two countries for the year; the comparative direction must be correct.
@@ -27,3 +31,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

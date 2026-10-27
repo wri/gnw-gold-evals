@@ -1,5 +1,5 @@
 id: ch-quant-175
-uid: 68b591d20f7a6a7e
+uid: 5a469b6fe061f718
 status: ready
 set: quantification
 group: tree-cover
@@ -11,13 +11,16 @@ expected:
   data_pull: 'TRUE'
   text: Gives the closest available data (for example tree cover or natural lands) and explains
     that primary versus secondary vegetation is not mapped as such.
-  accept_nudge_offering: 7;3
+  accept_nudge_offering: 7 | 3
+  figure: sum(area_ha) where aoi_id = 'BRA' | sum(area_ha) where natural_lands_class in ('Natural
+    forests', 'Natural peat forests', 'Mangroves', 'Natural short vegetation', 'Natural peat
+    short vegetation')
 notes:
   behaviour: answer with closest data (tree cover / natural lands); explain secondary vegetation
     not separated
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-218); USY-001369 Brazil MMA GBF reporting
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review; accept_nudge_offering added 2026-10-26 (AJ)'
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-218
@@ -31,4 +34,6 @@ notes:
   refresh_risk: Low
   review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
     passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: no nudge
-    offered SBTN Natural Lands (3); attempt 1 also left out tree cover (7).'
+    offered SBTN Natural Lands (3); attempt 1 also left out tree cover (7).; 2026-10-27 draft-5
+    review (AJ asked to apply the review): accept_nudge_offering 7 | 3 (a nudge offering either
+    dataset is a fair question); figure added (tree cover extent, or natural vegetation classes)'

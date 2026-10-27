@@ -1,5 +1,5 @@
 id: ch-comp-031
-uid: 57b0195a0674e71a
+uid: deb4f78ed2c5a47e
 status: ready
 set: comparison
 group: sluc
@@ -11,6 +11,11 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: sum(emissions_factor_tCO2e_per_tonne_production) where aoi_id = 'IDN' and crop_type
+    = 'Oil Palm' and gas_type = 'CO2e' and year = 2024 ; sum(emissions_factor_tCO2e_per_tonne_production)
+    where aoi_id = 'MYS' and crop_type = 'Oil Palm' and gas_type = 'CO2e' and year = 2024
+  figure_claim: '#1 > #2 :: Indonesia has the higher oil palm deforestation emission factor
+    in 2024 || Malaysia has the higher oil palm deforestation emission factor in 2024'
 notes:
   crop_types: 'Oil Palm (unscored: no evaluator surface yet)'
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -30,3 +35,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

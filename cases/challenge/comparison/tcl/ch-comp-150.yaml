@@ -1,5 +1,5 @@
 id: ch-comp-150
-uid: cd25015bf257b356
+uid: 884f9499b15d8217
 status: ready
 set: comparison
 group: tcl
@@ -11,12 +11,16 @@ expected:
   start_date: '2021-01-01'
   end_date: '2025-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'CIV.2.2' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'CIV.9.1' and tree_cover_loss_year in 2021..2025
+  figure_claim: '#2 > #1 :: Haut-Sassandra has lost more tree cover than Nawa since 2021 ||
+    Nawa has lost more tree cover than Haut-Sassandra since 2021'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-062); USY-001382 ECOM cocoa; USY-001399
     Olam
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
   build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
@@ -36,4 +40,6 @@ notes:
     "data_pull": "TRUE"}}'
   review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
     is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
-    version (notes.ghana_original) once it is fixed.'
+    version (notes.ghana_original) once it is fixed; 2026-10-27 draft-5 review (AJ asked to
+    apply the review): figure and figure_claim added (direction and the asked figures are
+    checked from the pulled table)'

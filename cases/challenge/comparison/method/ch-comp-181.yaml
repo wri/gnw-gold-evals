@@ -1,18 +1,19 @@
 id: ch-comp-181
-uid: e2559b979bedf060
+uid: 8b3aba97d5af99b9
 status: ready
 set: comparison
 group: method
 query: How does the grassland data compare with the land cover data for measuring pasture
   in Brazil?
 expected:
-  text: Explains how the grassland dataset and the land cover dataset differ in what they
-    map, and how each can or cannot measure pasture in Brazil.
+  text: Says the grassland dataset covers natural and semi-natural grassland only and excludes
+    cultivated pasture, and that the land cover dataset's cultivated grasslands class (2015
+    and 2024 snapshots) is the pasture proxy; neither maps pasture directly.
 notes:
   behaviour: Explain differences between datasets
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-290); USY-001638 Embrapa; USY-001315
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   benchmark_id: bm26-290
   benchmark_type: comparison
@@ -23,3 +24,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001638 Embrapa; USY-001315
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text tightened to the
+    two GNW datasets so a wrong claim about what the grassland dataset maps fails'

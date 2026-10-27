@@ -1,5 +1,5 @@
 id: ch-comp-165
-uid: 69f1fc62c0f0c38e
+uid: 7b8607186499c9d2
 status: ready
 set: comparison
 group: tcl-fires
@@ -11,12 +11,17 @@ expected:
   start_date: '2023-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'MEX.25' and tree_cover_loss_year
+    = 2024 ; sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'MEX.25' and tree_cover_loss_year
+    = 2023
+  figure_claim: '#1 > #2 :: fire-driven tree cover loss in Sinaloa was higher in 2024 than
+    in 2023 || fire-driven tree cover loss in Sinaloa was not higher in 2024 than in 2023'
 notes:
   behaviour: answer with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-119); USY-001556 El Universal / Sinaloa
     fires
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   benchmark_id: bm26-119
@@ -28,3 +33,5 @@ notes:
   grounding: Direct from story
   user_story_refs: USY-001556 El Universal / Sinaloa fires
   refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure check added (fire-driven
+    loss in 2024 and 2023, direction claim)'

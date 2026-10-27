@@ -1,5 +1,5 @@
 id: ch-comp-047
-uid: ab0dd4cacab53e95
+uid: 98c631c67134457a
 status: ready
 set: comparison
 group: ghg-flux
@@ -9,6 +9,10 @@ expected:
   aoi_ids: PER;BOL
   dataset_id: '6'
   data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'PER' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'BOL'
+  figure_claim: '#1 < #2 :: Peru''s forests have the lower (more sink-like) net flux than
+    Bolivia''s || Bolivia''s forests have the lower (more sink-like) net flux than Peru''s'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -28,3 +32,6 @@ notes:
   aoi_type: Multiple named areas
   capability: Supported
   grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

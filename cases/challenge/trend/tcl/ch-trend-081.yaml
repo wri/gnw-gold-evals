@@ -1,19 +1,21 @@
 id: ch-trend-081
-uid: 03476f14940be55a
+uid: 916b48b5d354b5e3
 status: ready
 set: trend
 group: tcl
 query: Is Madagascar on track for zero forest loss in protected areas by 2030?
 expected:
   dataset_id: '4'
-  text: Uses loss data for Madagascar's protected areas (or says it can only give national
-    figures) to describe the recent trend, and does not project to 2030 without a clear caveat.
+  text: Describes the recent loss trend from the data, for Madagascar's protected areas or
+    nationally with that stated; does not answer from restoration pledges or project to 2030
+    without a clear caveat.
   data_pull: 'TRUE'
 notes:
   behaviour: answer with trend; must not project beyond data without caveat
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-221); USY-001586 zero-loss-by-2030 commitment
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review; expectations revised 2026-10-26 (AJ, why-questions review)'
+    needs human review; expectations revised 2026-10-26 (AJ, why-questions review); draft-5
+    review 2026-10-27'
   synthetic: 'TRUE'
   benchmark_id: bm26-221
   benchmark_type: trend
@@ -25,4 +27,6 @@ notes:
   user_story_refs: USY-001586 zero-loss-by-2030 commitment
   refresh_risk: Low
   review: '2026-10-26 (AJ): why-questions must be answered from data, not blog posts; the
-    expectation now requires it. Added data_pull (dataset 4 was already expected).'
+    expectation now requires it. Added data_pull (dataset 4 was already expected).; 2026-10-27
+    draft-5 review (AJ asked to apply the review): text reworded so a blog answer about restoration
+    pledges or a bare offer of national figures does not pass; no figure (no window named)'

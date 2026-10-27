@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "fcc36e990adc633a",
+  "caseset_version": "f8c630e9a236f2c8",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -554,7 +554,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 192,
+      "dedicated": 195,
       "shared_only": 0
     },
     "output": {
@@ -562,7 +562,7 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 243,
+      "dedicated": 244,
       "shared_only": 0
     }
   },
@@ -574,23 +574,23 @@
     },
     {
       "field": "aoi_ids",
-      "cases": 609,
+      "cases": 613,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 515,
+      "cases": 516,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
-      "field": "end_date",
-      "cases": 326,
-      "switches_on": "date_extraction (a pulled window containing the period passes)"
+      "field": "start_date",
+      "cases": 324,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
-      "field": "start_date",
-      "cases": 326,
-      "switches_on": "date_extraction (a pulled window containing the period passes)"
+      "field": "end_date",
+      "cases": 323,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "forbidden_tools",
@@ -599,17 +599,27 @@
     },
     {
       "field": "text",
-      "cases": 191,
+      "cases": 194,
       "switches_on": "expected_text_match"
     },
     {
       "field": "context_layer",
-      "cases": 174,
+      "cases": 181,
       "switches_on": "context_layer_match"
     },
     {
+      "field": "figure",
+      "cases": 172,
+      "switches_on": "figure_match (computed from the agent's own pulled table)"
+    },
+    {
+      "field": "figure_claim",
+      "cases": 66,
+      "switches_on": "figure_claim_match (the conclusion the pulled data supports)"
+    },
+    {
       "field": "date_tolerance_days",
-      "cases": 43,
+      "cases": 44,
       "switches_on": "date_extraction (days a window may fall short of a bound)"
     },
     {
@@ -618,14 +628,14 @@
       "switches_on": "dataset_parameter_match"
     },
     {
-      "field": "clarification",
-      "cases": 19,
-      "switches_on": "clarification_requested"
+      "field": "accept_nudge_offering",
+      "cases": 18,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {
-      "field": "accept_nudge_offering",
-      "cases": 16,
-      "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
+      "field": "clarification",
+      "cases": 15,
+      "switches_on": "clarification_requested"
     },
     {
       "field": "nudge_type",
@@ -638,14 +648,14 @@
       "switches_on": "nudge_match"
     },
     {
+      "field": "accept_aoi_nudge_offering",
+      "cases": 5,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
+    },
+    {
       "field": "accept_blog_sources",
       "cases": 3,
       "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
-    },
-    {
-      "field": "accept_aoi_nudge_offering",
-      "cases": 1,
-      "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
     },
     {
       "field": "answer",
@@ -707,7 +717,7 @@
         "dataset_id": "1",
         "dataset_name": "Global land cover",
         "missing_instructions": [],
-        "cases": 51,
+        "cases": 52,
         "answer_graded": 3,
         "parameters": [],
         "context_layers": []
@@ -716,8 +726,8 @@
         "dataset_id": "2",
         "dataset_name": "Global natural/semi-natural grassland extent",
         "missing_instructions": [],
-        "cases": 54,
-        "answer_graded": 1,
+        "cases": 55,
+        "answer_graded": 2,
         "parameters": [],
         "context_layers": []
       },
@@ -725,7 +735,7 @@
         "dataset_id": "3",
         "dataset_name": "SBTN Natural Lands Map",
         "missing_instructions": [],
-        "cases": 52,
+        "cases": 50,
         "answer_graded": 3,
         "parameters": [],
         "context_layers": []
@@ -735,7 +745,7 @@
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
         "cases": 172,
-        "answer_graded": 25,
+        "answer_graded": 24,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -745,7 +755,7 @@
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 29
+            "cases": 28
           },
           {
             "name": "intact_forest",
@@ -753,7 +763,7 @@
           },
           {
             "name": "natural_forest",
-            "cases": 0
+            "cases": 2
           }
         ]
       },
@@ -770,8 +780,8 @@
         "dataset_id": "6",
         "dataset_name": "Forest greenhouse gas net flux",
         "missing_instructions": [],
-        "cases": 50,
-        "answer_graded": 4,
+        "cases": 47,
+        "answer_graded": 2,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -785,7 +795,7 @@
         "dataset_name": "Tree cover",
         "missing_instructions": [],
         "cases": 48,
-        "answer_graded": 2,
+        "answer_graded": 5,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -803,8 +813,8 @@
         "dataset_id": "8",
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
-        "cases": 65,
-        "answer_graded": 19,
+        "cases": 63,
+        "answer_graded": 20,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -817,8 +827,8 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 41,
-        "answer_graded": 8,
+        "cases": 42,
+        "answer_graded": 9,
         "parameters": [],
         "context_layers": []
       },
@@ -827,7 +837,7 @@
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
         "cases": 71,
-        "answer_graded": 7,
+        "answer_graded": 6,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -849,8 +859,8 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 105,
-        "answer_graded": 21,
+        "cases": 104,
+        "answer_graded": 19,
         "parameters": [],
         "context_layers": [
           {
@@ -1110,11 +1120,7 @@
       "12"
     ],
     "uncovered_parameters": {},
-    "uncovered_context_layers": {
-      "natural_forest": [
-        "4"
-      ]
-    }
+    "uncovered_context_layers": {}
   },
   "targets": {
     "sets": {

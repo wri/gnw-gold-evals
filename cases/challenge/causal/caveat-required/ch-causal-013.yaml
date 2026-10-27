@@ -1,5 +1,5 @@
 id: ch-causal-013
-uid: 1736d22d0730e66e
+uid: da94db99f8be9cc2
 status: ready
 set: causal
 group: caveat_required
@@ -9,12 +9,14 @@ expected:
   dataset_id: '8'
   data_pull: 'TRUE'
   text: Caveats that selective logging is under-detected in satellite tree cover loss data.
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Logging', sum(area_ha) where
+    tree_cover_loss_driver != 'Unknown')
 notes:
   difficulty: hard
   behaviour: answer with drivers (logging category); caveat that selective logging is under-detected
   lineage: benchmark v2026 proposed set (bm26-152); Rainforest Foundation UK vs CAFI
   expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
-    human review'
+    human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   user_story_refs: 'Impact-pathway PDF: Rainforest Foundation UK vs CAFI (not in story CSV)'
   benchmark_id: bm26-194
@@ -24,3 +26,5 @@ notes:
   aoi_type: Country
   capability: Supported
   grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (logging
+    share)'

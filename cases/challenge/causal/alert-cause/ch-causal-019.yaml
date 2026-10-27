@@ -1,5 +1,5 @@
 id: ch-causal-019
-uid: 122d136e53e8a864
+uid: 89f9b92fcbd7846c
 status: ready
 set: causal
 group: alert_cause
@@ -9,9 +9,8 @@ expected:
   aoi_ids: PER1700
   dataset_id: 11;8;1
   data_pull: 'TRUE'
-  text: Uses the community's alerts with land cover or historical driver data as context and
-    says that alerts on their own do not identify the cause; does not state a specific cause
-    as fact.
+  text: States that alerts do not identify what caused them and does not present a cause as
+    fact.
 notes:
   behaviour: Use alerts with land cover and historical drivers as context; say that alert-level
     driver data is not available yet; no invented cause
@@ -19,7 +18,7 @@ notes:
     JTBD (Miro) (know what caused alerts); GFW Advisory Council focus groups (linking drivers
     to alerts)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
   build_notes: 'Relative dates: resolve window at run time'
@@ -34,3 +33,6 @@ notes:
   user_story_refs: USY-001633 Matsés patrols; Alerts JTBD (Miro) (know what caused alerts);
     GFW Advisory Council focus groups (linking drivers to alerts)
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text reduced to the mislead
+    guard (alerts do not identify the cause; no cause stated as fact); the ''uses land cover
+    or driver data as context'' clause was completeness, not accuracy'

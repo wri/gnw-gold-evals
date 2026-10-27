@@ -1,5 +1,5 @@
 id: ch-mon-044
-uid: 7b77caf65ac6b1ac
+uid: aea857354ab16486
 status: ready
 set: monitoring
 group: alert_followup
@@ -8,14 +8,15 @@ query: Are this month's alerts in the Guarayos Indigenous Territory clustered or
 expected:
   text: Either describes from the alert data whether this month's alerts in the Guarayos territory
     are clustered or scattered and where the largest cluster is, or says it cannot analyse
-    alert clustering and offers the alert totals instead; does not invent cluster locations.
+    alert clustering and offers the alert totals instead; names a cluster location only from
+    map or location data, never from area totals.
 notes:
   behaviour: Describe spatial pattern and largest cluster location, or say clustering is not
     available
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-020); Alerts JTBD (Miro) (identify clusters
     of alerts); GFW Advisory Council focus groups (highlighting large clusters)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
-    needs human review'
+    needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
   build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
   capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
@@ -29,3 +30,7 @@ notes:
   user_story_refs: Alerts JTBD (Miro) (identify clusters of alerts); GFW Advisory Council
     focus groups (highlighting large clusters)
   refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): ''does not invent cluster
+    locations'' replaced by ''names a cluster location only from map or location data, never
+    from area totals''. The ask-back branch of the proposal not applied (prose ask-backs are
+    not accepted this round)'
