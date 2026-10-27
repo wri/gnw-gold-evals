@@ -485,12 +485,25 @@ class FigureResult:
     closest: tuple[str, float] | None = None
 
 
-def _check_figure(figure: Figure, tables, stated: list[Stated]) -> FigureResult:
+# A zero figure is often stated in words ("no loss was recorded").
+_ZERO_WORDS = re.compile(
+    r"\b(zero|none|no (recorded |detected |measurable )?"
+    r"(loss|alerts?|change|gain|emissions|disturbances?|deforestation))\b",
+    re.I,
+)
+
+
+def _check_figure(
+    figure: Figure, tables, stated: list[Stated], answer: str = ""
+) -> FigureResult:
     result = FigureResult(figure)
     for formula in figure.alternatives:
         as_share = isinstance(formula, Combined) and formula.func == "ratio"
         for value in candidates(formula, tables):
             result.values.append(value)
+            if value == 0 and (m := _ZERO_WORDS.search(answer)):
+                result.matched = m[0]
+                return result
             for number in stated:
                 difference = _close(number, value, as_share)
                 if difference is None:
@@ -523,12 +536,13 @@ def evaluate_figures(agent_state: dict[str, Any], figure_text: str) -> dict[str,
     if not tables:
         result["figure_match_reason"] = "no pulled table could be read; abstained"
         return result
-    stated = stated_numbers(extract_final_answer_text(agent_state.get("messages", [])))
+    answer = extract_final_answer_text(agent_state.get("messages", []))
+    stated = stated_numbers(answer)
     parts, scored, missed = [], 0, 0
     for figure in figures:
         if figure.ref:
             continue
-        checked = _check_figure(figure, tables, stated)
+        checked = _check_figure(figure, tables, stated, answer)
         if not checked.values:
             parts.append(f"{figure.text}: not computable from the pull")
             continue

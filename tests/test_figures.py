@@ -237,3 +237,12 @@ def test_answer_period_not_applicable_scores_null(monkeypatch):
     state = {"messages": [SimpleNamespace(content="I cannot answer that.")]}
     result = evaluate_answer_period(state, "q", "{run-14d}" and "2026-10-13", "2026-10-27", 3)
     assert result["answer_period_match_score"] is None
+
+
+def test_a_zero_figure_may_be_stated_in_words(pulled):
+    # Kayapó (BRA1507) returns no loss: "no loss was recorded" states it.
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    state, tables = _state("No loss was recorded in the territory in 2021.", empty_year)
+    pulled(tables)
+    assert evaluate_figures(state, "sum(area_ha)")["figure_match_score"] == 1.0
+
