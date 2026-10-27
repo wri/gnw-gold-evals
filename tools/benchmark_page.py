@@ -146,7 +146,8 @@ def place_kind(case: Case) -> str:
     ids = [i.strip() for i in first_alternative.split(";") if i.strip()]
     if not ids:
         return "No place named"
-    first = ids[0]
+    # An area may list equivalent records with ``/``; the first stands for it.
+    first = ids[0].split("/")[0].strip()
     if re.fullmatch(r"\d+", first):
         return "Protected area"
     if re.fullmatch(r"[A-Z]{3}\d{3,5}", first):

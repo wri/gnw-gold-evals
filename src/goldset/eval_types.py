@@ -1,5 +1,6 @@
 """Type definitions for E2E testing framework."""
 
+from itertools import product
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, field_validator
@@ -258,17 +259,26 @@ class ExpectedData(BaseModel):
         ``;`` already means "all of these" here, unlike ``dataset_id``.
         Some places have more than one defensible area (a national park and
         its World Heritage listing), and a single all-of set fails the
-        other one. A flat list is one alternative."""
+        other one. A flat list is one alternative.
+
+        Within one area, ``/`` lists that area's equivalent records, so a
+        comparison of two parks with several records each needs no cross
+        product by hand: ``A/B;C`` expands to ``A;C|B;C`` (draft-5 review,
+        2026-10-27)."""
         if isinstance(v, list):
             if v and all(isinstance(item, list) for item in v):
                 return v
             return [v] if v else []
         if isinstance(v, str):
-            alternatives = [
-                [item.strip() for item in alt.split(";") if item.strip()]
-                for alt in v.split("|")
-            ]
-            return [alt for alt in alternatives if alt]
+            alternatives: list[list[str]] = []
+            for alt in v.split("|"):
+                areas = [
+                    [record.strip() for record in item.split("/") if record.strip()]
+                    for item in alt.split(";")
+                    if item.strip()
+                ]
+                alternatives += [list(ids) for ids in product(*areas) if ids]
+            return alternatives
         return []
 
     @field_validator("expected_nudge_options", mode="before")

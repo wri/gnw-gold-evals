@@ -208,7 +208,10 @@ the opposite of the `dataset_id` and `scope` convention where `;` means
 own `;` set, and the check passes when the selection equals any one of them:
 `555697863|10906|6060` accepts any one of the Salonga national park, World
 Heritage site or KBA, and `PER.26.3|PER8623;PER8624` accepts the province, or
-both Kakataibo reserves together. `|` binds looser than `;`. Before that,
+both Kakataibo reserves together. `|` binds looser than `;`. Since
+2026-10-27, `/` lists one area's equivalent records inside a `;` set:
+`555697863/10906;2017/478291` (two parks, each under any of its records)
+expands to the four whole-set alternatives. Before that,
 an either-or AOI expectation could not be expressed
 (`cases/v2/imagery/1-104.yaml`'s `notes.rewrite`).
 

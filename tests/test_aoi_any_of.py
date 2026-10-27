@@ -22,6 +22,10 @@ def _state(*aois: tuple[str, str]) -> dict:
     ("555697863|10906|6060", [["555697863"], ["10906"], ["6060"]]),
     ("PER.26.3 | PER8623;PER8624", [["PER.26.3"], ["PER8623", "PER8624"]]),
     ("A||B|", [["A"], ["B"]]),
+    # '/' lists one area's equivalent records (draft-5 review, ch-comp-147)
+    ("555697863/10906;2017/478291",
+     [["555697863", "2017"], ["555697863", "478291"], ["10906", "2017"], ["10906", "478291"]]),
+    ("A/B | C", [["A"], ["B"], ["C"]]),
     ("", []),
     (["BRA", "IDN"], [["BRA", "IDN"]]),
     ([["A"], ["B"]], [["A"], ["B"]]),
@@ -34,6 +38,14 @@ def test_any_alternative_passes():
     expected = ExpectedData(expected_aoi_ids="555697863|10906").expected_aoi_ids
     assert evaluate_aoi_selection(_state(("10906", "wdpa")), expected)["aoi_id_match_score"] == 1.0
     assert evaluate_aoi_selection(_state(("555697863", "wdpa")), expected)["aoi_id_match_score"] == 1.0
+
+
+def test_each_area_may_use_any_of_its_records():
+    expected = ExpectedData(expected_aoi_ids="555697863/10906;2017/478291").expected_aoi_ids
+    both = _state(("10906", "wdpa"), ("478291", "wdpa"))
+    assert evaluate_aoi_selection(both, expected)["aoi_id_match_score"] == 1.0
+    one_area = _state(("10906", "wdpa"))
+    assert evaluate_aoi_selection(one_area, expected)["aoi_id_match_score"] == 0.0
 
 
 def test_no_alternative_fails():
