@@ -94,6 +94,30 @@ ACTUALS_FOR_CHECK = {
 ACTUAL_TRIM = 300
 
 
+def resolve_case(case: Case, now) -> Case:
+    """Expand template variables in queries and expected values (run-relative
+    date windows). The run keeps the case's original uid for the ledger."""
+
+    def _resolve_expected(expected: dict[str, str]) -> dict[str, str]:
+        return {k: resolve_templates(v, now=now) for k, v in expected.items()}
+
+    if case.is_multiturn:
+        resolved_turns = tuple(
+            {**turn, "query": resolve_templates(turn["query"], now=now),
+             "expected": _resolve_expected(turn.get("expected") or {})}
+            for turn in case.turns
+        )
+        return Case(
+            id=case.id, status=case.status, group=case.group, set=case.set,
+            expected=case.expected, notes=case.notes, turns=resolved_turns,
+        )
+    return Case(
+        id=case.id, status=case.status, group=case.group, set=case.set,
+        query=resolve_templates(case.query, now=now),
+        expected=_resolve_expected(case.expected), notes=case.notes,
+    )
+
+
 def _failed_actuals(dumped: dict, checks: dict) -> dict:
     actuals = {}
     for check, value in checks.items():
@@ -278,33 +302,11 @@ async def run_cases(
     total_cases = len(cases)
     completed_cases = 0
 
-    def _resolve_expected(expected: dict[str, str]) -> dict[str, str]:
-        return {k: resolve_templates(v, now=run_started) for k, v in expected.items()}
-
-    def _resolve_case(case: Case) -> Case:
-        """Expand template variables in queries and expected values (run-relative
-        date windows), preserving the original uid."""
-        if case.is_multiturn:
-            resolved_turns = tuple(
-                {**turn, "query": resolve_templates(turn["query"], now=run_started),
-                 "expected": _resolve_expected(turn.get("expected") or {})}
-                for turn in case.turns
-            )
-            return Case(
-                id=case.id, status=case.status, group=case.group, set=case.set,
-                expected=case.expected, notes=case.notes, turns=resolved_turns,
-            )
-        return Case(
-            id=case.id, status=case.status, group=case.group, set=case.set,
-            query=resolve_templates(case.query, now=run_started),
-            expected=_resolve_expected(case.expected), notes=case.notes,
-        )
-
     async def run_one(case: Case) -> dict:
         nonlocal completed_cases
         async with semaphore:
             original_uid = case.uid
-            resolved = _resolve_case(case)
+            resolved = resolve_case(case, run_started)
             trials = []
             for trial in range(1, args.trials + 1):
                 if resolved.is_multiturn:
@@ -321,7 +323,9 @@ async def run_cases(
                 else:
                     result = await runner.run_test(
                         resolved.query,
-                        case_to_expected(case),
+                        # The resolved case: its expected dates are real dates,
+                        # not {run-14d} tokens the date checks cannot parse.
+                        case_to_expected(resolved),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
                     trials.append(result_to_entry(result, original_uid))

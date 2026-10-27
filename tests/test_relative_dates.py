@@ -2,6 +2,8 @@
 
 from datetime import datetime
 
+from goldset.adapter import case_to_expected
+from goldset.cli import resolve_case
 from goldset.evaluators.data_pull_evaluator import evaluate_date_extraction
 from goldset.store import Case
 from goldset.templates import has_templates, resolve_templates, validate_templates
@@ -50,3 +52,17 @@ def test_tolerance_lets_a_window_fall_short_only_when_set(monkeypatch):
     assert exact["date_extraction_score"] == 0.0
     assert loose["date_extraction_score"] == 1.0
     assert late["date_extraction_score"] == 0.0
+
+
+def test_the_run_scores_a_case_against_its_resolved_dates():
+    # Regression: the run loop once built ExpectedData from the unresolved
+    # case, so '{run-14d}' reached date_extraction, failed to parse and the
+    # check abstained on every rolling window.
+    case = Case(
+        id="t", status="ready", group="g", query="Alerts in the last two weeks?",
+        expected={"start_date": "{run-14d}", "end_date": "{run}"},
+    )
+    expected = case_to_expected(resolve_case(case, NOW))
+    assert expected.expected_start_date == "2026-09-17"
+    assert expected.expected_end_date == "2026-10-01"
+
