@@ -84,6 +84,13 @@ a case store: read `benchmarks/README.md` first. Key rules:
   a chain of reruns); the index judges the combination canonical (`benchmarks/README.md`, "Rerunning revised
   members only").
 - After an erratum or a freeze, regenerate `results/index.json`.
+- An attempt that got no reply (`no_answer` on its trial: the stream sent
+  nothing for 240 s, hit the wall clock, dropped or returned a 5xx) is a
+  wrong attempt. An attempt the harness could not score keeps its trial
+  `error` and is left out; a member errors only when no attempt was scored
+  (AJ, 2026-10-27). Runs recorded before then errored the whole member on
+  any errored attempt, so a member can move from error to fail across that
+  date.
 
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR
 per spec (case store → results ledger → harness port → fixes → bucket scoring →
