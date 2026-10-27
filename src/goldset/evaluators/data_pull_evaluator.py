@@ -61,17 +61,24 @@ def _preferred_windows(
     return windows
 
 
-def _within(actual: str, expected: str, tolerance_days: int) -> bool:
-    """Exact match, or within tolerance_days when one is set."""
-    if actual == expected:
-        return True
-    if not tolerance_days or not actual:
-        return False
+def _days_inside(actual: str, expected: str) -> int | None:
+    """How many days ``actual`` lies after ``expected``; None if unparseable."""
     try:
-        delta = date.fromisoformat(actual) - date.fromisoformat(expected)
+        return (date.fromisoformat(actual) - date.fromisoformat(expected)).days
     except ValueError:
-        return False
-    return abs(delta.days) <= tolerance_days
+        return None
+
+
+def _covers_start(actual: str, expected: str, tolerance_days: int) -> bool:
+    """The pull starts on or before the expected start (or within tolerance after)."""
+    days = _days_inside(actual, expected)
+    return days is not None and days <= tolerance_days
+
+
+def _covers_end(actual: str, expected: str, tolerance_days: int) -> bool:
+    """The pull ends on or after the expected end (or within tolerance before)."""
+    days = _days_inside(actual, expected)
+    return days is not None and days >= -tolerance_days
 
 
 def evaluate_date_extraction(
@@ -80,23 +87,32 @@ def evaluate_date_extraction(
     expected_end_date: str | None = None,
     tolerance_days: int = 0,
 ) -> dict[str, Any]:
-    """Check the agent extracted the requested period from the prompt.
+    """Check the agent asked its data tools for the requested period.
 
     Scored against the ``start_date``/``end_date`` arguments the agent passed to
-    ``pull_data`` (or ``pick_dataset``), not against recorded state. A row may make
-    more than one dated call; the check passes if **any** of them matches, so a
+    ``pull_data`` (or ``pick_dataset``), not against recorded state. A window
+    passes when it **contains** the expected one: pulling wider and slicing in
+    code is fine (AJ, 2026-10-27); whether the answer then uses exactly the
+    asked period is ``answer_period_match``'s question. A row may make more than
+    one dated call; the check passes if **any** of them covers the period, so a
     comparative query that pulls twice is not penalised.
+
+    Either expected bound may be left out, and only the bounds a case names are
+    checked. ``tolerance_days`` lets a window fall short of a bound by up to that
+    many days (rolling windows: "last month" can fairly be 30 days or the
+    calendar month).
 
     Args:
         agent_state: Final agent state after execution
         expected_start_date: Expected start date in any supported format
         expected_end_date: Expected end date in any supported format
+        tolerance_days: Days a window may fall short of an expected bound
 
     Returns:
         Dict with:
-        - date_extraction_score (0/1/None): 1.0 if a dated tool call matches both
-          expected dates, 0.0 if none does, None if no expected dates were given or
-          the expected dates are unparseable
+        - date_extraction_score (0/1/None): 1.0 if a dated tool call covers the
+          expected period, 0.0 if none does, None if no expected date was given or
+          an expected date is unparseable
         - actual_extracted_start_date / actual_extracted_end_date (str | None): the
           matching window, or the last observed one when nothing matched
         - date_extraction_source (str | None): tool that supplied the window
@@ -120,11 +136,13 @@ def evaluate_date_extraction(
         result["actual_extracted_end_date"] = windows[-1][2] or None
 
     # No expectation, or an expectation the harness cannot parse -> not evaluated.
-    if not expected_start_date or not expected_end_date:
+    if not expected_start_date and not expected_end_date:
         return result
     expected_start = normalize_start_date(expected_start_date)
     expected_end = normalize_end_date(expected_end_date)
-    if not expected_start or not expected_end:
+    if (expected_start_date and not expected_start) or (
+        expected_end_date and not expected_end
+    ):
         return result
 
     # Dates were expected but the agent never scoped a request - it did not look for
@@ -135,17 +153,14 @@ def evaluate_date_extraction(
 
     for name, start, end in windows:
         # An omitted bound is an open-ended request ("from 2001 onwards"), which the
-        # agent does use - e.g. pull_data(start_date="2001-01-01") with no end. Only
-        # the bounds the agent actually supplied are checked; the other side is
-        # unconstrained and left to date_coverage. Requiring both would fail a
-        # legitimately open-ended pull.
-        start_ok = (
-            _within(normalize_start_date(start), expected_start, tolerance_days)
-            if start.strip() else True
+        # agent does use - e.g. pull_data(start_date="2001-01-01") with no end, and
+        # an open end covers any expected end. A bound the case leaves out is not
+        # checked either.
+        start_ok = not (start and expected_start) or _covers_start(
+            normalize_start_date(start), expected_start, tolerance_days
         )
-        end_ok = (
-            _within(normalize_end_date(end), expected_end, tolerance_days)
-            if end.strip() else True
+        end_ok = not (end and expected_end) or _covers_end(
+            normalize_end_date(end), expected_end, tolerance_days
         )
         if start_ok and end_ok:
             result.update(

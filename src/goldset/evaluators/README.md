@@ -151,7 +151,7 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`dataset_id_match`](#dataset_id_match) | retrieval | deterministic | gates | `dataset_id` | `dataset_evaluator.py:40` |
 | [`dataset_parameter_match`](#dataset_parameter_match) | retrieval | deterministic | gates | `dataset_parameters` **and** `dataset_id` | `dataset_evaluator.py:124-129` |
 | [`context_layer_match`](#context_layer_match) | retrieval | deterministic | gates | `context_layer` **and** `dataset_id` | `dataset_evaluator.py:132-138` |
-| [`date_extraction`](#date_extraction) | retrieval | deterministic | gates | `start_date` **and** `end_date` | `data_pull_evaluator.py:63` |
+| [`date_extraction`](#date_extraction) | retrieval | deterministic | gates | `start_date` and/or `end_date` (with `date_tolerance_days`) | `data_pull_evaluator.py:63` |
 | [`date_coverage`](#date_coverage) | — (untagged) | deterministic | **info-only** | `start_date` **and** `end_date` | `data_pull_evaluator.py:188` |
 | [`data_pull_exists`](#data_pull_exists) | retrieval | deterministic | gates | derived: `answer`, or `dashboard_widgets` containing `insight` | `data_pull_evaluator.py:284` |
 | [`answered_without_data`](#answered_without_data) | retrieval | deterministic | gates | derived: same as above | `guards.py:100-105` |
@@ -328,10 +328,14 @@ and not recorded state: `agent_state["start_date"]` has been observed recording
 the requested window, the dataset's full coverage extent, and a rolling window
 ending today, for the same query. Tool arguments are the only consistent signal.
 
-**Fires on** `start_date` **and** `end_date` together
-(`data_pull_evaluator.py:108-113`). One without the other is `null`.
+**Fires on** `start_date`, `end_date` or both; a bound the case leaves out is not
+checked. **Passes when a dated call's window contains the expected period**
+(AJ, 2026-10-27): pulling 2001 to 2025 for a 2006 to 2017 question and slicing
+in code is fine. Whether the answer then uses exactly the asked period is a
+separate question. `date_tolerance_days` lets a window fall short of a bound by
+up to N days (rolling windows).
 
-**`null` vs `0.0`**: `null` when either expected bound is missing or unparseable
+**`null` vs `0.0`**: `null` when no expected bound is given, or one is unparseable
 by `normalize_start_date`/`normalize_end_date` (`utils.py:46-81`, which accept
 `M/D/YYYY`, `YYYY-MM-DD`, and bare `YYYY` — a bare year expands to Jan 1 for a
 start and Dec 31 for an end). `0.0` when dates were expected and the agent made

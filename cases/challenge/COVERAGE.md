@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version fcc36e990adc633a` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-10-26_
+_Last updated: 2026-10-27_
 
 ## Groups
 
@@ -102,11 +102,12 @@ friends) run on top of it whenever their trigger state exists.
 | dataset_id | 712 | dataset_id_match |
 | aoi_ids | 609 | aoi_id_match |
 | data_pull | 515 | data_pull_exists, answered_without_data |
-| end_date | 326 | date_extraction (with start_date) |
-| start_date | 326 | date_extraction (with end_date) |
+| end_date | 326 | date_extraction (a pulled window containing the period passes) |
+| start_date | 326 | date_extraction (a pulled window containing the period passes) |
 | forbidden_tools | 200 | forbidden_tools_absent |
 | text | 191 | expected_text_match |
 | context_layer | 174 | context_layer_match |
+| date_tolerance_days | 43 | date_extraction (days a window may fall short of a bound) |
 | dataset_parameters | 37 | dataset_parameter_match |
 | clarification | 19 | clarification_requested |
 | accept_nudge_offering | 16 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
@@ -123,8 +124,6 @@ friends) run on top of it whenever their trigger state exists.
 | dataset_name | 0 ← unused | reference only |
 | scope | 0 ← unused | scope_match |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
-
-Fields present but not recognised here: date_tolerance_days
 
 ## Dataset coverage (project-zeno catalog)
 

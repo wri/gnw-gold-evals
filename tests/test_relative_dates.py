@@ -39,13 +39,14 @@ def state(start, end):
     return {"messages": [], "tool_calls": [{"name": "pull_data", "args": {"start_date": start, "end_date": end}}]}
 
 
-def test_tolerance_accepts_near_windows_only_when_set(monkeypatch):
+def test_tolerance_lets_a_window_fall_short_only_when_set(monkeypatch):
     import goldset.evaluators.data_pull_evaluator as dpe
     monkeypatch.setattr(dpe, "_tool_call_date_windows", lambda s: [("pull_data", s["tool_calls"][0]["args"]["start_date"], s["tool_calls"][0]["args"]["end_date"])])
     near = state("2026-08-31", "2026-09-30")
     exact = evaluate_date_extraction(near, "2026-09-01", "2026-10-01")
     loose = evaluate_date_extraction(near, "2026-09-01", "2026-10-01", tolerance_days=3)
-    far = evaluate_date_extraction(state("2026-07-01", "2026-09-30"), "2026-09-01", "2026-10-01", tolerance_days=3)
+    # A window may start earlier (it still contains the period), but not a week late.
+    late = evaluate_date_extraction(state("2026-09-08", "2026-09-30"), "2026-09-01", "2026-10-01", tolerance_days=3)
     assert exact["date_extraction_score"] == 0.0
     assert loose["date_extraction_score"] == 1.0
-    assert far["date_extraction_score"] == 0.0
+    assert late["date_extraction_score"] == 0.0

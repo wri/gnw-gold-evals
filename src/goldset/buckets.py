@@ -267,7 +267,7 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("dataset_parameter_match")
     if expected.get("context_layer"):
         implied.add("context_layer_match")
-    if expected.get("start_date") and expected.get("end_date"):
+    if expected.get("start_date") or expected.get("end_date"):
         implied.add("date_extraction")
     if expected.get("answer"):
         implied.update({"agent_answer", "chart_produced"})

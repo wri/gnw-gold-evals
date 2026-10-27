@@ -585,12 +585,12 @@
     {
       "field": "end_date",
       "cases": 326,
-      "switches_on": "date_extraction (with start_date)"
+      "switches_on": "date_extraction (a pulled window containing the period passes)"
     },
     {
       "field": "start_date",
       "cases": 326,
-      "switches_on": "date_extraction (with end_date)"
+      "switches_on": "date_extraction (a pulled window containing the period passes)"
     },
     {
       "field": "forbidden_tools",
@@ -606,6 +606,11 @@
       "field": "context_layer",
       "cases": 174,
       "switches_on": "context_layer_match"
+    },
+    {
+      "field": "date_tolerance_days",
+      "cases": 43,
+      "switches_on": "date_extraction (days a window may fall short of a bound)"
     },
     {
       "field": "dataset_parameters",
@@ -688,9 +693,7 @@
       "switches_on": "suggested_datasets_match"
     }
   ],
-  "unknown_expected_fields": [
-    "date_tolerance_days"
-  ],
+  "unknown_expected_fields": [],
   "dataset_coverage": {
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",

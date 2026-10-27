@@ -189,8 +189,8 @@ class ExpectedData(BaseModel):
     expected_context_layer: str = ""
     expected_start_date: str = ""
     expected_end_date: str = ""
-    # Days either side a date_extraction bound may miss by (rolling windows:
-    # "last month" can fairly be 30 days or the calendar month). 0 = exact.
+    # Days a pulled window may fall short of an expected bound (rolling windows:
+    # "last month" can fairly be 30 days or the calendar month). 0 = none.
     expected_date_tolerance_days: int = 0
     expected_answer: str = ""
     expected_text: str = ""

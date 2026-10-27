@@ -240,12 +240,12 @@
     {
       "field": "end_date",
       "cases": 5,
-      "switches_on": "date_extraction (with start_date)"
+      "switches_on": "date_extraction (a pulled window containing the period passes)"
     },
     {
       "field": "start_date",
       "cases": 5,
-      "switches_on": "date_extraction (with end_date)"
+      "switches_on": "date_extraction (a pulled window containing the period passes)"
     },
     {
       "field": "clarification",
@@ -286,6 +286,11 @@
       "field": "data_pull",
       "cases": 0,
       "switches_on": "data_pull_exists, answered_without_data"
+    },
+    {
+      "field": "date_tolerance_days",
+      "cases": 0,
+      "switches_on": "date_extraction (days a window may fall short of a bound)"
     },
     {
       "field": "forbidden_tools",
@@ -692,6 +697,7 @@
       "accept_nudge_offering",
       "chart_type",
       "data_pull",
+      "date_tolerance_days",
       "forbidden_tools",
       "suggested_datasets"
     ],
