@@ -1,5 +1,5 @@
 {
-  "caseset_version": "003ec8939c01da39",
+  "caseset_version": "b0b5a1738ab7af95",
   "case_count": 949,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -1608,14 +1608,14 @@
     },
     {
       "id": "ch-comp-047",
-      "uid": "98c631c67134457a",
+      "uid": "2118ea998b3d8ff9",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready"
     },
     {
       "id": "ch-comp-048",
-      "uid": "cabbb8b761cf920e",
+      "uid": "662d9696610da2a3",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready"
@@ -1650,7 +1650,7 @@
     },
     {
       "id": "ch-comp-053",
-      "uid": "0f427b374d13b515",
+      "uid": "85a1fc1659f0af77",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready"

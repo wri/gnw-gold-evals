@@ -1,5 +1,5 @@
 id: ch-comp-047
-uid: 98c631c67134457a
+uid: 2118ea998b3d8ff9
 status: ready
 set: comparison
 group: ghg-flux
@@ -11,8 +11,9 @@ expected:
   data_pull: 'TRUE'
   figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'PER' ; sum(carbon_net_flux_Mg_CO2e)
     where aoi_id = 'BOL'
-  figure_claim: '#1 < #2 :: Peru''s forests have the lower (more sink-like) net flux than
-    Bolivia''s || Bolivia''s forests have the lower (more sink-like) net flux than Peru''s'
+  figure_claim: '#1 < #2 :: Peru''s forests are the bigger net carbon sink (or the smaller
+    net source) of the two, compared with Bolivia''s || Bolivia''s forests are the bigger
+    net carbon sink (or the smaller net source) of the two, compared with Peru''s'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -34,4 +35,6 @@ notes:
   grounding: Verified Challenge case
   expectations: draft-5 review 2026-10-27
   review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
-    added (direction and the asked figures are checked from the pulled table)'
+    added (direction and the asked figures are checked from the pulled table); claim reworded
+    2026-10-27 after the draft-5 run: ''lower (more sink-like) net flux'' made the AI reviewer
+    read the bigger sink as the weaker one'
