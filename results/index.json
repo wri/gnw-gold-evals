@@ -2247,6 +2247,196 @@
         "canonical": true,
         "canonical_reasons": [],
         "page": "results/benchmark/pages/20261026T183522Z_prod.json"
+      },
+      {
+        "run_id": "20261027T094141Z_prod",
+        "path": "results/benchmark/runs/20261027T094141Z_prod.json",
+        "started": "2026-10-27T09:41:41Z",
+        "environment": "prod",
+        "build": "draft-5 2026-10-27 (benchmark-draft-5 98345be)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "98345be"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "draft-5: new checks figure_match, figure_claim_match and answer_period_match; date_extraction passes a containing window, reads the pulled window when no call carries dates and now scores rolling windows (resolved dates); web_fallback fires only without a pull; revised expectations from the draft-5 review (cases/challenge/README.md, 2026-10-27)",
+        "caseset": "challenge",
+        "caseset_version": "003ec8939c01da39",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 932,
+              "evaluated": 1040
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 206
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 381,
+              "evaluated": 396
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 163
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 285,
+              "evaluated": 381
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 242
+          },
+          "output": {
+            "dedicated": {
+              "passed": 160,
+              "evaluated": 161
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 160
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 25,
+              "evaluated": 28
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 28
+          },
+          "rows_total": 269,
+          "verdicts": {
+            "pass": 192,
+            "fail": 76,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "7b07ab276a917165",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "3 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261027T103249Z_prod",
+        "path": "results/benchmark/runs/20261027T103249Z_prod.json",
+        "started": "2026-10-27T10:32:49Z",
+        "environment": "prod",
+        "build": "draft-5 rerun after judge fixes (ea4f431)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "ea4f431"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "figure_claim_match fails only a contradiction; answer_period_match judges the stated period; zero figures stated in words match; three net-flux claims reworded",
+        "caseset": "challenge",
+        "caseset_version": "b0b5a1738ab7af95",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 171,
+              "evaluated": 177
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 30
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 69,
+              "evaluated": 77
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 31
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 40,
+              "evaluated": 56
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 31
+          },
+          "output": {
+            "dedicated": {
+              "passed": 30,
+              "evaluated": 30
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 30
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "rows_total": 32,
+          "verdicts": {
+            "pass": 19,
+            "fail": 12,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "351ecd19ae5bbe53",
+          "members": 269
+        },
+        "composed_with": [
+          "20261027T094141Z_prod"
+        ],
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261027T103249Z_prod.json"
       }
     ]
   },
@@ -2302,8 +2492,13 @@
       "frozen": null,
       "members": 269,
       "voided": 0,
-      "runs": [],
-      "canonical_runs": []
+      "runs": [
+        "20261027T094141Z_prod",
+        "20261027T103249Z_prod"
+      ],
+      "canonical_runs": [
+        "20261027T103249Z_prod"
+      ]
     },
     "2026-draft": {
       "path": "benchmarks/2026-draft.json",
