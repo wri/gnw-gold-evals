@@ -1149,7 +1149,8 @@
             "dashboard_widgets_match": null,
             "dashboard_widgets_valid": null
           },
-          "latency_s": 460.9
+          "latency_s": 460.9,
+          "no_answer": "ReadTimeout"
         },
         {
           "checks": {
@@ -1191,8 +1192,7 @@
           "latency_s": 16.9,
           "stream_s": 15.76
         }
-      ],
-      "error": "ReadTimeout"
+      ]
     },
     {
       "uid": "205b5abebbcfaf8c",
@@ -5555,5 +5555,12 @@
     "manifest_sha": "351ecd19ae5bbe53",
     "members": 269
   },
-  "methodology_note": "figure_claim_match fails only a contradiction; answer_period_match judges the stated period; zero figures stated in words match; three net-flux claims reworded"
+  "methodology_note": "figure_claim_match fails only a contradiction; answer_period_match judges the stated period; zero figures stated in words match; three net-flux claims reworded",
+  "corrections": [
+    {
+      "date": "2026-10-27",
+      "id": "ch-comp-053",
+      "change": "attempt 2's ReadTimeout (its reply stream sent nothing for 240 s and never finished: no stream_s, no checks) moved from the row's error to the attempt's no_answer, under the rule that an attempt with no reply is a failed attempt (AJ, 2026-10-27). No scores changed."
+    }
+  ]
 }
