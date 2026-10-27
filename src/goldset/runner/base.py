@@ -39,6 +39,7 @@ class BaseTestRunner(ABC):
         expected_data: ExpectedData,
         error: str,
         duration_seconds: float | None = None,
+        no_answer: bool = False,
     ) -> TestResult:
         """Create empty evaluation result for error cases."""
         kwargs = expected_data.to_dict()
@@ -123,6 +124,7 @@ class BaseTestRunner(ABC):
             **kwargs,
             # Error
             error=error,
+            no_answer=no_answer,
         )
 
     def _run_evaluations(

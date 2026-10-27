@@ -14,6 +14,11 @@ Three verdict rules the flat mean got wrong, now explicit:
 - info-only checks and judge errors never enter a verdict — an errored row
   is an *error*, not a failure;
 - an unmeasured bucket renders as unmeasured, never omitted.
+
+An attempt that got no reply (``no_answer``: Horizon stopped sending,
+dropped the connection or failed) is a failed attempt, not an error: the
+user got nothing (AJ, 2026-10-27). Only a row with no attempt the harness
+could score is an error (``cli.merge_trials``).
 """
 
 from __future__ import annotations
@@ -163,6 +168,16 @@ def _took_alternative_path(checks: dict[str, Any]) -> bool:
     )
 
 
+def attempt_verdict(trial: dict[str, Any]) -> str:
+    """One attempt's verdict: fail when it got no reply, error when the
+    harness could not score it, else its checks' verdict."""
+    if trial.get("no_answer"):
+        return "fail"
+    if trial.get("error"):
+        return "error"
+    return row_verdict({"checks": trial.get("checks") or {}})
+
+
 def row_verdict(entry: dict[str, Any]) -> str:
     """pass | fail | error | uncovered, per the rules above.
 
@@ -170,17 +185,22 @@ def row_verdict(entry: dict[str, Any]) -> str:
     path, and its attempts may take different ones; each path leaves the other's checks
     null, so a per-check majority would let a check measured on one attempt
     decide the row. Such rows pass when the majority of their scored
-    attempts pass (ties fail, as in ``ledger.majority``).
+    attempts pass (ties fail, as in ``ledger.majority``). So do rows with an
+    attempt that got no reply, which counts as a failed attempt; an attempt
+    the harness could not score (its trial's ``error``) is left out.
     """
     if entry.get("error") or entry.get("judge_errors"):
         return "error"
+    if entry.get("no_answer"):  # a single attempt, unmerged
+        return "fail"
     # The ledger writes a list (cli.merge_trials); older fixtures a dict.
     trials = entry.get("trials") or []
     if isinstance(trials, dict):
         trials = list(trials.values())
     trials = [trial for trial in trials if isinstance(trial, dict)]
-    if any(_took_alternative_path(trial.get("checks") or {}) for trial in trials):
-        verdicts = [row_verdict({"checks": trial.get("checks") or {}}) for trial in trials]
+    if any(trial.get("no_answer") or _took_alternative_path(trial.get("checks") or {})
+           for trial in trials):
+        verdicts = [attempt_verdict(trial) for trial in trials]
         scored = [verdict for verdict in verdicts if verdict in ("pass", "fail")]
         if not scored:
             return "uncovered"

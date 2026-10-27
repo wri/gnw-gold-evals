@@ -164,7 +164,8 @@ def _secs(value: float | None) -> str:
 
 
 def strict_clean(entry: dict[str, Any]) -> bool:
-    """True when the row passed AND no trial shows a failing non-info check.
+    """True when the row passed AND no trial shows a failing non-info check
+    or got no reply. An attempt the harness could not score is left out.
 
     Rows without per-trial data (1-trial runs) fall back to the majority
     verdict.
@@ -172,6 +173,10 @@ def strict_clean(entry: dict[str, Any]) -> bool:
     if row_verdict(entry) != "pass":
         return False
     for trial in _trial_list(entry):
+        if trial.get("no_answer"):
+            return False
+        if trial.get("error"):
+            continue
         for name, value in (trial.get("checks") or {}).items():
             if not is_info_only(name) and value == 0.0:
                 return False
@@ -547,6 +552,7 @@ def failure_stage(entry: dict[str, Any]) -> str:
     stages = {
         DEDICATED[base_check_name(name)]
         for trial in entry.get("trials") or []
+        if not trial.get("error")
         for name, value in (trial.get("checks") or {}).items()
         if value == 0.0 and not is_info_only(name) and base_check_name(name) in DEDICATED
     }

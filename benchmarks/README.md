@@ -134,8 +134,13 @@ right on **every** trial (`every_time`); `majority` is the North Star below.
   every applicable non-info check passed in the majority of trials) over
   active members that were measured, with a Wilson 95% interval.
 - **Consistency**: of complete answers, the share clean on every trial.
-- **Availability**: errored members leave the denominator and are reported
-  separately.
+- **Availability**: an attempt that got no reply (the stream stalled,
+  dropped or failed) counts as a wrong attempt, and the page reports how
+  many of all attempts got none. An attempt the harness could not score
+  (an AI reviewer or the state fetch failed) is left out; a member with no
+  scored attempt is errored, leaves the denominator and is reported
+  separately (AJ, 2026-10-27; before then any errored attempt errored the
+  member).
 - **Per type**: the same rate, and failure modes by primary-failure
   attribution: each failed member goes to its earliest failing dedicated
   stage in `stage_order`; failures only on shared checks are `unattributed`.

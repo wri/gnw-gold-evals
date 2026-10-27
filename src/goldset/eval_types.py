@@ -145,6 +145,10 @@ class TestResult(BaseModel):
 
     # Error handling
     error: str | None = None
+    # The error left the user with no reply: Horizon stopped sending, dropped
+    # the connection or failed before the stream finished. Such an attempt
+    # counts as wrong; any other error is the harness's and leaves it out.
+    no_answer: bool = False
 
     # Trial metadata
     num_trials: int = 1

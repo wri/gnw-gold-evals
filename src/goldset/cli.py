@@ -166,7 +166,7 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
     if result.trace_url:
         entry["trace_url"] = result.trace_url
     if result.error:
-        entry["error"] = str(result.error)[:REASON_TRIM]
+        entry["no_answer" if result.no_answer else "error"] = str(result.error)[:REASON_TRIM]
     return entry
 
 
@@ -181,14 +181,35 @@ def latency_info(latency_s: float | None, slow_threshold: float) -> dict | None:
     return {"slow": True, "threshold_s": slow_threshold}
 
 
+def _unscored(entry: dict) -> str | None:
+    """Why the harness could not score an attempt: it failed after the reply,
+    or an AI reviewer failed. None for a scored attempt, including one that
+    got no reply (``no_answer``), which counts as wrong."""
+    if entry.get("error"):
+        return entry["error"]
+    if entry.get("judge_errors"):
+        return "AI reviewer failed: " + ", ".join(entry["judge_errors"])
+    return None
+
+
 def merge_trials(entries: list[dict]) -> dict:
-    """Fold per-trial entries into one: majority verdict + per-trial detail."""
+    """Fold per-trial entries into one: majority verdict + per-trial detail.
+
+    An attempt the harness could not score stays out of the per-check
+    majority, its reason kept as its trial's ``error``. An attempt that got
+    no reply keeps ``no_answer`` on its trial and counts as a failed attempt
+    (``buckets.row_verdict``). The row carries ``error`` only when no
+    attempt could be scored (AJ, 2026-10-27)."""
     if len(entries) == 1:
         return entries[0]
+    unscored = [_unscored(e) for e in entries]
+    scored = [e for e, why in zip(entries, unscored, strict=True) if why is None]
     merged = dict(entries[-1])
-    check_names = sorted({name for e in entries for name in e["checks"]})
+    for key in ("error", "judge_errors", "no_answer"):
+        merged.pop(key, None)
+    check_names = sorted({name for e in scored for name in e["checks"]})
     merged["checks"] = {
-        name: majority([e["checks"].get(name) for e in entries])
+        name: majority([e["checks"].get(name) for e in scored])
         for name in check_names
     }
     merged["trials"] = [
@@ -196,21 +217,18 @@ def merge_trials(entries: list[dict]) -> dict:
             "checks": e["checks"],
             "latency_s": e.get("latency_s"),
             **({"stream_s": e["stream_s"]} if e.get("stream_s") is not None else {}),
+            **({"no_answer": e["no_answer"]} if e.get("no_answer") else {}),
+            **({"error": why} if why else {}),
         }
-        for e in entries
+        for e, why in zip(entries, unscored, strict=True)
     ]
-    # Errors from ANY trial must survive the merge (PR-09 H3) — the base
-    # copy above only carries the final trial's metadata.
-    judge_errors = sorted({je for e in entries for je in e.get("judge_errors", [])})
-    if judge_errors:
-        merged["judge_errors"] = judge_errors
-    else:
-        merged.pop("judge_errors", None)
-    errors = list(dict.fromkeys(e["error"] for e in entries if e.get("error")))
-    if errors:
-        merged["error"] = " | ".join(errors)[:500]
-    else:
-        merged.pop("error", None)
+    # Errors from ANY trial must survive the merge (PR-09 H3): on their
+    # trials always, and on the row when they leave nothing to score.
+    if not scored:
+        merged["error"] = " | ".join(dict.fromkeys(unscored))[:500]
+        judge_errors = sorted({je for e in entries for je in e.get("judge_errors", [])})
+        if judge_errors:
+            merged["judge_errors"] = judge_errors
     return merged
 
 
@@ -408,6 +426,9 @@ def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
     line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
     if errored:
         line += f", {errored} with ERRORS (rerun before trusting)"
+    no_reply = sum(1 for e in entries for t in (e.get("trials") or [e]) if t.get("no_answer"))
+    if no_reply:
+        line += f", {no_reply} attempt(s) got no reply (counted as wrong)"
     print(line)
     return 0
 

@@ -94,9 +94,12 @@ def compose(primary: dict, supplements: list[dict], cases_dir: Path) -> dict:
 
 
 def _all_trials_clean(entry: dict) -> bool:
-    if entry.get("error") or entry.get("judge_errors"):
+    if entry.get("error") or entry.get("judge_errors") or entry.get("no_answer"):
         return False
     trials = entry.get("trials") or [{"checks": entry.get("checks", {})}]
+    if any(trial.get("no_answer") for trial in trials):
+        return False
+    trials = [trial for trial in trials if not trial.get("error")]
     return all(
         all(
             value != 0.0

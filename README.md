@@ -169,7 +169,10 @@ a team checkout that has them.
   into **five buckets** (retrieval, analysis, explanation, output, scope);
   a run's verdict comes from per-row verdicts and per-bucket tallies, never
   a flat mean. Errored rows are errors, not measurements — they are excluded
-  from tallies rather than banking partial passes.
+  from tallies rather than banking partial passes. An attempt that got no
+  reply (Horizon's stream stalled, dropped or failed: `no_answer`) is a
+  failed attempt, not an error; an attempt the harness could not score is
+  left out, and a row is an error only when no attempt could be scored.
 - **Which check answers for which bucket** (full map with descriptions and
   case examples: [`docs/evaluator-map.html`](docs/evaluator-map.html);
   † = shared between two buckets, ° = info-only, never gates):

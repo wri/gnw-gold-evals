@@ -13,8 +13,10 @@ page cannot be rebuilt from the repo alone. The page is derived, like
 Rates use the BENCHMARK semantics (``benchmarks/README.md``): a question is
 complete when it passes in the majority of trials (``majority``); the page
 headline is the share right on **every** trial (``every_time``), with
-``any_time`` (right on at least one) alongside. Errored questions leave the
-denominator. Failures are attributed to their earliest failing stage
+``any_time`` (right on at least one) alongside. An attempt that got no reply
+is a wrong attempt (``attempt_errors`` kind ``no_answer``); one the harness
+could not score is left out (kind ``unscored``), and a question with none
+scored is an error and leaves the denominator. Failures are attributed to their earliest failing stage
 (``tools/challenge_rollup.py``). Groups by type and use case come from the
 manifest's frozen member facets, never the live case.
 
@@ -103,10 +105,24 @@ ANSWER_EXCERPT_CHARS = 220
 
 
 def trial_ok(trial: dict[str, Any]) -> bool:
-    """A trial is right when every gating check it evaluated passed."""
+    """A trial is right when every gating check it evaluated passed; one
+    that got no reply evaluated none, so it is wrong."""
     checks = {k: v for k, v in (trial.get("checks") or {}).items()
               if not is_info_only(k) and v is not None}
     return bool(checks) and all(v == 1.0 for v in checks.values())
+
+
+def scored_trials(entry: dict[str, Any]) -> list[dict[str, Any]]:
+    """The attempts that count: all but those the harness could not score."""
+    return [t for t in entry["trials"] if not t.get("error")]
+
+
+def attempt_error(trial: dict[str, Any]) -> dict[str, str] | None:
+    if trial.get("no_answer"):
+        return {"kind": "no_answer", "reason": trial["no_answer"]}
+    if trial.get("error"):
+        return {"kind": "unscored", "reason": trial["error"]}
+    return None
 
 
 def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
@@ -114,13 +130,13 @@ def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
     scored = [e for e, v in zip(entries, verdicts) if v in ("pass", "fail")]
     n = len(scored)
     passed = sum(1 for v in verdicts if v == "pass")
-    every = sum(1 for e in scored if all(trial_ok(t) for t in e["trials"]))
-    any_ = sum(1 for e in scored if any(trial_ok(t) for t in e["trials"]))
+    every = sum(1 for e in scored if all(trial_ok(t) for t in scored_trials(e)))
+    any_ = sum(1 for e in scored if any(trial_ok(t) for t in scored_trials(e)))
     modes = collections.Counter(cr.primary_failure(e) for e, v in zip(entries, verdicts) if v == "fail")
     wrong = {
-        "every_time": lambda e: not all(trial_ok(t) for t in e["trials"]),
+        "every_time": lambda e: not all(trial_ok(t) for t in scored_trials(e)),
         "majority": lambda e: row_verdict(e) == "fail",
-        "any_time": lambda e: not any(trial_ok(t) for t in e["trials"]),
+        "any_time": lambda e: not any(trial_ok(t) for t in scored_trials(e)),
     }
     by_standard = {}
     for standard, is_wrong in wrong.items():
@@ -129,6 +145,8 @@ def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "scored": n,
         "errors": verdicts.count("error"),
+        "attempts": sum(len(e["trials"]) for e in entries),
+        "no_answer": sum(1 for e in entries for t in e["trials"] if t.get("no_answer")),
         "passed": passed,
         "majority": passed / n if n else None,
         "every_time": every / n if n else None,
@@ -307,6 +325,7 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
             "query": case.query,
             "verdict": verdict,
             "trials_right": [trial_ok(t) for t in entry["trials"]],
+            "attempt_errors": [attempt_error(t) for t in entry["trials"]],
             "consistent": cr.strict_clean(entry),
             "primary_failure": cr.primary_failure(entry) if verdict == "fail" else None,
             "failed_checks": failed_checks(entry),
