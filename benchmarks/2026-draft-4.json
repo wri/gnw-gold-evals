@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "2026-draft-4",
-  "status": "draft",
+  "status": "retired",
   "created": "2026-10-24",
   "frozen": null,
   "source": {
@@ -4926,5 +4926,10 @@
       "synthetic": false
     }
   ],
-  "errata": []
+  "errata": [],
+  "retired": {
+    "date": "2026-10-27",
+    "reason": "replaced by 2026-draft-5: the same 269 questions after the draft-5 review ('could this answer mislead the user?'; cases/challenge/README.md, 2026-10-27): figure formulas on about 170 members, 209 revised expectations, two more questions moved off Ghana",
+    "superseded_by": "2026-draft-5"
+  }
 }

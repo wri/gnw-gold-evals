@@ -22,14 +22,15 @@ notes:
   build_notes: Needs relative-date expectations resolved at run time + live ground truth;
     needs multi-AOI ranking support
   user_story_refs: USY-001642 national alert monitoring; USY-001596
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids set to all 26
+    DRC provinces (COD.1 to COD.26, as pick_aoi resolved them in 20261023T094447Z_prod) so
+    a partial scan fails; figure added (the top province''s 30-day alert area; the province
+    name itself is not expressible as a figure); the capability facet stays as the BEF sheet
+    has it'
   benchmark_id: bm26-078
   benchmark_type: monitoring
   use_cases: UC2
   engagement: First look
   aoi_type: Portfolio / many areas
-  capability: Supported
+  capability: 'Not yet: expect clear redirect'
   grounding: Story analogue
-  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids set to all 26
-    DRC provinces (COD.1 to COD.26, as pick_aoi resolved them in 20261023T094447Z_prod) so
-    a partial scan fails; figure added (the top province''s 30-day alert area; the province
-    name itself is not expressible as a figure); capability Not yet -> Supported'
