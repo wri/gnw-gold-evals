@@ -9,6 +9,7 @@ from goldset.evaluators.aoi_evaluator import _normalize_aoi_ids
 def evaluate_dashboard_created(
     agent_state: dict[str, Any],
     expected_dashboard_created: bool | None,
+    accept_dashboard: bool | None = None,
 ) -> dict[str, Any]:
     """Check whether a dashboard was created in this turn.
 
@@ -17,13 +18,17 @@ def evaluate_dashboard_created(
         expected=True,  actual=False -> 0.0 (wrong - expected but not created)
         expected=False, actual=False -> 1.0 (correct)
         expected=False, actual=True  -> 0.0 (guardrail: unwanted dashboard)
-        expected=None,  actual=True  -> 0.0 (unsolicited dashboard creation)
+        expected=None,  actual=True  -> 0.0 (unsolicited dashboard creation),
+                                        or None when accept_dashboard is set
         expected=None,  actual=False -> None (not evaluated)
 
     Args:
         agent_state: Final agent state after execution
         expected_dashboard_created: Expected dashboard-creation behavior
             (True/False/None, None meaning "no expectation")
+        accept_dashboard: a dashboard is a fair answer but not a required one
+            (AJ, 2026-10-28, ch-mon-047: a printable map asked for, a dashboard
+            made and described as one), so an unsolicited one is not scored
 
     Returns:
         Dict with dashboard_created_score (0/1/None), actual_dashboard_created,
@@ -34,7 +39,7 @@ def evaluate_dashboard_created(
     actual_dashboard_created = bool(dashboard_id)
 
     if expected_dashboard_created is None:
-        score = 0.0 if actual_dashboard_created else None
+        score = 0.0 if actual_dashboard_created and not accept_dashboard else None
     else:
         score = 1.0 if actual_dashboard_created == expected_dashboard_created else 0.0
 

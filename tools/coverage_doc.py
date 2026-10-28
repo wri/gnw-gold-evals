@@ -75,6 +75,7 @@ FIELD_CHECKS = {
     "nudge_type": "nudge_match",
     "nudge_options": "nudge_match",
     "dashboard_created": "dashboard_created",
+    "accept_dashboard": "dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored)",
     "dashboard_widgets": "dashboard_widgets_match, dashboard_widgets_valid",
     "class_values": "class_value_match (info-only)",
     "chart_type": "chart_type_match",

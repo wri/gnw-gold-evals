@@ -170,7 +170,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         kind="deterministic",
         score_fields=("dashboard_created_score",),
         run=lambda state, expected, query, dashboard: evaluate_dashboard_created(
-            state, expected.expected_dashboard_created
+            state, expected.expected_dashboard_created, expected.expected_accept_dashboard
         ),
     ),
     EvaluatorSpec(

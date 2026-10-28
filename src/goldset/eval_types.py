@@ -210,6 +210,10 @@ class ExpectedData(BaseModel):
     expected_clarification: bool | None = None
     expected_suggested_datasets: list[str] = []
     expected_dashboard_created: bool | None = None
+    # A dashboard is allowed but not required: dashboard_created abstains on
+    # an unsolicited one instead of failing it (evaluate_dashboard_created).
+    # Opt-in, TRUE only.
+    expected_accept_dashboard: bool | None = None
     expected_dashboard_widgets: list[str] | None = None
     expected_nudge_type: str = ""
     expected_nudge_options: list[str] = []
@@ -316,6 +320,15 @@ class ExpectedData(BaseModel):
     def parse_dashboard_created(cls, v: str | bool | None) -> bool | None:
         """Convert string input to boolean or None (tri-state: True/False/no-expectation)."""
         return _parse_tri_state_bool(v)
+
+    @field_validator("expected_accept_dashboard", mode="before")
+    @classmethod
+    def parse_accept_dashboard(cls, v: str | bool | None) -> bool | None:
+        """TRUE or absent; anything else is a typo that would fail silently."""
+        parsed = _parse_tri_state_bool(v)
+        if v not in (None, "") and parsed is not True:
+            raise ValueError(f"accept_dashboard must be TRUE, got {v!r}")
+        return parsed
 
     @field_validator("expected_data_pull", mode="before")
     @classmethod

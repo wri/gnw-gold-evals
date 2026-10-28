@@ -974,7 +974,11 @@ row, on an unsolicited dashboard.**
 `False/True` → 0.0 (guardrail); **`None/True` → 0.0** (unsolicited creation is a
 guardrail violation on a row that never mentioned dashboards); `None/False` →
 `null`. That fifth row is the one to remember: this check can fail a case that
-set no dashboard expectation at all.
+set no dashboard expectation at all. A case where a dashboard is a fair answer
+but not a required one sets `accept_dashboard: TRUE`, and an unsolicited
+dashboard is then not scored (AJ, 2026-10-28, `ch-mon-047`: asked for a
+printable map, Horizon made a dashboard and said so). Any value but `TRUE`
+raises.
 
 **Reason**: none; `actuals.dashboard_created` = the boolean.
 
