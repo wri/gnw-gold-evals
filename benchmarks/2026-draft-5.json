@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "b0b5a1738ab7af95"
+    "caseset_version": "45a3459ea5da3b8e"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -847,7 +847,7 @@
       "synthetic": false
     },
     {
-      "uid": "e1d8440ce1f35fb0",
+      "uid": "42640cf0287be5fd",
       "id": "ch-comp-149",
       "type": "comparison",
       "set": "comparison",
@@ -2447,7 +2447,7 @@
       "synthetic": true
     },
     {
-      "uid": "c1a7d9e0c7761ec4",
+      "uid": "db652b6d07e80e90",
       "id": "ch-causal-015",
       "type": "causal",
       "set": "causal",
@@ -2465,7 +2465,7 @@
       "synthetic": true
     },
     {
-      "uid": "9eff4bd32471f9b3",
+      "uid": "af3e3402bfbacc5c",
       "id": "ch-causal-018",
       "type": "causal",
       "set": "causal",
@@ -2881,7 +2881,7 @@
       "synthetic": false
     },
     {
-      "uid": "65e604df30a5eaf7",
+      "uid": "0a499e532439b38e",
       "id": "ch-comp-034",
       "type": "comparison",
       "set": "comparison",
@@ -3909,7 +3909,7 @@
       "synthetic": true
     },
     {
-      "uid": "94be109e2bc75ff5",
+      "uid": "102dc64beb8f0aa0",
       "id": "ch-quant-180",
       "type": "quantification",
       "set": "quantification",

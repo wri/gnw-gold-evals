@@ -1,5 +1,5 @@
 id: ch-causal-015
-uid: c1a7d9e0c7761ec4
+uid: db652b6d07e80e90
 status: ready
 set: causal
 group: driver_vs_fire
@@ -11,6 +11,7 @@ expected:
   end_date: '2023-12-31'
   data_pull: 'TRUE'
   accept_nudge_offering: '8'
+  accept_fixed_period: 2001-2025
   figure: 'ref: sum(area_ha) where tree_cover_loss_driver = ''Wildfire'' ; ref: sum(area_ha)
     where tree_cover_loss_driver in (''Permanent agriculture'', ''Shifting cultivation'')'
   figure_claim: '#1 > #2 :: fires are a bigger cause of tree cover loss than agriculture ||
@@ -35,4 +36,7 @@ notes:
     (10), extras allowed; a correct pull still passes. 20261023T094447Z_prod: attempt 2 nudged
     with 8, 10 and loss (4); attempts 1 and 3 pulled; 2026-10-27 draft-5 review (AJ asked
     to apply the review): accept_nudge_offering 8;10 -> 8 (drivers alone answers; extras still
-    allowed); figures and claim added (wildfire against agriculture classes)'
+    allowed); figures and claim added (wildfire against agriculture classes); 2026-10-28 (AJ,
+    draft-5 failures review): accept_fixed_period 2001-2025 added, since the drivers data
+    only come as 2001 to 2025 as a whole and answer_period_match failed replies that said
+    so'

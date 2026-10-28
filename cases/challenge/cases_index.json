@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "b0b5a1738ab7af95",
+  "caseset_version": "45a3459ea5da3b8e",
   "case_count": 949,
   "cases": [
     {
@@ -3355,7 +3355,7 @@
     },
     {
       "id": "ch-causal-015",
-      "uid": "c1a7d9e0c7761ec4",
+      "uid": "db652b6d07e80e90",
       "set": "causal",
       "group": "driver_vs_fire",
       "status": "ready",
@@ -3363,6 +3363,7 @@
       "behaviour": "answer with drivers + fire data",
       "query": "Are fires or agriculture the bigger cause of tree cover loss in Madre de Dios, 2015–2023?",
       "expected_fields": [
+        "accept_fixed_period",
         "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
@@ -3445,7 +3446,7 @@
     },
     {
       "id": "ch-causal-018",
-      "uid": "9eff4bd32471f9b3",
+      "uid": "af3e3402bfbacc5c",
       "set": "causal",
       "group": "why_pa",
       "status": "ready",
@@ -4684,7 +4685,7 @@
     },
     {
       "id": "ch-comp-034",
-      "uid": "65e604df30a5eaf7",
+      "uid": "0a499e532439b38e",
       "set": "comparison",
       "group": "sluc",
       "status": "ready",
@@ -4693,17 +4694,14 @@
         "aoi_ids",
         "data_pull",
         "dataset_id",
-        "end_date",
         "figure",
-        "figure_claim",
-        "start_date"
+        "figure_claim"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
+        "dataset_id_match"
       ],
       "intent": "comparison",
       "dataset_ids": [
@@ -7698,7 +7696,7 @@
     },
     {
       "id": "ch-comp-149",
-      "uid": "e1d8440ce1f35fb0",
+      "uid": "42640cf0287be5fd",
       "set": "comparison",
       "group": "integrated-alerts",
       "status": "ready",
@@ -20123,7 +20121,7 @@
     },
     {
       "id": "ch-quant-180",
-      "uid": "94be109e2bc75ff5",
+      "uid": "102dc64beb8f0aa0",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",

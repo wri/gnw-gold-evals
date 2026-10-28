@@ -5,9 +5,9 @@ never hand-edited. Regenerate after any case edit; CI can verify
 freshness with `--check`. Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 
-`caseset_version b0b5a1738ab7af95` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version 45a3459ea5da3b8e` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-10-27_
+_Last updated: 2026-10-28_
 
 ## Groups
 
@@ -102,8 +102,8 @@ friends) run on top of it whenever their trigger state exists.
 | dataset_id | 712 | dataset_id_match |
 | aoi_ids | 613 | aoi_id_match |
 | data_pull | 516 | data_pull_exists, answered_without_data |
-| start_date | 324 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| end_date | 323 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| start_date | 323 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| end_date | 322 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | forbidden_tools | 200 | forbidden_tools_absent |
 | text | 194 | expected_text_match |
 | context_layer | 181 | context_layer_match |
@@ -117,6 +117,7 @@ friends) run on top of it whenever their trigger state exists.
 | nudge_options | 6 | nudge_match |
 | accept_aoi_nudge_offering | 4 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | accept_blog_sources | 3 | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
+| accept_fixed_period | 1 | answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes) |
 | answer | 0 ← unused | agent_answer, charts_answer, chart_produced |
 | aoi_source | 0 ← unused | reference only (dashboard AOI source) |
 | chart_type | 0 ← unused | chart_type_match |

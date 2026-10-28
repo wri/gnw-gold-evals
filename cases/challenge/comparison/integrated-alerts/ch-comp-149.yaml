@@ -1,5 +1,5 @@
 id: ch-comp-149
-uid: e1d8440ce1f35fb0
+uid: 42640cf0287be5fd
 status: ready
 set: comparison
 group: integrated-alerts
@@ -9,7 +9,9 @@ expected:
   aoi_ids: CIV.2.2
   dataset_id: '11'
   data_pull: 'TRUE'
-  text: Does not present the emailed 40 hectares as a figure from the alert data.
+  text: Does not present the emailed 40 hectares as a figure from the alert data. Referring
+    to the 40 hectares as the user's emailed figure, for example to compare it with what the
+    data show, is fine.
 notes:
   behaviour: Compare same month across years with data
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-037); USY-001582 Western North; Alerts
@@ -38,4 +40,5 @@ notes:
     version (notes.ghana_original) once it is fixed; 2026-10-27 draft-5 review (AJ asked to
     apply the review): text shortened to the one misleading behaviour (the emailed 40 ha presented
     as a figure from the data); no figure: the harness has no run-relative token for the same
-    month last year'
+    month last year; 2026-10-28 (AJ, draft-5 failures review): text says crediting the 40
+    ha to the email is fine (two draft-5 attempts did exactly that and failed)'

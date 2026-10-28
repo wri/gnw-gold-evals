@@ -1,5 +1,5 @@
 id: ch-comp-034
-uid: 65e604df30a5eaf7
+uid: 0a499e532439b38e
 status: ready
 set: comparison
 group: sluc
@@ -8,8 +8,6 @@ query: 'In Brazil, which crop has a higher deforestation emission factor per ton
 expected:
   aoi_ids: BRA
   dataset_id: '9'
-  start_date: '2024-01-01'
-  end_date: '2024-12-31'
   data_pull: 'TRUE'
   figure: sum(emissions_factor_tCO2e_per_tonne_production) where aoi_id = 'BRA' and crop_type
     = 'Soybean' and gas_type = 'CO2e' and year = 2024 ; sum(emissions_factor_tCO2e_per_tonne_production)
@@ -38,4 +36,8 @@ notes:
   grounding: Verified Challenge case
   expectations: draft-5 review 2026-10-27
   review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
-    added (direction and the asked figures are checked from the pulled table)'
+    added (direction and the asked figures are checked from the pulled table); 2026-10-28
+    (AJ, draft-5 failures review): start_date and end_date (2024) removed, which drops answer_period_match
+    and date_extraction; only a correct answer matters, and the figures already pin year 2024.
+    answer_period_match had read the sLUC method''s 2001 to 2020 look-back window as the reported
+    period'

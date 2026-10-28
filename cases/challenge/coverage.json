@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "b0b5a1738ab7af95",
+  "caseset_version": "45a3459ea5da3b8e",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -584,12 +584,12 @@
     },
     {
       "field": "start_date",
-      "cases": 324,
+      "cases": 323,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "end_date",
-      "cases": 323,
+      "cases": 322,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
@@ -656,6 +656,11 @@
       "field": "accept_blog_sources",
       "cases": 3,
       "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
+    },
+    {
+      "field": "accept_fixed_period",
+      "cases": 1,
+      "switches_on": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)"
     },
     {
       "field": "answer",
