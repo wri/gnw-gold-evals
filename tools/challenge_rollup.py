@@ -10,9 +10,11 @@ Where GOLD's verdict is a regression count (``tools/diff_runs.py``), a
 CHALLENGE run's verdict is a **pass rate per cohort** with a confidence
 interval, compared against ``cases/challenge/TARGETS.yml``. Semantics:
 
-- The **rate** is the majority-verdict pass rate: rows whose non-info
-  checks all passed (``goldset.buckets.row_verdict``), over rows that were
-  actually measured (verdict ``pass`` or ``fail``).
+- The **rate** is the majority-verdict pass rate: rows right on most of
+  their scored attempts, an attempt being right when its non-info checks all
+  passed (``goldset.buckets.row_verdict``; attempt majority since
+  2026-10-28), over rows that were actually measured (verdict ``pass`` or
+  ``fail``).
 - **strict** additionally requires every trial of every non-info check to
   have passed — the "clean on every trial" rate. On 1-trial runs it equals
   the rate.
@@ -68,6 +70,7 @@ from goldset.benchmark import (  # noqa: E402
 )
 from goldset.buckets import (  # noqa: E402
     DEDICATED,
+    attempt_verdict,
     base_check_name,
     is_info_only,
     row_verdict,
@@ -525,14 +528,32 @@ def render_markdown(rollups: list[dict[str, Any]], targets: dict[str, Any]) -> s
 ATTRIBUTION = (*STAGE_ORDER, "unattributed")
 
 
-def primary_failure(entry: dict[str, Any]) -> str:
-    """Earliest failing dedicated stage in STAGE_ORDER; ``unattributed`` when
-    only shared (or unbucketed) checks failed."""
-    stages = {
+def _failed_stages(checks: dict[str, Any]) -> set[str]:
+    return {
         DEDICATED[base_check_name(name)]
-        for name, value in (entry.get("checks") or {}).items()
+        for name, value in checks.items()
         if value == 0.0 and not is_info_only(name) and base_check_name(name) in DEDICATED
     }
+
+
+def primary_failure(entry: dict[str, Any]) -> str:
+    """Earliest failing dedicated stage in STAGE_ORDER; ``unattributed`` when
+    only shared (or unbucketed) checks failed.
+
+    The merged checks decide first. A row judged wrong by its attempts can
+    have no check failing on most of them (ch-mon-045: the text failed on one
+    attempt, a chart on another), so it then takes the earliest dedicated
+    stage that failed on any of its failed attempts."""
+    stages = _failed_stages(entry.get("checks") or {})
+    if not stages:
+        trials = entry.get("trials") or []
+        if isinstance(trials, dict):
+            trials = list(trials.values())
+        stages = set().union(*(
+            _failed_stages(trial.get("checks") or {})
+            for trial in trials
+            if isinstance(trial, dict) and attempt_verdict(trial) == "fail"
+        ))
     return next((s for s in STAGE_ORDER if s in stages), "unattributed")
 
 
@@ -542,7 +563,7 @@ def failure_stage(entry: dict[str, Any]) -> str:
 
     A failed verdict keeps ``primary_failure``, so the majority standard
     matches the rollup. A question that passed on the verdict but failed on
-    some trials has no failing final check, so it goes to the earliest
+    some trials goes to the earliest
     dedicated stage among gating checks that scored 0.0 on any trial
     (``unattributed`` when only shared or unbucketed checks did). Each
     question therefore sits at one stage under every standard, and a

@@ -159,14 +159,28 @@ def test_rows_on_the_nudge_path_are_judged_by_attempt_majority():
     assert row_verdict({**entry, "error": "timeout"}) == "error"
 
 
-def test_rows_off_the_nudge_path_keep_per_check_majority():
-    entry = {
+def test_every_row_is_judged_by_attempt_majority():
+    # AJ, 2026-10-28. Right on 1 of 3, its failures on different checks:
+    # each check's majority passes, but the row is wrong.
+    one_of_three = {
         "checks": {"aoi_id_match": 1.0, "data_pull_exists": 1.0},
         "trials": [{"checks": {"aoi_id_match": 1.0, "data_pull_exists": 0.0}},
                    {"checks": {"aoi_id_match": 1.0, "data_pull_exists": 1.0}},
                    {"checks": {"aoi_id_match": 0.0, "data_pull_exists": 1.0}}],
     }
-    assert row_verdict(entry) == "pass"
+    assert row_verdict(one_of_three) == "fail"
+    # ch-comp-034 on 28 Oct: right on 2 of 3; web_fallback scored only on the
+    # attempt that answered from blogs, so its per-check majority was 0.0.
+    pulled = {"data_pull_exists": 1.0, "web_fallback": None}
+    two_of_three = {
+        "checks": {"data_pull_exists": 1.0, "web_fallback": 0.0},
+        "trials": [{"checks": pulled}, {"checks": pulled},
+                   {"checks": {"data_pull_exists": 0.0, "web_fallback": 0.0}}],
+    }
+    assert row_verdict(two_of_three) == "pass"
+    # without per-trial detail (a one-trial run) the row's checks decide
+    assert row_verdict({"checks": {"aoi_id_match": 0.0}}) == "fail"
+    assert row_verdict({"checks": {"aoi_id_match": None}}) == "uncovered"
 
 
 def test_reconcile_owes_only_the_checks_of_the_path_taken():

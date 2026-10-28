@@ -33,9 +33,9 @@ this rule.
 Opt-in: it fires only on rows that set one of the two fields (``;``-separated
 ids, hashed into the uid), so GOLD is unaffected. Fair alternative offers are
 separated by ``|`` (``4;8 | 9``): the nudge must cover one of them in full
-(draft-5 review, 2026-10-27). Because attempts can take
-different paths, ``buckets.row_verdict`` judges these rows by the majority of
-attempt verdicts, not by per-check majority.
+(draft-5 review, 2026-10-27). Attempts can take different paths, which is
+why ``buckets.row_verdict`` judges a row by the majority of its attempt
+verdicts (every row since 2026-10-28; these rows first).
 """
 
 from __future__ import annotations

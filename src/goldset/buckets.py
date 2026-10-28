@@ -15,6 +15,11 @@ Three verdict rules the flat mean got wrong, now explicit:
   is an *error*, not a failure;
 - an unmeasured bucket renders as unmeasured, never omitted.
 
+A row passes when most of its attempts pass, each attempt judged on all the
+checks it scored (``row_verdict``; AJ, 2026-10-28). The per-check majorities
+the ledger stores under ``checks`` still drive the bucket tallies and
+regression diffs.
+
 An attempt that got no reply (``no_answer``: Horizon stopped sending,
 dropped the connection or failed) is a failed attempt, not an error: the
 user got nothing (AJ, 2026-10-27). Only a row with no attempt the harness
@@ -181,13 +186,17 @@ def attempt_verdict(trial: dict[str, Any]) -> str:
 def row_verdict(entry: dict[str, Any]) -> str:
     """pass | fail | error | uncovered, per the rules above.
 
-    A row whose case accepts a nudge or a blog answer can pass by either
-    path, and its attempts may take different ones; each path leaves the other's checks
-    null, so a per-check majority would let a check measured on one attempt
-    decide the row. Such rows pass when the majority of their scored
-    attempts pass (ties fail, as in ``ledger.majority``). So do rows with an
-    attempt that got no reply, which counts as a failed attempt; an attempt
-    the harness could not score (its trial's ``error``) is left out.
+    A row is judged by its attempts: it passes when the majority of its
+    scored attempts pass (ties fail, as in ``ledger.majority``), and an
+    attempt passes when every gating check it scored passed. An attempt
+    that got no reply counts as a failed attempt; one the harness could not
+    score (its trial's ``error``) is left out. A row without per-trial
+    detail (a one-trial run) is judged on its own checks.
+
+    AJ, 2026-10-28: the per-check majority used before let a check scored
+    on one attempt decide the row, failing rows right on 2 of 3 attempts
+    (the nudge, blog and no-pull paths leave the other path's checks null),
+    and passed rows right on 1 of 3 whose attempts failed different checks.
     """
     if entry.get("error") or entry.get("judge_errors"):
         return "error"
@@ -198,8 +207,7 @@ def row_verdict(entry: dict[str, Any]) -> str:
     if isinstance(trials, dict):
         trials = list(trials.values())
     trials = [trial for trial in trials if isinstance(trial, dict)]
-    if any(trial.get("no_answer") or _took_alternative_path(trial.get("checks") or {})
-           for trial in trials):
+    if trials:
         verdicts = [attempt_verdict(trial) for trial in trials]
         scored = [verdict for verdict in verdicts if verdict in ("pass", "fail")]
         if not scored:

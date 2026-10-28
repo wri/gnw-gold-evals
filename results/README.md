@@ -97,7 +97,9 @@ results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | ch
   reconciliation line) — see PR-05.
 - **Multi-trial runs** store one entry per case with
   `"trials": [{...}, {...}, {...}]` per check where trials > 1; the
-  top-level `checks` value is the majority verdict.
+  top-level `checks` value is each check's majority verdict. The row's
+  verdict is the majority of its attempts' verdicts (`buckets.row_verdict`,
+  since 2026-10-28), not a reading of those per-check majorities.
 - **No fabricated or backfilled runs.** A ledger entry is written by the
   ingester from real harness output, never by hand.
 

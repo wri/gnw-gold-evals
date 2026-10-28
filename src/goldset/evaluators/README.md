@@ -1277,9 +1277,9 @@ paths, and each attempt is judged on the one it took:
 
 **Row verdict**: attempts on different paths leave each other's checks `null`,
 so a per-check majority would let a check measured on one attempt decide the
-row. A row where any attempt took the nudge path is judged by the majority of
-its attempt verdicts instead (`buckets.row_verdict`, ties fail; mirrored in
-both report templates). Reconciliation owes a row only the checks of the path
+row. Such rows were the first judged by the majority of their attempt
+verdicts; since 2026-10-28 every row is (`buckets.row_verdict`, ties fail;
+mirrored in both report templates). Reconciliation owes a row only the checks of the path
 its merged checks show.
 
 **Fires on** `accept_nudge_offering` (`;`-separated dataset ids) and
@@ -1313,7 +1313,7 @@ be answered from data. Like the accepted nudge, it is a second path:
   not count links to the listed posts.
 
 Rows with an attempt on either alternative path are judged by attempt
-majority (`buckets.row_verdict`).
+majority (`buckets.row_verdict`), as every row is since 2026-10-28.
 
 **Fires on** `accept_blog_sources`. Opt-in, so no GOLD row fires it.
 

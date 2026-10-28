@@ -193,7 +193,8 @@ def _unscored(entry: dict) -> str | None:
 
 
 def merge_trials(entries: list[dict]) -> dict:
-    """Fold per-trial entries into one: majority verdict + per-trial detail.
+    """Fold per-trial entries into one: per-check majority + per-trial detail
+    (the row verdict is the majority of the attempts, ``buckets.row_verdict``).
 
     An attempt the harness could not score stays out of the per-check
     majority, its reason kept as its trial's ``error``. An attempt that got

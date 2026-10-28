@@ -18,8 +18,8 @@ each attempt is judged on the one it took:
   posts (``guards.py``): citing a post the case accepts is not falling back
   to the web.
 
-Like the accepted-nudge path, rows with an attempt on the blog path are judged
-by the majority of attempt verdicts (``buckets.row_verdict``).
+Like every row, rows with an attempt on the blog path are judged by the
+majority of attempt verdicts (``buckets.row_verdict``).
 """
 
 from __future__ import annotations

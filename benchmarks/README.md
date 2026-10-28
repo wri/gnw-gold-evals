@@ -131,8 +131,13 @@ points each run at its page. The page's headline is the share of questions
 right on **every** trial (`every_time`); `majority` is the North Star below.
 
 - **North Star**: majority-verdict complete rate (a question counts when
-  every applicable non-info check passed in the majority of trials) over
-  active members that were measured, with a Wilson 95% interval.
+  the majority of its scored attempts were right, an attempt being right
+  when every applicable non-info check passed on it) over active members
+  that were measured, with a Wilson 95% interval. AJ switched to this
+  attempt majority on 2026-10-28; before, a question counted when each
+  check passed in the majority of trials, which let a check scored on one
+  attempt fail a question right on 2 of 3, and passed one right on 1 of 3
+  whose attempts failed different checks.
 - **Consistency**: of complete answers, the share clean on every trial.
 - **Availability**: an attempt that got no reply (the stream stalled,
   dropped or failed) counts as a wrong attempt, and the page reports how
@@ -143,7 +148,9 @@ right on **every** trial (`every_time`); `majority` is the North Star below.
   member).
 - **Per type**: the same rate, and failure modes by primary-failure
   attribution: each failed member goes to its earliest failing dedicated
-  stage in `stage_order`; failures only on shared checks are `unattributed`.
+  stage in `stage_order` (from its per-check majorities, or, when none
+  failed, from the checks that failed on its wrong attempts); failures only
+  on shared checks are `unattributed`.
   Pass + stages + unattributed = 100% of measured.
 - **Failure modes by standard** (page data only, `failure_modes_by_standard`
   on every group): the same breakdown for each accuracy standard the page

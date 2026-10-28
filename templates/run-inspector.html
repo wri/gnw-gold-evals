@@ -241,19 +241,21 @@ function flakySet(entry) {
   return flaky;
 }
 
-// Mirrors buckets.row_verdict: a row whose attempts took an accepted
-// alternative path (nudge or blog) is judged by the majority of its attempt
-// verdicts.
-function tookNudgePath(checks) {
-  return Object.entries(checks || {})
-    .some(([n, v]) => ["accepted_nudge_match", "accepted_blog_match"].includes(base(n)) && v !== null);
+// Mirrors buckets.row_verdict: a row passes when most of its scored attempts
+// pass (ties fail); an attempt with no reply fails, one the harness could not
+// score is left out, and a row without per-trial detail is judged on its checks.
+function attemptVerdict(trial, infoOnly) {
+  if (trial.no_answer) return "fail";
+  if (trial.error) return "error";
+  return verdict({ checks: trial.checks }, infoOnly);
 }
 
 function verdict(entry, infoOnly) {
   if (entry.error || (entry.judge_errors || []).length) return "error";
-  const trials = entry.trials || [];
-  if (trials.some(t => tookNudgePath(t.checks))) {
-    const scoredTrials = trials.map(t => verdict({ checks: t.checks }, infoOnly))
+  if (entry.no_answer) return "fail";
+  const trials = Object.values(entry.trials || {}).filter(t => t && typeof t === "object");
+  if (trials.length) {
+    const scoredTrials = trials.map(t => attemptVerdict(t, infoOnly))
       .filter(v => v === "pass" || v === "fail");
     if (!scoredTrials.length) return "uncovered";
     const passes = scoredTrials.filter(v => v === "pass").length;

@@ -23,7 +23,9 @@ perform on prompts like X?" with a **pass rate per cohort**. Plan of record:
 - **The headline is a rate, never a regression count.** Verdicts come from
   `tools/challenge_rollup.py`: pass rates overall, per set, and per
   cohort/difficulty within each set, with Wilson 95% confidence intervals,
-  against `TARGETS.yml`.
+  against `TARGETS.yml`. A case passes when most of its attempts were right
+  (AJ, 2026-10-28; before, when each check passed on most attempts), so
+  rates in reports written before then are not comparable point for point.
 - **Every case still has a defined correct behaviour**, including the ones
   expected to fail today. `notes.behaviour` records it: `select` (right
   AOI(s) chosen), `nudge` (asks with the right options), `clarify` /
