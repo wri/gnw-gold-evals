@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "ca87ae3624fe89f5",
+  "caseset_version": "d1d6c95aaad4cdce",
   "case_count": 949,
   "cases": [
     {
@@ -14361,7 +14361,7 @@
     },
     {
       "id": "ch-mon-047",
-      "uid": "2c19cce5daa80ffe",
+      "uid": "1c8088c4b55cdf28",
       "set": "monitoring",
       "group": "unsupported_action",
       "status": "ready",

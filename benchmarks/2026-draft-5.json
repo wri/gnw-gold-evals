@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "ca87ae3624fe89f5"
+    "caseset_version": "d1d6c95aaad4cdce"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -643,7 +643,7 @@
       "synthetic": true
     },
     {
-      "uid": "2c19cce5daa80ffe",
+      "uid": "1c8088c4b55cdf28",
       "id": "ch-mon-047",
       "type": "monitoring",
       "set": "monitoring",
