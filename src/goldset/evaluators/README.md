@@ -574,6 +574,8 @@ axis, the field, and the padding ratio.
 - Deliberate overlap with `chart_well_formed`: a broken *spec* is an Output
   failure, a mis-joined *dataset* under a plausible spec is an Analysis failure
   (`output_checks.py:5-8`). The two reason strings read differently on purpose.
+- Tables are skipped: the FE's table widget renders only the records and the
+  title, so a table's axis fields are never drawn (AJ, 2026-10-28).
 - **The most stable check in the suite**: 0.99, ±0.01 over 94 rows in
   `20260803T201245Z`, which is why
   `results/gold/recommendations/20260803T201245Z.md` item 4 treats its verdict on
@@ -922,7 +924,10 @@ whatever the analysis computed (`output_checks.py:20-60`).
 
 **`null` vs `0.0`**: `null` only when there are no charts (`:27-28`). `0.0` for a
 non-object chart entry, empty/absent record data, or an axis naming a field that
-appears in no record.
+appears in no record. A table's axes are not checked, since the FE's table
+widget renders only the records and the title (AJ, 2026-10-28: `ch-quant-157`
+failed on a table whose unused `xAxis` named a missing field); an empty table
+still fails.
 
 **Reason**: `reasons.chart_well_formed`, semicolon-joined per problem, e.g.
 `"chart 1 (pie): empty data; chart 1 (pie): xAxis references field 'driver'

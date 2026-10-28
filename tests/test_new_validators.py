@@ -97,6 +97,12 @@ def test_a3_clean_chart_passes_and_no_chart_abstains():
     assert evaluate_chart_integrity(state())["chart_integrity_score"] is None
 
 
+def test_a3_skips_table_axis_fields():
+    table = {**CHART_1_060, "type": "table"}
+    assert evaluate_chart_integrity(state(charts=[table]))[
+        "chart_integrity_score"] == 1.0
+
+
 # --- E1 answer_traceability
 
 def test_e1_catches_1_027_untraceable_figure():
@@ -133,6 +139,16 @@ def test_o2_axis_referencing_missing_field_fails():
     result = evaluate_chart_well_formed(state(charts=[broken]))
     assert result["chart_well_formed_score"] == 0.0
     assert "absent from data" in result["chart_well_formed_reason"]
+
+
+def test_o2_table_axis_fields_are_not_checked():
+    # ch-quant-157 (draft-5): a table whose xAxis names a field no record has
+    table = {**CHART_1_027, "type": "table", "xAxis": "label"}
+    assert evaluate_chart_well_formed(state(charts=[table]))[
+        "chart_well_formed_score"] == 1.0
+    empty = {"type": "table", "xAxis": "x", "data": []}
+    assert evaluate_chart_well_formed(state(charts=[empty]))[
+        "chart_well_formed_score"] == 0.0
 
 
 def test_o2_empty_data_fails_and_pie_slices_are_info_only():
