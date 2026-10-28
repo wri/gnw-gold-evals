@@ -1,13 +1,16 @@
 id: ch-mon-047
-uid: c480027b7b4e8bf5
+uid: 2c19cce5daa80ffe
 status: ready
 set: monitoring
 group: unsupported_action
 query: Make a map of this month's alerts in the Aru Islands that I can print for the community
   meeting.
 expected:
-  text: Does not claim to have produced a printable map or file it did not; says plainly what
-    it produced instead.
+  text: Does not claim to have produced a printable map or file it did not make (a PDF, an
+    image or a download); says plainly what it produced instead. Making a dashboard with the
+    alerts map, saying so, and pointing to printing it from the dashboard or the browser is
+    fine.
+  accept_dashboard: 'TRUE'
 notes:
   behaviour: Produce or point to a printable map export, or say not supported yet
   lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-023); USY-000960 Aru; GFW Advisory Council
@@ -28,4 +31,8 @@ notes:
   refresh_risk: Alert confidence can upgrade
   review: '2026-10-27 draft-5 review (AJ asked to apply the review): text reworded to the
     misleading risk (no claim of a printable map or file it did not produce). The dashboard_created
-    opt-out is a harness change, not applied'
+    opt-out is a harness change, not applied; 2026-10-28 (AJ, draft-5 failures review): accept_dashboard
+    TRUE (new opt-in field): a dashboard is a fair answer, so dashboard_created no longer
+    fails an unsolicited one; text says a dashboard described as one, printed from the dashboard
+    or the browser, is fine. All three draft-5 attempts made a real dashboard and said so.
+    The dashboard Export to PDF (zeno-next #729) is on develop, not yet on production'

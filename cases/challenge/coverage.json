@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "45a3459ea5da3b8e",
+  "caseset_version": "ca87ae3624fe89f5",
   "case_count": 949,
   "statuses": {
     "ready": 914,
@@ -562,7 +562,7 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 243,
+      "dedicated": 245,
       "shared_only": 0
     }
   },
@@ -629,7 +629,7 @@
     },
     {
       "field": "accept_nudge_offering",
-      "cases": 18,
+      "cases": 20,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {
@@ -656,6 +656,11 @@
       "field": "accept_blog_sources",
       "cases": 3,
       "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
+    },
+    {
+      "field": "accept_dashboard",
+      "cases": 1,
+      "switches_on": "dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored)"
     },
     {
       "field": "accept_fixed_period",

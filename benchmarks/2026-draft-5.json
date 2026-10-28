@@ -6,7 +6,7 @@
   "frozen": null,
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "45a3459ea5da3b8e"
+    "caseset_version": "ca87ae3624fe89f5"
   },
   "sampling": {
     "tool": "tools/benchmark_from_sheet.py",
@@ -643,7 +643,7 @@
       "synthetic": true
     },
     {
-      "uid": "c480027b7b4e8bf5",
+      "uid": "2c19cce5daa80ffe",
       "id": "ch-mon-047",
       "type": "monitoring",
       "set": "monitoring",
@@ -742,13 +742,14 @@
       "synthetic": true
     },
     {
-      "uid": "89f9b92fcbd7846c",
+      "uid": "077ad13a262eee61",
       "id": "ch-causal-019",
       "type": "causal",
       "set": "causal",
       "cohort": "alert_cause",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -795,13 +796,14 @@
       "synthetic": true
     },
     {
-      "uid": "f020f0edc3509f36",
+      "uid": "34e783d6bed35888",
       "id": "ch-causal-022",
       "type": "causal",
       "set": "causal",
       "cohort": "why_subnational",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
@@ -1059,7 +1061,7 @@
       "synthetic": false
     },
     {
-      "uid": "8687681a6e823d74",
+      "uid": "7e47259dd8dddf07",
       "id": "ch-trend-050",
       "type": "trend",
       "set": "trend",
@@ -1131,7 +1133,7 @@
       "synthetic": true
     },
     {
-      "uid": "cfb58f6185790b23",
+      "uid": "b8b310be464aca90",
       "id": "ch-mon-057",
       "type": "monitoring",
       "set": "monitoring",
@@ -3478,7 +3480,7 @@
       "synthetic": false
     },
     {
-      "uid": "494e9631d915b59c",
+      "uid": "e3b8d54b3ce52176",
       "id": "ch-trend-001",
       "type": "trend",
       "set": "trend",

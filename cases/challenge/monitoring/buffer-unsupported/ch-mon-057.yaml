@@ -1,15 +1,15 @@
 id: ch-mon-057
-uid: cfb58f6185790b23
+uid: b8b310be464aca90
 status: ready
 set: monitoring
 group: buffer_unsupported
-query: Are any of this month's alerts in Boumba Bek National Park within 5 km of the park
+query: Were any of the June 2026 alerts in Boumba Bek National Park within 5 km of the park
   boundary?
 expected:
   aoi_ids: '308624'
   text: Says it cannot analyse a buffer around the park boundary and offers the in-park total;
     does not claim to have checked outside or near the boundary.
-  figure: sum(area_ha) where alert_date in {month_start}..{run}
+  figure: sum(area_ha) where alert_date in 2026-06-01..2026-06-30
 notes:
   behaviour: Answer with buffer analysis, or say buffers are not supported and offer the in-park
     total
@@ -20,7 +20,7 @@ notes:
     2026-10-27'
   synthetic: 'TRUE'
   verified: 'AOI ids: prod-api /api/aois 2026-10-23'
-  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  build_notes: 'Fixed month: June 2026 (AJ, 2026-10-28); AOI id to verify'
   capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
   benchmark_id: bm26-053
   benchmark_type: monitoring
@@ -35,4 +35,11 @@ notes:
     satisfies (same rule as ch-mon-055).; 2026-10-27 draft-5 review (AJ asked to apply the
     review): text: the decline is the only right branch (Horizon cannot analyse a buffer;
     A0 and A2 claimed a 5 km buffer check); re-open the answer branch if buffers ship; figure
-    added (the in-park month-to-date total it offers)'
+    added (the in-park month-to-date total it offers); 2026-10-28 (AJ, draft-5 failures review):
+    the question names June 2026 instead of this month. On 27 October no alerts had fallen
+    in the park that month, so ''none within 5 km'' was true if the boundary is read from
+    inside, and the case could not tell a decline from an invented buffer check; June 2026
+    had 19.19 ha of alerts in the park (13 alert days, analytics API 2026-10-28). Figure moved
+    to June'
+  query_original: Are any of this month's alerts in Boumba Bek National Park within 5 km of
+    the park boundary?
