@@ -2339,7 +2339,7 @@
         },
         "canonical": false,
         "canonical_reasons": [
-          "3 active member(s) not in the run"
+          "8 active member(s) not in the run"
         ]
       },
       {
@@ -2434,9 +2434,108 @@
         "composed_with": [
           "20261027T094141Z_prod"
         ],
+        "canonical": false,
+        "canonical_reasons": [
+          "5 active member(s) not in the run and its base"
+        ],
+        "page": "results/benchmark/pages/20261027T103249Z_prod.json"
+      },
+      {
+        "run_id": "20261028T121113Z_prod",
+        "path": "results/benchmark/runs/20261028T121113Z_prod.json",
+        "started": "2026-10-28T12:11:13Z",
+        "environment": "prod",
+        "build": "draft-5 rerun after AJ's 28 Oct calls (8dc02de)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "8dc02de"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 6,
+        "trial_timeout": 900.0,
+        "methodology_note": "Check semantics changed since 20261027T103249Z_prod: chart_well_formed and chart_integrity skip table charts (c1c6c84); new opt-in accept_fixed_period for answer_period_match (b9e1ca3); five members revised (8dc02de). ch-quant-157 is unchanged and rerun for the table rule.",
+        "caseset": "challenge",
+        "caseset_version": "45a3459ea5da3b8e",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 27,
+              "evaluated": 27
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 9,
+              "evaluated": 9
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 10
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "output": {
+            "dedicated": {
+              "passed": 5,
+              "evaluated": 5
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "rows_total": 6,
+          "verdicts": {
+            "pass": 5,
+            "fail": 1,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "758fb04faebc72bc",
+          "members": 269
+        },
+        "composed_with": [
+          "20261027T094141Z_prod",
+          "20261027T103249Z_prod"
+        ],
         "canonical": true,
         "canonical_reasons": [],
-        "page": "results/benchmark/pages/20261027T103249Z_prod.json"
+        "page": "results/benchmark/pages/20261028T121113Z_prod.json"
       }
     ]
   },
@@ -2494,10 +2593,11 @@
       "voided": 0,
       "runs": [
         "20261027T094141Z_prod",
-        "20261027T103249Z_prod"
+        "20261027T103249Z_prod",
+        "20261028T121113Z_prod"
       ],
       "canonical_runs": [
-        "20261027T103249Z_prod"
+        "20261028T121113Z_prod"
       ]
     },
     "2026-draft": {
