@@ -41,6 +41,10 @@ def evaluate_chart_well_formed(agent_state: dict[str, Any]) -> dict[str, Any]:
         if not records:
             problems.append(f"{label}: empty data")
             continue
+        # The FE's table widget renders only the records and the title, so a
+        # table's axis fields are never drawn (AJ, 2026-10-28, ch-quant-157).
+        if chart.get("type") == "table":
+            continue
         keys = {key for record in records for key in record}
         for axis in ("xAxis", "yAxis"):
             field = chart.get(axis)

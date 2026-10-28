@@ -1,5 +1,5 @@
 id: ch-comp-125
-uid: b019988329f6b802
+uid: cd7c818896855ce0
 status: ready
 set: comparison
 group: tcl-drivers
@@ -9,6 +9,12 @@ expected:
   aoi_ids: PER;BOL
   dataset_id: '8'
   data_pull: 'TRUE'
+  accept_nudge_offering: '8'
+  figure: sum(area_ha) where aoi_id = 'BOL' and tree_cover_loss_driver = 'Permanent agriculture'
+    ; sum(area_ha) where aoi_id = 'PER' and tree_cover_loss_driver = 'Permanent agriculture'
+  figure_claim: '#1 > #2 :: Bolivia has lost more tree cover to permanent agriculture than
+    Peru since 2001 || Peru has lost more tree cover to permanent agriculture than Bolivia
+    since 2001'
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'driver (unscored: no evaluator surface yet)'
@@ -18,3 +24,19 @@ notes:
   manifest_id: m-driver-comp-03
   lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-03a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-108
+  benchmark_type: comparison
+  synthetic: 'FALSE'
+  use_cases: UC2;UC3
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  user_story_refs: USY-001569 Sucden cocoa-area screening; USY-001515
+  refresh_risk: Re-verify at annual refresh (open-ended, categorical)
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
+    nudged with drivers (8) and tree cover loss (4); 2026-10-27 draft-5 review (AJ asked to
+    apply the review): figure and figure_claim added (direction and the asked figures are
+    checked from the pulled table)'
+  expectations: accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27

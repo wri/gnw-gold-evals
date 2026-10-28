@@ -88,11 +88,12 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
     TestResult->entry mapper (injected to avoid a circular import);
     ``artifact_sink_factory(turn_number)`` returns a per-turn sink or None.
 
-    A turn that errors (``result.error`` is set by ``run_test``'s own
-    degradation — transport failure, timeout) aborts the conversation:
-    firing turn N+1 would race a possibly-still-processing backend and
-    compare deltas against an all-empty snapshot. The un-run turns
-    contribute no checks at all; the entry records the turn-tagged error.
+    A turn that errors or gets no reply (``result.error`` is set by
+    ``run_test``'s own degradation — transport failure, timeout) aborts the
+    conversation: firing turn N+1 would race a possibly-still-processing
+    backend and compare deltas against an all-empty snapshot. The un-run
+    turns contribute no checks at all; the entry records the turn-tagged
+    error, or ``no_answer``, which makes the conversation a failed attempt.
     """
     from uuid import uuid4
 
@@ -110,7 +111,7 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
             thread_id=thread_id,
         )
         turn_entry = result_to_entry(result, case.uid)
-        if turn_entry.get("error"):
+        if turn_entry.get("error") or turn_entry.get("no_answer"):
             turn_entries.append(turn_entry)
             break
         # Delta computation must never take down the whole run (run_cases
@@ -168,7 +169,14 @@ async def run_conversation(runner, case, result_to_entry, artifact_sink_factory=
     ]
     if errors:
         entry["error"] = "; ".join(errors)[:500]
-    latencies = [e.get("latency_s") for e in turn_entries if e.get("latency_s")]
+    no_answer = [
+        f"t{n}: {e['no_answer']}"
+        for n, e in enumerate(turn_entries, start=1)
+        if e.get("no_answer")
+    ]
+    if no_answer:
+        entry["no_answer"] = "; ".join(no_answer)[:500]
+    latencies =[e.get("latency_s") for e in turn_entries if e.get("latency_s")]
     if latencies:
         entry["latency_s"] = round(sum(latencies), 1)
     streams = [e.get("stream_s") for e in turn_entries]

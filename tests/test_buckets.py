@@ -93,6 +93,8 @@ def test_implied_checks_from_expectations():
         {"dataset_id": "4", "data_pull": "TRUE"}
     )
     assert "data_pull_exists" not in implied_checks({"answer": "x", "data_pull": "FALSE"})
+    # one date bound is enough: the other is left to the agent
+    assert "date_extraction" in implied_checks({"start_date": "2021-01-01"})
     # each PR-06 expected field implies exactly its dedicated check —
     # equality, so a typo'd field-name lookup in implied_checks fails here
     assert implied_checks({"class_values": "Natural=2,124 ha"}) == {

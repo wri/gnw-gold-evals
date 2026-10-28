@@ -1,0 +1,33 @@
+id: ch-quant-164
+uid: 898370a268152afb
+status: ready
+set: quantification
+group: tcl
+query: How much primary forest does Malaysia have left, and how much has it lost since 2001?
+expected:
+  aoi_ids: MYS
+  dataset_id: 4;7
+  start_date: '2001-01-01'
+  end_date: '2025-12-31'
+  date_tolerance_days: '366'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with primary forest extent and loss (dashboard-style stats)
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-133); Map exploration research (Malaysia
+    dashboard stats); USY-001512
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: primary forest loss starts in 2002 and TCL runs to 2025, hence a one-year tolerance
+    on the open-ended window
+  benchmark_id: bm26-133
+  benchmark_type: quantification
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Map exploration research (Malaysia dashboard stats); USY-001512
+  refresh_risk: Low

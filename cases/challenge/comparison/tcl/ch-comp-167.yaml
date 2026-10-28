@@ -1,0 +1,30 @@
+id: ch-comp-167
+uid: 6de338a01715b96c
+status: todo
+set: comparison
+group: tcl
+query: Our baseline was 2020. How much tree cover has our project area lost since then?
+expected:
+  dataset_id: 4;7
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with data for the preloaded area
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-169); USY-001379 Wells for Zoé baselines
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-169
+  benchmark_type: comparison
+  use_cases: UC4
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001379 Wells for Zoé baselines
+  refresh_risk: Low

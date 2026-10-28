@@ -1,5 +1,5 @@
 id: ch-quant-009
-uid: 01f4547696dba49e
+uid: 26a2155805f4379e
 status: ready
 set: quantification
 group: tcl
@@ -9,8 +9,9 @@ expected:
   dataset_id: '4'
   start_date: '2023-01-01'
   end_date: '2023-12-31'
-  context_layer: primary_forest
+  context_layer: primary_forest | natural_forest
   data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2023
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: Per the dataset guidance, general 'deforestation' requests default to
@@ -20,3 +21,16 @@ notes:
   manifest_id: m-tcl-quant-09
   lineage: gnw-evals eval-metrics-slice-1 gt-quant-09
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001284 Indian Express; USY-001275 Suriname
+  refresh_risk: Low
+  benchmark_id: bm26-131
+  benchmark_type: quantification
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added; context_layer
+    eased to primary_forest | natural_forest (both are the catalog''s deforestation proxies)'

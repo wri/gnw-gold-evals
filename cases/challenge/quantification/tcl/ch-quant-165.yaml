@@ -1,0 +1,39 @@
+id: ch-quant-165
+uid: 7992f393a603a7ae
+status: ready
+set: quantification
+group: tcl
+query: Can I say Bolivia's 2024 tree cover loss was a record? How does it compare with every
+  year since 2001?
+expected:
+  aoi_ids: BOL
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  context_layer: no_selection
+  figure: 'sum(area_ha) where tree_cover_loss_year = 2024 ; ref: max(area_ha) by tree_cover_loss_year
+    where tree_cover_loss_year in 2001..2023'
+  figure_claim: '#1 > #2 :: 2024 was the record year for tree cover loss in Bolivia since
+    2001 || 2024 was not the record year for tree cover loss in Bolivia since 2001'
+notes:
+  behaviour: Answer with full annual series; flag method changes over time
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-165); USY-001555 Bolivia fires documentary;
+    GFW Advisory Council focus groups ("what can I say about it?")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-165
+  benchmark_type: quantification
+  use_cases: UC3;UC6
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001555 Bolivia fires documentary; GFW Advisory Council focus groups
+    ("what can I say about it?")
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): context_layer no_selection
+    (the prompt names tree cover loss); text dropped in favour of the figure claim (is 2024
+    the record); figure added'

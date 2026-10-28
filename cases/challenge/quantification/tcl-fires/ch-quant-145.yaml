@@ -1,5 +1,5 @@
 id: ch-quant-145
-uid: a902daaf2dc8304a
+uid: 53bcf82ca265f148
 status: ready
 set: quantification
 group: tcl-fires
@@ -14,6 +14,8 @@ expected:
   dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2020 ; sum(tree_cover_loss_non_fires_area_ha)
+    where tree_cover_loss_year = 2020
 notes:
   intersections: 'fire (unscored: no evaluator surface yet)'
   judge_instruction: Report fire vs non-fire tree cover loss for the year at a 50% canopy
@@ -22,3 +24,16 @@ notes:
   manifest_id: m-fires-quant-05
   lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-05a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001592 Guardian wildfires; USY-001631 Trouw
+  refresh_risk: Low
+  benchmark_id: bm26-161
+  benchmark_type: quantification
+  use_cases: UC3;UC5;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figures added (fire and
+    non-fire)'

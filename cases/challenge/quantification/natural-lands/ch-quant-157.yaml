@@ -1,0 +1,31 @@
+id: ch-quant-157
+uid: e10d12f48e0dee93
+status: ready
+set: quantification
+group: natural-lands
+query: How much natural land is there in Rio Grande do Sul, Brazil?
+expected:
+  aoi_ids: BRA.21
+  dataset_id: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where natural_lands_class in ('Natural forests', 'Mangroves', 'Natural
+    peat forests', 'Wetland natural forests', 'Natural short vegetation', 'Natural peat short
+    vegetation', 'Wetland natural short vegetation', 'Natural water', 'Bare')
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  lineage: benchmark v2026 proposed set (bm26-007); USY-001293 Sicredi
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  user_story_refs: USY-001293 Sicredi
+  benchmark_id: bm26-236
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (natural
+    classes)'

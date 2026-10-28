@@ -1,0 +1,32 @@
+id: ch-mon-063
+uid: fb2954b64d86535a
+status: ready
+set: monitoring
+group: compare_areas
+query: Compare alert area in the last 30 days across our two conservation concessions in Madre
+  de Dios and Loreto.
+expected:
+  clarification: 'TRUE'
+  text: Asks which two concessions are meant; does not present region-wide alerts as theirs.
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-079); USY-001639 AMPA conservation concessions
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; pinned to the regions as the sheet names
+    them; the concessions themselves are not in the AOI index'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-079
+  benchmark_type: monitoring
+  use_cases: UC2
+  engagement: Returning user
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001639 AMPA conservation concessions
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids (the two regions),
+    dataset_id, dates and data_pull dropped and clarification TRUE added: the region pins
+    passed a substituted place and failed the honest ask-back. Make it a fixture row with
+    seeded concessions later (as ch-mon-028)'

@@ -1,0 +1,35 @@
+id: ch-mon-049
+uid: ec859fc927ca96a9
+status: ready
+set: monitoring
+group: alert_followup
+query: Which alerts in the Okapi Wildlife Reserve should we investigate first?
+expected:
+  aoi_ids: '37043'
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: Suggests how to prioritise using the reserve's alert data (confidence, recency, size)
+    and does not name alert locations the data does not provide.
+notes:
+  behaviour: Suggest prioritization using size, recency, confidence and context; defer final
+    choice to local knowledge
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-025); USY-001596 Ituri; GFW Advisory
+    Council focus groups (prioritization by size, history, access)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-025
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Protected area
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001596 Ituri; GFW Advisory Council focus groups (prioritization by
+    size, history, access)
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text reworded: ''leaves
+    the final choice to the user'' (tone) replaced by no alert locations the data does not
+    provide'

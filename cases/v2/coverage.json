@@ -240,12 +240,12 @@
     {
       "field": "end_date",
       "cases": 5,
-      "switches_on": "date_extraction (with start_date)"
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "start_date",
       "cases": 5,
-      "switches_on": "date_extraction (with end_date)"
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "clarification",
@@ -263,6 +263,21 @@
       "switches_on": "dataset_parameter_match"
     },
     {
+      "field": "accept_aoi_nudge_offering",
+      "cases": 0,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
+    },
+    {
+      "field": "accept_blog_sources",
+      "cases": 0,
+      "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
+    },
+    {
+      "field": "accept_nudge_offering",
+      "cases": 0,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
+    },
+    {
       "field": "chart_type",
       "cases": 0,
       "switches_on": "chart_type_match"
@@ -271,6 +286,21 @@
       "field": "data_pull",
       "cases": 0,
       "switches_on": "data_pull_exists, answered_without_data"
+    },
+    {
+      "field": "date_tolerance_days",
+      "cases": 0,
+      "switches_on": "date_extraction (days a window may fall short of a bound)"
+    },
+    {
+      "field": "figure",
+      "cases": 0,
+      "switches_on": "figure_match (computed from the agent's own pulled table)"
+    },
+    {
+      "field": "figure_claim",
+      "cases": 0,
+      "switches_on": "figure_claim_match (the conclusion the pulled data supports)"
     },
     {
       "field": "forbidden_tools",
@@ -288,9 +318,9 @@
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",
       "ref": "origin/main",
-      "sha": "e2fb83f89469eda483830257f9b40c7ef21a6ebd",
+      "sha": "fa78c816186461dab120523ccad75fe274e6058c",
       "path": "src/agent/datasets/catalog",
-      "synced": "2026-09-25"
+      "synced": "2026-10-24"
     },
     "datasets": [
       {
@@ -340,6 +370,10 @@
           {
             "name": "intact_forest",
             "cases": 4
+          },
+          {
+            "name": "natural_forest",
+            "cases": 0
           }
         ]
       },
@@ -438,7 +472,12 @@
         "cases": 7,
         "answer_graded": 5,
         "parameters": [],
-        "context_layers": []
+        "context_layers": [
+          {
+            "name": "natural_lands",
+            "cases": 0
+          }
+        ]
       },
       {
         "dataset_id": "12",
@@ -663,8 +702,14 @@
   ],
   "known_gaps": {
     "unused_expected_fields": [
+      "accept_aoi_nudge_offering",
+      "accept_blog_sources",
+      "accept_nudge_offering",
       "chart_type",
       "data_pull",
+      "date_tolerance_days",
+      "figure",
+      "figure_claim",
       "forbidden_tools",
       "suggested_datasets"
     ],
@@ -686,12 +731,18 @@
       ]
     },
     "uncovered_context_layers": {
+      "natural_forest": [
+        "4"
+      ],
       "primary_forest": [
         "7",
         "10"
       ],
       "intact_forest": [
         "10"
+      ],
+      "natural_lands": [
+        "11"
       ]
     }
   },

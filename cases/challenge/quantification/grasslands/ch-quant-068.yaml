@@ -1,5 +1,5 @@
 id: ch-quant-068
-uid: f33817a4ff26af2f
+uid: 05f978477ed864ac
 status: ready
 set: quantification
 group: grasslands
@@ -10,6 +10,7 @@ expected:
   start_date: '2020-01-01'
   end_date: '2020-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where year = 2020
 notes:
   judge_instruction: Headline is natural/semi-natural grassland extent (area_ha) for the year,
     in hectares; exclude zero or missing years.
@@ -17,3 +18,15 @@ notes:
   manifest_id: m-grass-quant-01
   lineage: generated 2026-09-01 from phase-2 manifest; grass-quant-01a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001293 Sicredi; USY-001313 LDC grasslands
+  refresh_risk: Low
+  benchmark_id: bm26-254
+  benchmark_type: quantification
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

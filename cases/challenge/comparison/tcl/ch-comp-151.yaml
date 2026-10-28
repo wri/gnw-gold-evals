@@ -1,0 +1,38 @@
+id: ch-comp-151
+uid: 9320615f8c859e81
+status: ready
+set: comparison
+group: tcl
+query: 'Which had more tree cover loss in 2023: Riau, Jambi or West Kalimantan?'
+expected:
+  aoi_ids: IDN.24;IDN.8;IDN.12
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  figure: 'sum(area_ha) where aoi_id = ''IDN.24'' and tree_cover_loss_year = 2023 ; sum(area_ha)
+    where aoi_id = ''IDN.8'' and tree_cover_loss_year = 2023 ; sum(area_ha) where aoi_id =
+    ''IDN.12'' and tree_cover_loss_year = 2023 ; ref: max(area_ha) by aoi_id where tree_cover_loss_year
+    = 2023'
+  figure_claim: '#3 >= #4 :: West Kalimantan had the most tree cover loss of the three provinces
+    in 2023 || West Kalimantan did not have the most tree cover loss of the three provinces
+    in 2023'
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-063); USY-001417 Wilmar; USY-001415
+    PepsiCo palm
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-063
+  benchmark_type: comparison
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001417 Wilmar; USY-001415 PepsiCo palm
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-09-28_
+_Last updated: 2026-10-27_
 
 ## Groups
 
@@ -61,19 +61,25 @@ friends) run on top of it whenever their trigger state exists.
 | class_values | 6 | class_value_match (info-only) |
 | nudge_options | 6 | nudge_match |
 | dashboard_widgets | 5 | dashboard_widgets_match, dashboard_widgets_valid |
-| end_date | 5 | date_extraction (with start_date) |
-| start_date | 5 | date_extraction (with end_date) |
+| end_date | 5 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| start_date | 5 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | clarification | 3 | clarification_requested |
 | nudge_type | 3 | nudge_match |
 | dataset_parameters | 1 | dataset_parameter_match |
+| accept_aoi_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
+| accept_blog_sources | 0 ← unused | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
+| accept_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | chart_type | 0 ← unused | chart_type_match |
 | data_pull | 0 ← unused | data_pull_exists, answered_without_data |
+| date_tolerance_days | 0 ← unused | date_extraction (days a window may fall short of a bound) |
+| figure | 0 ← unused | figure_match (computed from the agent's own pulled table) |
+| figure_claim | 0 ← unused | figure_claim_match (the conclusion the pulled data supports) |
 | forbidden_tools | 0 ← unused | forbidden_tools_absent |
 | suggested_datasets | 0 ← unused | suggested_datasets_match |
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@e2fb83f (origin/main, synced 2026-09-25), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@fa78c81 (origin/main, synced 2026-10-24), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -86,14 +92,14 @@ answer-graded cases (`answer` or `text` expected) actually check.
 | 1 | Global land cover | 6 | 6 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 12 | 11 | — | — |
 | 3 | SBTN Natural Lands Map | 5 | 5 | — | — |
-| 4 | Tree cover loss | 42 | 30 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4 |
+| 4 | Tree cover loss | 42 | 30 | canopy_cover ×1 | primary_forest ×5, intact_forest ×4, natural_forest ×0 ← gap |
 | 5 | Tree cover gain | 5 | 5 | — | — |
 | 6 | Forest greenhouse gas net flux | 3 | 3 | canopy_cover ×0 ← gap | — |
 | 7 | Tree cover | 3 | 3 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap |
 | 8 | Tree cover loss by dominant driver | 5 | 5 | canopy_cover ×0 ← gap | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 1 | 1 | — | — |
 | 10 | Tree cover loss due to fires | 2 | 1 | canopy_cover ×0 ← gap | primary_forest ×0 ← gap, intact_forest ×0 ← gap |
-| 11 | Integrated alerts | 7 | 5 | — | — |
+| 11 | Integrated alerts | 7 | 5 | — | natural_lands ×0 ← gap |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
@@ -140,11 +146,11 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: chart_type, data_pull, forbidden_tools, suggested_datasets —
+- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_nudge_offering, chart_type, data_pull, date_tolerance_days, figure, figure_claim, forbidden_tools, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
   (see `src/goldset/buckets.py` for the demotion rationale).
 - Catalog datasets with no active case: 12.
-- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: primary_forest (7, 10), intact_forest (10).
+- Catalog features no active case exercises — parameters: canopy_cover (6, 7, 8, 10); context layers: natural_forest (4), primary_forest (7, 10), intact_forest (10), natural_lands (11).
 - Full check semantics and case archetypes: `docs/evaluator-map.html`.

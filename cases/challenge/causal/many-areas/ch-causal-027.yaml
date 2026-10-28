@@ -1,0 +1,43 @@
+id: ch-causal-027
+uid: 633eb6ad958a67e0
+status: ready
+set: causal
+group: many_areas
+query: Which districts of Madre de Dios have the most loss from mining?
+expected:
+  aoi_ids: PER.18.1.1_1;PER.18.1.2_1;PER.18.1.3_1;PER.18.2.1_1;PER.18.2.2_1;PER.18.2.3_1;PER.18.3.1_1;PER.18.3.2_1;PER.18.3.3_1;PER.18.3.4_1
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Explains that the closest driver class to mining is hard commodities (mining and energy
+    infrastructure) and ranks Madre de Dios's districts by that class from the pulled data;
+    does not present an unpulled figure as the answer.
+  figure: max(area_ha) by aoi_id where tree_cover_loss_driver = 'Hard commodities'
+notes:
+  behaviour: 'Redirect: ranking many districts; drivers data has no mining-specific class
+    at district level — explain'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-248); USY-001401 Caja Cusco; USY-001286
+    Mongabay Peru
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-248
+  benchmark_type: causal
+  use_cases: UC3;UC5
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: Confirm with engineering
+  grounding: Story analogue
+  user_story_refs: USY-001401 Caja Cusco; USY-001286 Mongabay Peru
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded; ranking every district with real data is within pick_aoi
+    takes up to 1,000 admin sub-units of one GADM parent, but only 50 protected areas, KBAs,
+    Indigenous lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py
+    SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT); 2026-10-27 draft-5 review (AJ asked to apply
+    the review): redirect -> answer with data: the agent pulled district driver data on every
+    attempt and then quoted a blog figure; aoi_ids pinned to the 10 GADM 4.1 districts, dataset
+    8, pull required, text requires the ranking from the pulled data; figure added (top district''s
+    hard-commodities loss)'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-27 (GADM 4.1 has 10 districts in Madre de
+    Dios; Huepetuhe is absent); the same 10 pick_aoi returned on every attempt'

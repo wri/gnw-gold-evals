@@ -553,3 +553,135 @@ def llm_judge_expected_text(
         }
 
     return judgement.score
+
+
+def llm_judge_claim(sentence: str, actual_answer: str) -> dict[str, int | str]:
+    """Whether the reply states a claim the data has already decided.
+
+    The harness works out from the pulled table which sentence is true
+    (``figures.claim_sentence``), so the reviewer only reads the reply and
+    never compares numbers itself.
+    """
+
+    class ClaimScore(BaseModel):
+        reason: str
+        score: int
+
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "user",
+                """
+                You are checking whether an AI assistant's reply states a
+                conclusion that has already been established from the data.
+
+                ESTABLISHED CONCLUSION:
+                {sentence}
+
+                ACTUAL AGENT RESPONSE:
+                {actual_answer}
+
+                The question is whether a reader could come away believing the
+                opposite. Return score 0 only if the response states or clearly
+                implies the opposite of the established conclusion. Return
+                score 1 if it states the conclusion in any wording, is
+                consistent with it, or simply does not speak to it.
+
+                Return:
+                - reason: one concise sentence explaining the score
+                - score: 1 or 0
+                """,
+            ),
+        ],
+    )
+    judgement = (prompt | HAIKU.with_structured_output(ClaimScore)).invoke(
+        {"sentence": sentence, "actual_answer": actual_answer}
+    )
+    return {"score": judgement.score, "reason": judgement.reason}
+
+
+def llm_judge_answer_period(
+    query: str, period: str, actual_answer: str, fixed_period: str = ""
+) -> dict[str, str]:
+    """Whether the reply's figures are computed over exactly the asked period.
+
+    AJ's rule (2026-10-27): pulling a wider window is fine, but the answer
+    must use the asked period. The reviewer reads which period the reply's
+    figures cover; it does no arithmetic.
+
+    ``fixed_period`` ("2001 to 2025") names the one period the data come as.
+    The general "fixed period" pass rule alone did not move Haiku on
+    ch-causal-015, and rewording it for every case made other verdicts
+    stricter, so the rule is spelled out only for the cases that opt in; with
+    it empty the prompt is unchanged.
+    """
+    fixed_period_rule = (
+        f"\n\n                THE DATA ONLY COME AS ONE FIXED PERIOD: {fixed_period}"
+        " as a whole, with no breakdown by year, so the asked period cannot be"
+        f" cut from them. Pass a response that gives its figures for {fixed_period}"
+        " and says so, in the reply or in its methodology note, even though that"
+        " is not the asked period; this takes precedence over the fail rule."
+        if fixed_period
+        else ""
+    )
+
+    class PeriodVerdict(BaseModel):
+        reason: str
+        verdict: str  # "pass", "fail" or "not_applicable"
+
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "user",
+                """
+                You are checking whether an AI assistant answered over the
+                period the user asked about.
+
+                USER QUESTION:
+                {query}
+
+                PERIOD THE ANSWER MUST USE:
+                {period}{fixed_period_rule}
+
+                ACTUAL AGENT RESPONSE:
+                {actual_answer}
+
+                Decide whether the figures the response gives as its answer
+                are for that period, as the response presents them. Judge only
+                the period the answering figures are stated for. How a dataset
+                builds a year's figure (look-back windows, model periods, the
+                source years behind an emission factor) is not your concern: a
+                2024 factor presented as the 2024 factor is for 2024.
+                - pass: the answering figures cover the asked period. Small
+                  differences for rolling windows (within the stated give or
+                  take, or up to the latest data available) and figures for
+                  other periods clearly labelled as extra context are fine.
+                  Also pass when the response says the data only covers part of
+                  the period, or only provides a fixed period, and labels its
+                  figures with the period they cover.
+                - fail: the answering figures cover a wider or narrower period
+                  than asked (for example an average over 2001 to 2025 when
+                  2018 to 2022 was asked, or a total that stops early), or the
+                  response presents another period's figure as the asked one.
+                - not_applicable: the response gives no figures (it declines,
+                  asks a question, or says the data could not be fetched).
+
+                Return:
+                - reason: one concise sentence naming the period the figures cover
+                - verdict: pass, fail or not_applicable
+                """,
+            ),
+        ],
+    )
+    judgement = (prompt | HAIKU.with_structured_output(PeriodVerdict)).invoke(
+        {
+            "query": query,
+            "period": period,
+            "fixed_period_rule": fixed_period_rule,
+            "actual_answer": actual_answer,
+        }
+    )
+    verdict = judgement.verdict.strip().lower().replace(" ", "_")
+    if verdict not in ("pass", "fail", "not_applicable"):
+        raise ValueError(f"answer_period verdict {judgement.verdict!r}")
+    return {"verdict": verdict, "reason": judgement.reason}

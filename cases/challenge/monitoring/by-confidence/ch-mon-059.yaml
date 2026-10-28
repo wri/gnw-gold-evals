@@ -1,0 +1,40 @@
+id: ch-mon-059
+uid: c174a51bdf6f0c43
+status: ready
+set: monitoring
+group: by_confidence
+query: What does 'high confidence' mean for these alerts, and is it worth sending a patrol
+  for the low-confidence ones in Guarayos?
+expected:
+  aoi_ids: BOL.8.7/BOL277/BOL290
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: Explains confidence classes accurately, gives the high/low split for Guarayos from
+    the data, and does not say low-confidence alerts are false or safe to ignore.
+notes:
+  behaviour: Explain confidence levels accurately; give the low vs high split for the area;
+    no field-safety guarantee
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-056); USY-001247 Guarayos; Alerts JTBD
+    (Miro) (understand confidence levels)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23; AOI unpinned: the index has two Landmark
+    ''Guarayo'' TIOC rows (BOL277, BOL290) and the GADM province Guarayos (BOL.8.7); aoi_ids
+    has no any-of; pinned 2026-10-27 (draft-5): ''Guarayos'' alone may mean the GADM province
+    BOL.8.7 or the Guarayo TIOC (BOL277, BOL290), so any of the three passes (prod /api/aois
+    name search)'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-056
+  benchmark_type: monitoring
+  use_cases: UC1;UC6
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Indigenous / community territory
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001247 Guarayos; Alerts JTBD (Miro) (understand confidence levels)
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids pinned to the
+    province or either Guarayo TIOC record; text reworded (''leaves the decision'' is tone;
+    now: no claim that low-confidence alerts are false or safe to ignore). No figure (the
+    question names no window)'

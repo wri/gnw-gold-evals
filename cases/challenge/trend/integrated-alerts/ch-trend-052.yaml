@@ -1,5 +1,5 @@
 id: ch-trend-052
-uid: 2fbce8db0984c0a3
+uid: 4f1d6f90058c88b6
 status: ready
 set: trend
 group: integrated-alerts
@@ -11,6 +11,7 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in 2024-01-01..2024-12-31
 notes:
   judge_instruction: Month-by-month alert area (area_ha) over 2024; verify the shape and direction
     of the series; line chart.
@@ -18,3 +19,16 @@ notes:
   manifest_id: m-ialert-trend-02
   lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-02a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-000455 CI Firecast; USY-001642 national alert monitoring
+  refresh_risk: 'Medium: alert confidence can upgrade; re-verify at refresh'
+  benchmark_id: bm26-050
+  benchmark_type: trend
+  use_cases: UC1;UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (2024 total
+    from the pulled table; the monthly pattern and peak month are not expressible)'

@@ -230,3 +230,51 @@ def test_coverage_fails_when_nothing_was_recorded():
     result = evaluate_date_selection({}, "2022-01-01", "2022-12-31")
     assert result["date_coverage_score"] == 0.0
     assert result["actual_start_date"] is None
+
+
+# ------------------------------------------- containment and one-bound expectations
+
+
+def test_extraction_accepts_a_wider_pull_that_contains_the_period():
+    # AJ, 2026-10-27: pull wide and slice in code is fine; the answer's period
+    # is answer_period_match's question.
+    def score(start, end):
+        return evaluate_date_extraction(
+            _state(("pull_data", start, end)), "2006-01-01", "2017-12-31"
+        )["date_extraction_score"]
+
+    assert score("2001-01-01", "2025-12-31") == 1.0
+    assert score("2006-01-01", "2017-12-31") == 1.0
+    assert score("2016-01-01", "2017-12-31") == 0.0  # misses 2006 to 2015
+    assert score("2006-01-01", "2015-12-31") == 0.0  # misses 2016 and 2017
+
+
+def test_extraction_checks_only_the_bounds_a_case_names():
+    # "Since 2021": the end is the agent's call (the API clips it to 2025).
+    assert (
+        evaluate_date_extraction(
+            _state(("pull_data", "2021-01-01", "2026-10-23")), "2021-01-01", None
+        )["date_extraction_score"]
+        == 1.0
+    )
+    assert (
+        evaluate_date_extraction(
+            _state(("pull_data", "2022-01-01", "2025-12-31")), "2021-01-01", None
+        )["date_extraction_score"]
+        == 0.0
+    )
+
+
+def test_extraction_judges_the_pulled_window_when_no_call_carries_dates():
+    # ch-quant-033 (AJ, 2026-10-27): the sLUC pull takes no dates and returns
+    # 2020 to 2024; accept it as long as the data includes 2024.
+    state = {
+        "messages": [StubMessage([{"name": "pull_data", "args": {"query": "soy"}, "id": "c"}])],
+        "statistics": [{"start_date": "2020-01-01", "end_date": "2024-12-31"}],
+    }
+    result = evaluate_date_extraction(state, "2024-01-01", "2024-12-31")
+    assert result["date_extraction_score"] == 1.0
+    assert result["date_extraction_source"] == "pulled"
+    narrow = {**state, "statistics": [{"start_date": "2020-01-01", "end_date": "2023-12-31"}]}
+    assert evaluate_date_extraction(narrow, "2024-01-01", "2024-12-31")[
+        "date_extraction_score"] == 0.0

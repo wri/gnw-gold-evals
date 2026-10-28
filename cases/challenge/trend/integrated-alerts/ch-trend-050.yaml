@@ -1,5 +1,5 @@
 id: ch-trend-050
-uid: 76fc1c6f5f34a5e8
+uid: 7e47259dd8dddf07
 status: ready
 set: trend
 group: integrated-alerts
@@ -11,6 +11,17 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where alert_date in 2024-01-01..2024-06-30 ; ref: sum(area_ha)
+    where alert_date in 2024-07-01..2024-12-31'
+  figure_claim: '#2 > #1 :: Over 2024 as a whole, Brazil''s alert area rose rather than fell:
+    July to December had more alert area than January to June. A rise to a peak in the second
+    half followed by a fall in the last months is consistent with this; only a reply saying
+    alerts decreased over 2024, or that the second half had less alert area than the first,
+    contradicts it. || Over 2024 as a whole, Brazil''s alert area fell rather than rose: July
+    to December had less alert area than January to June. A fall to a low in the second half
+    followed by a rise in the last months is consistent with this; only a reply saying alerts
+    increased over 2024, or that the second half had more alert area than the first, contradicts
+    it.'
 notes:
   judge_instruction: Direction of monthly alert area (area_ha) over 2024; expected as a line
     chart, optionally one line per confidence tier.
@@ -18,3 +29,21 @@ notes:
   manifest_id: m-ialert-trend-01
   lineage: generated 2026-09-01 from phase-2 manifest; ialert-trend-01a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-000455 CI Firecast; USY-001642 national alert monitoring
+  refresh_risk: 'Medium: alert confidence can upgrade; re-verify at refresh'
+  benchmark_id: bm26-049
+  benchmark_type: trend
+  use_cases: UC1;UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (second half of 2024 vs first half from the pulled table; a peak month is not expressible);
+    2026-10-28 (AJ, draft-5 failures review): claim reworded so a rise to a September peak
+    followed by a fall to December no longer reads as a contradiction; only a reply saying
+    alerts decreased over 2024, or that the second half was lower, fails. Re-judged on the
+    stored draft-5 replies: all three pass (two failed before), and two made-up replies saying
+    alerts decreased still fail'

@@ -186,12 +186,12 @@ async def test_two_turn_conversation(stateful_transport):
 
 @pytest.fixture
 def first_turn_fails_transport(monkeypatch):
-    seen = {"chats": 0}
+    seen = {"chats": 0, "status": 500}
 
     def handler(request: httpx.Request) -> httpx.Response:
         if request.url.path == "/api/chat":
             seen["chats"] += 1
-            return httpx.Response(500, text="backend exploded")
+            return httpx.Response(seen["status"], text="backend exploded")
         if request.url.path.startswith("/api/threads/"):
             return httpx.Response(200, json={"state": json.dumps(_state("BRA", "4"))})
         raise AssertionError(request.url)
@@ -207,15 +207,19 @@ def first_turn_fails_transport(monkeypatch):
 
 
 @pytest.mark.anyio
-async def test_errored_turn_aborts_conversation(first_turn_fails_transport):
+@pytest.mark.parametrize(("status", "key"), [(500, "no_answer"), (401, "error")])
+async def test_errored_turn_aborts_conversation(first_turn_fails_transport, status, key):
     """If turn N errors, turn N+1 must never fire: it would race a
     possibly-still-processing backend and diff against an empty snapshot.
-    The un-run turns contribute no checks at all."""
+    The un-run turns contribute no checks at all. A 5xx left the user with
+    no reply (a failed attempt); a refused request is the harness's error."""
+    first_turn_fails_transport["status"] = status
     runner = APITestRunner(api_base_url="https://api.example", api_token="tok")
     entry = await run_conversation(runner, CASE, result_to_entry)
 
     assert first_turn_fails_transport["chats"] == 1  # turn 2 never sent
-    assert entry["error"].startswith("t1:")
+    assert entry[key].startswith("t1:")
+    assert ({"error", "no_answer"} - {key}).isdisjoint(entry)
     assert not any(name.startswith("t2.") for name in entry["checks"])
     assert "t2.state_delta" not in entry["checks"]
     assert len(entry["turns_detail"]) == 1

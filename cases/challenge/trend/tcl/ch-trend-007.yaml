@@ -1,5 +1,5 @@
 id: ch-trend-007
-uid: a645e33258d22184
+uid: de6d8512899ab8ea
 status: ready
 set: trend
 group: tcl
@@ -12,6 +12,9 @@ expected:
   end_date: '2023-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: change(sum(area_ha) where tree_cover_loss_year = 2016, sum(area_ha) where tree_cover_loss_year
+    = 2023) ; pct_change(sum(area_ha) where tree_cover_loss_year = 2016, sum(area_ha) where
+    tree_cover_loss_year = 2023)
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: All forest types, so no forest-type filter should be applied.
@@ -19,3 +22,16 @@ notes:
   manifest_id: m-tcl-trend-07
   lineage: gnw-evals eval-metrics-slice-1 gt-trend-07
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001330 Forest Declaration Assessment; USY-001383 GEF-9
+  refresh_risk: Low
+  benchmark_id: bm26-215
+  benchmark_type: trend
+  use_cases: UC3;UC4;UC5;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (absolute
+    and percentage change 2016 to 2023 from the pulled table)'

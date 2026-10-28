@@ -1,5 +1,5 @@
 id: ch-quant-064
-uid: a8ca83872928692d
+uid: bf811588826bc208
 status: ready
 set: quantification
 group: land-cover
@@ -8,6 +8,9 @@ expected:
   aoi_ids: BRA
   dataset_id: '1'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class_start = 'Tree cover' and land_cover_class_end
+    = 'Cropland' | sum(area_ha) where land_cover_class_start = 'Tree cover' and land_cover_class_end
+    in ('Cropland', 'Cultivated grasslands')
 notes:
   land_cover_classes: 'tree cover;cropland (unscored: no evaluator surface yet)'
   judge_instruction: 'Change question: transitions between the fixed 2015 and 2024 snapshots;
@@ -18,3 +21,16 @@ notes:
   manifest_id: m-lc-quant-07
   lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-07a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001250 Antioquia land-use planning (analogue)
+  refresh_risk: Low
+  benchmark_id: bm26-233
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (the transition
+    row, cropland alone or with cultivated grasslands)'

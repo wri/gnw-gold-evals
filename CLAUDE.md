@@ -25,7 +25,10 @@ set. The short version:
   gnw-evals eval-metrics-slice-1, authored via `generation/` — see
   `generation/README.md`), and `dataset` (dataset-selection prompts, phrased as
   "show X on the map", that should run `pick_dataset` alone; hand-authored in
-  `seeds/challenge-dataset-v1.csv`). Run one set with `gold run --set <name>`. Like
+  `seeds/challenge-dataset-v1.csv`), plus `monitoring` and `causal` (benchmark
+  v2026 cases, `seeds/benchmark-v2026-proposed.csv`; Batch 4 in the README)
+  and `portfolio` (many areas at once, from the v2026 BEF sheet; Batch 5).
+  Run one set with `gold run --set <name>`. Like
   `group`, `set` is never hashed into the uid.
 - Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
   never regression counts. Many cases are *expected to fail*: do not triage
@@ -44,6 +47,50 @@ set. The short version:
   `tools/check.py --fix --cases-dir cases/challenge` and
   `tools/coverage_doc.py --cases-dir cases/challenge`, and commit both with
   the edit (CI gates both).
+
+## BENCHMARK (frozen subset of CHALLENGE — the North Star exam)
+
+`benchmarks/<version>.json` is a **uid manifest** over `cases/challenge`, not
+a case store: read `benchmarks/README.md` first. Key rules:
+
+- Membership is by uid, and type/cohort/difficulty/stages are frozen per
+  member. Editing a member case drops it (new uid); `tools/check_benchmark.py`
+  (CI) errors on frozen versions and warns on drafts. Never edit a member
+  of a frozen version: void it with an erratum and add new CHALLENGE cases.
+- Build a version by sampling (`tools/benchmark_sample.py --version <v>`:
+  20 per measured type; aoi and dataset easy+medium only) or by curating
+  from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv>
+  --version <v>`: one member per row, with its use cases UC1–UC6, or jobs,
+  impact pathways and user groups for the older sheet layout). Current
+  draft: `2026-draft-5` (curated from the BEF sheet, 269; draft-4 after
+  the 2026-10-27 review, "could this answer mislead the user?", with
+  figure formulas checked against each attempt's own pull). Regeneration is
+  deliberate, never CI's. Frozen manifests are never regenerated.
+- Rolling-window questions use run-relative date tokens in expected values
+  (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`,
+  `{last_month_end}`) plus `date_tolerance_days`; the uid hashes the token.
+- Run with `gold run --benchmark benchmarks/<v>.json --env prod --trials 3`
+  (no ff); results go to `results/benchmark/`. Only canonical runs are trend
+  points (`results/index.json` flags them). Roll up with
+  `tools/challenge_rollup.py --benchmark benchmarks/<v>.json <run>.json`.
+- Then write the page data the FE accuracy-benchmarks page reads:
+  `tools/benchmark_page.py results/benchmark/runs/<run_id>.json` writes
+  `results/benchmark/pages/<run_id>.json`. It needs the run's local agent
+  artifacts (gitignored), so do it on the machine that ran the run, and
+  commit it with the run before regenerating `results/index.json`.
+- To rerun only members revised since a run, add `--missing-from
+  <run>.json` to `gold run --benchmark`, then write the page with
+  `benchmark_page.py <rerun>.json --base <run>.json` (both flags repeat for
+  a chain of reruns); the index judges the combination canonical (`benchmarks/README.md`, "Rerunning revised
+  members only").
+- After an erratum or a freeze, regenerate `results/index.json`.
+- An attempt that got no reply (`no_answer` on its trial: the stream sent
+  nothing for 240 s, hit the wall clock, dropped or returned a 5xx) is a
+  wrong attempt. An attempt the harness could not score keeps its trial
+  `error` and is left out; a member errors only when no attempt was scored
+  (AJ, 2026-10-27). Runs recorded before then errored the whole member on
+  any errored attempt, so a member can move from error to fail across that
+  date.
 
 Read `docs/specs/PLAN.md` before proposing changes. The build landed as one PR
 per spec (case store → results ledger → harness port → fixes → bucket scoring →

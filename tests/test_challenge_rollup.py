@@ -223,6 +223,25 @@ def test_load_targets_nested_shape(tmp_path):
     assert targets["sets"]["aoi"]["targets"] == {"acronyms": 0.8}
 
 
+def test_primary_failure_falls_back_to_the_failed_attempts():
+    # ch-mon-045 (draft-5): wrong on 2 of 3, each attempt failing a different
+    # check, so no merged check failed; the earliest stage among the failed
+    # attempts' checks names it.
+    entry = {
+        "checks": {"expected_text_match": 1.0, "chart_well_formed": 1.0},
+        "trials": [
+            {"checks": {"expected_text_match": 0.0, "chart_well_formed": 1.0}},
+            {"checks": {"expected_text_match": 1.0, "chart_well_formed": 0.0}},
+            {"checks": {"expected_text_match": 1.0, "chart_well_formed": 1.0}},
+        ],
+    }
+    assert challenge_rollup.row_verdict(entry) == "fail"
+    assert challenge_rollup.primary_failure(entry) == "explanation"
+    # a failing merged check still decides first
+    merged = dict(entry, checks={"expected_text_match": 1.0, "chart_well_formed": 0.0})
+    assert challenge_rollup.primary_failure(merged) == "output"
+
+
 def test_strict_clean_reads_ledger_list_shaped_trials():
     """The ledger writes trials as a list (cli.merge_trials); a dict-only
     reader crashed on every real 3-trial run with a passing row."""

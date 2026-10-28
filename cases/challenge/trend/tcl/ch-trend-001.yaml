@@ -1,5 +1,5 @@
 id: ch-trend-001
-uid: a7eff4f0bc836cae
+uid: e3b8d54b3ce52176
 status: ready
 set: trend
 group: tcl
@@ -12,6 +12,16 @@ expected:
   end_date: '2023-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where tree_cover_loss_year = 2015 ; ref: sum(area_ha) where tree_cover_loss_year
+    = 2023'
+  figure_claim: '#2 > #1 :: Brazil''s annual tree cover loss did not trend downward over 2015
+    to 2023: loss in 2023 was above loss in 2015. Year-to-year fluctuation, or lower loss
+    after a peak year within the period, is consistent with this; only a reply saying loss
+    trended downward over 2015 to 2023, or that 2023 was below 2015, contradicts it. || Brazil''s
+    annual tree cover loss did not trend upward over 2015 to 2023: loss in 2023 was below
+    loss in 2015. Year-to-year fluctuation, or higher loss after a low year within the period,
+    is consistent with this; only a reply saying loss trended upward over 2015 to 2023, or
+    that 2023 was above 2015, contradicts it.'
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: All forest types, so no forest-type filter should be applied.
@@ -19,3 +29,21 @@ notes:
   manifest_id: m-tcl-trend-01
   lineage: gnw-evals eval-metrics-slice-1 gt-trend-01
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001330 Forest Declaration Assessment; USY-001383 GEF-9
+  refresh_risk: Low
+  benchmark_id: bm26-213
+  benchmark_type: trend
+  use_cases: UC3;UC4;UC5;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (2023 vs 2015 from the pulled table); 2026-10-28 (AJ, draft-5 failures review): claim
+    reworded so ''fluctuated, lower than the 2016 peak'' no longer reads as a downward trend;
+    only a reply saying loss trended downward over 2015 to 2023, or that 2023 was below 2015,
+    fails. Re-judged on the stored draft-5 replies: attempts 1 and 2 pass, attempt 3 still
+    fails (it calls 2019, 2.70 Mha, the period low, when 2015 was 2.22 Mha), and two made-up
+    downward-trend replies fail'

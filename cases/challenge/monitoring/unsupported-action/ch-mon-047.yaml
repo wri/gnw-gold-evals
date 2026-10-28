@@ -1,0 +1,42 @@
+id: ch-mon-047
+uid: 1c8088c4b55cdf28
+status: ready
+set: monitoring
+group: unsupported_action
+query: Make a map of this month's alerts in the Aru Islands that I can print for the community
+  meeting.
+expected:
+  text: Says plainly what it made. A dashboard with the alerts map, described as a dashboard,
+    passes, including when the reply calls it printable or tells the user they can print it.
+    Fails only a reply that claims a file it did not make, such as a PDF, an image or a download.
+  accept_dashboard: 'TRUE'
+notes:
+  behaviour: Produce or point to a printable map export, or say not supported yet
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-023); USY-000960 Aru; GFW Advisory Council
+    focus groups (map exports for community meetings)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-023
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: 'Not yet: expect clear redirect'
+  grounding: From user research
+  user_story_refs: USY-000960 Aru; GFW Advisory Council focus groups (map exports for community
+    meetings)
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text reworded to the
+    misleading risk (no claim of a printable map or file it did not produce). The dashboard_created
+    opt-out is a harness change, not applied; 2026-10-28 (AJ, draft-5 failures review): accept_dashboard
+    TRUE (new opt-in field): a dashboard is a fair answer, so dashboard_created no longer
+    fails an unsolicited one; text says a dashboard described as one, printed from the dashboard
+    or the browser, is fine. All three draft-5 attempts made a real dashboard and said so.
+    The dashboard Export to PDF (zeno-next #729) is on develop, not yet on production; 2026-10-28
+    (AJ, draft-5 failures review), second pass: the first rewording still failed ''You can
+    print this dashboard directly'' and ''a printable dashboard'' on 2 of 3 attempts (run
+    20261028T123356Z_prod), so the text now names those as passes and only a claimed file
+    (PDF, image, download) as a fail. Re-judged 3 times each: all six stored attempts pass,
+    two made-up PDF and image claims fail'

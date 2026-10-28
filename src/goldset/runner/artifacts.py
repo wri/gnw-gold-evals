@@ -74,6 +74,20 @@ def _last_statistics(agent_state: dict[str, Any]) -> dict[str, Any] | None:
     return slim
 
 
+def _statistics_refs(agent_state: dict[str, Any]) -> list[dict[str, Any]]:
+    """Every pull's reference (not its rows): the figure checks fetch each
+    table by source_url, so keeping all of them lets a run be re-scored."""
+    statistics = agent_state.get("statistics")
+    if isinstance(statistics, dict):
+        statistics = [statistics]
+    keep = ("dataset_id", "source_url", "aoi_ids", "start_date", "end_date", "parameters")
+    return [
+        {k: entry.get(k) for k in keep if k in entry}
+        for entry in statistics or []
+        if isinstance(entry, dict)
+    ]
+
+
 def build_artifact(
     agent_state: dict[str, Any],
     dashboard: dict[str, Any] | None,
@@ -90,6 +104,7 @@ def build_artifact(
         "codeact": _decode_codeact(agent_state),
         "tool_calls": _tool_calls(agent_state),
         "statistics_last": _last_statistics(agent_state),
+        "statistics_refs": _statistics_refs(agent_state),
         "charts_data": agent_state.get("charts_data"),
         "aoi_selection": agent_state.get("aoi_selection"),
         "dataset": agent_state.get("dataset"),

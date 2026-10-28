@@ -1,0 +1,38 @@
+id: ch-mon-030
+uid: cd3c80817865ed1b
+status: ready
+set: monitoring
+group: by_confidence
+query: How many high-confidence alerts were there in Tesso Nilo National Park in the last
+  30 days?
+expected:
+  aoi_ids: '317197'
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-30d}..{run} and alert_confidence in ('high',
+    'highest') | sum(area_ha) where alert_date in {run-30d}..{run} and alert_confidence =
+    'high'
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  lineage: benchmark v2026 proposed set (bm26-139); USY-000591 TuK (Riau fires)
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  unscored_params: confidence=high
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  user_story_refs: USY-001298 Tesso Nilo palm oil
+  benchmark_id: bm26-017
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (30-day
+    high-confidence alert area, either reading: high plus highest, or high only)'

@@ -1,0 +1,31 @@
+id: ch-quant-160
+uid: 30e4bc28fc35c8b6
+status: ready
+set: quantification
+group: tcl
+query: How much tree cover loss has Boquerón in the Paraguayan Chaco had from 2015 to 2024?
+expected:
+  aoi_ids: PRY.5
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2015..2024
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-123); USY-001271 Mongabay Mennonite
+    expansion; USY-001561 Paraguay beef
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-123
+  benchmark_type: quantification
+  use_cases: UC3
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001271 Mongabay Mennonite expansion; USY-001561 Paraguay beef
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

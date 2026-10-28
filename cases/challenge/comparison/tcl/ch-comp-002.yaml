@@ -1,5 +1,5 @@
 id: ch-comp-002
-uid: 8a92fc69cd23bf4b
+uid: 1da12d1099d45aa5
 status: ready
 set: comparison
 group: tcl
@@ -12,6 +12,10 @@ expected:
   end_date: '2023-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'IDN' and tree_cover_loss_year in 2020..2023 ; sum(area_ha)
+    where aoi_id = 'COD' and tree_cover_loss_year in 2020..2023
+  figure_claim: '#2 > #1 :: The DRC lost more tree cover than Indonesia over 2020 to 2023
+    || Indonesia lost more tree cover than the DRC over 2020 to 2023'
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: All tree cover including plantations, so no forest-type filter should
@@ -20,3 +24,16 @@ notes:
   manifest_id: m-tcl-comp-02
   lineage: gnw-evals eval-metrics-slice-1 gt-comp-02
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001284 Indian Express; USY-001275 Suriname
+  refresh_risk: Low
+  benchmark_id: bm26-135
+  benchmark_type: comparison
+  use_cases: UC3;UC4;UC6
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table)'

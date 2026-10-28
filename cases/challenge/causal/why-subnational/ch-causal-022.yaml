@@ -1,0 +1,39 @@
+id: ch-causal-022
+uid: 34e783d6bed35888
+status: ready
+set: causal
+group: why_subnational
+query: Why are our forests in Riau being burned?
+expected:
+  aoi_ids: IDN.24
+  dataset_id: 10;8;11
+  data_pull: 'TRUE'
+  text: Uses fire-driven loss and driver data for Riau to explain what lies behind the burning,
+    and caveats that the data show patterns rather than proving who or what set the fires.
+  accept_blog_sources: preventing-forest-fires-indonesia-focus-riau-province-peatland-and-illegal-burning;mencegah-kebakaran-hutan-di-indonesia-fokus-pada-provinsi-riau-lahan-gambut-serta;peering-through-haze-what-data-can-tell-us-about-fires-indonesia;indonesias-forest-fires-reignite-threatening-protected-areas-and-peatlands;fires-indonesia-spike-highest-levels-june-2013-haze-emergency;high-resolution-satellites-help-monitor-and-respond-fires-southeast-asia;exploring-indonesias-long-and-complicated-history-forest-fires;forest-fires-blaze-indonesias-tesso-nilo-national-park;indonesian-fires-bring-more-haze-southeast-asia;asean-leaders-can-act-reduce-fires-and-haze;indonesia-burning-forest-fires-flare-alarming-levels
+  accept_nudge_offering: 10 | 8
+notes:
+  behaviour: Answer with fire-driven loss and drivers; caveat on causes
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-034); Map exploration research ("Kenapa
+    hutan kita di bakar")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; expectations revised 2026-10-26 (AJ, why-questions review)'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: AOI id to verify
+  benchmark_id: bm26-034
+  benchmark_type: causal
+  use_cases: UC1;UC3
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Map exploration research ("Kenapa hutan kita di bakar")
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-26 (AJ): a blog post fairly answers this; an answer from search_blogs passes
+    when it links one of accept_blog_sources, and a correct pull still passes. 20261023T094447Z_prod:
+    attempts 2 and 3 answered from blogs citing listed Riau fire posts; attempt 1 stopped
+    after pick_dataset.; 2026-10-28 (AJ, draft-5 failures review): accept_nudge_offering 10
+    | 8: asking whether to look at fire-driven loss or the drivers is a fair answer (draft-5
+    attempts 1 and 2 asked exactly that). This accepts a question back where PZB-1589 (Pulling)
+    would have Horizon pull both in turn'

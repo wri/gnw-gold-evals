@@ -1,0 +1,26 @@
+id: ch-quant-191
+uid: 78b700a2d01a5b94
+status: ready
+set: quantification
+group: method
+query: What is the spatial resolution of tree cover loss, and what is the smallest clearing
+  it can detect?
+expected:
+  text: States that tree cover loss is mapped at 30-metre resolution from Landsat and explains
+    what that means for the smallest clearings it can detect.
+notes:
+  behaviour: Answer accurately (30 m pixels; detection limits)
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-269); GFW Advisory Council focus groups
+    ("what does the pixel mean?")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-269
+  benchmark_type: quantification
+  use_cases: UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: GFW Advisory Council focus groups ("what does the pixel mean?")
+  refresh_risk: Low

@@ -1,0 +1,44 @@
+id: ch-comp-149
+uid: 42640cf0287be5fd
+status: ready
+set: comparison
+group: integrated-alerts
+query: My email said there were about 40 hectares of new alerts in Côte d'Ivoire's Nawa region.
+  How does that compare with the same month last year?
+expected:
+  aoi_ids: CIV.2.2
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: Does not present the emailed 40 hectares as a figure from the alert data. Referring
+    to the 40 hectares as the user's emailed figure, for example to compare it with what the
+    data show, is fine.
+notes:
+  behaviour: Compare same month across years with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-037); USY-001582 Western North; Alerts
+    JTBD (Miro)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-26 (Côte d''Ivoire stand-in)'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-037
+  benchmark_type: comparison
+  use_cases: UC1;UC3
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001582 Western North; Alerts JTBD (Miro)
+  refresh_risk: Alert confidence can upgrade
+  ghana_original: '{"query": "My email said there were about 40 hectares of new alerts in
+    the Western North region. How does that compare with the same month last year?", "expected":
+    {"aoi_ids": "GHA16", "dataset_id": "11", "data_pull": "TRUE", "text": "Compares this month''s
+    alert area in Western North with the same month last year using the alert data, rather
+    than repeating the emailed 40 hectares without checking it."}}'
+  review: '2026-10-26 (AJ): moved from Ghana to a similar area in Côte d''Ivoire while PZB-1408
+    is open (the analytics API rejects every Ghana sub-national GADM id); restore the Ghana
+    version (notes.ghana_original) once it is fixed; 2026-10-27 draft-5 review (AJ asked to
+    apply the review): text shortened to the one misleading behaviour (the emailed 40 ha presented
+    as a figure from the data); no figure: the harness has no run-relative token for the same
+    month last year; 2026-10-28 (AJ, draft-5 failures review): text says crediting the 40
+    ha to the email is fine (two draft-5 attempts did exactly that and failed)'

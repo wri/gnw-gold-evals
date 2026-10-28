@@ -1,0 +1,26 @@
+id: ch-comp-178
+uid: f074b56c8ebee2c5
+status: ready
+set: comparison
+group: method
+query: How does tree cover loss from fires differ from burned area data?
+expected:
+  text: Explains correctly that tree cover loss due to fires measures tree cover lost where
+    fire was the cause, while burned area maps all land that burned, including non-forest
+    and fires that did not remove tree cover.
+notes:
+  behaviour: Explain the conceptual difference correctly
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-279); USY-001182 TNC; USY-001173 UNEP
+    fire reports
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-279
+  benchmark_type: comparison
+  use_cases: UC3;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001182 TNC; USY-001173 UNEP fire reports
+  refresh_risk: Low

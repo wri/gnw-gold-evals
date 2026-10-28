@@ -1,0 +1,37 @@
+id: ch-comp-165
+uid: 7b8607186499c9d2
+status: ready
+set: comparison
+group: tcl-fires
+query: How much tree cover was lost to fires in Sinaloa in 2024, and was that more than in
+  2023?
+expected:
+  aoi_ids: MEX.25
+  dataset_id: '10'
+  start_date: '2023-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'MEX.25' and tree_cover_loss_year
+    = 2024 ; sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'MEX.25' and tree_cover_loss_year
+    = 2023
+  figure_claim: '#1 > #2 :: fire-driven tree cover loss in Sinaloa was higher in 2024 than
+    in 2023 || fire-driven tree cover loss in Sinaloa was not higher in 2024 than in 2023'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-119); USY-001556 El Universal / Sinaloa
+    fires
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-119
+  benchmark_type: comparison
+  use_cases: UC3
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001556 El Universal / Sinaloa fires
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure check added (fire-driven
+    loss in 2024 and 2023, direction claim)'

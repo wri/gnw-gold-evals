@@ -1,0 +1,36 @@
+id: ch-mon-037
+uid: 2564a3e75c83e555
+status: ready
+set: monitoring
+group: monthly_recent
+query: Summarize disturbance alerts in Padre Abad province over the last 6 months, month by
+  month
+expected:
+  aoi_ids: PER.26.3
+  dataset_id: '11'
+  start_date: '{run-182d}'
+  end_date: '{run}'
+  date_tolerance_days: '31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-182d}..{run} | sum(area_ha) where alert_date
+    in {last_month_start}..{last_month_end}
+notes:
+  behaviour: answer with data + monthly chart
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-011); USY-001248 Kakataibo surveillance
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-011
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001248 Kakataibo surveillance
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text dropped (it scored
+    completeness, not accuracy); figure added (six-month total, or last full month''s figure
+    from a month-by-month answer; a whole monthly series is not expressible)'

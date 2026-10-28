@@ -1,5 +1,5 @@
 id: ch-quant-033
-uid: 74d5eb38dc9754ed
+uid: 56d3132c8b3b306a
 status: ready
 set: quantification
 group: sluc
@@ -11,6 +11,8 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: sum(emissions_factor_tCO2e_per_tonne_production) where crop_type = 'Soybean' and
+    gas_type = 'CO2e' and year = 2024
 notes:
   crop_types: 'Soybean (unscored: no evaluator surface yet)'
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -20,3 +22,16 @@ notes:
   manifest_id: m-sluc-quant-01
   lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-01a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001651 Olam GHG data; USY-001404 Mars
+  refresh_risk: Low
+  benchmark_id: bm26-191
+  benchmark_type: quantification
+  use_cases: UC2;UC4;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (CO2e row
+    of the sLUC table)'

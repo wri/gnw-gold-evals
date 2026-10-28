@@ -1,5 +1,5 @@
 id: ch-trend-045
-uid: 30089ff2a8838732
+uid: 835f05e2d874e479
 status: ready
 set: trend
 group: grasslands
@@ -10,6 +10,11 @@ expected:
   start_date: '2010-01-01'
   end_date: '2022-12-31'
   data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where year = 2010 ; ref: sum(area_ha) where year = 2022 ; sum(area_ha)
+    where year = 2022 | change(sum(area_ha) where year = 2010, sum(area_ha) where year = 2022)
+    | pct_change(sum(area_ha) where year = 2010, sum(area_ha) where year = 2022)'
+  figure_claim: '#2 < #1 :: grassland extent in 2022 was smaller than in 2010 || grassland
+    extent in 2022 was not smaller than in 2010'
 notes:
   judge_instruction: Compare grassland extent (area_ha) at the start and end of the window;
     volunteered figures must match the series.
@@ -17,3 +22,16 @@ notes:
   manifest_id: m-grass-trend-05
   lineage: generated 2026-09-01 from phase-2 manifest; grass-trend-05a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001293 Sicredi; USY-001313 LDC grasslands
+  refresh_risk: Low
+  benchmark_id: bm26-264
+  benchmark_type: trend
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (2022 vs 2010 extent from the pulled table)'

@@ -1,0 +1,24 @@
+id: ch-quant-203
+uid: 03099cba0ca96b29
+status: ready
+set: quantification
+group: method
+query: How is the sLUC emission factor for cocoa calculated?
+expected:
+  text: Explains at a high level how the sLUC emission factor for cocoa is calculated and
+    points to the methodology documentation.
+notes:
+  behaviour: Explain method accurately; point to documentation
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-294); USY-001651 Olam GHG data
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-294
+  benchmark_type: quantification
+  use_cases: UC4;UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001651 Olam GHG data
+  refresh_risk: Low

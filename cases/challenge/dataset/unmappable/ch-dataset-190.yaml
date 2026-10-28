@@ -15,3 +15,6 @@ notes:
   lineage: climate gap (#1 unmet topic)
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
   source_tab: challenge-dataset-v1
+  synthetic: 'FALSE'
+  user_story_refs: —
+  refresh_risk: Low

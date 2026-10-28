@@ -1,0 +1,36 @@
+id: ch-comp-148
+uid: d985f7043f9664b8
+status: ready
+set: comparison
+group: tcl
+query: Was Gabon's tree cover loss in 2016–2017 higher than its 2006–2015 annual average?
+expected:
+  aoi_ids: GAB
+  dataset_id: '4'
+  start_date: '2006-01-01'
+  end_date: '2017-12-31'
+  data_pull: 'TRUE'
+  figure: 'mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2006..2015
+    ; mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2016..2017 | sum(area_ha)
+    where tree_cover_loss_year = 2016 | sum(area_ha) where tree_cover_loss_year = 2017 ; ref:
+    mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2016..2017'
+  figure_claim: '#3 > #1 :: Gabon''s tree cover loss in 2016 to 2017 was higher than its 2006
+    to 2015 annual average || Gabon''s tree cover loss in 2016 to 2017 was not higher than
+    its 2006 to 2015 annual average'
+notes:
+  difficulty: hard
+  behaviour: answer with data; annualise correctly
+  lineage: benchmark v2026 proposed set (bm26-049); Rainforest Foundation UK vs CAFI
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  user_story_refs: 'Impact-pathway PDF: Rainforest Foundation UK vs CAFI (not in story CSV)'
+  benchmark_id: bm26-199
+  benchmark_type: comparison
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure (2006 to 2015
+    annual mean against the 2016 to 2017 loss) and figure_claim added'

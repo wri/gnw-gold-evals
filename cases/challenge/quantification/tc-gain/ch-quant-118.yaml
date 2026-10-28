@@ -1,5 +1,5 @@
 id: ch-quant-118
-uid: 05a6c6adc2167dbf
+uid: cdacf2987bf0dadf
 status: ready
 set: quantification
 group: tc-gain
@@ -11,6 +11,7 @@ expected:
   start_date: '2015-01-01'
   end_date: '2020-12-31'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_gain_period = '2015-2020'
 notes:
   judge_instruction: Cumulative gain over the 2015-2020 period; headline is that cumulative
     gain area (ha). Do not decompose the period into sub-intervals; gain is not restoration.
@@ -18,3 +19,15 @@ notes:
   manifest_id: m-gain-quant-03
   lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-03a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001296 / USY-001364 El Salvador
+  refresh_risk: Low
+  benchmark_id: bm26-261
+  benchmark_type: quantification
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

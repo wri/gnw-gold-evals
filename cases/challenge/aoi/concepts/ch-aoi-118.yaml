@@ -1,13 +1,12 @@
 id: ch-aoi-118
-uid: 5cd2fb1d2bbffb08
+uid: b4f464052b04941b
 status: ready
 set: aoi
 group: concepts
 query: Show me the Cerrado
 expected:
-  clarification: 'TRUE'
-  text: Explains that the Cerrado biome is not a selectable area and asks for countries or
-    states instead; does not silently select a small KBA with Cerrado in its name
+  text: Does not present a place merely named Cerrado as the Cerrado biome; either asks whether
+    the Brazilian biome is meant or explains that it is not selectable and asks for states.
 notes:
   difficulty: hard
   behaviour: clarify
@@ -15,3 +14,17 @@ notes:
   verify_query: Cerrado
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
+  synthetic: 'FALSE'
+  user_story_refs: USY-001636 Protected Planet (regional framing)
+  refresh_risk: Scored info-only until clarification validator is stable
+  benchmark_id: bm26-163
+  benchmark_type: scope
+  use_cases: UC3;UC5;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text no longer hinges
+    on ''silently'' (identical answers had scored F/T/T); clarification dropped (the text
+    requires the ask)'

@@ -1,5 +1,5 @@
 id: ch-comp-122
-uid: e9758565aa3a5ac9
+uid: ae320d328f6d25e0
 status: ready
 set: comparison
 group: tcl-drivers
@@ -9,6 +9,13 @@ expected:
   aoi_ids: BRA;IDN
   dataset_id: '8'
   data_pull: 'TRUE'
+  figure: ratio(max(area_ha) by tree_cover_loss_driver where aoi_id = 'BRA' and tree_cover_loss_driver
+    != 'Unknown', sum(area_ha) where aoi_id = 'BRA' and tree_cover_loss_driver != 'Unknown')
+    | max(area_ha) by tree_cover_loss_driver where aoi_id = 'BRA' and tree_cover_loss_driver
+    != 'Unknown' ; ratio(max(area_ha) by tree_cover_loss_driver where aoi_id = 'IDN' and tree_cover_loss_driver
+    != 'Unknown', sum(area_ha) where aoi_id = 'IDN' and tree_cover_loss_driver != 'Unknown')
+    | max(area_ha) by tree_cover_loss_driver where aoi_id = 'IDN' and tree_cover_loss_driver
+    != 'Unknown'
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'driver (unscored: no evaluator surface yet)'
@@ -19,3 +26,16 @@ notes:
   manifest_id: m-driver-comp-01
   lineage: generated 2026-09-01 from phase-2 manifest; driver-comp-01a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001569 Sucden cocoa-area screening; USY-001351 Bloomberg
+  refresh_risk: 'High: open-ended window, categorical answer; re-verify at annual refresh'
+  benchmark_id: bm26-106
+  benchmark_type: causal
+  use_cases: UC2;UC3
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figures added (dominant
+    driver share per country)'

@@ -1,0 +1,36 @@
+id: ch-mon-038
+uid: 247a4d49e98646e1
+status: ready
+set: monitoring
+group: recent_vs_prior
+query: Did alert area in Ituri go up in the last 30 days compared with the 30 days before?
+expected:
+  aoi_ids: COD.6
+  dataset_id: '11'
+  start_date: '{run-60d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where alert_date in {run-30d}..{run} ; ref: sum(area_ha) where
+    alert_date in {run-60d}..{run-31d}'
+  figure_claim: '#1 > #2 :: alert area went up in the last 30 days compared with the 30 days
+    before || alert area did not go up in the last 30 days compared with the 30 days before'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-012); USY-001596 SPAVOM Ituri
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-012
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001596 SPAVOM Ituri
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (last 30 days vs the 30 days before from the pulled table)'

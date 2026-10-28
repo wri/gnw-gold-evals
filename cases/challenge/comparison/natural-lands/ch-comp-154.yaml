@@ -1,0 +1,42 @@
+id: ch-comp-154
+uid: e6be088385f5e8f8
+status: ready
+set: comparison
+group: natural-lands
+query: Has any natural land been converted since 2021 in San Martín or Junín, where our cocoa
+  cooperatives are?
+expected:
+  aoi_ids: PER.23;PER.12
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  accept_nudge_offering: '4'
+  context_layer: natural_forest
+  figure: sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025
+notes:
+  behaviour: 'answer with data (2–3 named areas: supported)'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-066); USY-001510 Peru coffee & cocoa
+    producer orgs; USY-001402 Helvetas
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: open-ended window ends 2025-12-31 (catalog content_date 2001-2025); sheet said
+    2024-12-31
+  benchmark_id: bm26-066
+  benchmark_type: comparison
+  use_cases: UC2
+  engagement: Returning user
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001510 Peru coffee & cocoa producer orgs; USY-001402 Helvetas
+  refresh_risk: Low
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 nudges
+    offered tree cover loss (4) and land cover (1), never SBTN Natural Lands (3).; 2026-10-27
+    draft-5 review (AJ asked to apply the review): SBTN Natural Lands (3) dropped: a 2020-only
+    baseline that cannot show change; expects tree cover loss on the natural forest layer
+    from 2021, a nudge must offer 4; figure check added (loss per department)'

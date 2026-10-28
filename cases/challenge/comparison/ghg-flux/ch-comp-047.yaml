@@ -1,5 +1,5 @@
 id: ch-comp-047
-uid: ab0dd4cacab53e95
+uid: 2118ea998b3d8ff9
 status: ready
 set: comparison
 group: ghg-flux
@@ -9,6 +9,11 @@ expected:
   aoi_ids: PER;BOL
   dataset_id: '6'
   data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'PER' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'BOL'
+  figure_claim: '#1 < #2 :: Peru''s forests are the bigger net carbon sink (or the smaller
+    net source) of the two, compared with Bolivia''s || Bolivia''s forests are the bigger
+    net carbon sink (or the smaller net source) of the two, compared with Peru''s'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -18,3 +23,18 @@ notes:
   manifest_id: m-flux-comp-03
   lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-03b
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-000473 Economist flux; USY-001123 IPCC AR6
+  refresh_risk: Low
+  benchmark_id: bm26-196
+  benchmark_type: comparison
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table); claim reworded
+    2026-10-27 after the draft-5 run: ''lower (more sink-like) net flux'' made the AI reviewer
+    read the bigger sink as the weaker one'

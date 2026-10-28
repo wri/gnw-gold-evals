@@ -1,5 +1,5 @@
 id: ch-quant-050
-uid: 8bab87862df62af1
+uid: 0549eaa241490b83
 status: ready
 set: quantification
 group: ghg-flux
@@ -9,6 +9,9 @@ expected:
   aoi_ids: CRI
   dataset_id: '6'
   data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e)
+  figure_claim: '#1 < 0 :: Costa Rica''s forests were a net carbon sink over 2001 to 2025
+    || Costa Rica''s forests were a net carbon source over 2001 to 2025'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -18,3 +21,16 @@ notes:
   manifest_id: m-flux-quant-05
   lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-05a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-212
+  benchmark_type: quantification
+  synthetic: 'FALSE'
+  use_cases: UC3;UC4;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  user_story_refs: USY-000473 Economist flux; USY-001652 UNESCO GHG
+  refresh_risk: Re-verify at annual refresh (open-ended, categorical)
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and sink-or-source
+    claim added'

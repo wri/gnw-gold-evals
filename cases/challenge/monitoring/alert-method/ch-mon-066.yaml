@@ -1,0 +1,25 @@
+id: ch-mon-066
+uid: 67e7a9c812e06403
+status: ready
+set: monitoring
+group: alert_method
+query: What time period do the disturbance alerts cover and how often are they updated?
+expected:
+  text: States accurately that the integrated alerts start in December 2023 and are updated
+    daily as the source alert systems update, without inventing other periods or frequencies.
+notes:
+  behaviour: Answer accurately
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-275); Alerts JTBD (Miro) (understand
+    coverage)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-275
+  benchmark_type: monitoring
+  use_cases: UC1;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Alerts JTBD (Miro) (understand coverage)
+  refresh_risk: Alert confidence can upgrade

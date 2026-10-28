@@ -131,7 +131,9 @@ def evaluate_chart_integrity(agent_state: dict[str, Any]) -> dict[str, Any]:
 
     problems = []
     for index, chart in enumerate(charts):
-        if not isinstance(chart, dict):
+        # A table's axis fields are never drawn (the FE's table widget renders
+        # only the records and the title), so they say nothing about a join.
+        if not isinstance(chart, dict) or chart.get("type") == "table":
             continue
         data = chart.get("data")
         if not isinstance(data, list):
