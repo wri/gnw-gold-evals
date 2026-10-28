@@ -601,14 +601,29 @@ def llm_judge_claim(sentence: str, actual_answer: str) -> dict[str, int | str]:
 
 
 def llm_judge_answer_period(
-    query: str, period: str, actual_answer: str
+    query: str, period: str, actual_answer: str, fixed_period: str = ""
 ) -> dict[str, str]:
     """Whether the reply's figures are computed over exactly the asked period.
 
     AJ's rule (2026-10-27): pulling a wider window is fine, but the answer
     must use the asked period. The reviewer reads which period the reply's
     figures cover; it does no arithmetic.
+
+    ``fixed_period`` ("2001 to 2025") names the one period the data come as.
+    The general "fixed period" pass rule alone did not move Haiku on
+    ch-causal-015, and rewording it for every case made other verdicts
+    stricter, so the rule is spelled out only for the cases that opt in; with
+    it empty the prompt is unchanged.
     """
+    fixed_period_rule = (
+        f"\n\n                THE DATA ONLY COME AS ONE FIXED PERIOD: {fixed_period}"
+        " as a whole, with no breakdown by year, so the asked period cannot be"
+        f" cut from them. Pass a response that gives its figures for {fixed_period}"
+        " and says so, in the reply or in its methodology note, even though that"
+        " is not the asked period; this takes precedence over the fail rule."
+        if fixed_period
+        else ""
+    )
 
     class PeriodVerdict(BaseModel):
         reason: str
@@ -626,7 +641,7 @@ def llm_judge_answer_period(
                 {query}
 
                 PERIOD THE ANSWER MUST USE:
-                {period}
+                {period}{fixed_period_rule}
 
                 ACTUAL AGENT RESPONSE:
                 {actual_answer}
@@ -659,7 +674,12 @@ def llm_judge_answer_period(
         ],
     )
     judgement = (prompt | HAIKU.with_structured_output(PeriodVerdict)).invoke(
-        {"query": query, "period": period, "actual_answer": actual_answer}
+        {
+            "query": query,
+            "period": period,
+            "fixed_period_rule": fixed_period_rule,
+            "actual_answer": actual_answer,
+        }
     )
     verdict = judgement.verdict.strip().lower().replace(" ", "_")
     if verdict not in ("pass", "fail", "not_applicable"):

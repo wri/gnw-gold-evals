@@ -214,14 +214,16 @@ def test_figure_claim_is_judged_on_the_true_sentence(pulled, monkeypatch):
 def test_answer_period_reads_the_period_and_maps_the_verdict(monkeypatch):
     seen = {}
 
-    def judge(query, period, answer):
+    def judge(query, period, answer, fixed_period=""):
         seen["period"] = period
+        seen["fixed_period"] = fixed_period
         return {"verdict": "fail", "reason": "it averaged 2001 to 2025"}
 
     monkeypatch.setattr("goldset.evaluators.llm_judges.llm_judge_answer_period", judge)
     state = {"messages": [SimpleNamespace(content="The average was 1.2 Mha.")]}
     result = evaluate_answer_period(state, "Average 2018-2022?", "2018-01-01", "2022-12-31")
     assert seen["period"] == "from 2018 to 2022"
+    assert seen["fixed_period"] == ""
     assert result["answer_period_match_score"] == 0.0
     open_ended = evaluate_answer_period(state, "Since 2021?", "2021-01-01", "")
     assert seen["period"] == "from 2021 to the latest data available"
@@ -229,10 +231,29 @@ def test_answer_period_reads_the_period_and_maps_the_verdict(monkeypatch):
     assert evaluate_answer_period(state, "q", "", "")["answer_period_match_score"] is None
 
 
+def test_answer_period_passes_a_fixed_period_to_the_judge(monkeypatch):
+    # ch-causal-015: drivers data only come as 2001 to 2025 as a whole
+    seen = {}
+
+    def judge(query, period, answer, fixed_period=""):
+        seen["fixed_period"] = fixed_period
+        return {"verdict": "pass", "reason": "2001 to 2025, stated as the data's period"}
+
+    monkeypatch.setattr("goldset.evaluators.llm_judges.llm_judge_answer_period", judge)
+    state = {"messages": [SimpleNamespace(content="Agriculture: 227,084 ha (2001-2025).")]}
+    result = evaluate_answer_period(
+        state, "Fires or agriculture, 2015-2023?", "2015-01-01", "2023-12-31", 0, "2001-2025"
+    )
+    assert seen["fixed_period"] == "2001 to 2025"
+    assert result["answer_period_match_score"] == 1.0
+    with pytest.raises(ValueError, match="YYYY-YYYY"):
+        evaluate_answer_period(state, "q", "2015-01-01", "2023-12-31", 0, "2001 to 2025")
+
+
 def test_answer_period_not_applicable_scores_null(monkeypatch):
     monkeypatch.setattr(
         "goldset.evaluators.llm_judges.llm_judge_answer_period",
-        lambda q, p, a: {"verdict": "not_applicable", "reason": "it declined"},
+        lambda q, p, a, f="": {"verdict": "not_applicable", "reason": "it declined"},
     )
     state = {"messages": [SimpleNamespace(content="I cannot answer that.")]}
     result = evaluate_answer_period(state, "q", "{run-14d}" and "2026-10-13", "2026-10-27", 3)

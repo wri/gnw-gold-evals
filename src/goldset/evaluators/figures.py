@@ -649,14 +649,25 @@ def _period_text(start: str, end: str, tolerance_days: int) -> str:
     return text
 
 
+def _fixed_period_text(fixed_period: str) -> str:
+    match = re.fullmatch(r"\s*(\d{4})\s*-\s*(\d{4})\s*", fixed_period)
+    if not match:
+        raise ValueError(
+            f"accept_fixed_period must be 'YYYY-YYYY', got {fixed_period!r}"
+        )
+    return f"{match.group(1)} to {match.group(2)}"
+
+
 def evaluate_answer_period(
     agent_state: dict[str, Any],
     query: str,
     start_date: str,
     end_date: str,
     tolerance_days: int = 0,
+    fixed_period: str = "",
 ) -> dict[str, Any]:
-    """answer_period_match: the reply's figures cover exactly the asked period."""
+    """answer_period_match: the reply's figures cover exactly the asked period,
+    or the case's ``accept_fixed_period`` when the data only come as that."""
     from goldset.evaluators.llm_judges import llm_judge_answer_period
     from goldset.evaluators.utils import normalize_end_date, normalize_start_date
 
@@ -668,12 +679,13 @@ def evaluate_answer_period(
     }
     start = normalize_start_date(start_date) if start_date else ""
     end = normalize_end_date(end_date) if end_date else ""
+    fixed = _fixed_period_text(fixed_period) if fixed_period else ""
     answer = extract_final_answer_text(agent_state.get("messages", []))
     if not (start or end) or not answer:
         return result
     period = _period_text(start, end, tolerance_days)
     try:
-        judged = llm_judge_answer_period(query, period, answer)
+        judged = llm_judge_answer_period(query, period, answer, fixed)
     except Exception as error:
         result["answer_period_match_score_reason"] = f"JUDGE ERROR: {error}"
         result["judge_errors"] = ["answer_period_match"]

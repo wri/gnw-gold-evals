@@ -66,6 +66,7 @@ FIELD_CHECKS = {
     "figure": "figure_match (computed from the agent's own pulled table)",
     "figure_claim": "figure_claim_match (the conclusion the pulled data supports)",
     "date_tolerance_days": "date_extraction (days a window may fall short of a bound)",
+    "accept_fixed_period": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)",
     "answer": "agent_answer, charts_answer, chart_produced",
     "data_pull": "data_pull_exists, answered_without_data",
     "text": "expected_text_match",

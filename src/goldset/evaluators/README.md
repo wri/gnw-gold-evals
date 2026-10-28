@@ -1427,6 +1427,14 @@ the latest data" or "up to"), with `date_tolerance_days` passed on as "give or
 take N days". It counts toward the score from its first run, by AJ's choice
 (2026-10-27), although judged checks normally start info-only.
 
+**`accept_fixed_period`** (`YYYY-YYYY`, opt-in): the data only come as that one
+period, so a reply that gives its figures for it and says so passes, even in a
+methodology note (AJ, 2026-10-28, `ch-causal-015`, whose drivers data cover
+2001 to 2025 as a whole). The general rule above did not move Haiku on that
+case, and rewording it for every case made three unrelated draft-5 verdicts
+stricter, so the rule is spelled out in the prompt only when a case sets the
+field; without it the prompt is unchanged. Any other format raises.
+
 **`null` vs `0.0`**: `null` with no dates or no reply, and when the reviewer
 finds no figures to judge (a decline or a question).
 

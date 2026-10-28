@@ -201,6 +201,10 @@ class ExpectedData(BaseModel):
     # data must support (evaluators/figures.py; draft-5, 2026-10-27).
     expected_figure: str = ""
     expected_figure_claim: str = ""
+    # "YYYY-YYYY": the data only come as this one fixed period, so
+    # answer_period_match passes a reply that gives its figures for it and
+    # says so (AJ, 2026-10-28, ch-causal-015). Opt-in.
+    expected_accept_fixed_period: str = ""
     expected_answer: str = ""
     expected_text: str = ""
     expected_clarification: bool | None = None
