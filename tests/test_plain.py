@@ -109,14 +109,29 @@ def test_wrong_figure_needs_an_answer_with_a_failed_figure():
     assert not outcome.question([wrong] * 3, Calls(figure_info_only=True))["wrong_figure"]
 
 
+def test_the_strict_reading_needs_every_attempt_right_and_no_wrong_figure():
+    right = _attempt(figure_match=1.0)
+    wrong = _attempt(figure_match=0.0)
+    most = outcome.question([right, right, wrong], DEFAULT)
+    assert (most["outcome"], most["right_every_time"], most["wrong_figure_any"]) == (
+        "right", False, True)
+    assert outcome.question([right] * 3, DEFAULT)["right_every_time"]
+    # An attempt no check applied to is not shown to be right.
+    assert not outcome.question([right, right, _attempt()], DEFAULT)["right_every_time"]
+    assert not outcome.question([], DEFAULT)["right_every_time"]
+
+
 def test_summary_counts_uncovered_in_the_denominator():
     results = [
-        {"outcome": "right", "benchmark": "pass", "wrong_figure": False},
-        {"outcome": "uncovered", "benchmark": "uncovered", "wrong_figure": False},
+        {"outcome": "right", "benchmark": "pass", "wrong_figure": False,
+         "right_every_time": True, "wrong_figure_any": False},
+        {"outcome": "uncovered", "benchmark": "uncovered", "wrong_figure": False,
+         "right_every_time": False, "wrong_figure_any": True},
     ]
     summary = outcome.summarise(results)
     assert summary["rates"]["right"] == 0.5
     assert summary["uncovered"] == 1
+    assert (summary["right_every_time_rate"], summary["wrong_figure_any_rate"]) == (0.5, 0.5)
 
 
 def test_paired_gap_is_seeded_and_brackets_the_gap():

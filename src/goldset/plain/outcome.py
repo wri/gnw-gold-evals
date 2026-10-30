@@ -22,6 +22,10 @@ a tie counting as wrong; uncovered when no attempt scored. Beside it rides
 the BENCHMARK-style verdict: the same attempts handed to the harness's own
 ``buckets.row_verdict``, which ignores the label, so the extra outcomes hide
 nothing and the column follows BENCHMARK's rule if that rule changes.
+
+The stricter reading AJ asked to headline beside it (2026-10-30): right on
+every attempt, so an attempt no check applied to also falls short, and a
+wrong figure on any attempt, the risk a user meets on asking once.
 """
 
 from __future__ import annotations
@@ -114,11 +118,13 @@ def question(attempts: list[dict[str, Any]], calls: Calls) -> dict[str, Any]:
         outcome = "right"
     else:
         outcome = "declined" if outcomes.count("declined") > outcomes.count("wrong") else "wrong"
-    figure_wrong = majority([1.0 if wrong_figure(a, calls) else 0.0 for a, _ in scored])
+    figures_wrong = [wrong_figure(a, calls) for a, _ in scored]
     return {
         "outcome": outcome,
         "benchmark": row_verdict({"trials": [as_trial(a, calls) for a in attempts]}),
-        "wrong_figure": figure_wrong == 1.0,
+        "wrong_figure": majority([1.0 if w else 0.0 for w in figures_wrong]) == 1.0,
+        "right_every_time": bool(attempts) and all(o == "right" for o in outcomes),
+        "wrong_figure_any": any(figures_wrong),
     }
 
 
@@ -128,6 +134,8 @@ def summarise(results: Iterable[dict[str, Any]]) -> dict[str, Any]:
     total = len(results)
     counts = Counter(r["outcome"] for r in results)
     wrong_figures = sum(r["wrong_figure"] for r in results)
+    every_time = sum(r["right_every_time"] for r in results)
+    any_wrong_figure = sum(r["wrong_figure_any"] for r in results)
     benchmark_passes = sum(r["benchmark"] == "pass" for r in results)
 
     def share(n: int) -> float:
@@ -139,6 +147,10 @@ def summarise(results: Iterable[dict[str, Any]]) -> dict[str, Any]:
         "rates": {o: share(counts.get(o, 0)) for o in OUTCOMES},
         "wrong_figure": wrong_figures,
         "wrong_figure_rate": share(wrong_figures),
+        "right_every_time": every_time,
+        "right_every_time_rate": share(every_time),
+        "wrong_figure_any": any_wrong_figure,
+        "wrong_figure_any_rate": share(any_wrong_figure),
         "benchmark_style_pass": benchmark_passes,
         "benchmark_style_rate": share(benchmark_passes),
     }
