@@ -44,13 +44,15 @@ STOP_USD = 1.0
 CACHE_CONTROL = {"type": "ephemeral"}
 
 # "basic" puts each fetched page into context whole; "dynamic" filters pages
-# with code first. Measured in September on one Sonnet question: basic $0.18
-# and 35 s, dynamic $0.33 and 388 s, with tool-retry chatter in the reply.
+# with code first (built into the 20260209 versions, no extra tool). AJ chose
+# the newer, dynamic tools on 2026-10-30, as closer to what users get. Measured
+# in September on one Sonnet 5 question: basic $0.18 and 35 s, dynamic $0.33
+# and 388 s, with tool-retry chatter in the reply.
 WEB_TOOL_VERSIONS = {
     "basic": ("web_search_20250305", "web_fetch_20250910"),
     "dynamic": ("web_search_20260209", "web_fetch_20260209"),
 }
-DEFAULT_WEB_TOOLS = "basic"
+DEFAULT_WEB_TOOLS = "dynamic"
 
 # The case store is public on GitHub, so the expected answers are one fetch
 # away. Both hosts GitHub serves files from are blocked.
