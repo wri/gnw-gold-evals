@@ -134,6 +134,7 @@ def score_attempt(
     scored = run_checks(case, text, links)
     attempt: dict[str, Any] = {
         "label": labelled["label"], "label_reason": labelled["reason"],
+        "gives_figure": labelled["gives_figure"],
         "checks": scored["checks"], "reasons": scored["reasons"], "offer": None,
     }
     if scored["judge_errors"]:

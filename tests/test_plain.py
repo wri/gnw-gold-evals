@@ -29,7 +29,8 @@ def _attempt(label="answered", offer=None, **checks):
     # A decline passes a lenient "explains the limit" text, yet is no answer.
     (_attempt("declined", expected_text_match=1.0), DEFAULT, "declined"),
     (_attempt("declined", expected_text_match=1.0), Calls(decline_right=True), "right"),
-    (_attempt("declined", expected_text_match=0.0), Calls(decline_right=True), "declined"),
+    # A decline that fails its check where a decline is right misleads: wrong.
+    (_attempt("declined", expected_text_match=0.0), Calls(decline_right=True), "wrong"),
     # Where a decline is right and no check gates (a Horizon-only text), it stands.
     (_attempt("declined", expected_text_match=0.0),
      Calls(text="horizon_only", decline_right=True), "right"),
@@ -43,6 +44,25 @@ def _attempt(label="answered", offer=None, **checks):
 ])
 def test_attempt_outcomes(attempt, calls, expected):
     assert outcome.attempt_outcome(attempt, calls) == expected
+
+
+def _gives(gives_figure, **checks):
+    return {**_attempt(**checks), "gives_figure": gives_figure}
+
+
+@pytest.mark.parametrize("attempt, expected", [
+    # An honest omission: no figure of its own, nothing else failed.
+    (_gives(False, expected_text_match=1.0, figure_match=0.0), "declined"),
+    # A stated figure that misses is wrong.
+    (_gives(True, figure_match=0.0), "wrong"),
+    # Another check failed too, or the conclusion is wrong: still wrong.
+    (_gives(False, expected_text_match=0.0, figure_match=0.0), "wrong"),
+    (_gives(False, figure_match=0.0, figure_claim_match=0.0), "wrong"),
+])
+def test_a_missing_figure_is_not_a_wrong_one(attempt, expected):
+    assert outcome.attempt_outcome(attempt, DEFAULT) == expected
+    assert outcome.wrong_figure(attempt, DEFAULT) is (expected == "wrong"
+                                                     and attempt["gives_figure"])
 
 
 def test_a_question_is_right_on_most_scored_attempts():
@@ -184,7 +204,7 @@ def test_score_one_routes_a_nudge_and_spots_the_reference_pull(monkeypatch):
     monkeypatch.setattr(judges, "label", lambda q, r: pytest.fail("judged"))
     result = score.score_one(CASE, score.Attempt("Which?", NUDGE), ["http://a/r/9"], [])
     assert (result["offer"], result["pulled_reference"]) == (1.0, False)
-    monkeypatch.setattr(judges, "label", lambda q, r: {"label": "answered", "reason": "r"})
+    monkeypatch.setattr(judges, "label", lambda q, r: {"label": "answered", "reason": "r", "gives_figure": True})
     monkeypatch.setattr(score, "run_checks", lambda c, t, links: {
         "checks": {}, "reasons": {}, "judge_errors": []})
     same = score.score_one(CASE, score.Attempt("1,500 ha", None, ("http://b/r/9",)),
@@ -202,7 +222,7 @@ def table(monkeypatch):
 
 
 def test_figures_are_checked_against_the_reference(monkeypatch, table):
-    monkeypatch.setattr(judges, "label", lambda q, r: {"label": "answered", "reason": "r"})
+    monkeypatch.setattr(judges, "label", lambda q, r: {"label": "answered", "reason": "r", "gives_figure": True})
     right = score.score_attempt(CASE, "About 1,500 ha were lost in 2020.", ["http://a/x/1"])
     wrong = score.score_attempt(CASE, "About 2,000 ha were lost in 2020.", ["http://a/x/1"])
     assert right["checks"]["figure_match"] == 1.0
@@ -213,7 +233,7 @@ def test_figures_are_checked_against_the_reference(monkeypatch, table):
 
 
 def test_an_ask_back_is_read_against_each_fair_offer(monkeypatch, table):
-    monkeypatch.setattr(judges, "label", lambda q, r: {"label": "asked_back", "reason": "r"})
+    monkeypatch.setattr(judges, "label", lambda q, r: {"label": "asked_back", "reason": "r", "gives_figure": False})
     seen = []
 
     def offers(query, reply, options):

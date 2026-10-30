@@ -4,9 +4,11 @@ Same client as every harness judge (Haiku 4.5, temperature 0, structured
 output with the reason before the verdict). Neither does arithmetic. Both
 are new, so the pilot hand-checks them before the full run relies on them.
 
-- ``label``: did the reply answer, decline, or ask the user to choose?
-  A decline on a question that expects an answer is reported as Declined,
-  never Right, even where a lenient text check would pass it.
+- ``label``: did the reply answer, decline, or ask the user to choose? And
+  does it state its own figure for what was asked? A decline on a question
+  that expects an answer is reported as Declined, never Right, even where a
+  lenient text check would pass it; an answer that leaves out the asked
+  figure (and says nothing wrong) is not a wrong figure.
 - ``offers``: on a question where a fair choice is a right answer, does a
   prose ask-back offer every accepted option? Horizon's nudge is scored by
   ids (``accepted_nudge_match``); Sonnet has no nudge, so its prose is read.
@@ -41,11 +43,20 @@ label, one of:
 
 A reply that gives an answer and also suggests where to check it is
 "answered". A reply that explains why the question cannot be answered as
-asked, without answering it, is "declined".
+asked, without answering it, is "declined". So is a reply that says it
+cannot answer the core question and gives only background or related
+context instead.
+
+gives_figure: true when the reply states its own number for the quantity
+the question asks about (an area, a count, a share, an emission, a change),
+even if approximate. False when it gives no number for that quantity, only
+numbers for other things (a related dataset, another period, another
+place), or none at all.
 
 Return:
 - reason: one concise sentence on what the reply does
 - label: "answered", "declined" or "asked_back"
+- gives_figure: true or false
 """
 
 OFFER_PROMPT = """
@@ -71,6 +82,7 @@ Return:
 class _Label(BaseModel):
     reason: str
     label: Literal["answered", "declined", "asked_back"]
+    gives_figure: bool
 
 
 class _Offer(BaseModel):
@@ -87,9 +99,9 @@ def _judge(prompt: str, schema: type[BaseModel], **inputs: Any) -> BaseModel:
     return chain.invoke(inputs)
 
 
-def label(query: str, reply: str) -> dict[str, str]:
+def label(query: str, reply: str) -> dict[str, Any]:
     judged = _judge(LABEL_PROMPT, _Label, query=query, reply=reply)
-    return {"label": judged.label, "reason": judged.reason}
+    return {"label": judged.label, "reason": judged.reason, "gives_figure": judged.gives_figure}
 
 
 def offers(query: str, reply: str, options: list[str]) -> dict[str, Any]:

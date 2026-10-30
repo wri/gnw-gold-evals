@@ -6,10 +6,15 @@ An attempt's outcome combines its reply checks with its decline label:
   counts it;
 - asked back: right when it offers every accepted choice (the accepted-nudge
   check for Horizon, the offer judge for Sonnet), else as a decline;
-- declined: right only where the overlay says a decline is the right answer
-  and no check failed, else declined;
-- answered: right when every scored gating check passed, wrong when one
-  failed, uncovered when none scored.
+- declined: where the overlay says a decline is the right answer, right
+  unless a check failed, and then wrong (a decline can mislead too: an
+  invented WhatsApp setting); elsewhere declined;
+- answered: right when every scored gating check passed; uncovered when
+  none scored; declined when the only failure is a figure the reply never
+  stated (an honest omission, not an error); otherwise wrong.
+
+A wrong figure is an answer that states its own figure for what was asked
+and misses it. Pilot fixes agreed by AJ, 2026-10-30.
 
 A question takes right when most of its scored attempts are right (ties
 fail, as in BENCHMARK); otherwise declined or wrong, whichever is commoner,
@@ -61,14 +66,20 @@ def attempt_outcome(attempt: dict[str, Any], calls: Calls) -> str | None:
     label = attempt.get("label")
     if label == "asked_back" and attempt.get("offer") == 1.0:
         return "right"
-    verdict = checks_verdict(attempt.get("checks") or {}, calls)
+    checks = attempt.get("checks") or {}
+    verdict = checks_verdict(checks, calls)
     if label in ("declined", "asked_back"):
-        # Where a decline is the right answer, only a failed check (say, an
-        # invented figure alongside it) stops it counting.
-        return "right" if calls.decline_right and verdict != "fail" else "declined"
+        if not calls.decline_right:
+            return "declined"
+        return "wrong" if verdict == "fail" else "right"
     if verdict is None:
         return "uncovered"
-    return "right" if verdict == "pass" else "wrong"
+    if verdict == "pass":
+        return "right"
+    failed = {c for c in gating(calls) if checks.get(c) == 0.0}
+    if failed == {"figure_match"} and attempt.get("gives_figure") is False:
+        return "declined"
+    return "wrong"
 
 
 def as_trial(attempt: dict[str, Any], calls: Calls) -> dict[str, Any]:
@@ -86,6 +97,7 @@ def wrong_figure(attempt: dict[str, Any], calls: Calls) -> bool:
     """An answer whose figure check failed: the clearest way to mislead."""
     return (
         attempt.get("label") == "answered"
+        and attempt.get("gives_figure") is not False
         and "figure_match" in gating(calls)
         and (attempt.get("checks") or {}).get("figure_match") == 0.0
     )
