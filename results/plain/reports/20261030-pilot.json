@@ -1,0 +1,52 @@
+{
+ "gaps": {
+  "right": {
+   "gap": 0.3333,
+   "high": 0.5238,
+   "low": 0.1429
+  },
+  "wrong_figure": {
+   "gap": 0.3095,
+   "high": 0.4524,
+   "low": 0.1667
+  }
+ },
+ "questions": 42,
+ "sonnet": "20261030-pilot",
+ "summaries": {
+  "Horizon": {
+   "benchmark_style_pass": 32,
+   "benchmark_style_rate": 0.7619,
+   "declined": 5,
+   "questions": 42,
+   "rates": {
+    "declined": 0.119,
+    "right": 0.7619,
+    "uncovered": 0.0,
+    "wrong": 0.119
+   },
+   "right": 32,
+   "uncovered": 0,
+   "wrong": 5,
+   "wrong_figure": 0,
+   "wrong_figure_rate": 0.0
+  },
+  "Sonnet + web": {
+   "benchmark_style_pass": 19,
+   "benchmark_style_rate": 0.4524,
+   "declined": 8,
+   "questions": 42,
+   "rates": {
+    "declined": 0.1905,
+    "right": 0.4286,
+    "uncovered": 0.0,
+    "wrong": 0.381
+   },
+   "right": 18,
+   "uncovered": 0,
+   "wrong": 16,
+   "wrong_figure": 13,
+   "wrong_figure_rate": 0.3095
+  }
+ }
+}
