@@ -1,0 +1,195 @@
+{
+ "schema_version": 1,
+ "benchmark": "2026-draft-5",
+ "status": "draft",
+ "drafted": "2026-10-30 by Claude for AJ's review",
+ "reviewed": null,
+ "note": "Questions not listed take the defaults: the text applies to any assistant, a decline is not a right answer, and the figure checks gate.",
+ "questions": {
+  "ec76924ff13d7a88": {
+   "id": "ch-aoi-028",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map navigation ('Show me'): Horizon's area picker"
+  },
+  "f1417ef4b03dc5e3": {
+   "id": "ch-aoi-091",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map navigation: 'not selectable areas' is Horizon's area picker"
+  },
+  "c5f4e693731ac237": {
+   "id": "ch-aoi-116",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map navigation: 'not a selectable area' is Horizon's area picker"
+  },
+  "b4f464052b04941b": {
+   "id": "ch-aoi-118",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map navigation: 'not selectable' is Horizon's area picker"
+  },
+  "429cff193679e584": {
+   "id": "ch-aoi-119",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map navigation: 'not a selectable area' is Horizon's area picker"
+  },
+  "26e69e27bed0e9c7": {
+   "id": "ch-aoi-128",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map navigation from raw coordinates: Horizon's area picker"
+  },
+  "077ad13a262eee61": {
+   "id": "ch-causal-019",
+   "decline_right": true,
+   "why": "Right answer is that alerts do not record a cause"
+  },
+  "cfebd2ebb4f7ad99": {
+   "id": "ch-causal-021",
+   "decline_right": true,
+   "why": "Right answer is that alerts do not record a cause"
+  },
+  "cf4d75fb979f8a75": {
+   "id": "ch-causal-029",
+   "decline_right": true,
+   "why": "No outbreak data: explaining what the data can and cannot show is the answer"
+  },
+  "ff0965aa9c3d11f2": {
+   "id": "ch-dataset-186",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map layers: whether a dataset can be shown on Horizon's map"
+  },
+  "68388ad5237e0c52": {
+   "id": "ch-dataset-187",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map layers: whether a dataset can be shown on Horizon's map"
+  },
+  "3385322c4d5c5f7c": {
+   "id": "ch-dataset-193",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Map layers: 'no flood risk data' is Horizon's catalogue"
+  },
+  "0fb54475e69a2505": {
+   "id": "ch-mon-027",
+   "decline_right": true,
+   "why": "No assistant here can analyse a radius around a point; declining without guessing is right"
+  },
+  "eb50e91a9742c70b": {
+   "id": "ch-mon-040",
+   "decline_right": true,
+   "why": "Cannot set up alerts: saying so is right for any assistant"
+  },
+  "10b5f5c66a317fe9": {
+   "id": "ch-mon-052",
+   "decline_right": true,
+   "why": "Cannot send WhatsApp messages: saying so is right for any assistant"
+  },
+  "b8b310be464aca90": {
+   "id": "ch-mon-057",
+   "decline_right": true,
+   "why": "Buffer analysis unavailable; the text still asks for the in-park total"
+  },
+  "fb2954b64d86535a": {
+   "id": "ch-mon-063",
+   "decline_right": true,
+   "why": "Asking which two concessions are meant is the right answer"
+  },
+  "d79a9346a214cabf": {
+   "id": "ch-port-001",
+   "decline_right": true,
+   "why": "150 mills with 50 km buffers: explaining the limit and offering an alternative is right"
+  },
+  "74f2c3da2a3f9004": {
+   "id": "ch-port-010",
+   "decline_right": true,
+   "why": "No scheduling exists: saying so and offering a one-off is right"
+  },
+  "fb558956d0f92418": {
+   "id": "ch-port-015",
+   "decline_right": true,
+   "why": "Too many territories for one request: redirecting is right"
+  },
+  "cf43e9eec74533ae": {
+   "id": "ch-port-016",
+   "decline_right": true,
+   "why": "Too many concessions for one request: redirecting is right"
+  },
+  "49a8d29a6204e323": {
+   "id": "ch-port-027",
+   "decline_right": true,
+   "why": "Too many protected areas for one table: redirecting is right"
+  },
+  "26a2155805f4379e": {
+   "id": "ch-quant-009",
+   "figure_info_only": true,
+   "why": "'Deforestation' allows primary or natural forest loss; the reference fetches one"
+  },
+  "b1ded03727952d34": {
+   "id": "ch-quant-161",
+   "decline_right": true,
+   "why": "No project boundary: asking for one is right"
+  },
+  "8bf6a1396564661e": {
+   "id": "ch-quant-162",
+   "text": "horizon_only",
+   "why": "Bans general knowledge about the surroundings (Horizon's grounding rule); the in-park figure still gates"
+  },
+  "0857eb275c074465": {
+   "id": "ch-quant-163",
+   "text": "horizon_only",
+   "why": "Bans describing the point from general knowledge or articles (Horizon's grounding rule)"
+  },
+  "7b9b7407bfc3e41a": {
+   "id": "ch-quant-173",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "'sLUC data do not cover beef' is Horizon's catalogue; a cited figure from elsewhere is not wrong"
+  },
+  "adc00c0a76396f1a": {
+   "id": "ch-quant-174",
+   "decline_right": true,
+   "why": "Too many territories to total at once: redirecting is right"
+  },
+  "ebd81da2acb9a6ba": {
+   "id": "ch-quant-186",
+   "text": "horizon_only",
+   "why": "Bans narrative from general knowledge or articles (Horizon's grounding rule); the park figure still gates"
+  },
+  "39b7d113d797e61b": {
+   "id": "ch-quant-192",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Asks what overlay layers Horizon has"
+  },
+  "dda13d644bc10370": {
+   "id": "ch-quant-194",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Asks whether canopy height is in Horizon"
+  },
+  "cd81b6b9e2690822": {
+   "id": "ch-quant-200",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "'Soil carbon data not available' is Horizon's catalogue"
+  },
+  "02f1b063aeb5f2f6": {
+   "id": "ch-quant-201",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "'Pasture carbon not available' is Horizon's catalogue"
+  },
+  "6e8dd39b0b006835": {
+   "id": "ch-quant-205",
+   "text": "horizon_only",
+   "decline_right": true,
+   "why": "Asks which datasets in Horizon fit"
+  }
+ }
+}
