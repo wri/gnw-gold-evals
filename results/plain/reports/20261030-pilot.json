@@ -1,52 +1,519 @@
 {
- "gaps": {
-  "right": {
-   "gap": 0.3333,
-   "high": 0.5238,
-   "low": 0.1429
+ "alert_drift_flagged": [
+  "ch-causal-020",
+  "ch-mon-035"
+ ],
+ "all": {
+  "gaps": {
+   "right": {
+    "gap": 0.3333,
+    "high": 0.5238,
+    "low": 0.1429
+   },
+   "wrong_figure": {
+    "gap": 0.2143,
+    "high": 0.3333,
+    "low": 0.0952
+   }
   },
-  "wrong_figure": {
-   "gap": 0.2143,
-   "high": 0.3333,
-   "low": 0.0952
+  "questions": 42,
+  "summaries": {
+   "Horizon": {
+    "benchmark_style_pass": 31,
+    "benchmark_style_rate": 0.7381,
+    "declined": 4,
+    "questions": 42,
+    "rates": {
+     "declined": 0.0952,
+     "right": 0.7857,
+     "uncovered": 0.0,
+     "wrong": 0.119
+    },
+    "right": 33,
+    "uncovered": 0,
+    "wrong": 5,
+    "wrong_figure": 0,
+    "wrong_figure_rate": 0.0
+   },
+   "Sonnet + web": {
+    "benchmark_style_pass": 20,
+    "benchmark_style_rate": 0.4762,
+    "declined": 11,
+    "questions": 42,
+    "rates": {
+     "declined": 0.2619,
+     "right": 0.4524,
+     "uncovered": 0.0238,
+     "wrong": 0.2619
+    },
+    "right": 19,
+    "uncovered": 1,
+    "wrong": 11,
+    "wrong_figure": 9,
+    "wrong_figure_rate": 0.2143
+   }
   }
  },
- "questions": 42,
- "sonnet": "20261030-pilot",
- "summaries": {
-  "Horizon": {
-   "benchmark_style_pass": 31,
-   "benchmark_style_rate": 0.7381,
-   "declined": 4,
-   "questions": 42,
-   "rates": {
-    "declined": 0.0952,
-    "right": 0.7857,
-    "uncovered": 0.0,
-    "wrong": 0.119
+ "by_type": {
+  "causal": {
+   "gaps": {
+    "right": {
+     "gap": 0.2,
+     "high": 0.6,
+     "low": 0.0
+    },
+    "wrong_figure": {
+     "gap": 0.2,
+     "high": 0.6,
+     "low": 0.0
+    }
    },
-   "right": 33,
-   "uncovered": 0,
-   "wrong": 5,
-   "wrong_figure": 0,
-   "wrong_figure_rate": 0.0
+   "questions": 5,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 3,
+     "benchmark_style_rate": 0.6,
+     "declined": 1,
+     "questions": 5,
+     "rates": {
+      "declined": 0.2,
+      "right": 0.6,
+      "uncovered": 0.0,
+      "wrong": 0.2
+     },
+     "right": 3,
+     "uncovered": 0,
+     "wrong": 1,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 2,
+     "benchmark_style_rate": 0.4,
+     "declined": 1,
+     "questions": 5,
+     "rates": {
+      "declined": 0.2,
+      "right": 0.4,
+      "uncovered": 0.0,
+      "wrong": 0.4
+     },
+     "right": 2,
+     "uncovered": 0,
+     "wrong": 2,
+     "wrong_figure": 1,
+     "wrong_figure_rate": 0.2
+    }
+   }
   },
-  "Sonnet + web": {
-   "benchmark_style_pass": 20,
-   "benchmark_style_rate": 0.4762,
-   "declined": 11,
-   "questions": 42,
-   "rates": {
-    "declined": 0.2619,
-    "right": 0.4524,
-    "uncovered": 0.0238,
-    "wrong": 0.2619
+  "comparison": {
+   "gaps": {
+    "right": {
+     "gap": 0.6667,
+     "high": 1.0,
+     "low": 0.1111
+    },
+    "wrong_figure": {
+     "gap": 0.4444,
+     "high": 0.7778,
+     "low": 0.1111
+    }
    },
-   "right": 19,
-   "uncovered": 1,
-   "wrong": 11,
-   "wrong_figure": 9,
-   "wrong_figure_rate": 0.2143
+   "questions": 9,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 8,
+     "benchmark_style_rate": 0.8889,
+     "declined": 0,
+     "questions": 9,
+     "rates": {
+      "declined": 0.0,
+      "right": 0.8889,
+      "uncovered": 0.0,
+      "wrong": 0.1111
+     },
+     "right": 8,
+     "uncovered": 0,
+     "wrong": 1,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 2,
+     "benchmark_style_rate": 0.2222,
+     "declined": 2,
+     "questions": 9,
+     "rates": {
+      "declined": 0.2222,
+      "right": 0.2222,
+      "uncovered": 0.0,
+      "wrong": 0.5556
+     },
+     "right": 2,
+     "uncovered": 0,
+     "wrong": 5,
+     "wrong_figure": 4,
+     "wrong_figure_rate": 0.4444
+    }
+   }
+  },
+  "geospatial": {
+   "gaps": {
+    "right": {
+     "gap": 0.0,
+     "high": 0.0,
+     "low": 0.0
+    },
+    "wrong_figure": {
+     "gap": 0.0,
+     "high": 0.0,
+     "low": 0.0
+    }
+   },
+   "questions": 1,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 1,
+     "benchmark_style_rate": 1.0,
+     "declined": 0,
+     "questions": 1,
+     "rates": {
+      "declined": 0.0,
+      "right": 1.0,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 1,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 1,
+     "benchmark_style_rate": 1.0,
+     "declined": 0,
+     "questions": 1,
+     "rates": {
+      "declined": 0.0,
+      "right": 1.0,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 1,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    }
+   }
+  },
+  "monitoring": {
+   "gaps": {
+    "right": {
+     "gap": 0.6667,
+     "high": 1.0,
+     "low": 0.3333
+    },
+    "wrong_figure": {
+     "gap": 0.1667,
+     "high": 0.5,
+     "low": 0.0
+    }
+   },
+   "questions": 6,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 5,
+     "benchmark_style_rate": 0.8333,
+     "declined": 1,
+     "questions": 6,
+     "rates": {
+      "declined": 0.1667,
+      "right": 0.8333,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 5,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 3,
+     "benchmark_style_rate": 0.5,
+     "declined": 4,
+     "questions": 6,
+     "rates": {
+      "declined": 0.6667,
+      "right": 0.1667,
+      "uncovered": 0.0,
+      "wrong": 0.1667
+     },
+     "right": 1,
+     "uncovered": 0,
+     "wrong": 1,
+     "wrong_figure": 1,
+     "wrong_figure_rate": 0.1667
+    }
+   }
+  },
+  "portfolio": {
+   "gaps": {
+    "right": {
+     "gap": 0.5,
+     "high": 1.0,
+     "low": 0.0
+    },
+    "wrong_figure": {
+     "gap": 0.5,
+     "high": 1.0,
+     "low": 0.0
+    }
+   },
+   "questions": 2,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 2,
+     "benchmark_style_rate": 1.0,
+     "declined": 0,
+     "questions": 2,
+     "rates": {
+      "declined": 0.0,
+      "right": 1.0,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 2,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 1,
+     "benchmark_style_rate": 0.5,
+     "declined": 0,
+     "questions": 2,
+     "rates": {
+      "declined": 0.0,
+      "right": 0.5,
+      "uncovered": 0.0,
+      "wrong": 0.5
+     },
+     "right": 1,
+     "uncovered": 0,
+     "wrong": 1,
+     "wrong_figure": 1,
+     "wrong_figure_rate": 0.5
+    }
+   }
+  },
+  "quantification": {
+   "gaps": {
+    "right": {
+     "gap": 0.0769,
+     "high": 0.4615,
+     "low": -0.3077
+    },
+    "wrong_figure": {
+     "gap": 0.1538,
+     "high": 0.3846,
+     "low": 0.0
+    }
+   },
+   "questions": 13,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 8,
+     "benchmark_style_rate": 0.6154,
+     "declined": 2,
+     "questions": 13,
+     "rates": {
+      "declined": 0.1538,
+      "right": 0.6154,
+      "uncovered": 0.0,
+      "wrong": 0.2308
+     },
+     "right": 8,
+     "uncovered": 0,
+     "wrong": 3,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 8,
+     "benchmark_style_rate": 0.6154,
+     "declined": 3,
+     "questions": 13,
+     "rates": {
+      "declined": 0.2308,
+      "right": 0.5385,
+      "uncovered": 0.0769,
+      "wrong": 0.1538
+     },
+     "right": 7,
+     "uncovered": 1,
+     "wrong": 2,
+     "wrong_figure": 2,
+     "wrong_figure_rate": 0.1538
+    }
+   }
+  },
+  "refusal": {
+   "gaps": {
+    "right": {
+     "gap": 0.0,
+     "high": 0.0,
+     "low": 0.0
+    },
+    "wrong_figure": {
+     "gap": 0.0,
+     "high": 0.0,
+     "low": 0.0
+    }
+   },
+   "questions": 2,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 0,
+     "benchmark_style_rate": 0.0,
+     "declined": 0,
+     "questions": 2,
+     "rates": {
+      "declined": 0.0,
+      "right": 1.0,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 2,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 0,
+     "benchmark_style_rate": 0.0,
+     "declined": 0,
+     "questions": 2,
+     "rates": {
+      "declined": 0.0,
+      "right": 1.0,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 2,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    }
+   }
+  },
+  "trend": {
+   "gaps": {
+    "right": {
+     "gap": 0.25,
+     "high": 0.75,
+     "low": 0.0
+    },
+    "wrong_figure": {
+     "gap": 0.0,
+     "high": 0.0,
+     "low": 0.0
+    }
+   },
+   "questions": 4,
+   "summaries": {
+    "Horizon": {
+     "benchmark_style_pass": 4,
+     "benchmark_style_rate": 1.0,
+     "declined": 0,
+     "questions": 4,
+     "rates": {
+      "declined": 0.0,
+      "right": 1.0,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 4,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    },
+    "Sonnet + web": {
+     "benchmark_style_pass": 3,
+     "benchmark_style_rate": 0.75,
+     "declined": 1,
+     "questions": 4,
+     "rates": {
+      "declined": 0.25,
+      "right": 0.75,
+      "uncovered": 0.0,
+      "wrong": 0.0
+     },
+     "right": 3,
+     "uncovered": 0,
+     "wrong": 0,
+     "wrong_figure": 0,
+     "wrong_figure_rate": 0.0
+    }
+   }
+  }
+ },
+ "sonnet": "20261030-pilot",
+ "without_alert_drift": {
+  "gaps": {
+   "right": {
+    "gap": 0.35,
+    "high": 0.55,
+    "low": 0.15
+   },
+   "wrong_figure": {
+    "gap": 0.2,
+    "high": 0.325,
+    "low": 0.075
+   }
+  },
+  "questions": 40,
+  "summaries": {
+   "Horizon": {
+    "benchmark_style_pass": 31,
+    "benchmark_style_rate": 0.775,
+    "declined": 2,
+    "questions": 40,
+    "rates": {
+     "declined": 0.05,
+     "right": 0.825,
+     "uncovered": 0.0,
+     "wrong": 0.125
+    },
+    "right": 33,
+    "uncovered": 0,
+    "wrong": 5,
+    "wrong_figure": 0,
+    "wrong_figure_rate": 0.0
+   },
+   "Sonnet + web": {
+    "benchmark_style_pass": 20,
+    "benchmark_style_rate": 0.5,
+    "declined": 10,
+    "questions": 40,
+    "rates": {
+     "declined": 0.25,
+     "right": 0.475,
+     "uncovered": 0.025,
+     "wrong": 0.25
+    },
+    "right": 19,
+    "uncovered": 1,
+    "wrong": 10,
+    "wrong_figure": 8,
+    "wrong_figure_rate": 0.2
+   }
   }
  }
 }
