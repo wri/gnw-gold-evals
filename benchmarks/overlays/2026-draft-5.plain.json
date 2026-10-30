@@ -1,9 +1,9 @@
 {
  "schema_version": 1,
  "benchmark": "2026-draft-5",
- "status": "draft",
+ "status": "reviewed",
  "drafted": "2026-10-30 by Claude for AJ's review",
- "reviewed": null,
+ "reviewed": "2026-10-30 by AJ: all 34 calls agreed",
  "note": "Questions not listed take the defaults: the text applies to any assistant, a decline is not a right answer, and the figure checks gate.",
  "questions": {
   "ec76924ff13d7a88": {
