@@ -52,6 +52,11 @@ def agent_environment(run_environment: str) -> str:
     return "staging" if run_environment == "staging" else X_ENVIRONMENT
 
 
+def resource_id(link: str) -> str:
+    """The result's resource id: the last segment of its link."""
+    return link.rstrip("/").split("/")[-1]
+
+
 class AnalyticsError(Exception):
     """The analytics API couldn't answer. A run must abort loudly."""
 
@@ -69,7 +74,7 @@ class AnalyticsResult:
 
     @property
     def resource_id(self) -> str:
-        return self.link.rstrip("/").split("/")[-1]
+        return resource_id(self.link)
 
 
 class AnalyticsClient:
