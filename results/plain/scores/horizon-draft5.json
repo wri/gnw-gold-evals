@@ -73,7 +73,9 @@
    "id": "ch-causal-023",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "02f1b063aeb5f2f6": {
    "attempts": [
@@ -139,7 +141,9 @@
    "id": "ch-quant-201",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "03099cba0ca96b29": {
    "attempts": [
@@ -205,7 +209,9 @@
    "id": "ch-quant-203",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "035332f03c044abe": {
    "attempts": [
@@ -271,7 +277,9 @@
    "id": "ch-quant-155",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "04f16660228d6185": {
    "attempts": [
@@ -327,7 +335,9 @@
    "id": "ch-quant-168",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "0549eaa241490b83": {
    "attempts": [
@@ -393,7 +403,9 @@
    "id": "ch-quant-050",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "05f978477ed864ac": {
    "attempts": [
@@ -459,7 +471,9 @@
    "id": "ch-quant-068",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "077ad13a262eee61": {
    "attempts": [
@@ -525,7 +539,9 @@
    "id": "ch-causal-019",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "0857eb275c074465": {
    "attempts": [
@@ -591,7 +607,9 @@
    "id": "ch-quant-163",
    "outcome": "uncovered",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "08e83d200c6aa833": {
    "attempts": [
@@ -657,7 +675,9 @@
    "id": "ch-trend-004",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "0a499e532439b38e": {
    "attempts": [
@@ -723,7 +743,9 @@
    "id": "ch-comp-034",
    "outcome": "uncovered",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "0e04ef3cd74bf6ea": {
    "attempts": [
@@ -789,7 +811,9 @@
    "id": "ch-comp-124",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "0e6eb9c73710c199": {
    "attempts": [
@@ -855,7 +879,9 @@
    "id": "ch-quant-127",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "0efc8695e94edd8d": {
    "attempts": [
@@ -921,7 +947,9 @@
    "id": "ch-comp-156",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "0fb54475e69a2505": {
    "attempts": [
@@ -987,7 +1015,9 @@
    "id": "ch-mon-027",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "102dc64beb8f0aa0": {
    "attempts": [
@@ -1020,7 +1050,9 @@
    "id": "ch-quant-180",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "103f8900e3a2ddb9": {
    "attempts": [
@@ -1086,7 +1118,9 @@
    "id": "ch-causal-003",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "10b5f5c66a317fe9": {
    "attempts": [
@@ -1152,7 +1186,9 @@
    "id": "ch-mon-052",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "111f028d72a8708a": {
    "attempts": [
@@ -1218,7 +1254,9 @@
    "id": "ch-quant-187",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "114265022423b06f": {
    "attempts": [
@@ -1284,7 +1322,9 @@
    "id": "ch-trend-080",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "119fd4c15e91ea36": {
    "attempts": [
@@ -1350,7 +1390,9 @@
    "id": "ch-trend-083",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "11daa37eab20033c": {
    "attempts": [
@@ -1416,7 +1458,9 @@
    "id": "ch-causal-026",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "14635a9d6b2d4257": {
    "attempts": [
@@ -1482,7 +1526,9 @@
    "id": "ch-trend-082",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "14a55a95fcc8c506": {
    "attempts": [
@@ -1548,7 +1594,9 @@
    "id": "ch-mon-043",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "15f90076865589fc": {
    "attempts": [
@@ -1614,7 +1662,9 @@
    "id": "ch-comp-112",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "18c4565dc3b27343": {
    "attempts": [
@@ -1680,7 +1730,9 @@
    "id": "ch-port-018",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1a0083d5a0ba6273": {
    "attempts": [
@@ -1746,7 +1798,9 @@
    "id": "ch-comp-078",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1abf501a7df3b2ff": {
    "attempts": [
@@ -1812,7 +1866,9 @@
    "id": "ch-quant-170",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1c8088c4b55cdf28": {
    "attempts": [
@@ -1878,7 +1934,9 @@
    "id": "ch-mon-047",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1d015253c38e525b": {
    "attempts": [
@@ -1947,7 +2005,9 @@
    "id": "ch-comp-164",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1d736c80f0a28837": {
    "attempts": [
@@ -2003,7 +2063,9 @@
    "id": "ch-quant-188",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1da12d1099d45aa5": {
    "attempts": [
@@ -2069,7 +2131,9 @@
    "id": "ch-comp-002",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1de243d99d24c772": {
    "attempts": [
@@ -2135,7 +2199,9 @@
    "id": "ch-comp-158",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "205b5abebbcfaf8c": {
    "attempts": [
@@ -2201,7 +2267,9 @@
    "id": "ch-comp-147",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "2118ea998b3d8ff9": {
    "attempts": [
@@ -2267,7 +2335,9 @@
    "id": "ch-comp-047",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "21f09c2202fbd961": {
    "attempts": [
@@ -2333,7 +2403,9 @@
    "id": "ch-quant-159",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "226e874be703c8b4": {
    "attempts": [
@@ -2399,7 +2471,9 @@
    "id": "ch-quant-196",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "247a4d49e98646e1": {
    "attempts": [
@@ -2465,7 +2539,9 @@
    "id": "ch-mon-038",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "24d7088da1295387": {
    "attempts": [
@@ -2531,7 +2607,9 @@
    "id": "ch-comp-176",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "2564a3e75c83e555": {
    "attempts": [
@@ -2597,7 +2675,9 @@
    "id": "ch-mon-037",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "26a2155805f4379e": {
    "attempts": [
@@ -2663,7 +2743,9 @@
    "id": "ch-quant-009",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "26e69e27bed0e9c7": {
    "attempts": [
@@ -2729,7 +2811,9 @@
    "id": "ch-aoi-128",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "29141b29ca439f6b": {
    "attempts": [
@@ -2795,7 +2879,9 @@
    "id": "ch-mon-056",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "2938047081a6486b": {
    "attempts": [
@@ -2861,7 +2947,9 @@
    "id": "ch-comp-100",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "2a77f12faf134f8e": {
    "attempts": [
@@ -2927,7 +3015,9 @@
    "id": "ch-causal-002",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "2b1989a6523a7bdd": {
    "attempts": [
@@ -2993,7 +3083,9 @@
    "id": "ch-mon-058",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "2de134d8f847de90": {
    "attempts": [
@@ -3059,7 +3151,9 @@
    "id": "ch-quant-007",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "2df7ba15d33ebb71": {
    "attempts": [
@@ -3125,7 +3219,9 @@
    "id": "ch-comp-001",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "2f8c4b89e9c45ff9": {
    "attempts": [
@@ -3191,7 +3287,9 @@
    "id": "ch-comp-152",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "2fab5352ebf26d94": {
    "attempts": [
@@ -3257,7 +3355,9 @@
    "id": "ch-comp-160",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "30c74cafa2cf4310": {
    "attempts": [
@@ -3323,7 +3423,9 @@
    "id": "ch-comp-180",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "30e4bc28fc35c8b6": {
    "attempts": [
@@ -3389,7 +3491,9 @@
    "id": "ch-quant-160",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "31caf69fe0680735": {
    "attempts": [
@@ -3455,7 +3559,9 @@
    "id": "ch-mon-041",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3246b0c9d12604b2": {
    "attempts": [
@@ -3521,7 +3627,9 @@
    "id": "ch-trend-032",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3385220543cf26bf": {
    "attempts": [
@@ -3587,7 +3695,9 @@
    "id": "ch-comp-174",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3385322c4d5c5f7c": {
    "attempts": [
@@ -3653,7 +3763,9 @@
    "id": "ch-dataset-193",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "33ae2cadb410f8db": {
    "attempts": [
@@ -3719,7 +3831,9 @@
    "id": "ch-quant-115",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "34e783d6bed35888": {
    "attempts": [
@@ -3774,7 +3888,9 @@
    "id": "ch-causal-022",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "355bc17be510d894": {
    "attempts": [
@@ -3840,7 +3956,9 @@
    "id": "ch-mon-064",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "38fd71eda156078d": {
    "attempts": [
@@ -3873,7 +3991,9 @@
    "id": "ch-comp-157",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3920ccb55dd9ca9c": {
    "attempts": [
@@ -3939,7 +4059,9 @@
    "id": "ch-comp-144",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "39b7d113d797e61b": {
    "attempts": [
@@ -4005,7 +4127,9 @@
    "id": "ch-quant-192",
    "outcome": "uncovered",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "39f09b721855c9df": {
    "attempts": [
@@ -4071,7 +4195,9 @@
    "id": "ch-mon-036",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3a9d2de5475c2566": {
    "attempts": [
@@ -4137,7 +4263,9 @@
    "id": "ch-trend-053",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3c227b222e46a7ad": {
    "attempts": [
@@ -4203,7 +4331,9 @@
    "id": "ch-quant-198",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3c2d4df57e6552cb": {
    "attempts": [
@@ -4269,7 +4399,9 @@
    "id": "ch-trend-029",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3ce4e54ea7bccaf6": {
    "attempts": [
@@ -4335,7 +4467,9 @@
    "id": "ch-comp-005",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "4098c26b3bdb1353": {
    "attempts": [
@@ -4401,7 +4535,9 @@
    "id": "ch-quant-082",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "42640cf0287be5fd": {
    "attempts": [
@@ -4467,7 +4603,9 @@
    "id": "ch-comp-149",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "429cff193679e584": {
    "attempts": [
@@ -4533,7 +4671,9 @@
    "id": "ch-aoi-119",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "43b883c23fed3821": {
    "attempts": [
@@ -4599,7 +4739,9 @@
    "id": "ch-quant-172",
    "outcome": "wrong",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "452b568c1cc36921": {
    "attempts": [
@@ -4665,7 +4807,9 @@
    "id": "ch-comp-153",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "456f89d7df953066": {
    "attempts": [
@@ -4731,7 +4875,9 @@
    "id": "ch-quant-107",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "49a8d29a6204e323": {
    "attempts": [
@@ -4797,7 +4943,9 @@
    "id": "ch-port-027",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "4aaf5144e03026ef": {
    "attempts": [
@@ -4863,7 +5011,9 @@
    "id": "ch-trend-079",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "4c7aae4277ad39e6": {
    "attempts": [
@@ -4929,7 +5079,9 @@
    "id": "ch-comp-110",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "4ee9788120192321": {
    "attempts": [
@@ -4995,7 +5147,9 @@
    "id": "ch-quant-110",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "4f1d6f90058c88b6": {
    "attempts": [
@@ -5061,7 +5215,9 @@
    "id": "ch-trend-052",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "50c496873b9dd91f": {
    "attempts": [
@@ -5127,7 +5283,9 @@
    "id": "ch-quant-177",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "52caefe83d4be7be": {
    "attempts": [
@@ -5193,7 +5351,9 @@
    "id": "ch-quant-193",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "53bcf82ca265f148": {
    "attempts": [
@@ -5259,7 +5419,9 @@
    "id": "ch-quant-145",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "54aeb2328319ae47": {
    "attempts": [
@@ -5325,7 +5487,9 @@
    "id": "ch-mon-005",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "56d3132c8b3b306a": {
    "attempts": [
@@ -5391,7 +5555,9 @@
    "id": "ch-quant-033",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "57a970f4cbd99adf": {
    "attempts": [
@@ -5460,7 +5626,9 @@
    "id": "ch-mon-033",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "58deeac33d423978": {
    "attempts": [
@@ -5526,7 +5694,9 @@
    "id": "ch-quant-190",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "5a469b6fe061f718": {
    "attempts": [
@@ -5559,7 +5729,9 @@
    "id": "ch-quant-175",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "5e8c1cee53474c50": {
    "attempts": [
@@ -5625,7 +5797,9 @@
    "id": "ch-mon-039",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "5eaa0f906eeaf0c2": {
    "attempts": [
@@ -5691,7 +5865,9 @@
    "id": "ch-trend-087",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "62cb9fb26220627a": {
    "attempts": [
@@ -5757,7 +5933,9 @@
    "id": "ch-causal-006",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "633eb6ad958a67e0": {
    "attempts": [
@@ -5823,7 +6001,9 @@
    "id": "ch-causal-027",
    "outcome": "wrong",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "646ed6b1385e1900": {
    "attempts": [
@@ -5889,7 +6069,9 @@
    "id": "ch-comp-085",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "64a62f11b6a2a680": {
    "attempts": [
@@ -5955,7 +6137,9 @@
    "id": "ch-quant-031",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "662d9696610da2a3": {
    "attempts": [
@@ -6021,7 +6205,9 @@
    "id": "ch-comp-048",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "67e7a9c812e06403": {
    "attempts": [
@@ -6087,7 +6273,9 @@
    "id": "ch-mon-066",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "68388ad5237e0c52": {
    "attempts": [
@@ -6153,7 +6341,9 @@
    "id": "ch-dataset-187",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "683f6e05ed04c91b": {
    "attempts": [
@@ -6219,7 +6409,9 @@
    "id": "ch-quant-029",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "699616c418b7c943": {
    "attempts": [
@@ -6285,7 +6477,9 @@
    "id": "ch-comp-177",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "6b20500cc28224c5": {
    "attempts": [
@@ -6351,7 +6545,9 @@
    "id": "ch-quant-184",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "6c3585237aeda84f": {
    "attempts": [
@@ -6417,7 +6613,9 @@
    "id": "ch-quant-171",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "6d8e49dfa3926efa": {
    "attempts": [
@@ -6483,7 +6681,9 @@
    "id": "ch-quant-036",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "6e8dd39b0b006835": {
    "attempts": [
@@ -6549,7 +6749,9 @@
    "id": "ch-quant-205",
    "outcome": "uncovered",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "6fd40a85d6ee70a4": {
    "attempts": [
@@ -6615,7 +6817,9 @@
    "id": "ch-quant-153",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "70e7c4590828689f": {
    "attempts": [
@@ -6659,7 +6863,9 @@
    "id": "ch-causal-011",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "71036c0b96e83439": {
    "attempts": [
@@ -6725,7 +6931,9 @@
    "id": "ch-quant-166",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "74f2c3da2a3f9004": {
    "attempts": [
@@ -6791,7 +6999,9 @@
    "id": "ch-port-010",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "75472cb3813f9346": {
    "attempts": [
@@ -6857,7 +7067,9 @@
    "id": "ch-comp-043",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "75fc1cefa4f8c92b": {
    "attempts": [
@@ -6923,7 +7135,9 @@
    "id": "ch-comp-162",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "76a90b4e2ee08e8c": {
    "attempts": [
@@ -6989,7 +7203,9 @@
    "id": "ch-port-011",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "773686f5de054722": {
    "attempts": [
@@ -7055,7 +7271,9 @@
    "id": "ch-mon-045",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "777185e572ffe4f3": {
    "attempts": [
@@ -7121,7 +7339,9 @@
    "id": "ch-quant-083",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "78350dc4fa67df54": {
    "attempts": [
@@ -7187,7 +7407,9 @@
    "id": "ch-comp-093",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "78b700a2d01a5b94": {
    "attempts": [
@@ -7253,7 +7475,9 @@
    "id": "ch-quant-191",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7992f393a603a7ae": {
    "attempts": [
@@ -7319,7 +7543,9 @@
    "id": "ch-quant-165",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7b8607186499c9d2": {
    "attempts": [
@@ -7385,7 +7611,9 @@
    "id": "ch-comp-165",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7b9b7407bfc3e41a": {
    "attempts": [
@@ -7451,7 +7679,9 @@
    "id": "ch-quant-173",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7bb73a80cd1bfb98": {
    "attempts": [
@@ -7517,7 +7747,9 @@
    "id": "ch-comp-168",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7c307853a940e649": {
    "attempts": [
@@ -7583,7 +7815,9 @@
    "id": "ch-comp-076",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7cf0a7b433aa9695": {
    "attempts": [
@@ -7649,7 +7883,9 @@
    "id": "ch-trend-074",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7e47259dd8dddf07": {
    "attempts": [
@@ -7715,7 +7951,9 @@
    "id": "ch-trend-050",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7fa6d4f365c3c2c8": {
    "attempts": [
@@ -7781,7 +8019,9 @@
    "id": "ch-aoi-155",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "800ab120ac271e99": {
    "attempts": [
@@ -7847,7 +8087,9 @@
    "id": "ch-quant-134",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "835f05e2d874e479": {
    "attempts": [
@@ -7913,7 +8155,9 @@
    "id": "ch-trend-045",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "841d4af849e21432": {
    "attempts": [
@@ -7979,7 +8223,9 @@
    "id": "ch-quant-169",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "84219951f56b9748": {
    "attempts": [
@@ -8045,7 +8291,9 @@
    "id": "ch-comp-090",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "85a1fc1659f0af77": {
    "attempts": [
@@ -8096,7 +8344,9 @@
    "id": "ch-comp-053",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "884f9499b15d8217": {
    "attempts": [
@@ -8162,7 +8412,9 @@
    "id": "ch-comp-150",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "8b3aba97d5af99b9": {
    "attempts": [
@@ -8228,7 +8480,9 @@
    "id": "ch-comp-181",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "8bf6a1396564661e": {
    "attempts": [
@@ -8294,7 +8548,9 @@
    "id": "ch-quant-162",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "8cee46086faf3a28": {
    "attempts": [
@@ -8360,7 +8616,9 @@
    "id": "ch-comp-159",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "8dc21d392dd752a3": {
    "attempts": [
@@ -8426,7 +8684,9 @@
    "id": "ch-mon-053",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "8f1284b3ed4e4fd4": {
    "attempts": [
@@ -8459,7 +8719,9 @@
    "id": "ch-causal-024",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "8f2d627de19480f7": {
    "attempts": [
@@ -8525,7 +8787,9 @@
    "id": "ch-quant-202",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "916b48b5d354b5e3": {
    "attempts": [
@@ -8591,7 +8855,9 @@
    "id": "ch-trend-081",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "9184ef24c50c940b": {
    "attempts": [
@@ -8657,7 +8923,9 @@
    "id": "ch-comp-171",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "92e8f497775edd01": {
    "attempts": [
@@ -8723,7 +8991,9 @@
    "id": "ch-causal-010",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "9320615f8c859e81": {
    "attempts": [
@@ -8789,7 +9059,9 @@
    "id": "ch-comp-151",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "94b8e88f576fd50a": {
    "attempts": [
@@ -8855,7 +9127,9 @@
    "id": "ch-quant-011",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "956f082f0fd58057": {
    "attempts": [
@@ -8921,7 +9195,9 @@
    "id": "ch-mon-011",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "96b8474465f25c5b": {
    "attempts": [
@@ -8987,7 +9263,9 @@
    "id": "ch-quant-001",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "98209fa396f952a6": {
    "attempts": [
@@ -9053,7 +9331,9 @@
    "id": "ch-comp-175",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "9975fe90e72a47fc": {
    "attempts": [
@@ -9119,7 +9399,9 @@
    "id": "ch-causal-028",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "99a01b58f5501ed5": {
    "attempts": [
@@ -9185,7 +9467,9 @@
    "id": "ch-quant-047",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "9bc5cd4748591013": {
    "attempts": [
@@ -9251,7 +9535,9 @@
    "id": "ch-quant-142",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "9e4154ca0a40b888": {
    "attempts": [
@@ -9317,7 +9603,9 @@
    "id": "ch-mon-060",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "9f5a43a03eb4bfba": {
    "attempts": [
@@ -9383,7 +9671,9 @@
    "id": "ch-comp-179",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "9f92f470783342b1": {
    "attempts": [
@@ -9449,7 +9739,9 @@
    "id": "ch-comp-166",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a24784cc1594fb94": {
    "attempts": [
@@ -9515,7 +9807,9 @@
    "id": "ch-quant-096",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a349aeabb20e6e7e": {
    "attempts": [
@@ -9581,7 +9875,9 @@
    "id": "ch-trend-067",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a41f2abd7b638aea": {
    "attempts": [
@@ -9647,7 +9943,9 @@
    "id": "ch-quant-021",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a6910b8c6de425c8": {
    "attempts": [
@@ -9713,7 +10011,9 @@
    "id": "ch-mon-048",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a721cf33e90ab1ee": {
    "attempts": [
@@ -9746,7 +10046,9 @@
    "id": "ch-causal-025",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a80bef0521c0bbb6": {
    "attempts": [
@@ -9812,7 +10114,9 @@
    "id": "ch-mon-026",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a826426cb5e8dabe": {
    "attempts": [
@@ -9878,7 +10182,9 @@
    "id": "ch-quant-182",
    "outcome": "uncovered",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "a85a04f1fff6cfb0": {
    "attempts": [
@@ -9944,7 +10250,9 @@
    "id": "ch-quant-139",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "aa18d9e6f61d5ad3": {
    "attempts": [
@@ -10010,7 +10318,9 @@
    "id": "ch-quant-039",
    "outcome": "declined",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ac1c0d9cfbaf332b": {
    "attempts": [
@@ -10076,7 +10386,9 @@
    "id": "ch-comp-066",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "acc2e7386e13e9ae": {
    "attempts": [
@@ -10142,7 +10454,9 @@
    "id": "ch-mon-061",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "adc00c0a76396f1a": {
    "attempts": [
@@ -10208,7 +10522,9 @@
    "id": "ch-quant-174",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ae320d328f6d25e0": {
    "attempts": [
@@ -10274,7 +10590,9 @@
    "id": "ch-comp-122",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ae44f88fb4480a0a": {
    "attempts": [
@@ -10340,7 +10658,9 @@
    "id": "ch-comp-170",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "aea857354ab16486": {
    "attempts": [
@@ -10406,7 +10726,9 @@
    "id": "ch-mon-044",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "aef536cb8724479c": {
    "attempts": [
@@ -10472,7 +10794,9 @@
    "id": "ch-quant-151",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "af3e3402bfbacc5c": {
    "attempts": [
@@ -10538,7 +10862,9 @@
    "id": "ch-causal-018",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "af7738be4ece24b9": {
    "attempts": [
@@ -10604,7 +10930,9 @@
    "id": "ch-quant-156",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b0985c2f71a0f677": {
    "attempts": [
@@ -10670,7 +10998,9 @@
    "id": "ch-trend-072",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b1ded03727952d34": {
    "attempts": [
@@ -10736,7 +11066,9 @@
    "id": "ch-quant-161",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b23a45a0b36f67d7": {
    "attempts": [
@@ -10769,7 +11101,9 @@
    "id": "ch-comp-155",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b23ed9bae8e98ee2": {
    "attempts": [
@@ -10835,7 +11169,9 @@
    "id": "ch-mon-022",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b2e97b229a637777": {
    "attempts": [
@@ -10868,7 +11204,9 @@
    "id": "ch-mon-008",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b4160a574705ebce": {
    "attempts": [
@@ -10934,7 +11272,9 @@
    "id": "ch-quant-055",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b4f464052b04941b": {
    "attempts": [
@@ -11000,7 +11340,9 @@
    "id": "ch-aoi-118",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b55b73817a71eb47": {
    "attempts": [
@@ -11066,7 +11408,9 @@
    "id": "ch-causal-005",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b6e271c402a8fe75": {
    "attempts": [
@@ -11132,7 +11476,9 @@
    "id": "ch-trend-076",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b755e343b1cdb233": {
    "attempts": [
@@ -11165,7 +11511,9 @@
    "id": "ch-quant-061",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b75c4b8446ddfb57": {
    "attempts": [
@@ -11231,7 +11579,9 @@
    "id": "ch-comp-169",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "b88fa097189b1345": {
    "attempts": [
@@ -11297,7 +11647,9 @@
    "id": "ch-quant-178",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b8b310be464aca90": {
    "attempts": [
@@ -11363,7 +11715,9 @@
    "id": "ch-mon-057",
    "outcome": "wrong",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "bb015ea9d11ae8f9": {
    "attempts": [
@@ -11429,7 +11783,9 @@
    "id": "ch-mon-055",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "bf811588826bc208": {
    "attempts": [
@@ -11495,7 +11851,9 @@
    "id": "ch-quant-064",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c06e503df65950d0": {
    "attempts": [
@@ -11561,7 +11919,9 @@
    "id": "ch-quant-072",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c0fe2c75140fba23": {
    "attempts": [
@@ -11627,7 +11987,9 @@
    "id": "ch-quant-133",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c174a51bdf6f0c43": {
    "attempts": [
@@ -11693,7 +12055,9 @@
    "id": "ch-mon-059",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c17c6c02a31e1cfe": {
    "attempts": [
@@ -11759,7 +12123,9 @@
    "id": "ch-quant-204",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c2f302cfd91911ff": {
    "attempts": [
@@ -11825,7 +12191,9 @@
    "id": "ch-causal-007",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c3d506011b4c437d": {
    "attempts": [
@@ -11891,7 +12259,9 @@
    "id": "ch-comp-173",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c5f4e693731ac237": {
    "attempts": [
@@ -11957,7 +12327,9 @@
    "id": "ch-aoi-116",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c8d7419b4a3d845b": {
    "attempts": [
@@ -12023,7 +12395,9 @@
    "id": "ch-comp-163",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c905b26cb87c192d": {
    "attempts": [
@@ -12089,7 +12463,9 @@
    "id": "ch-quant-080",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "c9b87ce29bd646df": {
    "attempts": [
@@ -12122,7 +12498,9 @@
    "id": "ch-quant-183",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ccaec31601123ec6": {
    "attempts": [
@@ -12188,7 +12566,9 @@
    "id": "ch-causal-008",
    "outcome": "wrong",
    "reference": "partial",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ccdf4fd1703405a9": {
    "attempts": [
@@ -12254,7 +12634,9 @@
    "id": "ch-quant-100",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cd3c80817865ed1b": {
    "attempts": [
@@ -12320,7 +12702,9 @@
    "id": "ch-mon-030",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cd7c818896855ce0": {
    "attempts": [
@@ -12386,7 +12770,9 @@
    "id": "ch-comp-125",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cd81b6b9e2690822": {
    "attempts": [
@@ -12452,7 +12838,9 @@
    "id": "ch-quant-200",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cdacf2987bf0dadf": {
    "attempts": [
@@ -12518,7 +12906,9 @@
    "id": "ch-quant-118",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cf43e9eec74533ae": {
    "attempts": [
@@ -12584,7 +12974,9 @@
    "id": "ch-port-016",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cf4d75fb979f8a75": {
    "attempts": [
@@ -12650,7 +13042,9 @@
    "id": "ch-causal-029",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cfebd2ebb4f7ad99": {
    "attempts": [
@@ -12716,7 +13110,9 @@
    "id": "ch-causal-021",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d1c5ceb6d43c2e70": {
    "attempts": [
@@ -12782,7 +13178,9 @@
    "id": "ch-quant-185",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d2051fa985ecb061": {
    "attempts": [
@@ -12848,7 +13246,9 @@
    "id": "ch-comp-055",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "d31fe631c6cc71cc": {
    "attempts": [
@@ -12914,7 +13314,9 @@
    "id": "ch-mon-046",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d50067a5a601e831": {
    "attempts": [
@@ -12980,7 +13382,9 @@
    "id": "ch-causal-017",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d585774f2f838d4a": {
    "attempts": [
@@ -13046,7 +13450,9 @@
    "id": "ch-mon-042",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d5a5fd7d37f819ab": {
    "attempts": [
@@ -13112,7 +13518,9 @@
    "id": "ch-trend-086",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d79a9346a214cabf": {
    "attempts": [
@@ -13178,7 +13586,9 @@
    "id": "ch-port-001",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d8bf7c5cad29b0c3": {
    "attempts": [
@@ -13244,7 +13654,9 @@
    "id": "ch-quant-003",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d96b3f6899389352": {
    "attempts": [
@@ -13310,7 +13722,9 @@
    "id": "ch-trend-085",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d985f7043f9664b8": {
    "attempts": [
@@ -13376,7 +13790,9 @@
    "id": "ch-comp-148",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "d9c68e6300654701": {
    "attempts": [
@@ -13409,7 +13825,9 @@
    "id": "ch-mon-034",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "da94db99f8be9cc2": {
    "attempts": [
@@ -13475,7 +13893,9 @@
    "id": "ch-causal-013",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "db652b6d07e80e90": {
    "attempts": [
@@ -13541,7 +13961,9 @@
    "id": "ch-causal-015",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "dc08464051c97655": {
    "attempts": [
@@ -13607,7 +14029,9 @@
    "id": "ch-quant-197",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "dcb490b6605a7219": {
    "attempts": [
@@ -13673,7 +14097,9 @@
    "id": "ch-quant-103",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "dd7b82ccb41b673e": {
    "attempts": [
@@ -13739,7 +14165,9 @@
    "id": "ch-comp-133",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "dda13d644bc10370": {
    "attempts": [
@@ -13805,7 +14233,9 @@
    "id": "ch-quant-194",
    "outcome": "uncovered",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ddf490a6fde38112": {
    "attempts": [
@@ -13871,7 +14301,9 @@
    "id": "ch-quant-189",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "de6d8512899ab8ea": {
    "attempts": [
@@ -13937,7 +14369,9 @@
    "id": "ch-trend-007",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "de9d56c029b66f7b": {
    "attempts": [
@@ -14003,7 +14437,9 @@
    "id": "ch-mon-062",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "deb4f78ed2c5a47e": {
    "attempts": [
@@ -14069,7 +14505,9 @@
    "id": "ch-comp-031",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e10d12f48e0dee93": {
    "attempts": [
@@ -14135,7 +14573,9 @@
    "id": "ch-quant-157",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e1405ddf77ddc5e2": {
    "attempts": [
@@ -14201,7 +14641,9 @@
    "id": "ch-quant-092",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e1f68b0e426c9837": {
    "attempts": [
@@ -14267,7 +14709,9 @@
    "id": "ch-mon-035",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e25dbe217b87e7ec": {
    "attempts": [
@@ -14333,7 +14777,9 @@
    "id": "ch-causal-001",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e3b8d54b3ce52176": {
    "attempts": [
@@ -14399,7 +14845,9 @@
    "id": "ch-trend-001",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e462a0bc0a996653": {
    "attempts": [
@@ -14465,7 +14913,9 @@
    "id": "ch-causal-020",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e4ea3f70ab2e638f": {
    "attempts": [
@@ -14531,7 +14981,9 @@
    "id": "ch-mon-032",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e5efecdd9cd2f9a8": {
    "attempts": [
@@ -14597,7 +15049,9 @@
    "id": "ch-quant-002",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e6be088385f5e8f8": {
    "attempts": [
@@ -14641,7 +15095,9 @@
    "id": "ch-comp-154",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "e752e2965cb2280a": {
    "attempts": [
@@ -14674,7 +15130,9 @@
    "id": "ch-port-003",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e78a2004a8264762": {
    "attempts": [
@@ -14740,7 +15198,9 @@
    "id": "ch-quant-199",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "e817a2249c4bc982": {
    "attempts": [
@@ -14806,7 +15266,9 @@
    "id": "ch-quant-176",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ea0cca3029eb1845": {
    "attempts": [
@@ -14872,7 +15334,9 @@
    "id": "ch-quant-179",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ea8f19c0898f52ba": {
    "attempts": [
@@ -14938,7 +15402,9 @@
    "id": "ch-mon-014",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "eb50e91a9742c70b": {
    "attempts": [
@@ -15004,7 +15470,9 @@
    "id": "ch-mon-040",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ebd81da2acb9a6ba": {
    "attempts": [
@@ -15070,7 +15538,9 @@
    "id": "ch-quant-186",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ec76924ff13d7a88": {
    "attempts": [
@@ -15136,7 +15606,9 @@
    "id": "ch-aoi-028",
    "outcome": "uncovered",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ec859fc927ca96a9": {
    "attempts": [
@@ -15202,7 +15674,9 @@
    "id": "ch-mon-049",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ee8e29242f63d7b4": {
    "attempts": [
@@ -15268,7 +15742,9 @@
    "id": "ch-quant-167",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "eea51599747ed75e": {
    "attempts": [
@@ -15334,7 +15810,9 @@
    "id": "ch-trend-037",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "f074b56c8ebee2c5": {
    "attempts": [
@@ -15400,7 +15878,9 @@
    "id": "ch-comp-178",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "f1417ef4b03dc5e3": {
    "attempts": [
@@ -15466,7 +15946,9 @@
    "id": "ch-aoi-091",
    "outcome": "uncovered",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "f43e1c047e9e97b0": {
    "attempts": [
@@ -15532,7 +16014,9 @@
    "id": "ch-quant-010",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "f5443cf1be8f6fcf": {
    "attempts": [
@@ -15598,7 +16082,9 @@
    "id": "ch-quant-146",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "f5e2f290a208dc5a": {
    "attempts": [
@@ -15664,7 +16150,9 @@
    "id": "ch-comp-038",
    "outcome": "uncovered",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "f65ac5d2d0ac0c12": {
    "attempts": [
@@ -15730,7 +16218,9 @@
    "id": "ch-port-017",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "f8db8b312276b9b6": {
    "attempts": [
@@ -15796,7 +16286,9 @@
    "id": "ch-trend-078",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "fb2954b64d86535a": {
    "attempts": [
@@ -15862,7 +16354,9 @@
    "id": "ch-mon-063",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "fb558956d0f92418": {
    "attempts": [
@@ -15928,7 +16422,9 @@
    "id": "ch-port-015",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "fc16e3362d1a9844": {
    "attempts": [
@@ -15994,7 +16490,9 @@
    "id": "ch-comp-161",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": true
   },
   "fc373401ce357c77": {
    "attempts": [
@@ -16060,7 +16558,9 @@
    "id": "ch-mon-054",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "fcd5235c64258ab6": {
    "attempts": [
@@ -16126,7 +16626,9 @@
    "id": "ch-comp-006",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ff0965aa9c3d11f2": {
    "attempts": [
@@ -16192,7 +16694,9 @@
    "id": "ch-dataset-186",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ffd059ecf4779715": {
    "attempts": [
@@ -16258,7 +16762,9 @@
    "id": "ch-causal-012",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   }
  },
  "scored": "2026-10-30T10:46:22+00:00"

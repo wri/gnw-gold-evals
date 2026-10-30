@@ -35,7 +35,9 @@
    "id": "ch-quant-168",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "077ad13a262eee61": {
    "attempts": [
@@ -63,7 +65,9 @@
    "id": "ch-causal-019",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "10b5f5c66a317fe9": {
    "attempts": [
@@ -91,7 +95,9 @@
    "id": "ch-mon-052",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "111f028d72a8708a": {
    "attempts": [
@@ -119,7 +125,9 @@
    "id": "ch-quant-187",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1a0083d5a0ba6273": {
    "attempts": [
@@ -147,7 +155,9 @@
    "id": "ch-comp-078",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "1da12d1099d45aa5": {
    "attempts": [
@@ -175,7 +185,9 @@
    "id": "ch-comp-002",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "2118ea998b3d8ff9": {
    "attempts": [
@@ -203,7 +215,9 @@
    "id": "ch-comp-047",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "226e874be703c8b4": {
    "attempts": [
@@ -231,7 +245,9 @@
    "id": "ch-quant-196",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "247a4d49e98646e1": {
    "attempts": [
@@ -259,7 +275,9 @@
    "id": "ch-mon-038",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3246b0c9d12604b2": {
    "attempts": [
@@ -287,7 +305,9 @@
    "id": "ch-trend-032",
    "outcome": "declined",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "3385322c4d5c5f7c": {
    "attempts": [
@@ -315,7 +335,9 @@
    "id": "ch-dataset-193",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "34e783d6bed35888": {
    "attempts": [
@@ -343,7 +365,9 @@
    "id": "ch-causal-022",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "38fd71eda156078d": {
    "attempts": [
@@ -371,7 +395,9 @@
    "id": "ch-comp-157",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "39f09b721855c9df": {
    "attempts": [
@@ -399,7 +425,9 @@
    "id": "ch-mon-036",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "5a469b6fe061f718": {
    "attempts": [
@@ -427,7 +455,9 @@
    "id": "ch-quant-175",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "5eaa0f906eeaf0c2": {
    "attempts": [
@@ -455,7 +485,9 @@
    "id": "ch-trend-087",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "699616c418b7c943": {
    "attempts": [
@@ -483,7 +515,9 @@
    "id": "ch-comp-177",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "6c3585237aeda84f": {
    "attempts": [
@@ -511,7 +545,9 @@
    "id": "ch-quant-171",
    "outcome": "right",
    "reference": "none",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "71036c0b96e83439": {
    "attempts": [
@@ -539,7 +575,9 @@
    "id": "ch-quant-166",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "75472cb3813f9346": {
    "attempts": [
@@ -567,7 +605,9 @@
    "id": "ch-comp-043",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "773686f5de054722": {
    "attempts": [
@@ -595,7 +635,9 @@
    "id": "ch-mon-045",
    "outcome": "declined",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7bb73a80cd1bfb98": {
    "attempts": [
@@ -623,7 +665,9 @@
    "id": "ch-comp-168",
    "outcome": "wrong",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "7fa6d4f365c3c2c8": {
    "attempts": [
@@ -651,7 +695,9 @@
    "id": "ch-aoi-155",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "99a01b58f5501ed5": {
    "attempts": [
@@ -679,7 +725,9 @@
    "id": "ch-quant-047",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "ac1c0d9cfbaf332b": {
    "attempts": [
@@ -707,7 +755,9 @@
    "id": "ch-comp-066",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "adc00c0a76396f1a": {
    "attempts": [
@@ -735,7 +785,9 @@
    "id": "ch-quant-174",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b0985c2f71a0f677": {
    "attempts": [
@@ -763,7 +815,9 @@
    "id": "ch-trend-072",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "b1ded03727952d34": {
    "attempts": [
@@ -791,7 +845,9 @@
    "id": "ch-quant-161",
    "outcome": "uncovered",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "cd7c818896855ce0": {
    "attempts": [
@@ -819,7 +875,9 @@
    "id": "ch-comp-125",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "db652b6d07e80e90": {
    "attempts": [
@@ -847,7 +905,9 @@
    "id": "ch-causal-015",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "dc08464051c97655": {
    "attempts": [
@@ -875,7 +935,9 @@
    "id": "ch-quant-197",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "de6d8512899ab8ea": {
    "attempts": [
@@ -903,7 +965,9 @@
    "id": "ch-trend-007",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e10d12f48e0dee93": {
    "attempts": [
@@ -931,7 +995,9 @@
    "id": "ch-quant-157",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "e1f68b0e426c9837": {
    "attempts": [
@@ -959,7 +1025,9 @@
    "id": "ch-mon-035",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "e25dbe217b87e7ec": {
    "attempts": [
@@ -987,7 +1055,9 @@
    "id": "ch-causal-001",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "e462a0bc0a996653": {
    "attempts": [
@@ -1015,7 +1085,9 @@
    "id": "ch-causal-020",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e4ea3f70ab2e638f": {
    "attempts": [
@@ -1043,7 +1115,9 @@
    "id": "ch-mon-032",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e5efecdd9cd2f9a8": {
    "attempts": [
@@ -1071,7 +1145,9 @@
    "id": "ch-quant-002",
    "outcome": "right",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "e752e2965cb2280a": {
    "attempts": [
@@ -1099,7 +1175,9 @@
    "id": "ch-port-003",
    "outcome": "wrong",
    "reference": "ok",
-   "wrong_figure": true
+   "right_every_time": false,
+   "wrong_figure": true,
+   "wrong_figure_any": true
   },
   "e78a2004a8264762": {
    "attempts": [
@@ -1127,7 +1205,9 @@
    "id": "ch-quant-199",
    "outcome": "declined",
    "reference": "ok",
-   "wrong_figure": false
+   "right_every_time": false,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "fb558956d0f92418": {
    "attempts": [
@@ -1155,7 +1235,9 @@
    "id": "ch-port-015",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "ff0965aa9c3d11f2": {
    "attempts": [
@@ -1183,7 +1265,9 @@
    "id": "ch-dataset-186",
    "outcome": "right",
    "reference": "n/a",
-   "wrong_figure": false
+   "right_every_time": true,
+   "wrong_figure": false,
+   "wrong_figure_any": false
   }
  },
  "scored": "2026-10-30T10:37:58+00:00"
