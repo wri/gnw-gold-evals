@@ -1,0 +1,8504 @@
+{
+ "for": "horizon-draft5",
+ "questions": {
+  "00930c69f619fc71": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PRY.5",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-023",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PRY.5"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/00c8d8d0-4c5b-549e-bdd6-4a000e37dbb5",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PRY.5"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "035332f03c044abe": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "SLV",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-155",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "SLV"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/3a57a1c3-5861-583a-b694-bac81898589f",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "SLV"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 10,
+      "forest_filter": null
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "04f16660228d6185": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "10906",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-168",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "10906"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/a9275f40-7684-5aea-8864-ea74b6854a37",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "10906"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "04f94835037ad46c": {
+   "areas": [
+    {
+     "certainty": 1,
+     "id": "BOL277",
+     "source": "landmark"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-033",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL277"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/6c5bbf67-d2f6-5222-83cc-b2e07899dec7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL277"
+       ],
+       "type": "indigenous_land"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-07-29"
+     },
+     "polls": 1,
+     "source": "landmark"
+    }
+   ]
+  },
+  "0549eaa241490b83": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CRI",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-050",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CRI"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/562c711f-fc37-507a-88fe-3b38a52713a7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CRI"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "05f978477ed864ac": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-068",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/faff48a1-938d-560b-b5e9-72805adb5436",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "start_year": "2020"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "08e83d200c6aa833": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-004",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/c3f4aedf-471a-5ad4-9915-3ff0ed290158",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2011"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "0a499e532439b38e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-comp-034",
+   "skipped": [
+    "dataset 9: ch-comp-034: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "0af27878b1c87062": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.2.3",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-041",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.2.3"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/a4fca2ca-c9be-5602-97a9-5074ba4581c3",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.2.3"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-13"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "0e04ef3cd74bf6ea": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-124",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD",
+      "COL"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/b44a05e4-a4ab-5df1-bbd9-825d12f646b3",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD",
+        "COL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "0e6eb9c73710c199": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-127",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8f9e1c11-6f91-5a9b-8d2e-718c2fd83dfb",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "0efc8695e94edd8d": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PRY.5",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PRY.1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-156",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PRY.5",
+      "PRY.1"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/d2b54bd8-cde9-52eb-a07d-820d5d4a9260",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PRY.5",
+        "PRY.1"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "102dc64beb8f0aa0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.9.1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-quant-180",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.9.1"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/122b84ce-2375-51e0-99ab-fd687526cf4b",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.9.1"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "CIV.9.1"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/41e72c2b-c2ce-5493-b62d-4b08f99399b5",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.9.1"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "103f8900e3a2ddb9": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-003",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/39f1e637-7f37-5ad5-b18e-93c13ebcb587",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2016",
+      "forest_filter": "primary_forest",
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2016"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "114265022423b06f": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-080",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/4ff51ed2-df49-5330-8689-49cbe0e70387",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2019"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "119fd4c15e91ea36": {
+   "areas": [],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-083",
+   "skipped": [
+    "no area could be placed from None"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "15f90076865589fc": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-112",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD",
+      "COL"
+     ],
+     "dataset_id": "5",
+     "endpoint": "/v0/land_change/tree_cover_gain/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_gain/analytics/207f7675-98bd-5780-b4b7-1958c9872ab7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD",
+        "COL"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "forest_filter": null,
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "18c4565dc3b27343": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.14.100_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.101_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.102_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.103_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.104_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.105_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.106_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.107_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.108_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.109_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.10_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.110_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.111_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.112_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.113_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.114_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.115_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.116_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.117_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.118_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.119_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.11_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.120_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.121_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.122_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.123_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.124_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.125_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.126_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.127_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.128_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.129_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.12_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.130_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.131_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.132_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.133_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.134_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.135_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.136_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.137_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.138_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.139_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.13_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.140_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.141_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.142_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.143_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.144_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.14_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.15_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.16_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.17_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.18_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.19_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.1_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.20_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.21_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.22_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.23_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.24_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.25_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.26_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.27_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.28_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.29_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.2_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.30_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.31_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.32_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.33_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.34_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.35_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.36_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.37_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.38_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.39_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.3_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.40_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.41_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.42_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.43_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.44_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.45_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.46_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.47_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.48_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.49_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.4_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.50_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.51_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.52_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.53_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.54_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.55_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.56_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.57_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.58_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.59_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.5_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.60_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.61_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.62_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.63_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.64_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.65_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.66_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.67_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.68_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.69_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.6_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.70_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.71_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.72_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.73_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.74_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.75_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.76_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.77_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.78_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.79_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.7_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.80_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.81_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.82_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.83_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.84_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.85_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.86_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.87_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.88_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.89_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.8_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.90_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.91_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.92_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.93_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.94_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.95_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.96_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.97_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.98_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.99_2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14.9_2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-port-018",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.14.100_2",
+      "BRA.14.101_2",
+      "BRA.14.102_2",
+      "BRA.14.103_2",
+      "BRA.14.104_2",
+      "BRA.14.105_2",
+      "BRA.14.106_2",
+      "BRA.14.107_2",
+      "BRA.14.108_2",
+      "BRA.14.109_2",
+      "BRA.14.10_2",
+      "BRA.14.110_2",
+      "BRA.14.111_2",
+      "BRA.14.112_2",
+      "BRA.14.113_2",
+      "BRA.14.114_2",
+      "BRA.14.115_2",
+      "BRA.14.116_2",
+      "BRA.14.117_2",
+      "BRA.14.118_2",
+      "BRA.14.119_2",
+      "BRA.14.11_2",
+      "BRA.14.120_2",
+      "BRA.14.121_2",
+      "BRA.14.122_2",
+      "BRA.14.123_2",
+      "BRA.14.124_2",
+      "BRA.14.125_2",
+      "BRA.14.126_2",
+      "BRA.14.127_2",
+      "BRA.14.128_2",
+      "BRA.14.129_2",
+      "BRA.14.12_2",
+      "BRA.14.130_2",
+      "BRA.14.131_2",
+      "BRA.14.132_2",
+      "BRA.14.133_2",
+      "BRA.14.134_2",
+      "BRA.14.135_2",
+      "BRA.14.136_2",
+      "BRA.14.137_2",
+      "BRA.14.138_2",
+      "BRA.14.139_2",
+      "BRA.14.13_2",
+      "BRA.14.140_2",
+      "BRA.14.141_2",
+      "BRA.14.142_2",
+      "BRA.14.143_2",
+      "BRA.14.144_2",
+      "BRA.14.14_2",
+      "BRA.14.15_2",
+      "BRA.14.16_2",
+      "BRA.14.17_2",
+      "BRA.14.18_2",
+      "BRA.14.19_2",
+      "BRA.14.1_2",
+      "BRA.14.20_2",
+      "BRA.14.21_2",
+      "BRA.14.22_2",
+      "BRA.14.23_2",
+      "BRA.14.24_2",
+      "BRA.14.25_2",
+      "BRA.14.26_2",
+      "BRA.14.27_2",
+      "BRA.14.28_2",
+      "BRA.14.29_2",
+      "BRA.14.2_2",
+      "BRA.14.30_2",
+      "BRA.14.31_2",
+      "BRA.14.32_2",
+      "BRA.14.33_2",
+      "BRA.14.34_2",
+      "BRA.14.35_2",
+      "BRA.14.36_2",
+      "BRA.14.37_2",
+      "BRA.14.38_2",
+      "BRA.14.39_2",
+      "BRA.14.3_2",
+      "BRA.14.40_2",
+      "BRA.14.41_2",
+      "BRA.14.42_2",
+      "BRA.14.43_2",
+      "BRA.14.44_2",
+      "BRA.14.45_2",
+      "BRA.14.46_2",
+      "BRA.14.47_2",
+      "BRA.14.48_2",
+      "BRA.14.49_2",
+      "BRA.14.4_2",
+      "BRA.14.50_2",
+      "BRA.14.51_2",
+      "BRA.14.52_2",
+      "BRA.14.53_2",
+      "BRA.14.54_2",
+      "BRA.14.55_2",
+      "BRA.14.56_2",
+      "BRA.14.57_2",
+      "BRA.14.58_2",
+      "BRA.14.59_2",
+      "BRA.14.5_2",
+      "BRA.14.60_2",
+      "BRA.14.61_2",
+      "BRA.14.62_2",
+      "BRA.14.63_2",
+      "BRA.14.64_2",
+      "BRA.14.65_2",
+      "BRA.14.66_2",
+      "BRA.14.67_2",
+      "BRA.14.68_2",
+      "BRA.14.69_2",
+      "BRA.14.6_2",
+      "BRA.14.70_2",
+      "BRA.14.71_2",
+      "BRA.14.72_2",
+      "BRA.14.73_2",
+      "BRA.14.74_2",
+      "BRA.14.75_2",
+      "BRA.14.76_2",
+      "BRA.14.77_2",
+      "BRA.14.78_2",
+      "BRA.14.79_2",
+      "BRA.14.7_2",
+      "BRA.14.80_2",
+      "BRA.14.81_2",
+      "BRA.14.82_2",
+      "BRA.14.83_2",
+      "BRA.14.84_2",
+      "BRA.14.85_2",
+      "BRA.14.86_2",
+      "BRA.14.87_2",
+      "BRA.14.88_2",
+      "BRA.14.89_2",
+      "BRA.14.8_2",
+      "BRA.14.90_2",
+      "BRA.14.91_2",
+      "BRA.14.92_2",
+      "BRA.14.93_2",
+      "BRA.14.94_2",
+      "BRA.14.95_2",
+      "BRA.14.96_2",
+      "BRA.14.97_2",
+      "BRA.14.98_2",
+      "BRA.14.99_2",
+      "BRA.14.9_2"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/fd5ce9b8-cacd-5f9c-8869-a9f3a7f51f69",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.14.100",
+        "BRA.14.101",
+        "BRA.14.102",
+        "BRA.14.103",
+        "BRA.14.104",
+        "BRA.14.105",
+        "BRA.14.106",
+        "BRA.14.107",
+        "BRA.14.108",
+        "BRA.14.109",
+        "BRA.14.10",
+        "BRA.14.110",
+        "BRA.14.111",
+        "BRA.14.112",
+        "BRA.14.113",
+        "BRA.14.114",
+        "BRA.14.115",
+        "BRA.14.116",
+        "BRA.14.117",
+        "BRA.14.118",
+        "BRA.14.119",
+        "BRA.14.11",
+        "BRA.14.120",
+        "BRA.14.121",
+        "BRA.14.122",
+        "BRA.14.123",
+        "BRA.14.124",
+        "BRA.14.125",
+        "BRA.14.126",
+        "BRA.14.127",
+        "BRA.14.128",
+        "BRA.14.129",
+        "BRA.14.12",
+        "BRA.14.130",
+        "BRA.14.131",
+        "BRA.14.132",
+        "BRA.14.133",
+        "BRA.14.134",
+        "BRA.14.135",
+        "BRA.14.136",
+        "BRA.14.137",
+        "BRA.14.138",
+        "BRA.14.139",
+        "BRA.14.13",
+        "BRA.14.140",
+        "BRA.14.141",
+        "BRA.14.142",
+        "BRA.14.143",
+        "BRA.14.144",
+        "BRA.14.14",
+        "BRA.14.15",
+        "BRA.14.16",
+        "BRA.14.17",
+        "BRA.14.18",
+        "BRA.14.19",
+        "BRA.14.1",
+        "BRA.14.20",
+        "BRA.14.21",
+        "BRA.14.22",
+        "BRA.14.23",
+        "BRA.14.24",
+        "BRA.14.25",
+        "BRA.14.26",
+        "BRA.14.27",
+        "BRA.14.28",
+        "BRA.14.29",
+        "BRA.14.2",
+        "BRA.14.30",
+        "BRA.14.31",
+        "BRA.14.32",
+        "BRA.14.33",
+        "BRA.14.34",
+        "BRA.14.35",
+        "BRA.14.36",
+        "BRA.14.37",
+        "BRA.14.38",
+        "BRA.14.39",
+        "BRA.14.3",
+        "BRA.14.40",
+        "BRA.14.41",
+        "BRA.14.42",
+        "BRA.14.43",
+        "BRA.14.44",
+        "BRA.14.45",
+        "BRA.14.46",
+        "BRA.14.47",
+        "BRA.14.48",
+        "BRA.14.49",
+        "BRA.14.4",
+        "BRA.14.50",
+        "BRA.14.51",
+        "BRA.14.52",
+        "BRA.14.53",
+        "BRA.14.54",
+        "BRA.14.55",
+        "BRA.14.56",
+        "BRA.14.57",
+        "BRA.14.58",
+        "BRA.14.59",
+        "BRA.14.5",
+        "BRA.14.60",
+        "BRA.14.61",
+        "BRA.14.62",
+        "BRA.14.63",
+        "BRA.14.64",
+        "BRA.14.65",
+        "BRA.14.66",
+        "BRA.14.67",
+        "BRA.14.68",
+        "BRA.14.69",
+        "BRA.14.6",
+        "BRA.14.70",
+        "BRA.14.71",
+        "BRA.14.72",
+        "BRA.14.73",
+        "BRA.14.74",
+        "BRA.14.75",
+        "BRA.14.76",
+        "BRA.14.77",
+        "BRA.14.78",
+        "BRA.14.79",
+        "BRA.14.7",
+        "BRA.14.80",
+        "BRA.14.81",
+        "BRA.14.82",
+        "BRA.14.83",
+        "BRA.14.84",
+        "BRA.14.85",
+        "BRA.14.86",
+        "BRA.14.87",
+        "BRA.14.88",
+        "BRA.14.89",
+        "BRA.14.8",
+        "BRA.14.90",
+        "BRA.14.91",
+        "BRA.14.92",
+        "BRA.14.93",
+        "BRA.14.94",
+        "BRA.14.95",
+        "BRA.14.96",
+        "BRA.14.97",
+        "BRA.14.98",
+        "BRA.14.99",
+        "BRA.14.9"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "1a0083d5a0ba6273": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-078",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "IDN"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/4168208a-378a-592f-9088-509a44ad98b7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2024-12-31",
+      "start_date": "2024-01-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "1d015253c38e525b": {
+   "areas": [
+    {
+     "certainty": 0,
+     "id": "643",
+     "source": "wdpa"
+    },
+    {
+     "certainty": 2,
+     "id": "303875",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-164",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "643",
+      "303875"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/bbcb6748-d21f-5546-a667-f49b437f5f9e",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "643",
+        "303875"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "1d736c80f0a28837": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.14",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-188",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.14"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/cb502795-34df-535a-8bc9-925e129bc3f2",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.14"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "1da12d1099d45aa5": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-002",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN",
+      "COD"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/6965f664-770c-5eb3-9035-c4287129d446",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN",
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2020"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "1de243d99d24c772": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.11",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.9",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-158",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.11",
+      "BRA.9"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/19ba7de9-9824-59ae-8567-f342ec4fa7bb",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.11",
+        "BRA.9"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2022",
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "205b5abebbcfaf8c": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "10906",
+     "source": "wdpa"
+    },
+    {
+     "certainty": 2,
+     "id": "2017",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-147",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "10906",
+      "2017"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/e69c366a-9861-5124-928c-d5edc943d4fe",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "10906",
+        "2017"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "2118ea998b3d8ff9": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-047",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER",
+      "BOL"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/035f8617-9bdb-54c6-94b3-3554ed700088",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER",
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "21f09c2202fbd961": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "SUR",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-159",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "SUR"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/2506e4f8-acf5-57ed-b407-b198e603ab2e",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "SUR"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "SUR"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/3c6eebe4-929e-5465-9ded-1ebf8861744c",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "SUR"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "forest_filter": "primary_forest"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "236ae00bfcd20767": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD.2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-032",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD.2"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/496c810a-ad8e-5307-b32b-a01ab8adf1f1",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD.2"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-09-27"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "24d7088da1295387": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL.2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-176",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL.2"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/21e13948-d548-55f5-b40f-feccc61a68d4",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL.2"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "COL.2"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/6355b1b6-14ac-55ab-b4d6-6a71e2b21a32",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL.2"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "26a2155805f4379e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-009",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/26f3db96-5073-502f-83c0-03ef614f4a87",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "2938047081a6486b": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-100",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "COD"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/458c279e-7b5b-5b98-b858-647bc7babb17",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "forest_filter": null
+     },
+     "polls": 1,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA",
+      "COD"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/f291468d-2843-51a4-8c70-2e8b1c170e57",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "COD"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "2a77f12faf134f8e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-002",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/c0276385-ccb7-527e-8e0f-7c7c5146511e",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2024"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "2de134d8f847de90": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-007",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/443c0607-d8c6-5f56-b947-09c0a748f999",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "2df7ba15d33ebb71": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-001",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "IDN"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/e255db59-471f-5b9e-9003-3ee33444cbda",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "2f8c4b89e9c45ff9": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.22",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-152",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.22",
+      "BRA.12"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/e77e8a25-f459-5b6c-b7ce-b9a97a1be698",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.22",
+        "BRA.12"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "2fab5352ebf26d94": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL.8",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.3",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-160",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL.8",
+      "BOL.3"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/881d2d30-479a-5c4a-9f01-48351b9eac8b",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL.8",
+        "BOL.3"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2024"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "30e4bc28fc35c8b6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PRY.5",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-160",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PRY.5"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/eecfb33c-aa2c-58d4-b83a-0271310804d6",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PRY.5"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "3246b0c9d12604b2": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-032",
+   "skipped": [
+    "dataset 9: ch-trend-032: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "3385220543cf26bf": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-174",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER",
+      "COL",
+      "BRA"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/c18cc87d-cf63-5ab4-ae3e-795299feb6b6",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER",
+        "COL",
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "33ae2cadb410f8db": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-115",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "5",
+     "endpoint": "/v0/land_change/tree_cover_gain/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_gain/analytics/09225493-8b24-598d-9418-4f80dbd59287",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "forest_filter": null,
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "38fd71eda156078d": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.10",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.27",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.18",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-157",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.10",
+      "BRA.27",
+      "BRA.18"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/45da4591-837c-5fe0-88f4-cbdd9a775684",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.10",
+        "BRA.27",
+        "BRA.18"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 3,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA.10",
+      "BRA.27",
+      "BRA.18"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/e4076262-2d80-56b5-b5d1-c554607124d5",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.10",
+        "BRA.27",
+        "BRA.18"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2022",
+      "start_year": "2021"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "3920ccb55dd9ca9c": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-144",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/1c0973e0-0f60-54fd-b123-8a856ffdaf2e",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 3,
+     "source": "gadm"
+    }
+   ]
+  },
+  "3a60c8605197eaa0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN.34.6",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-056",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN.34.6"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/03c9cbb7-287f-560d-a75d-99c612eedcba",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN.34.6"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-01-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "3a9d2de5475c2566": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-053",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/751be84f-fe34-514c-a282-cea39acb59da",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2024-08-31",
+      "start_date": "2024-03-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "3ace7fa31c6ba5c5": {
+   "areas": [
+    {
+     "certainty": 0,
+     "id": "555721646",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-020",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "555721646"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/ba7173d2-7443-5697-8958-6a52e3f886b0",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "555721646"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-01"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    },
+    {
+     "aoi_ids": [
+      "555721646"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/94ab1962-8bac-50de-b013-a6b54ed91d6b",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "555721646"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30,
+      "end_year": "2026",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2026"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "3c2d4df57e6552cb": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-029",
+   "skipped": [
+    "dataset 9: ch-trend-029: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "3ce4e54ea7bccaf6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-005",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ec6117cf-38f6-594b-8eb2-9df04a2b2d6b",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "3ec8eee215744716": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "10906",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-005",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "10906"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/fe5d6d01-f368-505e-8895-48919e633451",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "10906"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-13"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "4098c26b3bdb1353": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-082",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/a198bd8c-b836-5929-9a35-0d6ffd526227",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2024-06-30",
+      "start_date": "2024-01-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "43b883c23fed3821": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "GHA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-172",
+   "skipped": [
+    "dataset 9: ch-quant-172: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "44f26e39b559fed8": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "303695",
+     "source": "wdpa"
+    },
+    {
+     "certainty": 2,
+     "id": "352249",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-153",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "303695",
+      "352249"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/80bf15c5-88ef-5b22-99cd-7b6f3682cb45",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "303695",
+        "352249"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-01-01"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "456f89d7df953066": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-107",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/c9be2b92-6c27-53ed-8cc5-6e0868ab5e90",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 75,
+      "forest_filter": null
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "4aaf5144e03026ef": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "10906",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-079",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "10906"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/4d03d02c-2637-54cf-b6e5-11173862b46d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "10906"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "4c7aae4277ad39e6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-110",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "IDN"
+     ],
+     "dataset_id": "5",
+     "endpoint": "/v0/land_change/tree_cover_gain/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_gain/analytics/bb705e7f-1336-5705-a8d5-1f5b12d38ba4",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "forest_filter": null,
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "4ee9788120192321": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-110",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/1887c277-49a6-5dd3-b9b4-9cbce93534d5",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "forest_filter": "primary_forest"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "4f1d6f90058c88b6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-052",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/7fc8d8f8-ca02-5415-bd28-607d21d891ec",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2024-12-31",
+      "start_date": "2024-01-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "50c496873b9dd91f": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL.2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-177",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL.2"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/a16673be-caf8-576b-b4d7-42532402ec0d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL.2"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "53bcf82ca265f148": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-145",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/655390e2-ccd6-5235-8e9a-abe5dcc869c4",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 50,
+      "end_year": "2020",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2020"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "54c3608e62cb3914": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD.1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.3",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.4",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.5",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.6",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.7",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.8",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.9",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.10",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.11",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.12",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.13",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.14",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.15",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.16",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.17",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.18",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.19",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.20",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.21",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.22",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.23",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.24",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.25",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD.26",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-022",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD.1",
+      "COD.2",
+      "COD.3",
+      "COD.4",
+      "COD.5",
+      "COD.6",
+      "COD.7",
+      "COD.8",
+      "COD.9",
+      "COD.10",
+      "COD.11",
+      "COD.12",
+      "COD.13",
+      "COD.14",
+      "COD.15",
+      "COD.16",
+      "COD.17",
+      "COD.18",
+      "COD.19",
+      "COD.20",
+      "COD.21",
+      "COD.22",
+      "COD.23",
+      "COD.24",
+      "COD.25",
+      "COD.26"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/f0fe3935-8907-5067-9110-ad0749dc49a1",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD.1",
+        "COD.2",
+        "COD.3",
+        "COD.4",
+        "COD.5",
+        "COD.6",
+        "COD.7",
+        "COD.8",
+        "COD.9",
+        "COD.10",
+        "COD.11",
+        "COD.12",
+        "COD.13",
+        "COD.14",
+        "COD.15",
+        "COD.16",
+        "COD.17",
+        "COD.18",
+        "COD.19",
+        "COD.20",
+        "COD.21",
+        "COD.22",
+        "COD.23",
+        "COD.24",
+        "COD.25",
+        "COD.26"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-09-27"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "56d3132c8b3b306a": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-033",
+   "skipped": [
+    "dataset 9: ch-quant-033: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "5a469b6fe061f718": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-175",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/05adeab2-76ed-5ecf-873b-438e7c4c7a76",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "forest_filter": null
+     },
+     "polls": 1,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/aadf8cea-a309-5262-90b3-837c6ec96251",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "5faabb8c3c9e53e6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.2.2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-011",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.2.2"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/d9a2e03d-0296-53d6-bda4-1cada96ea064",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.2.2"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-07-29"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "62cb9fb26220627a": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "10906",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-006",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "10906"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/706c1f16-fa1e-5f89-80e4-6af5c18df921",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "10906"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "633eb6ad958a67e0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.18.1.1_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.1.2_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.1.3_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.2.1_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.2.2_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.2.3_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.3.1_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.3.2_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.3.3_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18.3.4_1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-027",
+   "skipped": [],
+   "status": "none",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.18.1.1_1",
+      "PER.18.1.2_1",
+      "PER.18.1.3_1",
+      "PER.18.2.1_1",
+      "PER.18.2.2_1",
+      "PER.18.2.3_1",
+      "PER.18.3.1_1",
+      "PER.18.3.2_1",
+      "PER.18.3.3_1",
+      "PER.18.3.4_1"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "https://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics: Client error '422 Unprocessable Content' for url 'https://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/4",
+     "link": "",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.18.1.1",
+        "PER.18.1.2",
+        "PER.18.1.3",
+        "PER.18.2.1",
+        "PER.18.2.2",
+        "PER.18.2.3",
+        "PER.18.3.1",
+        "PER.18.3.2",
+        "PER.18.3.3",
+        "PER.18.3.4"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 0,
+     "source": "gadm"
+    }
+   ]
+  },
+  "646ed6b1385e1900": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-085",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/5f33fb06-5540-58b6-b059-d96e82dcea53",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2023-12-01"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "64a62f11b6a2a680": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-031",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/e304c818-397b-568b-8cff-2101f8c981e4",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2022",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2022"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "662d9696610da2a3": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "GBR",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CRI",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-048",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "GBR",
+      "CRI"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/f0383aee-9e5e-5d0d-9def-183816bcfeb4",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "GBR",
+        "CRI"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "683f6e05ed04c91b": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-029",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/11db4a09-6e47-54cd-ab22-70a93066708d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2020",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "69853f03f93aecd9": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL.2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-048",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL.2"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/55bf5698-2668-5e87-ad4c-b0a4522c0450",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL.2"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-13"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "6c3585237aeda84f": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-171",
+   "skipped": [
+    "dataset 9: ch-quant-171: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "6d8e49dfa3926efa": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-036",
+   "skipped": [
+    "dataset 9: ch-quant-036: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "6fd40a85d6ee70a4": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-153",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.12"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/a75b03f5-e0b9-55c1-ab2c-839ce2dc01de",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.12"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "70e7c4590828689f": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-011",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.12"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/a8fe3288-05a9-5ebb-9235-b89569561c13",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.12"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "75472cb3813f9346": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-043",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "IDN"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/cfd14996-8f2a-5b87-b76f-388e5caa668c",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "75fc1cefa4f8c92b": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.2.2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.8.1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-162",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.2.2",
+      "CIV.8.1"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/c578ade1-d198-58e5-984f-8ae233612b0d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.2.2",
+        "CIV.8.1"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "777185e572ffe4f3": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-083",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/7fc8d8f8-ca02-5415-bd28-607d21d891ec",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2024-12-31",
+      "start_date": "2024-01-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "78350dc4fa67df54": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "GBR",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CRI",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-093",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "GBR",
+      "CRI"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/22478980-dc3c-5213-a606-d20481242998",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "GBR",
+        "CRI"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "7992f393a603a7ae": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-165",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/18fb593f-d69c-5af3-a97a-07485f6112d5",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "7b8607186499c9d2": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "MEX.25",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-165",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "MEX.25"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/4dd57a5e-8a25-55b5-a4c5-97f869c352b3",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "MEX.25"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "7c307853a940e649": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-076",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/c0b04c1f-c229-5bd3-908d-572ad2994119",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2022",
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "7cf0a7b433aa9695": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-074",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8155eda1-6fa3-58ad-b9bb-f8f4622a2687",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2016"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "7d1c8ef98a78ac8e": {
+   "areas": [],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-054",
+   "skipped": [
+    "no area could be placed from None"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "7dd7c55d90550a80": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.26.3",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-037",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.26.3"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/9234b976-3f10-5b2f-91ad-3b56fa40ec31",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.26.3"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-04-28"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "7e47259dd8dddf07": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-trend-050",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/54fda1cf-0593-5865-9d6a-642d68563518",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2024-12-31",
+      "start_date": "2024-01-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "800ab120ac271e99": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-134",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/3d0dc77b-c2d6-5f0b-81ca-44a0cec8b8f3",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "8172a1df0be19591": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD.6",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-038",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD.6"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/102d90b5-168b-5a35-9585-7c223b5fb5a4",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD.6"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-08-28"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "835f05e2d874e479": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-045",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/ac681bc4-d1cf-5817-889c-06195e89956c",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2022",
+      "start_year": "2010"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "841d4af849e21432": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-169",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/52bc6837-c676-5f56-ae6b-d9d7a3cd66e2",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "84219951f56b9748": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-090",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "IDN"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/b06bb01c-2b87-5c99-b799-ebddf2f2dc32",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "IDN"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "85a1fc1659f0af77": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IND",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "MEX",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-053",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IND",
+      "MEX"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/a3ccb6ff-b6d7-51d8-b2ba-ca91a104d7b0",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IND",
+        "MEX"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "884f9499b15d8217": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.2.2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.9.1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-150",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.2.2",
+      "CIV.9.1"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/0628f862-3f84-5cbe-9044-20fb7b7a153e",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.2.2",
+        "CIV.9.1"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "8bf6a1396564661e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "317197",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-162",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "317197"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/cfbc6ce2-ea95-5569-b33b-1a8fccce0e7f",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "317197"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "8cee46086faf3a28": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.8",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.18",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-159",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.8",
+      "PER.18"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8cb0c01d-d52a-5dc1-9b2e-58cfd9ff7c08",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.8",
+        "PER.18"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "8f1284b3ed4e4fd4": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CAN.2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-024",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CAN.2"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/71a7e57c-afda-5903-ac38-36c1d9f875c6",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CAN.2"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "92e8f497775edd01": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "GAB",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-010",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "GAB"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ff673033-be13-5d1f-8cf5-dea9f8a4acc8",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "GAB"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2017",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2006"
+     },
+     "polls": 1,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "GAB"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8862aeb7-b771-58e1-aad8-eb59a7442051",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "GAB"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2017",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2006"
+     },
+     "polls": 3,
+     "source": "gadm"
+    }
+   ]
+  },
+  "9320615f8c859e81": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN.24",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN.8",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-151",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN.24",
+      "IDN.8",
+      "IDN.12"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8f202024-8f88-5d9f-8e9a-0619d5a73246",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN.24",
+        "IDN.8",
+        "IDN.12"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "94b8e88f576fd50a": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-011",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/17b937e0-a20f-5deb-ad38-7b421c83ea6d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2020",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2020"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "96b8474465f25c5b": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-001",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/26f3db96-5073-502f-83c0-03ef614f4a87",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "98209fa396f952a6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-175",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.12"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/bfc46e17-6050-56fd-9b14-aefe91d58d12",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.12"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA.12"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/29d816d3-133b-5647-bb78-e936d7b77de1",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.12"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "99a01b58f5501ed5": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-047",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/6d86792a-e3aa-5b5b-9f29-00ea73349a9a",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "9bc5cd4748591013": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-142",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/4cadcd45-732a-5063-a0c5-374952ed7a03",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2020",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "a24784cc1594fb94": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IND",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-096",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IND"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/d0724d01-8db1-53b6-9259-53e9059a8fb0",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IND"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "a349aeabb20e6e7e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-067",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/9de6d0a5-dc89-5305-a22a-5a2f49544d86",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "a41f2abd7b638aea": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CRI",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-021",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CRI"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/91cedba2-4714-5aa0-bf2c-9b627ce89504",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CRI"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 25,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "a721cf33e90ab1ee": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-025",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/fe3d2814-2e55-5769-a187-b6787ff6ef9b",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2024"
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/e105bb0d-7911-553c-94c3-61366a7c1926",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2024"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "a826426cb5e8dabe": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.26.3",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-182",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.26.3"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/10b92744-24f2-5e33-8cf7-596f22fb683d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.26.3"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "a85a04f1fff6cfb0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-139",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8cd1aa3b-17c0-5d4e-89e9-77b0bddbd923",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2020",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2020"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "aa18d9e6f61d5ad3": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IND",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-039",
+   "skipped": [
+    "dataset 9: ch-quant-039: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "aaef92e7e5b5dd29": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "4994",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-036",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "4994"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/184fff79-ac9a-586b-be0d-0570346777c9",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "4994"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-09-01"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "ac1c0d9cfbaf332b": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "MEX",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-066",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "MEX"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/c20d69be-71b4-5391-ae36-af42561be2fa",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "MEX"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "start_year": "2020"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ae320d328f6d25e0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-122",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "IDN"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/51b5513b-f53b-5c7b-a2d3-c865ffb72d99",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ae44f88fb4480a0a": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA1507",
+     "source": "landmark"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-170",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA1507"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ef3f097e-f522-56ed-8e26-93c88774a2b0",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA1507"
+       ],
+       "type": "indigenous_land"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2014"
+     },
+     "polls": 1,
+     "source": "landmark"
+    }
+   ]
+  },
+  "aef536cb8724479c": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA1507",
+     "source": "landmark"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-151",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA1507"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8654b639-0800-5417-9eb6-ae98a9b03c61",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA1507"
+       ],
+       "type": "indigenous_land"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "landmark"
+    }
+   ]
+  },
+  "af3e3402bfbacc5c": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "721",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-causal-018",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "721"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/37979d8b-e3bd-5c6b-9834-84975e67c9f7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "721"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "af7738be4ece24b9": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IND",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-156",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IND"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/fb313593-1a01-5675-9aaf-19288ac1bbf2",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IND"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "b0985c2f71a0f677": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.18",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-072",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.18"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/b6875ee6-a438-580f-a374-25200a12951c",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.18"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "b4160a574705ebce": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-055",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/96e261f4-3ee9-528b-ac92-82f4c9f2d48d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "b55b73817a71eb47": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN.24",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-005",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN.24"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/86b7ca87-afff-593b-84c6-f292ddcd5dad",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN.24"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "b755e343b1cdb233": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IND",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-061",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IND"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/ea68f813-9576-59d8-8fde-8eef46e7d6a7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IND"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "IND"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/d0724d01-8db1-53b6-9259-53e9059a8fb0",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IND"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "b75c4b8446ddfb57": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-169",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/82c26a88-a43c-520e-8525-5c851888a4c0",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2016"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "b83db8bbb40ba006": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.10",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-034",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.10"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/cc62ed0f-7a77-5ea7-9c6b-4745fffe87b7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.10"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-20"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "b8b310be464aca90": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "308624",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-mon-057",
+   "skipped": [
+    "no dataset_id"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "be4e4005cd940196": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD.2",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-076",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD.2"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/a2be46a3-9ac6-57a1-8083-5292ca63578d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD.2"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-04-30"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "bf811588826bc208": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-064",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/d7ae186b-7ca9-5ee7-b6d3-9c9073b11a12",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "c06e503df65950d0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-072",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/ee92e614-dff7-525b-86b4-963b9b8d6b96",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2015",
+      "start_year": "2005"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "c0fe2c75140fba23": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-133",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/650702ca-4da7-55f2-a980-4033b6f04d1f",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "c2f302cfd91911ff": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.14",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-007",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.14"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/d00464b8-52e7-5d1a-ac0f-f28d06961dfa",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.14"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA.14"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/6e0740d1-85d7-55d0-aca2-c94f19cc1c9f",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.14"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 3,
+     "source": "gadm"
+    }
+   ]
+  },
+  "c3d506011b4c437d": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "GHA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-173",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "GHA"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/f6a73fd7-e25b-5b8b-b6aa-d3d5a90dc9d7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "GHA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2018"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "c4215f51af8b8ead": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "317197",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-030",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "317197"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/1065282c-9e52-5e2f-9554-fe76870ee2dd",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "317197"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-09-27"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "c5f8a232c244058d": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.8.1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.8.2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.8.3",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-163",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.8.1",
+      "CIV.8.2",
+      "CIV.8.3"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/507c9349-c49d-539f-b387-eddce36ef2c7",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.8.1",
+        "CIV.8.2",
+        "CIV.8.3"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "c905b26cb87c192d": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-080",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/54fda1cf-0593-5865-9d6a-642d68563518",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2024-12-31",
+      "start_date": "2024-01-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "c9b87ce29bd646df": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-183",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.12"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/21ffc44c-f214-5510-9add-51a57c84ce38",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.12"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2022",
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA.12"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/bfc46e17-6050-56fd-9b14-aefe91d58d12",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.12"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ccaec31601123ec6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-008",
+   "skipped": [
+    "dataset 9: ch-causal-008: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "partial",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/b03123dd-5dc0-5931-90ba-56ac38c9f180",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ccdf4fd1703405a9": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "MYS",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-100",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "MYS"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/cdea905c-67db-5ce5-8cd9-b27f64a68b06",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "MYS"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "cd7c818896855ce0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-125",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER",
+      "BOL"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/c464256f-313e-5206-9b33-791004dc63d0",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER",
+        "BOL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "cdacf2987bf0dadf": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-118",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "5",
+     "endpoint": "/v0/land_change/tree_cover_gain/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_gain/analytics/ec80f58d-6fd5-53ab-919e-baf34e77ffa6",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "forest_filter": null,
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "d2051fa985ecb061": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-055",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "COD"
+     ],
+     "dataset_id": "1",
+     "endpoint": "/v0/land_change/land_cover_change/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/land_cover_change/analytics/f291468d-2843-51a4-8c70-2e8b1c170e57",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "COD"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA",
+      "COD"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/458c279e-7b5b-5b98-b858-647bc7babb17",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "forest_filter": null
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "d50067a5a601e831": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-017",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/5d0bb7b9-966b-50fe-8793-92309503edaa",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "d8bf7c5cad29b0c3": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-003",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/11db4a09-6e47-54cd-ab22-70a93066708d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2020",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "d96b3f6899389352": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "SLV",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-085",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "SLV"
+     ],
+     "dataset_id": "5",
+     "endpoint": "/v0/land_change/tree_cover_gain/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_gain/analytics/2f96e187-1cf4-518e-8abe-6426c0b8ee68",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "SLV"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "forest_filter": null,
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "d985f7043f9664b8": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "GAB",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-148",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "GAB"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ff673033-be13-5d1f-8cf5-dea9f8a4acc8",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "GAB"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2017",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2006"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "da94db99f8be9cc2": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "GAB",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-013",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "GAB"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ccbeff98-e567-50cd-a1ec-7ada62fd6f4a",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "GAB"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 3,
+     "source": "gadm"
+    }
+   ]
+  },
+  "db652b6d07e80e90": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.18",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-causal-015",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.18"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/80642eff-6353-56df-ad79-4dd77f27ec22",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.18"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2015"
+     },
+     "polls": 2,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "PER.18"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/4a5aceb4-e371-533f-9ac3-14c9c2b0b720",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.18"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2015"
+     },
+     "polls": 2,
+     "source": "gadm"
+    }
+   ]
+  },
+  "dcb490b6605a7219": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-103",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "7",
+     "endpoint": "/v0/land_change/tree_cover/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover/analytics/05adeab2-76ed-5ecf-873b-438e7c4c7a76",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "forest_filter": null
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "dd7b82ccb41b673e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-133",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA",
+      "IDN"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/8042637a-92e4-544c-baeb-4521f35fc0e4",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA",
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ddf490a6fde38112": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BOL.1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.2",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.3",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.4",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.5",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.6",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.7",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.8",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BOL.9",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-189",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BOL.1",
+      "BOL.2",
+      "BOL.3",
+      "BOL.4",
+      "BOL.5",
+      "BOL.6",
+      "BOL.7",
+      "BOL.8",
+      "BOL.9"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/04be37b9-ffc2-55b5-bd0a-9ed0bbc241da",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL.1",
+        "BOL.2",
+        "BOL.3",
+        "BOL.4",
+        "BOL.5",
+        "BOL.6",
+        "BOL.7",
+        "BOL.8",
+        "BOL.9"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BOL.1",
+      "BOL.2",
+      "BOL.3",
+      "BOL.4",
+      "BOL.5",
+      "BOL.6",
+      "BOL.7",
+      "BOL.8",
+      "BOL.9"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/7b0aaa0c-4c59-59f0-94b0-1d7307e8eb46",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BOL.1",
+        "BOL.2",
+        "BOL.3",
+        "BOL.4",
+        "BOL.5",
+        "BOL.6",
+        "BOL.7",
+        "BOL.8",
+        "BOL.9"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 4,
+     "source": "gadm"
+    }
+   ]
+  },
+  "de6d8512899ab8ea": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-007",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/1581f3e2-0508-54e3-b6f4-17829aff8226",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2016"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "deb4f78ed2c5a47e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "MYS",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-031",
+   "skipped": [
+    "dataset 9: ch-comp-031: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "e10d12f48e0dee93": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.21",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-quant-157",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.21"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/4b47ed11-6496-548f-baf1-0eea225f7a32",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.21"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e1405ddf77ddc5e2": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-092",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "3",
+     "endpoint": "/v0/land_change/natural_lands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/natural_lands/analytics/aadf8cea-a309-5262-90b3-837c6ec96251",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      }
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e25dbe217b87e7ec": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.8.1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-001",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.8.1"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ca2bfbed-0aef-5aa5-abb6-75611abaac94",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.8.1"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e3b8d54b3ce52176": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-28",
+   "id": "ch-trend-001",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/95981e23-a94c-52a8-9d29-602d8b1d1d00",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e4ceb6c058d470ad": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER1700",
+     "source": "landmark"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-014",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER1700"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/f767ee39-eb32-5ec1-a518-2de1e4195cd3",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER1700"
+       ],
+       "type": "indigenous_land"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-01"
+     },
+     "polls": 1,
+     "source": "landmark"
+    }
+   ]
+  },
+  "e5efecdd9cd2f9a8": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-002",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/c39c48a6-5608-5d2c-bdee-3a1db1f4cc22",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2022",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2022"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e6be088385f5e8f8": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.23",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "PER.12",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-154",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.23",
+      "PER.12"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ebb54d7e-e0e4-5359-a6a2-c0122c39f15d",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.23",
+        "PER.12"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 3,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e752e2965cb2280a": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA.1_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.2_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.3_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.4_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.5_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.6_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.7_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.8_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.9_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.10_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.11_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.12_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.13_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.14_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.15_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.16_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.17_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.18_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.19_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.20_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.21_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.22_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.23_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.24_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.25_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.26_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA.27_1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-port-003",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA.1_1",
+      "BRA.2_1",
+      "BRA.3_1",
+      "BRA.4_1",
+      "BRA.5_1",
+      "BRA.6_1",
+      "BRA.7_1",
+      "BRA.8_1",
+      "BRA.9_1",
+      "BRA.10_1",
+      "BRA.11_1",
+      "BRA.12_1",
+      "BRA.13_1",
+      "BRA.14_1",
+      "BRA.15_1",
+      "BRA.16_1",
+      "BRA.17_1",
+      "BRA.18_1",
+      "BRA.19_1",
+      "BRA.20_1",
+      "BRA.21_1",
+      "BRA.22_1",
+      "BRA.23_1",
+      "BRA.24_1",
+      "BRA.25_1",
+      "BRA.26_1",
+      "BRA.27_1"
+     ],
+     "dataset_id": "8",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ef4673ef-6b46-5742-b01b-cb6e6cd159cf",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.1",
+        "BRA.2",
+        "BRA.3",
+        "BRA.4",
+        "BRA.5",
+        "BRA.6",
+        "BRA.7",
+        "BRA.8",
+        "BRA.9",
+        "BRA.10",
+        "BRA.11",
+        "BRA.12",
+        "BRA.13",
+        "BRA.14",
+        "BRA.15",
+        "BRA.16",
+        "BRA.17",
+        "BRA.18",
+        "BRA.19",
+        "BRA.20",
+        "BRA.21",
+        "BRA.22",
+        "BRA.23",
+        "BRA.24",
+        "BRA.25",
+        "BRA.26",
+        "BRA.27"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [
+       "driver"
+      ],
+      "start_year": "2001"
+     },
+     "polls": 5,
+     "source": "gadm"
+    },
+    {
+     "aoi_ids": [
+      "BRA.1_1",
+      "BRA.2_1",
+      "BRA.3_1",
+      "BRA.4_1",
+      "BRA.5_1",
+      "BRA.6_1",
+      "BRA.7_1",
+      "BRA.8_1",
+      "BRA.9_1",
+      "BRA.10_1",
+      "BRA.11_1",
+      "BRA.12_1",
+      "BRA.13_1",
+      "BRA.14_1",
+      "BRA.15_1",
+      "BRA.16_1",
+      "BRA.17_1",
+      "BRA.18_1",
+      "BRA.19_1",
+      "BRA.20_1",
+      "BRA.21_1",
+      "BRA.22_1",
+      "BRA.23_1",
+      "BRA.24_1",
+      "BRA.25_1",
+      "BRA.26_1",
+      "BRA.27_1"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/318627ab-7790-5a20-88fb-88099e801624",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA.1",
+        "BRA.2",
+        "BRA.3",
+        "BRA.4",
+        "BRA.5",
+        "BRA.6",
+        "BRA.7",
+        "BRA.8",
+        "BRA.9",
+        "BRA.10",
+        "BRA.11",
+        "BRA.12",
+        "BRA.13",
+        "BRA.14",
+        "BRA.15",
+        "BRA.16",
+        "BRA.17",
+        "BRA.18",
+        "BRA.19",
+        "BRA.20",
+        "BRA.21",
+        "BRA.22",
+        "BRA.23",
+        "BRA.24",
+        "BRA.25",
+        "BRA.26",
+        "BRA.27"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 4,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e78a2004a8264762": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-199",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/9ebc0ec7-9f51-5664-84c9-85917acf7541",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2015",
+      "forest_filter": null,
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2015"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "e817a2249c4bc982": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "ESP",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-176",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "ESP"
+     ],
+     "dataset_id": "2",
+     "endpoint": "/v0/land_change/grasslands/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/grasslands/analytics/f36f9341-e254-5906-851a-2dda673b3bcf",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "ESP"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2022",
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ea0cca3029eb1845": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "SLV",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-179",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "SLV"
+     ],
+     "dataset_id": "5",
+     "endpoint": "/v0/land_change/tree_cover_gain/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_gain/analytics/2f96e187-1cf4-518e-8abe-6426c0b8ee68",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "SLV"
+       ],
+       "type": "admin"
+      },
+      "end_year": "2020",
+      "forest_filter": null,
+      "start_year": "2000"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ebd81da2acb9a6ba": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "721",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-186",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "721"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/9b2e54f5-f15f-511a-9cee-2461c3e500e6",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "721"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 7,
+     "source": "wdpa"
+    },
+    {
+     "aoi_ids": [
+      "721"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/b123a3fa-3b69-53d4-a26e-d86fdd889404",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "721"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2023-12-01"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "ee8e29242f63d7b4": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "186",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-167",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "186"
+     ],
+     "dataset_id": "6",
+     "endpoint": "/v0/land_change/carbon_flux/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/carbon_flux/analytics/3eaa9777-9eca-50f5-b0d4-491f978ab803",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "186"
+       ],
+       "type": "protected_area"
+      },
+      "canopy_cover": 30
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "eea51599747ed75e": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "MYS",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-037",
+   "skipped": [
+    "dataset 9: ch-trend-037: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "f43e1c047e9e97b0": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-010",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/c96aeb45-ab90-5657-96e6-3045ea612fa5",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2023",
+      "forest_filter": "intact_forest",
+      "intersections": [],
+      "start_year": "2023"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "f4bc1bce3b5ca308": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "PER.26.3",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-058",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "PER.26.3"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/77d7a776-b682-5851-a496-df65d7c81d68",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "PER.26.3"
+       ],
+       "type": "admin"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-01"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "f5443cf1be8f6fcf": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COD",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-quant-146",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COD"
+     ],
+     "dataset_id": "10",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/1d896642-27a0-5a73-8666-073d5fd5de63",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COD"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2022",
+      "forest_filter": "primary_forest",
+      "intersections": [
+       "fire"
+      ],
+      "start_year": "2022"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "f5e2f290a208dc5a": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-038",
+   "skipped": [
+    "dataset 9: ch-comp-038: dataset 9 (Deforestation (sLUC) Emission Factors by Agricultural Crop) has no request builder yet"
+   ],
+   "status": "none",
+   "tables": []
+  },
+  "f65ac5d2d0ac0c12": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "CIV.1_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.2_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.3_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.4_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.5_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.6_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.7_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.8_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.9_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.10_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.11_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.12_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.13_1",
+     "source": "gadm"
+    },
+    {
+     "certainty": 2,
+     "id": "CIV.14_1",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-port-017",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "CIV.1_1",
+      "CIV.2_1",
+      "CIV.3_1",
+      "CIV.4_1",
+      "CIV.5_1",
+      "CIV.6_1",
+      "CIV.7_1",
+      "CIV.8_1",
+      "CIV.9_1",
+      "CIV.10_1",
+      "CIV.11_1",
+      "CIV.12_1",
+      "CIV.13_1",
+      "CIV.14_1"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/4ea200c1-7ef6-54b9-85ae-7b3f1cb3d3bf",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "CIV.1",
+        "CIV.2",
+        "CIV.3",
+        "CIV.4",
+        "CIV.5",
+        "CIV.6",
+        "CIV.7",
+        "CIV.8",
+        "CIV.9",
+        "CIV.10",
+        "CIV.11",
+        "CIV.12",
+        "CIV.13",
+        "CIV.14"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 4,
+     "source": "gadm"
+    }
+   ]
+  },
+  "f67e2ed5b48945c1": {
+   "areas": [
+    {
+     "certainty": 0,
+     "id": "555721646",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-035",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "555721646"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/5942b004-bf57-51e6-b383-7db36d678807",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "555721646"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-01-01"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "f8db8b312276b9b6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-trend-078",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/4d652460-5a13-5d8b-8133-3e40e3b5c206",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2020"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "fb6b34f0b5bac21f": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "308624",
+     "source": "wdpa"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-mon-039",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "308624"
+     ],
+     "dataset_id": "11",
+     "endpoint": "/v0/land_change/integrated_alerts/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/integrated_alerts/analytics/bd431d8b-13a7-5d09-be7f-cc6f383f52b1",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "308624"
+       ],
+       "type": "protected_area"
+      },
+      "end_date": "2026-10-27",
+      "start_date": "2026-10-01"
+     },
+     "polls": 1,
+     "source": "wdpa"
+    }
+   ]
+  },
+  "fc16e3362d1a9844": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "BRA1507",
+     "source": "landmark"
+    },
+    {
+     "certainty": 2,
+     "id": "BRA1332",
+     "source": "landmark"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-161",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "BRA1507",
+      "BRA1332"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/303cf107-0fbc-5ca8-bc27-d6337b611bca",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "BRA1507",
+        "BRA1332"
+       ],
+       "type": "indigenous_land"
+      },
+      "canopy_cover": 30,
+      "end_year": "2024",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 1,
+     "source": "landmark"
+    }
+   ]
+  },
+  "fcd5235c64258ab6": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "IDN",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-comp-006",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "IDN"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/ede077f5-27e3-5044-bb11-73211e451b54",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "IDN"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": null,
+      "intersections": [],
+      "start_year": "2001"
+     },
+     "polls": 1,
+     "source": "gadm"
+    }
+   ]
+  },
+  "ffd059ecf4779715": {
+   "areas": [
+    {
+     "certainty": 2,
+     "id": "COL",
+     "source": "gadm"
+    }
+   ],
+   "as_of": "2026-10-27",
+   "id": "ch-causal-012",
+   "skipped": [],
+   "status": "ok",
+   "tables": [
+    {
+     "aoi_ids": [
+      "COL"
+     ],
+     "dataset_id": "4",
+     "endpoint": "/v0/land_change/tree_cover_loss/analytics",
+     "error": "",
+     "link": "http://analytics.globalnaturewatch.org/v0/land_change/tree_cover_loss/analytics/f784c056-a540-5fe5-9992-61d71666d37c",
+     "payload": {
+      "aoi": {
+       "ids": [
+        "COL"
+       ],
+       "type": "admin"
+      },
+      "canopy_cover": 30,
+      "end_year": "2025",
+      "forest_filter": "primary_forest",
+      "intersections": [],
+      "start_year": "2021"
+     },
+     "polls": 3,
+     "source": "gadm"
+    }
+   ]
+  }
+ },
+ "written": "2026-10-30T09:26:41+00:00"
+}
