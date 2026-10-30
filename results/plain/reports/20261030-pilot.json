@@ -6,47 +6,47 @@
    "low": 0.1429
   },
   "wrong_figure": {
-   "gap": 0.3095,
-   "high": 0.4524,
-   "low": 0.1667
+   "gap": 0.2143,
+   "high": 0.3333,
+   "low": 0.0952
   }
  },
  "questions": 42,
  "sonnet": "20261030-pilot",
  "summaries": {
   "Horizon": {
-   "benchmark_style_pass": 32,
-   "benchmark_style_rate": 0.7619,
-   "declined": 5,
+   "benchmark_style_pass": 31,
+   "benchmark_style_rate": 0.7381,
+   "declined": 4,
    "questions": 42,
    "rates": {
-    "declined": 0.119,
-    "right": 0.7619,
+    "declined": 0.0952,
+    "right": 0.7857,
     "uncovered": 0.0,
     "wrong": 0.119
    },
-   "right": 32,
+   "right": 33,
    "uncovered": 0,
    "wrong": 5,
    "wrong_figure": 0,
    "wrong_figure_rate": 0.0
   },
   "Sonnet + web": {
-   "benchmark_style_pass": 19,
-   "benchmark_style_rate": 0.4524,
-   "declined": 8,
+   "benchmark_style_pass": 20,
+   "benchmark_style_rate": 0.4762,
+   "declined": 11,
    "questions": 42,
    "rates": {
-    "declined": 0.1905,
-    "right": 0.4286,
-    "uncovered": 0.0,
-    "wrong": 0.381
+    "declined": 0.2619,
+    "right": 0.4524,
+    "uncovered": 0.0238,
+    "wrong": 0.2619
    },
-   "right": 18,
-   "uncovered": 0,
-   "wrong": 16,
-   "wrong_figure": 13,
-   "wrong_figure_rate": 0.3095
+   "right": 19,
+   "uncovered": 1,
+   "wrong": 11,
+   "wrong_figure": 9,
+   "wrong_figure_rate": 0.2143
   }
  }
 }

@@ -4,7 +4,7 @@
   "benchmark": "2026-draft-5",
   "drafted": "2026-10-30 by Claude for AJ's review",
   "note": "Questions not listed take the defaults: the text applies to any assistant, a decline is not a right answer, and the figure checks gate.",
-  "reviewed": "2026-10-30 by AJ: all 34 calls agreed",
+  "reviewed": "2026-10-30 by AJ: all 34 calls agreed; pilot fix 4 (ch-quant-161, ch-quant-175) agreed the same day",
   "schema_version": 1,
   "status": "reviewed"
  },
@@ -26,8 +26,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to clarify which specific metric they want (net carbon flux or annual gross emissions) before providing an answer.",
+     "label_reason": "The reply does not answer the question about gross emissions and removals; instead it asks the user to choose between two options (net carbon flux or annual gross emissions) before providing any data.",
      "offer": 0.0,
      "offer_reason": "The reply does not offer \"Forest greenhouse gas net flux\" as an option; instead it offers \"Net carbon flux (2001-2025)\" and \"Annual gross emissions (loss only)\" which are different framings.",
      "pulled_reference": false,
@@ -45,8 +46,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly provides the requested figures for gross emissions (0.0 MgCO\u2082e) and gross removals (0.0 MgCO\u2082e) for Salonga National Park, along with explanatory context about the data and methodology.",
+     "label_reason": "The reply directly answers the question by providing specific figures for gross emissions (0.0 MgCO\u2082e) and gross removals (0.0 MgCO\u2082e) for Salonga National Park, along with explanatory context about the data and methodology, and ends with follow-up suggestions.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -72,8 +74,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides a substantive answer explaining likely causes of the alerts (illegal logging, unauthorized roads, organized crime activities) with specific context about seasonal patterns, confidence levels, and historical impact data, while also offering follow-up options for deeper investigation.",
+     "label_reason": "The reply addresses what is likely causing the alerts by explaining seasonal patterns, disturbance drivers (illegal logging, unauthorized roads, organized crime), and provides specific figures for recent alert impacts (134 hectares in August 2024, 1,200+ hectares total since December 2023), then asks follow-up questions about next steps.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -90,8 +93,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific data on the alerts (325.01 ha total disturbance, 30.69 ha high confidence, 32.51 ha highest confidence in August) and explaining likely causes (illegal logging, infrastructure expansion, commercial agriculture) based on regional research and trends.",
+     "label_reason": "The reply directly addresses what is causing the alerts by providing specific explanations (illegal logging, infrastructure expansion, commercial agriculture) supported by data and research, while also offering a follow-up question about viewing satellite imagery.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -108,8 +112,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly addresses what is likely causing the high-confidence alerts in the Mats\u00e9s Native Community by identifying specific drivers (infrastructure/road building, organized illegal logging and arson, and mining threats), providing quantitative data on disturbance patterns, and explaining the seasonal trends that support these conclusions.",
+     "label_reason": "The reply directly answers what is likely causing the alerts by identifying infrastructure/road building, organized crime (illegal logging and arson), and mining as probable causes, supported by specific data (1,201 ha of disturbances, seasonal patterns, and referenced research).",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -135,8 +140,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "declined",
-     "label_reason": "The reply explains that the AI cannot directly change alert settings and instead directs the user to perform the task themselves through account settings, without actually answering or completing the requested action.",
+     "label_reason": "The reply explains that the assistant cannot directly change notification settings but provides step-by-step instructions for the user to make the change themselves in their account settings.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -153,8 +159,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "declined",
-     "label_reason": "The reply states the assistant cannot directly change notification settings and directs the user to manage settings themselves through the platform's User Profile or My GFW section, without answering the request.",
+     "label_reason": "The reply explains that the assistant cannot directly change notification settings but directs the user to where they can manage their alert preferences themselves (User Profile or My GFW section).",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -171,8 +178,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "declined",
-     "label_reason": "The reply states the assistant cannot change alert notification settings or send alerts via WhatsApp, and directs the user to manage settings elsewhere without answering the request.",
+     "label_reason": "The reply explains that the assistant cannot change alert notification settings or send alerts via WhatsApp, and directs the user to account settings or the platform's \"My GFW\" section to manage their preferences.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -198,8 +206,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply acknowledges the question but asks the user to choose between available datasets and clarify their preferences before providing an answer.",
+     "label_reason": "The reply acknowledges it cannot isolate social forestry areas specifically, declines to provide a figure for the question asked, and instead asks the user to choose between general datasets before proceeding.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -216,8 +225,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "declined",
-     "label_reason": "The reply explicitly states that specific, real-time deforestation figures for social forestry permit boundaries are not available in a single dataset, and instead provides general national trends and positive outcomes for social forestry areas without directly answering the specific question asked.",
+     "gives_figure": false,
+     "label": "answered",
+     "label_reason": "The reply acknowledges that specific deforestation figures for social forestry areas are not available in a single dataset, but provides related context about positive conservation trends in social forestry (2007-2018 showing increased primary forest cover) and national deforestation figures, then offers follow-up questions to narrow the scope.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -234,8 +244,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply acknowledges the question but asks the user to choose between two analysis tools (Tree cover loss or Integrated alerts) before providing an answer about deforestation in social forestry areas.",
+     "label_reason": "The reply acknowledges it lacks specific data on social forestry deforestation, offers general tools for analyzing forest loss in Indonesia, but does not provide a figure or direct answer to the question\u2014instead asking the user to choose between analysis options.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -261,8 +272,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Brazil had more disturbance alert area than Indonesia in 2024, providing specific figures (48.89 million ha vs 3.39 million ha) and detailed comparison data.",
+     "label_reason": "The reply directly answers which country had more disturbance alert area (Brazil), provides specific figures for both countries (48.89 million ha for Brazil vs 3.39 million ha for Indonesia), and includes detailed context about the data, though it ends with optional follow-up questions.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -279,8 +291,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating Brazil had more disturbance alert area than Indonesia in 2024, providing specific figures (48.9M ha vs 3.4M ha) and a clear comparison showing Brazil's alerts were 14 times larger.",
+     "label_reason": "The reply directly answers which country had more disturbance alerts in 2024 (Brazil), provides specific figures for both countries (48.9M ha vs 3.4M ha), and includes contextual information about the data sources and confidence levels.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -297,8 +310,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Brazil had more disturbance alert area than Indonesia in 2024, providing specific figures (Brazil: ~48.9M ha vs Indonesia: ~3.4M ha) and a clear comparison showing Brazil's alerts were 14 times larger.",
+     "label_reason": "The reply directly answers which country had more disturbance alert area (Brazil), provides specific figures for both countries (~48.9M ha for Brazil vs ~3.4M ha for Indonesia), and includes detailed context about the data sources and confidence levels.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -324,8 +338,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific figures for tree cover loss in both countries (DRC: 5.10 million hectares vs Indonesia: 4.08 million hectares from 2020-2023) and clearly states which country lost more.",
+     "label_reason": "The reply directly answers which country lost more tree cover (DRC), provides specific figures for both countries' total losses (5.10 vs 4.08 million hectares), includes annual trends and carbon emissions data, and ends with a follow-up question offering further investigation.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -342,8 +357,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by comparing total tree cover loss between Indonesia and the Democratic Republic of the Congo from 2020-2023, providing specific figures and clearly stating that the DRC lost more (~5.10 million hectares vs ~4.08 million hectares).",
+     "label_reason": "The reply directly answers which country lost more tree cover (DRC), provides specific figures for both countries' total loss (5.10 vs 4.08 million hectares), includes annual breakdowns and carbon emissions, and offers follow-up options without requiring clarification before answering.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -360,8 +376,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific tree cover loss figures for both countries (DRC: ~5.10 million hectares, Indonesia: ~4.08 million hectares) and clearly states which country lost more (DRC), along with supporting data on annual trends and carbon emissions.",
+     "label_reason": "The reply directly answers which country lost more tree cover (DRC), provides specific figures for both countries' losses (5.10 and 4.08 million hectares), includes carbon emissions data, and ends with follow-up questions offering further analysis options.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -387,8 +404,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that both Peru and Bolivia's forests act as carbon sinks, and provides specific comparative figures showing Peru sequesters significantly more CO2e than Bolivia (1.29 billion vs 365 million MgCO2e over 2001-2025).",
+     "label_reason": "The reply directly answers the question by stating both countries are net carbon sinks, identifying Peru as the significantly larger sink, and providing specific figures for sequestered CO2e for both countries over the 2001-2025 period.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -405,8 +423,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific comparative data showing that both Peru and Bolivia are net carbon sinks, with Peru absorbing significantly more CO2e (~1.29 billion MgCO2e) than Bolivia (~365 million MgCO2e) between 2001-2025.",
+     "label_reason": "The reply directly answers the question by stating both countries are net carbon sinks, ranking Peru's forests as a significantly larger sink than Bolivia's, and providing specific figures for net CO2e absorption over the 2001-2025 period.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -423,8 +442,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific net CO2e flux data for both Peru and Bolivia's forests over 2001-2025, clearly stating that both are carbon sinks with Peru being the larger sink, and includes methodology notes and suggested next steps.",
+     "label_reason": "The reply directly answers the question by stating both countries are carbon sinks, identifying Peru as the larger sink, and providing specific net CO2e figures for both countries over the 2001-2025 period.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -450,8 +470,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply directly addresses what a 0.8 value means in the tree cover gain layer by explaining it could represent either a probability/fractional cover estimate (80% likelihood or coverage), and provides context about the dataset's binary nature, definition of gain, and methodological considerations.",
+     "label_reason": "The reply explains what a 0.8 value means in the tree cover gain layer (80% probability/coverage), defines tree cover gain, and provides context about the dataset, though it doesn't give a specific figure for the quantity asked about.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -468,13 +489,14 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by explaining that a value of 0.8 in the tree cover gain layer represents 80% tree cover gain (or 0.8 fraction of a 30m pixel), and provides additional context about the dataset's definition, resolution, and methodology.",
+     "label_reason": "The reply directly answers what a 0.8 value means (80% tree cover gain fraction of a pixel) and provides detailed context about the Tree Cover Gain dataset, including its definition, resolution, and methodology.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": null,
-      "expected_text_match": "The response invents a meaning for 0.8 (80% tree cover gain fraction) rather than explaining it as an aggregated/rendered value or acknowledging it is not a documented per-pixel value, which directly contradicts the expected behavior of not inventing meanings for this value.",
+      "expected_text_match": "The response invents a meaning for 0.8 (representing 80% tree cover gain as a fraction of a pixel) rather than explaining it as an aggregated/rendered value or acknowledging that 0.8 is not a documented per-pixel value in the original dataset, which directly contradicts the expected behavior of not inventing meanings for this value.",
       "figure_claim_match": null,
       "figure_match": null
      }
@@ -486,8 +508,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by explaining that a value of 0.8 in the tree cover gain layer represents an 80% probability or confidence score that a pixel experienced tree cover gain, and provides detailed context about what this means, how it was derived, and important caveats about its interpretation.",
+     "label_reason": "The reply directly answers what a 0.8 value means (80% probability of tree cover gain) and provides detailed explanation of the metric, methodology, and caveats, without asking for clarification or requesting additional information from the user.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -513,8 +536,9 @@
       "figure_claim_match": 0.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the yes/no question with a clear \"No\" and provides specific quantitative data showing alert area decreased from 15,074.72 ha to 4,230.02 ha, along with explanatory context about the data sources and confidence levels.",
+     "label_reason": "The reply directly answers the yes/no question with a clear \"No,\" provides specific numerical figures for the alert area change (15,074.72 ha down to 4,230.02 ha, a decline of 10,844.70 ha), and ends with a follow-up question offering further analysis options.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -531,8 +555,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question with a clear finding (alert area decreased, not increased) supported by specific quantitative data for the two 30-day periods being compared.",
+     "label_reason": "The reply directly answers whether alert area went up or down in Ituri by stating it decreased, provides specific figures for both 30-day periods (4,230.02 ha vs 15,074.72 ha), and calculates the change (10,844.70 ha reduction).",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -549,8 +574,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question with a clear yes/no finding (alert area decreased, not increased) supported by specific quantitative data comparing the two 30-day periods.",
+     "label_reason": "The reply directly answers whether alert area went up or down in Ituri over the last 30 days, provides specific figures for both periods, and quantifies the change.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -576,8 +602,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific emission factor figures for Arabica coffee in Colombia for both 2020 (7.948 tCO2e/tonne) and 2024 (7.784 tCO2e/tonne), along with the comparison showing a 2.06% decline, and includes methodological context about the data source.",
+     "label_reason": "The reply directly answers the comparison question by providing specific emission factor figures for both 2020 and 2024, calculating the absolute and percentage change, and explaining the trend.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -594,8 +621,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific emission factor figures for Arabica Coffee in Colombia for both 2020 (7.948 tCO2e/tonne) and 2024 (7.784 tCO2e/tonne), along with a quantified comparison showing a 2.06% decrease over the period.",
+     "label_reason": "The reply directly answers the question by providing specific emission factor figures for both 2020 and 2024, calculating the comparison (2.06% decrease), and presenting a detailed annual trend table with supporting context and methodology.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -612,8 +640,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific emission factor values for both 2020 and 2024, calculating the percentage change (2.06% decrease), and offering comparative analysis with supporting context.",
+     "label_reason": "The reply directly answers the comparison question by providing specific emission factor figures for both 2020 and 2024, calculating the percentage change, and explaining the trend.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -639,8 +668,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "declined",
-     "label_reason": "The reply explicitly states that the assistant does not have a flood risk dataset and cannot fulfill the request, while offering alternative datasets instead.",
+     "gives_figure": false,
+     "label": "asked_back",
+     "label_reason": "The reply declines to answer the question by stating it lacks flood risk data, then offers alternative datasets and asks if the user wants to try those instead.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -657,8 +687,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "declined",
-     "label_reason": "The reply states that flood risk data is not available in the catalog and does not provide the requested information, instead offering alternative datasets and asking what the user would like to explore instead.",
+     "gives_figure": false,
+     "label": "asked_back",
+     "label_reason": "The reply declines to answer the question by stating the dataset is unavailable, then offers alternative datasets and asks what the user would like to explore instead.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -675,8 +706,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "declined",
-     "label_reason": "The reply explicitly states it does not have a dataset for flood risk and cannot fulfill the request, while offering alternative datasets instead.",
+     "gives_figure": false,
+     "label": "asked_back",
+     "label_reason": "The reply declines to answer the core question by stating it lacks flood risk data, then offers alternative datasets and asks if the user wants to explore those instead.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -702,8 +734,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply provides a direct explanation of why forests in Riau are being burned, citing agricultural expansion (oil palm and pulpwood production), peatland vulnerability, and land conflicts as primary causes, with supporting references.",
+     "label_reason": "The reply provides a detailed explanation of why forests in Riau are burned (land clearing for agriculture, peatland vulnerability, land conflicts), then offers follow-up options for deeper analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -728,8 +761,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply provides a substantive explanation of why forests in Riau are being burned, citing human activity for agricultural expansion and land clearing, with specific mention of peatlands and land conflicts, supported by references.",
+     "label_reason": "The reply explains the causes of forest fires in Riau (human activity for land clearing, peatland drainage, land conflicts) and offers to provide data analysis, but does not provide any specific figures about the quantity or scale of fires.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -788,14 +822,15 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the yes/no question by stating that deforestation alerts are lower this month than last month, supported by specific quantitative data (745.96 ha in September vs 91.38 ha in October) and detailed breakdowns by confidence level.",
+     "label_reason": "The reply directly answers the yes/no question with a clear finding (alerts are lower this month than last month) and provides specific figures for both months (745.96 ha in September vs 91.38 ha in October).",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
       "answer_period_match": "asked from 2026-09-01 to 2026-10-27 (give or take 3 days): The response provides figures for September 2026 (745.96 ha) and October 2026 (91.38 ha), which align with the requested period of 2026-09-01 to 2026-10-27, with the October data covering through late October as requested.",
       "expected_text_match": "The response effectively makes the current month's (October 2026) incompleteness visible by directly comparing it with the previous month (September 2026) through a detailed table showing dates covered and month-to-date metrics, demonstrating that October data is still incomplete relative to the full September dataset.",
-      "figure_claim_match": "alert area so far this month is not higher than last month's: The agent response directly confirms the established conclusion by stating that alert area in October 2026 (91.38 ha) is lower than September 2026 (745.96 ha), which is consistent with the conclusion that alert area is not higher this month than last month.",
+      "figure_claim_match": "alert area so far this month is not higher than last month's: The response directly states that alert area is lower this month (October) compared to last month (September), which is consistent with and confirms the established conclusion that alert area is not higher than last month.",
       "figure_match": null
      }
     },
@@ -806,8 +841,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the yes/no question with a clear finding (alerts are lower this month than last month) and provides specific quantitative data comparing October 2026 to September 2026, along with detailed breakdowns by confidence level.",
+     "label_reason": "The reply directly answers the yes/no question with a clear finding (alerts are lower this month), provides specific figures for both months (745.96 ha vs 91.38 ha), and includes a detailed breakdown table, then offers follow-up suggestions.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -824,8 +860,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that deforestation alerts are lower this month than last month, providing specific quantitative data (745.96 ha in September vs 91.38 ha in October) and explaining the comparison with appropriate caveats about data limitations.",
+     "label_reason": "The reply directly answers whether deforestation alerts are higher this month than last month (stating they are lower), provides specific figures for both months (745.96 ha in September vs 91.38 ha in October), and includes detailed context about confidence levels and data limitations.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -884,8 +921,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply directly addresses the question by explaining the methodology changes in 2015, their implications for comparisons, and recommends using a three-year moving average to account for these shifts, while also offering to provide specific data visualization.",
+     "label_reason": "The reply explains the methodological changes in 2015, acknowledges the difficulty of comparing across that year, recommends using a three-year moving average to address this issue, and then asks the user to specify a location for further analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -902,13 +940,14 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by explaining that comparisons require caution due to methodology changes around 2015, identifying the specific technical improvements that affected data sensitivity, and recommending the use of three-year moving averages to account for these inconsistencies.",
+     "label_reason": "The reply answers the question by explaining that comparisons require caution due to methodology changes around 2015, describes the technical improvements that affected data sensitivity, and recommends using three-year moving averages to account for inconsistencies, then asks where to look for specific data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": null,
-      "expected_text_match": "The response directly addresses the expected information by explaining that tree cover loss methodology changed significantly (particularly around 2011-2015 with Landsat 8 and algorithm updates), warns that comparisons across these periods require caution due to enhanced detection sensitivity, and provides specific guidance on responsible comparison using three-year moving averages instead of individual year comparisons.",
+      "expected_text_match": "The response directly addresses the expected information by explaining that tree cover loss methodology changed significantly (particularly around 2011-2015 with Landsat 8 and algorithm updates), warns that comparisons across these periods require caution due to enhanced detection sensitivity, and provides responsible comparison guidance through the use of three-year moving averages instead of year-to-year comparisons.",
       "figure_claim_match": null,
       "figure_match": null
      }
@@ -920,8 +959,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by explaining that comparisons across 2015 are possible but require caution due to methodology changes, and clarifies that while year-to-year comparisons can be misleading, the data is effective for identifying long-term trends and spatial patterns.",
+     "label_reason": "The reply addresses the question by explaining that direct comparisons across 2015 are problematic due to methodology changes, but notes the data remains useful for long-term trends, then offers to help with a specific comparison if the user provides a location.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -947,8 +987,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply provides a downloadable link to annual tree cover loss data for the three requested countries and time period, along with important methodological context and caveats about the data.",
+     "label_reason": "The reply provides a downloadable link to tree cover loss data for the requested countries and time period, includes important methodological context and caveats, and offers follow-up assistance, thereby answering the user's request for downloadable data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -965,8 +1006,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply provides a downloadable link to annual tree cover loss data for the three requested countries (Peru, Bolivia, Ecuador) for the specified time period (2001-2024), along with relevant methodological notes and context about the data.",
+     "label_reason": "The reply provides a downloadable link to annual tree cover loss data for the three requested countries and time period, includes explanatory notes about the data, and offers follow-up options.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -983,8 +1025,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "declined",
-     "label_reason": "The reply does not provide the actual data table requested; instead, it only directs the user to an external link where they can access the data themselves.",
+     "gives_figure": false,
+     "label": "answered",
+     "label_reason": "The reply provides a download link to tree cover loss data for the three requested countries and time period, along with methodological context, thereby answering the user's request for downloadable data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1010,8 +1053,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly provides the requested land-use change emission factor (1.126 tCO2e per tonne) for soy from Mato Grosso, along with supporting context about methodology, scope, and caveats.",
+     "label_reason": "The reply directly answers the question by providing a specific emission factor (1.126 tCO2e per tonne) for soy from Mato Grosso, includes supporting context and methodology, and ends with optional follow-up questions.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1028,8 +1072,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides a specific quantitative answer (1.126 tCO2e per tonne) to the question about land-use change emissions for soy from Mato Grosso, along with detailed methodological context and gas composition breakdown.",
+     "label_reason": "The reply directly answers the question by providing a specific emission factor (1.126 tCO2e per tonne) for soy from Mato Grosso, includes detailed breakdowns and context, and ends with a follow-up question offering further exploration.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1046,8 +1091,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly provides the requested land-use change emission factor (1.126 tCO2e per tonne of soy from Mato Grosso) along with supporting context, methodology notes, and suggestions for follow-up analysis.",
+     "label_reason": "The reply directly answers the question by providing a specific emission factor (1.126 tCO2e per tonne) for soy from Mato Grosso, includes detailed methodology and context, and ends with follow-up questions offering further analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1073,8 +1119,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply addresses the user's question about confidence and margin of error in DRC's 2024 tree cover loss data by explaining the accuracy limitations of monitoring systems, citing specific precision thresholds and validation accuracy ranges (50-90%) for tropical regions, while also offering to help the user access the actual data.",
+     "label_reason": "The reply addresses the confidence question by explaining accuracy limitations and precision issues with DRC tree cover loss monitoring, citing specific thresholds and accuracy ranges, then offers to pull 2024 data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1091,8 +1138,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply addresses the user's question about confidence and margin of error by providing a specific tree cover loss figure for the DRC (0.5 million hectares for 2023), explaining the global confidence interval (\u00b10.5 million hectares at 95%), and discussing sources of uncertainty in satellite observations.",
+     "label_reason": "The reply addresses the confidence question by providing a specific margin of error (95% confidence interval of \u00b10.5 million hectares) and explains the methodology, though it gives 2023 data instead of 2024 and ends with a follow-up question.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1109,8 +1157,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply addresses the user's question about confidence and margin of error by explaining the technical challenges in estimation, noting that a specific margin of error for 2024 is not yet finalized, and providing context about why 2024 is an outlier year with caveats about statistical volatility.",
+     "label_reason": "The reply addresses the confidence question by explaining technical challenges and noting that a specific margin of error is not yet finalized, while characterizing 2024 as an outlier year, then offers to provide regional data if desired.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1136,8 +1185,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Indonesia is a larger net source of greenhouse gas emissions from its forests compared to Brazil, providing specific quantitative data and explanations for both countries' net flux values over the 2001-2025 period.",
+     "label_reason": "The reply directly answers which country's forests are a larger net source of greenhouse gas emissions (Indonesia), provides specific numerical figures for net emissions/sinks for both countries over 2001-2025, and explains the comparison with detailed data.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1154,8 +1204,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Indonesia's forests are a larger net source of greenhouse gas emissions than Brazil's, supported by specific quantitative data (9.11 billion MgCO2e for Indonesia vs. -4.02 billion MgCO2e for Brazil) and methodological context.",
+     "label_reason": "The reply directly answers which country's forests are a larger net source of greenhouse gas emissions (Indonesia), provides specific quantitative figures for both countries' net fluxes (9.11 billion MgCO2e for Indonesia, -4.02 billion MgCO2e for Brazil), and then offers follow-up options without requiring clarification before answering.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1172,8 +1223,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Indonesia's forests are a larger net source of greenhouse gas emissions than Brazil's, supported by specific quantitative data for the 2001-2025 period.",
+     "label_reason": "The reply directly answers the question by stating Indonesia's forests are a larger net source of greenhouse gas emissions than Brazil's, provides specific quantitative figures for both countries' cumulative net flux over 2001-2025, and ends with an optional follow-up question.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1199,8 +1251,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that no high-confidence alerts were detected in the specified region and timeframe, while providing relevant context about the low-confidence detection that was found instead.",
+     "label_reason": "The reply answers the question by stating there were no high-confidence alerts in the specified region and timeframe, provides context about confidence levels, and offers follow-up options for verification.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1217,8 +1270,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides specific coordinates (latitude/longitude pairs), dates, and confidence levels for high-confidence alerts in the San-P\u00e9dro region, along with area measurements and a structured table for field verification, directly addressing the user's request.",
+     "label_reason": "The reply provides coordinates and dates of high-confidence alerts in San-P\u00e9dro region, though the alerts are from early October rather than the requested last two weeks, and includes a table with specific latitude/longitude pairs for field verification.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1235,8 +1289,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that no high-confidence alerts were found in the specified region and timeframe, and provides details about the single low-confidence alert that was detected instead, including its date and area.",
+     "label_reason": "The reply answers the question by stating that no high-confidence alerts were found in the specified region and timeframe, provides a figure (one low-confidence alert with 17.53 ha area and specific date), and explains why coordinates cannot be reliably provided, though it does not give coordinates as requested.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1262,8 +1317,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by identifying the Democratic Republic of the Congo, Zambia, and Mozambique as the African countries with the largest increases in tree cover loss between 2020 and 2024, providing specific quantitative data (e.g., DRC's 67,570 hectare increase) and analysis of the trends.",
+     "label_reason": "The reply directly answers the question by naming three African countries (DRC, Zambia, Mozambique) with the largest increases in tree cover loss between 2020-2024, provides specific figures for the increases (e.g., DRC's 67,570 hectares increase, reaching 1.37 million hectares in 2024), and offers detailed analysis without asking for clarification.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1280,8 +1336,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by identifying the Democratic Republic of the Congo as having the largest increase in tree cover loss between 2020 and 2024, with specific data on the magnitude and timing of the increase, and mentions other countries of concern like Zambia and Mozambique.",
+     "label_reason": "The reply identifies the DRC as having the largest increase in tree cover loss, provides specific figures for annual loss (1.38 million hectares in 2024, year-over-year increases between 2022-2023), and mentions other affected countries, directly answering the question about which African countries had the largest increases.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1298,8 +1355,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by identifying the Democratic Republic of the Congo and Zambia as the African countries with the largest increases in tree cover loss between 2020 and 2024, providing specific quantitative data (hectares of increase) for each country.",
+     "label_reason": "The reply identifies the Democratic Republic of the Congo and Zambia as having the largest increases in tree cover loss between 2020 and 2024, provides specific figures for the increases (67,570 and 66,823 hectares respectively), and ends with a follow-up question offering further investigation options.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1325,8 +1383,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides specific data on Amazon deforestation patterns including percentages cleared, recent rate increases, drivers of forest loss, and the tipping point threshold, directly addressing the question asked.",
+     "label_reason": "The reply describes deforestation patterns in the Amazon by providing specific figures (17% and 20% cleared, 15% increase in 2021, 15-year highs, 20-25% tipping point), explaining drivers and consequences, and ends with a follow-up question offering to analyze specific regional data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1343,8 +1402,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides a comprehensive answer describing the deforestation pattern in the Amazon, including specific statistics (17% total, 20% in Brazil), geographic concentration (Mato Grosso and Par\u00e1), key drivers, and the tipping point threshold, with citations supporting the claims.",
+     "label_reason": "The reply describes the deforestation pattern in the Amazon with specific figures (17% total, 20% in Brazil, concentration in two states), explains key drivers and regional variations, discusses the tipping point threshold, and ends with a follow-up question offering further analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1361,8 +1421,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides a comprehensive explanation of Amazon deforestation patterns, including specific characteristics (tipping point at 17% loss, 20-25% threshold), primary drivers (resource extraction, illegal logging, agricultural conversion), protective factors (indigenous land rights), and climate impacts, with supporting citations.",
+     "label_reason": "The reply describes deforestation patterns in the Amazon with specific figures (17% current deforestation, 20-25% tipping point threshold, 80% of Brazil's land-use emissions), explains key drivers and characteristics, and ends with an offer to provide more detailed regional analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1388,8 +1449,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the user's question by stating that DRC forests are a net carbon sink over the 25-year record, pulling in more carbon than they release, and provides specific quantitative data (net flux of -5.89 billion MgCO\u2082e) to support this finding.",
+     "label_reason": "The reply directly answers whether DRC forests are a carbon sink or source by stating they are a net carbon sink, provides specific figures for the net flux and component values, and offers follow-up options without requiring clarification first.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1406,8 +1468,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that DRC's forests are a net carbon sink (pulling in more carbon than pumping out) and provides specific quantified data for gross removals, gross emissions, and net flux over the 2001-2025 period.",
+     "label_reason": "The reply directly answers whether DRC forests are a carbon sink or source by stating they are a net carbon sink, provides specific figures for gross removals, emissions, and net flux over 2001-2025, and ends with a follow-up question offering further exploration.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1424,8 +1487,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the user's question by providing specific data showing that DRC's forests are a net carbon sink (pulling in more carbon than pumping out), with quantified figures for gross removals, gross emissions, and net flux over the 2001-2025 period.",
+     "label_reason": "The reply directly answers whether DRC forests are a carbon sink or source by stating they are a net carbon sink, provides specific figures for gross removals, gross emissions, and net flux over the 2001-2025 period, and ends with follow-up questions offering further analysis.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1451,8 +1515,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Brazil had significantly more natural/semi-natural grassland extent than Mexico in 2020, providing specific figures (Brazil: ~62.4 million hectares vs Mexico: ~5.2 million hectares) and supporting context.",
+     "label_reason": "The reply directly answers which country had more grassland (Brazil), provides specific figures for both countries (62.4 million hectares for Brazil and 5.2 million hectares for Mexico in 2020), and includes detailed context about trends and methodology, ending with an optional follow-up question.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1469,8 +1534,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Brazil had significantly more natural/semi-natural grassland than Mexico in 2020, providing specific hectare figures for both countries and explaining the classification methodology.",
+     "label_reason": "The reply directly answers which country had more grassland in 2020 (Brazil), provides specific area figures for both countries, and includes methodological context about the data.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1487,8 +1553,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Brazil had more natural/semi-natural grassland extent than Mexico in 2020, providing specific quantitative figures (62.4 million hectares vs 5.2 million hectares) along with methodological context.",
+     "label_reason": "The reply directly answers which country had more grassland in 2020 (Brazil), provides specific area figures for both countries (62.4 million hectares for Brazil and 5.2 million hectares for Mexico), and includes methodological context before ending with a follow-up question.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1514,8 +1581,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply does not provide an answer to the question about tree cover loss in Peru's Indigenous territories for 2024; instead, it asks the user to clarify or narrow their search by specifying a region, territory, ethnic group, or requesting national-level totals.",
+     "label_reason": "The reply declines to answer the specific question about tree cover loss in Peru's Indigenous territories for 2024, citing too many territories to analyze, and instead asks the user to narrow their search by choosing a region, specific territory, or requesting national-level totals.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1532,13 +1600,14 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply explains that the request is too broad and asks the user to clarify by choosing a specific region, territory, or analytical approach before proceeding.",
+     "label_reason": "The reply explains why it cannot provide the requested figure (too many areas to analyze), offers alternative approaches to narrow the scope, but does not answer the core question or provide any figure for Peru's Indigenous territories' tree cover loss in 2024.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": null,
-      "expected_text_match": "The response explains that analyzing all 8,000+ indigenous territories at once is not feasible, explicitly avoids inventing a total, and offers specific alternatives including analyzing named territories or asking which territory to focus on, which directly satisfies the expected behavior.",
+      "expected_text_match": "The response explains that analyzing all 8,000+ indigenous territories at once is not feasible, explicitly avoids inventing a total, and offers specific alternatives including analyzing named territories or asking which one to focus on, which directly satisfies the expected behavior.",
       "figure_claim_match": null,
       "figure_match": null
      }
@@ -1550,8 +1619,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply acknowledges the question but asks the user to clarify the scope of analysis (all territories, specific region, or selected territories) before providing an answer.",
+     "label_reason": "The reply acknowledges the question but declines to provide a direct answer, instead asking the user to choose between three analytical approaches before any data can be provided.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1577,8 +1647,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that tree cover loss in Madre de Dios, Peru has generally followed an upward trend from 2015 to 2023, supported by specific data points (13,520 ha in 2015 rising to 28,206 ha in 2021, with 24,474 ha in 2023).",
+     "label_reason": "The reply directly answers whether tree cover loss has been rising or falling by stating an upward trend, provides specific figures for the quantity asked about (annual loss in hectares for 2015-2023), and offers detailed supporting data without asking for clarification.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1595,8 +1666,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that tree cover loss in Madre de Dios followed a rising trend from 2015 to 2023, with specific data points, a peak year, and recent changes, along with methodological caveats about the data.",
+     "label_reason": "The reply directly answers whether tree cover loss has been rising or falling by stating an overall rising trend from 2015-2023 with specific hectare figures for multiple years (13,520 in 2015, 25,180 in 2017, 28,206 in 2021, 24,474 in 2023).",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1613,8 +1685,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that tree cover loss in Madre de Dios, Peru showed an overall rising trend from 2015 to 2023, supported by specific data points (10,594 ha in 2015 rising to a peak of 24,245 ha in 2021, then declining slightly to 21,019 ha in 2023).",
+     "label_reason": "The reply directly answers whether tree cover loss has been rising or falling by stating an \"overall rising trend\" from 2015-2023, provides specific figures for the trend (10,594 ha in 2015 to 24,245 ha peak in 2021, declining to 21,019 ha in 2023), and explains the pattern with supporting data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1640,8 +1713,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to take specific steps (enable a layer and select the concession on a map) before the assistant can analyze the forest loss, rather than providing an answer to the question.",
+     "label_reason": "The reply declines to answer the question directly and instead instructs the user how to find and select the area themselves before any analysis can be provided.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1658,8 +1732,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to first locate and select the Lob\u00e9 iron project on a map before the assistant can analyze forest loss, rather than providing an answer to the question.",
+     "label_reason": "The reply does not answer the question about forest loss at the Lob\u00e9 iron project since 2012; instead, it only provides instructions on how the user can look up this information themselves using a map tool.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1676,8 +1751,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The assistant asks the user to first locate and select the Lob\u00e9 iron project concession on the map before it can analyze forest loss, requiring user action to clarify the specific area before proceeding.",
+     "label_reason": "The reply declines to answer the question about forest loss at the Lob\u00e9 iron project, instead instructing the user how to locate and select the concession on a map before analysis can proceed.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1688,7 +1764,7 @@
      }
     }
    ],
-   "benchmark": "pass",
+   "benchmark": "uncovered",
    "id": "ch-quant-161",
    "outcome": "right",
    "reference": "n/a",
@@ -1703,8 +1779,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Bolivia has lost significantly more tree cover to permanent agriculture than Peru since 2001, providing specific hectare figures and percentages for both countries.",
+     "label_reason": "The reply directly answers which country lost more tree cover to permanent agriculture (Bolivia), provides specific hectare figures for both countries, and includes contextual comparisons and caveats about the data.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1721,8 +1798,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Bolivia has lost significantly more tree cover to permanent agriculture since 2001 (5,824,515 ha vs Peru's 2,908,008 ha) with specific figures and comparative analysis.",
+     "label_reason": "The reply directly answers which country lost more tree cover to permanent agriculture since 2001 (Bolivia), provides specific figures for both countries (5,824,515 ha for Bolivia vs 2,908,008 ha for Peru), and includes additional context about other drivers, without asking the user to clarify or choose anything first.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1739,8 +1817,9 @@
       "figure_claim_match": 1.0,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that Bolivia has lost significantly more tree cover to permanent agriculture than Peru since 2001, providing specific figures (5.82 million hectares vs 2.91 million hectares) and supporting data in a detailed table.",
+     "label_reason": "The reply directly answers the question by ranking the two countries (Bolivia lost more), provides specific figures for tree cover loss to permanent agriculture for both countries (Bolivia: ~5.82 million hectares, Peru: ~2.91 million hectares), and includes supporting context with a detailed comparison table.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1766,8 +1845,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that agriculture is the bigger cause of tree cover loss in Madre de Dios, providing specific hectare figures for both agriculture (~227,084 ha) and fires (~19,664 ha) to support the comparison.",
+     "label_reason": "The reply directly answers the question by stating agriculture is the bigger cause, provides specific figures for both agriculture (~227,084 hectares) and fires (~19,664 hectares) for the relevant region and period, and explains the comparison.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1784,8 +1864,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that agriculture is the bigger cause of tree cover loss in Madre de Dios (51.5% vs 4.7% for fires), providing specific figures and percentages from the cited dataset.",
+     "label_reason": "The reply directly answers the question by stating agriculture is the bigger cause, provides specific figures for both agriculture (51.5%) and fires (4.7%) in Madre de Dios for the relevant period, and ends with a follow-up question.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1802,8 +1883,9 @@
       "figure_claim_match": 1.0,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by stating that agriculture was the bigger cause of tree cover loss in Madre de Dios (2015-2023), providing specific quantitative comparisons (227,084 hectares for agriculture vs. 19,664 hectares for fires) and detailed breakdowns of the drivers.",
+     "label_reason": "The reply directly answers the question by stating agriculture was the bigger cause, provides specific figures for both drivers (227,084 hectares for agriculture vs 19,664 hectares for fires), and explains the comparison without asking for clarification.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1829,8 +1911,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "asked_back",
-     "label_reason": "The reply explains that multiple datasets are needed for EUDR deforestation monitoring and asks the user to choose between two approaches (Integrated alerts or Tree cover loss) before providing a specific recommendation.",
+     "gives_figure": false,
+     "label": "answered",
+     "label_reason": "The reply answers the question by recommending two specific datasets for EUDR deforestation monitoring (Integrated alerts and Tree cover loss) with explanations of their use cases, then asks the user to choose between them.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1847,8 +1930,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "asked_back",
-     "label_reason": "The reply provides general guidance about two dataset options for EUDR deforestation checking but asks the user to choose between them rather than directly answering which dataset to use.",
+     "gives_figure": false,
+     "label": "answered",
+     "label_reason": "The reply answers the question by recommending two specific datasets for EUDR deforestation checking with explanations of their use cases, then asks the user to choose between them.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1865,8 +1949,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by recommending specific datasets (Tree cover loss with Natural Forest context layer and Integrated alerts with Natural Lands context layer) for monitoring EUDR deforestation, along with explanations of when to use each.",
+     "label_reason": "The reply answers the question by recommending specific datasets for EUDR deforestation monitoring (Tree cover loss and Integrated alerts with their respective context layers), then asks the user which option they'd like to explore.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1879,7 +1964,7 @@
    ],
    "benchmark": "pass",
    "id": "ch-quant-197",
-   "outcome": "declined",
+   "outcome": "right",
    "reference": "n/a",
    "wrong_figure": false
   },
@@ -1892,8 +1977,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing both absolute and percentage changes in Indonesia's annual tree cover loss between 2016 and 2023 (42.4% decrease, 1.03 Mha reduction from 2.42 to 1.40 Mha), along with supporting context and methodology notes.",
+     "label_reason": "The reply directly answers the question by providing specific figures for Indonesia's tree cover loss change between 2016 and 2023 in both absolute terms (1.03 Mha reduction) and percentage terms (42.4% decrease), along with detailed supporting data and methodology notes.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -1910,8 +1996,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific figures for Indonesia's tree cover loss change between 2016 and 2023 in both absolute terms (-1,026,782 hectares) and percentage terms (-42.39%), along with supporting data and methodology notes.",
+     "label_reason": "The reply directly answers the question by providing both absolute change (-1,026,782 hectares) and percentage change (-42.39%) in Indonesia's annual tree cover loss between 2016 and 2023, with supporting data and methodology notes.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1928,8 +2015,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific figures for Indonesia's tree cover loss change between 2016 and 2023 in both absolute terms (1,026,782 hectares decrease) and percentage terms (42.4% decrease).",
+     "label_reason": "The reply directly answers the question by providing both absolute change (1,026,782 hectares decrease) and percentage change (42.4% decrease) in Indonesia's annual tree cover loss between 2016 and 2023, with supporting data and context.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1955,8 +2043,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (approximately 13.8 million hectares of natural land in Rio Grande do Sul in 2020) along with a detailed breakdown by land type and important contextual information about the data source and limitations.",
+     "label_reason": "The reply directly answers the question by providing a specific figure (13.8 million hectares) for natural land in Rio Grande do Sul in 2020, includes a detailed breakdown of natural land types, provides dataset context and caveats, and ends with optional follow-up questions.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1973,8 +2062,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (13.81 million hectares or 50.87% of natural land in Rio Grande do Sul as of 2020) along with a detailed breakdown of land composition and relevant caveats about the data.",
+     "label_reason": "The reply directly answers the question by providing specific figures for natural land area in Rio Grande do Sul (13.81 million hectares, 50.87%) with supporting details and methodological notes.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -1991,8 +2081,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific figures for natural land coverage in Rio Grande do Sul (13.8 million hectares or 50.9% in 2020), with additional breakdown by land type and important contextual caveats about the data source and methodology.",
+     "label_reason": "The reply directly answers the question by providing specific figures for natural land coverage in Rio Grande do Sul (13.8 million hectares or 50.9% in 2020), with additional breakdown by land type, context about the data source and methodology, and follow-up exploration options.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -2018,8 +2109,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to clarify which specific Wampis territory they are referring to (such as the one in Peru) before proceeding to search for alerts.",
+     "label_reason": "The reply indicates it cannot find the location in the database and asks the user to clarify whether they mean the Wampis territory in Peru or to search a broader region, without providing any answer to the alert question.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2036,8 +2128,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to clarify the location of the Wampis territory or provide an alternative name before the question can be answered.",
+     "label_reason": "The reply indicates the database lacks a direct match for \"Wampis territory\" and asks the user to provide clarification about the country or region, or an alternative name.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2054,8 +2147,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to clarify or provide additional information (broader location or confirm the correct territory name) before the question can be answered.",
+     "label_reason": "The reply indicates the system cannot find the specified location in its database and asks the user to provide clarification or choose from alternative similar territories before providing any answer about alerts.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2081,8 +2175,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides a direct explanation of the primary drivers of tree cover loss in C\u00f4te d'Ivoire's Cavally region (cocoa farming expansion and illegal mining), supported by specific claims and citations, before offering additional assistance.",
+     "label_reason": "The reply explains the primary drivers of tree cover loss in Cavally region (cocoa farming expansion and illegal mining), provides a specific figure (40% of cacao grown in protected areas), and offers to show additional data through a follow-up question.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2099,13 +2194,14 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": false,
      "label": "answered",
-     "label_reason": "The reply provides an explanation for high tree cover loss in C\u00f4te d'Ivoire's Cavally region by identifying cocoa production expansion and illegal mining as primary drivers, supported by references, before offering additional analysis.",
+     "label_reason": "The reply explains the primary drivers of tree cover loss in Cavally (cocoa expansion and illegal mining) and mentions national deforestation rates, then asks if the user wants specific data analysis for that region.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": null,
-      "expected_text_match": "The response directly contradicts the expected instruction by presenting cocoa production as a primary driver of tree cover loss in Cavally, when the instruction explicitly requires not presenting cocoa or any commodity as a finding from the drivers data.",
+      "expected_text_match": "The actual response directly contradicts the expected instruction by presenting cocoa production as a primary driver of tree cover loss in Cavally, when the instruction explicitly requires not presenting cocoa or any commodity as a finding.",
       "figure_claim_match": null,
       "figure_match": "ratio(max(area_ha) by tree_cover_loss_driver where tree_cover_loss_driver != 'Unknown', sum(area_ha) where tree_cover_loss_driver != 'Unknown') | max(area_ha) by tree_cover_loss_driver where tree_cover_loss_driver != 'Unknown' = 0.952371: reply states 1"
      }
@@ -2117,8 +2213,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides an explanation of the drivers behind tree cover loss in C\u00f4te d'Ivoire's Cavally region, citing cocoa farming expansion and illegal mining as primary causes, with specific data about protected areas, before offering to pull additional detailed trend data.",
+     "label_reason": "The reply explains the drivers of tree cover loss in C\u00f4te d'Ivoire's Cavally region (cocoa farming and illegal mining) with a specific figure (40% of cocoa in protected areas), then asks if the user wants more detailed trend analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2144,8 +2241,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to clarify the geographic location of the Wampis territory by specifying a country or administrative region before proceeding with the analysis.",
+     "label_reason": "The reply cannot locate the specified territory in the database and asks the user to clarify the geographic location (country or administrative region) before providing any analysis of forest loss data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2162,8 +2260,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to confirm the location and clarify which specific territory they are referring to before proceeding with the analysis.",
+     "label_reason": "The reply cannot find the requested territory in the database and asks the user to confirm the location before providing any analysis of forest loss data.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2180,8 +2279,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to clarify the geographic location of the Wampis territory by specifying a country or administrative region before attempting to answer the question about forest clearing history.",
+     "label_reason": "The reply states it cannot find the location in the database and asks the user to clarify which country or region the Wampis territory is in, without providing any answer to the question about forest clearing alerts.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2207,8 +2307,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific quantitative data on deforestation/disturbance alerts in \u00c9quateur province for the requested time period (last month), including a breakdown by confidence levels and important contextual caveats about data interpretation.",
+     "label_reason": "The reply directly answers the question by providing specific deforestation alert figures for \u00c9quateur province in the last month (1,209.32 ha total with breakdown by confidence levels), then offers follow-up options.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -2225,8 +2326,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by confirming that yes, there have been new disturbance alerts in \u00c9quateur province over the last month, and provides specific quantitative data (1,209.32 ha total with breakdown by confidence levels) along with temporal details and methodological context.",
+     "label_reason": "The reply answers the question with a yes, provides specific figures for deforestation alerts in \u00c9quateur province over the last month (1,209.32 ha total with breakdown by confidence level), and offers follow-up options.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -2243,8 +2345,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by confirming that yes, there have been new disturbance alerts in \u00c9quateur province in the last month, and provides specific quantitative data (1,209.32 ha total with breakdown by confidence levels), along with important caveats about what these alerts represent.",
+     "label_reason": "The reply directly answers the yes/no question about new deforestation alerts in \u00c9quateur province in the last month, provides specific figures for the total area (1,209.32 ha) and breakdown by confidence levels, includes important caveats about data interpretation, and ends with follow-up options.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -2270,8 +2373,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (1.22 million hectares of tree cover loss in the DRC in 2022) along with supporting details, methodology notes, and contextual information.",
+     "label_reason": "The reply directly answers the question by providing a specific figure (1.22 million hectares) for tree cover loss in the DRC in 2022, along with supporting details and methodology notes.",
      "offer": null,
      "pulled_reference": true,
      "reasons": {
@@ -2288,8 +2392,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (1.22 million hectares of tree cover loss in the DRC in 2022) along with supporting context, analysis, and methodological caveats.",
+     "label_reason": "The reply directly answers the question by providing a specific figure (1.22 million hectares) for tree cover loss in the DRC in 2022, along with supporting context, methodology notes, and suggested next steps.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2306,8 +2411,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (1,220,222 hectares of tree cover loss in DRC in 2022) along with supporting context, methodology notes, and caveats about data interpretation.",
+     "label_reason": "The reply directly answers the question by providing a specific figure (1,220,222 hectares) for tree cover loss in the DRC in 2022, along with supporting analysis and methodological caveats.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2366,8 +2472,9 @@
       "figure_claim_match": null,
       "figure_match": 1.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides a specific figure (290,248 hectares) for fire-driven tree cover loss in Indonesia in 2015 and explains the methodology used to determine \"fire-driven\" loss based on Landsat satellite imagery and spectral signature analysis by the University of Maryland.",
+     "label_reason": "The reply provides a specific figure (290,248 hectares) for fire-driven tree cover loss in Indonesia in 2015 and explains the methodology used to determine fire-driven loss based on Landsat satellite imagery and spectral signature analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2384,8 +2491,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides a specific figure (143,777 hectares of fire-driven tree cover loss in Indonesia in 2015) and explains in detail how \"fire-driven\" loss is determined by the GLAD lab using satellite imagery analysis, spectral signatures, and specific exclusion criteria.",
+     "label_reason": "The reply provides a specific figure (143,777 hectares) for fire-driven tree cover loss in Indonesia in 2015 and explains the methodology used to determine fire-driven loss through satellite imagery analysis and spectral signatures.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2402,8 +2510,9 @@
       "figure_claim_match": null,
       "figure_match": 0.0
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply explains the methodology for determining fire-driven loss and notes that 2015 data may be recorded in 2016, but then asks the user to choose between two datasets rather than providing the specific hectare figure requested.",
+     "label_reason": "The reply explains the methodology for determining fire-driven tree cover loss and offers to help access specific data, but does not provide the actual hectare figure for Indonesia's 2015 fire-driven loss, instead asking the user to choose a dataset first.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2429,8 +2538,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to clarify and narrow down the scope of the question by choosing a specific region or territory type before proceeding with the analysis.",
+     "label_reason": "The reply declines to provide the requested ranking, citing too many territories to analyze, and instead asks the user to narrow the scope by choosing a specific region or territory type before any answer can be given.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2447,8 +2557,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply asks the user to narrow the search by specifying a department, ethnic group, or region before providing the ranking, rather than answering the question as posed.",
+     "label_reason": "The reply declines to provide the requested ranking, explains why (too many territories), and asks the user to narrow the scope before any analysis can be given.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2465,8 +2576,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
+     "gives_figure": true,
      "label": "asked_back",
-     "label_reason": "The reply declines to provide the requested ranking and instead asks the user to narrow down the search by specifying a department or group of territories before proceeding.",
+     "label_reason": "The reply declines to answer the ranking question, states it found 8,676 Indigenous territories but says this is too many to rank, and asks the user to narrow the search before providing any ranking or analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2492,8 +2604,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "declined",
-     "label_reason": "The reply declines to show the requested map visualization, explaining that the dataset is tabular only with no map visualization available, and then asks the user to clarify their request for alternative analysis.",
+     "gives_figure": false,
+     "label": "asked_back",
+     "label_reason": "The reply identifies the relevant dataset and explains that map visualization is not available for this tabular data, then asks the user to specify a country or crop for analysis.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2510,8 +2623,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "asked_back",
-     "label_reason": "The reply identifies the relevant dataset but explains it cannot be displayed as a map, then asks the user to specify a country or region before proceeding with analysis.",
+     "gives_figure": false,
+     "label": "answered",
+     "label_reason": "The reply identifies the relevant dataset and explains why it cannot be displayed as a map (tabular format), then offers to provide analysis for a specific area if the user clarifies their location preference.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2528,8 +2642,9 @@
       "figure_claim_match": null,
       "figure_match": null
      },
-     "label": "declined",
-     "label_reason": "The reply explains that the dataset cannot be displayed on a map because it contains only tabular data, and offers an alternative approach rather than answering the original request to show the data on a map.",
+     "gives_figure": false,
+     "label": "asked_back",
+     "label_reason": "The reply explains that the requested data exists but cannot be displayed on a map due to being tabular only, then offers to provide analysis for a specific area if the user clarifies their location of interest.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
@@ -2547,5 +2662,5 @@
    "wrong_figure": false
   }
  },
- "scored": "2026-10-30T10:07:03+00:00"
+ "scored": "2026-10-30T10:37:40+00:00"
 }
