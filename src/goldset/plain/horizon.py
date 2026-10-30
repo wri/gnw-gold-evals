@@ -11,36 +11,24 @@ from __future__ import annotations
 
 import gzip
 import json
-import re
-from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+from goldset.ledger import read_run
+from goldset.plain.reference import bare_id
+from goldset.plain.score import Attempt, as_read, offer_key
+from goldset.runner.artifacts import artifact_name
 
 PAGE = Path("results/benchmark/pages/20261028T124051Z_prod.json")
 RUNS = Path("results/benchmark/runs")
 ARTIFACTS = Path("results/benchmark/artifacts")
 
 
-@dataclass
-class Attempt:
-    trial: int
-    reply: str = ""
-    nudge: dict[str, Any] | None = None
-    pulled_links: list[str] = field(default_factory=list)
-    no_answer: bool = False
+def _page(page: Path) -> dict[str, Any]:
+    return json.loads(page.read_text(encoding="utf-8"))
 
 
-@dataclass
-class Question:
-    uid: str
-    run_id: str
-    started: str  # ISO timestamp the run's dates were resolved at
-    attempts: list[Attempt]
-
-
-def _artifact(run_id: str, uid: str, trial: int, root: Path) -> dict[str, Any] | None:
-    name = f"{uid}.json.gz" if trial == 1 else f"{uid}_t{trial}.json.gz"
-    path = root / run_id / name
+def _artifact(path: Path) -> dict[str, Any] | None:
     if not path.exists():
         return None
     with gzip.open(path) as handle:
@@ -48,54 +36,56 @@ def _artifact(run_id: str, uid: str, trial: int, root: Path) -> dict[str, Any] |
 
 
 def load(uids: set[str], page: Path = PAGE, runs: Path = RUNS,
-         artifacts: Path = ARTIFACTS) -> dict[str, Question]:
-    """Every attempt Horizon made at ``uids`` in the draft-5 result."""
-    data = json.loads(page.read_text(encoding="utf-8"))
+         artifacts: Path = ARTIFACTS) -> dict[str, tuple[str, list[Attempt]]]:
+    """Every attempt Horizon made at ``uids`` in the draft-5 result, with the
+    moment its run resolved dates at: uid -> (started, attempts)."""
+    data = _page(page)
     started = {s["run_id"]: s["started"] for s in data["run"]["sources"]}
     run_of = {q["uid"]: q["run_id"] for q in data["questions"] if q["uid"] in uids}
     missing = uids - set(run_of)
     if missing:
         raise ValueError(f"{len(missing)} questions are not on the draft-5 page")
-    ledgers: dict[str, dict[str, Any]] = {}
-    for run_id in set(run_of.values()):
-        run = json.loads((runs / f"{run_id}.json").read_text(encoding="utf-8"))
-        ledgers[run_id] = {entry["uid"]: entry for entry in run["results"]}
+    ledgers = {run_id: {entry["uid"]: entry for entry in read_run(runs / f"{run_id}.json")["results"]}
+               for run_id in set(run_of.values())}
     questions = {}
     for uid, run_id in run_of.items():
         entry = ledgers[run_id][uid]
         attempts = []
         for trial, record in enumerate(entry.get("trials") or [entry], start=1):
-            artifact = _artifact(run_id, uid, trial, artifacts) or {}
+            artifact = _artifact(artifacts / run_id / artifact_name(uid, trial))
+            # No artefact means the attempt never produced a state: no reply.
+            if record.get("no_answer") or not artifact:
+                attempts.append(Attempt(""))
+                continue
+            nudge = artifact.get("nudge") if isinstance(artifact.get("nudge"), dict) else None
             attempts.append(Attempt(
-                trial=trial,
-                reply=str(artifact.get("final_answer") or ""),
-                nudge=artifact.get("nudge") if isinstance(artifact.get("nudge"), dict) else None,
-                pulled_links=[str(r.get("source_url")) for r in artifact.get("statistics_refs") or []
-                              if r.get("source_url")],
-                # No artefact for an attempt means it never produced a state.
-                no_answer=bool(record.get("no_answer")) or not artifact,
+                text=as_read(str(artifact.get("final_answer") or ""), nudge),
+                nudge=nudge,
+                pulled=tuple(str(r["source_url"]) for r in artifact.get("statistics_refs") or []
+                             if r.get("source_url")),
             ))
-        questions[uid] = Question(uid, run_id, started[run_id], attempts)
+        questions[uid] = (started[run_id], attempts)
     return questions
 
 
-def known_area_sources(artifacts: Path = ARTIFACTS) -> tuple[dict[str, str], dict[str, str]]:
-    """Every area Horizon picked or offered in draft-5: id -> source, and
-    id -> name (names let a judge read an area offer written in prose)."""
+def known_areas(page: Path = PAGE, artifacts: Path = ARTIFACTS
+                ) -> tuple[dict[str, str], dict[str, str]]:
+    """Every area Horizon picked or offered in the draft-5 runs: bare id ->
+    source, and offer key -> name (names let a judge read an area offer
+    written in prose)."""
     sources: dict[str, str] = {}
     names: dict[str, str] = {}
-    for path in artifacts.glob("2026102[78]T*_prod/*.json.gz"):
-        with gzip.open(path) as handle:
-            artifact = json.load(handle)
-        selection = artifact.get("aoi_selection")
-        areas = selection.get("aois", []) if isinstance(selection, dict) else []
-        nudge = artifact.get("nudge") if isinstance(artifact.get("nudge"), dict) else {}
-        if nudge.get("type") == "aoi_choice":
-            areas = [*areas, *(nudge.get("data") or [])]
-        for area in areas:
-            if isinstance(area, dict) and area.get("src_id") and area.get("source"):
-                bare = re.sub(r"_[1-5]$", "", str(area["src_id"]))
-                sources[bare] = str(area["source"])
-                if area.get("name"):
-                    names[bare] = str(area["name"])
+    for run in _page(page)["run"]["sources"]:
+        for path in (artifacts / run["run_id"]).glob("*.json.gz"):
+            artifact = _artifact(path) or {}
+            selection = artifact.get("aoi_selection")
+            areas = selection.get("aois", []) if isinstance(selection, dict) else []
+            nudge = artifact.get("nudge") if isinstance(artifact.get("nudge"), dict) else {}
+            if nudge.get("type") == "aoi_choice":
+                areas = [*areas, *(nudge.get("data") or [])]
+            for area in areas:
+                if isinstance(area, dict) and area.get("src_id") and area.get("source"):
+                    sources[bare_id(str(area["src_id"]))] = str(area["source"])
+                    if area.get("name"):
+                        names[offer_key(area["src_id"])] = str(area["name"])
     return sources, names

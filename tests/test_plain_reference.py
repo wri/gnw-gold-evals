@@ -3,7 +3,16 @@
 import httpx
 
 from goldset.groundtruth import AnalyticsClient
-from goldset.plain.reference import GUESSED, LIKELY, SURE, choose_areas, fetch, plan, source_of
+from goldset.plain.reference import (
+    GUESSED,
+    LIKELY,
+    SURE,
+    choose_areas,
+    fetch,
+    links,
+    plan,
+    source_of,
+)
 from goldset.store import Case
 
 
@@ -74,6 +83,6 @@ def test_a_failed_table_is_recorded_not_raised():
 
     reference = plan(_case(aoi_ids="BRA;BRA1507", dataset_id="4"), "2026-10-27")
     fetch([reference], AnalyticsClient("t", transport=httpx.MockTransport(handler)))
-    assert reference.links == ["http://a/x/1"]
+    assert links(reference.to_json()) == ["http://a/x/1"]
     assert "422" in reference.tables[1].error
     assert reference.status == "partial"

@@ -72,7 +72,7 @@ def zero_usage() -> dict[str, int]:
             "searches": 0, "fetches": 0, "requests": 0}
 
 
-def add_usage(total: dict[str, int], usage: Any) -> dict[str, int]:
+def add_usage(total: dict[str, int], usage: Any) -> None:
     """Fold one response's usage in; fields the API leaves unset count 0."""
     def g(obj: Any, name: str) -> int:
         return (getattr(obj, name, None) or 0) if obj is not None else 0
@@ -85,7 +85,6 @@ def add_usage(total: dict[str, int], usage: Any) -> dict[str, int]:
     total["searches"] += g(server, "web_search_requests")
     total["fetches"] += g(server, "web_fetch_requests")
     total["requests"] += 1
-    return total
 
 
 def cost_usd(usage: dict[str, int]) -> float:
@@ -144,8 +143,6 @@ def ask(query: str, today: str, versions: str = DEFAULT_WEB_TOOLS,
     usage = zero_usage()
     trail: list[dict[str, Any]] = []
     started = time.time()
-    stopped = False
-    response = None
     for _ in range(MAX_CONTINUATIONS + 1):
         response = api.messages.create(
             model=MODEL, max_tokens=MAX_TOKENS, system=system, messages=messages,
@@ -153,21 +150,18 @@ def ask(query: str, today: str, versions: str = DEFAULT_WEB_TOOLS,
         )
         add_usage(usage, response.usage)
         trail.extend(tool_trail(response.content))
-        if response.stop_reason != "pause_turn":
-            break
-        if cost_usd(usage) >= STOP_USD:
-            stopped = True
+        if response.stop_reason != "pause_turn" or cost_usd(usage) >= STOP_USD:
             break
         # The server paused its tool loop: resend and it resumes.
         messages = [{"role": "user", "content": query},
                     {"role": "assistant", "content": response.content}]
-    else:
-        stopped = True  # still pausing after every continuation allowed
+    # Still paused means stopped: at $1, or after every continuation allowed.
+    stopped = response.stop_reason == "pause_turn"
     usage_out: dict[str, Any] = dict(usage)
     usage_out.update({
         "wall_s": round(time.time() - started, 1),
-        "stop_reason": getattr(response, "stop_reason", None),
-        "served_model": getattr(response, "model", None),
+        "stop_reason": response.stop_reason,
+        "served_model": response.model,
         "cost_usd": cost_usd(usage),
     })
     return {
@@ -181,10 +175,6 @@ def ask(query: str, today: str, versions: str = DEFAULT_WEB_TOOLS,
     }
 
 
-class CostCap(RuntimeError):
-    """The run's spend limit is reached: no new question starts."""
-
-
 class Spend:
     """Running spend across threads, checked before each question starts."""
 
@@ -193,10 +183,9 @@ class Spend:
         self.spent = 0.0
         self._lock = threading.Lock()
 
-    def check(self) -> None:
+    def exhausted(self) -> bool:
         with self._lock:
-            if self.spent >= self.cap:
-                raise CostCap(f"spent ${self.spent:.2f} of ${self.cap:.2f}")
+            return self.spent >= self.cap
 
     def add(self, usd: float) -> None:
         with self._lock:

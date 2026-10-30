@@ -6,6 +6,7 @@
     uv run python tools/plain_baseline.py references --for <id>        # after the Sonnet run
     uv run python tools/plain_baseline.py score --for horizon-draft5 --uids <file>
     uv run python tools/plain_baseline.py score --for <id>
+    uv run python tools/plain_baseline.py outcomes --for <id>          # overlay changed: no API
     uv run python tools/plain_baseline.py report --sonnet <id>
 
 Plan of record: the "Plain Sonnet on BENCHMARK" doc (AJ, 2026-10-30). Output
@@ -23,42 +24,47 @@ import os
 import random
 import statistics
 import sys
+from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from challenge_rollup import percentile  # noqa: E402
 from dotenv import load_dotenv  # noqa: E402
 
 from goldset.benchmark import load_benchmark  # noqa: E402
-from goldset.cli import resolve_case  # noqa: E402
+from goldset.cli import require_api_token, resolve_case  # noqa: E402
+from goldset.evaluators import figures  # noqa: E402
 from goldset.groundtruth import AnalyticsClient, datasets  # noqa: E402
 from goldset.plain import horizon, outcome, overlay, reference, score, sonnet  # noqa: E402
 from goldset.store import Case, load_store  # noqa: E402
+from goldset.templates import has_templates  # noqa: E402
 
 BENCHMARK = Path("benchmarks/2026-draft-5.json")
-OVERLAY = Path("benchmarks/2026-draft-5.plain-overlay.json")
+OVERLAY = Path("benchmarks/overlays/2026-draft-5.plain.json")
 CASES = Path("cases/challenge")
 OUT = Path("results/plain")
 HORIZON = "horizon-draft5"
 # September's mean cost a question for Sonnet + web (cached, basic tools).
 SEPTEMBER_USD = 0.28
 WORKERS = 4
+# Judge calls are network-bound: scoring runs attempts, not questions, wide.
+SCORE_WORKERS = 12
+
+
+def member_types() -> dict[str, str]:
+    """Active draft-5 members (errata excluded) and their types."""
+    return {m.uid: m.type for m in load_benchmark(BENCHMARK).active_members}
 
 
 def members() -> dict[str, Case]:
     """The draft-5 questions that judge a reply: 253 of the 269."""
-    bench = load_benchmark(BENCHMARK)
-    uids = {m.uid for m in bench.members}
-    cases = {c.uid: c for _, c, _ in load_store(CASES) if c.uid in uids}
+    uids = set(member_types())
     reply_judged = ("text", "figure", "figure_claim")
-    return {uid: c for uid, c in cases.items()
-            if any(c.expected.get(k) for k in reply_judged)}
-
-
-def member_types() -> dict[str, str]:
-    return {m.uid: m.type for m in load_benchmark(BENCHMARK).members}
+    return {c.uid: c for _, c, _ in load_store(CASES)
+            if c.uid in uids and any(c.expected.get(k) for k in reply_judged)}
 
 
 def _when(timestamp: str) -> datetime:
@@ -84,18 +90,26 @@ def _limit(cases: dict[str, Case], uids_file: str | None) -> dict[str, Case]:
     return {uid: c for uid, c in cases.items() if uid in wanted}
 
 
-def _calls(cases: dict[str, Case]) -> tuple[dict[str, Any], dict[str, overlay.Calls]]:
+def _overlay() -> tuple[dict[str, Any], dict[str, overlay.Calls]]:
     if not OVERLAY.exists():
         return {"status": "missing"}, {}
     return overlay.load(OVERLAY, set(member_types()))
 
 
-def _when_replied(name: str, cases: dict[str, Case]) -> dict[str, datetime]:
-    """The moment each question's dates resolve to: when it was asked."""
+def _side(name: str, cases: dict[str, Case]
+          ) -> tuple[dict[str, datetime], dict[str, list[score.Attempt]]]:
+    """One assistant's attempts, and the moment each question's dates
+    resolve to: when it was asked."""
     if name == HORIZON:
-        return {uid: _when(q.started) for uid, q in horizon.load(set(cases)).items()}
-    started = _when(_read(OUT / "runs" / f"{name}.json")["started"])
-    return dict.fromkeys(cases, started)
+        loaded = horizon.load(set(cases))
+        return ({uid: _when(started) for uid, (started, _) in loaded.items()},
+                {uid: attempts for uid, (_, attempts) in loaded.items()})
+    run = _read(OUT / "runs" / f"{name}.json")
+    attempts: dict[str, list[score.Attempt]] = {}
+    for record in sorted(run["attempts"].values(), key=lambda a: a["trial"]):
+        if record["uid"] in cases:
+            attempts.setdefault(record["uid"], []).append(score.Attempt(record["reply"]))
+    return dict.fromkeys(cases, _when(run["started"])), attempts
 
 
 # ------------------------------------------------------------------ sample
@@ -114,22 +128,21 @@ def cmd_sample(args: argparse.Namespace) -> int:
         "accepted offer": [u for u in cases if cases[u].expected.get("accept_nudge_offering")
                            or cases[u].expected.get("accept_aoi_nudge_offering")],
         "two datasets": [u for u in cases if ";" in cases[u].expected.get("dataset_id", "")],
-        "rolling window": [u for u in cases if "{" in json.dumps(cases[u].expected)],
+        "rolling window": [u for u in cases
+                           if any(has_templates(v) for v in cases[u].expected.values())],
     }
     chosen: set[str] = set()
     for pool in special.values():
         chosen.update(rng.sample(sorted(pool), min(2, len(pool))))
     for kind, pool in sorted(by_type.items()):
         share = max(2, round(args.n * len(pool) / len(cases)))
-        have = [u for u in chosen if types[u] == kind]
+        have = sum(1 for u in chosen if types[u] == kind)
         rest = [u for u in pool if u not in chosen]
-        chosen.update(rng.sample(rest, max(0, min(len(rest), share - len(have)))))
+        chosen.update(rng.sample(rest, max(0, min(len(rest), share - have))))
     path = OUT / f"pilot-uids-seed{args.seed}.txt"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(sorted(chosen, key=lambda u: cases[u].id)) + "\n")
-    tally: dict[str, int] = {}
-    for uid in chosen:
-        tally[types[uid]] = tally.get(types[uid], 0) + 1
+    tally = Counter(types[u] for u in chosen)
     print(f"wrote {path}: {len(chosen)} questions {dict(sorted(tally.items()))}")
     return 0
 
@@ -140,33 +153,28 @@ def cmd_sample(args: argparse.Namespace) -> int:
 def cmd_references(args: argparse.Namespace) -> int:
     cases = {uid: c for uid, c in _limit(members(), args.uids).items()
              if c.expected.get("figure")}
-    _, calls = _calls(cases)
-    known, _ = horizon.known_area_sources()
-    when = _when_replied(args.for_, cases)
+    _, calls = _overlay()
+    known, _ = horizon.known_areas()
+    when, _ = _side(args.for_, cases)
     path = OUT / "references" / f"{args.for_}.json"
     stored = _read(path)["questions"] if path.exists() else {}
-    todo = []
+    todo: dict[str, reference.Reference] = {}
     for uid, case in cases.items():
         if uid in stored and stored[uid]["status"] == "ok" and not args.refetch:
             continue
-        now = when[uid]
         pinned = dict(calls[uid].areas) if uid in calls else None
-        todo.append(reference.plan(resolve_case(case, now), now.strftime("%Y-%m-%d"),
-                                   known, pinned))
-    token = os.environ.get("ANALYTICS_API_TOKEN") or os.environ.get("PROD_API_TOKEN")
+        todo[uid] = reference.plan(resolve_case(case, when[uid]),
+                                   when[uid].strftime("%Y-%m-%d"), known, pinned)
+    token = os.environ.get("ANALYTICS_API_TOKEN") or require_api_token("prod")
     if not token:
-        print("ANALYTICS_API_TOKEN or PROD_API_TOKEN must be set", file=sys.stderr)
         return 2
-    print(f"fetching {sum(len(r.tables) for r in todo)} tables for {len(todo)} questions")
-    reference.fetch(todo, AnalyticsClient(token))
-    for ref in todo:
-        stored[ref.uid] = ref.to_json()
+    print(f"fetching {sum(len(r.tables) for r in todo.values())} tables "
+          f"for {len(todo)} questions")
+    reference.fetch(list(todo.values()), AnalyticsClient(token))
+    stored.update({uid: ref.to_json() for uid, ref in todo.items()})
     _write(path, {"for": args.for_, "written": datetime.now(UTC).isoformat(timespec="seconds"),
                   "questions": stored})
-    counts: dict[str, int] = {}
-    for entry in stored.values():
-        counts[entry["status"]] = counts.get(entry["status"], 0) + 1
-    print(f"wrote {path}: {counts}")
+    print(f"wrote {path}: {dict(Counter(e['status'] for e in stored.values()))}")
     for entry in sorted(stored.values(), key=lambda e: e["id"]):
         problems = [t["error"] for t in entry["tables"] if t["error"]] + entry["skipped"]
         if problems:
@@ -177,6 +185,13 @@ def cmd_references(args: argparse.Namespace) -> int:
 # --------------------------------------------------------------------- ask
 
 
+def _attempt_record(uid: str, trial: int, answer: dict[str, Any]) -> dict[str, Any]:
+    usage = answer["usage"]
+    return {"uid": uid, "trial": trial, "reply": answer["reply"], "stopped": answer["stopped"],
+            "cost_usd": usage["cost_usd"], "searches": usage["searches"],
+            "fetches": usage["fetches"], "wall_s": usage["wall_s"]}
+
+
 def cmd_ask(args: argparse.Namespace) -> int:
     cases = _limit(members(), args.uids)
     planned = len(cases) * args.trials
@@ -185,153 +200,142 @@ def cmd_ask(args: argparse.Namespace) -> int:
     if args.dry_run:
         return 0
     run_path = OUT / "runs" / f"{args.run}.json"
-    started = datetime.now(UTC)
     run = _read(run_path) if run_path.exists() else {
-        "run_id": args.run, "started": started.isoformat(timespec="seconds"),
+        "run_id": args.run, "started": datetime.now(UTC).isoformat(timespec="seconds"),
         "assistant": "sonnet+web", "benchmark": str(BENCHMARK), "trials": args.trials,
         "web_tools": args.web_tools, "attempts": {},
     }
-    today = _when(run["started"]).strftime("%Y-%m-%d")
-    spend = sonnet.Spend(args.max_cost_usd)
+    asked_at = _when(run["started"])
     raw = OUT / "artifacts" / args.run
     raw.mkdir(parents=True, exist_ok=True)
+    # Answers already paid for (a killed run) are read back, never re-asked.
+    for path in raw.glob("*_t*.json"):
+        key = path.stem
+        if key not in run["attempts"]:
+            uid, trial = key.rsplit("_t", 1)
+            run["attempts"][key] = _attempt_record(uid, int(trial), _read(path))
+    spend = sonnet.Spend(args.max_cost_usd)
+    spend.add(sum(a["cost_usd"] for a in run["attempts"].values()))
     jobs = [(uid, t) for uid in sorted(cases) for t in range(1, args.trials + 1)
             if f"{uid}_t{t}" not in run["attempts"]]
 
-    def one(job: tuple[str, int]) -> tuple[str, dict[str, Any]] | None:
+    def one(job: tuple[str, int]) -> dict[str, Any] | None:
         uid, trial = job
-        try:
-            spend.check()
-        except sonnet.CostCap:
+        if spend.exhausted():
             return None
-        query = resolve_case(cases[uid], _when(run["started"])).query
-        answer = sonnet.ask(query, today, args.web_tools)
+        query = resolve_case(cases[uid], asked_at).query
+        answer = sonnet.ask(query, asked_at.strftime("%Y-%m-%d"), args.web_tools)
         spend.add(answer["usage"]["cost_usd"])
-        (raw / f"{uid}_t{trial}.json").write_text(json.dumps(answer, indent=1, default=str))
-        usage = answer["usage"]
-        return f"{uid}_t{trial}", {
-            "uid": uid, "trial": trial, "reply": answer["reply"], "stopped": answer["stopped"],
-            "cost_usd": usage["cost_usd"], "searches": usage["searches"],
-            "fetches": usage["fetches"], "wall_s": usage["wall_s"],
-        }
+        _write(raw / f"{uid}_t{trial}.json", answer)
+        return _attempt_record(uid, trial, answer)
 
+    not_started = 0
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
-        for done in pool.map(one, jobs):
-            if done:
-                run["attempts"][done[0]] = done[1]
-                _write(run_path, run)
+        for future in concurrent.futures.as_completed([pool.submit(one, j) for j in jobs]):
+            record = future.result()
+            if record is None:
+                not_started += 1
+                continue
+            run["attempts"][f"{record['uid']}_t{record['trial']}"] = record
+            _write(run_path, run)
     run["spent_usd"] = round(sum(a["cost_usd"] for a in run["attempts"].values()), 4)
     _write(run_path, run)
-    skipped = len(jobs) - sum(1 for j in jobs if f"{j[0]}_t{j[1]}" in run["attempts"])
     print(f"wrote {run_path}: {len(run['attempts'])} attempts, ${run['spent_usd']:.2f}"
-          + (f"; {skipped} not started (spend limit)" if skipped else ""))
+          + (f"; {not_started} not started (spend limit)" if not_started else ""))
     return 0
 
 
 # ------------------------------------------------------------------- score
 
 
-def _attempts(name: str, cases: dict[str, Case]) -> dict[str, list[dict[str, Any]]]:
-    """Each question's attempts as text the user reads, plus what scoring
-    needs beyond it (Horizon's nudge and own pulls)."""
-    if name == HORIZON:
-        return {uid: [{"text": "" if a.no_answer else score.as_read(a.reply, a.nudge),
-                       "nudge": a.nudge, "pulled": a.pulled_links}
-                      for a in q.attempts]
-                for uid, q in horizon.load(set(cases)).items()}
-    run = _read(OUT / "runs" / f"{name}.json")
-    out: dict[str, list[dict[str, Any]]] = {}
-    for attempt in sorted(run["attempts"].values(), key=lambda a: a["trial"]):
-        if attempt["uid"] in cases:
-            out.setdefault(attempt["uid"], []).append(
-                {"text": attempt["reply"], "nudge": None, "pulled": []})
-    return out
+def _outcomes(questions: dict[str, Any], calls: dict[str, overlay.Calls]) -> None:
+    """Each question's outcome from its stored attempts: no judge calls, so
+    an overlay change costs nothing to apply."""
+    for uid, entry in questions.items():
+        entry.update(outcome.question(entry["attempts"], calls.get(uid, overlay.Calls())))
 
 
 def cmd_score(args: argparse.Namespace) -> int:
     cases = _limit(members(), args.uids)
-    header, calls = _calls(cases)
+    header, calls = _overlay()
     refs_path = OUT / "references" / f"{args.for_}.json"
     refs = _read(refs_path)["questions"] if refs_path.exists() else {}
     missing_refs = [c.id for u, c in cases.items() if c.expected.get("figure") and u not in refs]
     if missing_refs:
         raise SystemExit(f"{len(missing_refs)} figure questions have no reference in "
                          f"{refs_path}; run references --for {args.for_} first")
-    when = _when_replied(args.for_, cases)
-    attempts = _attempts(args.for_, cases)
-    dataset_names = {d.dataset_id: d.name for d in datasets().values()}
-    _, area_names = horizon.known_area_sources()
+    when, attempts = _side(args.for_, cases)
+    _, area_names = horizon.known_areas()
+    names = {**{score.offer_key(d.dataset_id): d.name for d in datasets().values()},
+             **area_names}
+    links = {uid: reference.links(refs[uid]) for uid in cases if uid in refs}
+    resolved = {uid: resolve_case(case, when[uid]) for uid, case in cases.items()}
+    offers = {uid: score.offer_options(case, names) for uid, case in resolved.items()}
+    jobs = [(uid, i, a) for uid in sorted(cases) for i, a in enumerate(attempts.get(uid, []))]
 
-    def one(uid: str) -> tuple[str, dict[str, Any]]:
-        case = resolve_case(cases[uid], when[uid])
-        links = reference.Reference.from_json(uid, refs[uid]).links if uid in refs else []
-        own = {reference.resource_id(link) for link in links}
-        offers = score.offer_options(case, dataset_names, area_names)
-        scored = []
-        for attempt in attempts.get(uid, []):
-            offer = (score.horizon_nudge_offer(case, attempt["nudge"], attempt["pulled"])
-                     if attempt["nudge"] else None)
-            result = score.score_attempt(case, attempt["text"], links,
-                                         nudge_offer=offer, offers=offers)
-            # Horizon asked exactly the reference request: the API served it
-            # the same stored result, so its figure is judged on what it saw.
-            result["pulled_reference"] = bool(
-                own & {reference.resource_id(u) for u in attempt["pulled"]})
-            scored.append(result)
-        verdict = outcome.question(scored, calls.get(uid, overlay.Calls()))
-        return uid, {"id": cases[uid].id, "attempts": scored,
-                     "outcome": verdict.outcome, "benchmark": verdict.benchmark,
-                     "wrong_figure": verdict.wrong_figure,
-                     "reference": refs.get(uid, {}).get("status", "n/a")}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=SCORE_WORKERS) as pool:
+        # Each table once, before the attempts that share it ask for it at once.
+        list(pool.map(figures._fetch, {link for ls in links.values() for link in ls}))
+        scored = list(pool.map(
+            lambda job: score.score_one(resolved[job[0]], job[2], links.get(job[0], []),
+                                        offers[job[0]]), jobs))
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=args.workers) as pool:
-        questions = dict(pool.map(one, sorted(cases)))
+    questions: dict[str, Any] = {
+        uid: {"id": case.id, "reference": refs.get(uid, {}).get("status", "n/a"),
+              "attempts": [None] * len(attempts.get(uid, []))}
+        for uid, case in cases.items()
+    }
+    for (uid, i, _), result in zip(jobs, scored, strict=True):
+        questions[uid]["attempts"][i] = result
+    _outcomes(questions, calls)
     path = OUT / "scores" / f"{args.for_}.json"
     _write(path, {"for": args.for_, "scored": datetime.now(UTC).isoformat(timespec="seconds"),
                   "overlay": header, "questions": questions})
-    results = {u: outcome.QuestionResult(q["outcome"], q["benchmark"], q["wrong_figure"], ())
-               for u, q in questions.items()}
-    print(f"wrote {path}: {outcome.summarise(results)}")
+    print(f"wrote {path}: {outcome.summarise(questions.values())}")
+    return 0
+
+
+def cmd_outcomes(args: argparse.Namespace) -> int:
+    path = OUT / "scores" / f"{args.for_}.json"
+    stored = _read(path)
+    header, calls = _overlay()
+    _outcomes(stored["questions"], calls)
+    stored["overlay"] = header
+    _write(path, stored)
+    print(f"wrote {path}: {outcome.summarise(stored['questions'].values())}")
     return 0
 
 
 # ------------------------------------------------------------------ report
 
 
-def _results(name: str) -> dict[str, Any]:
-    return _read(OUT / "scores" / f"{name}.json")["questions"]
-
-
 def _spread(values: list[float]) -> str:
     if not values:
         return "n/a"
-    ordered = sorted(values)
-    p90 = ordered[min(len(ordered) - 1, int(0.9 * len(ordered)))]
-    return f"median {statistics.median(ordered):g}, p90 {p90:g}, max {ordered[-1]:g}"
+    return (f"median {statistics.median(values):g}, p90 {percentile(values, 90):g}, "
+            f"max {max(values):g}")
 
 
 def cmd_report(args: argparse.Namespace) -> int:
-    sides = {"Horizon": _results(HORIZON), "Sonnet + web": _results(args.sonnet)}
+    scores = {"Horizon": _read(OUT / "scores" / f"{HORIZON}.json"),
+              "Sonnet + web": _read(OUT / "scores" / f"{args.sonnet}.json")}
+    sides = {name: s["questions"] for name, s in scores.items()}
     common = sorted(set(sides["Horizon"]) & set(sides["Sonnet + web"]))
-    summaries = {
-        name: outcome.summarise({u: outcome.QuestionResult(
-            q[u]["outcome"], q[u]["benchmark"], q[u]["wrong_figure"], ()) for u in common})
-        for name, q in sides.items()
-    }
-    right = {n: {u: q[u]["outcome"] == "right" for u in common} for n, q in sides.items()}
-    wrong_fig = {n: {u: q[u]["wrong_figure"] for u in common} for n, q in sides.items()}
+    summaries = {name: outcome.summarise(q[u] for u in common) for name, q in sides.items()}
+    flag = {key: {n: {u: q[u][key] for u in common} for n, q in sides.items()}
+            for key in ("outcome", "wrong_figure")}
+    right = {n: {u: o == "right" for u, o in flag["outcome"][n].items()} for n in sides}
     gaps = {
         "right": outcome.paired_gap(right["Horizon"], right["Sonnet + web"], common),
-        "wrong_figure": outcome.paired_gap(wrong_fig["Sonnet + web"], wrong_fig["Horizon"], common),
+        "wrong_figure": outcome.paired_gap(flag["wrong_figure"]["Sonnet + web"],
+                                           flag["wrong_figure"]["Horizon"], common),
     }
     run = _read(OUT / "runs" / f"{args.sonnet}.json")
-    costs = [a["cost_usd"] for a in run["attempts"].values()]
-    searches = [a["searches"] for a in run["attempts"].values()]
-    fetches = [a["fetches"] for a in run["attempts"].values()]
-    stopped = sum(a["stopped"] for a in run["attempts"].values())
+    attempts = list(run["attempts"].values())
+    statuses = {name: s["overlay"].get("status", "missing") for name, s in scores.items()}
     lines = [
         f"# Plain baseline: Horizon against Sonnet + web ({args.sonnet})", "",
-        f"{len(common)} questions. Overlay: {_read(OVERLAY).get('status', 'missing') if OVERLAY.exists() else 'missing'}.",
+        f"{len(common)} questions. Overlay as scored: {statuses}.",
         "", "| | Right | Wrong | Declined | Uncovered | Wrong figure | BENCHMARK-style |",
         "| --- | --- | --- | --- | --- | --- | --- |",
     ]
@@ -347,9 +351,11 @@ def cmd_report(args: argparse.Namespace) -> int:
         f"Wrong figure, Sonnet minus Horizon: {gaps['wrong_figure']['gap']:+.1%} "
         f"(95% interval {gaps['wrong_figure']['low']:+.1%} to {gaps['wrong_figure']['high']:+.1%}).",
         "",
-        f"Sonnet cost a question: {_spread(costs)} (USD); searches {_spread(searches)}; "
-        f"fetches {_spread(fetches)}; stopped at the $1 limit: {stopped}; "
-        f"spent ${sum(costs):.2f}.",
+        f"Sonnet cost a question: {_spread([a['cost_usd'] for a in attempts])} (USD); "
+        f"searches {_spread([a['searches'] for a in attempts])}; "
+        f"fetches {_spread([a['fetches'] for a in attempts])}; "
+        f"stopped at the $1 limit: {sum(a['stopped'] for a in attempts)}; "
+        f"spent ${sum(a['cost_usd'] for a in attempts):.2f}.",
     ]
     path = OUT / "reports" / f"{args.sonnet}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -392,8 +398,11 @@ def main() -> int:
     p = sub.add_parser("score", help="score one assistant's attempts (Haiku judge calls)")
     p.add_argument("--for", dest="for_", required=True, help=f"'{HORIZON}' or a Sonnet run id")
     p.add_argument("--uids", help="file of uids to limit to")
-    p.add_argument("--workers", type=int, default=WORKERS)
     p.set_defaults(func=cmd_score)
+
+    p = sub.add_parser("outcomes", help="re-apply the overlay to stored scores (no API calls)")
+    p.add_argument("--for", dest="for_", required=True, help=f"'{HORIZON}' or a Sonnet run id")
+    p.set_defaults(func=cmd_outcomes)
 
     p = sub.add_parser("report", help="compare the two scored assistants")
     p.add_argument("--sonnet", required=True, help="the Sonnet run id")

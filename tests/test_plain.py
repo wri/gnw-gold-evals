@@ -48,41 +48,52 @@ def test_attempt_outcomes(attempt, calls, expected):
 def test_a_question_is_right_on_most_scored_attempts():
     right = _attempt(figure_match=1.0)
     wrong = _attempt(figure_match=0.0)
-    assert outcome.question([right, right, wrong], DEFAULT).outcome == "right"
+    assert outcome.question([right, right, wrong], DEFAULT)["outcome"] == "right"
     # An uncovered attempt is left out: 1 of 1 scored.
-    assert outcome.question([right, _attempt(), _attempt()], DEFAULT).outcome == "right"
+    assert outcome.question([right, _attempt(), _attempt()], DEFAULT)["outcome"] == "right"
     # Ties fail, as in BENCHMARK.
-    assert outcome.question([right, wrong], DEFAULT).outcome == "wrong"
+    assert outcome.question([right, wrong], DEFAULT)["outcome"] == "wrong"
 
 
 def test_declined_or_wrong_whichever_is_commoner_a_tie_wrong():
     declined = _attempt("declined")
     wrong = _attempt(figure_match=0.0)
     right = _attempt(figure_match=1.0)
-    assert outcome.question([declined, declined, wrong], DEFAULT).outcome == "declined"
-    assert outcome.question([declined, wrong, right], DEFAULT).outcome == "wrong"
-    assert outcome.question([_attempt(), _attempt()], DEFAULT).outcome == "uncovered"
+    assert outcome.question([declined, declined, wrong], DEFAULT)["outcome"] == "declined"
+    assert outcome.question([declined, wrong, right], DEFAULT)["outcome"] == "wrong"
+    assert outcome.question([_attempt(), _attempt()], DEFAULT)["outcome"] == "uncovered"
 
 
 def test_benchmark_style_ignores_the_label():
     declined = _attempt("declined", expected_text_match=1.0)
     result = outcome.question([declined] * 3, DEFAULT)
-    assert (result.outcome, result.benchmark) == ("declined", "pass")
+    assert (result["outcome"], result["benchmark"]) == ("declined", "pass")
+
+
+def test_benchmark_style_is_the_harness_row_verdict():
+    """No reply fails, an unscorable attempt is left out, an offer stands in
+    for the accepted-nudge path: buckets.row_verdict decides, not a copy."""
+    no_reply = {"no_answer": True}
+    offered = _attempt("asked_back", offer=1.0, figure_match=0.0)
+    broken = {"error": "judge down"}
+    assert outcome.question([offered, offered, no_reply], DEFAULT)["benchmark"] == "pass"
+    assert outcome.question([offered, no_reply, broken], DEFAULT)["benchmark"] == "fail"
+    assert outcome.question([broken] * 3, DEFAULT)["benchmark"] == "uncovered"
 
 
 def test_wrong_figure_needs_an_answer_with_a_failed_figure():
     wrong = _attempt(figure_match=0.0)
-    assert outcome.question([wrong, wrong, _attempt(figure_match=1.0)], DEFAULT).wrong_figure
+    assert outcome.question([wrong, wrong, _attempt(figure_match=1.0)], DEFAULT)["wrong_figure"]
     assert not outcome.question([_attempt("declined", figure_match=0.0)] * 3,
-                                DEFAULT).wrong_figure
-    assert not outcome.question([wrong] * 3, Calls(figure_info_only=True)).wrong_figure
+                                DEFAULT)["wrong_figure"]
+    assert not outcome.question([wrong] * 3, Calls(figure_info_only=True))["wrong_figure"]
 
 
 def test_summary_counts_uncovered_in_the_denominator():
-    results = {
-        "a": outcome.QuestionResult("right", "pass", False, ()),
-        "b": outcome.QuestionResult("uncovered", "uncovered", False, ()),
-    }
+    results = [
+        {"outcome": "right", "benchmark": "pass", "wrong_figure": False},
+        {"outcome": "uncovered", "benchmark": "uncovered", "wrong_figure": False},
+    ]
     summary = outcome.summarise(results)
     assert summary["rates"]["right"] == 0.5
     assert summary["uncovered"] == 1
@@ -139,20 +150,46 @@ def test_a_nudge_reads_as_its_buttons():
     text = score.as_read("Which dataset?", {"options": ["Tree cover loss", "Drivers"]})
     assert text.endswith("[Options offered as buttons: Tree cover loss; Drivers]")
     assert score.as_read("Plain.", None) == "Plain."
+    # No reply stays no reply, buttons or not.
+    assert score.as_read("", {"options": ["x"]}) == ""
 
 
 def test_offer_options_are_names_per_fair_offer():
     names = {"4": "Tree cover loss", "8": "Tree cover loss by dominant driver"}
-    assert score.offer_options(CASE, names, {}) == [
+    assert score.offer_options(CASE, names) == [
         ["Tree cover loss", "Tree cover loss by dominant driver"], ["9"],
     ]
 
 
+def test_area_offers_are_keyed_as_the_nudge_check_keys_them():
+    """`BRA.14_1` and a picked `BRA.14` are one area to accepted_nudge_match,
+    so the name lookup for prose must agree."""
+    case = Case(id="a", status="ready", group="g", query="q",
+                expected={"accept_aoi_nudge_offering": "BRA.14_1"})
+    assert score.offer_options(case, {score.offer_key("BRA.14"): "Pará"}) == [["Pará"]]
+
+
+NUDGE = {"type": "dataset_choice", "options": ["Tree cover loss", "Drivers"],
+         "data": [{"dataset_id": 4}, {"dataset_id": 8}]}
+
+
 def test_horizons_nudge_path_is_read_on_its_own_pulls():
-    nudge = {"type": "dataset_choice", "data": [{"dataset_id": 4}, {"dataset_id": 8}]}
-    assert score.horizon_nudge_offer(CASE, nudge, []) == 1.0
+    assert score.horizon_nudge_offer(CASE, score.Attempt("Which?", NUDGE)) == 1.0
     # It pulled data as well: the pull path, so the reply checks speak.
-    assert score.horizon_nudge_offer(CASE, nudge, ["http://a/x/1"]) is None
+    pulled = score.Attempt("Which?", NUDGE, ("http://a/x/1",))
+    assert score.horizon_nudge_offer(CASE, pulled) is None
+
+
+def test_score_one_routes_a_nudge_and_spots_the_reference_pull(monkeypatch):
+    monkeypatch.setattr(judges, "label", lambda q, r: pytest.fail("judged"))
+    result = score.score_one(CASE, score.Attempt("Which?", NUDGE), ["http://a/r/9"], [])
+    assert (result["offer"], result["pulled_reference"]) == (1.0, False)
+    monkeypatch.setattr(judges, "label", lambda q, r: {"label": "answered", "reason": "r"})
+    monkeypatch.setattr(score, "run_checks", lambda c, t, links: {
+        "checks": {}, "reasons": {}, "judge_errors": []})
+    same = score.score_one(CASE, score.Attempt("1,500 ha", None, ("http://b/r/9",)),
+                           ["http://a/r/9"], [])
+    assert same["pulled_reference"] is True
 
 
 @pytest.fixture
@@ -202,6 +239,25 @@ def test_a_judge_outage_is_an_error_not_a_verdict(monkeypatch):
     assert "overloaded" in score.score_attempt(CASE, "1,500 ha", [])["error"]
 
 
+def test_a_reply_check_judge_error_survives_the_later_checks(monkeypatch, table):
+    """answer_period runs last and always returns an empty judge_errors list;
+    merging results must not wipe an earlier check's error."""
+    from goldset.evaluators import answer_evaluator, llm_judges
+
+    def down(*args, **kwargs):
+        raise RuntimeError("overloaded")
+
+    # answer_evaluator binds the judge at import, so it is patched there.
+    monkeypatch.setattr(answer_evaluator, "llm_judge_expected_text", down)
+    case = Case(id="t", status="ready", group="g", query="q",
+                expected={"text": "Gives the 2020 loss.", "start_date": "2020-01-01",
+                          "end_date": "2020-12-31"})
+    monkeypatch.setattr(llm_judges, "llm_judge_answer_period",
+                        lambda *a, **k: {"verdict": "pass", "reason": "r"})
+    assert score.run_checks(case, "1,500 ha in 2020", [])["judge_errors"] == [
+        "expected_text_match"]
+
+
 # ------------------------------------------------------------------- sonnet
 
 
@@ -244,6 +300,6 @@ def test_sonnet_stops_at_a_dollar_with_no_reply():
 
 def test_spend_cap_refuses_new_questions():
     spend = sonnet.Spend(1.0)
+    assert not spend.exhausted()
     spend.add(1.0)
-    with pytest.raises(sonnet.CostCap):
-        spend.check()
+    assert spend.exhausted()

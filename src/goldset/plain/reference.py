@@ -20,16 +20,22 @@ no ``aoi_source``, so each id's source is read from the id where its shape
 says it (GADM codes, LandMark codes), else from the sources Horizon's own
 picks recorded, else guessed as WDPA and marked so. The alternative whose
 sources are surest is used; ties keep case order.
+
+Stored references are keyed by the member's uid. Resolving a rolling window
+mints a different uid (the uid hashes the expected values), so a resolved
+case's own uid is never used as the key.
 """
 
 from __future__ import annotations
 
 import concurrent.futures
+import dataclasses
 import re
 from dataclasses import dataclass, field
 from typing import Any
 
 from goldset.groundtruth import AnalyticsClient, AnalyticsError, RequestError, build_request
+from goldset.groundtruth.request import normalise_aoi_id
 from goldset.store import Case
 
 GADM_ID = re.compile(r"^[A-Z]{3}(\.\d+)*(_\d)?$")
@@ -54,13 +60,17 @@ def _split(value: str, sep: str) -> list[str]:
     return [part.strip() for part in value.split(sep) if part.strip()]
 
 
+def bare_id(area_id: str) -> str:
+    """An area id without its GADM level suffix, as Horizon's picks key it."""
+    return normalise_aoi_id(area_id, "admin")
+
+
 def source_of(area_id: str, known: dict[str, str]) -> Area | None:
     """One id's source, or None when nothing says what kind of area it is."""
-    bare = re.sub(r"_[1-5]$", "", area_id)
     if GADM_ID.match(area_id):
         return Area(area_id, "gadm", SURE)
-    if bare in known:
-        return Area(area_id, known[bare], SURE)
+    if bare_id(area_id) in known:
+        return Area(area_id, known[bare_id(area_id)], SURE)
     if LANDMARK_ID.match(area_id):
         return Area(area_id, "landmark", LIKELY)
     if NUMERIC_ID.match(area_id):
@@ -106,7 +116,6 @@ class Table:
 class Reference:
     """Every table one question's figures can be checked against."""
 
-    uid: str
     id: str
     as_of: str
     areas: list[dict[str, Any]] = field(default_factory=list)
@@ -114,30 +123,24 @@ class Reference:
     skipped: list[str] = field(default_factory=list)
 
     @property
-    def links(self) -> list[str]:
-        return [t.link for t in self.tables if t.link]
-
-    @property
     def status(self) -> str:
-        if not self.links:
+        fetched = sum(1 for t in self.tables if t.link)
+        if not fetched:
             return "none"
-        return "ok" if not self.skipped and all(t.link for t in self.tables) else "partial"
+        return "ok" if fetched == len(self.tables) and not self.skipped else "partial"
 
     def to_json(self) -> dict[str, Any]:
         return {
             "id": self.id, "as_of": self.as_of, "status": self.status,
             "areas": self.areas,
-            "tables": [t.__dict__ for t in self.tables],
+            "tables": [dataclasses.asdict(t) for t in self.tables],
             "skipped": self.skipped,
         }
 
-    @classmethod
-    def from_json(cls, uid: str, data: dict[str, Any]) -> Reference:
-        return cls(
-            uid=uid, id=data["id"], as_of=data["as_of"], areas=data.get("areas", []),
-            tables=[Table(**t) for t in data.get("tables", [])],
-            skipped=list(data.get("skipped", [])),
-        )
+
+def links(stored: dict[str, Any]) -> list[str]:
+    """The fetched tables' links from a stored reference."""
+    return [t["link"] for t in stored.get("tables", []) if t["link"]]
 
 
 def plan(case: Case, as_of: str, known: dict[str, str] | None = None,
@@ -148,21 +151,20 @@ def plan(case: Case, as_of: str, known: dict[str, str] | None = None,
     is wrong. A dataset the builder cannot request (sLUC) is skipped with its
     reason, and the question's figures go unchecked against it.
     """
-    reference = Reference(uid=case.uid, id=case.id, as_of=as_of)
+    reference = Reference(id=case.id, as_of=as_of)
     expected = dict(case.expected)
     areas = choose_areas(expected.get("aoi_ids", ""), {**(known or {}), **(areas_override or {})})
     if not areas:
         reference.skipped.append(f"no area could be placed from {expected.get('aoi_ids')!r}")
         return reference
-    reference.areas = [a.__dict__ for a in areas]
+    reference.areas = [dataclasses.asdict(a) for a in areas]
     by_source: dict[str, list[str]] = {}
     for area in areas:
         by_source.setdefault(area.source, []).append(area.id)
-    for dataset_id in _split(re.sub(r"\|", ";", expected.get("dataset_id", "")), ";"):
+    for dataset_id in _split(expected.get("dataset_id", "").replace("|", ";"), ";"):
         for source, ids in by_source.items():
-            one = Case(id=case.id, status=case.status, group=case.group, set=case.set,
-                       query=case.query, notes=case.notes,
-                       expected={**expected, "aoi_ids": ";".join(ids), "aoi_source": source})
+            one = dataclasses.replace(
+                case, expected={**expected, "aoi_ids": ";".join(ids), "aoi_source": source})
             try:
                 request = build_request(one, dataset_id=dataset_id, today=as_of)
             except RequestError as error:
@@ -175,8 +177,7 @@ def plan(case: Case, as_of: str, known: dict[str, str] | None = None,
     return reference
 
 
-def fetch(references: list[Reference], client: AnalyticsClient,
-          max_workers: int = MAX_WORKERS) -> None:
+def fetch(references: list[Reference], client: AnalyticsClient) -> None:
     """Fill each planned table's link, or its error. A failed table is
     recorded, never raised: one bad request must not lose the others."""
     tables = [t for r in references for t in r.tables if not t.link]
@@ -189,9 +190,5 @@ def fetch(references: list[Reference], client: AnalyticsClient,
             return
         table.link, table.polls = result.link, result.polls
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         list(pool.map(one, tables))
-
-
-def resource_id(link: str) -> str:
-    return link.rstrip("/").split("/")[-1]

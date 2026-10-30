@@ -7,15 +7,16 @@ An attempt's outcome combines its reply checks with its decline label:
 - asked back: right when it offers every accepted choice (the accepted-nudge
   check for Horizon, the offer judge for Sonnet), else as a decline;
 - declined: right only where the overlay says a decline is the right answer
-  and the checks pass, else declined;
+  and no check failed, else declined;
 - answered: right when every scored gating check passed, wrong when one
   failed, uncovered when none scored.
 
 A question takes right when most of its scored attempts are right (ties
 fail, as in BENCHMARK); otherwise declined or wrong, whichever is commoner,
 a tie counting as wrong; uncovered when no attempt scored. Beside it rides
-the BENCHMARK-style verdict, which ignores the label, so the extra outcomes
-hide nothing.
+the BENCHMARK-style verdict: the same attempts handed to the harness's own
+``buckets.row_verdict``, which ignores the label, so the extra outcomes hide
+nothing and the column follows BENCHMARK's rule if that rule changes.
 """
 
 from __future__ import annotations
@@ -23,9 +24,10 @@ from __future__ import annotations
 import random
 from collections import Counter
 from collections.abc import Iterable
-from dataclasses import dataclass
 from typing import Any
 
+from goldset.buckets import row_verdict
+from goldset.ledger import majority
 from goldset.plain.overlay import Calls
 
 GATING = ("expected_text_match", "figure_match", "figure_claim_match", "answer_period_match")
@@ -69,16 +71,15 @@ def attempt_outcome(attempt: dict[str, Any], calls: Calls) -> str | None:
     return "right" if verdict == "pass" else "wrong"
 
 
-def benchmark_style(attempt: dict[str, Any], calls: Calls) -> str | None:
-    """pass | fail | None by BENCHMARK's rule: the checks alone, no label.
-    An offer stands in for the accepted-nudge path."""
-    if attempt.get("no_answer"):
-        return "fail"
-    if attempt.get("error"):
-        return None
+def as_trial(attempt: dict[str, Any], calls: Calls) -> dict[str, Any]:
+    """An attempt in the harness's trial shape. An offer stands in for the
+    accepted-nudge path, where BENCHMARK leaves the reply checks null."""
     if attempt.get("offer") is not None:
-        return "pass" if attempt["offer"] == 1.0 else "fail"
-    return checks_verdict(attempt.get("checks") or {}, calls)
+        checks = {"accepted_nudge_match": attempt["offer"]}
+    else:
+        checks = {c: (attempt.get("checks") or {}).get(c) for c in gating(calls)}
+    return {"checks": checks, "no_answer": bool(attempt.get("no_answer")),
+            "error": attempt.get("error")}
 
 
 def wrong_figure(attempt: dict[str, Any], calls: Calls) -> bool:
@@ -90,48 +91,44 @@ def wrong_figure(attempt: dict[str, Any], calls: Calls) -> bool:
     )
 
 
-@dataclass(frozen=True)
-class QuestionResult:
-    outcome: str  # right | wrong | declined | uncovered
-    benchmark: str  # pass | fail | uncovered
-    wrong_figure: bool
-    attempts: tuple[str | None, ...]
-
-
-def question(attempts: list[dict[str, Any]], calls: Calls) -> QuestionResult:
+def question(attempts: list[dict[str, Any]], calls: Calls) -> dict[str, Any]:
+    """A question's outcome, BENCHMARK-style verdict and wrong-figure flag."""
     outcomes = [attempt_outcome(a, calls) for a in attempts]
-    scored = [o for o in outcomes if o in ("right", "wrong", "declined")]
+    scored = [(a, o) for a, o in zip(attempts, outcomes, strict=True)
+              if o in ("right", "wrong", "declined")]
     if not scored:
         outcome = "uncovered"
-    elif outcomes.count("right") * 2 > len(scored):
+    elif majority([1.0 if o == "right" else 0.0 for _, o in scored]) == 1.0:
         outcome = "right"
     else:
         outcome = "declined" if outcomes.count("declined") > outcomes.count("wrong") else "wrong"
-
-    verdicts = [v for a in attempts if (v := benchmark_style(a, calls)) is not None]
-    if not verdicts:
-        benchmark = "uncovered"
-    else:
-        benchmark = "pass" if verdicts.count("pass") * 2 > len(verdicts) else "fail"
-
-    figure_wrong = sum(wrong_figure(a, calls) for a in attempts)
-    return QuestionResult(outcome, benchmark, bool(scored) and figure_wrong * 2 > len(scored),
-                          tuple(outcomes))
+    figure_wrong = majority([1.0 if wrong_figure(a, calls) else 0.0 for a, _ in scored])
+    return {
+        "outcome": outcome,
+        "benchmark": row_verdict({"trials": [as_trial(a, calls) for a in attempts]}),
+        "wrong_figure": figure_wrong == 1.0,
+    }
 
 
-def summarise(results: dict[str, QuestionResult]) -> dict[str, Any]:
+def summarise(results: Iterable[dict[str, Any]]) -> dict[str, Any]:
     """Counts and shares over every question, uncovered included."""
+    results = list(results)
     total = len(results)
-    counts = Counter(r.outcome for r in results.values())
-    share = (lambda n: round(n / total, 4)) if total else (lambda n: 0.0)
+    counts = Counter(r["outcome"] for r in results)
+    wrong_figures = sum(r["wrong_figure"] for r in results)
+    benchmark_passes = sum(r["benchmark"] == "pass" for r in results)
+
+    def share(n: int) -> float:
+        return round(n / total, 4) if total else 0.0
+
     return {
         "questions": total,
         **{o: counts.get(o, 0) for o in OUTCOMES},
         "rates": {o: share(counts.get(o, 0)) for o in OUTCOMES},
-        "wrong_figure": sum(r.wrong_figure for r in results.values()),
-        "wrong_figure_rate": share(sum(r.wrong_figure for r in results.values())),
-        "benchmark_style_pass": sum(r.benchmark == "pass" for r in results.values()),
-        "benchmark_style_rate": share(sum(r.benchmark == "pass" for r in results.values())),
+        "wrong_figure": wrong_figures,
+        "wrong_figure_rate": share(wrong_figures),
+        "benchmark_style_pass": benchmark_passes,
+        "benchmark_style_rate": share(benchmark_passes),
     }
 
 

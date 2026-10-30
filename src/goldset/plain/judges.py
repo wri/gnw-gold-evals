@@ -14,12 +14,10 @@ are new, so the pilot hand-checks them before the full run relies on them.
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from langchain_core.prompts import ChatPromptTemplate
 from pydantic import BaseModel
-
-LABELS = ("answered", "declined", "asked_back")
 
 LABEL_PROMPT = """
 You are classifying how an assistant replied to a user's question about
@@ -80,23 +78,21 @@ class _Offer(BaseModel):
     offers_all: bool
 
 
-def _haiku():
+def _judge(prompt: str, schema: type[BaseModel], **inputs: Any) -> BaseModel:
     # Imported here so the module loads without an API key (tests stub these).
     from goldset.models import HAIKU
 
-    return HAIKU
+    chain = ChatPromptTemplate.from_messages([("user", prompt)]) | \
+        HAIKU.with_structured_output(schema)
+    return chain.invoke(inputs)
 
 
 def label(query: str, reply: str) -> dict[str, str]:
-    chain = ChatPromptTemplate.from_messages([("user", LABEL_PROMPT)]) | \
-        _haiku().with_structured_output(_Label)
-    judged = chain.invoke({"query": query, "reply": reply})
+    judged = _judge(LABEL_PROMPT, _Label, query=query, reply=reply)
     return {"label": judged.label, "reason": judged.reason}
 
 
-def offers(query: str, reply: str, options: list[str]) -> dict[str, object]:
-    chain = ChatPromptTemplate.from_messages([("user", OFFER_PROMPT)]) | \
-        _haiku().with_structured_output(_Offer)
-    judged = chain.invoke({"query": query, "reply": reply,
-                           "options": "\n".join(f"- {o}" for o in options)})
+def offers(query: str, reply: str, options: list[str]) -> dict[str, Any]:
+    judged = _judge(OFFER_PROMPT, _Offer, query=query, reply=reply,
+                    options="\n".join(f"- {o}" for o in options))
     return {"offers_all": judged.offers_all, "reason": judged.reason}

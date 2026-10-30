@@ -23,10 +23,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from goldset.groundtruth.catalog import AOI_TYPES
+
 SCHEMA_VERSION = 1
 TEXT_VALUES = ("any", "horizon_only")
 KEYS = {"id", "text", "decline_right", "figure_info_only", "areas", "why"}
-SOURCES = ("gadm", "wdpa", "kba", "landmark")
+SOURCES = tuple(AOI_TYPES)
 
 
 @dataclass(frozen=True)
