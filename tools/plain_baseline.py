@@ -38,7 +38,14 @@ from goldset.benchmark import load_benchmark  # noqa: E402
 from goldset.cli import require_api_token, resolve_case  # noqa: E402
 from goldset.evaluators import figures  # noqa: E402
 from goldset.groundtruth import AnalyticsClient, datasets  # noqa: E402
-from goldset.plain import horizon, outcome, overlay, reference, score, sonnet  # noqa: E402
+from goldset.plain import (  # noqa: E402
+    horizon,
+    outcome,
+    overlay,
+    reference,
+    score,
+    sonnet,
+)
 from goldset.store import Case, load_store  # noqa: E402
 from goldset.templates import has_templates  # noqa: E402
 

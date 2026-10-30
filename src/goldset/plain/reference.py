@@ -34,7 +34,12 @@ import re
 from dataclasses import dataclass, field
 from typing import Any
 
-from goldset.groundtruth import AnalyticsClient, AnalyticsError, RequestError, build_request
+from goldset.groundtruth import (
+    AnalyticsClient,
+    AnalyticsError,
+    RequestError,
+    build_request,
+)
 from goldset.groundtruth.request import normalise_aoi_id
 from goldset.store import Case
 
