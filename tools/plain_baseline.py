@@ -52,6 +52,7 @@ SEPTEMBER_USD = 0.28
 WORKERS = 4
 # Judge calls are network-bound: scoring runs attempts, not questions, wide.
 SCORE_WORKERS = 12
+REFERENCE_POLLS = 60
 
 
 def member_types() -> dict[str, str]:
@@ -172,7 +173,8 @@ def cmd_references(args: argparse.Namespace) -> int:
         return 2
     print(f"fetching {sum(len(r.tables) for r in todo.values())} tables "
           f"for {len(todo)} questions")
-    reference.fetch(list(todo.values()), AnalyticsClient(token))
+    # Alert jobs over large or new windows compute for minutes: poll longer.
+    reference.fetch(list(todo.values()), AnalyticsClient(token, max_polls=REFERENCE_POLLS))
     stored.update({uid: ref.to_json() for uid, ref in todo.items()})
     _write(path, {"for": args.for_, "written": datetime.now(UTC).isoformat(timespec="seconds"),
                   "questions": stored})
