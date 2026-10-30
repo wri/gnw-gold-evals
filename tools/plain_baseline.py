@@ -322,52 +322,96 @@ def _spread(values: list[float]) -> str:
             f"max {max(values):g}")
 
 
+def _compare(sides: dict[str, dict[str, Any]], uids: list[str]) -> dict[str, Any]:
+    """Both assistants' summaries over ``uids``, with the paired gaps."""
+    summaries = {name: outcome.summarise(q[u] for u in uids) for name, q in sides.items()}
+    right = {n: {u: q[u]["outcome"] == "right" for u in uids} for n, q in sides.items()}
+    wrong_figure = {n: {u: q[u]["wrong_figure"] for u in uids} for n, q in sides.items()}
+    return {
+        "questions": len(uids),
+        "summaries": summaries,
+        "gaps": {
+            "right": outcome.paired_gap(right["Horizon"], right["Sonnet + web"], uids),
+            "wrong_figure": outcome.paired_gap(wrong_figure["Sonnet + web"],
+                                               wrong_figure["Horizon"], uids),
+        },
+    }
+
+
+def _table(comparison: dict[str, Any]) -> list[str]:
+    lines = ["| | Right | Wrong | Declined | Uncovered | Wrong figure | BENCHMARK-style |",
+             "| --- | --- | --- | --- | --- | --- | --- |"]
+    for name, s in comparison["summaries"].items():
+        r = s["rates"]
+        lines.append(f"| {name} | {r['right']:.1%} | {r['wrong']:.1%} | {r['declined']:.1%} | "
+                     f"{r['uncovered']:.1%} | {s['wrong_figure_rate']:.1%} | "
+                     f"{s['benchmark_style_rate']:.1%} |")
+    gaps = comparison["gaps"]
+    lines += [
+        "",
+        f"Right, Horizon minus Sonnet: {gaps['right']['gap']:+.1%} "
+        f"(95% interval {gaps['right']['low']:+.1%} to {gaps['right']['high']:+.1%}). "
+        f"Wrong figure, Sonnet minus Horizon: {gaps['wrong_figure']['gap']:+.1%} "
+        f"(95% interval {gaps['wrong_figure']['low']:+.1%} to {gaps['wrong_figure']['high']:+.1%}).",
+    ]
+    return lines
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     scores = {"Horizon": _read(OUT / "scores" / f"{HORIZON}.json"),
               "Sonnet + web": _read(OUT / "scores" / f"{args.sonnet}.json")}
     sides = {name: s["questions"] for name, s in scores.items()}
     common = sorted(set(sides["Horizon"]) & set(sides["Sonnet + web"]))
-    summaries = {name: outcome.summarise(q[u] for u in common) for name, q in sides.items()}
-    flag = {key: {n: {u: q[u][key] for u in common} for n, q in sides.items()}
-            for key in ("outcome", "wrong_figure")}
-    right = {n: {u: o == "right" for u, o in flag["outcome"][n].items()} for n in sides}
-    gaps = {
-        "right": outcome.paired_gap(right["Horizon"], right["Sonnet + web"], common),
-        "wrong_figure": outcome.paired_gap(flag["wrong_figure"]["Sonnet + web"],
-                                           flag["wrong_figure"]["Horizon"], common),
+    cases = members()
+    types = member_types()
+    # Alert figures Horizon did not fetch with the reference's own request
+    # were computed after its reply, so later alerts may have moved them;
+    # that can only count against Horizon, so the result is also given
+    # without them (plan doc, Comparability).
+    drift = [u for u in common
+             if "11" in cases[u].expected.get("dataset_id", "").replace("|", ";").split(";")
+             and cases[u].expected.get("figure")
+             and not any(a.get("pulled_reference") for a in sides["Horizon"][u]["attempts"])]
+    report = {
+        "sonnet": args.sonnet,
+        "all": _compare(sides, common),
+        "without_alert_drift": _compare(sides, [u for u in common if u not in drift]),
+        "alert_drift_flagged": sorted(cases[u].id for u in drift),
+        "by_type": {kind: _compare(sides, [u for u in common if types[u] == kind])
+                    for kind in sorted({types[u] for u in common})},
     }
     run = _read(OUT / "runs" / f"{args.sonnet}.json")
     attempts = list(run["attempts"].values())
     statuses = {name: s["overlay"].get("status", "missing") for name, s in scores.items()}
     lines = [
         f"# Plain baseline: Horizon against Sonnet + web ({args.sonnet})", "",
-        f"{len(common)} questions. Overlay as scored: {statuses}.",
-        "", "| | Right | Wrong | Declined | Uncovered | Wrong figure | BENCHMARK-style |",
-        "| --- | --- | --- | --- | --- | --- | --- |",
+        f"{len(common)} questions. Overlay as scored: {statuses}.", "",
+        *_table(report["all"]),
+        "",
+        f"## Without the {len(drift)} alert questions later alerts could have moved", "",
+        *_table(report["without_alert_drift"]),
+        "",
+        "## By question type", "",
+        "| Type | Questions | Horizon right | Sonnet right | Sonnet wrong figure |",
+        "| --- | --- | --- | --- | --- |",
     ]
-    for name, s in summaries.items():
-        r = s["rates"]
-        lines.append(f"| {name} | {r['right']:.1%} | {r['wrong']:.1%} | {r['declined']:.1%} | "
-                     f"{r['uncovered']:.1%} | {s['wrong_figure_rate']:.1%} | "
-                     f"{s['benchmark_style_rate']:.1%} |")
+    for kind, c in report["by_type"].items():
+        h, so = c["summaries"]["Horizon"], c["summaries"]["Sonnet + web"]
+        lines.append(f"| {kind} | {c['questions']} | {h['rates']['right']:.0%} | "
+                     f"{so['rates']['right']:.0%} | {so['wrong_figure_rate']:.0%} |")
     lines += [
         "",
-        f"Right, Horizon minus Sonnet: {gaps['right']['gap']:+.1%} "
-        f"(95% interval {gaps['right']['low']:+.1%} to {gaps['right']['high']:+.1%}).",
-        f"Wrong figure, Sonnet minus Horizon: {gaps['wrong_figure']['gap']:+.1%} "
-        f"(95% interval {gaps['wrong_figure']['low']:+.1%} to {gaps['wrong_figure']['high']:+.1%}).",
-        "",
-        f"Sonnet cost a question: {_spread([a['cost_usd'] for a in attempts])} (USD); "
+        f"Sonnet cost an attempt: {_spread([a['cost_usd'] for a in attempts])} (USD); "
         f"searches {_spread([a['searches'] for a in attempts])}; "
         f"fetches {_spread([a['fetches'] for a in attempts])}; "
         f"stopped at the $1 limit: {sum(a['stopped'] for a in attempts)}; "
-        f"spent ${sum(a['cost_usd'] for a in attempts):.2f}.",
+        f"unfinished turns: {sum(a.get('incomplete', False) for a in attempts)}; "
+        f"spent ${run.get('spent_usd', 0):.2f} in all.",
     ]
     path = OUT / "reports" / f"{args.sonnet}.md"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    _write(path.with_suffix(".json"), {"sonnet": args.sonnet, "questions": len(common),
-                                       "summaries": summaries, "gaps": gaps})
+    _write(path.with_suffix(".json"), report)
     print("\n".join(lines))
     return 0
 
