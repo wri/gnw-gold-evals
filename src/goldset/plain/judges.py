@@ -42,7 +42,9 @@ label, one of:
   clarify something (which place, which dataset, which period) first.
 
 A reply that gives an answer and also suggests where to check it is
-"answered". A reply that explains why the question cannot be answered as
+"answered". So is a reply that answers and then offers more, or ends with a
+follow-up question ("Would you like me to show this for a specific area?"):
+"asked_back" is only for a reply that asks before giving any answer. A reply that explains why the question cannot be answered as
 asked, without answering it, is "declined". So is a reply that says it
 cannot answer the core question and gives only background or related
 context instead.
