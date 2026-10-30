@@ -303,3 +303,32 @@ def test_spend_cap_refuses_new_questions():
     assert not spend.exhausted()
     spend.add(1.0)
     assert spend.exhausted()
+
+
+def _server_tool_stop():
+    response = _response("tool_use")
+    response.content = [SimpleNamespace(type="text", text="Results are JSON; parsing."),
+                        SimpleNamespace(type="server_tool_use", name="code_execution", input={})]
+    return response
+
+
+def test_a_turn_ending_on_a_server_tool_call_resumes():
+    """The newer web tools can end a turn mid-filtering: resend, as for a pause."""
+    api = _Api([_server_tool_stop(), _response("end_turn", "1,500 ha")])
+    answer = sonnet.ask("q", "2026-11-03", api=api)
+    assert answer["reply"] == "1,500 ha" and len(api.calls) == 2
+    assert [r["stop_reason"] for r in answer["responses"]] == ["tool_use", "end_turn"]
+
+
+def test_a_turn_waiting_on_an_unoffered_tool_is_incomplete_not_a_reply():
+    response = _response("tool_use", "Let me check.")
+    response.content.append(SimpleNamespace(type="tool_use", name="mystery", input={}))
+    answer = sonnet.ask("q", "2026-11-03", api=_Api([response]))
+    assert answer["incomplete"] and answer["reply"] == "" and not answer["stopped"]
+
+
+def test_an_unfinished_attempt_is_left_out(monkeypatch):
+    monkeypatch.setattr(judges, "label", lambda q, r: pytest.fail("judged"))
+    result = score.score_one(CASE, score.Attempt("", error="turn left unfinished"), [], [])
+    assert result == {"error": "turn left unfinished"}
+    assert outcome.attempt_outcome(result, DEFAULT) is None

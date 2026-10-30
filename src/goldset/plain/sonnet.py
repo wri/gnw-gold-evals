@@ -13,6 +13,12 @@ inside one request and pauses (``pause_turn``) after ten iterations, so a
 question is stopped when it pauses with $1 already spent. A stopped question
 has no reply and counts as no reply, as Horizon's timeouts do. The caps keep
 one request's overshoot small.
+
+With the newer web tools a turn can also end ``tool_use`` on a server tool
+call (the filtering code still running): it resumes like ``pause_turn``.
+Any other unfinished turn has no reply the user would see, and the harness
+cannot score it, so it is marked ``incomplete`` and left out, as BENCHMARK
+leaves out an attempt it could not score.
 """
 
 from __future__ import annotations
@@ -134,16 +140,26 @@ def client() -> Any:
     return _client
 
 
+def resumable(response: Any) -> bool:
+    """The server's own tool loop is unfinished: resend and it resumes."""
+    if response.stop_reason == "pause_turn":
+        return True
+    last = response.content[-1] if response.content else None
+    return response.stop_reason == "tool_use" and getattr(last, "type", None) == "server_tool_use"
+
+
 def ask(query: str, today: str, versions: str = DEFAULT_WEB_TOOLS,
         api: Any = None) -> dict[str, Any]:
-    """One question. Returns the reply ("" when stopped), the trail and the
-    summed usage with its cost."""
+    """One question. Returns the reply ("" when stopped or incomplete), the
+    trail, each response's stop reason and blocks, and the summed usage with
+    its cost."""
     api = api or client()
     system = SYSTEM_PROMPT.format(today=today)
     tools = web_tools(versions)
     messages: list[dict[str, Any]] = [{"role": "user", "content": query}]
     usage = zero_usage()
     trail: list[dict[str, Any]] = []
+    responses: list[dict[str, Any]] = []
     started = time.time()
     for _ in range(MAX_CONTINUATIONS + 1):
         response = api.messages.create(
@@ -152,13 +168,16 @@ def ask(query: str, today: str, versions: str = DEFAULT_WEB_TOOLS,
         )
         add_usage(usage, response.usage)
         trail.extend(tool_trail(response.content))
-        if response.stop_reason != "pause_turn" or cost_usd(usage) >= STOP_USD:
+        responses.append({"stop_reason": response.stop_reason,
+                          "blocks": [getattr(b, "type", None) for b in response.content]})
+        if not resumable(response) or cost_usd(usage) >= STOP_USD:
             break
-        # The server paused its tool loop: resend and it resumes.
         messages = [{"role": "user", "content": query},
                     {"role": "assistant", "content": response.content}]
-    # Still paused means stopped: at $1, or after every continuation allowed.
-    stopped = response.stop_reason == "pause_turn"
+    # Still resumable means stopped: at $1, or after every continuation allowed.
+    stopped = resumable(response)
+    # Ended waiting on a tool this request never offered: nothing to read.
+    incomplete = not stopped and response.stop_reason == "tool_use"
     usage_out: dict[str, Any] = dict(usage)
     usage_out.update({
         "wall_s": round(time.time() - started, 1),
@@ -167,9 +186,11 @@ def ask(query: str, today: str, versions: str = DEFAULT_WEB_TOOLS,
         "cost_usd": cost_usd(usage),
     })
     return {
-        "reply": "" if stopped else reply_text(response.content),
+        "reply": "" if stopped or incomplete else reply_text(response.content),
         "stopped": stopped,
+        "incomplete": incomplete,
         "trail": trail,
+        "responses": responses,
         "usage": usage_out,
         "request": {"model": MODEL, "system": system, "max_tokens": MAX_TOKENS,
                     "tools": tools, "caching": "automatic", "thinking": "model default",

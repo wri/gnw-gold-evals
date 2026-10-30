@@ -108,7 +108,9 @@ def _side(name: str, cases: dict[str, Case]
     attempts: dict[str, list[score.Attempt]] = {}
     for record in sorted(run["attempts"].values(), key=lambda a: a["trial"]):
         if record["uid"] in cases:
-            attempts.setdefault(record["uid"], []).append(score.Attempt(record["reply"]))
+            attempts.setdefault(record["uid"], []).append(score.Attempt(
+                record["reply"],
+                error="turn left unfinished" if record.get("incomplete") else ""))
     return dict.fromkeys(cases, _when(run["started"])), attempts
 
 
@@ -188,6 +190,7 @@ def cmd_references(args: argparse.Namespace) -> int:
 def _attempt_record(uid: str, trial: int, answer: dict[str, Any]) -> dict[str, Any]:
     usage = answer["usage"]
     return {"uid": uid, "trial": trial, "reply": answer["reply"], "stopped": answer["stopped"],
+            "incomplete": answer.get("incomplete", False),
             "cost_usd": usage["cost_usd"], "searches": usage["searches"],
             "fetches": usage["fetches"], "wall_s": usage["wall_s"]}
 
@@ -215,7 +218,8 @@ def cmd_ask(args: argparse.Namespace) -> int:
             uid, trial = key.rsplit("_t", 1)
             run["attempts"][key] = _attempt_record(uid, int(trial), _read(path))
     spend = sonnet.Spend(args.max_cost_usd)
-    spend.add(sum(a["cost_usd"] for a in run["attempts"].values()))
+    # Superseded answers (asked again after a transport fix) were still paid for.
+    spend.add(sum(a["cost_usd"] for a in [*run["attempts"].values(), *run.get("superseded", [])]))
     jobs = [(uid, t) for uid in sorted(cases) for t in range(1, args.trials + 1)
             if f"{uid}_t{t}" not in run["attempts"]]
 
@@ -238,7 +242,7 @@ def cmd_ask(args: argparse.Namespace) -> int:
                 continue
             run["attempts"][f"{record['uid']}_t{record['trial']}"] = record
             _write(run_path, run)
-    run["spent_usd"] = round(sum(a["cost_usd"] for a in run["attempts"].values()), 4)
+    run["spent_usd"] = round(spend.spent, 4)
     _write(run_path, run)
     print(f"wrote {run_path}: {len(run['attempts'])} attempts, ${run['spent_usd']:.2f}"
           + (f"; {not_started} not started (spend limit)" if not_started else ""))

@@ -43,6 +43,8 @@ class Attempt:
     text: str
     nudge: dict[str, Any] | None = None
     pulled: tuple[str, ...] = field(default_factory=tuple)
+    # Set when the attempt could not be completed, so it cannot be scored.
+    error: str = ""
 
 
 def as_read(text: str, nudge: dict[str, Any] | None = None) -> str:
@@ -150,6 +152,8 @@ def score_attempt(
 def score_one(case: Case, attempt: Attempt, links: list[str],
               offers: list[list[str]]) -> dict[str, Any]:
     """An attempt of either assistant, routed as BENCHMARK routes it."""
+    if attempt.error:
+        return {"error": attempt.error}
     result = score_attempt(case, attempt.text, links,
                            nudge_offer=horizon_nudge_offer(case, attempt), offers=offers)
     # Horizon asked exactly the reference request: the API served it the same
