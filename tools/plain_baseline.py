@@ -325,34 +325,52 @@ def _spread(values: list[float]) -> str:
 def _compare(sides: dict[str, dict[str, Any]], uids: list[str]) -> dict[str, Any]:
     """Both assistants' summaries over ``uids``, with the paired gaps."""
     summaries = {name: outcome.summarise(q[u] for u in uids) for name, q in sides.items()}
-    right = {n: {u: q[u]["outcome"] == "right" for u in uids} for n, q in sides.items()}
-    wrong_figure = {n: {u: q[u]["wrong_figure"] for u in uids} for n, q in sides.items()}
+
+    def flags(test: Any) -> dict[str, dict[str, bool]]:
+        return {n: {u: bool(test(q[u])) for u in uids} for n, q in sides.items()}
+
+    def gap(first: str, second: str, test: Any) -> dict[str, float]:
+        flagged = flags(test)
+        return outcome.paired_gap(flagged[first], flagged[second], uids)
+
     return {
         "questions": len(uids),
         "summaries": summaries,
         "gaps": {
-            "right": outcome.paired_gap(right["Horizon"], right["Sonnet + web"], uids),
-            "wrong_figure": outcome.paired_gap(wrong_figure["Sonnet + web"],
-                                               wrong_figure["Horizon"], uids),
+            "right": gap("Horizon", "Sonnet + web", lambda q: q["outcome"] == "right"),
+            "right_every_time": gap("Horizon", "Sonnet + web",
+                                    lambda q: q["right_every_time"]),
+            "wrong_figure": gap("Sonnet + web", "Horizon", lambda q: q["wrong_figure"]),
+            "wrong_figure_any": gap("Sonnet + web", "Horizon",
+                                    lambda q: q["wrong_figure_any"]),
         },
     }
 
 
 def _table(comparison: dict[str, Any]) -> list[str]:
-    lines = ["| | Right | Wrong | Declined | Uncovered | Wrong figure | BENCHMARK-style |",
-             "| --- | --- | --- | --- | --- | --- | --- |"]
+    lines = ["Right, wrong, declined, uncovered and wrong figure take most of a question's "
+             "attempts; the strict columns need every attempt right, or a wrong figure on any.",
+             "",
+             "| | Right | Wrong | Declined | Uncovered | Wrong figure | Right every time "
+             "| Wrong figure on any | BENCHMARK-style |",
+             "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
     for name, s in comparison["summaries"].items():
         r = s["rates"]
         lines.append(f"| {name} | {r['right']:.1%} | {r['wrong']:.1%} | {r['declined']:.1%} | "
                      f"{r['uncovered']:.1%} | {s['wrong_figure_rate']:.1%} | "
+                     f"{s['right_every_time_rate']:.1%} | {s['wrong_figure_any_rate']:.1%} | "
                      f"{s['benchmark_style_rate']:.1%} |")
-    gaps = comparison["gaps"]
+
+    def interval(label: str, key: str) -> str:
+        g = comparison["gaps"][key]
+        return f"{label}: {g['gap']:+.1%} (95% interval {g['low']:+.1%} to {g['high']:+.1%})."
+
     lines += [
         "",
-        f"Right, Horizon minus Sonnet: {gaps['right']['gap']:+.1%} "
-        f"(95% interval {gaps['right']['low']:+.1%} to {gaps['right']['high']:+.1%}). "
-        f"Wrong figure, Sonnet minus Horizon: {gaps['wrong_figure']['gap']:+.1%} "
-        f"(95% interval {gaps['wrong_figure']['low']:+.1%} to {gaps['wrong_figure']['high']:+.1%}).",
+        interval("Right, Horizon minus Sonnet", "right"),
+        interval("Right every time, Horizon minus Sonnet", "right_every_time"),
+        interval("Wrong figure, Sonnet minus Horizon", "wrong_figure"),
+        interval("Wrong figure on any attempt, Sonnet minus Horizon", "wrong_figure_any"),
     ]
     return lines
 
@@ -392,13 +410,15 @@ def cmd_report(args: argparse.Namespace) -> int:
         *_table(report["without_alert_drift"]),
         "",
         "## By question type", "",
-        "| Type | Questions | Horizon right | Sonnet right | Sonnet wrong figure |",
-        "| --- | --- | --- | --- | --- |",
+        "| Type | Questions | Horizon right | Sonnet right | Horizon right every time "
+        "| Sonnet right every time | Sonnet wrong figure |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
     ]
     for kind, c in report["by_type"].items():
         h, so = c["summaries"]["Horizon"], c["summaries"]["Sonnet + web"]
         lines.append(f"| {kind} | {c['questions']} | {h['rates']['right']:.0%} | "
-                     f"{so['rates']['right']:.0%} | {so['wrong_figure_rate']:.0%} |")
+                     f"{so['rates']['right']:.0%} | {h['right_every_time_rate']:.0%} | "
+                     f"{so['right_every_time_rate']:.0%} | {so['wrong_figure_rate']:.0%} |")
     lines += [
         "",
         f"Sonnet cost an attempt: {_spread([a['cost_usd'] for a in attempts])} (USD); "
