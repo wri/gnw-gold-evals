@@ -352,3 +352,15 @@ def test_an_unfinished_attempt_is_left_out(monkeypatch):
     result = score.score_one(CASE, score.Attempt("", error="turn left unfinished"), [], [])
     assert result == {"error": "turn left unfinished"}
     assert outcome.attempt_outcome(result, DEFAULT) is None
+
+
+@pytest.mark.parametrize("answers, asks_back, expected", [
+    (True, True, "answered"),   # answers, then offers more
+    (True, False, "answered"),
+    (False, True, "asked_back"),
+    (False, False, "declined"),
+])
+def test_the_label_follows_answers_first(monkeypatch, answers, asks_back, expected):
+    judged = judges._Label(reason="r", answers=answers, asks_back=asks_back, gives_figure=False)
+    monkeypatch.setattr(judges, "_judge", lambda *a, **k: judged)
+    assert judges.label("q", "reply")["label"] == expected
