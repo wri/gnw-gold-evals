@@ -3,7 +3,7 @@
  "benchmark": "2026-draft-5",
  "status": "reviewed",
  "drafted": "2026-10-30 by Claude for AJ's review",
- "reviewed": "2026-10-30 by AJ: all 34 calls agreed",
+ "reviewed": "2026-10-30 by AJ: all 34 calls agreed; pilot fix 4 (ch-quant-161, ch-quant-175) agreed the same day",
  "note": "Questions not listed take the defaults: the text applies to any assistant, a decline is not a right answer, and the figure checks gate.",
  "questions": {
   "ec76924ff13d7a88": {
@@ -132,8 +132,9 @@
   },
   "b1ded03727952d34": {
    "id": "ch-quant-161",
+   "text": "horizon_only",
    "decline_right": true,
-   "why": "No project boundary: asking for one is right"
+   "why": "No project boundary in Horizon: asking for one is right; the text describes Horizon's limit, and a sourced answer from elsewhere is not wrong (pilot fix 4)"
   },
   "8bf6a1396564661e": {
    "id": "ch-quant-162",
@@ -155,6 +156,11 @@
    "id": "ch-quant-174",
    "decline_right": true,
    "why": "Too many territories to total at once: redirecting is right"
+  },
+  "5a469b6fe061f718": {
+   "id": "ch-quant-175",
+   "figure_info_only": true,
+   "why": "The question invites the closest available data; FAO or other forest figures are fair, so the natural-lands figure cannot gate (pilot fix 4)"
   },
   "ebd81da2acb9a6ba": {
    "id": "ch-quant-186",
