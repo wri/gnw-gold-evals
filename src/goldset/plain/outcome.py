@@ -61,7 +61,9 @@ def attempt_outcome(attempt: dict[str, Any], calls: Calls) -> str | None:
         return "right"
     verdict = checks_verdict(attempt.get("checks") or {}, calls)
     if label in ("declined", "asked_back"):
-        return "right" if calls.decline_right and verdict == "pass" else "declined"
+        # Where a decline is the right answer, only a failed check (say, an
+        # invented figure alongside it) stops it counting.
+        return "right" if calls.decline_right and verdict != "fail" else "declined"
     if verdict is None:
         return "uncovered"
     return "right" if verdict == "pass" else "wrong"

@@ -30,6 +30,11 @@ def _attempt(label="answered", offer=None, **checks):
     (_attempt("declined", expected_text_match=1.0), DEFAULT, "declined"),
     (_attempt("declined", expected_text_match=1.0), Calls(decline_right=True), "right"),
     (_attempt("declined", expected_text_match=0.0), Calls(decline_right=True), "declined"),
+    # Where a decline is right and no check gates (a Horizon-only text), it stands.
+    (_attempt("declined", expected_text_match=0.0),
+     Calls(text="horizon_only", decline_right=True), "right"),
+    (_attempt("answered", expected_text_match=1.0),
+     Calls(text="horizon_only", decline_right=True), "uncovered"),
     (_attempt("asked_back", offer=1.0), DEFAULT, "right"),
     (_attempt("asked_back", offer=0.0), DEFAULT, "declined"),
     # A Horizon-only text stops gating: the figure decides.
