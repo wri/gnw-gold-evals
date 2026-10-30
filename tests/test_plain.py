@@ -287,7 +287,7 @@ def test_sonnet_resumes_a_paused_turn_and_sums_usage():
     assert answer["reply"] == "1,500 ha" and not answer["stopped"]
     assert answer["usage"]["searches"] == 3 and answer["usage"]["requests"] == 2
     assert api.calls[0]["system"] == "You are Claude, a helpful assistant. Today's date is 2026-11-03."
-    assert {t["max_uses"] for t in api.calls[0]["tools"]} == {10}
+    assert {t["max_uses"] for t in api.calls[0]["tools"]} == {20}
 
 
 def test_sonnet_stops_at_a_dollar_with_no_reply():

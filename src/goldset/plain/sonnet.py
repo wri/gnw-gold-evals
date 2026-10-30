@@ -5,8 +5,9 @@ The request code is Craig's, from craigmmills/gnw-baseline-eval branch
 one system line and the question, so nothing from this machine (working
 directory, budget, email) leaks in, as it did under ``claude -p``. Changes
 for the plan (AJ, 2026-10-30): Sonnet 5.5; today's date in the system line,
-as claude.ai gives it, so "this month" means the run's month; at most 10
-searches and 10 fetches; and a question stops at $1.
+as claude.ai gives it, so "this month" means the run's month; at most 20
+searches and 20 fetches (AJ raised it from 10 after the estimate, where 3 of
+10 questions used every search); and a question stops at $1.
 
 The $1 stop can only act between requests: the server runs the search loop
 inside one request and pauses (``pause_turn``) after ten iterations, so a
@@ -38,8 +39,8 @@ PRICE_IN, PRICE_OUT = 2.0, 10.0
 CACHE_READ_MULT, CACHE_WRITE_MULT = 0.1, 1.25
 WEB_SEARCH_USD = 0.01
 
-MAX_SEARCHES = 10
-MAX_FETCHES = 10
+MAX_SEARCHES = 20
+MAX_FETCHES = 20
 FETCH_TOKEN_CAP = 12_000
 MAX_CONTINUATIONS = 5
 STOP_USD = 1.0
