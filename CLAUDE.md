@@ -24,9 +24,11 @@ set. The short version:
   `generation/README.md`), and `dataset` (dataset-selection prompts, phrased as
   "show X on the map", that should run `pick_dataset` alone; hand-authored in
   `seeds/challenge-dataset-v1.csv`), plus `monitoring` and `causal` (benchmark
-  v2026 cases, `seeds/benchmark-v2026-proposed.csv`; Batch 4 in the README)
-  and `portfolio` (many areas at once, from the v2026 BEF sheet; Batch 5).
-  Run one set with `gold run --set <name>`. Like
+  v2026 cases, `seeds/benchmark-v2026-proposed.csv`; Batch 4 in the README),
+  `portfolio` (many areas at once, from the v2026 benchmark sheet; Batch 5) and
+  `refusal` (how the agent declines: should-decline, alternatives,
+  should-answer and app-help cohorts; `seeds/challenge-refusal-v1.csv`;
+  Batch 6). Run one set with `gold run --set <name>`. Like
   `group`, `set` is never hashed into the uid.
 - Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
   never regression counts. Many cases are *expected to fail*: do not triage

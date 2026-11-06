@@ -1197,6 +1197,10 @@
       "dataset": {
         "overall": 0.8,
         "targets": {}
+      },
+      "refusal": {
+        "overall": null,
+        "targets": {}
       }
     },
     "overall": 0.7,

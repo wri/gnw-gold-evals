@@ -39,3 +39,8 @@ sets:
   dataset:
     overall: 0.80
     targets: {}
+  # refusal (added 2026-11-06): how the agent declines. Cohorts follow the
+  # 2026-11-06 priorities: should-decline (P1), alternatives (P2),
+  # should-answer (P3), app-help. No targets until the first baseline.
+  refusal:
+    targets: {}
