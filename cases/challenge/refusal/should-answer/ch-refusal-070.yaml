@@ -1,18 +1,23 @@
 id: ch-refusal-070
-uid: 2dc06280379c3974
+uid: 303291230d109d46
 status: ready
 set: refusal
 group: should-answer
-query: Show me the latest satellite imagery for Kuantan Singingi
+query: What was the natural grassland extent in Mongolia in 2022?
 expected:
-  aoi_ids: IDN.24.7_1
-  text: Shows recent Sentinel-2 imagery for the district and does not say the area is too
-    large or imagery is unavailable.
+  aoi_ids: MNG
+  dataset_id: '2'
+  data_pull: 'TRUE'
+  scope: analyse
+  text: Gives the natural grassland extent for 2022 and does not say the data is unavailable.
 notes:
   difficulty: easy
   behaviour: answer
-  family: imagery
+  family: data
   priority: P3
-  lineage: imagery control (district well under the size cap)
-  verified: prod /api/aois 2026-11-06
+  lineage: 'counterpart to ch-refusal-041 (grassland 2025: decline): the last year in range
+    must still be answered'
+  verified: local DB 2026-11-06 (zeno-data, GADM); catalog zeno@6942ee47 2026-11-06
   source_tab: challenge-refusal-v1
+  replaced: '2026-11-06 (AJ: P3 answerable locally): was recent Sentinel-2 imagery for Kuantan
+    Singingi; local imagery needs MOSAIC_S3_BUCKET'

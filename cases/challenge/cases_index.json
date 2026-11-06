@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "9a1277366ed183b1",
+  "caseset_version": "a411262120dc945b",
   "case_count": 1028,
   "cases": [
     {
@@ -21954,13 +21954,13 @@
     },
     {
       "id": "ch-refusal-064",
-      "uid": "bee7a8f81e19f9dd",
+      "uid": "5944b8924daa37cf",
       "set": "refusal",
       "group": "should-answer",
       "status": "ready",
       "difficulty": "medium",
       "behaviour": "answer",
-      "query": "Compare tree cover loss between Wassa Amenfi West and Prestea-Huni Valley districts in Ghana from 2015 to 2024",
+      "query": "Compare tree cover loss between Altamira and São Félix do Xingu in Pará, Brazil, from 2015 to 2024",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -21983,13 +21983,13 @@
     },
     {
       "id": "ch-refusal-065",
-      "uid": "a816a86f93268703",
+      "uid": "58cbc9b0d26e1e6f",
       "set": "refusal",
       "group": "should-answer",
       "status": "ready",
       "difficulty": "easy",
       "behaviour": "answer",
-      "query": "How much tree cover was lost in the Tapajós National Forest (Floresta Nacional do Tapajós) between 2015 and 2024?",
+      "query": "What is the land use change emission factor for cocoa in Ghana for 2024?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -22007,7 +22007,7 @@
       ],
       "intent": "refusal",
       "dataset_ids": [
-        "4"
+        "9"
       ]
     },
     {
@@ -22122,23 +22122,32 @@
     },
     {
       "id": "ch-refusal-070",
-      "uid": "2dc06280379c3974",
+      "uid": "303291230d109d46",
       "set": "refusal",
       "group": "should-answer",
       "status": "ready",
       "difficulty": "easy",
       "behaviour": "answer",
-      "query": "Show me the latest satellite imagery for Kuantan Singingi",
+      "query": "What was the natural grassland extent in Mongolia in 2022?",
       "expected_fields": [
         "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "scope",
         "text"
       ],
       "implied_checks": [
+        "answered_without_data",
         "aoi_id_match",
-        "expected_text_match"
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ],
       "intent": "refusal",
-      "dataset_ids": []
+      "dataset_ids": [
+        "2"
+      ]
     },
     {
       "id": "ch-refusal-071",

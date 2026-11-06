@@ -1,5 +1,5 @@
 {
-  "caseset_version": "9a1277366ed183b1",
+  "caseset_version": "a411262120dc945b",
   "case_count": 1028,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -6480,14 +6480,14 @@
     },
     {
       "id": "ch-refusal-064",
-      "uid": "bee7a8f81e19f9dd",
+      "uid": "5944b8924daa37cf",
       "set": "refusal",
       "group": "should-answer",
       "status": "ready"
     },
     {
       "id": "ch-refusal-065",
-      "uid": "a816a86f93268703",
+      "uid": "58cbc9b0d26e1e6f",
       "set": "refusal",
       "group": "should-answer",
       "status": "ready"
@@ -6522,7 +6522,7 @@
     },
     {
       "id": "ch-refusal-070",
-      "uid": "2dc06280379c3974",
+      "uid": "303291230d109d46",
       "set": "refusal",
       "group": "should-answer",
       "status": "ready"

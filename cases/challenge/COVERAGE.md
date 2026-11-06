@@ -6,7 +6,7 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version 9a1277366ed183b1` · 1028 cases · ready 993 · todo 35 · **1028 active** (everything but `not doing` runs by default)
+`caseset_version a411262120dc945b` · 1028 cases · ready 993 · todo 35 · **1028 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-11-18_
 
@@ -104,15 +104,15 @@ exists.
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 271 | 0 | 271 | 26% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 294 | 0 | 294 | 29% |
+| scope | 295 | 0 | 295 | 29% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 719 | dataset_id_match |
+| dataset_id | 720 | dataset_id_match |
 | aoi_ids | 622 | aoi_id_match |
-| data_pull | 523 | data_pull_exists, answered_without_data |
+| data_pull | 524 | data_pull_exists, answered_without_data |
 | start_date | 326 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | end_date | 325 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | text | 270 | expected_text_match |
@@ -121,7 +121,7 @@ exists.
 | figure | 172 | figure_match (computed from the agent's own pulled table) |
 | figure_claim | 66 | figure_claim_match (the conclusion the pulled data supports) |
 | date_tolerance_days | 44 | date_extraction (days a window may fall short of a bound) |
-| scope | 40 | scope_match |
+| scope | 41 | scope_match |
 | dataset_parameters | 37 | dataset_parameter_match |
 | accept_nudge_offering | 20 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | clarification | 15 | clarification_requested |
@@ -159,14 +159,14 @@ answer-graded column) exercise the other three.
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
 | 1 | Global land cover | 52 | 3 | — | — |
-| 2 | Global natural/semi-natural grassland extent | 55 | 2 | — | — |
+| 2 | Global natural/semi-natural grassland extent | 56 | 3 | — | — |
 | 3 | SBTN Natural Lands Map | 50 | 3 | — | — |
-| 4 | Tree cover loss | 176 | 27 | canopy_cover ×14 | primary_forest ×28, intact_forest ×4, natural_forest ×3 |
+| 4 | Tree cover loss | 175 | 26 | canopy_cover ×14 | primary_forest ×28, intact_forest ×4, natural_forest ×3 |
 | 5 | Tree cover gain | 42 | 1 | — | — |
 | 6 | Forest greenhouse gas net flux | 47 | 2 | canopy_cover ×5 | — |
 | 7 | Tree cover | 48 | 5 | canopy_cover ×10 | primary_forest ×8 |
 | 8 | Tree cover loss by dominant driver | 63 | 20 | canopy_cover ×4 | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 42 | 9 | — | — |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 43 | 10 | — | — |
 | 10 | Tree cover loss due to fires | 71 | 6 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
 | 11 | Integrated alerts | 107 | 20 | — | natural_lands ×2 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
