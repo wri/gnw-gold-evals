@@ -1,0 +1,19 @@
+id: ch-refusal-009
+uid: 01383b57257d8f99
+status: ready
+set: refusal
+group: should-decline
+query: How many people migrated because of deforestation between 2010 and 2020?
+expected:
+  text: Says there is no migration or population data and gives no figure or estimate of the
+    number of people who migrated.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Oct 2026: migration figure answered from research'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

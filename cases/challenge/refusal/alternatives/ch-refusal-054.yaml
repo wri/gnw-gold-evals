@@ -1,0 +1,18 @@
+id: ch-refusal-054
+uid: e32d5b48ccc194ef
+status: ready
+set: refusal
+group: alternatives
+query: I want to prioritise sites for rangeland restoration in southern Kenya and northern
+  Tanzania. What can you show me?
+expected:
+  text: Offers Global Nature Watch data for the area, such as natural grassland extent or
+    land cover change, rather than only summarising published research.
+notes:
+  difficulty: hard
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Oct 2026: answered from research only'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,23 @@
+id: ch-refusal-066
+uid: c7ffaf29efd3670d
+status: ready
+set: refusal
+group: should-answer
+query: Show integrated alerts on natural lands only in Ucayali, Peru, from July to September
+  2026
+expected:
+  aoi_ids: PER.26_1
+  dataset_id: '11'
+  context_layer: natural_lands
+  start_date: '2026-07-01'
+  end_date: '2026-09-30'
+  data_pull: 'TRUE'
+  scope: analyse
+notes:
+  difficulty: medium
+  behaviour: answer
+  family: data
+  priority: P3
+  lineage: natural_lands filter control for the alerts-primary decline
+  verified: prod /api/aois 2026-11-06; catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

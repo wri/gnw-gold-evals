@@ -1,0 +1,19 @@
+id: ch-refusal-036
+uid: 51770373b43a2ba6
+status: ready
+set: refusal
+group: should-decline
+query: Occupation du sol en 2005 dans le département du Wouri, Cameroun
+expected:
+  text: Says land cover is available only for 2015 and 2024 and gives no 2005 land cover figures.
+    It may offer tree cover in 2000.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: beyond-coverage
+  priority: P1
+  lineage: 'traces Sep 2026: LULC 2005'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

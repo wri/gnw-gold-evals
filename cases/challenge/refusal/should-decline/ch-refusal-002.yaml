@@ -1,0 +1,19 @@
+id: ch-refusal-002
+uid: 1286b15afb49132d
+status: ready
+set: refusal
+group: should-decline
+query: Berapa curah hujan rata-rata di Kalimantan Timur tahun 2024?
+expected:
+  text: Says plainly that there is no rainfall or precipitation data and gives no rainfall
+    figure for East Kalimantan.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Oct 2026: weather asks in Indonesian'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,20 @@
+id: ch-refusal-014
+uid: f521dfba9bbe688c
+status: ready
+set: refusal
+group: should-decline
+query: Where are the manganese mines in South Africa?
+expected:
+  text: Says there is no map of manganese mine sites and does not list mine locations as data.
+    It may offer tree cover loss from hard commodities (mining and energy), or mining concession
+    areas where available.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Oct 2026: mine sites answered from research'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

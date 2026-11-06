@@ -1,6 +1,6 @@
 {
-  "caseset_version": "d1d6c95aaad4cdce",
-  "case_count": 949,
+  "caseset_version": "9a1277366ed183b1",
+  "case_count": 1028,
   "source": "challenge-map-v1.csv",
   "cases": [
     {
@@ -6035,6 +6035,559 @@
       "uid": "6e8dd39b0b006835",
       "set": "quantification",
       "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-001",
+      "uid": "9b555b955273b485",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-002",
+      "uid": "1286b15afb49132d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-003",
+      "uid": "9980492b9d21d665",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-004",
+      "uid": "a73b04374f1ce783",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-005",
+      "uid": "4caa47237d7c8744",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-006",
+      "uid": "4c10eeccc9ad1d06",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-007",
+      "uid": "55e585168807bfff",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-008",
+      "uid": "216c7ac4bf5a4414",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-009",
+      "uid": "01383b57257d8f99",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-010",
+      "uid": "7b73065d6c7da087",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-011",
+      "uid": "2d961b911fa52c0f",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-012",
+      "uid": "0f7ecdf74f8a022d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-013",
+      "uid": "99d878df278d0325",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-014",
+      "uid": "f521dfba9bbe688c",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-015",
+      "uid": "404a85c33f671832",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-016",
+      "uid": "eda1776aa8f299b2",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-017",
+      "uid": "7aeaff21ad31238d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-018",
+      "uid": "3994da6488e813f3",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-019",
+      "uid": "2c8b74d28b4eacc9",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-020",
+      "uid": "3ff54e3769373118",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-021",
+      "uid": "89162870e9de41a5",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-022",
+      "uid": "c56ddbd1b6ef880e",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-023",
+      "uid": "98307e0ed68c04a4",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-024",
+      "uid": "ecda599c3a9d3eac",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-025",
+      "uid": "54852a11ead9adba",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-026",
+      "uid": "071d891dadb32c60",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-027",
+      "uid": "056d35e6a66b95d1",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-028",
+      "uid": "c8dd79afc28a1474",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-029",
+      "uid": "d8b96b225abbeaee",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-030",
+      "uid": "1419aa5ebf0a7bd1",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-031",
+      "uid": "434e6bd05d493b7c",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-032",
+      "uid": "4c3c6de23750a558",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-033",
+      "uid": "a3ef6ac011f7f19a",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-034",
+      "uid": "5ee747da427bfbcd",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-035",
+      "uid": "0d81bf0cca818489",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-036",
+      "uid": "51770373b43a2ba6",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-037",
+      "uid": "493577ce5acb5e7f",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-038",
+      "uid": "ce1c90c9d789cf70",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-039",
+      "uid": "8fc56c7b7cec0f06",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-040",
+      "uid": "c322dc0299e5a51f",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-041",
+      "uid": "a04323795f6e83c8",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-042",
+      "uid": "f853c8cca3f05787",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-043",
+      "uid": "d3f38906c985a930",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-044",
+      "uid": "58197fe11bd3e939",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-045",
+      "uid": "3a3d2eefa45e4d5b",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-046",
+      "uid": "adbaf93701c0784d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-047",
+      "uid": "ed889f433a2d0fc5",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-048",
+      "uid": "7169e44364929867",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-049",
+      "uid": "951ad89a8671bce6",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-050",
+      "uid": "aad4fab8b2545afc",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-051",
+      "uid": "a4614d8c10b45144",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-052",
+      "uid": "a42a96d3dbfed674",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-053",
+      "uid": "fd1bf0e052442e2e",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-054",
+      "uid": "e32d5b48ccc194ef",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-055",
+      "uid": "aeba3b15f8744e9a",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-056",
+      "uid": "ea5ad69e2ca42c18",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-057",
+      "uid": "b700797cfa11e10d",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-058",
+      "uid": "0bddc7a71abf5024",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-059",
+      "uid": "d11aa3606eccd557",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-060",
+      "uid": "a1125f823f864915",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-061",
+      "uid": "f5fdf07b9b9a1e29",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-062",
+      "uid": "ba410949732172b3",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-063",
+      "uid": "ba9387bff8e1482b",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-064",
+      "uid": "bee7a8f81e19f9dd",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-065",
+      "uid": "a816a86f93268703",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-066",
+      "uid": "c7ffaf29efd3670d",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-067",
+      "uid": "fd29cc4fd9cb284f",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-068",
+      "uid": "f532f8d613c82990",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-069",
+      "uid": "115cf03cd822a20e",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-070",
+      "uid": "2dc06280379c3974",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-071",
+      "uid": "8a0e62ccbd2740ba",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-072",
+      "uid": "8585742f2fa251bc",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-073",
+      "uid": "a7d5f47788448a75",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-074",
+      "uid": "1b45ab80ac9174ee",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-075",
+      "uid": "7641c34caa2bf880",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-076",
+      "uid": "7fd7b7decc2b0d6e",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-077",
+      "uid": "414cb9b424889b9b",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-078",
+      "uid": "9e3a4fc36233e320",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready"
+    },
+    {
+      "id": "ch-refusal-079",
+      "uid": "89a9eb3c620c63ae",
+      "set": "refusal",
+      "group": "app-help",
       "status": "ready"
     },
     {

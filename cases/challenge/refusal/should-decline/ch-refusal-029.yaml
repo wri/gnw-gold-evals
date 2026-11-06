@@ -1,0 +1,17 @@
+id: ch-refusal-029
+uid: d8b96b225abbeaee
+status: ready
+set: refusal
+group: should-decline
+query: Give me the land cover for every year from 2015 to 2024 in Rowan County, North Carolina
+expected:
+  text: Says land cover is available only for 2015 and 2024, not for each year, and gives
+    no figures for the years in between.
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: invented-estimate
+  priority: P1
+  lineage: 'traces Oct-Nov 2026: annual land cover asks'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,18 @@
+id: ch-refusal-051
+uid: a4614d8c10b45144
+status: ready
+set: refusal
+group: alternatives
+query: Garimpo em áreas protegidas na Amazônia brasileira
+expected:
+  text: Says there is no dedicated map of artisanal mining (garimpo). Offers tree cover loss
+    attributed to hard commodities (mining and energy) and/or integrated alerts, without presenting
+    either as a garimpo map.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Sep 2026: garimpo; driver class not offered'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

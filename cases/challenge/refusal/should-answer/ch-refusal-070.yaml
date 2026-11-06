@@ -1,0 +1,18 @@
+id: ch-refusal-070
+uid: 2dc06280379c3974
+status: ready
+set: refusal
+group: should-answer
+query: Show me the latest satellite imagery for Kuantan Singingi
+expected:
+  aoi_ids: IDN.24.7_1
+  text: Shows recent Sentinel-2 imagery for the district and does not say the area is too
+    large or imagery is unavailable.
+notes:
+  difficulty: easy
+  behaviour: answer
+  family: imagery
+  priority: P3
+  lineage: imagery control (district well under the size cap)
+  verified: prod /api/aois 2026-11-06
+  source_tab: challenge-refusal-v1

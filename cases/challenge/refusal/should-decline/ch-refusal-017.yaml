@@ -1,0 +1,19 @@
+id: ch-refusal-017
+uid: 7aeaff21ad31238d
+status: ready
+set: refusal
+group: should-decline
+query: Will Madagascar have more wildfires in the next 10 years than in the past?
+expected:
+  text: Says it cannot forecast future fires and gives no prediction of more or fewer fires.
+    It may offer the historical record of tree cover loss due to fires from 2001 to 2025.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: forecast-opinion
+  priority: P1
+  lineage: 'traces Oct 2026: fire forecast answered from research'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

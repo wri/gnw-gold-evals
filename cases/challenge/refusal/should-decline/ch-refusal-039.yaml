@@ -1,0 +1,18 @@
+id: ch-refusal-039
+uid: 8fc56c7b7cec0f06
+status: ready
+set: refusal
+group: should-decline
+query: Berapa kehilangan tutupan pohon per kecamatan di Kabupaten Natuna?
+expected:
+  text: Says the analysis goes down to district (kabupaten) level, not sub-district (kecamatan),
+    and gives no per-kecamatan figures.
+  scope: refuse;suggest
+notes:
+  difficulty: hard
+  behaviour: decline
+  family: beyond-coverage
+  priority: P1
+  lineage: 'traces Sep 2026: per-kecamatan breakdown (analytics takes GADM 0-2)'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

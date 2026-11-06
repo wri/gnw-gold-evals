@@ -1,0 +1,21 @@
+id: ch-refusal-063
+uid: ba9387bff8e1482b
+status: ready
+set: refusal
+group: should-answer
+query: Quero ver os alertas integrados de janeiro a setembro de 2026 no Pará
+expected:
+  aoi_ids: BRA.14_1
+  dataset_id: '11'
+  start_date: '2026-01-01'
+  end_date: '2026-09-30'
+  data_pull: 'TRUE'
+  scope: analyse
+notes:
+  difficulty: medium
+  behaviour: answer
+  family: data
+  priority: P3
+  lineage: 'traces Aug-Oct 2026: 2026 alerts refused'
+  verified: prod /api/aois 2026-11-06; catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

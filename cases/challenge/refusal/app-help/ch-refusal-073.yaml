@@ -1,0 +1,18 @@
+id: ch-refusal-073
+uid: a7d5f47788448a75
+status: ready
+set: refusal
+group: app-help
+query: Can you show the protected area boundaries in Panama on the map?
+expected:
+  text: Points to the Protected Areas boundary layer (Areas panel, Boundaries tab) or selects
+    protected areas in Panama. Does not say protected area boundaries are unavailable.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: guide
+  family: ui-answer
+  priority: P1/P3
+  lineage: 'traces Aug-Oct 2026: ''no protected areas layer'''
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

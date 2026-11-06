@@ -1,0 +1,19 @@
+id: ch-refusal-072
+uid: 8585742f2fa251bc
+status: ready
+set: refusal
+group: app-help
+query: Download chart (png) yang tampil serta data tabel (csv), kemudian siapkan email kepada
+  tim saya untuk mengirim data tersebut sebagai rekomendasi patroli
+expected:
+  text: Says it cannot download files or send email itself, points to the chart's Download
+    menu for CSV and PNG, and may offer to draft the email text.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: guide
+  family: ui-decline
+  priority: P1/P3
+  lineage: 'traces Oct 2026: download and email (workshop prompt)'
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

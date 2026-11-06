@@ -1,0 +1,18 @@
+id: ch-refusal-019
+uid: 2c8b74d28b4eacc9
+status: ready
+set: refusal
+group: should-decline
+query: Forecast the brown tree snake population on Guam for the next ten years
+expected:
+  text: Says it cannot forecast species populations and has no species data; gives no forecast.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: easy
+  behaviour: decline
+  family: forecast-opinion
+  priority: P1
+  lineage: 'traces Nov 2026: species forecast'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

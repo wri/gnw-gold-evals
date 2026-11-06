@@ -6,9 +6,9 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version d1d6c95aaad4cdce` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
+`caseset_version 9a1277366ed183b1` · 1028 cases · ready 993 · todo 35 · **1028 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-11-17_
+_Last updated: 2026-11-18_
 
 ## Groups
 
@@ -20,8 +20,10 @@ _Last updated: 2026-11-17_
 | alert_context | 3 | 3 | ready 3 |
 | alert_followup | 4 | 4 | ready 4 |
 | alert_method | 4 | 4 | ready 4 |
+| alternatives | 15 | 15 | ready 15 |
 | ambiguity | 11 | 11 | ready 11 |
 | ambiguous | 15 | 15 | ready 15 |
+| app-help | 9 | 9 | ready 9 |
 | buffer_unsupported | 2 | 2 | ready 2 |
 | by_confidence | 5 | 5 | ready 5 |
 | caveat_required | 3 | 3 | ready 3 |
@@ -62,6 +64,8 @@ _Last updated: 2026-11-17_
 | recent_summary | 1 | 1 | ready 1 |
 | recent_vs_prior | 4 | 4 | ready 4 |
 | saved-areas | 8 | 8 | todo 8 |
+| should-answer | 9 | 9 | ready 9 |
+| should-decline | 46 | 46 | ready 46 |
 | sluc | 36 | 36 | ready 36 |
 | sources | 15 | 15 | ready 15 |
 | spike_attribution | 3 | 3 | ready 3 |
@@ -96,27 +100,28 @@ exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 825 | 0 | 825 | 87% |
+| retrieval | 834 | 0 | 834 | 81% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 195 | 0 | 195 | 21% |
+| explanation | 271 | 0 | 271 | 26% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 245 | 0 | 245 | 26% |
+| scope | 294 | 0 | 294 | 29% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 712 | dataset_id_match |
-| aoi_ids | 613 | aoi_id_match |
-| data_pull | 516 | data_pull_exists, answered_without_data |
-| start_date | 323 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| end_date | 322 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| forbidden_tools | 200 | forbidden_tools_absent |
-| text | 194 | expected_text_match |
-| context_layer | 181 | context_layer_match |
+| dataset_id | 719 | dataset_id_match |
+| aoi_ids | 622 | aoi_id_match |
+| data_pull | 523 | data_pull_exists, answered_without_data |
+| start_date | 326 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| end_date | 325 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| text | 270 | expected_text_match |
+| forbidden_tools | 237 | forbidden_tools_absent |
+| context_layer | 183 | context_layer_match |
 | figure | 172 | figure_match (computed from the agent's own pulled table) |
 | figure_claim | 66 | figure_claim_match (the conclusion the pulled data supports) |
 | date_tolerance_days | 44 | date_extraction (days a window may fall short of a bound) |
+| scope | 40 | scope_match |
 | dataset_parameters | 37 | dataset_parameter_match |
 | accept_nudge_offering | 20 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | clarification | 15 | clarification_requested |
@@ -134,7 +139,6 @@ exists.
 | dashboard_widgets | 0 ← unused | dashboard_widgets_match (+ dashboard_widgets_valid when a dashboard exists) |
 | dataset_name | 0 ← unused | reference only |
 | ground_truth | 0 ← unused | ground_truth_match, ground_truth_answer (info-only) |
-| scope | 0 ← unused | scope_match |
 | suggested_datasets | 0 ← unused | suggested_datasets_match (legacy: the agent now writes nudge; author nudge_type / nudge_options) |
 
 ## Dataset coverage (project-zeno catalog)
@@ -157,19 +161,19 @@ answer-graded column) exercise the other three.
 | 1 | Global land cover | 52 | 3 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 55 | 2 | — | — |
 | 3 | SBTN Natural Lands Map | 50 | 3 | — | — |
-| 4 | Tree cover loss | 172 | 24 | canopy_cover ×14 | primary_forest ×28, intact_forest ×4, natural_forest ×2 |
+| 4 | Tree cover loss | 176 | 27 | canopy_cover ×14 | primary_forest ×28, intact_forest ×4, natural_forest ×3 |
 | 5 | Tree cover gain | 42 | 1 | — | — |
 | 6 | Forest greenhouse gas net flux | 47 | 2 | canopy_cover ×5 | — |
 | 7 | Tree cover | 48 | 5 | canopy_cover ×10 | primary_forest ×8 |
 | 8 | Tree cover loss by dominant driver | 63 | 20 | canopy_cover ×4 | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 42 | 9 | — | — |
 | 10 | Tree cover loss due to fires | 71 | 6 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
-| 11 | Integrated alerts | 104 | 19 | — | natural_lands ×1 |
+| 11 | Integrated alerts | 107 | 20 | — | natural_lands ×2 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
 
-0 active conversations (0 turns). Delta assertions: none
+5 active conversations (10 turns). Delta assertions: none
 
 ## Parked and held cases
 
@@ -213,7 +217,7 @@ answer-graded column) exercise the other three.
 
 ## Known gaps
 
-- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, ground_truth, scope, suggested_datasets.
+- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, ground_truth, suggested_datasets.
   Their checks cannot fire until a case sets the field. Leave
   `suggested_datasets` unused: it is legacy (the agent now writes
   `nudge`), so author `nudge_type` / `nudge_options` instead.
