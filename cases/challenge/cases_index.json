@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "a411262120dc945b",
+  "caseset_version": "8a909a3c6658e9e2",
   "case_count": 1028,
   "cases": [
     {
@@ -21315,21 +21315,30 @@
     },
     {
       "id": "ch-refusal-032",
-      "uid": "4c3c6de23750a558",
+      "uid": "4506389adf12f5e4",
       "set": "refusal",
-      "group": "should-decline",
+      "group": "should-answer",
       "status": "ready",
       "difficulty": "hard",
-      "behaviour": "decline",
+      "behaviour": "answer",
       "query": "Which company owns the oil palm concession that burned the most in Aceh Selatan between 2016 and 2025?",
       "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "scope",
         "text"
       ],
       "implied_checks": [
-        "expected_text_match"
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
       ],
       "intent": "refusal",
-      "dataset_ids": []
+      "dataset_ids": [
+        "10"
+      ]
     },
     {
       "id": "ch-refusal-033",

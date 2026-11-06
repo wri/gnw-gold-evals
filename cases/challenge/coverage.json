@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "a411262120dc945b",
+  "caseset_version": "8a909a3c6658e9e2",
   "case_count": 1028,
   "statuses": {
     "ready": 993,
@@ -414,18 +414,18 @@
     },
     {
       "group": "should-answer",
-      "cases": 9,
-      "active": 9,
+      "cases": 10,
+      "active": 10,
       "statuses": {
-        "ready": 9
+        "ready": 10
       }
     },
     {
       "group": "should-decline",
-      "cases": 46,
-      "active": 46,
+      "cases": 45,
+      "active": 45,
       "statuses": {
-        "ready": 46
+        "ready": 45
       }
     },
     {
@@ -578,7 +578,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 834,
+      "dedicated": 835,
       "shared_only": 0
     },
     "analysis": {
@@ -594,14 +594,14 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 295,
+      "dedicated": 296,
       "shared_only": 0
     }
   },
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 720,
+      "cases": 721,
       "switches_on": "dataset_id_match"
     },
     {
@@ -611,7 +611,7 @@
     },
     {
       "field": "data_pull",
-      "cases": 524,
+      "cases": 525,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
@@ -656,7 +656,7 @@
     },
     {
       "field": "scope",
-      "cases": 41,
+      "cases": 42,
       "switches_on": "scope_match"
     },
     {
@@ -883,8 +883,8 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 71,
-        "answer_graded": 6,
+        "cases": 72,
+        "answer_graded": 7,
         "parameters": [
           {
             "name": "canopy_cover",

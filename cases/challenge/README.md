@@ -434,9 +434,9 @@ priorities set on 2026-11-06:
 
 | cohort | n | priority | what passes |
 |---|---|---|---|
-| should-decline | 46 | P1 | says plainly what is not available and gives no figure for it (families: no-data, forecast-opinion, invented-estimate, verdict, beyond-coverage, pushback) |
+| should-decline | 45 | P1 | says plainly what is not available and gives no figure for it (families: no-data, forecast-opinion, invented-estimate, verdict, beyond-coverage, pushback) |
 | alternatives | 15 | P2 | declines and offers the right alternative, described correctly (dataset and imagery families) |
-| should-answer | 9 | P3 | does the analysis or shows the imagery instead of declining |
+| should-answer | 10 | P3 | does the analysis or shows the imagery instead of declining |
 | app-help | 9 | P1/P3 | gives UI steps only for what the app has (verified against project-zeno-next main), and says so when it has no such feature |
 
 Behaviours (`notes.behaviour`):
@@ -456,10 +456,11 @@ Scoring decisions and gaps:
 - `scope: refuse;suggest` only means "no data pull". An answer written from
   general knowledge or blog search with no pull also classifies as `refuse`,
   so `text` carries the P1 judgement on every decline row.
-- `text` is judged (Haiku) on 76 of the 79 rows. The 7 `should-answer` data
+- `text` is judged (Haiku) on 76 of the 79 rows. Seven `should-answer` data
   rows also carry deterministic `aoi_ids`, `dataset_id` and pull checks, and
-  the 2 imagery rows carry `aoi_ids`. All `aoi_ids` were verified against
-  prod `/api/aois` on 2026-11-06.
+  the 2 imagery rows carry `aoi_ids`. `ch-refusal-032` (a concession named in
+  the data) carries `dataset_id` and pull checks but no `aoi_ids`. All
+  `aoi_ids` were verified against prod `/api/aois` on 2026-11-06.
 - There is no required-tool check, so the imagery rows rely on `text`.
 - `forbidden_tools` on multi-turn rows would see turn 1's calls, so the five
   pushback rows score `text` per turn only.
