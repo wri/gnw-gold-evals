@@ -717,10 +717,10 @@
   "dataset_coverage": {
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",
-      "ref": "origin/main",
+      "ref": "fa78c816186461dab120523ccad75fe274e6058c",
       "sha": "fa78c816186461dab120523ccad75fe274e6058c",
       "path": "src/agent/datasets/catalog",
-      "synced": "2026-10-24"
+      "synced": "2026-10-30"
     },
     "datasets": [
       {
