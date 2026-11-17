@@ -41,8 +41,8 @@ cited. Terms are defined in the [README glossary](../../../README.md#glossary).
   timeout block once mimicked a capability loss).
 
 ```bash
-uv run gold run --env staging --build "<label>"              # smoke
-uv run gold run --env staging --trials 3 --build "<label>"   # official
+uv run gold run --suite gold --env staging --build "<label>"              # smoke
+uv run gold run --suite gold --env staging --trials 3 --build "<label>"   # official
 ```
 
 ## 2. During the run
@@ -60,9 +60,9 @@ Run all four, in order:
 1. **Reports:**
    ```bash
    uv run python tools/render_html.py results/gold/runs/<run_id>.json
-   uv run python tools/render_html.py --all
-   uv run python tools/render_inspector.py --all
-   uv run python tools/render_trends.py
+   uv run python tools/render_html.py --all --suite gold
+   uv run python tools/render_inspector.py --all --suite gold
+   uv run python tools/render_trends.py --suite gold
    ```
 2. **Flakiness + diff:**
    ```bash

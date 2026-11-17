@@ -54,7 +54,7 @@ measures: [evaluators README index](../../../src/goldset/evaluators/README.md#in
 
 ## 4. Verify before `done`
 
-- Run it: `uv run gold run --env staging --id <id> --verbose`. The expected
+- Run it: `uv run gold run --suite gold --env staging --id <id> --verbose`. The expected
   `answer` must come from a verified measurement (this run, or the analytics
   API directly).
 - Status ladder: land as `ready` (or `todo` with a dated blocking note) if
@@ -67,6 +67,6 @@ measures: [evaluators README index](../../../src/goldset/evaluators/README.md#in
 ## 5. Finish with the lifecycle ritual
 
 Hand off to the **case-edit** skill, or run its ritual yourself:
-`check.py --fix`, then `coverage_doc.py`, then `audit_cases.py --strict`,
+`check.py --fix --suite gold`, then `coverage_doc.py --suite gold`, then `audit_cases.py --strict`,
 then commit the case, `MANIFEST.json` and `COVERAGE.md` together.
 `tests/test_schema.py` validates the file shape in CI.

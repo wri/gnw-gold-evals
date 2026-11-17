@@ -38,7 +38,8 @@ caffeinate -i uv run evals run --suite benchmark --env prod --trials 3 --workers
 
 The run goes to `results/benchmark/runs/<run_id>.json`. Watch for `[ERROR]`
 rows. If the run is killed, finish it with `uv run evals run --suite benchmark
---resume <run_id>`. The results directory must match the original run.
+--resume <run_id>`. With no other flag it searches the three ledgers and uses a single match;
+`--suite` or `--results-dir` narrows it.
 
 ## 3. After the run (all on the machine that ran it)
 
@@ -86,7 +87,7 @@ before a freeze. Then do steps 3 and 4 above.
 ## Guardrails
 
 - The frontend shows a run only after a frontend release pins it in
-  `model/releases.ts` to a gold commit. Committing here does not publish it.
+  `src/features/ai-accuracy-scorecards/model/releases.ts` (wri/project-zeno-next) to a commit of this repo. Committing here does not publish it.
 - The frontend parses the page files strictly. A change to the page shape
   (`tools/benchmark_page.py`) is a cross-repo contract change: it needs a
   frontend change in the same cycle.
