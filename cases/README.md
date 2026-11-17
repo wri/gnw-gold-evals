@@ -89,7 +89,63 @@ field. Check this table before you write one.
 
 `|` separates fair alternatives, any one of which passes, in `aoi_ids`, `context_layer`, `accept_nudge_offering` and `figure`; it binds looser than `;`. In `aoi_ids`, `/` lists one area's equivalent records inside a `;` set (`555697863/10906;2017` is two parks, the first under either of two records). Both came with the BENCHMARK reviews of October 2026 and are documented with each check in the [evaluators README](../src/goldset/evaluators/README.md#index).
 
-## Run-time ground truth (`ground_truth`)
+## Status lifecycle
+
+Every case has one of four statuses:
+
+- `ready`: written and expected to run. In GOLD it also means not yet verified at its current uid. In CHALLENGE a case that fails stays `ready`: failure is data, and there is no verified-passing status.
+- `todo`: held by a known problem; a dated `notes.status_reason` says what blocks it (in CHALLENGE, for example, a seeded test account the case needs, or an expected value not yet pinned).
+- `done`: GOLD only: verified at its current uid (see below).
+- `not doing`: parked (GOLD) or retired (CHALLENGE); runs skip it, and `notes.status_reason` says why.
+
+`evals run` runs every status except `not doing` (`--status-exclude`
+defaults to `not doing`), and the audit and COVERAGE.md count the same
+cases as active. CHALLENGE's canonical runs also leave out `todo`
+(`--status-exclude "not doing,todo"`), and a BENCHMARK version takes only
+`ready` cases as members. In GOLD, `ready` and `todo` cases are run and
+scored like `done` ones; the progress line prints each case's status, so a
+failure on an unverified case reads differently. COVERAGE.md lists every
+`todo` and `not doing` case with its reason
+([CHALLENGE](challenge/COVERAGE.md#parked-and-held-cases),
+[GOLD](v2/COVERAGE.md#parked-and-held-cases)).
+
+**Parking.** Set `status: not doing` when a case cannot earn a verdict,
+and always write a dated `notes.status_reason` with the evidence: which
+run, what the agent did on how many trials, and why no prompt edit can fix
+it (or what would). `cases/v2/parent-child/1-011.yaml` has a good GOLD example.
+Notes are never hashed, so parking does not change the uid.
+
+**Unparking.** Treat it as probation: re-test the reason the case was
+parked, and do not assume it is fixed. An edit that does not touch that
+reason (closing the date window on a case parked for an ambiguous AOI,
+say) leaves the case parked. An unparked case returns as `ready` (or
+`todo`) and earns `done` like any other.
+
+## After an edit
+
+After any change to a case file (query, expected values, status, set, group, notes, or a new or deleted case), run these for the store you changed, and commit their output in the same commit as the edit:
+
+```bash
+# CHALLENGE
+uv run python tools/check.py --fix --suite challenge      # uids and MANIFEST.json
+uv run python tools/coverage_doc.py --suite challenge     # COVERAGE.md, coverage.json, cases_index.json
+uv run python tools/check_benchmark.py                    # BENCHMARK members still match their cases
+
+# GOLD (legacy copy): cases/v2 only
+uv run python tools/check.py --fix --suite gold
+uv run python tools/coverage_doc.py --suite gold
+uv run python tools/audit_cases.py --strict               # the depth rule and DON'Ts
+```
+
+`check_benchmark.py` is needed because editing the query or an expected value of a `ready` case that a draft BENCHMARK version lists gives the case a new uid, so the draft no longer runs it. The tool warns on a draft and fails on a frozen version. CI runs all of these (without `--fix`) and fails the PR when one is out of date. The audit is described in [GOLD-AUTHORING.md, The audit gate](GOLD-AUTHORING.md#the-audit-gate).
+
+## The catalogue snapshot
+
+`cases/zeno_catalog.json` is a committed copy of the agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` in wri/project-zeno), so COVERAGE.md can measure dataset coverage without network access. It also holds each dataset's analytics endpoint and date window, from which ground-truth requests are built. When project-zeno adds, removes or changes a dataset, run `uv run python tools/sync_zeno_catalog.py`, then `coverage_doc.py` for each store, and commit them together. The sync reads `origin/main` of a sibling `../project-zeno` checkout with `git show` and never touches its working tree.
+
+## GOLD legacy copy only
+
+### Run-time ground truth (`ground_truth`)
 
 A numeric case can name **which figure** it is about instead of **what value**
 that figure has. The harness fetches the number from the analytics API before
@@ -155,26 +211,6 @@ from the prompt, because that would redo the agent's own AOI resolution and let
 an AOI regression silently corrupt the ground truth. A case with no `aoi_ids` or
 no `aoi_source` aborts the run rather than guessing.
 
-## Status lifecycle
-
-Every case has one of four statuses:
-
-- `ready`: written and expected to run. In GOLD it also means not yet verified at its current uid. In CHALLENGE a case that fails stays `ready`: failure is data, and there is no verified-passing status.
-- `todo`: held by a known problem; a dated `notes.status_reason` says what blocks it (in CHALLENGE, for example, a seeded test account the case needs, or an expected value not yet pinned).
-- `done`: GOLD only: verified at its current uid (see below).
-- `not doing`: parked (GOLD) or retired (CHALLENGE); runs skip it, and `notes.status_reason` says why.
-
-`evals run` runs every status except `not doing` (`--status-exclude`
-defaults to `not doing`), and the audit and COVERAGE.md count the same
-cases as active. CHALLENGE's canonical runs also leave out `todo`
-(`--status-exclude "not doing,todo"`), and a BENCHMARK version takes only
-`ready` cases as members. In GOLD, `ready` and `todo` cases are run and
-scored like `done` ones; the progress line prints each case's status, so a
-failure on an unverified case reads differently. COVERAGE.md lists every
-`todo` and `not doing` case with its reason
-([CHALLENGE](challenge/COVERAGE.md#parked-and-held-cases),
-[GOLD](v2/COVERAGE.md#parked-and-held-cases)).
-
 **Promoting to `done` (GOLD).** A case is `done` when it passes at its current
 uid on a 3-trial run with the same `ff` as the release baseline (today the
 default [profile](../README.md#profile), no `--ff`): every gating check
@@ -184,37 +220,3 @@ Cite the run_id and date in `notes.status_reason`, for example
 A 1-trial pass is a smoke signal, not verification. An edit that mints a
 new uid ends the verification: set the case back to `ready` until it
 passes again.
-
-**Parking.** Set `status: not doing` when a case cannot earn a verdict,
-and always write a dated `notes.status_reason` with the evidence: which
-run, what the agent did on how many trials, and why no prompt edit can fix
-it (or what would). `cases/v2/parent-child/1-011.yaml` has a good GOLD example.
-Notes are never hashed, so parking does not change the uid.
-
-**Unparking.** Treat it as probation: re-test the reason the case was
-parked, and do not assume it is fixed. An edit that does not touch that
-reason (closing the date window on a case parked for an ambiguous AOI,
-say) leaves the case parked. An unparked case returns as `ready` (or
-`todo`) and earns `done` like any other.
-
-## After an edit
-
-After any change to a case file (query, expected values, status, set, group, notes, or a new or deleted case), run these for the store you changed, and commit their output in the same commit as the edit:
-
-```bash
-# CHALLENGE
-uv run python tools/check.py --fix --suite challenge      # uids and MANIFEST.json
-uv run python tools/coverage_doc.py --suite challenge     # COVERAGE.md, coverage.json, cases_index.json
-uv run python tools/check_benchmark.py                    # BENCHMARK members still match their cases
-
-# GOLD (legacy copy): cases/v2 only
-uv run python tools/check.py --fix --suite gold
-uv run python tools/coverage_doc.py --suite gold
-uv run python tools/audit_cases.py --strict               # the depth rule and DON'Ts
-```
-
-`check_benchmark.py` is needed because editing the query or an expected value of a `ready` case that a draft BENCHMARK version lists gives the case a new uid, so the draft no longer runs it. The tool warns on a draft and fails on a frozen version. CI runs all of these (without `--fix`) and fails the PR when one is out of date. The audit is described in [GOLD-AUTHORING.md, The audit gate](GOLD-AUTHORING.md#the-audit-gate).
-
-## The catalogue snapshot
-
-`cases/zeno_catalog.json` is a committed copy of the agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` in wri/project-zeno), so COVERAGE.md can measure dataset coverage without network access. It also holds each dataset's analytics endpoint and date window, from which ground-truth requests are built. When project-zeno adds, removes or changes a dataset, run `uv run python tools/sync_zeno_catalog.py`, then `coverage_doc.py` for each store, and commit them together. The sync reads `origin/main` of a sibling `../project-zeno` checkout with `git show` and never touches its working tree.
