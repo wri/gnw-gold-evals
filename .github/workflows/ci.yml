@@ -67,7 +67,7 @@ jobs:
           API_TOKEN: ${{ secrets.API_TOKEN_STAGING }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          uv run gold run --env staging --trials 3 --workers "${{ inputs.workers }}" \
+          uv run gold run --suite gold --env staging --trials 3 --workers "${{ inputs.workers }}" \
             --build "${{ inputs.build_label }}"
       - name: Regression gate vs newest comparable committed run
         run: |
