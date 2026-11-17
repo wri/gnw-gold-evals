@@ -1,0 +1,1141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/wri/gnw-gold-evals/schema/benchmark_page.schema.json",
+  "title": "BENCHMARK page data",
+  "description": "results/benchmark/pages/<run_id>.json, written by tools/benchmark_page.py and parsed strictly by the accuracy-scorecards page in wri/project-zeno-next (src/features/ai-accuracy-scorecards/api/github-benchmark-gateway.ts, at a commit its model/releases.ts pins). A change here is a cross-repo contract change. Strict where the frontend is: required keys, enums, types. The frontend uses zod, which ignores unknown keys everywhere, so openness is not a frontend need: only the objects the frontend explicitly parses loosely are open here; the rest are closed so that a key the tool starts writing is noticed and reviewed before it ships. schema_version is 1 on every committed page although the shape grew, so the generations are told apart by their keys: the pages up to 20261026T183522Z lack the attempt keys (attempts, no_answer, attempt_errors), and 20261023T094447Z also lacks per-question run_id. The root's if/then makes the current generation, marked by summary.attempts, require them everywhere.",
+  "allOf": [
+    {
+      "$ref": "#/$defs/page"
+    },
+    {
+      "if": {
+        "properties": {
+          "summary": {
+            "required": [
+              "attempts"
+            ]
+          }
+        },
+        "required": [
+          "summary"
+        ]
+      },
+      "then": {
+        "properties": {
+          "summary": {
+            "required": [
+              "attempts",
+              "no_answer"
+            ]
+          },
+          "types": {
+            "items": {
+              "if": {
+                "properties": {
+                  "measured": {
+                    "const": true
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "attempts",
+                  "no_answer"
+                ]
+              }
+            }
+          },
+          "use_cases": {
+            "items": {
+              "required": [
+                "attempts",
+                "no_answer"
+              ]
+            }
+          },
+          "questions": {
+            "items": {
+              "required": [
+                "attempt_errors",
+                "run_id"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "page": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "description": "The frontend refuses any other value (PAGE_SCHEMA_VERSION). The tool's SCHEMA_VERSION has stayed 1 while the shape grew; the generations are told apart by their keys, see the version branch."
+        },
+        "generated_by": {
+          "const": "tools/benchmark_page.py"
+        },
+        "run": {
+          "$ref": "#/$defs/run"
+        },
+        "benchmark": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "manifest_sha": {
+              "type": "string"
+            },
+            "members": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "excluded": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "version",
+            "status",
+            "manifest_sha",
+            "members",
+            "excluded"
+          ],
+          "additionalProperties": true,
+          "description": "Open: z.looseObject in the frontend. version, members and excluded are read."
+        },
+        "summary": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/group"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "consistency": {
+                  "type": "object",
+                  "properties": {
+                    "complete": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "clean": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "complete",
+                    "clean"
+                  ],
+                  "additionalProperties": false
+                },
+                "attempt_rates": {
+                  "type": "array",
+                  "items": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1
+                  }
+                },
+                "datasets_covered": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "consistency",
+                "attempt_rates",
+                "datasets_covered"
+              ]
+            }
+          ],
+          "description": "Whole-run stats. Open (z.looseObject in the frontend): the group stats are read; consistency, attempt_rates and datasets_covered are not."
+        },
+        "stages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "key": {
+                "enum": [
+                  "scope",
+                  "retrieval",
+                  "analysis",
+                  "explanation",
+                  "output"
+                ]
+              },
+              "checked": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "passed": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "first_failures": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "key",
+              "checked",
+              "passed",
+              "first_failures"
+            ],
+            "additionalProperties": true,
+            "description": "Open: z.looseObject in the frontend, which reads key and checked."
+          }
+        },
+        "unattributed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "types": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/type_measured"
+              },
+              {
+                "$ref": "#/$defs/type_unmeasured"
+              }
+            ]
+          }
+        },
+        "use_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/use_case"
+          }
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/question"
+          }
+        }
+      },
+      "required": [
+        "schema_version",
+        "generated_by",
+        "run",
+        "benchmark",
+        "summary",
+        "stages",
+        "unattributed",
+        "types",
+        "use_cases",
+        "questions"
+      ],
+      "additionalProperties": true,
+      "description": "Open at the root (z.looseObject in the frontend)."
+    },
+    "failure_counts": {
+      "type": "object",
+      "propertyNames": {
+        "enum": [
+          "scope",
+          "retrieval",
+          "analysis",
+          "explanation",
+          "output",
+          "unattributed"
+        ]
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "description": "A partial record: the tool leaves zero counts out and the frontend zero-fills them (z.partialRecord), so an unknown stage key is rejected."
+    },
+    "group": {
+      "type": "object",
+      "properties": {
+        "scored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "errors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Added with the attempt-error work (page 20261027T103249Z and later); see the version branch at the root."
+        },
+        "no_answer": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "As attempts."
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "majority": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "every_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "any_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "failure_modes": {
+          "$ref": "#/$defs/failure_counts"
+        },
+        "failure_modes_by_standard": {
+          "type": "object",
+          "properties": {
+            "every_time": {
+              "$ref": "#/$defs/failure_counts"
+            },
+            "majority": {
+              "$ref": "#/$defs/failure_counts"
+            },
+            "any_time": {
+              "$ref": "#/$defs/failure_counts"
+            }
+          },
+          "required": [
+            "every_time",
+            "majority",
+            "any_time"
+          ],
+          "additionalProperties": false,
+          "description": "The frontend does not read this; it is pinned here because the tool documents it as a contract of the page (benchmark_page.py docstring)."
+        }
+      },
+      "required": [
+        "scored",
+        "errors",
+        "passed",
+        "majority",
+        "every_time",
+        "any_time",
+        "failure_modes",
+        "failure_modes_by_standard"
+      ],
+      "additionalProperties": true,
+      "description": "Per-group counts. scored, errors, passed, majority, every_time, any_time and failure_modes are read strictly by the frontend (RawStats). Rates are shares in [0, 1], null only when nothing was scored."
+    },
+    "stage_checks": {
+      "type": "object",
+      "properties": {
+        "checked": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "first_failures": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "checked",
+        "passed",
+        "first_failures"
+      ],
+      "additionalProperties": false
+    },
+    "attempt": {
+      "type": "object",
+      "properties": {
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "aoi_ids": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "dataset_id": {
+          "type": [
+            "string",
+            "integer",
+            "null"
+          ],
+          "description": "The tool copies the state's value, which is an integer today; the frontend accepts string or number."
+        },
+        "context_layer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dates": {
+          "anyOf": [
+            {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "string"
+                },
+                {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              ],
+              "items": false,
+              "minItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nudge": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "charts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "answer_excerpt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tools",
+        "aoi_ids",
+        "dataset_id",
+        "context_layer",
+        "dates",
+        "nudge",
+        "charts",
+        "answer_excerpt"
+      ],
+      "additionalProperties": false,
+      "description": "One attempt's summary (RawAttempt). Strict: the frontend rejects a missing key or a wrong type."
+    },
+    "failed_check": {
+      "type": "object",
+      "properties": {
+        "check": {
+          "type": "string"
+        },
+        "stage": {
+          "enum": [
+            "scope",
+            "retrieval",
+            "analysis",
+            "explanation",
+            "output",
+            "shared"
+          ]
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "per_trial": {
+          "type": "array",
+          "items": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "actual": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "check",
+        "stage",
+        "verdict",
+        "per_trial",
+        "actual",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "attempt_error": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "no_answer",
+            "unscored"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "count": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "items": false,
+      "minItems": 2,
+      "description": "A [label, count] pair; the frontend parses z.tuple([string, number])."
+    },
+    "type_measured": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "measured": {
+          "const": true
+        },
+        "scored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "errors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Added with the attempt-error work (page 20261027T103249Z and later); see the version branch at the root."
+        },
+        "no_answer": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "As attempts."
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "majority": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "every_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "any_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "failure_modes": {
+          "$ref": "#/$defs/failure_counts"
+        },
+        "failure_modes_by_standard": {
+          "type": "object",
+          "properties": {
+            "every_time": {
+              "$ref": "#/$defs/failure_counts"
+            },
+            "majority": {
+              "$ref": "#/$defs/failure_counts"
+            },
+            "any_time": {
+              "$ref": "#/$defs/failure_counts"
+            }
+          },
+          "required": [
+            "every_time",
+            "majority",
+            "any_time"
+          ],
+          "additionalProperties": false,
+          "description": "The frontend does not read this; it is pinned here because the tool documents it as a contract of the page (benchmark_page.py docstring)."
+        },
+        "stage_checks": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "$ref": "#/$defs/stage_checks"
+            },
+            "retrieval": {
+              "$ref": "#/$defs/stage_checks"
+            },
+            "analysis": {
+              "$ref": "#/$defs/stage_checks"
+            },
+            "explanation": {
+              "$ref": "#/$defs/stage_checks"
+            },
+            "output": {
+              "$ref": "#/$defs/stage_checks"
+            }
+          },
+          "required": [
+            "scope",
+            "retrieval",
+            "analysis",
+            "explanation",
+            "output"
+          ],
+          "additionalProperties": false
+        },
+        "example_pass": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "example_fail": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "query": {
+                  "type": "string"
+                },
+                "failed_checks": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "query",
+                "failed_checks"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "description",
+        "measured",
+        "scored",
+        "errors",
+        "passed",
+        "majority",
+        "every_time",
+        "any_time",
+        "failure_modes",
+        "failure_modes_by_standard",
+        "stage_checks",
+        "example_pass",
+        "example_fail"
+      ],
+      "additionalProperties": false,
+      "description": "A measured query type: group stats plus examples (the frontend's RawType, measured=true)."
+    },
+    "type_unmeasured": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "measured": {
+          "const": false
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "description",
+        "measured"
+      ],
+      "additionalProperties": false,
+      "description": "A query type with no member in the run (the frontend's RawType, measured=false). Closed: it carries no stats."
+    },
+    "use_case": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "enum": [
+            "UC1",
+            "UC2",
+            "UC3",
+            "UC4",
+            "UC5",
+            "UC6"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "scored": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "errors": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Added with the attempt-error work (page 20261027T103249Z and later); see the version branch at the root."
+        },
+        "no_answer": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "As attempts."
+        },
+        "passed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "majority": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "every_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "any_time": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "failure_modes": {
+          "$ref": "#/$defs/failure_counts"
+        },
+        "failure_modes_by_standard": {
+          "type": "object",
+          "properties": {
+            "every_time": {
+              "$ref": "#/$defs/failure_counts"
+            },
+            "majority": {
+              "$ref": "#/$defs/failure_counts"
+            },
+            "any_time": {
+              "$ref": "#/$defs/failure_counts"
+            }
+          },
+          "required": [
+            "every_time",
+            "majority",
+            "any_time"
+          ],
+          "additionalProperties": false,
+          "description": "The frontend does not read this; it is pinned here because the tool documents it as a contract of the page (benchmark_page.py docstring)."
+        },
+        "composition": {
+          "type": "object",
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/count"
+              }
+            },
+            "places": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/count"
+              }
+            },
+            "datasets": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/count"
+              }
+            },
+            "synthetic": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "types",
+            "places",
+            "datasets",
+            "synthetic"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "key",
+        "label",
+        "scored",
+        "errors",
+        "passed",
+        "majority",
+        "every_time",
+        "any_time",
+        "failure_modes",
+        "failure_modes_by_standard",
+        "composition"
+      ],
+      "additionalProperties": false,
+      "description": "A priority use case. The key must be one the frontend knows (UC1 to UC6, model/config.ts USE_CASES); the label is ignored by the frontend. composition.types keys must each be a types[].key: the frontend throws on an unknown one (not expressible here; tests/test_benchmark_page_schema.py checks it)."
+    },
+    "question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string"
+        },
+        "benchmark_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The tool copies the manifest member's value; the frontend does not read it."
+        },
+        "type": {
+          "type": "string"
+        },
+        "cohort": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string"
+        },
+        "query": {
+          "type": "string"
+        },
+        "verdict": {
+          "enum": [
+            "pass",
+            "fail",
+            "error",
+            "uncovered"
+          ]
+        },
+        "trials_right": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          }
+        },
+        "attempt_errors": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/attempt_error"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "description": "Required by the frontend (RawQuestion). Pages before 20261027T103249Z lack it, so the frontend cannot read them; see the version branch."
+        },
+        "consistent": {
+          "type": "boolean"
+        },
+        "primary_failure": {
+          "anyOf": [
+            {
+              "enum": [
+                "scope",
+                "retrieval",
+                "analysis",
+                "explanation",
+                "output",
+                "unattributed"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "failed_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/failed_check"
+          }
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Values must be strings: the frontend parses z.record(string, string)."
+        },
+        "drafted": {
+          "type": "boolean"
+        },
+        "run_id": {
+          "type": "string",
+          "description": "The run the question came from. Absent on page 20261023T094447Z, before combined pages."
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/attempt"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "trace_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "place": {
+          "type": "string"
+        },
+        "use_cases": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "UC1",
+              "UC2",
+              "UC3",
+              "UC4",
+              "UC5",
+              "UC6"
+            ]
+          }
+        },
+        "synthetic": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "uid",
+        "benchmark_id",
+        "type",
+        "cohort",
+        "difficulty",
+        "query",
+        "verdict",
+        "trials_right",
+        "consistent",
+        "primary_failure",
+        "failed_checks",
+        "expected",
+        "drafted",
+        "attempts",
+        "trace_url",
+        "place",
+        "use_cases",
+        "synthetic"
+      ],
+      "additionalProperties": false,
+      "description": "One question. Strict where the frontend is (RawQuestion); attempt_errors and run_id are required on current pages through the version branch at the root."
+    },
+    "run": {
+      "type": "object",
+      "properties": {
+        "run_id": {
+          "type": "string"
+        },
+        "started": {
+          "type": "string"
+        },
+        "environment": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ff": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "num_trials": {
+          "const": 3,
+          "description": "The frontend's wording assumes three tries and refuses any other count (z.literal(3))."
+        },
+        "harness_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "run_id": {
+                "type": "string"
+              },
+              "started": {
+                "type": "string"
+              },
+              "questions": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "run_id",
+              "started",
+              "questions"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Present only on a combined page (--base): each run's id, start time and question count, oldest first. tools/build_run_index.py reads it."
+        }
+      },
+      "required": [
+        "run_id",
+        "started",
+        "environment",
+        "ff",
+        "num_trials",
+        "harness_sha"
+      ],
+      "additionalProperties": true,
+      "description": "The run (the rerun, on a combined page). Open: the frontend reads it with z.looseObject, so extra keys are tolerated."
+    }
+  }
+}
