@@ -121,7 +121,7 @@ uv run evals run --help                                                        #
 
 **Killed runs.** A run appends each finished case to `results/<suite>/runs/<run_id>.partial.jsonl`, which is gitignored. `uv run evals run --resume <run_id>` finishes it. With neither `--suite` nor `--results-dir`, it searches the three ledgers and uses the run only if exactly one holds it. The run's settings come from the partial file, so other flags are ignored. It refuses if the case set changed, and the record carries `resumed: true`.
 
-**Workers and timeouts.** `--workers` sets how many cases run at once: 10 by default, capped at 20. The BENCHMARK run command in [benchmarks/README.md](benchmarks/README.md#runs) uses 5. The worker count is recorded on the run and has no effect on whether a run is canonical. An attempt gets `no_answer`, a failed attempt, when the stream sends nothing for 240 seconds or is still open at `--trial-timeout`, 900 seconds by default. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before you blame the agent.
+**Workers and timeouts.** `--workers` sets how many cases run at once: 10 by default, capped at 20. [benchmarks/README.md](benchmarks/README.md#runs) says to leave it at the default for a BENCHMARK run. The worker count is recorded on the run and has no effect on whether a run is canonical. An attempt gets `no_answer`, a failed attempt, when the stream sends nothing for 240 seconds or is still open at `--trial-timeout`, 900 seconds by default. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before you blame the agent.
 
 `uv run evals prune-artifacts --suite <suite>` deletes the raw artifacts of all but the newest 5 runs.
 
