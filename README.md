@@ -124,21 +124,29 @@ Roll the run up with `tools/challenge_rollup.py --benchmark`, write the page dat
 
 ## Changing cases
 
-Edit GOLD cases in `cases/v2` only; `cases/v1` is frozen ([The two stores](cases/README.md#the-two-stores)). Read [cases/README.md](cases/README.md) before writing or editing a case: it says what makes a good case and how a case's [status](cases/README.md#status-lifecycle) moves.
+Read [cases/README.md](cases/README.md) before writing or editing a case: it describes the stores, the case file, and how a case's [status](cases/README.md#status-lifecycle) moves. How to write a good case depends on the store: [cases/challenge/README.md](cases/challenge/README.md) for CHALLENGE, [cases/GOLD-AUTHORING.md](cases/GOLD-AUTHORING.md) for the GOLD legacy copy.
 
-After any change to a case file (query, expected values, status, group, notes, or a new or deleted case), run all three of these and commit their output in the same commit as the edit:
+After any change to a case file (query, expected values, status, set, group, notes, or a new or deleted case), run these for the store you changed and commit their output in the same commit as the edit:
 
 ```bash
-uv run python tools/check.py --fix            # recompute uids and MANIFEST.json (v2 by default)
-uv run python tools/coverage_doc.py           # regenerate cases/v2/COVERAGE.md
-uv run python tools/audit_cases.py --strict   # depth rule and DON'Ts, as CI runs it
+# CHALLENGE
+uv run python tools/check.py --fix --suite challenge      # recompute uids and MANIFEST.json
+uv run python tools/coverage_doc.py --suite challenge     # regenerate COVERAGE.md, coverage.json, cases_index.json
+uv run python tools/check_benchmark.py                    # did the edit drop a BENCHMARK member?
+
+# GOLD (legacy copy): edit cases/v2 only; cases/v1 is frozen
+uv run python tools/check.py --fix --suite gold
+uv run python tools/coverage_doc.py --suite gold
+uv run python tools/audit_cases.py --strict               # depth rule and DON'Ts, as CI runs it
 ```
 
-CI runs `check.py` (without `--fix`) on every store (`cases/v1`, `cases/v2`, `cases/challenge`), `coverage_doc.py --check` (v2 and challenge) and `audit_cases.py --strict`, and fails the PR if a uid or manifest is out of date, COVERAGE.md is stale, or the audit finds a violation ([The audit gate](cases/README.md#the-audit-gate)).
+`check_benchmark.py` matters because editing a `ready` member case gives it a new uid, so the draft BENCHMARK version that listed it no longer runs it. The tool warns on a draft and fails on a frozen version ([benchmarks/README.md](benchmarks/README.md)).
 
-Editing the query or any expected value gives the case a new uid, so earlier results no longer match it and a `done` case needs verifying again. That is intended: it keeps every score pinned to the content it measured. Say in the PR which cases changed and why; the PR is the only record of the reason.
+CI runs `check.py` (without `--fix`) on every store (`cases/v1`, `cases/v2`, `cases/challenge`), `coverage_doc.py --check` on `cases/v2` and `cases/challenge`, `audit_cases.py --strict` on `cases/v2` ([The audit gate](cases/GOLD-AUTHORING.md#the-audit-gate)) and `check_benchmark.py`. It fails the PR if a uid or manifest is out of date, a coverage file is stale, the audit finds a violation, or a frozen BENCHMARK version lost a member.
 
-When project-zeno adds, removes or changes a dataset, refresh the catalogue snapshot with `uv run python tools/sync_zeno_catalog.py`, then run `coverage_doc.py` and commit both.
+Editing the query or any expected value gives the case a new uid, so earlier results no longer match it. That is intended: it keeps every score pinned to the content it measured. Say in the PR which cases changed and why; the PR is the only record of the reason.
+
+When project-zeno adds, removes or changes a dataset, refresh the catalogue snapshot with `uv run python tools/sync_zeno_catalog.py`, then run `coverage_doc.py` for each store and commit them together.
 
 ## How scoring reads
 
