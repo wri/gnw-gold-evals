@@ -148,7 +148,7 @@ later edits are made to the case file.
 
 | | Seed CSV import | Generation pipeline | Written by hand |
 |---|---|---|---|
-| Use it for | nothing new: each seed was imported once and must not be imported again ([seeds/README.md](../../seeds/README.md)) | new numeric cases (quantification, comparison, trend) from the dataset catalogue | any other case |
+| Use it for | a new set written as a sheet, imported once; never import an existing seed again ([seeds/README.md](../../seeds/README.md)) | new numeric cases (quantification, comparison, trend) from the dataset catalogue | any other case |
 | Steps | `tools/import_sheet.py --csv <seed> --cases-dir cases/challenge --set <set>` | [generation/README.md](../../generation/README.md) | [Writing a case by hand](#writing-a-case-by-hand) |
 | Sets made this way | `aoi`, `dataset` | `quantification`, `comparison`, `trend` | `monitoring`, `causal`, `portfolio`, the `aoi` `designations` cohort, area-level numeric rows |
 | Record on the case | `notes.source_tab` names the CSV | `notes.manifest_id` and `notes.lineage` name the manifest row | `notes.lineage`, plus `notes.expectations` or `notes.origin` saying who drafted it from what |
