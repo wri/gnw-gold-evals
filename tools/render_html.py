@@ -1,10 +1,10 @@
 """Render ledger runs as standalone HTML reports.
 
-    uv run python tools/render_html.py results/gold/runs/<run_id>.json
-    # -> results/gold/reports/<run_id>.html
+    uv run python tools/render_html.py results/<suite>/runs/<run_id>.json
+    # -> results/<suite>/reports/<run_id>.html
 
-    uv run python tools/render_html.py --all
-    # -> results/gold/reports/all-runs.html (every run, run-selector dropdown)
+    uv run python tools/render_html.py --all [--suite gold]
+    # -> results/challenge/reports/all-runs.html (every run, run-selector dropdown)
 
 Injects the run(s) (plus the current INFO_ONLY set, so verdict rendering
 matches buckets.py) into `templates/run-report.html`. The template also
@@ -22,8 +22,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from goldset.buckets import DEDICATED, INFO_ONLY
-from goldset.ledger import read_run
+from goldset.ledger import RUNS_DIRNAME, read_run
 from goldset.store import load_store
+from goldset.suites import SUITE_NAMES, SUITES, SuiteError, cases_dir_for
 
 PLACEHOLDER = "__RUN_PAYLOAD__"
 TEMPLATE = Path(__file__).resolve().parents[1] / "templates" / "run-report.html"
@@ -130,16 +131,22 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("run", type=Path, nargs="?",
-                        help="results/gold/runs/<run_id>.json")
+                        help="results/<suite>/runs/<run_id>.json")
     parser.add_argument("--all", action="store_true",
                         help="embed every run in --runs-dir behind a "
                              "run-selector dropdown")
-    parser.add_argument("--runs-dir", type=Path, default=Path("results/gold/runs"),
-                        help="ledger directory scanned by --all")
+    parser.add_argument("--suite", choices=SUITE_NAMES, default=None,
+                        help="--all reads this suite's ledger (default: "
+                             "challenge). The case context comes from its store; "
+                             "for one run, from the store the run records")
+    parser.add_argument("--runs-dir", type=Path, default=None,
+                        help="ledger directory scanned by --all, instead of the suite's")
     parser.add_argument("--out", type=Path, default=None,
-                        help="default: results/gold/reports/<run_id>.html, "
-                             "or results/gold/reports/all-runs.html with --all")
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
+                        help="default: <ledger>/reports/<run_id>.html, "
+                             "or <ledger>/reports/all-runs.html with --all")
+    parser.add_argument("--cases-dir", type=Path, default=None,
+                        help="store for the case context, instead of the suite's "
+                             "or the run's")
     args = parser.parse_args()
     if args.all == (args.run is not None):
         parser.error("pass exactly one of <run> or --all")
@@ -147,15 +154,19 @@ def main() -> int:
     generated = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     template_text = TEMPLATE.read_text(encoding="utf-8")
     if args.all:
-        runs = load_all_runs(args.runs_dir)
-        contexts = merged_case_contexts(args.cases_dir, runs)
-        out = args.out or args.runs_dir.parent / "reports" / "all-runs.html"
+        suite = SUITES[args.suite or "challenge"]
+        runs_dir = args.runs_dir or suite.results_dir / RUNS_DIRNAME
+        runs = load_all_runs(runs_dir)
+        contexts = merged_case_contexts(args.cases_dir or suite.cases_dir, runs)
+        out = args.out or runs_dir.parent / "reports" / "all-runs.html"
         html = render_report_all(runs, template_text, generated, cases=contexts)
     else:
         run = read_run(args.run)
-        contexts = (
-            load_case_contexts(args.cases_dir, run) if args.cases_dir.exists() else {}
-        )
+        try:
+            cases_dir = cases_dir_for(run, cases_dir=args.cases_dir, suite=args.suite)
+        except SuiteError as error:
+            parser.error(str(error))
+        contexts = load_case_contexts(cases_dir, run) if cases_dir.exists() else {}
         out = args.out or args.run.parents[1] / "reports" / f"{run['run_id']}.html"
         html = render_report(run, template_text, generated, cases=contexts)
     out.parent.mkdir(parents=True, exist_ok=True)

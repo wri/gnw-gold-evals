@@ -1,7 +1,7 @@
 """Render every ledger run into a standalone performance-trends page.
 
-    uv run python tools/render_trends.py
-    # -> results/gold/reports/trends.html
+    uv run python tools/render_trends.py [--suite gold]
+    # -> results/challenge/reports/trends.html
 
 A run-over-run ticker: overall pass rate (one line per ff profile, never
 drawn across differing tool profiles), KPI tiles with deltas against the
@@ -23,6 +23,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from render_html import load_all_runs
 
+from goldset.ledger import RUNS_DIRNAME
+from goldset.suites import SUITE_NAMES, SUITES
+
 PLACEHOLDER = "__RUN_PAYLOAD__"
 TEMPLATE = Path(__file__).resolve().parents[1] / "templates" / "run-trends.html"
 
@@ -40,14 +43,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("--runs-dir", type=Path, default=Path("results/gold/runs"),
-                        help="ledger directory to chart")
+    parser.add_argument("--suite", choices=SUITE_NAMES, default="challenge",
+                        help="chart this suite's ledger (default: challenge)")
+    parser.add_argument("--runs-dir", type=Path, default=None,
+                        help="ledger directory to chart, instead of the suite's")
     parser.add_argument("--out", type=Path, default=None,
-                        help="default: results/gold/reports/trends.html")
+                        help="default: <ledger>/reports/trends.html")
     args = parser.parse_args()
 
-    runs = load_all_runs(args.runs_dir)
-    out = args.out or args.runs_dir.parent / "reports" / "trends.html"
+    runs_dir = args.runs_dir or SUITES[args.suite].results_dir / RUNS_DIRNAME
+    runs = load_all_runs(runs_dir)
+    out = args.out or runs_dir.parent / "reports" / "trends.html"
     out.parent.mkdir(parents=True, exist_ok=True)
     generated = datetime.now(UTC).strftime("%Y-%m-%d %H:%M UTC")
     out.write_text(
