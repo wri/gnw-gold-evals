@@ -67,7 +67,6 @@ Each job has one doc that owns it, and most have a Claude Code skill that walks 
 | Anything GOLD | project-zeno `evals/gold/`; for this copy, [docs/gold-legacy.md](docs/gold-legacy.md) | `gold-run`, `new-case`, `release-gate`, `triage-run` |
 | Work here as an AI coding agent | [CLAUDE.md](CLAUDE.md) | |
 
-<a id="setup"></a>
 ## Quick start
 
 You need Python 3.11 or later and [uv](https://docs.astral.sh/uv/).
@@ -88,7 +87,6 @@ Cases with ground truth also call the analytics API, with `ANALYTICS_API_TOKEN` 
 
 The Python package is called `goldset` for historical reasons. A rename would touch most files for no gain.
 
-<a id="running-the-set"></a>
 ## Running a suite
 
 `evals run` and `gold run` are the same command; `gold` is the older name. A run must name its suite, so that it never lands in the wrong ledger:
