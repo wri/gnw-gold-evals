@@ -273,6 +273,16 @@
       "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
     },
     {
+      "field": "accept_dashboard",
+      "cases": 0,
+      "switches_on": "dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored)"
+    },
+    {
+      "field": "accept_fixed_period",
+      "cases": 0,
+      "switches_on": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)"
+    },
+    {
       "field": "accept_nudge_offering",
       "cases": 0,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
@@ -317,10 +327,10 @@
   "dataset_coverage": {
     "source": {
       "repo": "https://github.com/wri/project-zeno.git",
-      "ref": "origin/main",
+      "ref": "fa78c816186461dab120523ccad75fe274e6058c",
       "sha": "fa78c816186461dab120523ccad75fe274e6058c",
       "path": "src/agent/datasets/catalog",
-      "synced": "2026-10-24"
+      "synced": "2026-10-30"
     },
     "datasets": [
       {
@@ -704,6 +714,8 @@
     "unused_expected_fields": [
       "accept_aoi_nudge_offering",
       "accept_blog_sources",
+      "accept_dashboard",
+      "accept_fixed_period",
       "accept_nudge_offering",
       "chart_type",
       "data_pull",

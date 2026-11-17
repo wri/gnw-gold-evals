@@ -114,6 +114,12 @@ def build_artifact(
     }
 
 
+def artifact_name(uid: str, trial: int) -> str:
+    """``<uid>.json.gz`` for the first trial, ``<uid>_t<n>.json.gz`` after."""
+    suffix = f"_t{trial}" if trial > 1 else ""
+    return f"{uid}{suffix}.json.gz"
+
+
 class ArtifactWriter:
     """Writes one gzipped JSON per case under a run's artifact directory."""
 
@@ -122,8 +128,7 @@ class ArtifactWriter:
         self._dir.mkdir(parents=True, exist_ok=True)
 
     def __call__(self, uid: str, trial: int, artifact: dict[str, Any]) -> Path:
-        suffix = f"_t{trial}" if trial > 1 else ""
-        path = self._dir / f"{uid}{suffix}.json.gz"
+        path = self._dir / artifact_name(uid, trial)
         payload = json.dumps(artifact, default=str, ensure_ascii=False)
         with gzip.open(path, "wt", encoding="utf-8") as handle:
             handle.write(payload)

@@ -59,7 +59,7 @@ def _parse_ids(value: Any) -> set[str]:
     }
 
 
-def _parse_offer_sets(value: Any) -> list[set[str]]:
+def parse_offer_sets(value: Any) -> list[set[str]]:
     """Fair offers, separated by ``|``: each is a ``;``-set the nudge must
     cover in full; any one passes (``4;8 | 9``). Without ``|``, one set."""
     if not value:
@@ -86,8 +86,8 @@ def nudge_path(
     if not isinstance(nudge, dict) or _data_was_pulled(agent_state):
         return None
     accepted = {
-        DATASET_CHOICE: bool(_parse_offer_sets(dataset_offering)),
-        AOI_CHOICE: bool(_parse_offer_sets(aoi_offering)),
+        DATASET_CHOICE: bool(parse_offer_sets(dataset_offering)),
+        AOI_CHOICE: bool(parse_offer_sets(aoi_offering)),
     }
     kind = nudge.get("type")
     return kind if accepted.get(kind) else None
@@ -120,7 +120,7 @@ def evaluate_accepted_nudge(
         result["actual_nudge_offered"] = f"{kind} nudge carries no ids; abstained"
         return result
 
-    offers = _parse_offer_sets(
+    offers = parse_offer_sets(
         dataset_offering if kind == DATASET_CHOICE else aoi_offering
     )
     result["actual_nudge_offered"] = f"{kind}: " + "; ".join(sorted(offered))
