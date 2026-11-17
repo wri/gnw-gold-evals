@@ -166,17 +166,22 @@ def plan(case: Case, as_of: str, known: dict[str, str] | None = None,
     by_source: dict[str, list[str]] = {}
     for area in areas:
         by_source.setdefault(area.source, []).append(area.id)
+    # `a | b` offers either layer, so each gets its own table.
+    layers = _split(expected.get("context_layer") or "", "|") or [None]
     for dataset_id in _split(expected.get("dataset_id", "").replace("|", ";"), ";"):
-        for source, ids in by_source.items():
-            one = dataclasses.replace(
-                case, expected={**expected, "aoi_ids": ";".join(ids), "aoi_source": source})
-            try:
-                request = build_request(one, dataset_id=dataset_id, today=as_of)
-            except RequestError as error:
-                reference.skipped.append(f"dataset {dataset_id}: {error}")
-                continue
-            reference.tables.append(Table(dataset_id, source, ids, request.endpoint,
-                                          request.payload))
+        for layer in layers:
+            for source, ids in by_source.items():
+                fields = {"aoi_ids": ";".join(ids), "aoi_source": source}
+                if layer:
+                    fields["context_layer"] = layer
+                one = dataclasses.replace(case, expected={**expected, **fields})
+                try:
+                    request = build_request(one, dataset_id=dataset_id, today=as_of)
+                except RequestError as error:
+                    reference.skipped.append(f"dataset {dataset_id}: {error}")
+                    continue
+                reference.tables.append(Table(dataset_id, source, ids, request.endpoint,
+                                              request.payload))
     if not reference.tables and not reference.skipped:
         reference.skipped.append("no dataset_id")
     return reference

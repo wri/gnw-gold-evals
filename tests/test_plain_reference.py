@@ -56,6 +56,18 @@ def test_one_table_per_dataset_and_source():
     assert reference.tables[0].payload["aoi"] == {"type": "admin", "ids": ["BRA"]}
 
 
+def test_one_table_per_layer_alternative():
+    """ch-quant-009 accepts primary or natural forest loss: a figure is right
+    against either table, never against unfiltered loss."""
+    reference = plan(_case(aoi_ids="BRA", dataset_id="4",
+                           context_layer="primary_forest | natural_forest"), "2026-10-27")
+    assert [t.payload["forest_filter"] for t in reference.tables] == [
+        "primary_forest", "natural_forest_only",
+    ]
+    assert [t.payload["canopy_cover"] for t in reference.tables] == [30, 10]
+    assert reference.skipped == []
+
+
 def test_an_open_window_ends_on_the_reply_day():
     reference = plan(_case(aoi_ids="BRA", dataset_id="11", start_date="2026-10-01"),
                      "2026-10-27")
