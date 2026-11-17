@@ -5,7 +5,7 @@ about a year. CHALLENGE (`cases/challenge/`) grows and changes, so its rates
 move under readers. BENCHMARK does not: it is the exam behind the published
 North Star.
 
-| | GOLD (`cases/v2`) | CHALLENGE (`cases/challenge`) | BENCHMARK (`benchmarks/`) |
+| | GOLD (legacy copy, `cases/v2`) | CHALLENGE (`cases/challenge`) | BENCHMARK (`benchmarks/`) |
 |---|---|---|---|
 | Question | did a release break something? | how good is the system, per capability? | is the system getting better, on a fixed exam? |
 | Headline | regression count | pass rate per set / cohort | North Star complete rate + trend |
@@ -39,6 +39,10 @@ North Star.
 | `2026-draft-2` | retired | 199 (quantification 45, comparison 32, trend 32, monitoring 29, causal 24, geospatial 15, refusal 15, dataset 7) | curated from the proposed v2026 set (`seeds/benchmark-v2026-proposed.csv`); members carry JTBD jobs, impact pathways and user groups; replaced by `2026-draft-3` on 2026-10-23; keeps its 1 Oct run as history |
 | `2026-draft` | retired | 100 (20 each: geospatial, dataset, quantification, comparison, trend) | sampled 2026-09-29; replaced by `2026-draft-2`; keeps its 29 Sep run as history |
 | `2026` | not yet frozen | | freeze planned November 2026, from `2026-draft-5` once the drafted expectations are reviewed |
+
+`2026-draft-5` is the only live version. The four earlier drafts are
+retired: they stay in the repo because their runs reference them, and
+`tools/check_benchmark.py` validates them structurally only.
 
 Use cases (`USE_CASES` in `goldset.benchmark`; a question can carry several):
 UC1 Alert monitoring and response, UC2 Supply chain and sourcing, UC3
@@ -82,12 +86,12 @@ only comparable within a version.
 ## Runs
 
 ```bash
-uv run gold run --env prod --trials 3 --workers 5 \
+uv run evals run --env prod --trials 3 --workers 5 \
   --benchmark benchmarks/2026-draft-5.json --build "<label>"
 ```
 
-`--benchmark` selects the manifest's active members from its source store,
-writes to `results/benchmark/`, and records `benchmark: {version, status,
+`--benchmark` (which implies `--suite benchmark`) selects the manifest's
+active members from its source store, writes to `results/benchmark/`, and records `benchmark: {version, status,
 manifest_sha, members}` on the run. A run is a **trend point** only when
 it is **canonical**: prod, default profile (no `ff`), 3 trials, every active
 member measured or errored (none missing). `results/index.json` lists
@@ -100,7 +104,7 @@ draft version), rerun just those members and combine them with the earlier
 run instead of rerunning the whole set:
 
 ```bash
-uv run gold run --env prod --trials 3 --benchmark benchmarks/<v>.json \
+uv run evals run --env prod --trials 3 --benchmark benchmarks/<v>.json \
   --missing-from results/benchmark/runs/<earlier>.json --build "<label>"
 uv run python tools/benchmark_page.py results/benchmark/runs/<rerun>.json \
   --base results/benchmark/runs/<earlier>.json
@@ -120,10 +124,107 @@ results come from two dates, so agent changes in between show up only in
 the rerun members; say so in the rerun's recommendations doc, and prefer a
 full run before a freeze.
 
+## After a run
+
+A BENCHMARK run is finished when its run record, page data, index entry
+and recommendations doc are committed together. In order:
+
+1. **Before the run, check the manifest**: `uv run python tools/check_benchmark.py`.
+   A warning on a draft means a member case was edited or is no longer
+   `ready`, so the run would leave it out.
+2. **Run it** (see [Runs](#runs)).
+3. **Roll it up**:
+   ```bash
+   uv run python tools/challenge_rollup.py --benchmark benchmarks/<v>.json \
+     results/benchmark/runs/<run_id>.json
+   ```
+4. **Write the page data on the machine that ran the run**:
+   ```bash
+   uv run python tools/benchmark_page.py results/benchmark/runs/<run_id>.json
+   ```
+   It reads the run's agent artifacts under `results/benchmark/artifacts/<run_id>/`,
+   which are gitignored, so no other machine can write it. For a rerun of
+   revised members, add `--base <earlier run>` ([Rerunning revised members
+   only](#rerunning-revised-members-only)).
+5. **Stage the run and its page**:
+   `git add results/benchmark/runs/<run_id>.json results/benchmark/pages/<run_id>.json`.
+6. **Regenerate the index**: `uv run python tools/build_run_index.py`. It
+   lists tracked and staged files only, so stage first. Check that the
+   run's entry in `results/index.json` says `canonical: true` before you
+   call it a trend point.
+7. **Write `results/benchmark/recommendations/<run_id>.md`**.
+8. **Commit** the run, the page, `results/index.json` and the
+   recommendations doc in one commit.
+
+**Recommendations docs.** Every committed BENCHMARK run has one (15 runs,
+15 docs on 2026-11-17). A full run or a combined page gets a full report:
+what the run measured, its North Star and failure modes, what to file
+upstream, what it says about the cases and the harness, and what to watch
+next. A rerun whose results only feed a combined page gets a short note
+that names the report using it (for example `20261027T094141Z_prod.md`).
+When a later report replaces one, the older doc gets a "Superseded by"
+line at the top. Nothing in CI checks this: it is the practice the ledger
+shows.
+
+**A new page is not yet public.** The frontend shows only the runs it pins
+(see [Page data contract](#page-data-contract)), so committing a page does
+not publish it.
+
+## Page data contract
+
+`results/benchmark/pages/<run_id>.json` holds the precomputed numbers for
+one BENCHMARK run: the data behind the AI accuracy scorecards page of the
+GNW frontend. `tools/benchmark_page.py` writes it, and nothing else does;
+never edit it by hand. A combined page (`--base`) is named after the
+rerun.
+
+Top-level keys, at `schema_version` 1 (`SCHEMA_VERSION` in
+`tools/benchmark_page.py`):
+
+| Key | Holds |
+|---|---|
+| `schema_version` | the page format version, `1` |
+| `generated_by` | `"tools/benchmark_page.py"` |
+| `run` | the run's `run_id`, `started`, `environment`, `ff`, `num_trials` and `harness_sha`; a combined page adds `sources`, each run it draws on with its question count |
+| `benchmark` | the manifest's `version`, `status` and `manifest_sha`, the number of active `members`, and how many sheet rows were `excluded` |
+| `summary` | the headline numbers: `majority` (the North Star), `every_time` (the page headline) and `any_time` rates, counts of scored questions, errors, attempts and attempts with no reply, `failure_modes`, `failure_modes_by_standard`, `consistency`, per-trial `attempt_rates` and `datasets_covered` |
+| `stages` | per stage in `stage_order`: checks checked and passed, and the first failures |
+| `unattributed` | failed questions whose only failures were on shared checks |
+| `types` | per query type: the same rates and failure modes, plus `measured`, stage checks and example questions |
+| `use_cases` | per use case (UC1 to UC6): the same rates and failure modes, plus the composition of its questions |
+| `questions` | one entry per active member: its verdict, per-trial results, failed checks, expected values, the run it came from, and a summary of what the agent did on each attempt |
+
+**The frontend reads it strictly.** In
+[wri/project-zeno-next](https://github.com/wri/project-zeno-next),
+`src/features/ai-accuracy-scorecards` fetches each page from GitHub at a
+commit of this repo and parses it with a schema that throws on a mismatch
+rather than guess. It shows only the runs that its `model/releases.ts`
+lists, each pinned to a full commit sha of this repo. So:
+
+- A new page reaches users only with a frontend release that adds its run
+  to `releases.ts`.
+- Rebuilding a page in place changes nothing users see until `releases.ts`
+  pins a commit that holds the new page.
+- Changing the page's shape (a key, a type, the meaning of a field) is a
+  cross-repo contract change: change the frontend parser in the same cycle.
+
+The JSON Schema for the page is `schema/benchmark_page.schema.json`, and a
+test checks every committed page against it.
+
+## The plain baseline
+
+`tools/plain_baseline.py` asks Sonnet with web search the `2026-draft-5`
+questions that judge a reply (253 of the 269) and rescores the agent's own
+draft-5 attempts the same way. Per-question calls that the case files
+cannot hold without new uids live in `benchmarks/overlays/2026-draft-5.plain.json`, keyed
+by uid. Its results go to `results/plain/`, never to `results/benchmark/`,
+so the frontend cannot show them. See
+[results/plain/README.md](../results/plain/README.md).
+
 ## Metrics
 
-`tools/challenge_rollup.py --benchmark` computes these in Python. The FE
-accuracy-benchmarks page reads them precomputed: `tools/benchmark_page.py`
+`tools/challenge_rollup.py --benchmark` computes these in Python. The
+frontend's AI accuracy scorecards page reads them precomputed: `tools/benchmark_page.py`
 writes `results/benchmark/pages/<run_id>.json` after each run (the numbers
 below plus per-type, per-use-case and per-question detail, including a
 summary of what the agent did on each attempt), and `results/index.json`
