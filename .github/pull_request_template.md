@@ -1,25 +1,30 @@
-# What & why
+# What and why
 
-<!-- One paragraph. For case edits: editing a case changes its uid, and this
-     PR is the only record of why. Name the cases whose uids changed and the
+<!-- One paragraph. Editing a case gives it a new uid, and this pull
+     request is the only record of why: name each changed case and the
      reason. -->
 
 ## Checklist
 
-- [ ] `uv run pytest -q` green
-- [ ] `uv run ruff check src tools tests` clean (the pinned ruff CI uses)
+- [ ] `uv run pytest -q` passes
+- [ ] `uv run ruff check src tools tests generation` is clean
 
-**Case edits only** (steps: "Changing cases" in `README.md`; authoring rules: `cases/README.md`):
+**Case changes** (commands: "After an edit" in `cases/README.md`):
 
-- [ ] `uv run python tools/check.py --fix` run after every edit, so uids and the manifest match the cases
-- [ ] `uv run python tools/coverage_doc.py` run, and `cases/v2/COVERAGE.md` committed with the edit
-- [ ] `uv run python tools/audit_cases.py --strict` passes (CI runs the same; it fails on depth and DON'T violations)
-- [ ] the four properties hold (capability-anchored, deterministic,
-      checkable in depth, environment-honest)
-- [ ] `env_gated` noted where the capability is environment-dependent
+- [ ] each changed case, and why it changed, is named above
+- [ ] no case was changed to make it pass
+- [ ] `tools/check.py --fix`, `tools/coverage_doc.py` and `tools/check_benchmark.py` ran, and their output is committed with the edit
+- [ ] GOLD legacy copy only: `tools/audit_cases.py --strict` passes
 
-**Check-semantics changes only:**
+**Runs, manifests and page data:**
 
-- [ ] regression test reproducing the old defect
-- [ ] whether a missing input scores `None` or `0.0` is stated in the check's docstring and its section of `src/goldset/evaluators/README.md`
-- [ ] first post-merge run carries `--note` so diffs aren't read as agent movement
+- [ ] no smoke run or `--env local` run is committed; each committed run has its suite's after-run steps done
+- [ ] regenerated files listed here (for example `results/index.json`, `COVERAGE.md`, a page)
+- [ ] a BENCHMARK manifest changed? Say how: draft rebuilt, erratum, or freeze
+- [ ] the page data shape changed? Link the matching project-zeno-next change
+
+**Check semantics changes:**
+
+- [ ] a regression test reproduces the old defect
+- [ ] the check's docstring and its section of `src/goldset/evaluators/README.md` say whether a missing input scores `null` or `0.0`
+- [ ] the first run after merge will carry `--note`
