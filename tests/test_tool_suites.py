@@ -141,3 +141,52 @@ def test_render_one_run_without_caseset_needs_a_store(ledgers, name):
     proc = tool(ledgers, name, str(old))
     assert proc.returncode == 2 and "pass --cases-dir or --suite" in proc.stderr
     assert tool(ledgers, name, str(old), "--suite", "gold").returncode == 0
+
+
+def test_report_run_reads_the_store_it_records(ledgers):
+    run = ledgers / "results" / "challenge" / "runs" / "20261101T000000Z_prod.json"
+    proc = tool(ledgers, "report_run", str(run))
+    assert proc.returncode == 0, proc.stderr
+    assert "WARNING" not in proc.stdout
+    assert "(status: ready)" in proc.stdout
+
+
+def test_report_run_warns_first_when_no_uid_is_in_the_store(ledgers):
+    run = ledgers / "results" / "challenge" / "runs" / "20261101T000000Z_prod.json"
+    proc = tool(ledgers, "report_run", str(run), "--suite", "gold")
+    assert proc.returncode == 0
+    assert proc.stdout.startswith("WARNING: none of this run's 2 uids is in cases/v2")
+
+
+def test_report_run_without_caseset_needs_a_store(ledgers):
+    old = write_ledger_run(ledgers, "gold", "20260801T000000Z_prod", GOLD, None)
+    proc = tool(ledgers, "report_run", str(old))
+    assert proc.returncode == 2 and "pass --cases-dir or --suite" in proc.stderr
+    assert tool(ledgers, "report_run", str(old), "--cases-dir", "cases/v2").returncode == 0
+
+
+def test_compose_runs_reads_the_primary_runs_store(ledgers):
+    run = ledgers / "results" / "challenge" / "runs" / "20261101T000000Z_prod.json"
+    proc = tool(ledgers, "compose_runs", str(run))
+    assert proc.returncode == 0, proc.stderr
+    assert "active cases: 2, measured: 2" in proc.stdout
+
+
+def test_compose_runs_refuses_a_benchmark_run(ledgers):
+    bench = write_ledger_run(ledgers, "benchmark", "20261102T000000Z_prod", CHALLENGE,
+                             "challenge", benchmark={"version": "t"})
+    proc = tool(ledgers, "compose_runs", str(bench))
+    assert proc.returncode == 2
+    assert "benchmark_page.py <rerun>.json --base <run>.json" in proc.stderr
+
+
+def test_find_baseline_searches_the_new_runs_own_ledger(ledgers):
+    challenge = ledgers / "results" / "challenge" / "runs"
+    new = write_ledger_run(ledgers, "challenge", "20261103T000000Z_prod", CHALLENGE,
+                           "challenge")
+    proc = tool(ledgers, "find_baseline", str(new))
+    assert proc.returncode == 0, proc.stderr
+    assert Path(proc.stdout.strip()) == challenge / "20261101T000000Z_prod.json"
+    # the GOLD ledger has no comparable run (different caseset)
+    proc = tool(ledgers, "find_baseline", str(new), "--suite", "gold")
+    assert proc.returncode == 1 and "no run in results/gold/runs" in proc.stderr

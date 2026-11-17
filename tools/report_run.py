@@ -1,6 +1,9 @@
 """Print a four-layer Markdown report of one ledger run.
 
-    uv run python tools/report_run.py results/gold/runs/<run_id>.json
+    uv run python tools/report_run.py results/<suite>/runs/<run_id>.json
+
+The case store is the one the run records in ``caseset``, unless --suite or
+--cases-dir names another.
 
 The layers, in order: row verdicts; the bucket table (scores beside coverage
 denominators); reconciliation (implied versus evaluated checks, each miss
@@ -27,6 +30,7 @@ from goldset.buckets import (
 )
 from goldset.ledger import read_run
 from goldset.store import load_store
+from goldset.suites import SUITE_NAMES, SuiteError, cases_dir_for
 
 
 def _bucket_line(name: str, block: dict) -> str:
@@ -144,13 +148,26 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("run", type=Path)
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
+    parser.add_argument("--suite", choices=SUITE_NAMES, default=None,
+                        help="read this suite's case store instead of the run's")
+    parser.add_argument("--cases-dir", type=Path, default=None,
+                        help="read this case store instead of the run's")
     args = parser.parse_args()
 
     run = read_run(args.run)
-    store = list(load_store(args.cases_dir))
+    try:
+        cases_dir = cases_dir_for(run, cases_dir=args.cases_dir, suite=args.suite)
+    except SuiteError as error:
+        parser.error(str(error))
+    store = list(load_store(cases_dir))
     expected_by_uid = {case.uid: implied_checks_for_case(case) for _p, case, _u in store}
     status_by_uid = {case.uid: case.status for _p, case, _u in store}
+    uids = {entry.get("uid") for entry in run["results"]}
+    if not uids & expected_by_uid.keys():
+        # A wrong store reconciles nothing and reads as a clean "0/0".
+        print(f"WARNING: none of this run's {len(uids)} uids is in {cases_dir}: "
+              "either the wrong store, or every case it measured has been edited "
+              "since. Reconciliation and statuses below are empty.\n")
     print(render(run, expected_by_uid, status_by_uid))
     return 0
 

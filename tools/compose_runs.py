@@ -3,7 +3,11 @@
     uv run python tools/compose_runs.py results/gold/runs/PRIMARY.json
         results/gold/runs/SUPP1.json [results/gold/runs/SUPP2.json ...] [--json out.json]
 
-This never writes to `results/gold/runs/`. Run files are immutable, and a run's
+The case store is the one the primary run records in ``caseset``, unless
+--suite or --cases-dir names another. BENCHMARK runs are refused: their
+reruns are combined by ``tools/benchmark_page.py <rerun>.json --base <run>.json``.
+
+This never writes to a ledger's `runs/`. Run files are immutable, and a run's
 metadata (`ff`, `workers`, `build`) must describe how its own rows were
 produced, so rows from another run cannot be spliced in. See "Composing a
 current picture across runs" in results/README.md.
@@ -27,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from goldset.buckets import is_info_only, row_verdict, summarize_buckets  # noqa: E402
 from goldset.store import load_store  # noqa: E402
+from goldset.suites import SUITE_NAMES, SuiteError, cases_dir_for  # noqa: E402
 
 
 def load_run(path: Path) -> dict:
@@ -157,15 +162,27 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("primary", type=Path)
     parser.add_argument("supplements", type=Path, nargs="*")
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
+    parser.add_argument("--suite", choices=SUITE_NAMES, default=None,
+                        help="read this suite's case store instead of the "
+                             "primary run's")
+    parser.add_argument("--cases-dir", type=Path, default=None,
+                        help="read this case store instead of the primary run's")
     parser.add_argument("--json", type=Path, default=None)
     args = parser.parse_args(argv)
 
-    report = compose(
-        load_run(args.primary),
-        [load_run(path) for path in args.supplements],
-        args.cases_dir,
-    )
+    primary = load_run(args.primary)
+    supplements = [load_run(path) for path in args.supplements]
+    # The active cases here are the whole store, not a manifest's members, so
+    # a BENCHMARK composition would list every non-member as unmeasured.
+    benchmark = [run["_path"] for run in [primary, *supplements] if "benchmark" in run]
+    if benchmark:
+        parser.error(f"{', '.join(benchmark)}: BENCHMARK run(s); combine reruns "
+                     "with tools/benchmark_page.py <rerun>.json --base <run>.json")
+    try:
+        cases_dir = cases_dir_for(primary, cases_dir=args.cases_dir, suite=args.suite)
+    except SuiteError as error:
+        parser.error(str(error))
+    report = compose(primary, supplements, cases_dir)
     print(render(report))
     if args.json:
         args.json.write_text(json.dumps(report, indent=1))
