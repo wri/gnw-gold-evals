@@ -70,7 +70,7 @@ described in [README, Changing cases](../../../README.md#changing-cases).
 
 - Never edit `cases/v1/`: it is the frozen baseline, pinned by
   `tests/test_v1_frozen.py`. Curation goes to v2 only
-  ([cases/README.md, The two stores](../../../cases/README.md#the-two-stores)).
+  ([cases/README.md, The two stores](../../../cases/GOLD-AUTHORING.md#the-two-stores)).
 - Never hand-write or backfill results to "confirm" an edit. Run the case:
   `uv run gold run --env staging --id <id> --verbose`.
 - If an edit really tests a new capability, write a new case (new `id`)

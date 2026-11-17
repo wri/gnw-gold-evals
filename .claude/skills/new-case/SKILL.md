@@ -7,7 +7,7 @@ description: Use when authoring a new GOLD case ("add a case for…"). Interview
 
 GOLD is a capability smoke test: a case earns its place by failing when a
 capability breaks, deterministically. Full authoring rules:
-[cases/README.md](../../../cases/README.md). Terms are defined in the
+[cases/README.md](../../../cases/GOLD-AUTHORING.md). Terms are defined in the
 [README glossary](../../../README.md#glossary).
 
 ## 1. Interview first
