@@ -137,8 +137,10 @@ Optional fields, written only when they apply:
 |---|---|---|
 | `methodology_note` | run | The `--note` text: check semantics changed since the previous run, so movement on those checks is not an agent change. |
 | `resumed` | run | `true` when the run was finished with `evals run --resume`; its timing mixes two sessions. |
-| `error` | entry | The agent call failed or timed out, or the harness hit an error. The row verdict is `error`, never `fail`. |
-| `judge_errors` | entry | Checks whose judge call failed. They stay `null` and the row verdict is `error`. |
+| `error` | entry | The harness could not score the case: the agent call failed before any reply was due (a refused request, no connection), or the harness hit an error. On a multi-trial run it is on the entry only when no trial could be scored. The row verdict is `error`, never `fail`. |
+| `judge_errors` | entry | Checks whose judge call failed. They stay `null`. On a multi-trial run it is on the entry only when no trial could be scored; the row verdict is then `error`. |
+| `no_answer` | entry or trial | The agent sent no reply: the stream stalled (a read timeout or the wall clock), dropped or failed with a 5xx before it finished (since 2026-10-27). The attempt counts as failed, not as an error. On a multi-trial run it sits on the trial. |
+| `error` | trial | Why the harness could not score that trial (it failed after the reply, or a judge call failed). That trial is left out of the per-check majorities and of the row verdict (since 2026-10-27). |
 | `stream_s` | entry | `POST /api/chat` to the last stream line only: the agent turn, and the latency to compare (2026-09-25 on). `latency_s` runs from `POST /api/chat` until the final state (and dashboard) is fetched, and excludes scoring and judge time. |
 | `info` | entry | `{"slow": true, "threshold_s": 180.0}` when the case took longer than `--slow-threshold`. Never scored. |
 | `ground_truth` | run | Present when any case carried `expected.ground_truth`: the analytics host, the number of cases fetched, the fetch time and the grading tolerance. |
@@ -187,9 +189,13 @@ Optional fields, written only when they apply:
   case. Its `checks` map holds each check's majority verdict: pass only if
   more than half of the trials that evaluated it passed (ties fail), `null`
   if no trial evaluated it. `trials` lists every trial as
-  `{"checks": {...}, "latency_s": ...}`. `error` and `judge_errors` collect
-  the errors of every trial; `reasons`, `actuals`, `latency_s`, `trace_url`
-  and `turns_detail` come from the last trial. The row's verdict is the
+  `{"checks": {...}, "latency_s": ...}`, plus `stream_s` and, when they
+  apply, `no_answer` or `error`. A trial that got no reply counts as a
+  failed attempt; a trial the harness could not score is left out of the
+  majorities. The entry carries `error` (and `judge_errors`) only when no
+  trial could be scored (since 2026-10-27; before, it collected the errors
+  of every trial and the row became `error`). `reasons`, `actuals`,
+  `latency_s`, `trace_url` and `turns_detail` come from the last trial. The row's verdict is the
   majority of its attempts' verdicts (`buckets.row_verdict`, since
   2026-10-28), not a reading of those per-check majorities.
 - **Ground truth is recorded, not trusted.** A case carrying
