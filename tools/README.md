@@ -9,6 +9,22 @@ The harness itself is the `gold` command (`uv run gold run`, see
 ledger entry: [results/README.md](../results/README.md) has the contract
 they all follow.
 
+## CHALLENGE and BENCHMARK
+
+A CHALLENGE verdict is a pass rate, not a regression count, and a BENCHMARK
+version is a uid manifest over `cases/challenge`. Read
+[cases/challenge/README.md](../cases/challenge/README.md) and
+[benchmarks/README.md](../benchmarks/README.md) before you use these tools.
+
+| tool | what it does |
+|---|---|
+| `challenge_rollup.py` | Pass rates for one or more CHALLENGE runs: overall, per set and per cohort, with confidence intervals and the strict rate (clean on every trial), compared against `cases/challenge/TARGETS.yml`. Errored rows leave the denominator and are reported as availability. Latency is reported too. Run it after every CHALLENGE run, before the recommendations doc. `--benchmark <manifest>` rolls up a BENCHMARK run: North Star, consistency, failure modes per type and the type x stage matrix over the manifest's active members. |
+| `benchmark_sample.py` | Write a sampled BENCHMARK version (`benchmarks/<version>.json`) from the `ready` CHALLENGE cases: `--per-type` members (default 20) for each measured query type, easy and medium only for aoi and dataset. The same store and seed give the same manifest. It never regenerates a frozen version. |
+| `benchmark_from_sheet.py` | Write a curated BENCHMARK version from a reviewed sheet export (`--seed <csv> --version <v>`), one member for each sheet row. It also writes each member's sheet facets into the case `notes`, so the uids do not change. |
+| `check_benchmark.py` | Check every manifest in `benchmarks/` against `cases/challenge`: each active member's uid exists, its case is `ready`, and its frozen facets still match the case. A problem fails a frozen version and gives a warning on a draft. CI runs it. |
+| `benchmark_page.py` | Write the page data that the FE scorecards page reads (`results/benchmark/pages/<run_id>.json`) for one BENCHMARK run. Run it on the machine that ran the run, because it reads the run's agent artifacts, which are gitignored. Commit the page with the run, then regenerate `results/index.json`. `--base <run>` fills the members that a rerun did not measure from an earlier run (see [Rerunning revised members only](../benchmarks/README.md#rerunning-revised-members-only)). |
+| `plain_baseline.py` | Plain Sonnet with web search against Horizon on BENCHMARK draft-5, scored on the reply only. Output goes to `results/plain/`, never `results/benchmark/`, so the FE page cannot show it. The `ask` step spends API budget: run it only with AJ's go-ahead. |
+
 ## Case store
 
 | tool | what it does |
@@ -36,22 +52,6 @@ they all follow.
 | `render_html.py` | Standalone HTML report of one run for stakeholders; `--all` builds the cross-run page with a run selector. Refresh both after every official run. |
 | `render_inspector.py` | HTML matrix of every case against every check, with expected and measured values. Use it to find which checks failed on which cases; `--all` builds the cross-run page. |
 | `render_trends.py` | Pass-rate trends across every run in the ledger, one line per `ff`. Use it to see movement across releases; never read a trend across differing `ff`. |
-
-## CHALLENGE and BENCHMARK
-
-A CHALLENGE verdict is a pass rate, not a regression count, and a BENCHMARK
-version is a uid manifest over `cases/challenge`. Read
-[cases/challenge/README.md](../cases/challenge/README.md) and
-[benchmarks/README.md](../benchmarks/README.md) before you use these tools.
-
-| tool | what it does |
-|---|---|
-| `challenge_rollup.py` | Pass rates for one or more CHALLENGE runs: overall, per set and per cohort, with confidence intervals and the strict rate (clean on every trial), compared against `cases/challenge/TARGETS.yml`. Errored rows leave the denominator and are reported as availability. Latency is reported too. Run it after every CHALLENGE run, before the recommendations doc. `--benchmark <manifest>` rolls up a BENCHMARK run: North Star, consistency, failure modes per type and the type x stage matrix over the manifest's active members. |
-| `benchmark_sample.py` | Write a sampled BENCHMARK version (`benchmarks/<version>.json`) from the `ready` CHALLENGE cases: `--per-type` members (default 20) for each measured query type, easy and medium only for aoi and dataset. The same store and seed give the same manifest. It never regenerates a frozen version. |
-| `benchmark_from_sheet.py` | Write a curated BENCHMARK version from a reviewed sheet export (`--seed <csv> --version <v>`), one member for each sheet row. It also writes each member's sheet facets into the case `notes`, so the uids do not change. |
-| `check_benchmark.py` | Check every manifest in `benchmarks/` against `cases/challenge`: each active member's uid exists, its case is `ready`, and its frozen facets still match the case. A problem fails a frozen version and gives a warning on a draft. CI runs it. |
-| `benchmark_page.py` | Write the page data that the FE scorecards page reads (`results/benchmark/pages/<run_id>.json`) for one BENCHMARK run. Run it on the machine that ran the run, because it reads the run's agent artifacts, which are gitignored. Commit the page with the run, then regenerate `results/index.json`. `--base <run>` fills the members that a rerun did not measure from an earlier run (see [Rerunning revised members only](../benchmarks/README.md#rerunning-revised-members-only)). |
-| `plain_baseline.py` | Plain Sonnet with web search against Horizon on BENCHMARK draft-5, scored on the reply only. Output goes to `results/plain/`, never `results/benchmark/`, so the FE page cannot show it. The `ask` step spends API budget: run it only with AJ's go-ahead. |
 
 ## Legacy tools
 
