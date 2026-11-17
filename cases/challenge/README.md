@@ -240,8 +240,8 @@ For a member of a draft (the live draft is curated from a seed CSV):
    Never edit or rename the old seed ([seeds/README.md](../../seeds/README.md)).
    The rebuild also rewrites each member's sheet notes in its case file:
    read `git diff` for changes you did not expect.
-5. **Check it**: `uv run python tools/check_benchmark.py benchmarks/<v>.json`
-   must print `ok` with no warning.
+5. **Check it**: `uv run python tools/check_benchmark.py` must print `ok`
+   for every manifest, with no warning.
 6. **Regenerate the index**: `uv run python tools/build_run_index.py`. The
    rebuilt manifest changes the `canonical` flags of earlier runs, and CI
    fails on a stale index.

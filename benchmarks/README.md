@@ -148,9 +148,9 @@ A BENCHMARK run is finished when its run record, page data, index entry and
 recommendations doc are committed together. Do these in order, in the
 checkout that ran the run:
 
-1. **Check the manifest** before you start:
-   `uv run python tools/check_benchmark.py benchmarks/<v>.json`. An error
-   (frozen version) stops the run. A warning (draft) means a member case was
+1. **Check the manifests** before you start:
+   `uv run python tools/check_benchmark.py`. An error on a frozen version
+   stops the run. A warning on the draft you run means a member case was
    edited or is no longer `ready`, so the run would leave it out: rebuild the
    draft first ([Rules](#rules)).
 2. **Run it** ([Runs](#runs)).
