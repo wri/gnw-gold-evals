@@ -89,6 +89,39 @@ By default every case whose status is not `not doing` runs (`--status-exclude` d
 
 **Workers and timeouts.** By default 10 cases run at once (the hard cap is 20), and a trial that takes over 900 seconds becomes an error row. Runs record both settings. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before blaming the agent.
 
+## CHALLENGE
+
+CHALLENGE asks "how well does the agent answer questions like this?" Its cases sit in a hierarchy, **set, cohort, case**, at `cases/challenge/<set>/<cohort>/<id>.yaml`, and its verdicts are pass rates per set and cohort, never regression counts. Many cases are expected to fail: never triage those failures as regressions, and never change a case to make it pass. Read [cases/challenge/README.md](cases/challenge/README.md) before you touch the set.
+
+```bash
+# canonical run (published rates): prod, default profile, 3 trials
+uv run evals run --suite challenge --env prod --trials 3 \
+  --status-exclude "not doing,todo" --build "<label>"
+
+# roll it up: pass rates per set and cohort against TARGETS.yml
+uv run python tools/challenge_rollup.py results/challenge/runs/<run_id>.json
+```
+
+### After a CHALLENGE run
+
+Roll the run up, write `results/challenge/recommendations/<run_id>.md`, then commit the run and the recommendations doc together with a regenerated `results/index.json`. The steps are in [cases/challenge/README.md, After every run](cases/challenge/README.md#after-every-run).
+
+## BENCHMARK
+
+BENCHMARK asks "is the agent getting better on a fixed exam?" A version is a manifest, `benchmarks/<version>.json`, that lists CHALLENGE cases by uid; it has no cases of its own. Editing a member case gives it a new uid, which drops it from the version, so a frozen version's members are never edited. Its canonical runs are the North Star trend, and each one's page data is what the frontend AI accuracy scorecards page shows. Read [benchmarks/README.md](benchmarks/README.md) first.
+
+```bash
+uv run evals run --benchmark benchmarks/2026-draft-5.json --env prod --trials 3 --build "<label>"
+```
+
+### After a BENCHMARK run
+
+Roll the run up with `tools/challenge_rollup.py --benchmark`, write the page data with `tools/benchmark_page.py` on the machine that ran the run, regenerate `results/index.json`, write the recommendations doc, and commit them together. The steps and their order are in [benchmarks/README.md, After a run](benchmarks/README.md#after-a-run). The page data is a contract with the frontend: [Page data contract](benchmarks/README.md#page-data-contract).
+
+## The plain baseline
+
+`tools/plain_baseline.py` asks Sonnet with web search the BENCHMARK `2026-draft-5` questions and scores its replies against the agent's, on the reply only. Its output goes to `results/plain/`, never to `results/benchmark/`, so the frontend cannot show it. Its `ask` step spends API budget: run it only with AJ's go-ahead. The steps, files and keys are in [results/plain/README.md](results/plain/README.md).
+
 ## Changing cases
 
 Edit GOLD cases in `cases/v2` only; `cases/v1` is frozen ([The two stores](cases/README.md#the-two-stores)). Read [cases/README.md](cases/README.md) before writing or editing a case: it says what makes a good case and how a case's [status](cases/README.md#status-lifecycle) moves.
