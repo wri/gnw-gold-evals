@@ -1,9 +1,13 @@
 ---
 name: release-gate
-description: Use when comparing two GOLD runs for a release verdict ("did this build break anything", "gate this release"). Checks comparability preconditions, runs the diff, frames the count against trial noise.
+description: Use when comparing two GOLD runs for a release verdict ("did this build break anything", "gate this release"; legacy copy in this repo). Checks comparability preconditions, runs the diff, frames the count against trial noise. Not for CHALLENGE or BENCHMARK runs, which have no regression count.
 ---
 
 # release-gate: the two-run verdict
+
+> GOLD moved to wri/project-zeno `evals/gold/` on 2026-10-27. This skill applies to the
+> legacy copy in this repo and will move with it. For CHALLENGE or BENCHMARK work use
+> **challenge-cases** (CHALLENGE rollups) or **benchmark-run** (BENCHMARK runs), which report rates, not regression counts.
 
 GOLD's headline is a regression count between two runs. The count is only
 meaningful if the two runs are comparable; check that before diffing. Terms
