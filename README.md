@@ -21,7 +21,6 @@ GOLD, the capability regression suite this repo was first built for, now lives i
 
 A BENCHMARK version is a list of uids, not a copy of the cases. The live version, `2026-draft-5`, is a draft. Freezing a version, so that its members never change, is the intended end state, but no version is frozen yet.
 
-<a id="glossary"></a>
 ## Core concepts
 
 Every other doc uses these terms. The [glossary](docs/glossary.md) defines the rest.
