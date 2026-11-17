@@ -52,6 +52,11 @@ def agent_environment(run_environment: str) -> str:
     return "staging" if run_environment == "staging" else X_ENVIRONMENT
 
 
+def resource_id(link: str) -> str:
+    """The result's resource id: the last segment of its link."""
+    return link.rstrip("/").split("/")[-1]
+
+
 class AnalyticsError(Exception):
     """The analytics API couldn't answer. A run must abort loudly."""
 
@@ -63,10 +68,13 @@ class AnalyticsResult:
     result: dict[str, list[Any]]
     metadata: dict[str, Any]
     link: str
+    # 1 when the first POST found the result already stored: the API keys
+    # results by request, so it is the answer computed when first asked.
+    polls: int = 1
 
     @property
     def resource_id(self) -> str:
-        return self.link.rstrip("/").split("/")[-1]
+        return resource_id(self.link)
 
 
 class AnalyticsClient:
@@ -89,7 +97,7 @@ class AnalyticsClient:
         url = self.base_url + endpoint
         with httpx.Client(timeout=self._timeout, follow_redirects=True,
                           transport=self._transport) as client:
-            body = self._submit(client, url, payload)
+            body, polls = self._submit(client, url, payload)
             link = (body.get("data") or {}).get("link")
             if not link:
                 raise AnalyticsError(f"{endpoint}: no data.link in {body!r}")
@@ -106,12 +114,12 @@ class AnalyticsClient:
         if not result:
             # an empty result is a failed fetch
             raise AnalyticsError(f"{endpoint}: empty result at {link}")
-        return AnalyticsResult(result, data.get("metadata") or {}, link)
+        return AnalyticsResult(result, data.get("metadata") or {}, link, polls)
 
     def _submit(
         self, client: httpx.Client, url: str, payload: dict[str, Any]
-    ) -> dict[str, Any]:
-        for _ in range(self.max_polls):
+    ) -> tuple[dict[str, Any], int]:
+        for poll in range(1, self.max_polls + 1):
             try:
                 response = client.post(url, json=payload, headers=self._headers)
                 response.raise_for_status()
@@ -122,7 +130,7 @@ class AnalyticsClient:
                 raise AnalyticsError(f"{url}: malformed JSON ({exc})") from exc
             status = str(body.get("status") or "").lower()
             if status in DONE:
-                return body
+                return body, poll
             if status in FAILED:
                 raise AnalyticsError(f"{url}: job {status}: {body.get('message')}")
             if status != "pending":

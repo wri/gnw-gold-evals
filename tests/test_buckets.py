@@ -90,6 +90,13 @@ def test_implied_checks_from_expectations():
     # a map-only dashboard implies no pull; an insight widget does
     assert "data_pull_exists" not in implied_checks({"dashboard_widgets": "map"})
     assert "data_pull_exists" in implied_checks({"dashboard_widgets": "insight;map"})
+    # an explicit data_pull expectation implies the pull checks without an answer
+    assert {"data_pull_exists", "answered_without_data"} <= implied_checks(
+        {"dataset_id": "4", "data_pull": "TRUE"}
+    )
+    assert "data_pull_exists" not in implied_checks({"answer": "x", "data_pull": "FALSE"})
+    # one date bound is enough: the other is left to the agent
+    assert "date_extraction" in implied_checks({"start_date": "2021-01-01"})
     # class_values, chart_type and scope each imply exactly their dedicated
     # check. The assertions use equality, so a mistyped field name in
     # implied_checks fails here.

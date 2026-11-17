@@ -1,0 +1,27 @@
+id: ch-mon-065
+uid: 7c0ce4fdc697fae9
+status: todo
+set: monitoring
+group: custom_area
+query: Is the net forest carbon flux in our project landscape getting better or worse?
+expected:
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data for the preloaded custom area
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-170); USY-001563 WWF-US project landscapes;
+    USY-001607 ZSL TRIDOM
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-170
+  benchmark_type: monitoring
+  use_cases: UC4
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001563 WWF-US project landscapes; USY-001607 ZSL TRIDOM
+  refresh_risk: Low

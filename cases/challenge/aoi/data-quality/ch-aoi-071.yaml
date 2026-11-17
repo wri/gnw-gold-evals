@@ -1,0 +1,15 @@
+id: ch-aoi-071
+uid: 6ab726cd8146edf2
+status: ready
+set: aoi
+group: data-quality
+query: Go to the city of Bristol in England
+expected:
+  aoi_ids: GBR.1.12.1
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: municipality row 'Bristol, NA, England, United Kingdom' (NA hierarchy noise)
+  verify_query: Bristol
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

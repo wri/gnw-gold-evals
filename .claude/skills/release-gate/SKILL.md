@@ -30,7 +30,7 @@ Check and state each item:
 ## 2. Run the gate
 
 ```bash
-uv run python tools/diff_runs.py results/runs/<old>.json results/runs/<new>.json \
+uv run python tools/diff_runs.py results/gold/runs/<old>.json results/gold/runs/<new>.json \
   --json scratch/gate.json --fail-on-regression --fail-on-coverage-loss
 ```
 
@@ -79,4 +79,4 @@ stopped being measured and why before any green light.
 
 - Row-level failure analysis → the **triage-run** skill.
 - The verdict plus evidence goes in the new run's
-  `results/recommendations/<run_id>.md`.
+  `results/gold/recommendations/<run_id>.md`.

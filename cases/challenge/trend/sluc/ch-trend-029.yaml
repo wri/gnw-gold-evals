@@ -1,0 +1,40 @@
+id: ch-trend-029
+uid: 3c2d4df57e6552cb
+status: ready
+set: trend
+group: sluc
+query: Between 2020 and 2024, did Brazil's soybean deforestation emission factor (tCO2e per
+  tonne of production) go up or down?
+expected:
+  aoi_ids: BRA
+  dataset_id: '9'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: 'ref: mean(emissions_factor_tCO2e_per_tonne_production) where crop_type = ''Soybean''
+    and gas_type = ''CO2e'' and year = 2020 ; ref: mean(emissions_factor_tCO2e_per_tonne_production)
+    where crop_type = ''Soybean'' and gas_type = ''CO2e'' and year = 2024'
+  figure_claim: '#2 < #1 :: the soybean emission factor was lower in 2024 than in 2020 (down
+    overall) || the soybean emission factor was not lower in 2024 than in 2020 (not down overall)'
+notes:
+  crop_types: 'Soybean (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Direction of the emission factor (emission_factor_tCO2e_per_tonne_production)
+    across reporting years 2020-2024; tabular; tCO2e = MgCO2e.
+  eval_subtype: direction
+  manifest_id: m-sluc-trend-01
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-trend-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001651 Olam GHG data; USY-001404 Mars
+  refresh_risk: Low
+  benchmark_id: bm26-188
+  benchmark_type: trend
+  use_cases: UC2;UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (soybean CO2e factor 2024 vs 2020 from the pulled table)'

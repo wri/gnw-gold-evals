@@ -20,6 +20,16 @@ Row verdicts (``row_verdict``), in order of precedence:
 
 ``summarize_buckets`` always emits all five buckets, so a bucket with no
 scored checks shows as unmeasured instead of disappearing.
+
+A row passes when most of its attempts pass, each attempt judged on all the
+checks it scored (``row_verdict``; AJ, 2026-10-28). The per-check majorities
+the ledger stores under ``checks`` still drive the bucket tallies and
+regression diffs.
+
+An attempt that got no reply (``no_answer``: Horizon stopped sending,
+dropped the connection or failed) is a failed attempt, not an error: the
+user got nothing (AJ, 2026-10-27). Only a row with no attempt the harness
+could score is an error (``cli.merge_trials``).
 """
 
 from __future__ import annotations
@@ -59,6 +69,17 @@ DEDICATED: dict[str, str] = {
     "chart_well_formed": OUTPUT,
     "chart_type_match": OUTPUT,
     "scope_match": SCOPE,
+    # CHALLENGE dataset set: opt-in tool-scope isolation
+    "forbidden_tools_absent": SCOPE,
+    # Opt-in: a dataset_choice nudge offering every listed dataset passes
+    "accepted_nudge_match": SCOPE,
+    # Opt-in: an answer from search_blogs citing an accepted post passes
+    "accepted_blog_match": EXPLANATION,
+    # Draft-5: the maths on the agent's own pull, the period the answer uses,
+    # and the conclusion the data supports (evaluators/figures.py)
+    "figure_match": ANALYSIS,
+    "answer_period_match": ANALYSIS,
+    "figure_claim_match": EXPLANATION,
     # Multi-turn: scored by runner/multiturn.py, not by a registry evaluator.
     "state_delta": RETRIEVAL,
     # Run-time ground truth. Every way it scores 0.0 is a retrieval failure:
@@ -92,6 +113,43 @@ INFO_ONLY: frozenset[str] = frozenset(
 )
 
 
+# Checks that presuppose a data pull: the evaluators the registry marks
+# ``presumes_pull``. On an attempt judged on the accepted-nudge path they
+# are null (not applicable), and accepted_nudge_match speaks instead.
+PULL_PATH_CHECKS: frozenset[str] = frozenset(
+    {
+        "dataset_id_match",
+        "dataset_parameter_match",
+        "context_layer_match",
+        "date_coverage",
+        "date_extraction",
+        "data_pull_exists",
+        "charts_answer",
+        "charts_answer_judge",
+        "agent_answer",
+        "expected_text_match",
+        "chart_produced",
+        "answered_without_data",
+        "web_fallback",
+        "pull_source_match",
+        "class_value_match",
+        "chart_integrity",
+        "answer_traceability",
+        "chart_well_formed",
+        "chart_type_match",
+        "figure_match",
+        "figure_claim_match",
+        "answer_period_match",
+        "ground_truth_match",
+        "ground_truth_answer",
+    }
+)
+ACCEPTED_NUDGE = "accepted_nudge_match"
+# One check per accepted alternative path; an attempt that took one leaves
+# the pull-path checks null (see row_verdict).
+ALTERNATIVE_PATH_CHECKS: frozenset[str] = frozenset({ACCEPTED_NUDGE, "accepted_blog_match"})
+
+
 _TURN_PREFIX = re.compile(r"^t\d+\.")
 
 
@@ -112,10 +170,54 @@ def buckets_for(check: str) -> tuple[str, ...]:
     return SHARED.get(check, ())
 
 
+def _took_alternative_path(checks: dict[str, Any]) -> bool:
+    return any(
+        base_check_name(name) in ALTERNATIVE_PATH_CHECKS and value is not None
+        for name, value in checks.items()
+    )
+
+
+def attempt_verdict(trial: dict[str, Any]) -> str:
+    """One attempt's verdict: fail when it got no reply, error when the
+    harness could not score it, else its checks' verdict."""
+    if trial.get("no_answer"):
+        return "fail"
+    if trial.get("error"):
+        return "error"
+    return row_verdict({"checks": trial.get("checks") or {}})
+
+
 def row_verdict(entry: dict[str, Any]) -> str:
-    """pass | fail | error | uncovered, per the rules above."""
+    """pass | fail | error | uncovered, per the rules above.
+
+    A row is judged by its attempts: it passes when the majority of its
+    scored attempts pass (ties fail, as in ``ledger.majority``), and an
+    attempt passes when every gating check it scored passed. An attempt
+    that got no reply counts as a failed attempt; one the harness could not
+    score (its trial's ``error``) is left out. A row without per-trial
+    detail (a one-trial run) is judged on its own checks.
+
+    AJ, 2026-10-28: the per-check majority used before let a check scored
+    on one attempt decide the row, failing rows right on 2 of 3 attempts
+    (the nudge, blog and no-pull paths leave the other path's checks null),
+    and passed rows right on 1 of 3 whose attempts failed different checks.
+    """
     if entry.get("error") or entry.get("judge_errors"):
         return "error"
+    if entry.get("no_answer"):  # a single attempt, unmerged
+        return "fail"
+    # The ledger writes a list (cli.merge_trials); older fixtures a dict.
+    trials = entry.get("trials") or []
+    if isinstance(trials, dict):
+        trials = list(trials.values())
+    trials = [trial for trial in trials if isinstance(trial, dict)]
+    if trials:
+        verdicts = [attempt_verdict(trial) for trial in trials]
+        scored = [verdict for verdict in verdicts if verdict in ("pass", "fail")]
+        if not scored:
+            return "uncovered"
+        passes = sum(1 for verdict in scored if verdict == "pass")
+        return "pass" if passes * 2 > len(scored) else "fail"
     evaluated = {
         name: value
         for name, value in entry.get("checks", {}).items()
@@ -183,6 +285,9 @@ def _tri(value: str | None) -> bool | None:
 def _case_expects_data_pull(expected: dict[str, str]) -> bool:
     if _tri(expected.get("clarification")) is True:
         return False
+    explicit = _tri(expected.get("data_pull"))
+    if explicit is not None:
+        return explicit
     if expected.get("answer") or expected.get("ground_truth"):
         return True
     return "insight" in (expected.get("dashboard_widgets") or "")
@@ -202,7 +307,7 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("dataset_parameter_match")
     if expected.get("context_layer"):
         implied.add("context_layer_match")
-    if expected.get("start_date") and expected.get("end_date"):
+    if expected.get("start_date") or expected.get("end_date"):
         implied.add("date_extraction")
     if expected.get("answer"):
         implied.update({"agent_answer", "chart_produced"})
@@ -230,7 +335,31 @@ def implied_checks(expected: dict[str, str]) -> set[str]:
         implied.add("chart_type_match")
     if expected.get("scope"):
         implied.add("scope_match")
+    if expected.get("forbidden_tools"):
+        implied.add("forbidden_tools_absent")
+    if expected.get("accept_nudge_offering") or expected.get("accept_aoi_nudge_offering"):
+        implied.add(ACCEPTED_NUDGE)
+    if expected.get("accept_blog_sources"):
+        implied.add("accepted_blog_match")
     return implied
+
+
+def _implied_for_entry(implied: set[str], checks: dict[str, Any]) -> set[str]:
+    """A case that accepts a nudge or a blog answer implies every path's
+    checks; a row only owes the checks of the path it took (see
+    ``row_verdict``)."""
+    if not any(base_check_name(check) in ALTERNATIVE_PATH_CHECKS for check in implied):
+        return implied
+    if _took_alternative_path(checks):
+        # An area-choice nudge or a blog answer also leaves aoi_id_match
+        # null: no area is chosen on those paths.
+        skipped = PULL_PATH_CHECKS | (
+            {"aoi_id_match"} if checks.get("aoi_id_match") is None else set()
+        )
+        taken = {name for name in ALTERNATIVE_PATH_CHECKS if checks.get(name) is not None}
+        skipped |= ALTERNATIVE_PATH_CHECKS - taken
+        return {c for c in implied if base_check_name(c) not in skipped}
+    return {c for c in implied if base_check_name(c) not in ALTERNATIVE_PATH_CHECKS}
 
 
 def implied_checks_for_case(case: Any) -> set[str]:
@@ -266,6 +395,7 @@ def reconcile(
             unmatched_rows += 1
             continue
         implied = expected if isinstance(expected, set) else implied_checks(expected)
+        implied = _implied_for_entry(implied, entry.get("checks", {}))
         for check in sorted(implied):
             implied_total += 1
             if entry.get("checks", {}).get(check) is not None:

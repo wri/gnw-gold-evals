@@ -1,0 +1,25 @@
+id: ch-quant-008
+uid: a4b351fefea58cc0
+status: ready
+set: quantification
+group: tcl-drivers
+query: What has been the dominant driver of tree cover loss in Brazil, and how many hectares
+  of loss are attributed to it?
+expected:
+  aoi_ids: BRA
+  dataset_id: '8'
+  start_date: '2001-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: This dataset aggregates drivers across the whole record (2001-2025),
+    not a per-year timeseries; it is not date-filterable, so per-year or sub-range driver
+    figures must not be required. Per the dataset guidance the 'Unknown' class is excluded
+    from driver analysis, so the dominant-driver share may be reported as a percentage of
+    total or of known (non-Unknown) loss.
+  eval_subtype: driver_share
+  manifest_id: m-tcl-quant-08
+  lineage: gnw-evals eval-metrics-slice-1 gt-quant-08
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

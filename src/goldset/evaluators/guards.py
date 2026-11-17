@@ -22,7 +22,12 @@ import re
 from typing import Any
 
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
-from goldset.evaluators.utils import last_statistics, normalize_value
+from goldset.evaluators.utils import (
+    last_statistics,
+    link_slug,
+    normalize_value,
+    parse_slugs,
+)
 
 # Substantive prose (vs a bare refusal/greeting): anything this long that
 # arrives with no data behind it is an answer the user will believe.
@@ -52,7 +57,7 @@ def _pull_dataset_reference(statistics: dict[str, Any]) -> str:
 
     Most statistics entries carry an integer ``dataset_id`` alongside
     ``source_url``, ``id``, ``data``, ``start_date`` and ``end_date``; a few do
-    not (see results/campaigns/20260801-pr08.md). Presence is checked by key
+    not (see results/gold/campaigns/20260801-pr08.md). Presence is checked by key
     rather than truthiness, so an id of 0 still counts as present.
     """
     if "dataset_id" in statistics:
@@ -65,6 +70,7 @@ def evaluate_guards(
     expects_data_pull: bool,
     expected_answer: str,
     expected_dataset_id: str,
+    accepted_blog_sources: str = "",
 ) -> dict[str, Any]:
     result: dict[str, Any] = {
         "chart_produced_score": None,
@@ -94,15 +100,21 @@ def evaluate_guards(
         violated = answered and not pulled and not dataset_selected
         result["answered_without_data_score"] = 0.0 if violated else 1.0
 
-    # web_fallback: outside links in an answer that should come from pulled data
-    # suggest it came from web knowledge instead.
+    # web_fallback: external citations in an answer that pulled no data signal
+    # it came from web knowledge instead. Once data was pulled, a cited article
+    # beside the figures misleads no one (AJ, 2026-10-27), and the figure checks
+    # speak for the figures, so the check abstains; the links are still
+    # recorded. Posts the case accepts (accept_blog_sources) never count.
     if expects_data_pull and answer_text:
+        accepted = parse_slugs(accepted_blog_sources)
         links = [
             link
             for link in _LINK_RE.findall(answer_text)
             if not any(domain in link.lower() for domain in _OWN_DOMAINS)
+            and link_slug(link) not in accepted
         ]
-        result["web_fallback_score"] = 0.0 if links else 1.0
+        if not pulled:
+            result["web_fallback_score"] = 0.0 if links else 1.0
         if links:
             result["actual_web_links"] = "; ".join(sorted(set(links))[:5])
 

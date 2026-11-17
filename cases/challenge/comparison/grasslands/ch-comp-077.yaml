@@ -1,0 +1,20 @@
+id: ch-comp-077
+uid: 8d6852df049d4819
+status: ready
+set: comparison
+group: grasslands
+query: Between 2005 and 2015, which country lost more natural/semi-natural grassland, Mexico
+  or Brazil?
+expected:
+  aoi_ids: MEX;BRA
+  dataset_id: '2'
+  start_date: '2005-01-01'
+  end_date: '2015-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare which country lost more natural/semi-natural grassland over the
+    window (sum of the annual loss column, hectares).
+  eval_subtype: two_country
+  manifest_id: m-grass-comp-09
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-09a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

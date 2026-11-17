@@ -22,6 +22,7 @@ from typing import Any
 from goldset.groundtruth.catalog import (
     AOI_TYPES,
     DEFAULT_CANOPY_COVER,
+    NATURAL_FOREST_DEFAULT_CANOPY_COVER,
     Dataset,
     dataset_for,
 )
@@ -34,11 +35,20 @@ _GADM_SUFFIX = re.compile(r"_[1-5]$")
 # time rather than returning a confusing API error.
 _GADM_ONLY = {"9", "12"}
 
-_FOREST_FILTERS = {
-    "loss": frozenset({"primary_forest", "intact_forest"}),
-    "gain": frozenset({"primary_forest"}),
-    "extent": frozenset({"primary_forest"}),
+# The forest_filter zeno sends for each context layer, by payload style. A
+# layer missing here is sent as null.
+_FOREST_FILTERS: dict[str, dict[str, str]] = {
+    "loss": {
+        "primary_forest": "primary_forest",
+        "intact_forest": "intact_forest",
+        "natural_forest": "natural_forest_only",
+    },
+    "gain": {"primary_forest": "primary_forest"},
+    "extent": {"primary_forest": "primary_forest"},
 }
+
+# The context layers zeno sends as the Integrated Alerts land_filter.
+_LAND_FILTERS = frozenset({"natural_lands", "natural_forests"})
 
 
 class RequestError(Exception):
@@ -64,28 +74,33 @@ def normalise_aoi_id(raw: str, aoi_type: str) -> str:
     return _GADM_SUFFIX.sub("", raw) if aoi_type == "admin" else raw
 
 
-def canopy_cover(expected: dict[str, str]) -> int:
+def canopy_cover(expected: dict[str, str], layer: str | None = None) -> int:
     """The canopy threshold to send, from ``dataset_parameters``.
 
     Zeno takes ``int(max(param["values"]))`` off the agent's *narrowed*
-    selection and otherwise defaults to 30. A case that does not pin
-    ``dataset_parameters`` therefore relies on that default matching what the
-    agent chose — true for 1-076, but a coincidence rather than a guarantee,
-    which is why pinning it is recommended when authoring.
+    selection and otherwise defaults to 30, or to 10 when the context layer is
+    natural_forest. A case that does not pin ``dataset_parameters`` therefore
+    relies on that default matching what the agent chose — true for 1-076, but
+    a coincidence rather than a guarantee, which is why pinning it is
+    recommended when authoring.
     """
+    default = (NATURAL_FOREST_DEFAULT_CANOPY_COVER if layer == "natural_forest"
+               else DEFAULT_CANOPY_COVER)
     raw = (expected.get("dataset_parameters") or "").strip()
     if not raw:
-        return DEFAULT_CANOPY_COVER
+        return default
     try:
         for param in json.loads(raw):
             if param.get("name") == "canopy_cover" and param.get("values"):
                 return int(max(param["values"]))
     except (ValueError, TypeError, KeyError) as exc:
         raise RequestError(f"unparseable dataset_parameters: {raw!r} ({exc})")
-    return DEFAULT_CANOPY_COVER
+    return default
 
 
-def _years(expected: dict[str, str], dataset: Dataset) -> tuple[str, str]:
+def _years(
+    expected: dict[str, str], dataset: Dataset, today: str | None = None
+) -> tuple[str, str]:
     """The analysis window, as years.
 
     ``cases/README.md`` forbids date expectations on annual datasets — the agent
@@ -95,22 +110,26 @@ def _years(expected: dict[str, str], dataset: Dataset) -> tuple[str, str]:
     (``... WHERE tree_cover_loss_year=2019``), not in the request.
     """
     start = (expected.get("start_date") or dataset.start_date)[:4]
-    end_raw = expected.get("end_date") or dataset.end_date
-    if not end_raw:
-        from datetime import UTC, datetime
-
-        end_raw = datetime.now(UTC).strftime("%Y-%m-%d")
+    end_raw = expected.get("end_date") or dataset.end_date or _today(today)
     return start, end_raw[:4]
 
 
-def _dates(expected: dict[str, str], dataset: Dataset) -> tuple[str, str]:
+def _dates(
+    expected: dict[str, str], dataset: Dataset, today: str | None = None
+) -> tuple[str, str]:
     start = expected.get("start_date") or dataset.start_date
-    end = expected.get("end_date") or dataset.end_date
-    if not end:
-        from datetime import UTC, datetime
-
-        end = datetime.now(UTC).strftime("%Y-%m-%d")
+    end = expected.get("end_date") or dataset.end_date or _today(today)
     return start, end
+
+
+def _today(today: str | None) -> str:
+    """The open end of a window. A rescore passes the day the reply was
+    given, so "to today" means what it meant to the assistant then."""
+    if today:
+        return today
+    from datetime import UTC, datetime
+
+    return datetime.now(UTC).strftime("%Y-%m-%d")
 
 
 def _snap(year: str, floor: int) -> str:
@@ -125,10 +144,12 @@ def forest_filter(layer: str | None, style: str) -> str | None:
     ``None`` when the dataset has no filter for that layer — the same as the
     agent sends.
     """
-    return layer if layer in _FOREST_FILTERS.get(style, frozenset()) else None
+    return _FOREST_FILTERS.get(style, {}).get(layer or "")
 
 
-def build_request(case: Any, dataset_id: str | None = None) -> AnalyticsRequest:
+def build_request(
+    case: Any, dataset_id: str | None = None, today: str | None = None
+) -> AnalyticsRequest:
     """Build the analytics request a ground-truth case implies.
 
     ``dataset_id`` selects one alternative when the case offers several
@@ -176,32 +197,38 @@ def build_request(case: Any, dataset_id: str | None = None) -> AnalyticsRequest:
                 "ids": [normalise_aoi_id(i, aoi_type) for i in ids]},
     }
     layer = (expected.get("context_layer") or "").strip() or None
+    if layer and "|" in layer:
+        raise RequestError(
+            f"{label}: context_layer {layer!r} offers alternatives; "
+            "build one request per layer"
+        )
 
     if dataset.style == "date":
-        # Dates only, matching zeno's Integrated Alerts payload. The API rejects
-        # unknown fields with a 422, so no `intersections` key is sent, not even
-        # an empty one. A context layer on the case is ignored, as zeno ignores
-        # it, so the harness sends the same request as the agent.
-        start, end = _dates(expected, dataset)
-        payload |= {"start_date": start, "end_date": end}
+        # Dates and land_filter, matching zeno's Integrated Alerts payload. The
+        # API rejects unknown fields with a 422, so no `intersections` key is
+        # sent, not even an empty one. zeno always sends land_filter: the
+        # context layer when it is a land filter, else null.
+        start, end = _dates(expected, dataset, today)
+        payload |= {"start_date": start, "end_date": end,
+                    "land_filter": layer if layer in _LAND_FILTERS else None}
     elif dataset.style == "year":
-        start, end = _years(expected, dataset)
+        start, end = _years(expected, dataset, today)
         payload |= {"start_year": start, "end_year": end}
     elif dataset.style == "loss":
-        start, end = _years(expected, dataset)
+        start, end = _years(expected, dataset, today)
         payload |= {"start_year": start, "end_year": end,
                     "forest_filter": forest_filter(layer, dataset.style),
                     "intersections": list(dataset.intersections),
-                    "canopy_cover": canopy_cover(expected)}
+                    "canopy_cover": canopy_cover(expected, layer)}
     elif dataset.style == "gain":
-        start, end = _years(expected, dataset)
+        start, end = _years(expected, dataset, today)
         payload |= {"start_year": _snap(start, 2000), "end_year": _snap(end, 2005),
                     "forest_filter": forest_filter(layer, dataset.style)}
     elif dataset.style == "canopy":
-        payload |= {"canopy_cover": canopy_cover(expected)}
+        payload |= {"canopy_cover": canopy_cover(expected, layer)}
     elif dataset.style == "extent":
         payload |= {"forest_filter": forest_filter(layer, dataset.style),
-                    "canopy_cover": canopy_cover(expected)}
+                    "canopy_cover": canopy_cover(expected, layer)}
     # "none": AOI only.
 
     return AnalyticsRequest(dataset.endpoint, payload, dataset)

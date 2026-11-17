@@ -1,0 +1,19 @@
+id: ch-quant-059
+uid: e076188f9898cb55
+status: ready
+set: quantification
+group: land-cover
+query: I'm digging into land cover data for the UK - do you know roughly how much of the country's
+  land is classified as built-up land right now?
+expected:
+  aoi_ids: GBR
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'built-up land (unscored: no evaluator surface yet)'
+  judge_instruction: Composition question against the fixed 2024 snapshot; headline is the
+    built-up land class area_ha.
+  eval_subtype: class_area
+  manifest_id: m-lc-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

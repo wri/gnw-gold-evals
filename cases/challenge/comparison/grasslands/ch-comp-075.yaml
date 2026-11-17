@@ -1,0 +1,20 @@
+id: ch-comp-075
+uid: 1107e0b958734f60
+status: ready
+set: comparison
+group: grasslands
+query: I'm curious about 2018 — does Colombia or Peru have more natural/semi-natural grassland
+  area that year?
+expected:
+  aoi_ids: COL;PER
+  dataset_id: '2'
+  start_date: '2018-01-01'
+  end_date: '2018-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare grassland extent (area_ha, hectares) between the two countries
+    for the year.
+  eval_subtype: two_country
+  manifest_id: m-grass-comp-07
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

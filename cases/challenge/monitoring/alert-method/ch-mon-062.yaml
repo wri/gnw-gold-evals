@@ -1,0 +1,28 @@
+id: ch-mon-062
+uid: de9d56c029b66f7b
+status: ready
+set: monitoring
+group: alert_method
+query: The alert date says March but our rangers saw machines there in February. How soon
+  after clearing does an alert appear?
+expected:
+  text: Explains that the alert date is the detection date, not when clearing began, and that
+    lag depends on satellite revisit and cloud; any lag figures are given as typical ranges.
+notes:
+  behaviour: Explain detection lag, revisit time and date meaning
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-059); Alerts JTBD (Miro) (know when
+    alerts took place)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-059
+  benchmark_type: monitoring
+  use_cases: UC1;UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Alerts JTBD (Miro) (know when alerts took place)
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text reworded: published
+    typical lag ranges are allowed (''without inventing exact lags'' failed accurate detail)'

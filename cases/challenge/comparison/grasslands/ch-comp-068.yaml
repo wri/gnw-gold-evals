@@ -1,0 +1,20 @@
+id: ch-comp-068
+uid: 3050d45cf32974a6
+status: ready
+set: comparison
+group: grasslands
+query: Between 2015 and 2020, which country lost more natural/semi-natural grassland, Bolivia
+  or Colombia?
+expected:
+  aoi_ids: BOL;COL
+  dataset_id: '2'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare which country lost more natural/semi-natural grassland over the
+    window (sum of the annual loss column, hectares); loss is not necessarily permanent conversion.
+  eval_subtype: two_country
+  manifest_id: m-grass-comp-02
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-02a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

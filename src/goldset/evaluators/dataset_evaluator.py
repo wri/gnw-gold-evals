@@ -5,6 +5,13 @@ from typing import Any
 
 from goldset.evaluators.utils import normalize_value
 
+# Expected dataset_id sentinel: "no dataset selected is correct". Usable alone
+# or as an alternative ("9;no_selection"), mirroring context_layer's
+# no_selection. Added for the CHALLENGE dataset set's unmappable cohort, whose
+# correct behaviour (decline, never substitute a land dataset) otherwise
+# scored 0.0 unconditionally on the missing dataset.
+NO_SELECTION = "no_selection"
+
 
 def _normalize_dataset_parameters(value: Any) -> str:
     """Normalise dataset parameters for stable JSON comparison.
@@ -82,9 +89,19 @@ def evaluate_dataset_selection(
 
     dataset = agent_state.get("dataset")
 
-    if not dataset:
+    # The expected id accepts ;-separated alternatives for cases where more than
+    # one dataset is defensible (for example "8;10"); any alternative matches.
+    expected_id_alternatives = {
+        normalize_value(alt)
+        for alt in str(expected_dataset_id).split(";")
+        if normalize_value(alt)
+    }
+    no_selection_ok = NO_SELECTION in expected_id_alternatives
+
+    # A dataset dict with no id is treated as no selection.
+    if not dataset or not normalize_value(dataset.get("dataset_id")):
         return {
-            "dataset_id_match_score": 0.0,
+            "dataset_id_match_score": 1.0 if no_selection_ok else 0.0,
             "dataset_parameter_match_score": None,
             "context_layer_match_score": None,
             "actual_dataset_id": None,
@@ -101,13 +118,6 @@ def evaluate_dataset_selection(
     )
     actual_context_layer = dataset.get("context_layer", "")
 
-    # The expected id accepts ;-separated alternatives for cases where more than
-    # one dataset is defensible (for example "8;10"); any alternative matches.
-    expected_id_alternatives = {
-        normalize_value(alt)
-        for alt in str(expected_dataset_id).split(";")
-        if normalize_value(alt)
-    }
     actual_id_str = normalize_value(actual_dataset_id)
     dataset_match = actual_id_str in expected_id_alternatives
 
@@ -126,13 +136,18 @@ def evaluate_dataset_selection(
             1.0 if expected_parameters_str == actual_parameters_str else 0.0
         )
 
-    # An expected "no_selection" means the agent should choose no context layer.
+    # Context layer matching: if expected is empty, return None (not evaluated).
+    # Fair alternatives are separated by "|" ("primary_forest | natural_forest",
+    # draft-5 review 2026-10-27); "no_selection" means no layer at all.
     if not expected_context_str:
         context_layer_match_score = None
-    elif expected_context_str == "no_selection":
-        context_layer_match_score = 1.0 if not actual_context_str else 0.0
     else:
-        context_layer_match = expected_context_str == actual_context_str
+        alternatives = {
+            normalize_value(alt) for alt in str(expected_context_layer).split("|")
+        } - {""}
+        context_layer_match = (
+            not actual_context_str if "no_selection" in alternatives else False
+        ) or (bool(actual_context_str) and actual_context_str in alternatives)
         context_layer_match_score = 1.0 if context_layer_match else 0.0
 
     return {

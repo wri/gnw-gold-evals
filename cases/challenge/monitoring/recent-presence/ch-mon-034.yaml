@@ -1,0 +1,38 @@
+id: ch-mon-034
+uid: d9c68e6300654701
+status: ready
+set: monitoring
+group: recent_presence
+query: Any fire-related disturbance alerts in Maranhão this week? Looking for escaped fires.
+expected:
+  aoi_ids: BRA.10
+  dataset_id: '11'
+  start_date: '{run-7d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Reports disturbance alerts in Maranhão for the past week and is clear that the alerts
+    do not record which were caused by fire, rather than calling alerts fires without evidence.
+  accept_nudge_offering: '11'
+  figure: sum(area_ha) where alert_date in {run-7d}..{run}
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-004); USY-000194 Maranhão forest manager
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-004
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-000194 Maranhão forest manager
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: all 3 attempts
+    nudged with Integrated alerts (11) and fire loss (10).; 2026-10-27 draft-5 review (AJ
+    asked to apply the review): figure added (7-day alert area from the pulled table)'

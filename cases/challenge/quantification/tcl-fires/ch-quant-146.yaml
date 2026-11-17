@@ -1,0 +1,37 @@
+id: ch-quant-146
+uid: f5443cf1be8f6fcf
+status: ready
+set: quantification
+group: tcl-fires
+query: How much primary forest loss in the Democratic Republic of the Congo in 2022 was caused
+  by fires, in hectares?
+expected:
+  aoi_ids: COD
+  dataset_id: '10'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2022
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Report fire-driven loss within primary forest for the year (hectares);
+    fire and non-fire components sum to total area_ha. A primary-forest layer is applied,
+    so 'deforestation' terminology is acceptable. NEVER report carbon emissions. 30% default.
+  eval_subtype: primary_forest
+  manifest_id: m-fires-quant-06
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001592 Guardian wildfires; USY-001631 Trouw
+  refresh_risk: Low
+  benchmark_id: bm26-153
+  benchmark_type: quantification
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

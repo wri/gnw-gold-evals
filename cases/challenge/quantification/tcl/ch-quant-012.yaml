@@ -1,0 +1,22 @@
+id: ch-quant-012
+uid: 230fc8436909c0be
+status: ready
+set: quantification
+group: tcl
+query: What was the total area of tree cover loss across all forest types in Brazil during
+  2023?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked for all tree cover including plantations, so no forest-type
+    filter should be applied.
+  eval_subtype: single_year
+  manifest_id: m-tcl-quant-01
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,20 @@
+id: ch-quant-120
+uid: c723c793b27984c2
+status: ready
+set: quantification
+group: tc-gain
+query: I'm digging into Peru's forests for a piece I'm writing - do you know roughly how many
+  hectares of tree cover gain the country has racked up cumulatively from 2005 to 2020?
+expected:
+  aoi_ids: PER
+  dataset_id: '5'
+  start_date: '2005-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Cumulative gain over the 2005-2020 period (ha). Do not decompose into
+    sub-intervals; gain is not restoration.
+  eval_subtype: period_gain
+  manifest_id: m-gain-quant-05
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-quant-05a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

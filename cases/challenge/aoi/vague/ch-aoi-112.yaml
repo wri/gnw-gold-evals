@@ -1,0 +1,16 @@
+id: ch-aoi-112
+uid: 6566e0480b239334
+status: ready
+set: aoi
+group: vague
+query: Take me to the north of Madagascar
+expected:
+  clarification: 'TRUE'
+  text: Asks the user to clarify which administrative area in northern Madagascar they mean
+notes:
+  difficulty: medium
+  behaviour: clarify
+  lineage: relative direction
+  verify_query: MDG
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

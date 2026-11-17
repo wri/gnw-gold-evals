@@ -1,0 +1,25 @@
+id: ch-quant-198
+uid: 3c227b222e46a7ad
+status: ready
+set: quantification
+group: method
+query: What data sources and models are behind the tree cover loss numbers you just gave me?
+expected:
+  text: Names the source and method of the tree cover loss data accurately (University of
+    Maryland / Hansen et al., Landsat-based, on Global Forest Watch).
+notes:
+  behaviour: Name source and method accurately
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-281); Map exploration research (trust
+    tied to knowing sources)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-281
+  benchmark_type: quantification
+  use_cases: UC3;UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Map exploration research (trust tied to knowing sources)
+  refresh_risk: Low

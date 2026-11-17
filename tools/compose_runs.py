@@ -1,9 +1,9 @@
 """Combine a primary run with scoped re-runs into one current picture.
 
-    uv run python tools/compose_runs.py results/runs/PRIMARY.json
-        results/runs/SUPP1.json [results/runs/SUPP2.json ...] [--json out.json]
+    uv run python tools/compose_runs.py results/gold/runs/PRIMARY.json
+        results/gold/runs/SUPP1.json [results/gold/runs/SUPP2.json ...] [--json out.json]
 
-This never writes to `results/runs/`. Run files are immutable, and a run's
+This never writes to `results/gold/runs/`. Run files are immutable, and a run's
 metadata (`ff`, `workers`, `build`) must describe how its own rows were
 produced, so rows from another run cannot be spliced in. See "Composing a
 current picture across runs" in results/README.md.
@@ -91,9 +91,12 @@ def compose(primary: dict, supplements: list[dict], cases_dir: Path) -> dict:
 
 
 def _all_trials_clean(entry: dict) -> bool:
-    if entry.get("error") or entry.get("judge_errors"):
+    if entry.get("error") or entry.get("judge_errors") or entry.get("no_answer"):
         return False
     trials = entry.get("trials") or [{"checks": entry.get("checks", {})}]
+    if any(trial.get("no_answer") for trial in trials):
+        return False
+    trials = [trial for trial in trials if not trial.get("error")]
     return all(
         all(
             value != 0.0

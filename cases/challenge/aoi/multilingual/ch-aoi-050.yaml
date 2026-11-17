@@ -1,0 +1,15 @@
+id: ch-aoi-050
+uid: 3df7a2151f6c951a
+status: ready
+set: aoi
+group: multilingual
+query: Show me São Paulo state
+expected:
+  aoi_ids: BRA.25
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: diacritics
+  verify_query: São Paulo
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

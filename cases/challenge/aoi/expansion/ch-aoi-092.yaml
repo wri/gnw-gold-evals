@@ -1,0 +1,15 @@
+id: ch-aoi-092
+uid: 5b0e2bbde3fc60a4
+status: ready
+set: aoi
+group: expansion
+query: Show me all the provinces of Canada
+expected:
+  aoi_ids: CAN.1;CAN.2;CAN.3;CAN.4;CAN.5;CAN.6;CAN.7;CAN.8;CAN.9;CAN.10;CAN.11;CAN.12;CAN.13
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: 13 level-1 rows structural
+  verify_query: Canada
+  verified: structural
+  source_tab: challenge-aoi-v1

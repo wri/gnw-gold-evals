@@ -189,27 +189,30 @@ def _answer_state(answer: str) -> dict:
 
 
 def test_h8_own_tile_domain_is_not_web_fallback():
-    """1-095 answered from a real data pull and linked a Global Forest Watch
-    dashboard for the same figures. A link to the product's own domains is
-    not evidence of a web-sourced answer."""
+    """1-095 linked a Global Forest Watch dashboard for the same figures. A
+    link to the product's own domains is not evidence of a web-sourced
+    answer. Checked without a pull, where `web_fallback` still fires."""
     state = _answer_state(
         "Finland lost 241,368.24 hectares in 2025 at a 10% canopy threshold. "
         "See also https://www.globalforestwatch.org/dashboards/country/FIN/ "
         "for the same figures." + " padding" * 10,
     )
+    state["statistics"] = []
     result = evaluate_guards(state, expects_data_pull=True, expected_answer="x",
                              expected_dataset_id="4")
     assert result["web_fallback_score"] == 1.0
 
 
-def test_h8_wri_org_citation_still_fires():
-    """A wri.org link in an answer to a data question means the agent answered
-    from a WRI blog post instead of pulling data (1-030), so `web_fallback`
-    must still flag it."""
+def test_h8_wri_org_citation_still_fires_without_a_pull():
+    """A wri.org link in an answer to a data question, with no pull behind it,
+    means the agent answered from a WRI blog post instead of pulling data
+    (1-030), so `web_fallback` must still flag it. After a pull the check
+    abstains (2026-10-27)."""
     state = _answer_state(
         "Ziguinchor has the most mangroves in Senegal, per "
         "https://www.wri.org/insights/mangrove-restoration." + " padding" * 10,
     )
+    state["statistics"] = []
     result = evaluate_guards(state, expects_data_pull=True, expected_answer="x",
                              expected_dataset_id="4")
     assert result["web_fallback_score"] == 0.0

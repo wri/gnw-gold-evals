@@ -1,0 +1,22 @@
+id: ch-trend-036
+uid: f686339e2b35d96b
+status: ready
+set: trend
+group: sluc
+query: Hey, quick one - for cocoa grown in Côte d'Ivoire, how do the total sLUC emissions
+  (in tCO2e) in 2024 stack up against where they were back in 2020?
+expected:
+  aoi_ids: CIV
+  dataset_id: '9'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Cocoa (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare total sLUC emissions (emissions_tCO2e) between reporting years
+    2020 and 2024; tabular.
+  eval_subtype: change_over_period
+  manifest_id: m-sluc-trend-06
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-trend-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

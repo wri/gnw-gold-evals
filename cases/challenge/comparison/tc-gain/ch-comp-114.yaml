@@ -1,0 +1,20 @@
+id: ch-comp-114
+uid: cdd8cbf014084eda
+status: ready
+set: comparison
+group: tc-gain
+query: 'Quick question for a piece I''m working on: between Peru and Bolivia, who''s seen
+  bigger tree cover gains over the 2005-2020 stretch?'
+expected:
+  aoi_ids: PER;BOL
+  dataset_id: '5'
+  start_date: '2005-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare cumulative gain over the 2005-2020 period; direction must be
+    correct; do not decompose the period. Gain is not restoration.
+  eval_subtype: two_country
+  manifest_id: m-gain-comp-03
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-03b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

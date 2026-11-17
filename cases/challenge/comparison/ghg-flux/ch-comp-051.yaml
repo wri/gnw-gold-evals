@@ -1,0 +1,20 @@
+id: ch-comp-051
+uid: ed748aee516c0aa5
+status: ready
+set: comparison
+group: ghg-flux
+query: Using a 50% canopy density threshold, how do Brazil and the Democratic Republic of
+  the Congo compare in terms of their whole-period net forest GHG flux totals in MgCO2e?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '6'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  data_pull: 'TRUE'
+notes:
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: 50% canopy density threshold applied to both. Compare whole-period net
+    flux totals (2001-2025) in MgCO2e; direction correct; net source/sink per sign.
+  eval_subtype: two_country
+  manifest_id: m-flux-comp-06
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-06b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

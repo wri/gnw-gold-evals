@@ -4,7 +4,7 @@ This was a one-off check, run before gnw-evals was retired as the GOLD
 runner. Rerun it only if that proof is needed again, for example after
 changing how a check that both harnesses produce is computed.
 
-    uv run python tools/parity.py results/runs/A.json results/runs/B.json
+    uv run python tools/parity.py results/gold/runs/A.json results/gold/runs/B.json
 
 A is a gnw-evals run imported with `tools/ingest_run.py`; B is a `gold run`
 on the same agent build. It compares majority verdicts on the checks both

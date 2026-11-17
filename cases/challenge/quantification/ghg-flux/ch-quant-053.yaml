@@ -1,0 +1,20 @@
+id: ch-quant-053
+uid: cb7ba9caca85cf22
+status: ready
+set: quantification
+group: ghg-flux
+query: What is Indonesia's total net forest greenhouse gas flux, in MgCO2e, over the full
+  2001-2025 record at a 75% canopy density threshold?
+expected:
+  aoi_ids: IDN
+  dataset_id: '6'
+  dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
+  data_pull: 'TRUE'
+notes:
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: 75% canopy density threshold. Whole-period net flux total (2001-2025)
+    in MgCO2e; not annual; net source/sink per sign.
+  eval_subtype: canopy_threshold
+  manifest_id: m-flux-quant-07
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

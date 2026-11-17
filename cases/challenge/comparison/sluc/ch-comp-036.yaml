@@ -1,0 +1,22 @@
+id: ch-comp-036
+uid: a6f9e3b5f1dedb1d
+status: ready
+set: comparison
+group: sluc
+query: Hey, quick question - in Indonesia, which one has a bigger sLUC emission factor per
+  tonne, oil palm or rice?
+expected:
+  aoi_ids: IDN
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Oil Palm;Rice (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Compare the emission factor (emission_factor_tCO2e_per_tonne_production)
+    between the two crops in the country; tabular; default reporting year 2024.
+  eval_subtype: two_crop
+  manifest_id: m-sluc-comp-04
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-comp-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

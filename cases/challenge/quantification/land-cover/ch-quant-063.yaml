@@ -1,0 +1,20 @@
+id: ch-quant-063
+uid: 407981e7b908787a
+status: ready
+set: quantification
+group: land-cover
+query: I'm digging into Ghana's farmland situation - any idea roughly how much of the country's
+  land is currently agricultural land?
+expected:
+  aoi_ids: GHA
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'cropland;cultivated grasslands (unscored: no evaluator surface yet)'
+  judge_instruction: The user asks about agricultural land generically, so per the catalog
+    the expected figure is cropland + cultivated grasslands area_ha combined from the 2024
+    composition.
+  eval_subtype: agriculture_combined
+  manifest_id: m-lc-quant-06
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

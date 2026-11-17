@@ -1,0 +1,15 @@
+id: ch-aoi-067
+uid: 55fcccf2c16543c0
+status: ready
+set: aoi
+group: data-quality
+query: Go to Northern Ireland
+expected:
+  aoi_ids: GBR.2
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: control
+  verify_query: Northern Ireland
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

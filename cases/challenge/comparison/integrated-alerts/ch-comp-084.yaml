@@ -1,0 +1,18 @@
+id: ch-comp-084
+uid: f08466fa7c4d13fc
+status: ready
+set: comparison
+group: integrated-alerts
+query: In Indonesia, was more forest disturbance area flagged from January to June 2024 or
+  from July to December 2024?
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare the two halves of 2024 (2024-01-01..2024-06-30 vs 2024-07-01..2024-12-31)
+    for total alert area (area_ha).
+  eval_subtype: two_period
+  manifest_id: m-ialert-comp-06
+  lineage: generated 2026-09-01 from phase-2 manifest; ialert-comp-06a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

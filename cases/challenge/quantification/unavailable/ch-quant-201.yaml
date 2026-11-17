@@ -1,0 +1,24 @@
+id: ch-quant-201
+uid: 02f1b063aeb5f2f6
+status: ready
+set: quantification
+group: unavailable
+query: What is the carbon stored in pastures in Mato Grosso do Sul?
+expected:
+  text: Says data on carbon stored in pastures are not available, or redirects to related
+    data such as forest carbon flux; does not invent a figure for Mato Grosso do Sul.
+notes:
+  behaviour: 'decline or redirect: pasture carbon not in catalog'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-292); USY-001638 Embrapa pasture carbon
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-292
+  benchmark_type: quantification
+  use_cases: UC4;UC6
+  engagement: First look
+  aoi_type: Subnational
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Direct from story
+  user_story_refs: USY-001638 Embrapa pasture carbon
+  refresh_risk: Low

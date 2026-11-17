@@ -1,0 +1,20 @@
+id: ch-quant-114
+uid: ca8cee61a4ae7779
+status: ready
+set: quantification
+group: tree-cover
+query: I'm putting together a baseline for a report - do you know how many hectares of tree
+  cover Brazil has if we set the canopy density threshold at 50%?
+expected:
+  aoi_ids: BRA
+  dataset_id: '7'
+  dataset_parameters: '[{"name":"canopy_cover","values":[50]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Fixed 2000 snapshot; the stated 50% canopy threshold must be applied.
+    Headline is tree cover area_ha, never a percentage.
+  eval_subtype: canopy_threshold
+  manifest_id: m-tc-quant-10
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-quant-10a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

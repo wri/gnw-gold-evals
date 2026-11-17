@@ -1,0 +1,20 @@
+id: ch-comp-010
+uid: 922f567e0261c278
+status: ready
+set: comparison
+group: tcl
+query: Between Brazil and the Democratic Republic of the Congo, which one saw greater primary
+  forest loss during 2023?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-04
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-04b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

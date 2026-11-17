@@ -1,0 +1,22 @@
+id: ch-trend-009
+uid: 9d91134dfd0843e4
+status: ready
+set: trend
+group: tcl
+query: Looking at Brazil's tree cover loss across all forest types from 2015 to 2023, has
+  the annual trend been increasing or decreasing?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked across all forest types, so no forest-type filter should
+    be applied.
+  eval_subtype: direction
+  manifest_id: m-tcl-trend-01
+  lineage: gnw-evals eval-metrics-slice-1 tcl-trend-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

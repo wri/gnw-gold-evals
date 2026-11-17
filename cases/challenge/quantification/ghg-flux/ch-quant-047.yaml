@@ -1,0 +1,37 @@
+id: ch-quant-047
+uid: 99a01b58f5501ed5
+status: ready
+set: quantification
+group: ghg-flux
+query: I'm trying to wrap my head around DRC's forests - over the whole record, are they actually
+  pulling in more carbon than they're pumping out, or is it the other way around?
+expected:
+  aoi_ids: COD
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e)
+  figure_claim: '#1 < 0 :: DRC''s forests were a net carbon sink over 2001 to 2025 || DRC''s
+    forests were a net carbon source over 2001 to 2025'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: 'Answer whether the country''s forests are a net source or net sink over
+    2001-2025: net-negative flux = net sink, net-positive = net source. Whole-period total
+    in MgCO2e; do not annualise.'
+  eval_subtype: net_sink_source
+  manifest_id: m-flux-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-000473 Economist flux; USY-001123 IPCC AR6
+  refresh_risk: 'High: open-ended window, categorical answer; re-verify at annual refresh'
+  benchmark_id: bm26-211
+  benchmark_type: quantification
+  use_cases: UC3;UC4;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and sink-or-source
+    claim added'

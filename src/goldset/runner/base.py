@@ -6,6 +6,8 @@ from datetime import datetime
 from typing import Any
 
 from goldset.eval_types import ExpectedData, TestResult
+from goldset.evaluators.accepted_blog import blog_path
+from goldset.evaluators.accepted_nudge import AOI_CHOICE, nudge_path
 from goldset.registry import EVALUATORS
 
 
@@ -38,6 +40,7 @@ class BaseTestRunner(ABC):
         expected_data: ExpectedData,
         error: str,
         duration_seconds: float | None = None,
+        no_answer: bool = False,
     ) -> TestResult:
         """Create empty evaluation result for error cases."""
         kwargs = expected_data.to_dict()
@@ -122,6 +125,7 @@ class BaseTestRunner(ABC):
             **kwargs,
             # Error
             error=error,
+            no_answer=no_answer,
         )
 
     def _run_evaluations(
@@ -136,10 +140,29 @@ class BaseTestRunner(ABC):
         Iterates the registry in its declared order and merges the result
         dicts, so a later evaluator wins a key collision. Judge errors from
         every evaluator are collected into ``judge_errors``.
+
+        An attempt judged on an accepted alternative path (a nudge, or an
+        answer from accepted blog posts) skips the evaluators that presume a
+        pull (and, at an area choice or on the blog path, a chosen area) and
+        records their checks as null: not applicable, rather than failed for
+        a step the case did not require.
         """
         evaluations: dict[str, Any] = {}
         judge_errors: list[str] = []
+        path = nudge_path(
+            agent_state,
+            expected_data.expected_accept_nudge_offering,
+            expected_data.expected_accept_aoi_nudge_offering,
+        ) or ("blog" if blog_path(
+            agent_state, expected_data.expected_accept_blog_sources
+        ) else None)
         for spec in EVALUATORS:
+            if path and (
+                spec.presumes_pull
+                or (path in (AOI_CHOICE, "blog") and spec.presumes_area)
+            ):
+                evaluations.update(dict.fromkeys(spec.score_fields))
+                continue
             result = spec.run(agent_state, expected_data, query, dashboard)
             judge_errors.extend(result.pop("judge_errors", []) or [])
             evaluations.update(result)

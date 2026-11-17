@@ -30,11 +30,18 @@ from goldset.evaluators import (
     evaluate_nudge,
     evaluate_suggested_datasets,
 )
+from goldset.evaluators.accepted_blog import evaluate_accepted_blog
+from goldset.evaluators.accepted_nudge import evaluate_accepted_nudge
 from goldset.evaluators.analysis_checks import (
     evaluate_chart_integrity,
     evaluate_class_values,
 )
 from goldset.evaluators.explanation_checks import evaluate_answer_traceability
+from goldset.evaluators.figures import (
+    evaluate_answer_period,
+    evaluate_figure_claim,
+    evaluate_figures,
+)
 from goldset.evaluators.groundtruth_checks import evaluate_ground_truth
 from goldset.evaluators.guards import evaluate_guards
 from goldset.evaluators.output_checks import (
@@ -42,6 +49,7 @@ from goldset.evaluators.output_checks import (
     evaluate_chart_well_formed,
 )
 from goldset.evaluators.scope_checks import evaluate_scope
+from goldset.evaluators.tool_checks import evaluate_forbidden_tools
 
 EvaluatorFn = Callable[
     [dict[str, Any], ExpectedData, str, dict[str, Any] | None],
@@ -55,6 +63,12 @@ class EvaluatorSpec:
     kind: str  # "deterministic" | "llm_judge" | "mixed"
     score_fields: tuple[str, ...]
     run: EvaluatorFn
+    # Its checks only make sense after a data pull, so an attempt judged on
+    # the accepted-nudge path skips it and records null (accepted_nudge.py).
+    presumes_pull: bool = False
+    # Its checks only make sense once an area is chosen, so an attempt that
+    # stopped at an accepted aoi_choice nudge skips it too.
+    presumes_area: bool = False
 
 
 EVALUATORS: tuple[EvaluatorSpec, ...] = (
@@ -73,6 +87,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_aoi_selection(
             state, expected.expected_aoi_ids, query
         ),
+        presumes_area=True,
     ),
     EvaluatorSpec(
         name="dataset",
@@ -89,6 +104,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected.expected_context_layer,
             query,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="date_coverage",
@@ -99,6 +115,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected_start_date=expected.expected_start_date,
             expected_end_date=expected.expected_end_date,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="date_extraction",
@@ -108,7 +125,9 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             state,
             expected_start_date=expected.expected_start_date,
             expected_end_date=expected.expected_end_date,
+            tolerance_days=expected.expected_date_tolerance_days,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="data_pull",
@@ -117,6 +136,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_data_pull(
             state, expects_data_pull=expected.expects_data_pull(), query=query
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="answer",
@@ -130,6 +150,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_final_answer(
             state, expected.expected_answer, expected.expected_text, query
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="ground_truth",
@@ -138,6 +159,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_ground_truth(
             state, expected
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="suggested_datasets",
@@ -160,7 +182,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         kind="deterministic",
         score_fields=("dashboard_created_score",),
         run=lambda state, expected, query, dashboard: evaluate_dashboard_created(
-            state, expected.expected_dashboard_created
+            state, expected.expected_dashboard_created, expected.expected_accept_dashboard
         ),
     ),
     EvaluatorSpec(
@@ -196,7 +218,9 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expects_data_pull=expected.expects_data_pull(),
             expected_answer=expected.expected_answer,
             expected_dataset_id=expected.expected_dataset_id,
+            accepted_blog_sources=expected.expected_accept_blog_sources,
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="analysis_checks",
@@ -206,6 +230,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             **evaluate_class_values(state, expected.expected_class_values),
             **evaluate_chart_integrity(state),
         },
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="traceability",
@@ -214,6 +239,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: (
             evaluate_answer_traceability(state)
         ),
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="output_checks",
@@ -223,6 +249,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             **evaluate_chart_well_formed(state),
             **evaluate_chart_type(state, expected.expected_chart_type),
         },
+        presumes_pull=True,
     ),
     EvaluatorSpec(
         name="scope",
@@ -231,6 +258,67 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         run=lambda state, expected, query, dashboard: evaluate_scope(
             state, expected.expected_scope
         ),
+    ),
+    EvaluatorSpec(
+        name="accepted_nudge",
+        kind="deterministic",
+        score_fields=("accepted_nudge_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_accepted_nudge(
+            state,
+            expected.expected_accept_nudge_offering,
+            expected.expected_accept_aoi_nudge_offering,
+        ),
+    ),
+    EvaluatorSpec(
+        name="accepted_blog",
+        kind="deterministic",
+        score_fields=("accepted_blog_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_accepted_blog(
+            state, expected.expected_accept_blog_sources
+        ),
+    ),
+    EvaluatorSpec(
+        name="tool_scope",
+        kind="deterministic",
+        score_fields=("forbidden_tools_absent_score",),
+        run=lambda state, expected, query, dashboard: evaluate_forbidden_tools(
+            state, expected.expected_forbidden_tools
+        ),
+    ),
+    # Draft-5 (AJ, 2026-10-27): the asked figure, recomputed from the agent's
+    # own pulled table; the conclusion the data supports; and the period the
+    # answer's figures cover. Data quality itself is out of scope.
+    EvaluatorSpec(
+        name="figures",
+        kind="deterministic",
+        score_fields=("figure_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_figures(
+            state, expected.expected_figure
+        ),
+        presumes_pull=True,
+    ),
+    EvaluatorSpec(
+        name="figure_claim",
+        kind="llm_judge",
+        score_fields=("figure_claim_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_figure_claim(
+            state, expected.expected_figure, expected.expected_figure_claim
+        ),
+        presumes_pull=True,
+    ),
+    EvaluatorSpec(
+        name="answer_period",
+        kind="llm_judge",
+        score_fields=("answer_period_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_answer_period(
+            state,
+            query,
+            expected.expected_start_date,
+            expected.expected_end_date,
+            expected.expected_date_tolerance_days,
+            expected.expected_accept_fixed_period,
+        ),
+        presumes_pull=True,
     ),
 )
 

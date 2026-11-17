@@ -1,0 +1,32 @@
+id: ch-port-015
+uid: fb558956d0f92418
+status: ready
+set: portfolio
+group: many-areas
+query: Rank all Indigenous territories in Peru by tree cover loss in 2024.
+expected:
+  text: Does not invent a ranking or a total; explains that Peru has too many Indigenous territories
+    to analyse in one request and offers a few named territories or a smaller region.
+notes:
+  behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
+    areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-094); USY-001633 Matsés; USY-001576
+    Wampis (network view)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
+    ships'
+  benchmark_id: bm26-094
+  benchmark_type: portfolio
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001633 Matsés; USY-001576 Wampis (network view)
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded to the real limits. pick_aoi takes up to 1,000 admin
+    sub-units of one GADM parent, but only 50 protected areas, KBAs, Indigenous lands or concessions
+    (project-zeno main, src/agent/subagents/pick_aoi/tool.py SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT).
+    pick_aoi found over 8,000 Indigenous territories in Peru (20261023T094447Z_prod, ch-quant-174).'

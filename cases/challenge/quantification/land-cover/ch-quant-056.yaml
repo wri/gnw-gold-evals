@@ -1,0 +1,21 @@
+id: ch-quant-056
+uid: 0e25d2f6ad16fa44
+status: ready
+set: quantification
+group: land-cover
+query: Of Brazil's total land area, how much is classified as tree cover in the latest land
+  cover data?
+expected:
+  aoi_ids: BRA
+  dataset_id: '1'
+  data_pull: 'TRUE'
+notes:
+  land_cover_classes: 'tree cover (unscored: no evaluator surface yet)'
+  judge_instruction: 'Composition question against the fixed 2024 snapshot; the prompt names
+    no year. The headline is the area_ha of the tree cover land-cover class from the composition
+    breakdown (expected presentation: pie/breakdown of the 2024 classes). This is the land-cover
+    class, not the Tree Cover (2000) extent dataset.'
+  eval_subtype: class_area
+  manifest_id: m-lc-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; lc-quant-01a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

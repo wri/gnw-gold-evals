@@ -2,18 +2,31 @@
 
 Terms are defined in the [README glossary](../README.md#glossary).
 
-`results/runs/` holds one committed JSON file per run: the long-term record
-GOLD exists to keep. `gold run` writes these files. Older runs made with
-gnw-evals were converted by `tools/ingest_run.py` (see
+`results/gold/runs/` holds one committed JSON file per GOLD run: the
+long-term record this repo exists to keep. `gold run` writes these files.
+Older runs made with gnw-evals were converted by `tools/ingest_run.py` (see
 [Legacy tools](../tools/README.md#legacy-tools)). Raw per-case agent state
-goes to `results/artifacts/` (gitignored), rendered reports to
-`results/reports/`, the written analysis of each official run to
-`results/recommendations/`, and multi-run write-ups to `results/campaigns/`.
+goes to `results/gold/artifacts/` (gitignored), rendered reports to
+`results/gold/reports/`, the written analysis of each official run to
+`results/gold/recommendations/`, and multi-run write-ups to
+`results/gold/campaigns/`.
+
+The contract applies to all three ledgers, which never mix: `results/gold/`
+(GOLD, regression counts), `results/challenge/` (CHALLENGE, pass rates; see
+`cases/challenge/README.md`) and `results/benchmark/` (BENCHMARK runs, made by
+`gold run --benchmark` over a manifest's members; see `benchmarks/README.md`).
+Each holds its own `runs/`, `recommendations/`, and gitignored `artifacts/`;
+report pages and campaigns are GOLD-only today.
+
+A benchmark run record additionally carries `benchmark: {path, version,
+status, manifest_sha, members}`, naming the manifest (by content hash,
+errata included) that chose its cases; its `caseset`/`caseset_version` are
+the source store's (CHALLENGE).
 
 ## File naming
 
 ```
-results/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json
+results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | challenge | benchmark
 ```
 
 The time is the run's start in UTC. The `_<ff>` suffix is left out when the
@@ -22,7 +35,7 @@ run used the agent's default profile, so a `_prod` run and a
 
 ## Shape
 
-Trimmed from `results/runs/20260831T163347Z_prod.json`:
+Trimmed from `results/gold/runs/20260831T163347Z_prod.json`:
 
 ```jsonc
 {
@@ -120,6 +133,7 @@ Optional fields, written only when they apply:
 | `resumed` | run | `true` when the run was finished with `gold run --resume`; its timing mixes two sessions. |
 | `error` | entry | The agent call failed or timed out, or the harness hit an error. The row verdict is `error`, never `fail`. |
 | `judge_errors` | entry | Checks whose judge call failed. They stay `null` and the row verdict is `error`. |
+| `stream_s` | entry | `POST /api/chat` to the last stream line only: the agent turn, and the latency to compare (2026-09-25 on). `latency_s` runs from `POST /api/chat` until the final state (and dashboard) is fetched, and excludes scoring and judge time. |
 | `info` | entry | `{"slow": true, "threshold_s": 180.0}` when the case took longer than `--slow-threshold`. Never scored. |
 | `ground_truth` | run | Present when any case carried `expected.ground_truth`: the analytics host, the number of cases fetched, the fetch time and the grading tolerance. |
 | `ground_truth` | entry | What was fetched for a ground-truth case and how (shape above). See "Ground truth is recorded, not trusted" below. |
@@ -152,7 +166,7 @@ Optional fields, written only when they apply:
   allowed. Re-ingesting after a tooling fix means deleting the file first,
   visibly, in a reviewable commit.
 - **In-flight state is a sidecar, never the run file.** While a run
-  executes, completed entries stream to `results/runs/<run_id>.partial.jsonl`
+  executes, completed entries stream to `results/<set>/runs/<run_id>.partial.jsonl`
   (gitignored, fsynced per case). The immutable run JSON is still written
   once, at the end, and the partial deleted. A killed run is finished with
   `gold run --resume <run_id>`; a record completed that way carries
@@ -169,7 +183,9 @@ Optional fields, written only when they apply:
   if no trial evaluated it. `trials` lists every trial as
   `{"checks": {...}, "latency_s": ...}`. `error` and `judge_errors` collect
   the errors of every trial; `reasons`, `actuals`, `latency_s`, `trace_url`
-  and `turns_detail` come from the last trial.
+  and `turns_detail` come from the last trial. The row's verdict is the
+  majority of its attempts' verdicts (`buckets.row_verdict`, since
+  2026-10-28), not a reading of those per-check majorities.
 - **Ground truth is recorded, not trusted.** A case carrying
   `expected.ground_truth` is graded against values fetched from the
   production analytics API before any trial, and its entry records what was
@@ -214,7 +230,7 @@ weak verdict. Pass `--strict` to refuse any pair whose `caseset_version`
 differs.
 
 To pick a baseline, `tools/find_baseline.py <new run>` prints the newest
-run in `results/runs/` that meets all three conditions and also loaded the
+run in `results/gold/runs/` that meets all three conditions and also loaded the
 same store (`caseset`), and exits non-zero with the reason when none does.
 The CI release gate uses it. Runs from before 2026-08-04 record no
 `caseset`, so they never match.
@@ -261,15 +277,37 @@ false, which misleads the next person to diff the file.
 Compose in the **analysis** instead:
 
 ```bash
-uv run python tools/compose_runs.py results/runs/<primary>.json \
-    results/runs/<supplementary>.json
+uv run python tools/compose_runs.py results/gold/runs/<primary>.json \
+    results/gold/runs/<supplementary>.json
 ```
 
 It resolves every active case to its freshest measurement **at the case's current
 uid** (supplements win over the primary, later supplements over earlier), prints
 per-row provenance, names any row nothing has measured, warns when the sources
-disagree on `ff`, and writes nothing to `results/runs/`. Both runs stay in the
+disagree on `ff`, and writes nothing to `results/gold/runs/`. Both runs stay in the
 ledger as honest, independently reproducible records; only the summary is joined.
+
+## Derived index
+
+`results/index.json` is a generated projection of the **committed** runs
+(every set): per run, the header fields plus the `buckets` block verbatim,
+with no computed rates and no per-case rows. It exists so web consumers (the
+evals dashboard) can enumerate runs and draw trends from one fetch, since
+raw.githubusercontent.com cannot list directories. Regenerate with
+`uv run python tools/build_run_index.py` after `git add`-ing a new run
+(enumeration is `git ls-files`, so untracked local runs never leak in), and
+commit it with the run; CI gates freshness via `--check`. Like every other
+derived artefact here, it is never hand-edited.
+
+Benchmark entries (`sets.benchmark[]`) also carry the run's `benchmark`
+block, `canonical` (a North Star trend point: prod, no ff, 3 trials, every
+currently active member present) and `canonical_reasons`. The top-level
+`benchmarks` object maps each version to `{path, status, frozen, members,
+voided, runs, canonical_runs}`. Because it reads `benchmarks/*.json`, adding
+an erratum or freezing a version also requires regenerating the index.
+A benchmark run whose page data is committed
+(`results/benchmark/pages/<run_id>.json`, written by `tools/benchmark_page.py`
+for the FE accuracy-benchmarks page) also carries `page`, that file's path.
 
 ## Ledger resets
 

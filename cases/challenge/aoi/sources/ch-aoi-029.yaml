@@ -1,0 +1,15 @@
+id: ch-aoi-029
+uid: 90656dedc7ef7154
+status: ready
+set: aoi
+group: sources
+query: Go to the Okavango Delta
+expected:
+  aoi_ids: '6047'
+notes:
+  difficulty: medium
+  behaviour: select
+  lineage: baseline
+  verify_query: Okavango
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1

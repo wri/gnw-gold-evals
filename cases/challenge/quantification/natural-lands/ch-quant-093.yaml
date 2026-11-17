@@ -1,0 +1,19 @@
+id: ch-quant-093
+uid: 35b3e5f33afaa1ad
+status: ready
+set: quantification
+group: natural-lands
+query: What is the total area of natural land in Brazil?
+expected:
+  aoi_ids: BRA
+  dataset_id: '3'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Fixed 2020 baseline; the prompt names no year. Ground truth groups by
+    is_natural into exactly two rows (Natural / Non-natural) summing area_ha; the headline
+    is the Natural row's area_ha. A caveat that the map overestimates the extent of natural
+    lands is acceptable.
+  eval_subtype: natural_extent
+  manifest_id: m-nl-quant-01
+  lineage: generated 2026-09-01 from phase-2 manifest; nl-quant-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,0 +1,20 @@
+id: ch-trend-021
+uid: 9e409709e08acd95
+status: ready
+set: trend
+group: tcl
+query: I'm digging into Costa Rica's tree cover loss data across all forest types from 2011
+  to 2023 - which year in there actually saw the biggest loss?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2011-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  eval_subtype: peak_year
+  manifest_id: m-tcl-trend-13
+  lineage: gnw-evals eval-metrics-slice-1 tcl-trend-13a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

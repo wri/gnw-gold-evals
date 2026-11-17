@@ -1,0 +1,20 @@
+id: ch-comp-030
+uid: d562fc610c821e0b
+status: ready
+set: comparison
+group: tcl
+query: Quick one on the UK's tree cover loss, all tree types included - comparing 2014-2018
+  against 2019-2023, which chunk lost more?
+expected:
+  aoi_ids: GBR
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare the two halves of the window (2014-2018 vs 2019-2023); values
+    are small and the direction must follow the data.
+  eval_subtype: two_period
+  manifest_id: m-tcl-comp-16
+  lineage: gnw-evals eval-metrics-slice-1 tcl-comp-16b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

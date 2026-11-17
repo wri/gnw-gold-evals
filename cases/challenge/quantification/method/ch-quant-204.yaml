@@ -1,0 +1,25 @@
+id: ch-quant-204
+uid: c17c6c02a31e1cfe
+status: ready
+set: quantification
+group: method
+query: At what scale should I analyze the land cover data? Is it reliable at district level?
+expected:
+  text: Explains the land cover data's resolution and gives sensible guidance on whether district-level
+    analysis is reliable.
+notes:
+  behaviour: Explain resolution and recommended scale
+  lineage: 'benchmark v2026 BEF sheet 2026-10-22 (bm26-297); Map exploration research (geographer:
+    indicate recommended scales)'
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-297
+  benchmark_type: quantification
+  use_cases: UC5;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: 'Map exploration research (geographer: indicate recommended scales)'
+  refresh_risk: Low

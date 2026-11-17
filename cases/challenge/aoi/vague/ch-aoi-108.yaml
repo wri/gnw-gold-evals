@@ -1,0 +1,14 @@
+id: ch-aoi-108
+uid: b40ac95ca0120986
+status: todo
+set: aoi
+group: vague
+query: Go to Lahti city in Finland
+expected: {}
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: ADR-001 wrong resolution level
+  verify_query: Lahti
+  verified: todo
+  source_tab: challenge-aoi-v1

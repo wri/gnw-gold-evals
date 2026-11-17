@@ -1,7 +1,8 @@
 """Per-case raw-artefact capture: keep more than we score.
 
 The committed ledger stays small; these gzipped JSONs (gitignored, under
-``results/artifacts/<run_id>/<uid>.json.gz``) hold the signals future
+``<results-dir>/artifacts/<run_id>/<uid>.json.gz``: ``results/gold/`` for
+GOLD, ``results/challenge/`` for CHALLENGE) hold the signals future
 validators and triage need (decoded codeact, the tool-call sequence, the
 last statistics payload, chart specs, dashboard widget bodies), so a run
 can be re-analysed without being re-executed.
@@ -75,6 +76,20 @@ def _last_statistics(agent_state: dict[str, Any]) -> dict[str, Any] | None:
     return slim
 
 
+def _statistics_refs(agent_state: dict[str, Any]) -> list[dict[str, Any]]:
+    """Every pull's reference (not its rows): the figure checks fetch each
+    table by source_url, so keeping all of them lets a run be re-scored."""
+    statistics = agent_state.get("statistics")
+    if isinstance(statistics, dict):
+        statistics = [statistics]
+    keep = ("dataset_id", "source_url", "aoi_ids", "start_date", "end_date", "parameters")
+    return [
+        {k: entry.get(k) for k in keep if k in entry}
+        for entry in statistics or []
+        if isinstance(entry, dict)
+    ]
+
+
 def _cap_table(table: dict[str, Any]) -> dict[str, Any]:
     """One column-oriented table with each column's rows capped."""
     slim: dict[str, Any] = {
@@ -117,6 +132,7 @@ def build_artifact(
         "codeact": _decode_codeact(agent_state),
         "tool_calls": _tool_calls(agent_state),
         "statistics_last": _last_statistics(agent_state),
+        "statistics_refs": _statistics_refs(agent_state),
         "pulled_data": _pulled_data(agent_state),
         "charts_data": agent_state.get("charts_data"),
         "aoi_selection": agent_state.get("aoi_selection"),
@@ -127,6 +143,12 @@ def build_artifact(
     }
 
 
+def artifact_name(uid: str, trial: int) -> str:
+    """``<uid>.json.gz`` for the first trial, ``<uid>_t<n>.json.gz`` after."""
+    suffix = f"_t{trial}" if trial > 1 else ""
+    return f"{uid}{suffix}.json.gz"
+
+
 class ArtifactWriter:
     """Writes one gzipped JSON per case under a run's artefact directory."""
 
@@ -135,8 +157,7 @@ class ArtifactWriter:
         self._dir.mkdir(parents=True, exist_ok=True)
 
     def __call__(self, uid: str, trial: int, artifact: dict[str, Any]) -> Path:
-        suffix = f"_t{trial}" if trial > 1 else ""
-        path = self._dir / f"{uid}{suffix}.json.gz"
+        path = self._dir / artifact_name(uid, trial)
         payload = json.dumps(artifact, default=str, ensure_ascii=False)
         with gzip.open(path, "wt", encoding="utf-8") as handle:
             handle.write(payload)

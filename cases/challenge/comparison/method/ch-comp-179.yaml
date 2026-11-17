@@ -1,0 +1,29 @@
+id: ch-comp-179
+uid: 9f5a43a03eb4bfba
+status: ready
+set: comparison
+group: method
+query: What's the difference between natural lands and primary forest?
+expected:
+  text: Defines natural lands as all natural ecosystems (the SBTN Natural Lands Map) and primary
+    forest as mature natural forest largely undisturbed by people, and says natural lands
+    is the broader category; the 2020 baseline year and the humid-tropical scope are optional
+    detail.
+notes:
+  behaviour: Explain both definitions correctly
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-280); Map exploration research (trust
+    tied to understanding data sources)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-280
+  benchmark_type: comparison
+  use_cases: UC3;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Map exploration research (trust tied to understanding data sources)
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text softened: the bracketed
+    details were read as required and failed a correct answer'

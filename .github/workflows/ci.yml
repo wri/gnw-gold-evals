@@ -33,16 +33,23 @@ jobs:
       # authoring new cases rather than fixing existing ones.
       - name: Case-set audit (depth and DON'T rules, --strict)
         run: uv run python tools/audit_cases.py --strict
-      - name: Case-store integrity (uids and manifests match the YAML, v1 and v2)
+      - name: Case-store integrity (uids and manifests match the YAML, all stores)
         run: |
           uv run python tools/check.py --cases-dir cases/v1
           uv run python tools/check.py --cases-dir cases/v2
-      - name: COVERAGE.md is up to date (generated, never hand-edited)
-        run: uv run python tools/coverage_doc.py --check
+          uv run python tools/check.py --cases-dir cases/challenge
+      - name: COVERAGE.md is up to date (generated, never hand-edited; GOLD and CHALLENGE)
+        run: |
+          uv run python tools/coverage_doc.py --check
+          uv run python tools/coverage_doc.py --check --cases-dir cases/challenge
+      - name: Run index freshness (results/index.json derived, never hand-edited)
+        run: uv run python tools/build_run_index.py --check
+      - name: Benchmark integrity (member uids exist + ready; errors on frozen, warnings on draft)
+        run: uv run python tools/check_benchmark.py
 
   # Manual release gate (workflow_dispatch only; never runs on push or PR).
   # Runs the GOLD set (cases/v2) against staging with 3 trials and no ff,
-  # then diffs that run against the newest committed run in results/runs/
+  # then diffs that run against the newest committed run in results/gold/runs/
   # with the same environment, ff, trial count and case store (caseset),
   # failing on any gating regression. If no committed run matches on all
   # four, the job fails rather than diff against an incomparable baseline;
@@ -65,12 +72,12 @@ jobs:
       - name: Regression gate vs newest comparable committed run
         run: |
           set -euo pipefail
-          NEW=$(ls results/runs/*.json | sort | tail -1)
+          NEW=$(ls results/gold/runs/*.json | sort | tail -1)
           PREV=$(uv run python tools/find_baseline.py "$NEW")
           uv run python tools/diff_runs.py "$PREV" "$NEW" --fail-on-regression
-      - name: Upload run ledger (results/runs/)
+      - name: Upload run ledger (results/gold/runs/)
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: gold-run
-          path: results/runs/
+          path: results/gold/runs/

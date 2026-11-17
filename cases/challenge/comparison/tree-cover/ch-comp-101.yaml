@@ -1,0 +1,21 @@
+id: ch-comp-101
+uid: d884f97a1a5f298d
+status: ready
+set: comparison
+group: tree-cover
+query: Between Brazil and the Democratic Republic of the Congo, which country has a larger
+  area of tree cover?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '7'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: Compare tree cover area_ha in the fixed 2000 snapshot at the default
+    30% canopy threshold (unstated in the prompt); the direction must be correct and cited
+    figures are areas in hectares, never percentages.
+  eval_subtype: two_country
+  manifest_id: m-tc-comp-01
+  lineage: generated 2026-09-01 from phase-2 manifest; tc-comp-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

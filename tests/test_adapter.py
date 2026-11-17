@@ -25,7 +25,7 @@ def test_prefixing_and_validator_parsing():
     assert expected.expected_dataset_id == "11"
     assert expected.expected_answer == "1,319,600 hectares"
     # ExpectedData's own validators apply, identically to gnw-evals:
-    assert expected.expected_aoi_ids == ["BRA.25_1", "BRA.14_1"]
+    assert expected.expected_aoi_ids == [["BRA.25_1", "BRA.14_1"]]  # one all-of alternative
     assert expected.expected_clarification is False
     assert expected.expected_suggested_datasets == ["0", "11"]
     assert expected.expected_dashboard_widgets == ["insight", "map"]
@@ -52,6 +52,27 @@ def test_expects_data_pull_gating():
     clarify = Case(
         id="y", status="ready", group="g", query="q",
         expected={"answer": "42 ha", "clarification": "TRUE"},
+    )
+    assert case_to_expected(clarify).expects_data_pull() is False
+
+
+def test_explicit_data_pull_expectation():
+    # CHALLENGE numeric cases: no stored answer, explicit data_pull TRUE
+    explicit = Case(
+        id="z", status="ready", group="g", query="q",
+        expected={"dataset_id": "4", "data_pull": "TRUE"},
+    )
+    assert case_to_expected(explicit).expects_data_pull() is True
+    # explicit FALSE beats an answer-driven implication
+    opted_out = Case(
+        id="z2", status="ready", group="g", query="q",
+        expected={"answer": "42 ha", "data_pull": "FALSE"},
+    )
+    assert case_to_expected(opted_out).expects_data_pull() is False
+    # clarification still wins over an explicit TRUE
+    clarify = Case(
+        id="z3", status="ready", group="g", query="q",
+        expected={"data_pull": "TRUE", "clarification": "TRUE"},
     )
     assert case_to_expected(clarify).expects_data_pull() is False
 
@@ -120,5 +141,5 @@ def test_cases_without_ground_truth_are_built_exactly_as_before():
     assert dumped["ground_truth_unresolved"] == ""
     assert dumped["expected_ground_truth"] == ""
     # ...and the pre-existing expectations still parse identically.
-    assert dumped["expected_aoi_ids"] == ["BRA.25_1", "BRA.14_1"]
+    assert dumped["expected_aoi_ids"] == [["BRA.25_1", "BRA.14_1"]]
     assert dumped["expected_answer"] == "1,319,600 hectares"

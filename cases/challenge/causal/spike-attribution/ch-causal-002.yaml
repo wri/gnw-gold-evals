@@ -1,0 +1,38 @@
+id: ch-causal-002
+uid: 2a77f12faf134f8e
+status: ready
+set: causal
+group: spike_attribution
+query: What caused the spike in Bolivia's tree cover loss in 2024?
+expected:
+  aoi_ids: BOL
+  dataset_id: '10'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  accept_blog_sources: amazon-forest-fires-2024;forest-carbon-sink-shrinking-fires-deforestation;global-trends-forest-fires;climate-fire-feedback-loop-explained
+  figure: ratio(sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2024,
+    sum(area_ha) where tree_cover_loss_year = 2024) | sum(tree_cover_loss_from_fires_area_ha)
+    where tree_cover_loss_year = 2024
+notes:
+  difficulty: hard
+  behaviour: answer with fire + driver data
+  lineage: benchmark v2026 proposed set (bm26-141); USY-001217 Bolivia fires
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; expectations revised 2026-10-26 (AJ, why-questions review); draft-5 review
+    2026-10-27'
+  synthetic: 'TRUE'
+  user_story_refs: USY-001555 Bolivia fires documentary
+  benchmark_id: bm26-144
+  benchmark_type: causal
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  review: '2026-10-26 (AJ): a blog post fairly answers this; an answer from search_blogs passes
+    when it links one of accept_blog_sources, and a correct pull still passes. 20261023T094447Z_prod:
+    attempt 1 answered from blogs citing amazon-forest-fires-2024; attempt 2 stopped after
+    pick_dataset; attempt 3 pulled the wrong dataset; 2026-10-27 draft-5 review (AJ asked
+    to apply the review): dataset_id 10;8 -> 10 (drivers cannot isolate 2024); figure added
+    (2024 fire share)'

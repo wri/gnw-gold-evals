@@ -1,0 +1,22 @@
+id: ch-quant-023
+uid: bdb55cb41d412311
+status: ready
+set: quantification
+group: tcl
+query: I'm digging into Costa Rica's forests right now - do you know how many hectares of
+  tree cover, across all forest types, were lost there in 2021?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2021-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked for all tree cover, so no forest-type filter should be
+    applied.
+  eval_subtype: single_year
+  manifest_id: m-tcl-quant-16
+  lineage: gnw-evals eval-metrics-slice-1 tcl-quant-16a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

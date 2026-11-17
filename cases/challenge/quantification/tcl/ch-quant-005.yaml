@@ -1,0 +1,21 @@
+id: ch-quant-005
+uid: e88dfbb2bf4798c0
+status: ready
+set: quantification
+group: tcl
+query: Using a 75% canopy density threshold, how much tree cover did Brazil lose in 2022?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: The user explicitly set a 75% canopy density threshold, which must be
+    used instead of the 30% default.
+  eval_subtype: canopy_threshold
+  manifest_id: m-tcl-quant-05
+  lineage: gnw-evals eval-metrics-slice-1 gt-quant-05
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

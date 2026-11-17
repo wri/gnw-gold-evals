@@ -7,7 +7,7 @@
         dropdown (newest first, human-readable datetime) switches between
         them, and the URL hash deep-links a specific run.
      3. Opened raw (placeholder intact), it shows a drop zone: drop any
-        results/runs/<id>.json onto it to render locally, no server.
+        results/gold/runs/<id>.json onto it to render locally, no server.
         Dropping more files adds them to the dropdown in every mode.
 
      Accessibility notes: every percentage is printed as text (meters are
@@ -129,8 +129,26 @@ const BUCKET_INFO = {
   scope:       ["Doing the right amount", "Did it answer, suggest, ask for clarification, or refuse — whichever was appropriate?"],
 };
 
+// Mirrors buckets.row_verdict: a row passes when most of its scored attempts
+// pass (ties fail); an attempt with no reply fails, one the harness could not
+// score is left out, and a row without per-trial detail is judged on its checks.
+function attemptVerdict(trial, infoOnly) {
+  if (trial.no_answer) return "fail";
+  if (trial.error) return "error";
+  return checksVerdict(trial.checks, infoOnly);
+}
+
 function verdictOf(entry, infoOnly) {
   if (entry.error || (entry.judge_errors || []).length) return "error";
+  if (entry.no_answer) return "fail";
+  const trials = Object.values(entry.trials || {}).filter(t => t && typeof t === "object");
+  if (trials.length) {
+    const scoredTrials = trials.map(t => attemptVerdict(t, infoOnly))
+      .filter(v => v === "pass" || v === "fail");
+    if (!scoredTrials.length) return "uncovered";
+    const passes = scoredTrials.filter(v => v === "pass").length;
+    return passes * 2 > scoredTrials.length ? "pass" : "fail";
+  }
   const scored = Object.entries(entry.checks || {})
     .filter(([n, v]) => v !== null && !infoOnly.includes(baseName(n)));
   if (!scored.length) return "uncovered";
@@ -226,6 +244,11 @@ const CHECK_EXPECTED_FIELDS = {
   suggested_datasets_match: ["suggested_datasets"],
   nudge_match: ["nudge_type", "nudge_options"],
   chart_type_match: ["chart_type"], scope_match: ["scope"],
+  forbidden_tools_absent: ["forbidden_tools"],
+  accepted_nudge_match: ["accept_nudge_offering", "accept_aoi_nudge_offering"],
+  accepted_blog_match: ["accept_blog_sources"],
+  figure_match: ["figure"], figure_claim_match: ["figure_claim"],
+  answer_period_match: ["start_date", "end_date"],
   class_value_match: ["class_values"],
   dashboard_created: ["dashboard_created"],
   dashboard_aoi_match: ["aoi_ids"],
@@ -501,7 +524,7 @@ if (RUNS.length) {
 } else {
   document.getElementById("app").innerHTML =
     `<h1>GOLD run report</h1>
-     <div id="drop">Drop a <span class="mono">results/runs/&lt;run_id&gt;.json</span>
+     <div id="drop">Drop a <span class="mono">results/gold/runs/&lt;run_id&gt;.json</span>
        file here to render it — drop more to compare via the dropdown.</div>`;
 }
 </script>

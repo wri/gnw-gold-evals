@@ -1,0 +1,22 @@
+id: ch-comp-004
+uid: 5d0d9bfa51255d86
+status: ready
+set: comparison
+group: tcl
+query: Which country lost more primary forest in 2023, Brazil or the Democratic Republic of
+  the Congo?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user explicitly asked for primary forest, so the primary forest context
+    layer should be applied.
+  eval_subtype: two_country
+  manifest_id: m-tcl-comp-04
+  lineage: gnw-evals eval-metrics-slice-1 gt-comp-04
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -1,6 +1,6 @@
 """Pick the committed run a new run must be diffed against.
 
-    uv run python tools/find_baseline.py results/runs/NEW.json [--runs-dir results/runs]
+    uv run python tools/find_baseline.py results/gold/runs/NEW.json [--runs-dir results/gold/runs]
 
 Prints the path of the newest run in ``--runs-dir`` that is comparable to the
 given run: same ``environment``, same ``ff`` (unset matches only unset), same
@@ -69,7 +69,7 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("new_run", type=Path, help="the run to find a baseline for")
-    parser.add_argument("--runs-dir", type=Path, default=Path("results/runs"))
+    parser.add_argument("--runs-dir", type=Path, default=Path("results/gold/runs"))
     args = parser.parse_args()
 
     baseline = find_baseline(args.new_run, args.runs_dir)

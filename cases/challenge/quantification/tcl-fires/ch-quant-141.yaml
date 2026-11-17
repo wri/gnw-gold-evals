@@ -1,0 +1,24 @@
+id: ch-quant-141
+uid: a315dc099dceb544
+status: ready
+set: quantification
+group: tcl-fires
+query: How much tree cover loss in Indonesia during 2019 was due to fires, across all forest
+  types, and how does that compare to non-fire loss for the same year?
+expected:
+  aoi_ids: IDN
+  dataset_id: '10'
+  start_date: '2019-01-01'
+  end_date: '2019-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Report fire vs non-fire tree cover loss for the year (hectares); the
+    two components sum to total area_ha. NEVER report carbon emissions. Plain tree cover,
+    30% default; use 'tree cover loss', not 'deforestation'.
+  eval_subtype: single_year
+  manifest_id: m-fires-quant-02
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-02a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

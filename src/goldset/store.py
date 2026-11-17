@@ -6,6 +6,11 @@ Layout::
       MANIFEST.json            # generated: caseset_version and an id-to-uid index
       <group-slug>/<id>.yaml   # one case per file
 
+Stores whose cases carry the optional ``set`` field (CHALLENGE) gain one
+directory level — ``<set-slug>/<group-slug>/<id>.yaml`` — so new sets can
+sit side by side (``aoi/``, ...). ``set`` is organisational like ``group``:
+never hashed into the uid, so assigning or renaming it mints no versions.
+
 Case files are the source of truth and are edited by hand. After any edit,
 follow the after-edit ritual in README.md, "Changing cases": its first step,
 ``tools/check.py --fix``, recomputes uids and the manifest, and
@@ -63,6 +68,7 @@ class Case:
     expected: dict[str, str] = field(default_factory=dict)
     notes: dict[str, str] = field(default_factory=dict)
     turns: tuple = ()
+    set: str = ""  # optional hierarchy level above group (e.g. CHALLENGE "aoi")
     uid_includes_deltas: bool = False
 
     @property
@@ -150,8 +156,10 @@ def case_to_dict(case: Case) -> dict:
         "id": case.id,
         "uid": case.uid,
         "status": case.status,
-        "group": case.group,
     }
+    if case.set:
+        data["set"] = case.set
+    data["group"] = case.group
     if case.is_multiturn:
         data["turns"] = [dict(turn) for turn in case.turns]
     else:
@@ -166,6 +174,8 @@ def case_to_dict(case: Case) -> dict:
 
 
 def case_path(root: Path, case: Case) -> Path:
+    if case.set:
+        return root / group_slug(case.set) / group_slug(case.group) / f"{case.id}.yaml"
     return root / group_slug(case.group) / f"{case.id}.yaml"
 
 
@@ -191,7 +201,7 @@ def read_case(path: Path, uid_includes_deltas: bool = False) -> tuple[Case, str]
     if not isinstance(raw, dict):
         raise ValueError(f"{path}: not a mapping")
     unknown = set(raw) - {
-        "id", "uid", "status", "group", "query", "expected", "notes", "turns"
+        "id", "uid", "status", "set", "group", "query", "expected", "notes", "turns"
     }
     if unknown:
         raise ValueError(f"{path}: unknown top-level keys {sorted(unknown)}")
@@ -209,6 +219,7 @@ def read_case(path: Path, uid_includes_deltas: bool = False) -> tuple[Case, str]
     case = Case(
         id=str(raw.get("id", "")),
         status=str(raw.get("status", "")),
+        set=str(raw.get("set", "")),
         group=str(raw.get("group", "")),
         query=str(raw.get("query", "")),
         expected={str(k): str(v) for k, v in (raw.get("expected") or {}).items()},
@@ -269,7 +280,13 @@ def build_manifest(
     if uid_includes_deltas:
         manifest[UID_INCLUDES_DELTAS] = True
     manifest["cases"] = [
-        {"id": c.id, "uid": c.uid, "group": c.group, "status": c.status}
+        {
+            "id": c.id,
+            "uid": c.uid,
+            **({"set": c.set} if c.set else {}),
+            "group": c.group,
+            "status": c.status,
+        }
         for c in ordered
     ]
     return manifest

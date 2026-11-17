@@ -8,7 +8,7 @@ Terms are defined in the [README glossary](../../README.md#glossary).
 
 `caseset_version 295e4a6f3b7f8f11` · 145 cases · done 96 · not doing 30 · ready 13 · todo 6 · **115 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-10-15_
+_Last updated: 2026-11-17_
 
 ## Groups
 
@@ -65,8 +65,8 @@ exists.
 | text | 29 | expected_text_match |
 | context_layer | 19 | context_layer_match |
 | dashboard_created | 8 | dashboard_created |
-| end_date | 8 | date_extraction (with start_date) |
-| start_date | 8 | date_extraction (with end_date) |
+| end_date | 8 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| start_date | 8 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | class_values | 6 | class_value_match (info-only) |
 | dashboard_widgets | 5 | dashboard_widgets_match (+ dashboard_widgets_valid when a dashboard exists) |
 | nudge_options | 5 | nudge_match |
@@ -75,11 +75,21 @@ exists.
 | chart_type | 1 | chart_type_match |
 | dataset_parameters | 1 | dataset_parameter_match |
 | ground_truth | 1 | ground_truth_match, ground_truth_answer (info-only) |
+| accept_aoi_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
+| accept_blog_sources | 0 ← unused | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
+| accept_dashboard | 0 ← unused | dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored) |
+| accept_fixed_period | 0 ← unused | answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes) |
+| accept_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| data_pull | 0 ← unused | data_pull_exists, answered_without_data |
+| date_tolerance_days | 0 ← unused | date_extraction (days a window may fall short of a bound) |
+| figure | 0 ← unused | figure_match (computed from the agent's own pulled table) |
+| figure_claim | 0 ← unused | figure_claim_match (the conclusion the pulled data supports) |
+| forbidden_tools | 0 ← unused | forbidden_tools_absent |
 | suggested_datasets | 0 ← unused | suggested_datasets_match (legacy: the agent now writes nudge; author nudge_type / nudge_options) |
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json`: project-zeno@9e71aa4 (origin/main, synced 2026-10-13), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json`: project-zeno@fa78c81 (fa78c816186461dab120523ccad75fe274e6058c, synced 2026-10-30), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`8;10`
 counts toward both 8 and 10).
@@ -154,7 +164,7 @@ answer-graded column) exercise the other three.
 
 ## Known gaps
 
-- Expected fields no active case uses: suggested_datasets.
+- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_dashboard, accept_fixed_period, accept_nudge_offering, data_pull, date_tolerance_days, figure, figure_claim, forbidden_tools, suggested_datasets.
   Their checks cannot fire until a case sets the field. Leave
   `suggested_datasets` unused: it is legacy (the agent now writes
   `nudge`), so author `nudge_type` / `nudge_options` instead.

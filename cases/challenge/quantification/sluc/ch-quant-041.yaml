@@ -1,0 +1,22 @@
+id: ch-quant-041
+uid: 4007119d0b85bb1a
+status: ready
+set: quantification
+group: sluc
+query: Hey, can you tell me what the sLUC emission factor was for oil palm production in Malaysia
+  back in 2021? I need the figure in tCO2e per tonne.
+expected:
+  aoi_ids: MYS
+  dataset_id: '9'
+  start_date: '2021-01-01'
+  end_date: '2021-12-31'
+  data_pull: 'TRUE'
+notes:
+  crop_types: 'Oil Palm (unscored: no evaluator surface yet)'
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Headline is the emission factor (emission_factor_tCO2e_per_tonne_production)
+    in tCO2e per tonne for reporting year 2021; tabular.
+  eval_subtype: emission_factor
+  manifest_id: m-sluc-quant-07
+  lineage: generated 2026-09-01 from phase-2 manifest; sluc-quant-07a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

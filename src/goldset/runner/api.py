@@ -21,6 +21,21 @@ from goldset.runner.artifacts import build_artifact
 from goldset.runner.base import BaseTestRunner
 
 
+def got_no_answer(error: BaseException, stream_seconds: float | None) -> bool:
+    """Whether an error left the user with no reply: it came before the
+    stream finished, and Horizon stopped sending (a read timeout or the
+    wall clock), dropped the connection or failed (5xx). Failing to connect
+    and a refused request (4xx, such as a bad token) are the harness's own."""
+    if stream_seconds is not None:
+        return False
+    if isinstance(error, httpx.HTTPStatusError):
+        return error.response.status_code >= 500
+    return isinstance(
+        error,
+        (TimeoutError, httpx.ReadTimeout, httpx.ReadError, httpx.RemoteProtocolError),
+    )
+
+
 class APITestRunner(BaseTestRunner):
     """Test runner for API endpoint execution."""
 
@@ -130,6 +145,14 @@ class APITestRunner(BaseTestRunner):
         trace_url = None
         app_thread_url = self._build_app_thread_url(self.api_base_url, thread_id)
         start_time = time.time()
+        # stream_seconds: the agent turn as a user sees it — POST /api/chat
+        # sent to the last NDJSON line received (monotonic clock). Excludes
+        # the harness's own follow-up GETs (thread state, dashboard) and all
+        # scoring/judge time, so it is the latency to compare across
+        # selectors. duration_seconds (ledger latency_s) additionally spans
+        # those GETs; neither includes judge time.
+        stream_seconds: float | None = None
+        stream_start = time.monotonic()
 
         try:
             # Read the whole stream before fetching state: the thread state is
@@ -176,6 +199,8 @@ class APITestRunner(BaseTestRunner):
                                     )
                                     trace_id = update_data.get("trace_id")
                                     trace_url = update_data.get("trace_url")
+
+                    stream_seconds = time.monotonic() - stream_start
 
                     state_response = await client.get(
                         f"{self.api_base_url}/api/threads/{thread_id}/state",
@@ -279,10 +304,11 @@ class APITestRunner(BaseTestRunner):
                 overall_score=overall_score,
                 execution_time=datetime.now().isoformat(),
                 duration_seconds=api_duration_seconds,
+                stream_duration_seconds=stream_seconds,
                 **kwargs,
             )
 
-        except TimeoutError:
+        except TimeoutError as e:
             message = (
                 f"trial exceeded the {self.wall_clock_limit:.0f}s "
                 "wall-clock limit (stream kept the connection alive)"
@@ -296,6 +322,7 @@ class APITestRunner(BaseTestRunner):
                 expected_data,
                 message,
                 duration_seconds=time.time() - start_time,
+                no_answer=got_no_answer(e, stream_seconds),
             )
         except Exception as e:
             # str(e) can be empty (bare exceptions print as "Error: " and
@@ -311,6 +338,7 @@ class APITestRunner(BaseTestRunner):
                 expected_data,
                 error_text,
                 duration_seconds=time.time() - start_time,
+                no_answer=got_no_answer(e, stream_seconds),
             )
 
     @staticmethod

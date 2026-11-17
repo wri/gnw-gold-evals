@@ -179,6 +179,7 @@ REQUIRED_PARTIAL_HEADER_FIELDS = (
     "status_exclude",
     "id",
     "group",
+    "set",
     "note",
 )
 

@@ -1,0 +1,20 @@
+id: ch-quant-046
+uid: c7c5f5923c502bfd
+status: ready
+set: quantification
+group: ghg-flux
+query: What is the total net greenhouse gas flux from Indonesia's forests over the full 2001-2025
+  period, in MgCO2e?
+expected:
+  aoi_ids: IDN
+  dataset_id: '6'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  gas_types: 'CO2e (unscored: no evaluator surface yet)'
+  judge_instruction: Whole-period net GHG flux total (2001-2025) in MgCO2e; not annual; split
+    bar; net source/sink per sign.
+  eval_subtype: net_flux
+  manifest_id: m-flux-quant-02
+  lineage: generated 2026-09-01 from phase-2 manifest; flux-quant-02a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

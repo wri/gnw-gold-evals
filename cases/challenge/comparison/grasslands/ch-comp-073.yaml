@@ -1,0 +1,18 @@
+id: ch-comp-073
+uid: cdf35f2fc31dca2c
+status: ready
+set: comparison
+group: grasslands
+query: Did Brazil lose more natural/semi-natural grassland from 2000 to 2011 compared with
+  2012 to 2022?
+expected:
+  aoi_ids: BRA
+  dataset_id: '2'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare grassland loss in the two halves of the window (2000-2011 vs
+    2012-2022, sum of the annual loss column); exclude zero or missing years.
+  eval_subtype: two_period
+  manifest_id: m-grass-comp-05
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-05b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

@@ -5,7 +5,7 @@ description: Use when analysing a finished GOLD run ("what failed", "triage this
 
 # triage-run: turn a ledger run into actions
 
-Input: a `results/runs/<run_id>.json`. Output: a classified failure table and
+Input: a `results/gold/runs/<run_id>.json`. Output: a classified failure table and
 the four-section recommendations doc. The ledger file itself is read-only.
 Terms are defined in the [README glossary](../../../README.md#glossary).
 
@@ -59,9 +59,9 @@ Rules of thumb:
 
 ## 4. Deliverable
 
-Fill `results/recommendations/<run_id>.md` with the four sections the
+Fill `results/gold/recommendations/<run_id>.md` with the four sections the
 after-run ritual requires ([README, After a run](../../../README.md#after-a-run));
-`results/recommendations/20260801T093002Z.md` is the model:
+`results/gold/recommendations/20260801T093002Z.md` is the model:
 
 1. **File upstream:** agent behaviour, with failing and flapping row lists.
 2. **Case set:** stale expectations, park and unpark candidates, coverage holes.

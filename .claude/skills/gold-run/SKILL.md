@@ -55,26 +55,29 @@ Run all four, in order:
 
 1. **Reports:**
    ```bash
-   uv run python tools/render_html.py results/runs/<run_id>.json
+   uv run python tools/render_html.py results/gold/runs/<run_id>.json
    uv run python tools/render_html.py --all
    uv run python tools/render_inspector.py --all
    uv run python tools/render_trends.py
    ```
 2. **Flakiness + diff:**
    ```bash
-   uv run python tools/flakiness.py results/runs/<run_id>.json --per-case
-   uv run python tools/diff_runs.py results/runs/<prev>.json results/runs/<run_id>.json
+   uv run python tools/flakiness.py results/gold/runs/<run_id>.json --per-case
+   uv run python tools/diff_runs.py results/gold/runs/<prev>.json results/gold/runs/<run_id>.json
    ```
    Diff only against a comparable run: same `ff` (check the run_id suffix,
    `…_prod_experimental` versus `…_prod`), same trial count, same
    environment. The full definition is in
    [results/README.md, Comparing two runs](../../../results/README.md#comparing-two-runs).
    If no comparable run exists, say so; do not diff against something else.
-3. **Recommendations doc** at `results/recommendations/<run_id>.md`: use the
+3. **Recommendations doc** at `results/gold/recommendations/<run_id>.md`: use the
    **triage-run** skill, which classifies the failures and fills the four
    sections listed in [README, After a run](../../../README.md#after-a-run).
 4. **Commit**, but **stop and show the user what will be committed first**
-   (run JSON + reports + recommendations in one commit). Never hand-edit a
+   (run JSON + reports + recommendations in one commit). After `git add`-ing
+   the run JSON, regenerate the run index (`uv run python
+   tools/build_run_index.py`) and include `results/index.json` in the same
+   commit (CI gates its freshness). Never hand-edit a
    run file; a re-ingest after a tooling fix means visibly deleting the file
    in a reviewable commit.
 

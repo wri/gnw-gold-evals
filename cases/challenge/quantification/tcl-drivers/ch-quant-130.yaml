@@ -1,0 +1,20 @@
+id: ch-quant-130
+uid: f3e540edfe24a4a5
+status: ready
+set: quantification
+group: tcl-drivers
+query: I'm digging into DRC's forest data - do you know roughly how much of the tree cover
+  loss there since 2001 can be pinned on shifting cultivation?
+expected:
+  aoi_ids: COD
+  dataset_id: '8'
+  data_pull: 'TRUE'
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  intersections: 'driver (unscored: no evaluator surface yet)'
+  judge_instruction: Share/area of loss attributed to shifting cultivation over the whole
+    record 2001-2025; exclude Unknown; avoid 'deforestation' for raw loss.
+  eval_subtype: driver_share
+  manifest_id: m-driver-quant-03
+  lineage: generated 2026-09-01 from phase-2 manifest; driver-quant-03a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

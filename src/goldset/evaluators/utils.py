@@ -81,6 +81,19 @@ def normalize_end_date(date_str: str | None) -> str:
     return normalize_date(date_str)
 
 
+def parse_slugs(value) -> set[str]:
+    """``;``-separated article slugs (accept_blog_sources), lower-cased."""
+    if not value:
+        return set()
+    return {item.strip().strip("/").lower() for item in str(value).split(";") if item.strip()}
+
+
+def link_slug(link: str) -> str:
+    """The last path segment of a link, without query, anchor or punctuation."""
+    path = link.split("#", 1)[0].split("?", 1)[0].rstrip(".,;:)]>\"'").rstrip("/")
+    return path.rsplit("/", 1)[-1].lower()
+
+
 def last_statistics(agent_state: dict) -> dict | None:
     """The most recent analytics pull recorded in agent state, or None.
 

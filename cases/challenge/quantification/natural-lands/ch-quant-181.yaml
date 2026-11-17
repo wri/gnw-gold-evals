@@ -1,0 +1,26 @@
+id: ch-quant-181
+uid: 490b637a7d75d022
+status: todo
+set: quantification
+group: natural-lands
+query: How much of my area is natural land and how much is cropland?
+expected:
+  dataset_id: 3;1
+  data_pull: 'TRUE'
+notes:
+  behaviour: Answer with data for the preloaded area
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-240); USY-001293 Sicredi (analogue)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-240
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: Story analogue
+  user_story_refs: USY-001293 Sicredi (analogue)
+  refresh_risk: Low

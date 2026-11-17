@@ -1,0 +1,19 @@
+id: ch-comp-067
+uid: 41d55f4bd6c70fa1
+status: ready
+set: comparison
+group: grasslands
+query: In 2020, did Brazil or Mexico have a larger area of natural/semi-natural grassland?
+expected:
+  aoi_ids: BRA;MEX
+  dataset_id: '2'
+  start_date: '2020-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare natural/semi-natural grassland extent (area_ha, hectares) between
+    the two countries for the year; the comparative direction must be correct.
+  eval_subtype: two_country
+  manifest_id: m-grass-comp-01
+  lineage: generated 2026-09-01 from phase-2 manifest; grass-comp-01b
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

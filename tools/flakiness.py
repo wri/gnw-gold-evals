@@ -1,6 +1,6 @@
 """Per-check flakiness of a multi-trial run.
 
-    uv run python tools/flakiness.py results/runs/<run_id>.json [--per-case]
+    uv run python tools/flakiness.py results/gold/runs/<run_id>.json [--per-case]
 
 For each check: its mean, its flake std (the population std of one case's
 trial values, averaged over cases) and how many cases' trials disagreed.

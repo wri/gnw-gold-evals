@@ -2,15 +2,15 @@
 
 GOLD is the capability regression suite for the agent behind Global Nature Watch (GNW): Project Zeno, an LLM agent that answers questions about land and nature data, such as deforestation, land cover and carbon, for named places. This repo holds the GOLD cases, the harness that runs them against the agent, and the committed ledger of results.
 
-GOLD answers one question before each release: **did an agent change break a capability that used to work?** It does not measure answer quality or accuracy; a separate programme (CHALLENGE, not in this repo) does that. So coverage across capabilities is the design goal, a deterministic case beats a realistic one, and the headline number is a **regression count** between two runs, not a mean score.
+GOLD answers one question before each release: **did an agent change break a capability that used to work?** It does not measure answer quality or accuracy; the CHALLENGE set in this repo (`cases/challenge/`, with its frozen BENCHMARK subsets in `benchmarks/`) does that, as pass rates rather than regression counts. So coverage across capabilities is the design goal, a deterministic case beats a realistic one, and the headline number is a **regression count** between two runs, not a mean score.
 
 Cases used to live in a Google Sheet, where edits landed mid-run and nothing recorded which version of a case a score belonged to. Here every case is a versioned file and every result is pinned to the exact case content it was scored against. Project terms are defined in the [Glossary](#glossary).
 
 ## How it works
 
-A **case** is a YAML file holding a user query (or a scripted conversation) and the values a correct answer must contain: the place ids, the dataset, the date range, a figure. `gold run` sends each query to the agent's API, waits for the answer, then fetches the agent's final state for that conversation. **Evaluators** compare that state with the case's expected values and produce **checks**, each scoring pass, fail or not evaluated. Each check speaks for one or two of five **buckets** (retrieval, analysis, explanation, output, scope), so a failure points at the stage that broke. The run is written to `results/runs/` as one immutable JSON record, which is committed. Before a release, `tools/diff_runs.py` compares the candidate build's run with a baseline run and counts **regressions**: checks that passed before and fail now.
+A **case** is a YAML file holding a user query (or a scripted conversation) and the values a correct answer must contain: the place ids, the dataset, the date range, a figure. `gold run` sends each query to the agent's API, waits for the answer, then fetches the agent's final state for that conversation. **Evaluators** compare that state with the case's expected values and produce **checks**, each scoring pass, fail or not evaluated. Each check speaks for one or two of five **buckets** (retrieval, analysis, explanation, output, scope), so a failure points at the stage that broke. The run is written to `results/gold/runs/` as one immutable JSON record, which is committed. Before a release, `tools/diff_runs.py` compares the candidate build's run with a baseline run and counts **regressions**: checks that passed before and fail now.
 
-Results are keyed by case content, not by case name. Every case has a [uid](#uid), a hash of its query and expected values, so editing a case gives it a new uid and an old score is never read as a score for the new content. Each store of cases has a [caseset_version](#caseset-version), a hash of all its uids. There are two stores: `cases/v2` is the working set that every edit goes to, and `cases/v1` is the frozen import of the original sheet, kept so the effect of curating the cases can be measured. See [The two stores](cases/README.md#the-two-stores).
+Results are keyed by case content, not by case name. Every case has a [uid](#uid), a hash of its query and expected values, so editing a case gives it a new uid and an old score is never read as a score for the new content. Each store of cases has a [caseset_version](#caseset-version), a hash of all its uids. GOLD has two stores: `cases/v2` is the working set that every edit goes to, and `cases/v1` is the frozen import of the original sheet, kept so the effect of curating the cases can be measured. See [The two stores](cases/README.md#the-two-stores).
 
 ## Glossary
 
@@ -21,7 +21,8 @@ Definitions only: counts are in [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md), an
 - **GNW (Global Nature Watch)**: the World Resources Institute (WRI) product for asking questions about land and nature data for named places.
 - **Project Zeno, the agent**: the LLM agent behind GNW, built in [wri/project-zeno](https://github.com/wri/project-zeno). The harness asks it a question with `POST /api/chat`, then reads its final state with `GET /api/threads/{id}/state`; checks score that state.
 - **GOLD**: this suite, a capability regression check run before each release (also called the capability smoke-test set; not the same thing as a [smoke run](#smoke-run)). Its headline is a regression count, not a score.
-- **CHALLENGE**: a separate evaluation programme that scores answer quality and accuracy. It has no code or docs in this repo.
+- **CHALLENGE**: the quality and accuracy counterpart to GOLD, in `cases/challenge/` (set, cohort, case). Its verdicts are pass rates per set and cohort, never regression counts, and its ledger is `results/challenge/`. See [cases/challenge/README.md](cases/challenge/README.md).
+- **BENCHMARK**: a frozen, versioned subset of CHALLENGE behind the North Star: a uid manifest at `benchmarks/<version>.json`, run with `gold run --benchmark`, with results in `results/benchmark/`. See [benchmarks/README.md](benchmarks/README.md).
 - **gnw-evals**: the earlier evaluation harness ([wri/gnw-evals](https://github.com/wri/gnw-evals)) that this harness was ported from. A few [legacy tools](#legacy-tools) still read or write its formats.
 - **harness**: the code here that sends each case to the agent, fetches the final state and scores it (`src/goldset/runner/`, run with `gold run`).
 - **environment**: the agent deployment a run targets: `staging`, `prod` or `local` (`http://localhost:8000`). Recorded on the run and in its run_id.
@@ -65,10 +66,10 @@ Definitions only: counts are in [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md), an
 - **majority verdict**: a check's result across trials: pass if more than half of the trials that evaluated it passed, otherwise fail (a tie fails); not evaluated if no trial evaluated it.
 - <a id="smoke-run"></a>**smoke run, official run**: the two run tiers. A smoke run (1 trial, the default) is for quick iteration and is never committed, diffed or used as a baseline. An official run (3 trials) is anything that produces a regression count or becomes a baseline. See [Running the set](#running-the-set).
 - **build label**: free text passed with `--build` naming the agent build under test (default `unknown`). The harness records it as given; it does not ask the API.
-- **run record, ledger**: a run record is the JSON file one run writes to `results/runs/`, immutable once written. The ledger is the committed set of run records. Nothing in it is ever written or edited by hand. Contract: [results/README.md](results/README.md).
+- **run record, ledger**: a run record is the JSON file one run writes to `results/gold/runs/`, immutable once written. The ledger is the committed set of run records. Nothing in it is ever written or edited by hand. Contract: [results/README.md](results/README.md).
 - **run_id**: a run record's name, `<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>]` in UTC, for example `20260831T163347Z_prod`. The suffix shows the environment and `ff` at a glance.
-- **partial file**: `results/runs/<run_id>.partial.jsonl` (gitignored), where a run appends each finished case so that a killed run can be resumed.
-- **artefacts**: raw agent state for each case and trial, gzipped under `results/artifacts/<run_id>/` (gitignored). They keep evidence a run record does not. `uv run gold prune-artifacts` deletes all but the newest runs' artefacts.
+- **partial file**: `results/gold/runs/<run_id>.partial.jsonl` (gitignored), where a run appends each finished case so that a killed run can be resumed.
+- **artefacts**: raw agent state for each case and trial, gzipped under `results/gold/artifacts/<run_id>/` (gitignored). They keep evidence a run record does not. `uv run gold prune-artifacts` deletes all but the newest runs' artefacts.
 - **methodology note**: text passed with `--note` and stored as `methodology_note` on the run, recording that check semantics changed since the previous run.
 - **regression, recovery**: between two runs, for a case uid present in both: a check that went from pass to fail (regression) or from fail to pass (recovery). Counted per check, not per case. Info-only checks never count towards the gate.
 - <a id="data-bump"></a>**data bump**: a ground-truth check that flipped between two runs while the digest of its fetched values moved, so the data changed under the case. `diff_runs.py` lists bumps but never counts them as regressions or recoveries, and they never gate. A bump that the agent's own recorded figure does not explain is flagged as a possible hidden regression.
@@ -79,8 +80,8 @@ Definitions only: counts are in [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md), an
 - **stale_case, stale expectation**: `stale_case` marks a result whose uid the current store no longer holds ([results/README.md](results/README.md)). A stale expectation is something else: an expected value that is out of date, so the case fails although the agent is right.
 - **flaky check**: a check whose trials disagree within one run. `tools/flakiness.py` reports each check's mean, standard deviation and number of flips across trials.
 - **compose**: build a current picture from a full run plus scoped re-runs with `tools/compose_runs.py`. It works in the analysis only and never writes to the ledger.
-- **recommendations doc**: `results/recommendations/<run_id>.md`, written after each official run. See [After a run](#after-a-run).
-- **campaign**: a write-up of a multi-run validation effort, kept in `results/campaigns/`.
+- **recommendations doc**: `results/gold/recommendations/<run_id>.md`, written after each official run. See [After a run](#after-a-run).
+- **campaign**: a write-up of a multi-run validation effort, kept in `results/gold/campaigns/`.
 - **probation, re-admission**: a trial period before something is trusted again. An info-only check must meet its stated condition before it gates again; an unparked case must show that the reason it was parked no longer holds.
 
 ### Scoring
@@ -116,7 +117,7 @@ Cases with `expected.ground_truth` also call the production analytics API. They 
 
 ## Running the set
 
-`gold run` sends every case in `cases/v2` whose status is not `not doing` to the agent, scores it, and writes one run record to `results/runs/<run_id>.json`, plus raw agent state under `results/artifacts/<run_id>/` (gitignored).
+`gold run` sends every case in `cases/v2` whose status is not `not doing` to the agent, scores it, and writes one run record to `results/gold/runs/<run_id>.json`, plus raw agent state under `results/gold/artifacts/<run_id>/` (gitignored).
 
 ```bash
 uv run gold run --env staging --build "<label>"              # smoke run: 1 trial
@@ -137,7 +138,7 @@ uv run gold run --help                                       # every flag
 
 **Local runs.** `--env local` targets a project-zeno API on `http://localhost:8000` (`make api` in a project-zeno checkout) and reads only `API_TOKEN`. Local runs are smoke runs: a local stack does not match staging or prod, so never commit or diff them.
 
-**Killed runs.** A run appends each finished case to `results/runs/<run_id>.partial.jsonl` (gitignored), so a killed run loses only the cases that were in progress. `uv run gold run --resume <run_id>` finishes it: the settings come from that file (every other flag except `--results-dir` is ignored), it refuses if the case set has changed, and the final record carries `resumed: true`.
+**Killed runs.** A run appends each finished case to `results/gold/runs/<run_id>.partial.jsonl` (gitignored), so a killed run loses only the cases that were in progress. `uv run gold run --resume <run_id>` finishes it: the settings come from that file (every other flag except `--results-dir` is ignored), it refuses if the case set has changed, and the final record carries `resumed: true`.
 
 **Workers and timeouts.** By default 10 cases run at once (the hard cap is 20), and a trial that takes over 900 seconds becomes an error row. Runs record both settings. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before blaming the agent.
 
@@ -146,7 +147,7 @@ uv run gold run --help                                       # every flag
 Before a release, diff an official run of the candidate build against the baseline: the most recent committed official run that is comparable with it. If there is none, first make one with the build currently released.
 
 ```bash
-uv run python tools/diff_runs.py results/runs/<baseline>.json results/runs/<candidate>.json \
+uv run python tools/diff_runs.py results/gold/runs/<baseline>.json results/gold/runs/<candidate>.json \
   --fail-on-regression --fail-on-coverage-loss
 ```
 
@@ -158,32 +159,32 @@ An official run is not finished when its JSON lands; it is finished when someone
 
 1. **Render the reports.**
    ```bash
-   uv run python tools/render_html.py results/runs/<run_id>.json   # results/reports/<run_id>.html
-   uv run python tools/render_html.py --all        # results/reports/all-runs.html
-   uv run python tools/render_inspector.py --all   # results/reports/all-runs_inspector.html
-   uv run python tools/render_trends.py            # results/reports/trends.html
+   uv run python tools/render_html.py results/gold/runs/<run_id>.json   # results/gold/reports/<run_id>.html
+   uv run python tools/render_html.py --all        # results/gold/reports/all-runs.html
+   uv run python tools/render_inspector.py --all   # results/gold/reports/all-runs_inspector.html
+   uv run python tools/render_trends.py            # results/gold/reports/trends.html
    ```
-   For a quick read, `uv run python tools/report_run.py results/runs/<run_id>.json` prints a Markdown summary, and `render_inspector.py results/runs/<run_id>.json` builds a matrix of every case against every check for one run. Read the trends page within one `ff` only.
+   For a quick read, `uv run python tools/report_run.py results/gold/runs/<run_id>.json` prints a Markdown summary, and `render_inspector.py results/gold/runs/<run_id>.json` builds a matrix of every case against every check for one run. Read the trends page within one `ff` only.
 2. **Check flakiness and diff.**
    ```bash
-   uv run python tools/flakiness.py results/runs/<run_id>.json --per-case
-   uv run python tools/diff_runs.py results/runs/<baseline>.json results/runs/<run_id>.json
+   uv run python tools/flakiness.py results/gold/runs/<run_id>.json --per-case
+   uv run python tools/diff_runs.py results/gold/runs/<baseline>.json results/gold/runs/<run_id>.json
    ```
    Diff only against a comparable run ([Comparing two runs](results/README.md#comparing-two-runs)). If none exists, say so in the recommendations doc rather than diffing against something else.
-3. **Write `results/recommendations/<run_id>.md`** with four sections:
+3. **Write `results/gold/recommendations/<run_id>.md`** with four sections:
    - what to report to the agent team, with the failing and flapping rows as evidence;
    - what the run says about the case set (stale expectations, coverage gaps, cases ready to leave probation);
    - what it says about the harness;
    - what to watch on the next run.
 
-   `results/recommendations/20260801T093002Z.md` shows the shape.
-4. **Commit** the run JSON, the rendered reports and the recommendations doc together, in one commit.
+   `results/gold/recommendations/20260801T093002Z.md` shows the shape.
+4. **Commit** the run JSON, the rendered reports and the recommendations doc together, in one commit. After `git add`-ing the run JSON, regenerate the run index (`uv run python tools/build_run_index.py`; it enumerates tracked and staged files, so add the run first) and commit `results/index.json` in the same commit; CI gates its freshness.
 
 The `gold-run` skill runs these steps, and the `triage-run` skill helps fill in step 3.
 
 ## Changing cases
 
-Edit cases in `cases/v2` only; `cases/v1` is frozen ([The two stores](cases/README.md#the-two-stores)). Read [cases/README.md](cases/README.md) before writing or editing a case: it says what makes a good case and how a case's [status](cases/README.md#status-lifecycle) moves.
+Edit GOLD cases in `cases/v2` only; `cases/v1` is frozen ([The two stores](cases/README.md#the-two-stores)). Read [cases/README.md](cases/README.md) before writing or editing a case: it says what makes a good case and how a case's [status](cases/README.md#status-lifecycle) moves.
 
 After any change to a case file (query, expected values, status, group, notes, or a new or deleted case), run all three of these and commit their output in the same commit as the edit:
 
@@ -193,7 +194,7 @@ uv run python tools/coverage_doc.py           # regenerate cases/v2/COVERAGE.md
 uv run python tools/audit_cases.py --strict   # depth rule and DON'Ts, as CI runs it
 ```
 
-CI runs `check.py` (without `--fix`) on both stores, `coverage_doc.py --check` and `audit_cases.py --strict`, and fails the PR if a uid or manifest is out of date, COVERAGE.md is stale, or the audit finds a violation ([The audit gate](cases/README.md#the-audit-gate)).
+CI runs `check.py` (without `--fix`) on every store (`cases/v1`, `cases/v2`, `cases/challenge`), `coverage_doc.py --check` (v2 and challenge) and `audit_cases.py --strict`, and fails the PR if a uid or manifest is out of date, COVERAGE.md is stale, or the audit finds a violation ([The audit gate](cases/README.md#the-audit-gate)).
 
 Editing the query or any expected value gives the case a new uid, so earlier results no longer match it and a `done` case needs verifying again. That is intended: it keeps every score pinned to the content it measured. Say in the PR which cases changed and why; the PR is the only record of the reason.
 
@@ -224,6 +225,8 @@ A run is read through row verdicts and per-bucket tallies, never a flat mean. Ea
 - `error`: the API or the judge failed, so the row measured nothing reliable; rerun it before trusting it. It never counts as a fail;
 - `uncovered`: no gating check was evaluated, so it never counts as a pass.
 
+An attempt that got no reply (Horizon's stream stalled, dropped or failed: `no_answer`) is a failed attempt, not an error; an attempt the harness could not score is left out, and a row is an error only when no attempt could be scored.
+
 **Multi-turn cases** run all their turns in one thread. Per-turn checks are prefixed with the turn number (`t2.aoi_id_match`), and `state_delta` scores the expected changes between turns. A turn that errors ends its conversation, so later turns are not scored against a broken thread.
 
 The tools fail loudly when nothing was measured: `flakiness.py` marks a partial sample INSUFFICIENT DATA instead of calling it stable, `diff_runs.py --fail-on-coverage-loss` fails when checks stop being evaluated, and each report's reconciliation line compares the checks a case should have produced with those actually evaluated.
@@ -231,23 +234,29 @@ The tools fail loudly when nothing was measured: `flakiness.py` marks a partial 
 ## Repository layout
 
 ```
-cases/v2/                 the working case set: one YAML per case in group folders, plus MANIFEST.json
-cases/v1/                 the frozen import of the retired Google Sheet (same layout)
-cases/v2/COVERAGE.md      generated coverage report; never edit by hand
-cases/zeno_catalog.json   snapshot of the agent's dataset catalogue, read by coverage_doc.py
-schema/case.schema.json   the case file contract; tests validate every case against it
-src/goldset/              the library and the `gold` CLI: case store and hashing, runner,
-                          evaluators, buckets, ledger (module map in CLAUDE.md)
-tools/                    command-line tools over src/goldset (see tools/README.md)
-templates/                HTML templates for the rendered reports
-tests/                    the test suite; needs no network
-results/runs/             the committed run ledger (contract: results/README.md)
-results/reports/          rendered HTML reports
-results/recommendations/  one action doc per official run
-results/campaigns/        write-ups of multi-run validation efforts
-results/artifacts/        raw agent state per case and trial (gitignored)
-.claude/skills/           Claude Code workflow skills (see Further reading)
-.github/workflows/ci.yml  checks on every PR, plus a manually triggered staging run
+cases/v2/                     the working case set: one YAML per case in group folders, plus MANIFEST.json
+cases/v1/                     the frozen import of the retired Google Sheet (same layout)
+cases/v2/COVERAGE.md          generated coverage report; never edit by hand
+cases/challenge/              the CHALLENGE case set: set, cohort, case (cases/challenge/README.md)
+cases/zeno_catalog.json       snapshot of the agent's dataset catalogue, read by coverage_doc.py
+benchmarks/                   BENCHMARK manifests: frozen uid subsets of CHALLENGE
+                              (benchmarks/README.md)
+schema/case.schema.json       the case file contract; tests validate every case against it
+src/goldset/                  the library and the `gold` CLI: case store and hashing, runner,
+                              evaluators, buckets, ledger (module map in CLAUDE.md)
+tools/                        command-line tools over src/goldset (see tools/README.md)
+templates/                    HTML templates for the rendered reports
+tests/                        the test suite; needs no network
+results/gold/runs/            the committed GOLD run ledger (contract: results/README.md)
+results/gold/reports/         rendered HTML reports
+results/gold/recommendations/ one action doc per official run
+results/gold/campaigns/       write-ups of multi-run validation efforts
+results/gold/artifacts/       raw agent state per case and trial (gitignored)
+results/challenge/            committed CHALLENGE run ledger + rollup recommendations
+                              (rates, not regressions; see cases/challenge/README.md)
+results/benchmark/            committed BENCHMARK run ledger (gold run --benchmark)
+.claude/skills/               Claude Code workflow skills (see Further reading)
+.github/workflows/ci.yml      checks on every PR, plus a manually triggered staging run
 ```
 
 ## Further reading
@@ -259,8 +268,10 @@ results/artifacts/        raw agent state per case and trial (gitignored)
 | [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md) | Generated coverage report: groups, buckets, expected fields, datasets against the agent's catalogue, parked cases, known gaps |
 | [src/goldset/evaluators/README.md](src/goldset/evaluators/README.md) | Reference for every check: what it reads, when it scores `null` or `0.0`, its bucket, and how to triage a failure |
 | [results/README.md](results/README.md) | The ledger contract, comparing two runs, and composing a current picture across runs |
-| [results/recommendations/](results/recommendations/) | One action doc per official run |
-| [results/campaigns/](results/campaigns/) | Write-ups of multi-run validation efforts |
+| [results/gold/recommendations/](results/gold/recommendations/) | One action doc per official run |
+| [results/gold/campaigns/](results/gold/campaigns/) | Write-ups of multi-run validation efforts |
+| [results/challenge/](results/challenge/) | The CHALLENGE ledger: same contract, pass-rate verdicts via `tools/challenge_rollup.py` |
+| [benchmarks/README.md](benchmarks/README.md) | BENCHMARK: the frozen, versioned CHALLENGE subset behind the North Star; manifest, freeze, errata, canonical runs, metric semantics |
 | [tools/README.md](tools/README.md) | Every command-line tool, grouped by what it works on, including the legacy tools |
 
 ### Claude Code skills

@@ -1,0 +1,20 @@
+id: ch-comp-119
+uid: 61186b1f1f0ee398
+status: ready
+set: comparison
+group: tc-gain
+query: Which country had greater cumulative tree cover gain between 2010 and 2020, Brazil
+  or Colombia?
+expected:
+  aoi_ids: BRA;COL
+  dataset_id: '5'
+  start_date: '2010-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+notes:
+  judge_instruction: Compare cumulative gain over the 2010-2020 period; direction correct;
+    cited figures (ha) within tolerance. Gain is not restoration.
+  eval_subtype: two_country
+  manifest_id: m-gain-comp-08
+  lineage: generated 2026-09-01 from phase-2 manifest; gain-comp-08a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

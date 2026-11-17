@@ -1,0 +1,782 @@
+{
+  "schema_version": 1,
+  "store": "v2",
+  "caseset_version": "295e4a6f3b7f8f11",
+  "case_count": 145,
+  "statuses": {
+    "done": 96,
+    "not doing": 30,
+    "ready": 13,
+    "todo": 6
+  },
+  "active_count": 115,
+  "groups": [
+    {
+      "group": "class-comparison",
+      "cases": 9,
+      "active": 6,
+      "statuses": {
+        "done": 6,
+        "not doing": 3
+      }
+    },
+    {
+      "group": "comparative",
+      "cases": 14,
+      "active": 13,
+      "statuses": {
+        "done": 11,
+        "not doing": 1,
+        "todo": 2
+      }
+    },
+    {
+      "group": "context-layer",
+      "cases": 11,
+      "active": 10,
+      "statuses": {
+        "done": 8,
+        "not doing": 1,
+        "todo": 2
+      }
+    },
+    {
+      "group": "dashboard",
+      "cases": 7,
+      "active": 7,
+      "statuses": {
+        "done": 7
+      }
+    },
+    {
+      "group": "dataset-parameters",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "done": 1
+      }
+    },
+    {
+      "group": "dataset-suggestion",
+      "cases": 8,
+      "active": 6,
+      "statuses": {
+        "done": 6,
+        "not doing": 2
+      }
+    },
+    {
+      "group": "direct",
+      "cases": 29,
+      "active": 21,
+      "statuses": {
+        "done": 19,
+        "not doing": 8,
+        "ready": 1,
+        "todo": 1
+      }
+    },
+    {
+      "group": "imagery",
+      "cases": 5,
+      "active": 1,
+      "statuses": {
+        "done": 1,
+        "not doing": 4
+      }
+    },
+    {
+      "group": "metadata",
+      "cases": 5,
+      "active": 5,
+      "statuses": {
+        "done": 5
+      }
+    },
+    {
+      "group": "multilingual",
+      "cases": 5,
+      "active": 5,
+      "statuses": {
+        "done": 5
+      }
+    },
+    {
+      "group": "multiturn",
+      "cases": 12,
+      "active": 8,
+      "statuses": {
+        "not doing": 4,
+        "ready": 8
+      }
+    },
+    {
+      "group": "nudge",
+      "cases": 2,
+      "active": 2,
+      "statuses": {
+        "ready": 2
+      }
+    },
+    {
+      "group": "parent-child",
+      "cases": 14,
+      "active": 12,
+      "statuses": {
+        "done": 11,
+        "not doing": 2,
+        "ready": 1
+      }
+    },
+    {
+      "group": "ranking",
+      "cases": 1,
+      "active": 1,
+      "statuses": {
+        "done": 1
+      }
+    },
+    {
+      "group": "refusal",
+      "cases": 6,
+      "active": 2,
+      "statuses": {
+        "done": 1,
+        "not doing": 4,
+        "todo": 1
+      }
+    },
+    {
+      "group": "temporal",
+      "cases": 16,
+      "active": 15,
+      "statuses": {
+        "done": 14,
+        "not doing": 1,
+        "ready": 1
+      }
+    }
+  ],
+  "bucket_coverage": {
+    "retrieval": {
+      "dedicated": 109,
+      "shared_only": 0
+    },
+    "analysis": {
+      "dedicated": 0,
+      "shared_only": 76
+    },
+    "explanation": {
+      "dedicated": 29,
+      "shared_only": 65
+    },
+    "output": {
+      "dedicated": 82,
+      "shared_only": 3
+    },
+    "scope": {
+      "dedicated": 99,
+      "shared_only": 7
+    }
+  },
+  "expected_fields": [
+    {
+      "field": "dataset_id",
+      "cases": 100,
+      "switches_on": "dataset_id_match"
+    },
+    {
+      "field": "scope",
+      "cases": 98,
+      "switches_on": "scope_match"
+    },
+    {
+      "field": "aoi_source",
+      "cases": 93,
+      "switches_on": "no check of its own (dashboard_aoi_match also compares it)"
+    },
+    {
+      "field": "dataset_name",
+      "cases": 93,
+      "switches_on": "reference only"
+    },
+    {
+      "field": "aoi_ids",
+      "cases": 81,
+      "switches_on": "aoi_id_match"
+    },
+    {
+      "field": "answer",
+      "cases": 76,
+      "switches_on": "agent_answer, chart_produced, data_pull_exists, answered_without_data (+ charts_answer when a chart exists)"
+    },
+    {
+      "field": "text",
+      "cases": 29,
+      "switches_on": "expected_text_match"
+    },
+    {
+      "field": "context_layer",
+      "cases": 19,
+      "switches_on": "context_layer_match"
+    },
+    {
+      "field": "dashboard_created",
+      "cases": 8,
+      "switches_on": "dashboard_created"
+    },
+    {
+      "field": "end_date",
+      "cases": 8,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
+    },
+    {
+      "field": "start_date",
+      "cases": 8,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
+    },
+    {
+      "field": "class_values",
+      "cases": 6,
+      "switches_on": "class_value_match (info-only)"
+    },
+    {
+      "field": "dashboard_widgets",
+      "cases": 5,
+      "switches_on": "dashboard_widgets_match (+ dashboard_widgets_valid when a dashboard exists)"
+    },
+    {
+      "field": "nudge_options",
+      "cases": 5,
+      "switches_on": "nudge_match"
+    },
+    {
+      "field": "clarification",
+      "cases": 3,
+      "switches_on": "clarification_requested"
+    },
+    {
+      "field": "nudge_type",
+      "cases": 2,
+      "switches_on": "nudge_match"
+    },
+    {
+      "field": "chart_type",
+      "cases": 1,
+      "switches_on": "chart_type_match"
+    },
+    {
+      "field": "dataset_parameters",
+      "cases": 1,
+      "switches_on": "dataset_parameter_match"
+    },
+    {
+      "field": "ground_truth",
+      "cases": 1,
+      "switches_on": "ground_truth_match, ground_truth_answer (info-only)"
+    },
+    {
+      "field": "accept_aoi_nudge_offering",
+      "cases": 0,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
+    },
+    {
+      "field": "accept_blog_sources",
+      "cases": 0,
+      "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
+    },
+    {
+      "field": "accept_dashboard",
+      "cases": 0,
+      "switches_on": "dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored)"
+    },
+    {
+      "field": "accept_fixed_period",
+      "cases": 0,
+      "switches_on": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)"
+    },
+    {
+      "field": "accept_nudge_offering",
+      "cases": 0,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
+    },
+    {
+      "field": "data_pull",
+      "cases": 0,
+      "switches_on": "data_pull_exists, answered_without_data"
+    },
+    {
+      "field": "date_tolerance_days",
+      "cases": 0,
+      "switches_on": "date_extraction (days a window may fall short of a bound)"
+    },
+    {
+      "field": "figure",
+      "cases": 0,
+      "switches_on": "figure_match (computed from the agent's own pulled table)"
+    },
+    {
+      "field": "figure_claim",
+      "cases": 0,
+      "switches_on": "figure_claim_match (the conclusion the pulled data supports)"
+    },
+    {
+      "field": "forbidden_tools",
+      "cases": 0,
+      "switches_on": "forbidden_tools_absent"
+    },
+    {
+      "field": "suggested_datasets",
+      "cases": 0,
+      "switches_on": "suggested_datasets_match (legacy: the agent now writes nudge; author nudge_type / nudge_options)"
+    }
+  ],
+  "unknown_expected_fields": [],
+  "dataset_coverage": {
+    "source": {
+      "repo": "https://github.com/wri/project-zeno.git",
+      "ref": "fa78c816186461dab120523ccad75fe274e6058c",
+      "sha": "fa78c816186461dab120523ccad75fe274e6058c",
+      "path": "src/agent/datasets/catalog",
+      "synced": "2026-10-30"
+    },
+    "datasets": [
+      {
+        "dataset_id": "1",
+        "dataset_name": "Global land cover",
+        "missing_instructions": [],
+        "cases": 6,
+        "answer_graded": 6,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "2",
+        "dataset_name": "Global natural/semi-natural grassland extent",
+        "missing_instructions": [],
+        "cases": 12,
+        "answer_graded": 11,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "3",
+        "dataset_name": "SBTN Natural Lands Map",
+        "missing_instructions": [],
+        "cases": 5,
+        "answer_graded": 5,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "4",
+        "dataset_name": "Tree cover loss",
+        "missing_instructions": [],
+        "cases": 48,
+        "answer_graded": 36,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 1
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 5
+          },
+          {
+            "name": "intact_forest",
+            "cases": 5
+          },
+          {
+            "name": "natural_forest",
+            "cases": 5
+          }
+        ]
+      },
+      {
+        "dataset_id": "5",
+        "dataset_name": "Tree cover gain",
+        "missing_instructions": [],
+        "cases": 6,
+        "answer_graded": 6,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "6",
+        "dataset_name": "Forest greenhouse gas net flux",
+        "missing_instructions": [],
+        "cases": 3,
+        "answer_graded": 3,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "7",
+        "dataset_name": "Tree cover",
+        "missing_instructions": [],
+        "cases": 3,
+        "answer_graded": 3,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 0
+          }
+        ]
+      },
+      {
+        "dataset_id": "8",
+        "dataset_name": "Tree cover loss by dominant driver",
+        "missing_instructions": [],
+        "cases": 5,
+        "answer_graded": 5,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "9",
+        "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
+        "missing_instructions": [],
+        "cases": 1,
+        "answer_graded": 1,
+        "parameters": [],
+        "context_layers": []
+      },
+      {
+        "dataset_id": "10",
+        "dataset_name": "Tree cover loss due to fires",
+        "missing_instructions": [],
+        "cases": 2,
+        "answer_graded": 1,
+        "parameters": [
+          {
+            "name": "canopy_cover",
+            "cases": 0
+          }
+        ],
+        "context_layers": [
+          {
+            "name": "primary_forest",
+            "cases": 0
+          },
+          {
+            "name": "intact_forest",
+            "cases": 0
+          }
+        ]
+      },
+      {
+        "dataset_id": "11",
+        "dataset_name": "Integrated alerts",
+        "missing_instructions": [],
+        "cases": 11,
+        "answer_graded": 9,
+        "parameters": [],
+        "context_layers": [
+          {
+            "name": "natural_lands",
+            "cases": 4
+          }
+        ]
+      },
+      {
+        "dataset_id": "12",
+        "dataset_name": "Land GHG Monitoring System (LGMS)",
+        "missing_instructions": [],
+        "cases": 0,
+        "answer_graded": 0,
+        "parameters": [],
+        "context_layers": []
+      }
+    ],
+    "unknown_dataset_ids": []
+  },
+  "multi_turn": {
+    "conversations": 8,
+    "turns": 16,
+    "delta_assertions": {
+      "absent": 1,
+      "changed": 8,
+      "retain": 7
+    }
+  },
+  "parked": [
+    {
+      "id": "1-005",
+      "status": "not doing",
+      "group": "parent-child",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT over natural lands and cannot be answered without it."
+    },
+    {
+      "id": "1-006",
+      "status": "not doing",
+      "group": "class-comparison",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT with driver context layer and cannot be answered without it."
+    },
+    {
+      "id": "1-007",
+      "status": "not doing",
+      "group": "class-comparison",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT and cannot be answered without it."
+    },
+    {
+      "id": "1-008",
+      "status": "not doing",
+      "group": "class-comparison",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT and cannot be answered without it."
+    },
+    {
+      "id": "1-011",
+      "status": "not doing",
+      "group": "parent-child",
+      "reason": "RE-PARKED 2026-08-04 after verification (run 20260803T220705Z). Unparking it was premature: the agent selects three arbitrary WDPA polygons (555665453, 1034, 555607614) rather than all protected areas in Colorado, nudges aoi_choice on some trials, and the resulting figure varies about 20x across identical trials (41,339 ha vs 1,920.67 ha). Closing the date window did not touch the real defect — protected areas in Colorado is a multi-AOI aggregate the product does not select deterministically, exactly as the original park note said. Needs a product answer, not a prompt edit."
+    },
+    {
+      "id": "1-028",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "parked 2026-08-03: percentage answer (2.10%) and Landmark AOI resolution both unverified here, and the row has never run in this repo. Probe once with --id 1-028, then unpark or delete with the outcome recorded. Landmark has 5 other active carriers."
+    },
+    {
+      "id": "1-049",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "parked 2026-08-03: answer 1.41 hectares of tree cover gain over 2010-2015 for a whole reserve is implausible on its face — likely a unit/scale error in the sheet. Dataset 5 has 5 other active carriers, so nothing is lost. Unpark only if a run reproduces the figure; otherwise delete."
+    },
+    {
+      "id": "1-085",
+      "status": "not doing",
+      "group": "dataset-suggestion",
+      "reason": "parked 2026-08-03: the most on-charter prompt in the dataset-suggestion group (it explicitly asks for suggestions), but its expectations sit on the dead suggested_datasets surface (0 of 1,298 trials populate it). Unpark after rewriting onto nudge_type/nudge_options, fixing 'wilfires' in the same edit."
+    },
+    {
+      "id": "1-088",
+      "status": "not doing",
+      "group": "context-layer",
+      "reason": "parked 2026-08-27: DIST-ALERT (dataset 0) removed from agent; case is solely about DIST-ALERT with natural_lands context layer and cannot be answered without it."
+    },
+    {
+      "id": "1-108",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "PARKED 2026-08-04 on creation, after verification (run 20260803T220705Z). It was authored to repay the level-3 AOI coverage debt, and it demonstrated instead that the debt may be unpayable on this build: the city of Bern resolves to CHE.6_1 (the canton) on 1 trial and produces a clarify_area / clarify_aoi nudge on 2. So city/municipality AOI resolution is not deterministic here — the missing level-3 coverage is a PRODUCT limitation, not a case-set gap. Keep the row as the standing probe and unpark when the agent resolves sub-district AOIs reliably."
+    },
+    {
+      "id": "1-112",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: 2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental — every gating check passed at this uid before the text expectation was added (aoi, dataset 12, pull_source, scope analyse; answer_traceability 0.0 is info-only and structural, see no_answer_rationale). Needs a 3-trial ff=experimental pass at the final uid for done."
+    },
+    {
+      "id": "1-113",
+      "status": "not doing",
+      "group": "temporal",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: 2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental — all gating checks passed at the pre-fill uid (aoi, dataset 12, pull_source, scope analyse). class_values and text added from that run's verified artifact. Needs a 3-trial ff=experimental pass at the final uid for done."
+    },
+    {
+      "id": "1-114",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: 2026-08-07: 1-trial fill run 20260807T125843Z_staging_experimental — clean pass at this exact uid: aoi_id_match, expected_text_match (\"clearly explains that carbon density and carbon stocks are not available as datasets\") and scope_match (no pull, no nudge -> none, matching refuse) all 1.0. Needs a 3-trial ff=experimental pass for done."
+    },
+    {
+      "id": "1-115",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent instead raised a dataset_choice nudge (options: LGMS, Forest greenhouse gas net flux) — no dataset selected, no pull, actual scope suggest — so dataset_id_match, expected_text_match and scope_match all failed. Expectations kept at the presentation-instruction intent, which the nudge bypasses (those instructions only enter context after selection). One trial cannot separate an always-nudge from the known ~1-in-3 routing nudge: needs a 3-trial ff=experimental run before promoting to ready, or an upstream fix if the nudge is systematic."
+    },
+    {
+      "id": "1-116",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent did the opposite of the expected refusal — it offered to calculate credits and estimate sequestration potential, answering from web knowledge with landcarbonlab.org and wri.org citations (the 1-030 shape; scope_match still passed because no pull happened). Upstream finding: the credits/offsets refusal lives in LGMS presentation_instructions, which never enter context because this query selects no dataset — a platform-level guardrail gap. Promote to ready only after the agent refuses on a 3-trial ff=experimental run."
+    },
+    {
+      "id": "1-117",
+      "status": "not doing",
+      "group": "dataset-suggestion",
+      "reason": "2026-08-31: not doing while gold runs target the default agent profile — LGMS (dataset 12) is hidden unless ff=experimental, so these cases cannot pass without the flag. Re-admit when runs return to the experimental profile or LGMS joins the default catalog. | prior: todo 2026-08-07: on the 1-trial fill run 20260807T125843Z_staging_experimental the agent answered with a generic web-knowledge essay citing wri.org insight pages — no pull, no nudge, no clarification (actual scope none), and no statement that mitigation potential is not calculated. Same root cause as 1-116: LGMS presentation_instructions never enter context when no dataset is selected. Promote to ready only after a 3-trial ff=experimental run shows the expected redirect behaviour."
+    },
+    {
+      "id": "1-118",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-119",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-120",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-121",
+      "status": "not doing",
+      "group": "imagery",
+      "reason": null
+    },
+    {
+      "id": "1-123",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and before it merges the agent interprets LGMS data freely, so the text expectation fails by design. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-124",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent answers this question with a year and a figure. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-125",
+      "status": "not doing",
+      "group": "comparative",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent pulls both areas and compares them. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-127",
+      "status": "not doing",
+      "group": "refusal",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time. Note this row is the least dependent on #827 of the six: the one-area guard is what refuses the pull, so a 3-trial ff=experimental pass is achievable as soon as LGMS is on the default profile. Re-admit with the other LGMS rows; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-128",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-09-24: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased: wri/project-zeno#830 was open at authoring time. Re-admit with the other LGMS rows once #830 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-129",
+      "status": "not doing",
+      "group": "direct",
+      "reason": "2026-09-24: not doing, same two counts as 1-128: LGMS is hidden on the default profile, and wri/project-zeno#830 was unreleased at authoring time. Re-admit with the other LGMS rows once #830 is deployed; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "mt-007",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-23: parked (not doing). Two standing, reproduced issues without a clean fix: T1's primary-forest-vs-total ambiguity, still ~coin-flip (2 of 3 trials picked total, run 20260923T225312Z_staging) — see finding. T2's httpx ReadTimeout susceptibility — every historical run with a recorded mt-007 error failed the identical way, 't2: ReadTimeout' (240s+ silent stream on the pushback turn) — see finding."
+    },
+    {
+      "id": "mt-010",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile, and update_insight_display is itself an experimental-profile tool. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the reviser restyles LGMS insights on request. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "mt-011",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent compares the two areas on request. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "mt-012",
+      "status": "not doing",
+      "group": "multiturn",
+      "reason": "2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden unless ff=experimental while gold runs target the default profile. (2) The behaviour is unreleased - wri/project-zeno#827 was open at authoring time, and today the agent answers with a causal narrative. Re-admit with the other LGMS rows once #827 is deployed and runs carry --ff experimental; promote to done on a 3-trial ff=experimental pass at this uid."
+    },
+    {
+      "id": "1-027",
+      "status": "todo",
+      "group": "direct",
+      "reason": "CHART aggregates results, hiding requested class"
+    },
+    {
+      "id": "1-030",
+      "status": "todo",
+      "group": "comparative",
+      "reason": "Expecting SBTN analysis but using the Blog skill"
+    },
+    {
+      "id": "1-062",
+      "status": "todo",
+      "group": "comparative",
+      "reason": "2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a fresh 3-trial verification run at this uid — the finding's ~12% nudge rate means data_pull_exists/chart_produced/answered_without_data (dormant until now, since they require answer to be set) will start gating on this row, and that residual flakiness hasn't been measured against the new expectations yet."
+    },
+    {
+      "id": "1-130",
+      "status": "todo",
+      "group": "context-layer",
+      "reason": "todo 2026-10-09: blocked on project-zeno applying a 10% canopy threshold with the natural_forest layer (AJ, 2026-10-09: it currently runs natural forest loss unthresholded, which is wrong). Run 20261009T104826Z_staging_experimental (3 trials, ff=experimental) at this uid: AOI (BRA.11_1), dataset, natural_forest, text and scope pass 3/3; only agent_answer and charts_answer fail, because the agent reports 331,678 ha, the unthresholded figure to the hectare (7.62% off). Promote once the fix lands and a 3-trial run passes at this uid."
+    },
+    {
+      "id": "1-138",
+      "status": "todo",
+      "group": "refusal",
+      "reason": "todo 2026-10-15: blocked on the concession ingest on staging. #864 is deployed there (/api/metadata lists the five concession sources), but GET /api/aois?source=oil_palm returns no rows, and prod does not have #864 yet. Smoke run 20261015T173835Z_staging (1 trial, default profile, not committed): pick_aoi found no concessions, the agent fell back to the Kuantan Singingi district (IDN.24.7_1), and pick_dataset offered tree cover gain as a dataset_choice nudge because there is no concessions layer to filter by. text and scope passed and dataset_id_match failed (a nudge leaves no dataset on state), so the guard never ran. Rerun once ingest_concessions.py and build-aois have run on staging; pin aoi_ids to the concession ids that run resolves if they are stable over 3 trials."
+    },
+    {
+      "id": "1-139",
+      "status": "todo",
+      "group": "context-layer",
+      "reason": "todo 2026-10-15: blocked on the concession ingest on staging, as 1-138. Smoke run 20261015T173835Z_staging (1 trial, default profile, not committed): pick_aoi found no concessions and the agent fell back to the Kuantan Singingi district (IDN.24.7_1). pick_dataset chose Tree cover loss with context layer None, although its reasoning said the intact_forest layer filters the loss. The agent then pulled the whole district and reported \"57,502 ha of tree cover loss in intact forests within oil palm concessions\", a figure with neither filter applied (trace https://langfuse.staging.globalnaturewatch.org/project/wri_lcl/traces/4ebd47ba74061e9666687411f37f52d3). dataset_id_match passed; context_layer_match, text and scope failed. That failure is real and does not depend on #864, so this row should keep failing until it is fixed. Rerun once the concessions are ingested on staging."
+    }
+  ],
+  "known_gaps": {
+    "unused_expected_fields": [
+      "accept_aoi_nudge_offering",
+      "accept_blog_sources",
+      "accept_dashboard",
+      "accept_fixed_period",
+      "accept_nudge_offering",
+      "data_pull",
+      "date_tolerance_days",
+      "figure",
+      "figure_claim",
+      "forbidden_tools",
+      "suggested_datasets"
+    ],
+    "info_only_checks": [
+      "answer_traceability",
+      "charts_answer_judge",
+      "class_value_match",
+      "date_coverage",
+      "ground_truth_answer"
+    ],
+    "catalog_datasets_no_case": [
+      "12"
+    ],
+    "uncovered_parameters": {
+      "canopy_cover": [
+        "6",
+        "7",
+        "8",
+        "10"
+      ]
+    },
+    "uncovered_context_layers": {
+      "primary_forest": [
+        "7",
+        "10"
+      ],
+      "intact_forest": [
+        "10"
+      ]
+    }
+  },
+  "targets": null
+}

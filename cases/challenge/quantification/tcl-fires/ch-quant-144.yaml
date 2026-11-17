@@ -1,0 +1,23 @@
+id: ch-quant-144
+uid: 515d31ae696b4599
+status: ready
+set: quantification
+group: tcl-fires
+query: For Brazil in 2021, how many hectares of tree cover loss across all forest types were
+  due to fires at a 75% canopy density threshold?
+expected:
+  aoi_ids: BRA
+  dataset_id: '10'
+  start_date: '2021-01-01'
+  end_date: '2021-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+notes:
+  intersections: 'fire (unscored: no evaluator surface yet)'
+  judge_instruction: Report fire vs non-fire tree cover loss for the year at a 75% canopy
+    threshold (hectares); components sum to total area_ha. NEVER report carbon emissions.
+  eval_subtype: canopy_threshold
+  manifest_id: m-fires-quant-04
+  lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-04a
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)

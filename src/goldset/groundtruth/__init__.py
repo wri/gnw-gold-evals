@@ -11,23 +11,29 @@ value*, so its uid survives every vintage.
 The agent pulls from this same API, so comparing the two measures **retrieval
 and usage fidelity** — did the agent build the right query and use the returned
 numbers correctly — not the quality of the underlying data.
+
+The plain baseline (``goldset.plain``) uses the request builder, client and
+catalogue too: it fetches reference tables with them, so a reply that pulled no
+data of its own can still have its figures checked.
 """
 
 from goldset.groundtruth.catalog import CatalogError, Dataset, datasets
-from goldset.groundtruth.client import AnalyticsClient, AnalyticsError
+from goldset.groundtruth.client import AnalyticsClient, AnalyticsError, AnalyticsResult
 from goldset.groundtruth.fetch import (
     GROUND_TRUTH_FIELD,
     GroundTruth,
     is_ground_truth,
     prefetch,
 )
-from goldset.groundtruth.request import RequestError, build_request
+from goldset.groundtruth.request import AnalyticsRequest, RequestError, build_request
 from goldset.groundtruth.selector import Selector, SelectorError, parse_selector
 
 __all__ = [
     "GROUND_TRUTH_FIELD",
     "AnalyticsClient",
     "AnalyticsError",
+    "AnalyticsRequest",
+    "AnalyticsResult",
     "CatalogError",
     "Dataset",
     "GroundTruth",

@@ -1,0 +1,35 @@
+id: ch-quant-002
+uid: e5efecdd9cd2f9a8
+status: ready
+set: quantification
+group: tcl
+query: Across all forest types, how much tree cover did the Democratic Republic of the Congo
+  lose in 2022?
+expected:
+  aoi_ids: COD
+  dataset_id: '4'
+  start_date: '2022-01-01'
+  end_date: '2022-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2022
+notes:
+  canopy: default 30, unstated in prompt; unscored
+  judge_instruction: The user asked for all forest types, so no forest-type filter should
+    be applied.
+  eval_subtype: single_year
+  manifest_id: m-tcl-quant-02
+  lineage: gnw-evals eval-metrics-slice-1 gt-quant-02
+  verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-139
+  benchmark_type: quantification
+  synthetic: 'FALSE'
+  use_cases: UC3;UC4;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  user_story_refs: USY-001284 Indian Express; USY-001275 Suriname
+  refresh_risk: Low
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

@@ -22,9 +22,14 @@
       "minLength": 1,
       "description": "Lifecycle state, in lower case: ready (not yet verified at the current uid), todo (held by a known blocker), done (verified at the current uid) or not doing (parked, so gold run skips it). What each requires: cases/README.md, Status lifecycle."
     },
+    "set": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional hierarchy level above group (CHALLENGE: 'aoi', ...). Adds one directory level (<set>/<group>/); organisational like group and status, never hashed into the uid."
+    },
     "group": {
       "type": "string",
-      "description": "Capability grouping (test_group); also the case's directory."
+      "description": "Capability grouping (test_group); also the case's directory (nested under the set directory when set is present)."
     },
     "query": {
       "type": "string",
