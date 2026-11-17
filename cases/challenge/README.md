@@ -2,13 +2,17 @@
 
 The quality and accuracy measure for the GNW / Project Zeno agent.
 CHALLENGE answers "how well does the system perform on prompts like X?"
-with a **pass rate per cohort**. It is the counterpart of GOLD, the
-capability regression suite (now in project-zeno `evals/gold/`; a legacy
-copy is in `cases/v2`), which answers "did an agent change break a
-capability that used to work?" with a regression count. BENCHMARK versions
-(`benchmarks/`) are frozen subsets of this store. Plan of record:
-`PRDs/challenge-set.md` in the GNW workspace. How each set was built, and
-every dated review of its cases, is in [CHANGELOG.md](CHANGELOG.md).
+with a **pass rate per cohort**. GOLD, the capability regression suite, is
+its counterpart: it answers "did an agent change break a capability that
+used to work?" with a regression count. GOLD now lives in project-zeno
+`evals/gold/`; `cases/v2` is a legacy copy. BENCHMARK versions
+(`benchmarks/`) are frozen subsets of this store.
+
+How each set was built, and every dated review of its cases, is in
+[CHANGELOG.md](CHANGELOG.md). Terms are defined in
+[docs/glossary.md](../../docs/glossary.md). The plan of record is
+`PRDs/challenge-set.md` in the GNW workspace, a separate repository that is
+not public.
 
 ## Doctrine (deliberately inverted from GOLD where noted)
 
@@ -16,136 +20,193 @@ every dated review of its cases, is in [CHANGELOG.md](CHANGELOG.md).
   them. GOLD's depth floor and phrasing rules (`audit_cases.py --strict`)
   do not apply to this store.
 - **Failure is data, not a defect.** Cases that do not pass stay `ready` and
-  keep running; that is the point. There is no "verified passing" status
-  ladder here. Statuses: `ready` (runs), `todo` (authored but held, e.g.
-  expectation not yet pinned), `not doing` (retired).
-- **The store is hierarchical: set → cohort → case.** Each case carries
-  `set:` (the level new CHALLENGE sets are added at; the sets are listed
-  under [Sets](#sets)) and `group:` (its cohort within the set); files live
-  at `cases/challenge/<set>/<cohort>/<id>.yaml`. Like `group`, `set` is
+  keep running; that is the point. **Never fix a case to make it pass.**
+  Change a case only when its expectation is wrong, and say why. There is no
+  "verified passing" status ladder here. Statuses: `ready` (runs), `todo`
+  (written but held, for example until an expectation is pinned or a test
+  account exists), `not doing` (retired).
+- **The store is hierarchical: set, then cohort, then case.** Each case
+  carries `set:` (the sets are listed under [Sets](#sets)) and `group:` (its
+  cohort within the set). Files live at
+  `cases/challenge/<set>/<cohort>/<id>.yaml`. Like `group`, `set` is
   organisational and never hashed into the uid.
 - **The headline is a rate, never a regression count.** Verdicts come from
-  `tools/challenge_rollup.py`: pass rates overall, per set, and per
-  cohort/difficulty within each set, with Wilson 95% confidence intervals,
-  against `TARGETS.yml`. A case passes when most of its attempts were right
-  (AJ, 2026-10-28; before, when each check passed on most attempts), so
-  rates in reports written before then are not comparable point for point.
+  `tools/challenge_rollup.py`: pass rates overall, per set, and per cohort
+  and difficulty within each set, with Wilson 95% confidence intervals,
+  against `TARGETS.yml`. A case passes when most of its scored attempts were
+  right. This rule dates from 2026-10-28, so rates in earlier reports are
+  not comparable point for point.
 - **Every case still has a defined correct behaviour**, including the ones
-  expected to fail today. `notes.behaviour` records it: `select` (right
-  AOI(s) chosen), `nudge` (asks with the right options), `clarify` /
-  `decline` (asks or explains, never substitutes a wrong area). "Hard" means
-  the system currently fails, not that there is no right answer.
+  expected to fail today. `notes.behaviour` records it: `select` (the right
+  areas chosen), `nudge` (asks with the right options), `clarify` or
+  `decline` (asks or explains, never substitutes a wrong area). "Hard"
+  means the system fails today, not that there is no right answer.
 - **No unverified expectations.** Every expected id is verified against the
-  target environment before it enters the store (`notes.verified` records
-  how and when). `todo` rows hold unpinnable expectations until a smoke run
-  or DB query pins them.
+  target environment before it enters the store, and `notes.verified`
+  records how and when. A `todo` case holds an expectation that cannot be
+  pinned yet.
 - **Identity discipline is the same as GOLD's**: uid content hash,
-  caseset_version, immutable run ledger, tri-state checks, majority verdicts.
-  After any case edit, run the commands in [After an edit](#after-an-edit)
-  and commit their output with the edit.
+  `caseset_version`, immutable run ledger, tri-state checks, majority
+  verdicts. After any case edit, follow [After an edit](#after-an-edit).
 
 ## Running
 
-Canonical published series: **prod, default profile, 3 trials**. Anything
-else (staging, `--ff experimental`, 1 trial) is diagnostic: never published,
-never mixed into the canonical trend, never compared across differing
-env/ff/trials/caseset_version.
+The canonical series, and the only one published, is **prod, default
+profile, 3 trials**. Any other run (staging, `--ff experimental`, 1 trial,
+a local stack) is a diagnostic run: never published, never mixed into the
+canonical trend, never compared across a different environment, profile,
+trial count or `caseset_version`.
 
 ```bash
-# canonical (published rates)
-uv run evals run --suite challenge --env prod --trials 3 \
-  --status-exclude "not doing,todo" --build "<label>"
+# canonical run (published rates)
+caffeinate -i uv run evals run --suite challenge --env prod --trials 3 --build "<label>"
 
-# diagnostic smoke (never committed, never published)
-uv run evals run --suite challenge --env staging \
-  --status-exclude "not doing,todo" --build "<label>"
+# diagnostic run: staging, 1 trial
+uv run evals run --suite challenge --env staging --build "<label>"
 
 # one set only
-uv run evals run --suite challenge --set aoi --env staging \
-  --status-exclude "not doing,todo" --build "<label>"
-
-# rollup (step 1 of the after-run steps)
-uv run python tools/challenge_rollup.py results/challenge/runs/<run_id>.json
+uv run evals run --suite challenge --set aoi --env staging --build "<label>"
 ```
 
-`--set` is an exact match on the case's `set`. The run ledger lives in
-`results/challenge/` so CHALLENGE runs never enter GOLD's trend pages,
-diffs, or CI baseline logic. The ledger contract
-(`results/README.md`) applies unchanged: immutable run files, no backfills,
-1-trial runs are smoke only.
+- `--suite challenge` skips `todo` and `not doing` cases by default
+  (`--status-exclude` overrides it).
+- `--set` is an exact match on the case's `set`. `--id <id>` runs one
+  case; repeat the flag for more.
+- `--dry-run` lists the selected cases without calling the API.
+- Runs go to `results/challenge/`, so they never enter GOLD's or
+  BENCHMARK's trends and diffs. The ledger contract is in
+  [results/README.md](../../results/README.md).
+
+**The committed runs.** All six runs in `results/challenge/runs/` are
+diagnostic runs. Four are prod, 1-trial runs of 2026-09-01: one of the `aoi`
+set and one each of the trend, quantification and comparison cases. Two are
+local, 3-trial runs of 2026-09-25 that compared two dataset pickers on the
+`dataset` set. No canonical (prod, 3-trial) CHALLENGE run exists yet.
 
 ## After every run
 
-1. **Rollup**: `tools/challenge_rollup.py` as above; read rates against
-   `TARGETS.yml`.
-2. **Write `results/challenge/recommendations/<run_id>.md`**: the run is
-   not done until someone can act on it. Cover: what to file upstream
-   (agent behaviour, with failing rows and trace URLs as evidence), what
-   the run says about the case set (expectation reviews, scoring gaps,
-   todo pinning; remember failures are data, never fix a case to make it
-   pass), what it says about the harness, and a next-run watchlist. Frame
-   everything as rates vs targets, never regression counts.
-   `results/challenge/recommendations/20260901T131519Z_prod.md` is the
-   model.
-3. **Commit** the run JSON and the recommendations doc together (the
-   run's artifacts are gitignored and stay local). Only canonical runs (prod, default, 3 trials) enter the
-   published series; a diagnostic run's recommendations doc must say so in
-   its header and treat its rates as directional. After `git add`-ing the
-   run JSON, regenerate `results/index.json`
-   (`uv run python tools/build_run_index.py`) and commit it in the same
-   commit; CI gates its freshness.
+Do these in order. They are the only CHALLENGE after-run steps; other docs
+point here.
+
+1. **Run it** ([Running](#running)). On a Mac, run under `caffeinate -i`:
+   an idle sleep stalls a long run. If the run is killed, finish it with
+   `uv run evals run --resume <run_id>`.
+2. **Roll it up** and read the rates against `TARGETS.yml`:
+   ```bash
+   uv run python tools/challenge_rollup.py results/challenge/runs/<run_id>.json
+   ```
+3. **Write `results/challenge/recommendations/<run_id>.md`**: the run is
+   not done until someone can act on it. Cover what to file upstream (agent
+   behaviour, with failing rows and trace URLs as evidence), what the run
+   says about the case set (expectation reviews, scoring gaps, `todo` rows to
+   pin; never fix a case to make it pass), what it says about the harness,
+   and what to watch on the next run. Frame everything as rates against
+   targets, never regression counts. A diagnostic run's doc says so in its
+   header and treats its rates as directional.
+   `results/challenge/recommendations/20260901T131519Z_prod.md` shows the
+   sections; it is itself a 1-trial diagnostic run of the `aoi` set, which
+   its header says.
+4. **Stage the run and the doc**:
+   ```bash
+   git add results/challenge/runs/<run_id>.json results/challenge/recommendations/<run_id>.md
+   ```
+5. **Regenerate the index**: `uv run python tools/build_run_index.py`. It
+   lists tracked and staged files only, so stage first. CI fails on a stale
+   index.
+6. **Commit** the run, the doc and `results/index.json` in one commit. The
+   raw artifacts in `results/challenge/artifacts/<run_id>/` are gitignored
+   and stay in this checkout; the rollup output is not committed.
 
 ## Targets (the OKR loop)
 
 `TARGETS.yml` mirrors the store hierarchy: a challenge-wide `overall`, then
 per-set blocks (`sets.<set>.overall` and `sets.<set>.targets.<cohort>`).
-Each cycle: add or extend a
-cohort whose prompts do not yet pass, set its target, and commit the baseline
-rollup showing the sub-target rate; that commit is the commitment. At cycle
-end, one canonical run plus rollup answers "the system now handles N% of
-prompts of this type".
+Each cycle, add or extend a cohort whose prompts do not yet pass, set its
+target, and commit the baseline rollup showing the rate below target: that
+commit is the commitment. At the end of the cycle, one canonical run and its
+rollup answer "the system now handles N% of prompts of this type".
 
 ## Sets
 
 | Set | What it asks | Cohorts | How its cases were made | History |
 |---|---|---|---|---|
-| `aoi` | Find the place the user means; only `pick_aoi` should run | prompt classes (`acronyms`, `ambiguity`, `designations`, ...) | 131 imported from `seeds/challenge-aoi-v1.csv`; the 22 `designations` cases written directly as case files (from session traces, `notes.origin`); one drafted from the BEF sheet | [Batch 1](CHANGELOG.md#batch-1-the-aoi-set) |
+| `aoi` | Find the place the user means; only `pick_aoi` should run | prompt classes (`acronyms`, `ambiguity`, `designations`, ...) | imported from `seeds/challenge-aoi-v1.csv`; the `designations` cohort written by hand from session traces | [Batch 1](CHANGELOG.md#batch-1-the-aoi-set) |
 | `dataset` | Pick the right layer ("show X on the map"); only `pick_dataset` should run | ten datasets, plus `multilingual`, `context-layer`, `ambiguous`, `unmappable` | imported from `seeds/challenge-dataset-v1.csv` | [Batch 3](CHANGELOG.md#batch-3-the-dataset-set) |
-| `quantification`, `comparison`, `trend` | How much; places or periods compared; change over time | datasets, plus `method`, `many-areas` and others from the sheets | generated by the `generation/` pipeline (the 90 slice-1 tree cover loss cases were ported through `promote_cases.py`); area-level and other rows drafted from benchmark sheet rows | [Batch 2](CHANGELOG.md#batch-2-the-numeric-sets-quantification-trend-comparison), [4](CHANGELOG.md#batch-4-the-benchmark-v2026-cases-monitoring-causal-aoi-level), [5](CHANGELOG.md#batch-5-the-v2026-bef-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
-| `monitoring` | Recent alerts in an area, and follow-up questions on them | question shapes (`recent-area`, `alert-followup`, ...) | drafted from benchmark sheet rows | [Batch 4](CHANGELOG.md#batch-4-the-benchmark-v2026-cases-monitoring-causal-aoi-level), [5](CHANGELOG.md#batch-5-the-v2026-bef-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
-| `causal` | Why it happened: drivers, fires, premise checks | question shapes (`why-country`, `premise-check`, ...) | drafted from benchmark sheet rows | [Batch 4](CHANGELOG.md#batch-4-the-benchmark-v2026-cases-monitoring-causal-aoi-level), [5](CHANGELOG.md#batch-5-the-v2026-bef-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
-| `portfolio` | Many areas at once | `many-areas`, `saved-areas`, `uploaded-sites` | drafted from the BEF sheet rows | [Batch 5](CHANGELOG.md#batch-5-the-v2026-bef-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
+| `quantification`, `comparison`, `trend` | How much; places or periods compared; change over time | datasets, plus `method`, `many-areas` and others | the `generation/` pipeline; area-level and method rows written by hand from benchmark sheet rows | [Batch 2](CHANGELOG.md#batch-2-the-numeric-sets-quantification-trend-comparison), [4](CHANGELOG.md#batch-4-the-benchmark-v2026-cases-monitoring-causal-aoi-level), [5](CHANGELOG.md#batch-5-the-v2026-benchmark-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
+| `monitoring` | Recent alerts in an area, and follow-up questions on them | question shapes (`recent-area`, `alert-followup`, ...) | written by hand from benchmark sheet rows | [Batch 4](CHANGELOG.md#batch-4-the-benchmark-v2026-cases-monitoring-causal-aoi-level), [5](CHANGELOG.md#batch-5-the-v2026-benchmark-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
+| `causal` | Why it happened: drivers, fires, premise checks | question shapes (`why-country`, `premise-check`, ...) | written by hand from benchmark sheet rows | [Batch 4](CHANGELOG.md#batch-4-the-benchmark-v2026-cases-monitoring-causal-aoi-level), [5](CHANGELOG.md#batch-5-the-v2026-benchmark-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
+| `portfolio` | Many areas at once | `many-areas`, `saved-areas`, `uploaded-sites` | written by hand from benchmark sheet rows | [Batch 5](CHANGELOG.md#batch-5-the-v2026-benchmark-sheet-portfolio-set-plus-monitoring-numeric-and-causal-rows) |
 
 Case counts per set and cohort are in [COVERAGE.md](COVERAGE.md). Known
 scoring gaps for each set are recorded with its batch in the changelog.
 
 ## How cases get here
 
-Three paths have brought cases into the store. Once a case lands, its YAML
-file is the source of truth: none of the inputs below is read again, and
-later edits are made to the case files.
+Cases have come into the store in three ways. Once a case is in the store,
+its YAML file is the source of truth: no input below is read again, and
+later edits are made to the case file.
 
-| | Seed CSV | Generation pipeline | Benchmark sheet rows |
+| | Seed CSV import | Generation pipeline | Written by hand |
 |---|---|---|---|
-| Input | `seeds/challenge-aoi-v1.csv`, `seeds/challenge-dataset-v1.csv`: one row per case, sheet columns (`test_id`, `status`, `test_group`, `query`, `expected_*`, note columns) | `generation/manifests/<dataset>__<intent>.manifest.csv`, plus the wording rules in `generation/<dataset>/` | `seeds/benchmark-v2026-proposed.csv`, `seeds/benchmark-v2026-bef-2026-10-22.csv`: one row per BENCHMARK question |
-| Steps | `tools/import_sheet.py --csv <seed> --cases-dir cases/challenge`, with `--set <set>` to add the set level | `generation/generate_cases.py` writes wordings to `scratch/candidates/*.candidates.csv` (gitignored); a person reviews every wording; `generation/promote_cases.py` writes the cases | a row that names an existing case (by `challenge_id` or exact query) needs no new case. For the other rows the case was drafted from the row in a Claude Code session and committed (63 on 2026-10-01, 168 on 2026-10-23); no committed tool writes them. Then `tools/benchmark_from_sheet.py` tags the members and writes the manifest |
-| Sets | `aoi`, `dataset` | `quantification`, `comparison`, `trend` | `monitoring`, `causal`, `portfolio`, and area-level rows in the numeric sets |
-| Record on the case | `notes.source_tab` names the CSV | `notes.lineage` names the manifest | `notes.expectations` says who drafted it from which CSV |
-| Details | [seeds/README.md](../../seeds/README.md) | [generation/README.md](../../generation/README.md) | [seeds/README.md](../../seeds/README.md), [benchmarks/README.md](../../benchmarks/README.md) |
+| Use it for | nothing new: each seed was imported once and must not be imported again ([seeds/README.md](../../seeds/README.md)) | new numeric cases (quantification, comparison, trend) from the dataset catalogue | any other case |
+| Steps | `tools/import_sheet.py --csv <seed> --cases-dir cases/challenge --set <set>` | [generation/README.md](../../generation/README.md) | [Writing a case by hand](#writing-a-case-by-hand) |
+| Sets made this way | `aoi`, `dataset` | `quantification`, `comparison`, `trend` | `monitoring`, `causal`, `portfolio`, the `aoi` `designations` cohort, area-level numeric rows |
+| Record on the case | `notes.source_tab` names the CSV | `notes.manifest_id` and `notes.lineage` name the manifest row | `notes.lineage`, plus `notes.expectations` or `notes.origin` saying who drafted it from what |
 
-The seed CSV path is established from the cases and git history: every case
-from those CSVs carries `notes.source_tab` with the CSV's name, which is
-what `tools/import_sheet.py --csv` writes, and the import commit of the
-`dataset` set (2026-09-25) names `--set map`, the set's name before it was
-renamed `dataset` on 2026-09-29. `tools/import_sheet.py` is listed with the
-[legacy tools](../../tools/README.md#legacy-tools) and writes to `cases/v2`
-unless you pass `--cases-dir`. `tools/benchmark_from_sheet.py` stops on a
-sheet row that no case answers, so write the new cases first.
+A curated BENCHMARK version is built from cases already in the store:
+`tools/benchmark_from_sheet.py` matches each sheet row to a case and stops
+on a row that no case answers, so write the case first
+([benchmarks/README.md](../../benchmarks/README.md)).
+
+### Writing a case by hand
+
+1. **Pick the set and cohort, and start from a copy** of an existing case in
+   the same cohort directory. The directory is
+   `cases/challenge/<set>/<cohort>/`, where `<cohort>` is the case's `group`
+   in lower case with `_` and spaces turned into `-` (group `recent_area`
+   lives in `recent-area/`). A file anywhere else is not moved: `check.py
+   --fix` writes a second copy at the right path, and the next check fails
+   on a duplicate id.
+2. **Choose the id**: the set's prefix and the next free number, in three
+   digits. Find the highest number in use, of any status, and add 1. Never
+   reuse a number.
+   ```bash
+   ls cases/challenge/monitoring/*/ | grep -o 'ch-mon-[0-9]*' | sort | tail -1
+   ```
+
+   | Set | Prefix |
+   |---|---|
+   | `aoi` | `ch-aoi` |
+   | `dataset` | `ch-dataset` |
+   | `quantification` | `ch-quant` |
+   | `comparison` | `ch-comp` |
+   | `trend` | `ch-trend` |
+   | `monitoring` | `ch-mon` |
+   | `causal` | `ch-causal` |
+   | `portfolio` | `ch-port` |
+
+3. **Fill in the fields.** The tools require `id`, `status`, `set`,
+   `group`, `query` and `expected`. Every value is a string, so quote
+   numbers and flags (`dataset_id: '11'`, `data_pull: 'TRUE'`). **Leave
+   `uid` out**: `check.py --fix` writes it. Which expected field switches on
+   which check is in `src/goldset/evaluators/README.md`; field syntax (what
+   `;`, `|` and `/` mean) is in [cases/README.md](../README.md). A `todo`
+   case also needs `notes.status_reason`.
+4. **Add the notes this store requires**: `behaviour` (the correct
+   behaviour), `verified` (how and when each expected id was checked) and
+   `lineage` (where the prompt came from). Add `difficulty` (`easy`,
+   `medium` or `hard`): rollups group by it, and a case without it is
+   "unlabelled". The schema is `schema/case.schema.json`.
+5. **Run [After an edit](#after-an-edit).**
+6. **Check that it runs**:
+   `uv run evals run --suite challenge --env staging --id <id> --dry-run`
+   lists it with its uid. Then a diagnostic run without `--dry-run` and with
+   `--verbose` shows how it scores.
 
 ## After an edit
 
-After any change to a case file, run these and commit their output with
-the edit:
+After any change to a case file, run these and commit their output with the
+edit. CI runs all three (without `--fix`).
 
 ```bash
 uv run python tools/check.py --fix --suite challenge      # uids and MANIFEST.json
@@ -153,42 +214,44 @@ uv run python tools/coverage_doc.py --suite challenge     # COVERAGE.md, coverag
 uv run python tools/check_benchmark.py                    # BENCHMARK members still match their cases
 ```
 
-`check_benchmark.py` comes last because editing the query or an expected
-value of a `ready` case that a draft BENCHMARK version lists gives the case
-a new uid, so the draft no longer runs it; the tool warns. On a frozen
-version it fails: never edit a frozen version's members (see
-[benchmarks/README.md](../../benchmarks/README.md)). CI runs all three
-(without `--fix`).
+Editing the query or an expected value of a case gives it a new uid. If the
+case is a member of a BENCHMARK version, `check_benchmark.py` reports it:
 
-## Pinning the todo rows
+- **Frozen version**: an error. Never edit a frozen version's members: undo
+  the edit, or void the member with an erratum and add a new case
+  ([benchmarks/README.md](../../benchmarks/README.md)).
+- **Draft version**: a warning. The tool exits 0, but CI fails until the
+  draft is rebuilt. Continue with the steps below.
+- **Retired version**: nothing to do.
 
-`ch-aoi-095/098/099/101` (expansion id lists) and `ch-aoi-108` (Lahti,
-unreachable via name search): run each once with
-`--id <id> --status-exclude "not doing"`, read the selected ids from the run
-artifact (`results/challenge/artifacts/<run_id>/<uid>.json.gz`), verify them,
-move the expectation into the case, and flip the status to `ready`.
+For a member of a draft (the live draft is curated from a seed CSV):
 
-## Comparing two builds locally
-
-Used for the `dataset` set's jev and RAG comparison (2026-09-25; [CHANGELOG.md](CHANGELOG.md#batch-3-the-dataset-set)).
-
-Comparison protocol: prod, default profile, 3 trials is the published
-reference series. The jev verdict is read from a **local-main vs local-jev**
-pair (same commit, same stack, same trials, same `--workers`), never prod
-vs local.
-
-Latency is half of that verdict, so:
-
-- The rollup reports median, p90 and mean per set and cohort from
-  `stream_s` (POST /api/chat to the last stream line: the agent turn; no
-  state GET, no judge time). Older runs only carry `latency_s`, which also
-  spans the state GET; the rollup says which basis it used.
-- Run both local sides with `--workers 1` (the CLI's concurrency knob,
-  recorded on the run as `workers`): concurrent turns contend for one local
-  API and inflate each other's latency.
-- Compare with `tools/challenge_rollup.py <local-main>.json <local-jev>.json`:
-  the cross-run latency table gives both runs side by side with median
-  deltas and flags any env, workers or basis mismatch.
-- **Prod latency is reference only.** It includes internet round-trips and
-  prod infrastructure (autoscaling, other users' load), so a prod vs local
-  gap says nothing about the selector.
+4. **Rebuild the draft** from the seed its manifest names in
+   `sampling.seed_file`:
+   ```bash
+   uv run python tools/benchmark_from_sheet.py \
+     --seed seeds/benchmark-v2026-bef-2026-10-27.csv --version 2026-draft-5
+   ```
+   If you changed a query, the tool stops with "query differs from the
+   sheet's" (the row names its case by `challenge_id`) or "no CHALLENGE
+   case has this query" (the row is matched by its text). Then copy the seed
+   to a new dated file, `seeds/benchmark-v2026-bef-<YYYY-MM-DD>.csv`, put
+   the new query in that row, and rebuild with `--seed` set to the new file.
+   Never edit or rename the old seed ([seeds/README.md](../../seeds/README.md)).
+   The rebuild also rewrites each member's sheet notes in its case file:
+   read `git diff` for changes you did not expect.
+5. **Check it**: `uv run python tools/check_benchmark.py benchmarks/<v>.json`
+   must print `ok` with no warning.
+6. **Regenerate the index**: `uv run python tools/build_run_index.py`. The
+   rebuilt manifest changes the `canonical` flags of earlier runs, and CI
+   fails on a stale index.
+7. **Check the plain baseline's overlay.** If
+   `benchmarks/overlays/2026-draft-5.plain.json` has an entry for the old
+   uid, every `tools/plain_baseline.py` step that reads it stops with "uids
+   are not draft-5 members". Move the entry to the new uid and have the repo
+   owner review the call, which was made for the old wording. See
+   [results/plain/README.md](../../results/plain/README.md).
+8. **Commit** the case edit, the store files, the manifest, any new seed and
+   `results/index.json` together.
+9. **Rerun the revised members**: [benchmarks/README.md, Rerunning revised
+   members only](../../benchmarks/README.md#rerunning-revised-members-only).
