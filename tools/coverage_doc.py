@@ -5,8 +5,11 @@ hand-edited: they outline what the set contains (groups, statuses, fields,
 multi-turn shapes) and what it covers (which buckets the active cases'
 implied checks reach), plus the gaps. Regenerate after any case edit:
 
-    uv run python tools/coverage_doc.py                # writes cases/v2/COVERAGE.md
+    uv run python tools/coverage_doc.py                # writes cases/challenge/COVERAGE.md
     uv run python tools/coverage_doc.py --check        # CI freshness gate
+
+Both act on the CHALLENGE store. `--suite gold` acts on the legacy GOLD copy
+(cases/v2), and `--cases-dir` on any other store.
 
 Coverage counts use gating checks only; info-only checks are reported
 separately because they never enter a verdict.
@@ -51,6 +54,7 @@ from goldset.buckets import (
 )
 from goldset.evaluators.dataset_evaluator import NO_SELECTION
 from goldset.store import load_store, read_manifest
+from goldset.suites import SUITE_NAMES, SUITES
 
 ACTIVE_EXCLUDED = {"not doing"}
 
@@ -684,7 +688,11 @@ def render(cases_dir: Path, catalog_path: Path | None = None) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
+    parser.add_argument("--suite", choices=SUITE_NAMES, default="challenge",
+                        help="document this suite's case store (default: "
+                             "challenge; benchmark reads the same store)")
+    parser.add_argument("--cases-dir", type=Path, default=None,
+                        help="a store to document instead of the suite's")
     parser.add_argument("--out", type=Path, default=None,
                         help="default: <cases-dir>/COVERAGE.md")
     parser.add_argument("--catalog", type=Path, default=None,
@@ -693,6 +701,8 @@ def main() -> int:
     parser.add_argument("--check", action="store_true",
                         help="verify the committed doc is fresh; exit 1 if stale")
     args = parser.parse_args()
+    if args.cases_dir is None:
+        args.cases_dir = SUITES[args.suite].cases_dir
 
     out = args.out or (args.cases_dir / "COVERAGE.md")
     text = render(args.cases_dir, args.catalog)
