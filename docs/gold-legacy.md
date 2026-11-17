@@ -67,3 +67,46 @@ The repo commits [Claude Code](https://claude.com/claude-code) skills under `.cl
 ### Legacy tools
 
 Cases used to live in a Google Sheet, and runs used to go through the gnw-evals harness. Both are retired: the case store is the source of truth, and `evals run` is the only runner. A few tools from that period remain for occasional use: `import_sheet.py` and `export_sheet_csv.py` (move cases between a sheet tab and the store), `export_csv.py` (write cases as a gnw-evals test CSV), `ingest_run.py` (import an old gnw-evals run into the ledger) and `parity.py` (the one-off check that the harness scored the same as gnw-evals). None of them is part of the normal GOLD workflow, though `import_sheet.py` also imported CHALLENGE's seed CSVs ([seeds/README.md](seeds/README.md)). [tools/README.md](tools/README.md#legacy-tools) says what each is still for.
+
+## Moved from results/README.md
+
+### Picking a baseline
+
+To pick a GOLD baseline, `tools/find_baseline.py <new run>` prints the newest
+run in `results/gold/runs/` that meets all three conditions and also loaded the
+same store (`caseset`), and exits non-zero with the reason when none does.
+The CI release gate uses it. Runs from before 2026-08-04 record no
+`caseset`, so they never match.
+
+### Info-only checks in a diff
+
+**Info-only checks never gate.** Checks in `buckets.INFO_ONLY` (see
+[Info-only checks](../src/goldset/evaluators/README.md#info-only-checks)),
+including multi-turn ones under a `t<N>.` prefix, appear in the diff, but
+`--fail-on-regression` and `--fail-on-coverage-loss` ignore them. The
+headline splits regressions and lost checks into gating and info-only
+counts, and the JSON report's `gating_regressions` and
+`gating_coverage_lost` are what the two flags read. If the newer run carries a `methodology_note`, movement on the
+checks it names comes from a harness change, not from the agent.
+
+### Data bumps
+
+**Data bumps are not regressions.** A ground-truth case is graded against
+values fetched when the run starts, so a data release can flip it with no
+agent change. When a ground-truth check flips and the case's `digest` moved,
+the diff lists it as a data bump with its cause: `data` (same request,
+different numbers), `request` (GOLD's own request changed, so a harness
+change) or `fixed_dataset` (a dataset declared never to change has changed).
+Bumps are never counted as regressions or recoveries and never gate. A
+`ground_truth_match` bump whose agent figure matches neither run's values,
+or that has no figure, is flagged `possible_hidden_regression`: review it
+before trusting the regression count, because a break that lands in the
+same run as a data change would otherwise never be counted.
+
+## Ledger resets
+
+- **2026-08-04: GOLD v2 baseline reset.** Runs scored against intermediate v2
+  curation states (2026-08-02 and 2026-08-03) and their reports were
+  deleted, so the v2 record starts at the first official v2 run. They remain
+  in git history. The v1 runs from 2026-07-31 and 2026-08-01, and the
+  recommendations and campaign docs from that period, were kept.

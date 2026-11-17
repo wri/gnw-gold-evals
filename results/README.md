@@ -247,39 +247,12 @@ number of shared cases with the result, because a small overlap makes a
 weak verdict. Pass `--strict` to refuse any pair whose `caseset_version`
 differs.
 
-To pick a GOLD baseline, `tools/find_baseline.py <new run>` prints the newest
-run in `results/gold/runs/` that meets all three conditions and also loaded the
-same store (`caseset`), and exits non-zero with the reason when none does.
-The CI release gate uses it. Runs from before 2026-08-04 record no
-`caseset`, so they never match.
-
 **Why 3 trials.** Two trials of the same run (same build, same cases,
 nothing changed) differ by 18 to 29 spurious regressions. That is more than
 the 15 real regressions measured between two different builds, so a
 1-trial diff cannot tell a clean release from a broken one, and a 1-trial
 run diffed against a 3-trial baseline is worse. Comparing the three trials
 stored in `20260831T163347Z_prod` pairwise gives the same band.
-
-**Info-only checks never gate.** Checks in `buckets.INFO_ONLY` (see
-[Info-only checks](../src/goldset/evaluators/README.md#info-only-checks)),
-including multi-turn ones under a `t<N>.` prefix, appear in the diff, but
-`--fail-on-regression` and `--fail-on-coverage-loss` ignore them. The
-headline splits regressions and lost checks into gating and info-only
-counts, and the JSON report's `gating_regressions` and
-`gating_coverage_lost` are what the two flags read. If the newer run carries a `methodology_note`, movement on the
-checks it names comes from a harness change, not from the agent.
-
-**Data bumps are not regressions.** A ground-truth case is graded against
-values fetched when the run starts, so a data release can flip it with no
-agent change. When a ground-truth check flips and the case's `digest` moved,
-the diff lists it as a data bump with its cause: `data` (same request,
-different numbers), `request` (GOLD's own request changed, so a harness
-change) or `fixed_dataset` (a dataset declared never to change has changed).
-Bumps are never counted as regressions or recoveries and never gate. A
-`ground_truth_match` bump whose agent figure matches neither run's values,
-or that has no figure, is flagged `possible_hidden_regression`: review it
-before trusting the regression count, because a break that lands in the
-same run as a data change would otherwise never be counted.
 
 ## Composing a current picture across runs
 
@@ -328,11 +301,3 @@ A benchmark run whose page data is committed
 for the frontend's AI accuracy scorecards page) also carries `page`, that
 file's path. A run whose page combines it with earlier runs carries
 `composed_with`, and is judged canonical over the runs together.
-
-## Ledger resets
-
-- **2026-08-04: GOLD v2 baseline reset.** Runs scored against intermediate v2
-  curation states (2026-08-02 and 2026-08-03) and their reports were
-  deleted, so the v2 record starts at the first official v2 run. They remain
-  in git history. The v1 runs from 2026-07-31 and 2026-08-01, and the
-  recommendations and campaign docs from that period, were kept.
