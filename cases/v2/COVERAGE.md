@@ -7,7 +7,7 @@ info-only checks are listed separately (they never enter a verdict).
 
 `caseset_version aec8d9e5bf8512ca` · 135 cases · done 90 · not doing 30 · ready 12 · todo 3 · **105 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-10-27_
+_Last updated: 2026-11-17_
 
 ## Groups
 
@@ -68,6 +68,8 @@ friends) run on top of it whenever their trigger state exists.
 | dataset_parameters | 1 | dataset_parameter_match |
 | accept_aoi_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | accept_blog_sources | 0 ← unused | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
+| accept_dashboard | 0 ← unused | dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored) |
+| accept_fixed_period | 0 ← unused | answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes) |
 | accept_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | chart_type | 0 ← unused | chart_type_match |
 | data_pull | 0 ← unused | data_pull_exists, answered_without_data |
@@ -79,7 +81,7 @@ friends) run on top of it whenever their trigger state exists.
 
 ## Dataset coverage (project-zeno catalog)
 
-Catalog snapshot `cases/zeno_catalog.json` — project-zeno@fa78c81 (origin/main, synced 2026-10-24), 12 datasets. Refresh with
+Catalog snapshot `cases/zeno_catalog.json` — project-zeno@fa78c81 (fa78c816186461dab120523ccad75fe274e6058c, synced 2026-10-30), 12 datasets. Refresh with
 `uv run python tools/sync_zeno_catalog.py`, then regenerate this doc.
 A case counts toward every dataset its `dataset_id` accepts (`0;11`
 counts for both). Datasets carry four instruction fields unless noted;
@@ -146,7 +148,7 @@ answer-graded cases (`answer` or `text` expected) actually check.
 
 ## Known gaps
 
-- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_nudge_offering, chart_type, data_pull, date_tolerance_days, figure, figure_claim, forbidden_tools, suggested_datasets —
+- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_dashboard, accept_fixed_period, accept_nudge_offering, chart_type, data_pull, date_tolerance_days, figure, figure_claim, forbidden_tools, suggested_datasets —
   the checks they switch on can never fire until cases set them.
 - Info-only checks (reported, never gating): answer_traceability, charts_answer_judge, class_value_match, date_coverage.
   Their buckets lose that much *gating* coverage until re-admission
