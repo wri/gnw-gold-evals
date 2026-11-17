@@ -4,9 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-GOLD is the capability regression suite for the GNW / Project Zeno agent: cases, harness and results ledger in one versioned repo. It answers one question per release: *did an agent change break a capability that used to work?* The headline is a **regression count**, never a mean score, and determinism outranks realism in every design call.
+The quality and accuracy evals for the GNW / Project Zeno agent: cases, harness and results ledgers in one versioned repo. It runs three things:
 
-Before proposing changes, read `README.md`, `cases/README.md` and `results/README.md`. Where a rule below rests on a design decision, its reason is given with it.
+- **CHALLENGE** (`cases/challenge/`, `results/challenge/`): realistic cases whose verdicts are pass rates per set and cohort.
+- **BENCHMARK** (`benchmarks/`, `results/benchmark/`): frozen uid manifests over CHALLENGE, giving the North Star rate and the page data the frontend scorecards page shows.
+- **The plain baseline** (`tools/plain_baseline.py`, `results/plain/`): Sonnet with web search on the BENCHMARK questions, scored on its reply.
+
+GOLD, the capability regression suite, moved to wri/project-zeno `evals/gold/` on 2026-10-27 (project-zeno PR #874). `cases/v1`, `cases/v2`, `results/gold/`, the six skills in `.claude/skills/` and the manual CI release gate are a legacy copy, kept until a later PR deletes it once its case notes are reconciled with project-zeno. Do new GOLD work in project-zeno. Rules marked GOLD apply to this copy only.
+
+Before proposing changes, read `README.md`, `cases/README.md`, `results/README.md` and the doc of the suite you touch. Where a rule below rests on a design decision, its reason is given with it.
 
 ## The CHALLENGE set (second case set — quality rates, not regressions)
 
@@ -89,6 +95,14 @@ a case store: read `benchmarks/README.md` first. Key rules:
   (AJ, 2026-10-27). Runs recorded before then errored the whole member on
   any errored attempt, so a member can move from error to fail across that
   date.
+
+## Plain baseline
+
+- `tools/plain_baseline.py` writes to `results/plain/` only, never to `results/benchmark/`, so the frontend cannot show its results.
+- Its `ask` step spends API budget: run it only with AJ's go-ahead (`--dry-run` prints the projected cost).
+- It scores the `2026-draft-5` members. Per-question calls go in `benchmarks/overlays/2026-draft-5.plain.json`, keyed by uid, never in the case files: editing a member case would drop it from draft-5.
+- The agent's side is rescored from the draft-5 runs' artifacts, which are gitignored, so do it on the machine that ran draft-5.
+- Steps, files and keys: `results/plain/README.md`.
 
 ## Commands
 
