@@ -348,6 +348,17 @@ Definitions only: counts are in each store's COVERAGE.md ([CHALLENGE](cases/chal
 
 ## GOLD (legacy copy)
 
+GOLD asks one question before each release: did an agent change break a capability that used to work? Its headline is a regression count between two runs, and its cases favour determinism over realism. On 2026-10-27 it moved to [wri/project-zeno](https://github.com/wri/project-zeno) under `evals/gold/` (project-zeno PR #874), with its own README, CLAUDE.md, case store (`evals/gold/cases/v2`) and ledger (`evals/gold/results/`). Run, author and gate GOLD there.
+
+The copy here stays until a later PR deletes it, after its case notes are reconciled with project-zeno. Until then:
+
+- CI still checks `cases/v1`, `cases/v2` and `results/gold/` (uids, manifests, COVERAGE.md, the audit and the run index), so an edit to them follows [Changing cases](#changing-cases).
+- The authoring rules for `cases/v2`, the two stores and the audit gate are in [cases/GOLD-AUTHORING.md](cases/GOLD-AUTHORING.md).
+- The six Claude Code skills under `.claude/skills/` and the manual `staging-run` CI job work on this copy only. The skills use the older `gold` command name. They are not yet ported to project-zeno.
+- Its other records: [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md) (generated coverage report), [results/gold/recommendations/](results/gold/recommendations/) (action docs written after official runs) and [results/gold/campaigns/](results/gold/campaigns/) (write-ups of multi-run validation efforts).
+
+The sections below are what someone needs to run or gate this copy before it is deleted. The current versions are in project-zeno's [`evals/gold/README.md`](https://github.com/wri/project-zeno/blob/main/evals/gold/README.md).
+
 ### The release gate
 
 Before a release, diff an official run of the candidate build against the baseline: the most recent committed official run that is comparable with it. If there is none, first make one with the build currently released.
@@ -361,7 +372,7 @@ uv run python tools/diff_runs.py results/gold/runs/<baseline>.json results/gold/
 
 ### After a run
 
-An official run is not finished when its JSON lands; it is finished when someone can act on it. Smoke runs skip these steps and are never committed. If check semantics changed since the previous run, the run should already carry `--note` (see [Running the set](#running-the-set)).
+An official run is not finished when its JSON lands; it is finished when someone can act on it. Smoke runs skip these steps and are never committed. If check semantics changed since the previous run, the run should already carry `--note` (see [Running a suite](#running-the-set)).
 
 1. **Render the reports.**
    ```bash
@@ -390,7 +401,7 @@ The `gold-run` skill runs these steps, and the `triage-run` skill helps fill in 
 
 ### Claude Code skills
 
-The repo commits [Claude Code](https://claude.com/claude-code) skills under `.claude/skills/`, so anyone using Claude Code here gets the same workflows. Invoke one by name (`/gold-run`) or describe the task and the matching skill loads. Each skill follows the procedures in this README and the rules in CLAUDE.md, step by step.
+The repo commits [Claude Code](https://claude.com/claude-code) skills under `.claude/skills/`, so anyone using Claude Code here gets the same workflows. All six are for the GOLD legacy copy. Invoke one by name (`/gold-run`) or describe the task and the matching skill loads. Each skill follows the procedures in this README and the rules in CLAUDE.md, step by step.
 
 | Skill | Use it when |
 |---|---|
@@ -403,4 +414,4 @@ The repo commits [Claude Code](https://claude.com/claude-code) skills under `.cl
 
 ### Legacy tools
 
-Cases used to live in a Google Sheet, and runs used to go through the gnw-evals harness. Both are retired: the case store is the source of truth, and `gold run` is the only runner. A few tools from that period remain for occasional use: `import_sheet.py` and `export_sheet_csv.py` (move cases between a sheet tab and the store), `export_csv.py` (write cases as a gnw-evals test CSV), `ingest_run.py` (import an old gnw-evals run into the ledger) and `parity.py` (the one-off check that `gold run` scored the same as gnw-evals). None of them is part of the normal workflow. [tools/README.md](tools/README.md#legacy-tools) says what each is still for.
+Cases used to live in a Google Sheet, and runs used to go through the gnw-evals harness. Both are retired: the case store is the source of truth, and `evals run` is the only runner. A few tools from that period remain for occasional use: `import_sheet.py` and `export_sheet_csv.py` (move cases between a sheet tab and the store), `export_csv.py` (write cases as a gnw-evals test CSV), `ingest_run.py` (import an old gnw-evals run into the ledger) and `parity.py` (the one-off check that the harness scored the same as gnw-evals). None of them is part of the normal GOLD workflow, though `import_sheet.py` also imported CHALLENGE's seed CSVs ([seeds/README.md](seeds/README.md)). [tools/README.md](tools/README.md#legacy-tools) says what each is still for.
