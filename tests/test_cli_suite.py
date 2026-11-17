@@ -34,6 +34,8 @@ CHALLENGE = [
 GOLD = [
     Case(id="1-001", status="ready", group="direct", query="q one",
          expected={"dataset_id": "4"}),
+    Case(id="1-002", status="todo", group="direct", query="q two",
+         expected={"dataset_id": "11"}),
 ]
 RUN_ID = "20261117T100000Z_prod"
 
@@ -162,6 +164,43 @@ def test_benchmark_refuses_another_suite_or_store(repo, monkeypatch, capsys):
     assert main(monkeypatch, "run", "--benchmark", bench,
                 "--results-dir", "results/challenge") == 1
     assert "filed in results/benchmark" in capsys.readouterr().out
+
+
+# --- status exclusion -------------------------------------------------------------
+
+def selected(capsys) -> list[str]:
+    return sorted(line.split()[0] for line in capsys.readouterr().out.splitlines()
+                  if line.startswith(("ch-", "1-")))
+
+
+@pytest.mark.parametrize("argv", [["--suite", "challenge"],
+                                  ["--cases-dir", "cases/challenge"]])
+def test_challenge_store_holds_back_todo_rows(repo, monkeypatch, capsys, argv):
+    assert main(monkeypatch, "run", *argv, "--dry-run") == 0
+    out = capsys.readouterr().out
+    assert "suite challenge: cases/challenge -> results/challenge; " \
+           "status excluded: not doing,todo" in out
+    assert "ch-aoi-001" in out and "ch-aoi-002" not in out
+
+
+def test_explicit_status_exclude_wins(repo, monkeypatch, capsys):
+    assert main(monkeypatch, "run", "--suite", "challenge",
+                "--status-exclude", "not doing", "--dry-run") == 0
+    assert selected(capsys) == ["ch-aoi-001", "ch-aoi-002"]
+
+
+def test_gold_keeps_todo_rows(repo, monkeypatch, capsys):
+    assert main(monkeypatch, "run", "--suite", "gold", "--dry-run") == 0
+    out = capsys.readouterr().out
+    assert "status excluded: not doing\n" in out
+    assert "1-001" in out and "1-002" in out
+
+
+def test_benchmark_selection_ignores_status(repo, monkeypatch, capsys):
+    assert main(monkeypatch, "run", "--benchmark", str(make_bench(repo)),
+                "--dry-run") == 0
+    assert "suite benchmark: cases/challenge -> results/benchmark; " \
+           "members of t-draft" in capsys.readouterr().out
 
 
 # --- resume ---------------------------------------------------------------------

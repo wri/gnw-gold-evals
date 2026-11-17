@@ -696,7 +696,11 @@ def main() -> int:
     # of timeouts late in a run usually means load, and that cannot be diagnosed
     # without knowing the concurrency.
     run.add_argument("--workers", type=int, default=10)
-    run.add_argument("--status-exclude", default="not doing")
+    run.add_argument("--status-exclude", default=None,
+                     help="comma-separated case statuses to skip. Default: "
+                          "'not doing,todo' for the CHALLENGE store (its todo "
+                          "rows are not pinned yet), 'not doing' otherwise. "
+                          "Not used by --benchmark: the manifest names the cases")
     run.add_argument("--id", action="append", default=None,
                      help="run only this case id (repeatable)")
     run.add_argument("--group", default=None, help="substring match on group")
@@ -818,6 +822,12 @@ def main() -> int:
         print(error)
         return 1
     args.cases_dir, args.results_dir = dirs.cases_dir, dirs.results_dir
+    if args.status_exclude is None:
+        args.status_exclude = dirs.status_exclude
+    selection = (f"members of {args.benchmark['version']}" if args.benchmark
+                 else f"status excluded: {args.status_exclude}")
+    print(f"suite {dirs.suite or '(none)'}: {args.cases_dir} -> {args.results_dir}; "
+          f"{selection}", flush=True)
 
     manifest = read_manifest(args.cases_dir)
     if manifest is None:
