@@ -1,22 +1,28 @@
-# Results ledger: contract
+# Results ledgers: contract
 
 Terms are defined in the [README glossary](../README.md#glossary).
 
-`results/gold/runs/` holds one committed JSON file per GOLD run: the
-long-term record this repo exists to keep. `gold run` writes these files.
-Older runs made with gnw-evals were converted by `tools/ingest_run.py` (see
-[Legacy tools](../tools/README.md#legacy-tools)). Raw per-case agent state
-goes to `results/gold/artifacts/` (gitignored), rendered reports to
-`results/gold/reports/`, the written analysis of each official run to
-`results/gold/recommendations/`, and multi-run write-ups to
-`results/gold/campaigns/`.
+Each suite writes its runs to its own ledger under `results/`, and the
+ledgers never mix:
 
-The contract applies to all three ledgers, which never mix: `results/gold/`
-(GOLD, regression counts), `results/challenge/` (CHALLENGE, pass rates; see
-`cases/challenge/README.md`) and `results/benchmark/` (BENCHMARK runs, made by
-`gold run --benchmark` over a manifest's members; see `benchmarks/README.md`).
-Each holds its own `runs/`, `recommendations/`, and gitignored `artifacts/`;
-report pages and campaigns are GOLD-only today.
+| Ledger | Suite | Holds | Read as |
+|---|---|---|---|
+| `results/challenge/` | CHALLENGE | `runs/`, `recommendations/` | pass rates per set and cohort (`tools/challenge_rollup.py`; see `cases/challenge/README.md`) |
+| `results/benchmark/` | BENCHMARK | `runs/`, `recommendations/`, `pages/` | the North Star rate, and page data for the frontend (see `benchmarks/README.md`) |
+| `results/gold/` | GOLD (legacy copy) | `runs/`, `reports/`, `recommendations/`, `campaigns/` | regression counts (`tools/diff_runs.py`) |
+| `results/plain/` | plain baseline | its own files, not run records | see [plain/README.md](plain/README.md) |
+
+Every run ledger also has a gitignored `artifacts/` (raw agent state per
+case and trial) and, while a run is in progress,
+`runs/<run_id>.partial.jsonl`. `results/index.json` indexes the committed
+runs of the challenge, benchmark and gold ledgers.
+
+The contract below applies to the three run ledgers: challenge, benchmark
+and gold. `results/plain/` does not follow it: `tools/plain_baseline.py`
+writes its files in a format of its own. `evals run` writes run files.
+Older GOLD runs made with gnw-evals were converted by `tools/ingest_run.py`
+(see [Legacy tools](../tools/README.md#legacy-tools)). Report pages and
+campaigns exist for GOLD only.
 
 A benchmark run record additionally carries `benchmark: {path, version,
 status, manifest_sha, members}`, naming the manifest (by content hash,
@@ -26,7 +32,7 @@ the source store's (CHALLENGE).
 ## File naming
 
 ```
-results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | challenge | benchmark
+results/<suite>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <suite>: challenge | benchmark | gold
 ```
 
 The time is the run's start in UTC. The `_<ff>` suffix is left out when the
@@ -35,7 +41,7 @@ run used the agent's default profile, so a `_prod` run and a
 
 ## Shape
 
-Trimmed from `results/gold/runs/20260831T163347Z_prod.json`:
+Trimmed from a GOLD run, `results/gold/runs/20260831T163347Z_prod.json`; runs in every ledger have this shape:
 
 ```jsonc
 {
@@ -130,7 +136,7 @@ Optional fields, written only when they apply:
 | Field | Level | Meaning |
 |---|---|---|
 | `methodology_note` | run | The `--note` text: check semantics changed since the previous run, so movement on those checks is not an agent change. |
-| `resumed` | run | `true` when the run was finished with `gold run --resume`; its timing mixes two sessions. |
+| `resumed` | run | `true` when the run was finished with `evals run --resume`; its timing mixes two sessions. |
 | `error` | entry | The agent call failed or timed out, or the harness hit an error. The row verdict is `error`, never `fail`. |
 | `judge_errors` | entry | Checks whose judge call failed. They stay `null` and the row verdict is `error`. |
 | `stream_s` | entry | `POST /api/chat` to the last stream line only: the agent turn, and the latency to compare (2026-09-25 on). `latency_s` runs from `POST /api/chat` until the final state (and dashboard) is fetched, and excludes scoring and judge time. |
@@ -157,7 +163,7 @@ Optional fields, written only when they apply:
   `id` plus the exact query, with a warning (`joined_by: "test_id"`), and is
   stale if the case's expected values have changed since (`drift` lists
   them). Stale rows stay in the file but are left out of diffs and
-  flakiness. `gold run` always writes current uids. Separately,
+  flakiness. `evals run` always writes current uids. Separately,
   `tools/report_run.py` shows `stale_case` as the status of a failing row
   whose uid the current store no longer holds, which means the case was
   edited after the run.
@@ -166,10 +172,10 @@ Optional fields, written only when they apply:
   allowed. Re-ingesting after a tooling fix means deleting the file first,
   visibly, in a reviewable commit.
 - **In-flight state is a sidecar, never the run file.** While a run
-  executes, completed entries stream to `results/<set>/runs/<run_id>.partial.jsonl`
+  executes, completed entries stream to `results/<suite>/runs/<run_id>.partial.jsonl`
   (gitignored, fsynced per case). The immutable run JSON is still written
   once, at the end, and the partial deleted. A killed run is finished with
-  `gold run --resume <run_id>`; a record completed that way carries
+  `evals run --suite <suite> --resume <run_id>`; a record completed that way carries
   `resumed: true` (its timing mixes two sessions; everything else is
   identical to an unbroken run).
 - **Checks are tri-state.** `1.0` pass, `0.0` fail, `null` not evaluated.
@@ -198,10 +204,16 @@ Optional fields, written only when they apply:
   [Comparing two runs](#comparing-two-runs)), and reads `agent_values` to
   flag a bump that may hide a real agent break.
 - **No fabricated or backfilled runs.** A run file is written by
-  `gold run` (or, for legacy runs, `tools/ingest_run.py`) from real harness
+  `evals run` (or, for legacy runs, `tools/ingest_run.py`) from real harness
   output, never by hand.
 
 ## Comparing two runs
+
+The three comparability conditions below apply whenever two runs are
+compared, in any ledger: CHALLENGE never compares rates across differing
+environment, `ff`, trial count or caseset_version either. `diff_runs.py`,
+its regression count, `find_baseline.py` and the release gate are GOLD's
+(legacy copy).
 
 `tools/diff_runs.py <older> <newer>` compares two runs check by check, on
 every case both runs scored, and reports regressions (pass to fail),
@@ -229,7 +241,7 @@ number of shared cases with the result, because a small overlap makes a
 weak verdict. Pass `--strict` to refuse any pair whose `caseset_version`
 differs.
 
-To pick a baseline, `tools/find_baseline.py <new run>` prints the newest
+To pick a GOLD baseline, `tools/find_baseline.py <new run>` prints the newest
 run in `results/gold/runs/` that meets all three conditions and also loaded the
 same store (`caseset`), and exits non-zero with the reason when none does.
 The CI release gate uses it. Runs from before 2026-08-04 record no
@@ -277,14 +289,14 @@ false, which misleads the next person to diff the file.
 Compose in the **analysis** instead:
 
 ```bash
-uv run python tools/compose_runs.py results/gold/runs/<primary>.json \
-    results/gold/runs/<supplementary>.json
+uv run python tools/compose_runs.py results/<suite>/runs/<primary>.json \
+    results/<suite>/runs/<supplementary>.json --cases-dir cases/<store>
 ```
 
 It resolves every active case to its freshest measurement **at the case's current
 uid** (supplements win over the primary, later supplements over earlier), prints
 per-row provenance, names any row nothing has measured, warns when the sources
-disagree on `ff`, and writes nothing to `results/gold/runs/`. Both runs stay in the
+disagree on `ff`, and writes nothing to the ledger. Both runs stay in the
 ledger as honest, independently reproducible records; only the summary is joined.
 
 ## Derived index
@@ -307,11 +319,13 @@ voided, runs, canonical_runs}`. Because it reads `benchmarks/*.json`, adding
 an erratum or freezing a version also requires regenerating the index.
 A benchmark run whose page data is committed
 (`results/benchmark/pages/<run_id>.json`, written by `tools/benchmark_page.py`
-for the FE accuracy-benchmarks page) also carries `page`, that file's path.
+for the frontend's AI accuracy scorecards page) also carries `page`, that
+file's path. A run whose page combines it with earlier runs carries
+`composed_with`, and is judged canonical over the runs together.
 
 ## Ledger resets
 
-- **2026-08-04: v2 baseline reset.** Runs scored against intermediate v2
+- **2026-08-04: GOLD v2 baseline reset.** Runs scored against intermediate v2
   curation states (2026-08-02 and 2026-08-03) and their reports were
   deleted, so the v2 record starts at the first official v2 run. They remain
   in git history. The v1 runs from 2026-07-31 and 2026-08-01, and the
