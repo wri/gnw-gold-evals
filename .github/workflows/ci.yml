@@ -24,7 +24,7 @@ jobs:
       - name: Install
         run: uv sync --dev
       - name: Lint (ruleset pinned in pyproject, ruff pinned in dev deps)
-        run: uv run ruff check src tools tests
+        run: uv run ruff check src tools tests generation
       - name: Tests (includes per-case schema conformance)
         run: uv run pytest -q
       # --strict fails the build on depth and DON'T violations (rules in
