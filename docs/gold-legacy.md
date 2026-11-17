@@ -35,7 +35,7 @@ GOLD's canonical runs are 3-trial, default-profile runs on the environment of th
 
 `tools/diff_runs.py <older> <newer>` compares two runs check by check, on every case both runs scored. It reports:
 
-- regressions (pass to fail) and recoveries (fail to pass), counted per check, not per case;
+- regressions, where a check went from pass to fail, and recoveries, the reverse, counted per check, not per case;
 - coverage changes: a check that started or stopped being evaluated;
 - data bumps (below).
 

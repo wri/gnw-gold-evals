@@ -4,7 +4,7 @@ Definitions only. Counts are in each store's COVERAGE.md ([CHALLENGE](../cases/c
 
 ## The product
 
-- **GNW (Global Nature Watch)**: the World Resources Institute (WRI) product for asking questions about land and nature data for named places.
+- **GNW, Global Nature Watch**: the World Resources Institute (WRI) product for asking questions about land and nature data for named places.
 - **Project Zeno, the agent**: the large language model (LLM) agent behind GNW, built in [wri/project-zeno](https://github.com/wri/project-zeno). The harness asks it a question with `POST /api/chat`, then reads its final state with `GET /api/threads/{id}/state`. Checks score that state.
 - **Horizon**: the agent's name in the GNW app. The plain baseline and the scorecards page call the agent Horizon.
 - **frontend (FE)**: the GNW web app, in [wri/project-zeno-next](https://github.com/wri/project-zeno-next). Its AI accuracy scorecards page shows BENCHMARK page data.
@@ -13,7 +13,7 @@ Definitions only. Counts are in each store's COVERAGE.md ([CHALLENGE](../cases/c
 - **harness**: the code here that sends each case to the agent, fetches the final state and scores it (`evals run`).
 - **environment**: the agent deployment a run targets: `staging`, `prod` or `local` (`http://localhost:8000`). It is recorded on the run and in its run_id.
 - <a id="profile"></a>**ff, tool profile**: `ff` (feature flag) is a field in the chat request that picks the agent's tool profile. Leaving it out gives the default profile. `experimental` adds features not yet released to the default. A run records its `ff`, and its run_id ends with it.
-- **AOI (area of interest)**: the place a question is about, as the agent resolved it: one or more ids from a boundary source (`aoi_source`). The sources are `gadm`, `kba`, `wdpa` and `landmark`.
+- **AOI, area of interest**: the place a question is about, as the agent resolved it: one or more ids from a boundary source, `aoi_source`. The sources are `gadm`, `kba`, `wdpa` and `landmark`.
 - **GADM**: the Database of Global Administrative Areas: country, state and district boundaries. Ids look like `BRA.25_1`: a country code, admin-level numbers, then a `_N` suffix that `aoi_id_match` ignores.
 - **KBA, WDPA, LandMark**: the other AOI sources: Key Biodiversity Areas, the World Database on Protected Areas, and LandMark, a map of indigenous and community lands.
 - **dataset, catalogue**: the agent's datasets are numbered and defined in project-zeno's dataset catalogue (`src/agent/datasets/catalog/*.yml`). A case's `dataset_id` names the dataset it expects. A retired dataset id, such as 0 (DIST-ALERT), is never reused.
@@ -35,8 +35,8 @@ Definitions only. Counts are in each store's COVERAGE.md ([CHALLENGE](../cases/c
 - **group**: the directory a case sits in. In CHALLENGE it is the cohort. In GOLD it is the capability the case tests, such as `direct` or `temporal`.
 - **status**: where a case is in its lifecycle: `ready`, `todo`, `done` or `not doing`. `done` is used in GOLD only. See [Status lifecycle](../cases/README.md#status-lifecycle).
 - **park, unpark**: set a case to `not doing` with a dated reason in `notes.status_reason`, or bring it back. An unparked case must show again that the reason it was parked no longer holds.
-- **scope**: the kind of work a case expects: `analyse` (pull data and answer), `suggest` (offer datasets), `clarify` (ask the user to choose) or `refuse` (decline). The harness classifies the agent's final state into one of these. `refuse` matches a state with no data pull, no suggestion and no nudge.
-- **multi-turn case, deltas**: a case with `turns:` instead of one query and expected block. All its turns share one thread. A turn's `deltas` say which state fields must have `changed`, stayed the same (`retain`) or become empty (`absent`) since the previous turn. The `state_delta` check scores them. Only GOLD has multi-turn cases today.
+- **scope**: the kind of work a case expects: `analyse` to pull data and answer, `suggest` to offer datasets, `clarify` to ask the user to choose, or `refuse` to decline. The harness classifies the agent's final state into one of these. `refuse` matches a state with no data pull, no suggestion and no nudge.
+- **multi-turn case, deltas**: a case with `turns:` instead of one query and expected block. All its turns share one thread. A turn's `deltas` name state fields under three keys: `changed` fields must differ from the previous turn, `retain` fields must stay the same, and `absent` fields must be empty. The `state_delta` check scores them. Only GOLD has multi-turn cases today.
 - <a id="ground-truth"></a>**ground truth**: an `expected.ground_truth` selector, such as `sum(area_ha) WHERE year=2019`, that names a figure instead of pinning its value. The harness fetches the value from the analytics API when the run starts, so the case survives data releases with its uid. Only GOLD cases use it today. See [Run-time ground truth](../cases/README.md#run-time-ground-truth-ground_truth).
 - **figure formula**: an `expected.figure` or `figure_claim` formula that names a figure the answer must state. It is checked against the table the agent itself pulled. BENCHMARK members use it. See `figure_match` in the [evaluators README](../src/goldset/evaluators/README.md#index).
 - **query template, run token**: a token such as `{current_year}` in a query, or `{run-30d}` in an expected date, replaced with a concrete date when the run starts. The uid hashes the token, not the date, so the case keeps its identity as time passes.
@@ -86,7 +86,7 @@ Definitions only. Counts are in each store's COVERAGE.md ([CHALLENGE](../cases/c
 
 ## Scoring
 
-- **check**: one named score on one attempt, such as `aoi_id_match`: `1.0` (pass), `0.0` (fail) or `null` (not evaluated).
+- **check**: one named score on one attempt, such as `aoi_id_match`: `1.0` for a pass, `0.0` for a fail, or `null` when it was not evaluated.
 - **evaluator**: a function of the agent's final state and the case's expected values that returns one or more checks. Evaluators are registered in `src/goldset/registry.py`.
 - **deterministic, judged**: how a check decides: in code, or by asking the LLM judge. Some checks combine the two, and the evaluators README says which.
 - **judge**: the LLM that scores judged checks: `claude-haiku-4-5` unless `--judge-backend` picks another. It is never asked to do arithmetic; numbers are compared in code.

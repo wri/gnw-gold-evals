@@ -31,7 +31,7 @@ Every other doc uses these terms. The [glossary](docs/glossary.md) defines the r
 - **store**: a directory of cases with its `MANIFEST.json`. `cases/challenge` holds CHALLENGE and every BENCHMARK member.
 - **run**: one execution of a selection of cases against one environment: `prod`, `staging` or `local`.
 - **trial**: one attempt at one case within a run, in a fresh conversation. `--trials 3` runs each case three times.
-- **check**: one named score on one attempt, such as `aoi_id_match`: `1.0` (pass), `0.0` (fail) or `null` (not evaluated).
+- **check**: one named score on one attempt, such as `aoi_id_match`: `1.0` for a pass, `0.0` for a fail, or `null` when it was not evaluated.
 - **bucket**: the stage of the agent's work that a check speaks for: retrieval, analysis, explanation, output or scope. A failure then points at the stage that broke.
 - **ledger**: a suite's committed run records, one JSON file per run under `results/<suite>/runs/`. Only the harness writes it.
 
@@ -130,7 +130,7 @@ uv run evals run --help                                                        #
 
 ## How scoring reads
 
-Every check is tri-state: `1.0` (pass), `0.0` (fail) or `null` (not evaluated). Each check's documentation says whether a missing input scores `null` or `0.0`, because a `null` that should have been a fail hides a failure.
+Every check is tri-state: `1.0` for a pass, `0.0` for a fail, or `null` when it was not evaluated. Each check's documentation says whether a missing input scores `null` or `0.0`, because a `null` that should have been a fail hides a failure.
 
 Checks roll up into five buckets, one per stage of the agent's work:
 
