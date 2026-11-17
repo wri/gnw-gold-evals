@@ -88,3 +88,25 @@ The steps after a committed run differ by suite:
 - GOLD (legacy copy): render the reports, check flakiness and diff, write
   the recommendations doc, commit with a regenerated `results/index.json`
   ([README, After a run](../README.md#after-a-run)).
+
+## Generated or hand-edited
+
+A generated file is written by a tool and never edited by hand: change its inputs and run the tool again. CI checks several of them for freshness, so a stale one fails the PR.
+
+| File | Kind | Written by |
+|---|---|---|
+| `cases/<store>/MANIFEST.json` | generated | `tools/check.py --fix` (CI checks it) |
+| `cases/<store>/COVERAGE.md`, `coverage.json`, `cases_index.json` | generated | `tools/coverage_doc.py` (CI runs `--check`) |
+| `cases/zeno_catalog.json` | generated | `tools/sync_zeno_catalog.py`, from project-zeno's dataset catalogue |
+| `results/<suite>/runs/<run_id>.json` (run records) | generated | `evals run` only; older GOLD runs by `tools/ingest_run.py` |
+| `results/index.json` | generated | `tools/build_run_index.py` (CI runs `--check`) |
+| `results/benchmark/pages/<run_id>.json` | generated | `tools/benchmark_page.py` |
+| `results/plain/` runs, references, scores and reports | generated | `tools/plain_baseline.py` ([results/plain/README.md](results/plain/README.md)) |
+| `results/gold/reports/*.html` | generated | `tools/render_html.py`, `render_inspector.py`, `render_trends.py` |
+| Case YAML (`cases/<store>/.../<id>.yaml`) | hand-edited or tool-written | by hand, `tools/import_sheet.py` or `generation/promote_cases.py`. `tools/check.py --fix` rewrites the `uid:` line, and `tools/benchmark_from_sheet.py` writes the BENCHMARK membership notes |
+| `benchmarks/<version>.json` | tool-written, errata by hand | `tools/benchmark_sample.py` or `tools/benchmark_from_sheet.py`. No tool writes `errata[]` entries; both tools keep the existing ones when they rebuild a draft |
+| `benchmarks/overlays/2026-draft-5.plain.json` | hand-edited | the plain baseline's per-question calls, reviewed by AJ |
+| `generation/manifests/*.csv`, `generation/<dataset>/*.md`, `generation/dataset_config.py` | hand-edited | the inputs of the generation pipeline ([generation/README.md](generation/README.md)) |
+| `seeds/*.csv` | hand-edited | sheet exports and hand-made CSVs ([seeds/README.md](seeds/README.md)) |
+| `cases/challenge/TARGETS.yml` | hand-edited | CHALLENGE's target rates |
+| `results/<suite>/recommendations/*.md`, `results/gold/campaigns/*.md` | hand-written | the written analysis of a run; write-ups of multi-run efforts |
