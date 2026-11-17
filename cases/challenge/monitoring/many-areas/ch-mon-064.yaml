@@ -10,7 +10,7 @@ expected:
     research as this month's alerts.
 notes:
   behaviour: 'Redirect: many areas; offer a named park'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-127); GFW Advisory Council focus groups
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-127); GFW Advisory Council focus groups
     (journalists target parks for new alerts)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'

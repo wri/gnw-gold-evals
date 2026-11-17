@@ -11,7 +11,7 @@ expected:
     from general knowledge or articles.
 notes:
   behaviour: Decline point lookup or ask for an area; must not guess
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-126); GFW Advisory Council focus groups
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-126); GFW Advisory Council focus groups
     ("we tell the story behind a coordinate")
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'

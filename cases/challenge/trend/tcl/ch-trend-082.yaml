@@ -14,7 +14,7 @@ expected:
     itself.
 notes:
   behaviour: answer with trend data; must not make the EUDR risk classification itself
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-222); USY-001512 New Straits Times EUDR
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-222); USY-001512 New Straits Times EUDR
     op-ed
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'

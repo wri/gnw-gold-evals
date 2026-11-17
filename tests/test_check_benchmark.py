@@ -53,8 +53,12 @@ def test_edited_member_errors_when_frozen_warns_when_draft(tmp_path, monkeypatch
     first = edit_first_member(tmp_path, data)
     errors, warnings = cb.check(write(tmp_path, data, "frozen"), tmp_path)
     assert warnings == [] and any(first["id"] in e and "uid not in" in e for e in errors)
+    # The remedy follows the status: an erratum for frozen, a rebuild for a draft.
+    assert all("erratum" in e and "rebuild" not in e for e in errors)
     errors, warnings = cb.check(write(tmp_path, data, "draft"), tmp_path)
     assert errors == [] and any("uid not in" in w for w in warnings)
+    assert all("rebuild the draft with tools/benchmark_sample.py" in w
+               and "erratum" not in w for w in warnings)
 
 
 def test_erratum_silences_a_voided_member(tmp_path, monkeypatch):

@@ -1,41 +1,31 @@
-# Results ledger: contract
+# Results ledgers: contract
 
-Terms are defined in the [README glossary](../README.md#glossary).
+Each suite writes its runs to its own ledger under `results/`, and the ledgers never mix. Terms are in the [glossary](../docs/glossary.md).
 
-`results/gold/runs/` holds one committed JSON file per GOLD run: the
-long-term record this repo exists to keep. `gold run` writes these files.
-Older runs made with gnw-evals were converted by `tools/ingest_run.py` (see
-[Legacy tools](../tools/README.md#legacy-tools)). Raw per-case agent state
-goes to `results/gold/artifacts/` (gitignored), rendered reports to
-`results/gold/reports/`, the written analysis of each official run to
-`results/gold/recommendations/`, and multi-run write-ups to
-`results/gold/campaigns/`.
+| Ledger | Suite | Holds | Read as |
+|---|---|---|---|
+| `results/challenge/` | CHALLENGE | `runs/`, `recommendations/` | pass rates per set and cohort, with `tools/challenge_rollup.py` |
+| `results/benchmark/` | BENCHMARK | `runs/`, `recommendations/`, `pages/` | the North Star, and page data for the frontend ([benchmarks/README.md](../benchmarks/README.md)) |
+| `results/gold/` | GOLD legacy copy | `runs/`, `reports/`, `recommendations/`, `campaigns/` | regression counts ([docs/gold-legacy.md](../docs/gold-legacy.md)) |
+| `results/plain/` | plain baseline | its own files, not run records | [plain/README.md](plain/README.md) |
 
-The contract applies to all three ledgers, which never mix: `results/gold/`
-(GOLD, regression counts), `results/challenge/` (CHALLENGE, pass rates; see
-`cases/challenge/README.md`) and `results/benchmark/` (BENCHMARK runs, made by
-`gold run --benchmark` over a manifest's members; see `benchmarks/README.md`).
-Each holds its own `runs/`, `recommendations/`, and gitignored `artifacts/`;
-report pages and campaigns are GOLD-only today.
+Every run ledger also has a gitignored `artifacts/` with the raw agent state per case and trial. While a run is in progress it also has `runs/<run_id>.partial.jsonl`. `results/index.json` indexes the committed runs of the three run ledgers.
 
-A benchmark run record additionally carries `benchmark: {path, version,
-status, manifest_sha, members}`, naming the manifest (by content hash,
-errata included) that chose its cases; its `caseset`/`caseset_version` are
-the source store's (CHALLENGE).
+The contract below applies to the three run ledgers. `results/plain/` does not follow it: `tools/plain_baseline.py` writes files in a format of its own. `evals run` writes every new run file. Older GOLD runs made with gnw-evals were converted by `tools/ingest_run.py`.
+
+A BENCHMARK run record also carries `benchmark: {path, version, status, manifest_sha, members}`. It names the manifest that chose its cases, by content hash, errata included. Its `caseset` and `caseset_version` are those of the source store, `cases/challenge`.
 
 ## File naming
 
 ```
-results/<set>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <set>: gold | challenge | benchmark
+results/<suite>/runs/<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>].json     # <suite>: challenge | benchmark | gold
 ```
 
-The time is the run's start in UTC. The `_<ff>` suffix is left out when the
-run used the agent's default profile, so a `_prod` run and a
-`_prod_experimental` run used different profiles.
+The time is the run's start in UTC. The `_<ff>` suffix is left out when the run used the agent's default profile, so a `_prod` run and a `_prod_experimental` run used different profiles.
 
 ## Shape
 
-Trimmed from `results/gold/runs/20260831T163347Z_prod.json`:
+Trimmed from a GOLD run, `results/gold/runs/20260831T163347Z_prod.json`. Runs in every ledger have this shape:
 
 ```jsonc
 {
@@ -88,8 +78,89 @@ Trimmed from `results/gold/runs/20260831T163347Z_prod.json`:
 }
 ```
 
-A ground-truth case (one with `expected.ground_truth`) adds an object to
-its entry, and the run gains a summary:
+`validate_run` in `src/goldset/ledger.py` requires `run_id`, `started`, `environment`, `build`, `ff`, `harness`, `judge_model`, `num_trials`, `caseset_version` and `results`. Older runs can lack other fields: the [Scoring change log](#scoring-change-log) says which.
+
+Optional fields, written only when they apply:
+
+| Field | Level | Meaning |
+|---|---|---|
+| `methodology_note` | run | The `--note` text: check semantics changed since the previous run, so movement on those checks is not an agent change. |
+| `resumed` | run | `true` when the run was finished with `evals run --resume`. Its timing mixes two sessions. |
+| `error` | entry | The harness could not score the case: the request was refused, the connection failed, or the harness hit an error. On a multi-trial run it is on the entry only when no trial could be scored. The row verdict is then `error`, never `fail`. |
+| `judge_errors` | entry | Checks whose judge call failed. They stay `null`. On a multi-trial run it is on the entry only when no trial could be scored, and the row verdict is then `error`. |
+| `no_answer` | entry or trial | The agent sent no reply: the stream stalled, dropped or failed with a server error before it finished. A stall is 240 seconds with no data, or a stream still open at the trial timeout. The attempt counts as failed, not as an error. On a multi-trial run it sits on the trial. |
+| `error` | trial | Why the harness could not score that trial: it failed after the reply, or a judge call failed. That trial is left out of the per-check majorities and of the row verdict. |
+| `stream_s` | entry and trial | The agent turn: from `POST /api/chat` to the last stream line. Compare latency with it. `latency_s` runs until the final state and any dashboard are fetched. Neither includes scoring or judge time. |
+| `info` | entry | `{"slow": true, "threshold_s": 180.0}` when the case took longer than `--slow-threshold`. Never scored. |
+| `ground_truth` | run and entry | Present when a case carried `expected.ground_truth`; see [GOLD legacy copy only](#gold-legacy-copy-only). |
+| `turns_detail` | entry | Multi-turn cases only: each turn's query, reasons, latency and trace URL. Their checks sit in `checks` as `t<N>.<check>`. |
+| `stale_case`, `drift`, `joined_by` | entry | Written only by `tools/ingest_run.py`; see [Stale means stale](#stale-means-stale). |
+
+## Rules
+
+- **Keying.** Results reference cases by `uid`. If a case was edited since the run, the uid mismatch shows it, instead of attributing old scores to new content. Runs also record the store's `caseset_version`.
+- **Run files are immutable.** `write_run` refuses to overwrite a run file with different content. A byte-identical rewrite is allowed. Re-ingesting after a tooling fix means deleting the file first, visibly, in a reviewable commit.
+- **No fabricated or backfilled runs.** A run file is written by `evals run` from real harness output, never by hand. Legacy GOLD runs came through `tools/ingest_run.py`.
+- **In-flight state is a sidecar.** While a run executes, each finished entry is appended to `runs/<run_id>.partial.jsonl`, which is gitignored and synced to disk per case. The run file is written once, at the end, and the partial file is deleted.
+- **Resumed runs.** `evals run --resume <run_id>` finishes a killed run from its partial file. The record then carries `resumed: true` and is otherwise the same as an unbroken run.
+- **Checks are tri-state**: `1.0` pass, `0.0` fail, `null` not evaluated.
+- **Implied checks must evaluate.** A case's expected values imply checks that must evaluate (`buckets.implied_checks_for_case`). `tools/report_run.py` prints the reconciliation line, which lists each implied check that was not evaluated.
+- <a id="stale-means-stale"></a>**Stale means stale.** Only `tools/ingest_run.py` writes `stale_case: true`. A row with a uid joins on that uid alone: if the store no longer holds it, the row is stale. It is never matched again through a weaker join, because that would attach old scores to edited case content. A legacy row with no uid may join on `id` plus the exact query, with a warning (`joined_by: "test_id"`). It is stale if the case's expected values have changed since, and `drift` lists them. Stale rows stay in the file but are left out of diffs and flakiness. Separately, `tools/report_run.py` shows `stale_case` as the status of a failing row whose uid the current store no longer holds.
+
+### Multi-trial runs
+
+A run with `num_trials` above 1 still stores one entry per case:
+
+- `trials` lists every trial: its `checks`, `latency_s` and `stream_s`, and `no_answer` or `error` when they apply.
+- `checks` holds each check's majority verdict across the scored trials: pass only if more than half of the trials that evaluated it passed, a tie fails, and `null` if no trial evaluated it.
+- A trial that got no reply counts as a failed attempt. A trial the harness could not score is left out of the majorities.
+- The entry carries `error` and `judge_errors` only when no trial could be scored.
+- `reasons`, `actuals`, `latency_s`, `trace_url` and `turns_detail` come from the last trial.
+- The row verdict comes from the attempts (`buckets.row_verdict`), not from the per-check majorities: see [README, How scoring reads](../README.md#how-scoring-reads).
+
+## Comparing two runs
+
+Two runs are comparable only with the same `ff`, the same trial count and the same environment. [README, Running a suite](../README.md#running-a-suite) owns these conditions, the reasons for them and the evidence for 3 trials. Each kind of comparison adds one more condition:
+
+- **CHALLENGE rates**: the same `caseset_version`. A rate over a different set of cases has a different denominator.
+- **BENCHMARK rates**: the same version. Rates are only comparable within a version.
+- **A per-case diff**: the `caseset_version` may differ. The diff covers only the uids both runs scored, so a growing case set never shows up as regressions or recoveries. GOLD's `tools/diff_runs.py`, its data bumps and the release gate are in [docs/gold-legacy.md](../docs/gold-legacy.md#regression-diffs).
+
+## Composing a current picture across runs
+
+A scoped rerun is often all that is needed: when only a few rows changed, or when one capability was unreachable during the full run. It is tempting to write the fresher scores into the earlier run file, to get a single number to quote. **Don't.** `write_run` refuses it, and the rules above forbid it. A run record also describes how its rows were produced, through `ff`, `workers`, `build`, `harness` and `caseset_version`. Rows spliced in from other conditions would make that metadata false.
+
+Compose in the analysis instead:
+
+```bash
+uv run python tools/compose_runs.py results/<suite>/runs/<primary>.json \
+    results/<suite>/runs/<supplementary>.json
+```
+
+It resolves every active case to its freshest measurement at the case's current uid. A supplement wins over the primary, and a later supplement over an earlier one. It prints where each row came from, names any row nothing has measured, warns when the sources disagree on `ff`, and writes nothing to the ledger. It reads the store each run records, and it refuses BENCHMARK runs: combine those with `tools/benchmark_page.py --base` ([benchmarks/README.md](../benchmarks/README.md#rerunning-revised-members-only)).
+
+## Derived index
+
+`results/index.json` is a generated projection of the committed runs of every ledger: per run, the header fields plus the `buckets` block, with no computed rates and no per-case rows. Web consumers, such as the evals dashboard, use it to list runs and draw trends from one fetch, because raw.githubusercontent.com cannot list directories.
+
+- Regenerate it with `uv run python tools/build_run_index.py` after you stage a new run, and commit it with the run. It lists files with `git ls-files`, so unstaged local runs never leak in. CI's `--check` fails on a stale index.
+- It also reads `benchmarks/*.json`, so a rebuilt manifest, an erratum or a freeze needs a fresh index too.
+- Each BENCHMARK entry in `sets.benchmark` carries the run's `benchmark` block, `canonical` and `canonical_reasons`. A run is canonical when it is prod, default profile, 3 trials and measured every currently active member.
+- A BENCHMARK entry whose page data is committed carries `page`, the page's path. When the page combines the run with earlier runs, the entry carries `composed_with` and is judged canonical over the runs together.
+- The top-level `benchmarks` object maps each version to its `path`, `status`, `frozen` date, `members`, `voided` count, `runs` and `canonical_runs`.
+
+## Scoring change log
+
+Changes that affect how an older run reads. Rates on either side of a scoring change are not comparable point for point.
+
+- **2026-08-04**: runs start to record `workers`, `trial_timeout` and `caseset`. To find which store an older run loaded, match its `caseset_version` against the manifests' git history.
+- **2026-09-25**: runs start to record `stream_s`, the latency to compare. Older runs carry only `latency_s`.
+- **2026-10-27**: an attempt that got no reply records `no_answer` and counts as a failed attempt. An attempt the harness could not score keeps its own `error` and is left out, and a row is `error` only when no attempt was scored. Before, any errored trial made the whole row `error`.
+- **2026-10-28**: the row verdict comes from the majority of the attempts, each passing when every gating check it scored passed. Before, it came from each check's majority across trials. That failed rows right on 2 of 3 attempts when a check was scored on one attempt only, and passed rows right on 1 of 3 whose attempts failed different checks.
+
+## GOLD legacy copy only
+
+Only GOLD cases carry `expected.ground_truth` today, though the harness records it for any store. A ground-truth case adds an object to its entry, and the run gains a summary:
 
 ```jsonc
 // on the entry
@@ -119,200 +190,4 @@ its entry, and the run gains a summary:
 }
 ```
 
-`validate_run` in `src/goldset/ledger.py` requires `run_id`, `started`,
-`environment`, `build`, `ff`, `harness`, `judge_model`, `num_trials`,
-`caseset_version` and `results`. Runs before 2026-08-04 lack `workers`,
-`trial_timeout` and `caseset`; to find which store such a run loaded, match
-its `caseset_version` against the manifests' git history.
-
-Optional fields, written only when they apply:
-
-| Field | Level | Meaning |
-|---|---|---|
-| `methodology_note` | run | The `--note` text: check semantics changed since the previous run, so movement on those checks is not an agent change. |
-| `resumed` | run | `true` when the run was finished with `gold run --resume`; its timing mixes two sessions. |
-| `error` | entry | The agent call failed or timed out, or the harness hit an error. The row verdict is `error`, never `fail`. |
-| `judge_errors` | entry | Checks whose judge call failed. They stay `null` and the row verdict is `error`. |
-| `stream_s` | entry | `POST /api/chat` to the last stream line only: the agent turn, and the latency to compare (2026-09-25 on). `latency_s` runs from `POST /api/chat` until the final state (and dashboard) is fetched, and excludes scoring and judge time. |
-| `info` | entry | `{"slow": true, "threshold_s": 180.0}` when the case took longer than `--slow-threshold`. Never scored. |
-| `ground_truth` | run | Present when any case carried `expected.ground_truth`: the analytics host, the number of cases fetched, the fetch time and the grading tolerance. |
-| `ground_truth` | entry | What was fetched for a ground-truth case and how (shape above). See "Ground truth is recorded, not trusted" below. |
-| `turns_detail` | entry | Multi-turn cases only: each turn's query, reasons, latency and trace URL. Their checks sit in `checks` as `t<N>.<check>`. |
-| `stale_case`, `drift`, `joined_by` | entry | Written only by `tools/ingest_run.py`; see "Stale means stale" below. |
-
-## Rules
-
-- **Keying.** Results reference cases by `uid`. If a case was edited since
-  the run, the uid mismatch makes that visible instead of silently
-  attributing old scores to new content. Runs also record the whole-set
-  `caseset_version`. Diffs cover only the uids both runs share, so a
-  growing case set never shows up as regressions or recoveries (see
-  [Comparing two runs](#comparing-two-runs)).
-- <a id="stale-means-stale"></a>**Stale means stale.** Only the legacy
-  importer, `tools/ingest_run.py`, writes `stale_case: true`. A row that
-  carries a uid joins on that uid alone: if the store no longer holds it,
-  the row is stale and is never re-matched through a weaker join, however
-  well its query still matches, because that would attach old scores to
-  edited case content. A row with no uid (legacy sheet runs) may join on
-  `id` plus the exact query, with a warning (`joined_by: "test_id"`), and is
-  stale if the case's expected values have changed since (`drift` lists
-  them). Stale rows stay in the file but are left out of diffs and
-  flakiness. `gold run` always writes current uids. Separately,
-  `tools/report_run.py` shows `stale_case` as the status of a failing row
-  whose uid the current store no longer holds, which means the case was
-  edited after the run.
-- **Run files are immutable.** `write_run` refuses to overwrite an existing
-  run file with different content; byte-identical re-ingest (idempotence) is
-  allowed. Re-ingesting after a tooling fix means deleting the file first,
-  visibly, in a reviewable commit.
-- **In-flight state is a sidecar, never the run file.** While a run
-  executes, completed entries stream to `results/<set>/runs/<run_id>.partial.jsonl`
-  (gitignored, fsynced per case). The immutable run JSON is still written
-  once, at the end, and the partial deleted. A killed run is finished with
-  `gold run --resume <run_id>`; a record completed that way carries
-  `resumed: true` (its timing mixes two sessions; everything else is
-  identical to an unbroken run).
-- **Checks are tri-state.** `1.0` pass, `0.0` fail, `null` not evaluated.
-  A case's expected values imply checks that must evaluate
-  (`buckets.implied_checks_for_case`). `tools/report_run.py` prints the
-  reconciliation line: how many implied checks were actually evaluated,
-  with each miss listed, so a check that silently stopped running shows up.
-- **Multi-trial runs** (`num_trials` above 1) still store one entry per
-  case. Its `checks` map holds each check's majority verdict: pass only if
-  more than half of the trials that evaluated it passed (ties fail), `null`
-  if no trial evaluated it. `trials` lists every trial as
-  `{"checks": {...}, "latency_s": ...}`. `error` and `judge_errors` collect
-  the errors of every trial; `reasons`, `actuals`, `latency_s`, `trace_url`
-  and `turns_detail` come from the last trial. The row's verdict is the
-  majority of its attempts' verdicts (`buckets.row_verdict`, since
-  2026-10-28), not a reading of those per-check majorities.
-- **Ground truth is recorded, not trusted.** A case carrying
-  `expected.ground_truth` is graded against values fetched from the
-  production analytics API before any trial, and its entry records what was
-  fetched and how. The API exposes no data-version field, so `digest` (a hash
-  of the values the selector picked, not of the whole response) is the only
-  sign that data moved: a digest that differs between two runs means that
-  case's data changed. It is omitted on an unresolved selector, where it
-  would be the same constant for every such case and prove nothing.
-  `tools/diff_runs.py` reads it to file data bumps (see
-  [Comparing two runs](#comparing-two-runs)), and reads `agent_values` to
-  flag a bump that may hide a real agent break.
-- **No fabricated or backfilled runs.** A run file is written by
-  `gold run` (or, for legacy runs, `tools/ingest_run.py`) from real harness
-  output, never by hand.
-
-## Comparing two runs
-
-`tools/diff_runs.py <older> <newer>` compares two runs check by check, on
-every case both runs scored, and reports regressions (pass to fail),
-recoveries (fail to pass), data bumps (below) and coverage changes (a check
-that started or stopped being evaluated). The count means something only when the two runs
-are comparable. Check these before you diff, and before you trust a count
-someone else produced:
-
-1. **Same `ff`.** Each profile gives the agent different tools, so a diff
-   across profiles measures the profile, not the build. The run_id ends
-   with the ff: `20260831T163347Z_prod` (default profile) cannot be diffed
-   against `20260831T155003Z_prod_experimental`.
-2. **Same trial count, and 3 trials for anything that yields a regression
-   count**: a release gate, a baseline, a before-and-after comparison. Read
-   `num_trials` in each file. A 1-trial run is a smoke run and is never
-   diffed (see [Running the set](../README.md#running-the-set)).
-3. **Same environment** (`staging`, `prod` or `local`, also in the run_id).
-   Environments usually run different agent builds, so a diff across them
-   measures the environment.
-
-`caseset_version` may differ. The diff covers only the uids present in both
-runs (stale rows excluded), so added, removed or edited cases show up as
-"only in A" or "only in B", never as regressions or recoveries. Report the
-number of shared cases with the result, because a small overlap makes a
-weak verdict. Pass `--strict` to refuse any pair whose `caseset_version`
-differs.
-
-To pick a baseline, `tools/find_baseline.py <new run>` prints the newest
-run in `results/gold/runs/` that meets all three conditions and also loaded the
-same store (`caseset`), and exits non-zero with the reason when none does.
-The CI release gate uses it. Runs from before 2026-08-04 record no
-`caseset`, so they never match.
-
-**Why 3 trials.** Two trials of the same run (same build, same cases,
-nothing changed) differ by 18 to 29 spurious regressions. That is more than
-the 15 real regressions measured between two different builds, so a
-1-trial diff cannot tell a clean release from a broken one, and a 1-trial
-run diffed against a 3-trial baseline is worse. Comparing the three trials
-stored in `20260831T163347Z_prod` pairwise gives the same band.
-
-**Info-only checks never gate.** Checks in `buckets.INFO_ONLY` (see
-[Info-only checks](../src/goldset/evaluators/README.md#info-only-checks)),
-including multi-turn ones under a `t<N>.` prefix, appear in the diff, but
-`--fail-on-regression` and `--fail-on-coverage-loss` ignore them. The
-headline splits regressions and lost checks into gating and info-only
-counts, and the JSON report's `gating_regressions` and
-`gating_coverage_lost` are what the two flags read. If the newer run carries a `methodology_note`, movement on the
-checks it names comes from a harness change, not from the agent.
-
-**Data bumps are not regressions.** A ground-truth case is graded against
-values fetched when the run starts, so a data release can flip it with no
-agent change. When a ground-truth check flips and the case's `digest` moved,
-the diff lists it as a data bump with its cause: `data` (same request,
-different numbers), `request` (GOLD's own request changed, so a harness
-change) or `fixed_dataset` (a dataset declared never to change has changed).
-Bumps are never counted as regressions or recoveries and never gate. A
-`ground_truth_match` bump whose agent figure matches neither run's values,
-or that has no figure, is flagged `possible_hidden_regression`: review it
-before trusting the regression count, because a break that lands in the
-same run as a data change would otherwise never be counted.
-
-## Composing a current picture across runs
-
-A scoped re-run is often all that's needed: when only a handful of rows changed,
-or when one capability was unreachable (a missing `ff`, a service outage). The
-temptation is then to write those fresher scores into the earlier run file so
-there is a single number to quote. **Don't.** `write_run` refuses it and the rules
-above forbid it, but the deeper reason is that a run record also describes *how*
-its rows were produced (`ff`, `workers`, `build`, `harness`, `caseset_version`).
-Splice in rows produced under different conditions and that metadata becomes
-false, which misleads the next person to diff the file.
-
-Compose in the **analysis** instead:
-
-```bash
-uv run python tools/compose_runs.py results/gold/runs/<primary>.json \
-    results/gold/runs/<supplementary>.json
-```
-
-It resolves every active case to its freshest measurement **at the case's current
-uid** (supplements win over the primary, later supplements over earlier), prints
-per-row provenance, names any row nothing has measured, warns when the sources
-disagree on `ff`, and writes nothing to `results/gold/runs/`. Both runs stay in the
-ledger as honest, independently reproducible records; only the summary is joined.
-
-## Derived index
-
-`results/index.json` is a generated projection of the **committed** runs
-(every set): per run, the header fields plus the `buckets` block verbatim,
-with no computed rates and no per-case rows. It exists so web consumers (the
-evals dashboard) can enumerate runs and draw trends from one fetch, since
-raw.githubusercontent.com cannot list directories. Regenerate with
-`uv run python tools/build_run_index.py` after `git add`-ing a new run
-(enumeration is `git ls-files`, so untracked local runs never leak in), and
-commit it with the run; CI gates freshness via `--check`. Like every other
-derived artefact here, it is never hand-edited.
-
-Benchmark entries (`sets.benchmark[]`) also carry the run's `benchmark`
-block, `canonical` (a North Star trend point: prod, no ff, 3 trials, every
-currently active member present) and `canonical_reasons`. The top-level
-`benchmarks` object maps each version to `{path, status, frozen, members,
-voided, runs, canonical_runs}`. Because it reads `benchmarks/*.json`, adding
-an erratum or freezing a version also requires regenerating the index.
-A benchmark run whose page data is committed
-(`results/benchmark/pages/<run_id>.json`, written by `tools/benchmark_page.py`
-for the FE accuracy-benchmarks page) also carries `page`, that file's path.
-
-## Ledger resets
-
-- **2026-08-04: v2 baseline reset.** Runs scored against intermediate v2
-  curation states (2026-08-02 and 2026-08-03) and their reports were
-  deleted, so the v2 record starts at the first official v2 run. They remain
-  in git history. The v1 runs from 2026-07-31 and 2026-08-01, and the
-  recommendations and campaign docs from that period, were kept.
+**Ground truth is recorded, not trusted.** A ground-truth case is graded against values fetched from the production analytics API before any trial, and its entry records what was fetched and how. The API has no data-version field, so `digest` is the only sign that the data moved: a digest that differs between two runs means that case's data changed. It hashes the values the selector picked, not the whole response. It is left out on an unresolved selector, where it would be the same for every such case and prove nothing. `tools/diff_runs.py` reads it to file [data bumps](../docs/gold-legacy.md#data-bumps), and reads `agent_values` to flag a bump that may hide a real agent break.

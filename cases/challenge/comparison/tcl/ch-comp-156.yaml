@@ -17,7 +17,7 @@ expected:
     Alto Paraguay lost more tree cover than Boquerón since 2021'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-068); USY-001561 Paraguay deforestation-free
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-068); USY-001561 Paraguay deforestation-free
     beef policy
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'

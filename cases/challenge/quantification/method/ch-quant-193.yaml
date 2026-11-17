@@ -9,7 +9,7 @@ expected:
     and points to documentation, without inventing endpoints.
 notes:
   behaviour: Explain API access; point to documentation; no fabricated endpoints
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-271); USY-000455 CI Firecast API; Alerts
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-271); USY-000455 CI Firecast API; Alerts
     JTBD (Miro)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

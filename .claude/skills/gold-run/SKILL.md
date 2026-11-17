@@ -1,14 +1,18 @@
 ---
 name: gold-run
-description: Use when running the GOLD eval set or finishing a run. Covers preflight (ff, trials, build label), the run itself, then the full after-run ritual (reports, flakiness, diff, recommendations doc, commit).
+description: Use when running the GOLD eval set or finishing a GOLD run (legacy copy in this repo). Covers preflight (ff, trials, build label), the run itself, then the full after-run ritual (reports, flakiness, diff, recommendations doc, commit). Not for CHALLENGE or BENCHMARK runs.
 ---
 
 # gold-run: run the set and finish the job
 
+> GOLD moved to wri/project-zeno `evals/gold/` on 2026-10-27. This skill applies to the
+> legacy copy in this repo and will move with it. For CHALLENGE or BENCHMARK work use
+> **challenge-cases** (CHALLENGE runs) or **benchmark-run** (BENCHMARK runs).
+
 A run is not done when the JSON lands: it is done when someone can act on it.
 This skill covers preflight, the run, and the four-step after-run ritual
-([README, After a run](../../../README.md#after-a-run)), executed rather than
-cited. Terms are defined in the [README glossary](../../../README.md#glossary).
+("After a GOLD run" in [docs/gold-legacy.md](../../../docs/gold-legacy.md)), executed rather than cited. Terms are
+defined in [docs/glossary.md](../../../docs/glossary.md).
 
 ## 1. Preflight (all of these, every time)
 
@@ -16,12 +20,13 @@ cited. Terms are defined in the [README glossary](../../../README.md#glossary).
   for `--env staging`, `PROD_API_TOKEN` for `--env prod`, plus
   `ANTHROPIC_API_KEY` for the judge (the CLI loads `.env`). `API_TOKEN` is
   only a fallback (and the one `--env local` reads), so make sure it does not
-  hold another environment's token. See [README, Setup](../../../README.md#setup).
+  hold another environment's token. See Setup in [README.md](../../../README.md).
 - **Tool profile:** run the default profile (no `--ff`). Add
   `--ff experimental` only when the run is about something still behind that
   profile, and then diff it only against other `experimental` runs. Check the
   `ff` of the baseline you will diff against before you start. The rule, and
-  what each profile holds: [README, Running the set](../../../README.md#running-the-set).
+  what each profile holds: "Running a suite" in [README.md](../../../README.md)
+  and "Running GOLD here" in [docs/gold-legacy.md](../../../docs/gold-legacy.md).
 - **Tier: decide out loud.**
   - *Smoke* (`--trials 1`, the default): minutes-fast iteration. Never
     committed, never diffed, never a baseline.
@@ -37,8 +42,8 @@ cited. Terms are defined in the [README glossary](../../../README.md#glossary).
   timeout block once mimicked a capability loss).
 
 ```bash
-uv run gold run --env staging --build "<label>"              # smoke
-uv run gold run --env staging --trials 3 --build "<label>"   # official
+uv run gold run --suite gold --env staging --build "<label>"              # smoke
+uv run gold run --suite gold --env staging --trials 3 --build "<label>"   # official
 ```
 
 ## 2. During the run
@@ -47,7 +52,9 @@ Watch the progress lines for `[ERROR]` rows and the closing line ("N with
 ERRORS (rerun before trusting)"). An error row (a crash, a timeout or a judge
 error) is unmeasured, not failed: rerun it before trusting it. A contiguous
 block of timeouts near the end is a load signature, not an agent regression.
-If the run is killed, finish it with `uv run gold run --resume <run_id>`.
+If the run is killed, finish it with `uv run gold run --resume <run_id>`. The
+run's settings come from its partial file, and with no other flag the CLI
+finds the run in whichever of the three ledgers holds it.
 
 ## 3. After the run (official tier; smoke stops here)
 
@@ -56,9 +63,9 @@ Run all four, in order:
 1. **Reports:**
    ```bash
    uv run python tools/render_html.py results/gold/runs/<run_id>.json
-   uv run python tools/render_html.py --all
-   uv run python tools/render_inspector.py --all
-   uv run python tools/render_trends.py
+   uv run python tools/render_html.py --all --suite gold
+   uv run python tools/render_inspector.py --all --suite gold
+   uv run python tools/render_trends.py --suite gold
    ```
 2. **Flakiness + diff:**
    ```bash
@@ -72,7 +79,7 @@ Run all four, in order:
    If no comparable run exists, say so; do not diff against something else.
 3. **Recommendations doc** at `results/gold/recommendations/<run_id>.md`: use the
    **triage-run** skill, which classifies the failures and fills the four
-   sections listed in [README, After a run](../../../README.md#after-a-run).
+   sections listed in "After a GOLD run" in [docs/gold-legacy.md](../../../docs/gold-legacy.md).
 4. **Commit**, but **stop and show the user what will be committed first**
    (run JSON + reports + recommendations in one commit). After `git add`-ing
    the run JSON, regenerate the run index (`uv run python

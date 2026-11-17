@@ -16,7 +16,7 @@ expected:
     no button, panel, file or link that does not exist.
 notes:
   behaviour: Answer for three countries; provide table/download or explain how
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-266); USY-001514 MapMe threat assessments
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-266); USY-001514 MapMe threat assessments
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

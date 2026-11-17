@@ -3,7 +3,7 @@
     uv run python tools/audit_cases.py                # report (exit 0)
     uv run python tools/audit_cases.py --strict       # exit 1 on violations
 
-Encodes the authoring rules in cases/README.md (its DOs, DON'Ts and "The
+Encodes the authoring rules in cases/GOLD-AUTHORING.md (its DOs, DON'Ts and "The
 audit gate" sections):
 
 - depth: every ready, todo or done case implies at least 2 checks across at
@@ -36,7 +36,7 @@ EXEMPT_GROUPS = {"metadata"}  # sanctioned judged-only capability
 EXCLUDED_STATUSES = {"not doing"}
 
 # Alert/imagery datasets take genuinely date-scoped pulls; everything else
-# is annual/fixed and must not carry date expectations (cases/README.md).
+# is annual/fixed and must not carry date expectations (cases/GOLD-AUTHORING.md).
 DATE_SCOPED_DATASET_IDS = {"0", "11"}
 DATE_SCOPED_GROUPS = {"imagery"}
 
@@ -44,7 +44,7 @@ RELATIVE_DATE_RE = re.compile(
     r"\b(last|past|recent|latest|this (year|month|week))\b", re.IGNORECASE
 )
 
-# The rule (cases/README.md, DON'T #1): relative-date phrasing is tolerated
+# The rule (cases/GOLD-AUTHORING.md, "DON'T use relative dates"): relative-date phrasing is tolerated
 # only when the case asserts *routing alone*: which AOI/dataset/layer/
 # parameters the agent selected, its scope, and whether it asked to clarify.
 # Those stay true whatever the calendar says. Every other expectation

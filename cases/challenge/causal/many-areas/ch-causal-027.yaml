@@ -15,7 +15,7 @@ expected:
 notes:
   behaviour: 'Redirect: ranking many districts; drivers data has no mining-specific class
     at district level — explain'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-248); USY-001401 Caja Cusco; USY-001286
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-248); USY-001401 Caja Cusco; USY-001286
     Mongabay Peru
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review

@@ -14,7 +14,7 @@ expected:
   accept_nudge_offering: 10 | 8
 notes:
   behaviour: Answer with fire-driven loss and drivers; caveat on causes
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-034); Map exploration research ("Kenapa
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-034); Map exploration research ("Kenapa
     hutan kita di bakar")
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; expectations revised 2026-10-26 (AJ, why-questions review)'

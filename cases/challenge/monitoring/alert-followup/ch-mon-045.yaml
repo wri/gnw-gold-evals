@@ -12,8 +12,8 @@ expected:
     coordinates.
 notes:
   behaviour: List or export coordinates and dates, or explain how to get them
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-021); USY-001249 Offinso; Alerts JTBD
-    (Miro) (navigate to alerts in the field)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-021); USY-001249 Offinso; Alerts JTBD (Miro)
+    (navigate to alerts in the field)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

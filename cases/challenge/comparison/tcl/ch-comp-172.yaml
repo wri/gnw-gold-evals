@@ -17,7 +17,7 @@ notes:
   behaviour: Compare pre/post-2020 loss for the preloaded area; Do not suggest the data can
     set payment amounts; it can serve as an informal cross-check; explain method differences
     from official monitoring
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-203); USY-001338 TNC avoided conversion;
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-203); USY-001338 TNC avoided conversion;
     USY-001379 Wells for Zoé (analogue)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

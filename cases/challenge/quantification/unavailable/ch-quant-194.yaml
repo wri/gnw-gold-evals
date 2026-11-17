@@ -10,7 +10,7 @@ expected:
 notes:
   behaviour: Explain whether canopy height is available in Horizon; point to Land & Carbon
     Lab if not
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-272); USY-001368 One Acre Fund; USY-001343
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-272); USY-001368 One Acre Fund; USY-001343
     Meta canopy height
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'

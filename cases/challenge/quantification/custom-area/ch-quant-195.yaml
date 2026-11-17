@@ -9,8 +9,8 @@ expected:
     once.
 notes:
   behaviour: Explain upload support and portfolio limits
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-273); Map exploration research (KML
-    support; upload shapes)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-273); Map exploration research (KML support;
+    upload shapes)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

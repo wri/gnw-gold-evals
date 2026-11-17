@@ -10,8 +10,8 @@ expected:
     a workable alternative (one area, or bulk downloads or the API).
 notes:
   behaviour: Redirect until portfolio monitoring ships
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-102); Portfolio monitoring research
-    (returning to a previously monitored area)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-102); Portfolio monitoring research (returning
+    to a previously monitored area)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'

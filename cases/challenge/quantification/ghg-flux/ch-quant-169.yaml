@@ -17,8 +17,7 @@ expected:
   figure: sum(carbon_emissions_MgCO2e) where tree_cover_loss_year = 2023
 notes:
   behaviour: Answer with data; caveat on national inventory methods
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-173); USY-001625 CONAFOR (analogue);
-    USY-001330
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-173); USY-001625 CONAFOR (analogue); USY-001330
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
     2026-10-27'

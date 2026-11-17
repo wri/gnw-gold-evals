@@ -9,7 +9,7 @@ expected:
     biodiversity layers; it may say which kinds of biodiversity data are not available.
 notes:
   behaviour: Say what is and is not available; no fabricated biodiversity layers
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-298); USY-001523 GBF indicator; USY-001636
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-298); USY-001523 GBF indicator; USY-001636
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'

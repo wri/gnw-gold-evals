@@ -12,8 +12,8 @@ expected:
   data_pull: 'TRUE'
 notes:
   behaviour: answer if cattle in sLUC crops; else decline and say which commodities are covered
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-186); Green Markets donor deliverable
-    (FY27 slides); USY-001228
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-186); Green Markets donor deliverable (FY27
+    slides); USY-001228
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; expectations revised 2026-10-26 (AJ, why-questions review); draft-5
     review 2026-10-27'

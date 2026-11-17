@@ -11,8 +11,8 @@ expected:
 notes:
   behaviour: Say active-fire alerts are not available; offer disturbance alerts or fire-driven
     loss
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-029); Map exploration research (latest
-    VIIRS fire alerts); USY-001332 IBIF
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-029); Map exploration research (latest VIIRS
+    fire alerts); USY-001332 IBIF
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

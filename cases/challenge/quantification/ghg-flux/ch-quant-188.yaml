@@ -17,8 +17,7 @@ expected:
   figure: sum(carbon_gross_removals_Mg_CO2e) where aoi_id = 'BRA.14'
 notes:
   behaviour: Answer with flux for the state; explain if within-state hotspots are not supported
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-263); USY-000473 Economist Amazon flux
-    (analogue)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-263); USY-000473 Economist Amazon flux (analogue)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; accept_aoi_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'

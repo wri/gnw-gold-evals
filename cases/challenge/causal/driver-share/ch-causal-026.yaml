@@ -13,7 +13,7 @@ expected:
     cocoa belt), and notes that the cocoa belt is not a defined boundary.
 notes:
   behaviour: answer with drivers data at supported scale; caveat
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-228); USY-001392 Ghana Cocoa Belt restoration
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-228); USY-001392 Ghana Cocoa Belt restoration
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

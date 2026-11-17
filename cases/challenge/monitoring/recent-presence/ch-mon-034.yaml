@@ -17,7 +17,7 @@ expected:
   figure: sum(area_ha) where alert_date in {run-7d}..{run}
 notes:
   behaviour: answer with data
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-004); USY-000194 Maranhão forest manager
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-004); USY-000194 Maranhão forest manager
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'

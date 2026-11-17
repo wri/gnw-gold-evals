@@ -15,7 +15,7 @@ expected:
 notes:
   behaviour: Use alerts with land cover and historical drivers as context; say that alert-level
     driver data is not available yet; no invented cause
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-031); USY-001633 Matsés patrols; Alerts
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-031); USY-001633 Matsés patrols; Alerts
     JTBD (Miro) (know what caused alerts); GFW Advisory Council focus groups (linking drivers
     to alerts)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;

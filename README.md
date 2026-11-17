@@ -1,292 +1,198 @@
 # gnw-gold-evals
 
-GOLD is the capability regression suite for the agent behind Global Nature Watch (GNW): Project Zeno, an LLM agent that answers questions about land and nature data, such as deforestation, land cover and carbon, for named places. This repo holds the GOLD cases, the harness that runs them against the agent, and the committed ledger of results.
+This repo measures how well the agent behind Global Nature Watch (GNW) answers questions. GNW is a World Resources Institute (WRI) product for asking about land and nature data, such as deforestation, land cover and carbon, for named places. The agent is Project Zeno, a large language model (LLM) agent built in [wri/project-zeno](https://github.com/wri/project-zeno). The GNW app calls it Horizon.
 
-GOLD answers one question before each release: **did an agent change break a capability that used to work?** It does not measure answer quality or accuracy; the CHALLENGE set in this repo (`cases/challenge/`, with its frozen BENCHMARK subsets in `benchmarks/`) does that, as pass rates rather than regression counts. So coverage across capabilities is the design goal, a deterministic case beats a realistic one, and the headline number is a **regression count** between two runs, not a mean score.
+The repo holds the cases, the harness that sends them to the agent and scores the answers, and the committed results. It measures three things:
 
-Cases used to live in a Google Sheet, where edits landed mid-run and nothing recorded which version of a case a score belonged to. Here every case is a versioned file and every result is pinned to the exact case content it was scored against. Project terms are defined in the [Glossary](#glossary).
+- **CHALLENGE** measures quality as pass rates per kind of question. Its cases are phrased the way users ask, and many of them are expected to fail today: a failure is data, not a defect.
+- **BENCHMARK** is a fixed exam drawn from CHALLENGE, to show whether the agent gets better over time. Its runs give the North Star rate and the page data behind the AI accuracy scorecards page of the GNW frontend.
+- **The plain baseline** asks a plain LLM with web search the same BENCHMARK questions and scores its replies, so the agent can be compared with a general assistant.
 
-## How it works
+GOLD, the capability regression suite this repo was first built for, now lives in project-zeno under `evals/gold/`. The GOLD files here are a legacy copy until a later pull request deletes them: see [docs/gold-legacy.md](docs/gold-legacy.md).
 
-A **case** is a YAML file holding a user query (or a scripted conversation) and the values a correct answer must contain: the place ids, the dataset, the date range, a figure. `gold run` sends each query to the agent's API, waits for the answer, then fetches the agent's final state for that conversation. **Evaluators** compare that state with the case's expected values and produce **checks**, each scoring pass, fail or not evaluated. Each check speaks for one or two of five **buckets** (retrieval, analysis, explanation, output, scope), so a failure points at the stage that broke. The run is written to `results/gold/runs/` as one immutable JSON record, which is committed. Before a release, `tools/diff_runs.py` compares the candidate build's run with a baseline run and counts **regressions**: checks that passed before and fail now.
+## Suites at a glance
 
-Results are keyed by case content, not by case name. Every case has a [uid](#uid), a hash of its query and expected values, so editing a case gives it a new uid and an old score is never read as a score for the new content. Each store of cases has a [caseset_version](#caseset-version), a hash of all its uids. GOLD has two stores: `cases/v2` is the working set that every edit goes to, and `cases/v1` is the frozen import of the original sheet, kept so the effect of curating the cases can be measured. See [The two stores](cases/README.md#the-two-stores).
+| Suite | Question it answers | Cases | Results | Owner doc |
+|---|---|---|---|---|
+| CHALLENGE | How well does the agent answer each kind of question? A pass rate per set and cohort, against targets | `cases/challenge/<set>/<cohort>/<id>.yaml` | `results/challenge/` | [cases/challenge/README.md](cases/challenge/README.md) |
+| BENCHMARK | Is the agent getting better on a fixed exam? | `benchmarks/<version>.json`, a list of CHALLENGE case uids | `results/benchmark/` | [benchmarks/README.md](benchmarks/README.md) |
+| Plain baseline | What does a plain LLM with web search get on the same questions? | the BENCHMARK `2026-draft-5` questions that judge a reply | `results/plain/` | [results/plain/README.md](results/plain/README.md) |
+| GOLD (legacy copy) | Did an agent change break a capability that used to work? | `cases/v2/`, and `cases/v1/` frozen | `results/gold/` | [docs/gold-legacy.md](docs/gold-legacy.md) |
 
-## Glossary
+A BENCHMARK version is a list of uids, not a copy of the cases. The live version, `2026-draft-5`, is a draft. Freezing a version, so that its members never change, is the intended end state, but no version is frozen yet.
 
-Definitions only: counts are in [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md), and rules are in the sections below and in [CLAUDE.md](CLAUDE.md).
+## Core concepts
 
-### The product
+Every other doc uses these terms. The [glossary](docs/glossary.md) defines the rest.
 
-- **GNW (Global Nature Watch)**: the World Resources Institute (WRI) product for asking questions about land and nature data for named places.
-- **Project Zeno, the agent**: the LLM agent behind GNW, built in [wri/project-zeno](https://github.com/wri/project-zeno). The harness asks it a question with `POST /api/chat`, then reads its final state with `GET /api/threads/{id}/state`; checks score that state.
-- **GOLD**: this suite, a capability regression check run before each release (also called the capability smoke-test set; not the same thing as a [smoke run](#smoke-run)). Its headline is a regression count, not a score.
-- **CHALLENGE**: the quality and accuracy counterpart to GOLD, in `cases/challenge/` (set, cohort, case). Its verdicts are pass rates per set and cohort, never regression counts, and its ledger is `results/challenge/`. See [cases/challenge/README.md](cases/challenge/README.md).
-- **BENCHMARK**: a frozen, versioned subset of CHALLENGE behind the North Star: a uid manifest at `benchmarks/<version>.json`, run with `gold run --benchmark`, with results in `results/benchmark/`. See [benchmarks/README.md](benchmarks/README.md).
-- **gnw-evals**: the earlier evaluation harness ([wri/gnw-evals](https://github.com/wri/gnw-evals)) that this harness was ported from. A few [legacy tools](#legacy-tools) still read or write its formats.
-- **harness**: the code here that sends each case to the agent, fetches the final state and scores it (`src/goldset/runner/`, run with `gold run`).
-- **environment**: the agent deployment a run targets: `staging`, `prod` or `local` (`http://localhost:8000`). Recorded on the run and in its run_id.
-- <a id="profile"></a>**ff, tool profile**: `ff` (feature flag) is a field in the chat request that picks the agent's tool profile. Leaving it out gives the default profile; `experimental` adds features not yet released to the default. A run records its `ff`, and its run_id ends with it. See [Running the set](#running-the-set).
-- **AOI (area of interest)**: the place a question is about, as the agent resolved it: one or more ids from a boundary source (`aoi_source`), which is `gadm`, `kba`, `wdpa` or `landmark`.
-- **GADM**: the Database of Global Administrative Areas: country, state and district boundaries. Ids look like `BRA.25_1`: a country code, admin-level numbers, then a `_N` suffix that `aoi_id_match` ignores.
-- **KBA, WDPA, Landmark**: the other AOI sources: Key Biodiversity Areas, the World Database on Protected Areas, and LandMark (indigenous and community lands).
-- **dataset, catalogue**: the agent's datasets are numbered and defined in project-zeno's dataset catalogue (`src/agent/datasets/catalog/*.yml`). A case's `dataset_id` names the dataset it expects. A retired dataset id, such as 0 (DIST-ALERT), is never reused.
-- **LGMS**: the Land GHG Monitoring System dataset (id 12), hidden on the default profile.
-- **nudge**: the agent's structured follow-up offer, held in the `nudge` state field as `{type, options, data?}`. A `dataset_choice` nudge offers datasets (scope `suggest`); other types, such as `aoi_choice`, ask the user to pick or clarify (scope `clarify`). It replaced the older `suggested_datasets` field, which the agent no longer writes.
-- **send_nudge**: the agent tool that writes a nudge with fixed arguments, the most deterministic kind of nudge.
-- **thread**: one conversation with the agent. Each trial runs in a fresh thread; a multi-turn case sends all its turns to one thread.
+- **case**: one test in one YAML file: a user query, or a scripted conversation, and the values a correct answer must contain, such as the place ids, the dataset, the date range or a figure.
+- **uid**: a 16-character hash of a case's query and expected values. Editing either gives the case a new uid, so an old score is never read as a score for new content. The case's `id`, such as `ch-aoi-001`, is its human name and stays the same.
+- **store**: a directory of cases with its `MANIFEST.json`. `cases/challenge` holds CHALLENGE and every BENCHMARK member.
+- **run**: one execution of a selection of cases against one environment: `prod`, `staging` or `local`.
+- **trial**: one attempt at one case within a run, in a fresh conversation. `--trials 3` runs each case three times.
+- **check**: one named score on one attempt, such as `aoi_id_match`: `1.0` for a pass, `0.0` for a fail, or `null` when it was not evaluated.
+- **bucket**: the stage of the agent's work that a check speaks for: retrieval, analysis, explanation, output or scope. A failure then points at the stage that broke.
+- **ledger**: a suite's committed run records, one JSON file per run under `results/<suite>/runs/`. Only the harness writes it.
 
-### Cases and stores
+### From case to score
 
-- **case**: one test, stored as one YAML file at `cases/<store>/<group>/<id>.yaml`: a query (or turns), the expected values it is graded on, a status, a group and free-form notes.
-- **id**: a case's stable, human-readable name, such as `1-030` (single-turn) or `mt-005` (multi-turn). It survives edits, so it links every version of one test.
-- <a id="uid"></a>**uid**: a 16-character hash (truncated SHA-256) of a case's query and every non-empty expected value; for a multi-turn case, of every turn in order (in v2, including each turn's `deltas`). Editing the query or any expected value gives a new uid; status, group and notes never do. Results are keyed by uid. The exact rules are in [CLAUDE.md](CLAUDE.md#the-identity-system).
-- <a id="caseset-version"></a>**caseset_version**: a 16-character hash of the sorted uids of every case in a store, kept in the store's `MANIFEST.json`. It changes when a case is added, removed or given a new uid. Two runs with the same caseset_version scored the same case content; runs with different ones can still be compared over the cases they share ([Comparing two runs](results/README.md#comparing-two-runs)).
-- **store, v1, v2**: a store is a directory of case files plus its generated `MANIFEST.json`. v2 (`cases/v2`) is the working set: all edits go there and every tool uses it by default. v1 (`cases/v1`) is the frozen import of the retired Google Sheet, and a test fails if it changes. See [The two stores](cases/README.md#the-two-stores).
-- **MANIFEST.json**: a per-store file written by `tools/check.py --fix`: the caseset_version plus an id-to-uid index.
-- **expected, notes**: `expected` holds the values a case is graded on; each non-empty key switches on one or more checks and is part of the uid. `notes` holds annotations, such as `status_reason` and `env_gated`, that are never hashed or scored.
-- **group**: the capability a case tests (`direct`, `temporal`, `dashboard` and so on); also the name of its directory.
-- **status**: where a case is in its lifecycle: `ready`, `todo`, `done` or `not doing`. Every status except `not doing` runs by default. See [Status lifecycle](cases/README.md#status-lifecycle).
-- **park, unpark**: set a case to `not doing` with a dated reason in `notes.status_reason`, or bring it back. An unparked case must show again that the reason it was parked no longer holds.
-- **scope**: the kind of work a case expects: `analyse` (pull data and answer), `suggest` (offer datasets), `clarify` (ask the user to choose) or `refuse` (decline). The harness classifies the agent's final state into one of these; `refuse` matches a state with no data pull, no suggestion and no nudge.
-- **`;` in expected values**: in `dataset_id`, `scope`, `nudge_type` and `chart_type`, `a;b` means either value is acceptable. In `aoi_ids` it means all of them (the two sets must match). Other fields have their own rules, given with each check in the [evaluators README](src/goldset/evaluators/README.md#index).
-- **multi-turn case, deltas**: a case with `turns:` instead of one query and expected block; all turns share one thread. A turn's `deltas` say which state fields must have `changed`, stayed the same (`retain`) or become empty (`absent`) since the previous turn, scored as the `state_delta` check.
-- <a id="ground-truth"></a>**ground truth**: an `expected.ground_truth` selector, such as `sum(area_ha) WHERE year=2019`, that names a figure instead of pinning its value. The harness fetches the value from the analytics API when the run starts, so the case survives data releases with its uid. See [Run-time ground truth](cases/README.md#run-time-ground-truth-ground_truth).
-- **query template**: a token such as `{current_year}` in a query, replaced with a concrete date when the run starts. The uid hashes the token, not the date, so the case keeps its identity as time passes.
-- **env_gated**: a note on a case whose capability is missing in some environment or profile, so its zeros are not read as regressions. Only people read it; no code does.
-- **sentinel**: a deliberately loosely worded case, kept so that a drift towards over-nudging is still caught.
-- **depth rule**: a case's expected values must imply at least two checks in at least two buckets, so a pass always measured something. CI enforces it ([The audit gate](cases/README.md#the-audit-gate)).
-- **COVERAGE.md**: `cases/v2/COVERAGE.md`, a generated report of what v2 covers: groups, buckets, expected fields, datasets and parked cases. Never edit it by hand; CI fails if it is out of date.
-- **catalogue snapshot**: `cases/zeno_catalog.json`, a committed copy of the agent's dataset catalogue, so COVERAGE.md can be generated without network access. It also holds the analytics endpoint and date window that ground-truth requests are built from.
+Code paths are under `src/goldset/` unless they start with `tools/`.
 
-### Runs and results
+| Step | What happens | Code |
+|---|---|---|
+| 1. Select | `evals run` loads the store and picks the cases: by suite, status, set or id, or a BENCHMARK version's members | `cli.py`, `suites.py`, `store.py`, `benchmark.py` |
+| 2. Resolve | Date tokens such as `{current_year}` are filled in. The uid keeps the token | `templates.py` |
+| 3. Ask | The harness sends the query to the agent with `POST /api/chat`, reads the stream to its end, then fetches the final state with `GET /api/threads/{id}/state` | `runner/api.py`, `runner/multiturn.py` |
+| 4. Score | Each evaluator compares the final state with the case's `expected` values and returns checks | `adapter.py`, `registry.py`, `evaluators/` |
+| 5. Verdict | Each attempt gets a verdict from its gating checks, and each case gets a row verdict from its attempts. Checks are tallied per bucket | `buckets.py` |
+| 6. Record | The run record goes to `results/<suite>/runs/<run_id>.json`. Raw agent state goes to the gitignored `results/<suite>/artifacts/` | `ledger.py`, `runner/artifacts.py` |
+| 7. Read | CHALLENGE: pass rates. BENCHMARK: the North Star and the page data | `tools/challenge_rollup.py`, `tools/benchmark_page.py` |
 
-- **run**: one execution of the selected cases against one environment, written as one run record.
-- <a id="trial"></a>**trial**: one execution of one case within a run, in a fresh thread. `--trials 3` runs each case three times; the run stores each check's majority verdict and every trial's scores.
-- **majority verdict**: a check's result across trials: pass if more than half of the trials that evaluated it passed, otherwise fail (a tie fails); not evaluated if no trial evaluated it.
-- <a id="smoke-run"></a>**smoke run, official run**: the two run tiers. A smoke run (1 trial, the default) is for quick iteration and is never committed, diffed or used as a baseline. An official run (3 trials) is anything that produces a regression count or becomes a baseline. See [Running the set](#running-the-set).
-- **build label**: free text passed with `--build` naming the agent build under test (default `unknown`). The harness records it as given; it does not ask the API.
-- **run record, ledger**: a run record is the JSON file one run writes to `results/gold/runs/`, immutable once written. The ledger is the committed set of run records. Nothing in it is ever written or edited by hand. Contract: [results/README.md](results/README.md).
-- **run_id**: a run record's name, `<YYYYMMDD>T<HHMMSS>Z_<env>[_<ff>]` in UTC, for example `20260831T163347Z_prod`. The suffix shows the environment and `ff` at a glance.
-- **partial file**: `results/gold/runs/<run_id>.partial.jsonl` (gitignored), where a run appends each finished case so that a killed run can be resumed.
-- **artefacts**: raw agent state for each case and trial, gzipped under `results/gold/artifacts/<run_id>/` (gitignored). They keep evidence a run record does not. `uv run gold prune-artifacts` deletes all but the newest runs' artefacts.
-- **methodology note**: text passed with `--note` and stored as `methodology_note` on the run, recording that check semantics changed since the previous run.
-- **regression, recovery**: between two runs, for a case uid present in both: a check that went from pass to fail (regression) or from fail to pass (recovery). Counted per check, not per case. Info-only checks never count towards the gate.
-- <a id="data-bump"></a>**data bump**: a ground-truth check that flipped between two runs while the digest of its fetched values moved, so the data changed under the case. `diff_runs.py` lists bumps but never counts them as regressions or recoveries, and they never gate. A bump that the agent's own recorded figure does not explain is flagged as a possible hidden regression.
-- **coverage loss, coverage gain**: a check that went from evaluated to not evaluated (loss) or the reverse (gain) between two runs. A check that stopped running has not passed.
-- **comparable runs**: two runs whose diff means something: same `ff`, same trial count (3) and same environment. The caseset_version may differ, because a diff only covers uids present in both runs. See [Comparing two runs](results/README.md#comparing-two-runs).
-- **baseline**: the official run a new run is diffed against: the most recent committed official run that is comparable with it.
-- **release gate**: the check before a release: `tools/diff_runs.py --fail-on-regression` between the baseline and an official run of the candidate build. See [The release gate](#the-release-gate).
-- **stale_case, stale expectation**: `stale_case` marks a result whose uid the current store no longer holds ([results/README.md](results/README.md)). A stale expectation is something else: an expected value that is out of date, so the case fails although the agent is right.
-- **flaky check**: a check whose trials disagree within one run. `tools/flakiness.py` reports each check's mean, standard deviation and number of flips across trials.
-- **compose**: build a current picture from a full run plus scoped re-runs with `tools/compose_runs.py`. It works in the analysis only and never writes to the ledger.
-- **recommendations doc**: `results/gold/recommendations/<run_id>.md`, written after each official run. See [After a run](#after-a-run).
-- **campaign**: a write-up of a multi-run validation effort, kept in `results/gold/campaigns/`.
-- **probation, re-admission**: a trial period before something is trusted again. An info-only check must meet its stated condition before it gates again; an unparked case must show that the reason it was parked no longer holds.
+## Start here
 
-### Scoring
+Each job has one doc that owns it, and most have a Claude Code skill that walks it.
 
-- **check**: one named score on a case, such as `aoi_id_match`. Every check is tri-state.
-- **evaluator**: a function of the agent's final state and the case's expected values that returns one or more checks. Evaluators are registered in `src/goldset/registry.py`.
-- **deterministic, judged**: how a check decides: in code, or by asking the LLM judge. Some checks combine the two (for example, the judge picks the figure out of the prose and code compares it); the evaluators README says which.
-- **judge**: the LLM (`claude-haiku-4-5` unless `--judge-backend` picks another) that scores judged checks. It is never asked to do arithmetic; numbers are compared in code.
-- **tri-state**: every check scores `1.0` (pass), `0.0` (fail) or `null` (not evaluated). Each check's documentation says when a missing input scores `null` and when it scores `0.0`.
-- **implied check, reconciliation line**: implied checks are those a case's expected values guarantee will be evaluated. A report's reconciliation line compares the implied count with the evaluated count, so a check that silently did not run shows up.
-- <a id="bucket"></a>**bucket**: one of five pipeline stages a check speaks for: retrieval, analysis, explanation, output and scope (see [How scoring reads](#how-scoring-reads)). A **dedicated** check belongs to one bucket; a **shared** check belongs to two, because its failure cannot be pinned on one.
-- <a id="info-only"></a>**gating, info-only**: a gating check can turn a row's verdict to fail. An info-only check is recorded and reported but never affects a row verdict or the release gate; new judged checks start info-only. The list is `INFO_ONLY` in `src/goldset/buckets.py`, explained in [Info-only checks](src/goldset/evaluators/README.md#info-only-checks).
-- <a id="row"></a>**row, row verdict**: a row is one case's result in a run (the word dates from the sheet). Its verdict is `pass`, `fail` (a gating check scored `0.0`), `error` (an API or judge failure, never counted as a fail) or `uncovered` (no gating check was evaluated, never counted as a pass).
-- **judge error**: a judge call that failed. The check stays `null`, its name is recorded in `judge_errors`, and the row verdict becomes `error`.
-- **gate**: used for several things, so say which: the CI checks on every PR; the audit gate (`audit_cases.py --strict`); the release gate (`diff_runs.py --fail-on-regression`); a check being gating; the flakiness limits.
+| Job | Owner doc | Skill |
+|---|---|---|
+| Run CHALLENGE and finish the run | [cases/challenge/README.md](cases/challenge/README.md) | `challenge-cases` |
+| Run BENCHMARK and publish its page data | [benchmarks/README.md](benchmarks/README.md) | `benchmark-run` |
+| Rerun only the BENCHMARK members revised since a run | [benchmarks/README.md, Rerunning revised members only](benchmarks/README.md#rerunning-revised-members-only) | `benchmark-run` |
+| Add or edit a CHALLENGE case | [cases/README.md](cases/README.md) for the case file and the after-edit commands, then [cases/challenge/README.md](cases/challenge/README.md) | `challenge-cases`, `case-edit` |
+| Run or rescore the plain baseline | [results/plain/README.md](results/plain/README.md) | `plain-baseline` |
+| Refresh the dataset catalogue snapshot | [cases/README.md, The catalogue snapshot](cases/README.md#the-catalogue-snapshot) | `sync-catalog` |
+| Read or change a check | [src/goldset/evaluators/README.md](src/goldset/evaluators/README.md) | |
+| Read the ledger format or compare runs | [results/README.md](results/README.md) | |
+| Find a tool | [tools/README.md](tools/README.md) | |
+| Anything GOLD | project-zeno `evals/gold/`; for this copy, [docs/gold-legacy.md](docs/gold-legacy.md) | `gold-run`, `new-case`, `release-gate`, `triage-run` |
+| Work here as an AI coding agent | [CLAUDE.md](CLAUDE.md) | |
 
-## Setup
+## Quick start
 
 You need Python 3.11 or later and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync                               # install, including the dev tools
-uv run python -m pytest -q            # the full suite; needs no network or secrets
-uv run ruff check src tools tests     # lint, as CI runs it
+uv sync                                        # install, with the dev tools
+uv run pytest -q                               # the tests; no network or secrets
+uv run ruff check src tools tests generation   # lint, as CI runs it
+uv run evals run --suite challenge --dry-run   # list the cases a run would send; no API calls
 ```
 
-Live runs need two secrets, set in your shell or in a `.env` file at the repo root (gitignored; `gold run` loads it before checking for a token):
+A live run needs two secrets, in your shell or in a gitignored `.env` file at the repo root:
 
-- **An API token for the target environment**: `STAGING_API_TOKEN` for `--env staging`, `PROD_API_TOKEN` for `--env prod`. If that variable is not set, the CLI falls back to `API_TOKEN`, which is also the only one `--env local` reads. So a stale environment-specific token in `.env` wins over a fresh `API_TOKEN`.
-- **Judge credentials**: `ANTHROPIC_API_KEY` for the default judge. With `--judge-backend openrouter-jev-decisions` the judge is TypeSafe JEV through OpenRouter Decisions, which needs `OPENROUTER_API_KEY` instead.
+- **An API token for the agent.** `STAGING_API_TOKEN` for `--env staging`, `PROD_API_TOKEN` for `--env prod`. When that variable is not set, the harness uses `API_TOKEN`, the only token `--env local` reads. So a stale environment-specific token in `.env` wins over a fresh `API_TOKEN`.
+- **The judge's key.** `ANTHROPIC_API_KEY` for the default judge. `--judge-backend openrouter-jev-decisions` uses another judge model, TypeSafe JEV through OpenRouter, and needs `OPENROUTER_API_KEY` instead.
 
-Cases with `expected.ground_truth` also call the production analytics API. They use `ANALYTICS_API_TOKEN` when it is set, and the API token otherwise.
+Cases with ground truth also call the analytics API, with `ANALYTICS_API_TOKEN` or else the API token. Only GOLD cases use ground truth today.
 
-## Running the set
+The Python package is called `goldset` for historical reasons. A rename would touch most files for no gain.
 
-`gold run` sends every case in `cases/v2` whose status is not `not doing` to the agent, scores it, and writes one run record to `results/gold/runs/<run_id>.json`, plus raw agent state under `results/gold/artifacts/<run_id>/` (gitignored).
+## Running a suite
+
+`evals run` and `gold run` are the same command; `gold` is the older name. A run must name its suite, so that it never lands in the wrong ledger:
+
+| Flag | Cases from | Results to |
+|---|---|---|
+| `--suite challenge` | `cases/challenge` | `results/challenge/` |
+| `--benchmark benchmarks/<version>.json` | that version's members, in `cases/challenge` | `results/benchmark/` |
+| `--suite gold` | `cases/v2` | `results/gold/` |
+
+`--benchmark` implies `--suite benchmark`. `--cases-dir` and `--results-dir` override a suite's directories, but the harness refuses a store and a ledger of different suites.
+
+**Which cases run.** `--suite challenge` leaves out `not doing` and `todo` cases, because `todo` cases are not pinned yet. `--suite gold` leaves out only `not doing`. `--status-exclude` changes this. A `--benchmark` run ignores status: the manifest names its members. Narrow any run with `--set`, `--group` or `--id`.
 
 ```bash
-uv run gold run --env staging --build "<label>"              # smoke run: 1 trial
-uv run gold run --env staging --trials 3 --build "<label>"   # official run
-uv run gold run --env staging --id 1-030 --verbose           # one case (repeat --id for more)
-uv run gold run --dry-run                                    # list the selected cases; no API calls
-uv run gold run --help                                       # every flag
+uv run evals run --suite challenge --set aoi --env staging --build "<label>"   # smoke run of one set
+uv run evals run --suite challenge --id ch-aoi-001 --env staging --verbose     # one case; --id repeats
+uv run evals run --help                                                        # every flag
 ```
 
-**Choose the tier before you start.**
+**Tiers.** Choose the tier before you start.
 
-- A **smoke run** (1 trial, the default) answers a quick question in minutes, such as "did my prompt rewrite stop the nudge?". It is never committed, never diffed and never used as a baseline.
-- An **official run** (`--trials 3`) is anything that produces a regression count or becomes a baseline. It needs three trials because the agent is not deterministic: two single trials of the same build differ by more spurious regressions than a real build change produced ([Comparing two runs](results/README.md#comparing-two-runs) has the evidence). Give it a meaningful `--build` label, such as the agent build string or a purpose like `post-fix-validation`, not the default `unknown`.
+- A **smoke run** has 1 trial, the default. It answers a quick question in minutes. It is never committed, compared or used as a baseline. `--env local` runs are smoke runs too, because a local stack matches neither staging nor prod.
+- A **canonical run** has 3 trials and the default profile, and for CHALLENGE and BENCHMARK it runs on prod. Only canonical runs are published, trended or used as a baseline. A BENCHMARK run is canonical only when it also measured every active member of its version, and `results/index.json` flags it.
 
-**Use the default tool profile.** Leave out `--ff` unless the cases under test need a feature still behind the `experimental` profile, such as the LGMS dataset (id 12). The run records its `ff`, and the run_id ends with it (`20260831T163347Z_prod` versus `20260831T155003Z_prod_experimental`). Never diff or trend two runs with different `ff`: the profiles offer different tools, so the diff would measure the profile, not the release. Cases that need `experimental` are parked (`not doing`) while official runs use the default profile; each one's `status_reason` says when to bring it back. Until late August 2026, dashboards and satellite imagery existed only behind `experimental`, so every run before 2026-08-31 used `ff=experimental`; do not compare those runs with later default-profile runs.
+**Why 3 trials.** The agent is not deterministic. In GOLD, two trials of the same build with nothing changed differed by 18 to 29 spurious regressions. That is more than the 15 real regressions measured between two different builds, so a 1-trial comparison cannot tell a good build from a broken one. Comparing the three trials stored in `results/gold/runs/20260831T163347Z_prod.json` pairwise gives the same band.
 
-**Record semantic changes.** If check semantics changed since the previous run, pass `--note "<what changed>"`. It is stored on the run, so later diffs are not read as agent changes.
+**Profile.** Leave out `--ff` unless the cases under test need a feature still behind the `experimental` tool profile. The run records its `ff`, and the run_id ends with it: `20260831T163347Z_prod` against `20260831T155003Z_prod_experimental`.
 
-**Local runs.** `--env local` targets a project-zeno API on `http://localhost:8000` (`make api` in a project-zeno checkout) and reads only `API_TOKEN`. Local runs are smoke runs: a local stack does not match staging or prod, so never commit or diff them.
+**Comparable runs only.** Compare or trend two runs only when they share `ff`, trial count and environment. Profiles offer different tools, and environments usually run different agent builds, so a comparison across them measures the setup, not the agent. If no comparable run exists, say so. [results/README.md, Comparing two runs](results/README.md#comparing-two-runs) adds what else each suite needs to match.
 
-**Killed runs.** A run appends each finished case to `results/gold/runs/<run_id>.partial.jsonl` (gitignored), so a killed run loses only the cases that were in progress. `uv run gold run --resume <run_id>` finishes it: the settings come from that file (every other flag except `--results-dir` is ignored), it refuses if the case set has changed, and the final record carries `resumed: true`.
+**Labels and notes.** Give a run a meaningful `--build`, such as the agent build string or `post-fix-validation`, not the default `unknown`. If check semantics changed since the previous run, pass `--note "<what changed>"`, so the change is not read as agent movement.
 
-**Workers and timeouts.** By default 10 cases run at once (the hard cap is 20), and a trial that takes over 900 seconds becomes an error row. Runs record both settings. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before blaming the agent.
+**Killed runs.** A run appends each finished case to `results/<suite>/runs/<run_id>.partial.jsonl`, which is gitignored. `uv run evals run --resume <run_id>` finishes it. With neither `--suite` nor `--results-dir`, it searches the three ledgers and uses the run only if exactly one holds it. The run's settings come from the partial file, so other flags are ignored. It refuses if the case set changed, and the record carries `resumed: true`.
 
-## The release gate
+**Workers and timeouts.** `--workers` sets how many cases run at once: 10 by default, capped at 20. [benchmarks/README.md](benchmarks/README.md#runs) says to leave it at the default for a BENCHMARK run. The worker count is recorded on the run and has no effect on whether a run is canonical. An attempt gets `no_answer`, a failed attempt, when the stream sends nothing for 240 seconds or is still open at `--trial-timeout`, 900 seconds by default. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before you blame the agent.
 
-Before a release, diff an official run of the candidate build against the baseline: the most recent committed official run that is comparable with it. If there is none, first make one with the build currently released.
-
-```bash
-uv run python tools/diff_runs.py results/gold/runs/<baseline>.json results/gold/runs/<candidate>.json \
-  --fail-on-regression --fail-on-coverage-loss
-```
-
-`--fail-on-regression` exits 1 on any regression in a gating check; `--fail-on-coverage-loss` also fails when a gating check stopped being evaluated. The count only means something if the two runs are comparable: same `ff`, same trial count (3) and same environment. [Comparing two runs](results/README.md#comparing-two-runs) gives the conditions and the evidence behind them; the `release-gate` skill walks through the verdict. Ground-truth flips caused by a data change are reported as [data bumps](#data-bump), not regressions; review any flagged as a possible hidden regression before trusting the count.
-
-## After a run
-
-An official run is not finished when its JSON lands; it is finished when someone can act on it. Smoke runs skip these steps and are never committed. If check semantics changed since the previous run, the run should already carry `--note` (see [Running the set](#running-the-set)).
-
-1. **Render the reports.**
-   ```bash
-   uv run python tools/render_html.py results/gold/runs/<run_id>.json   # results/gold/reports/<run_id>.html
-   uv run python tools/render_html.py --all        # results/gold/reports/all-runs.html
-   uv run python tools/render_inspector.py --all   # results/gold/reports/all-runs_inspector.html
-   uv run python tools/render_trends.py            # results/gold/reports/trends.html
-   ```
-   For a quick read, `uv run python tools/report_run.py results/gold/runs/<run_id>.json` prints a Markdown summary, and `render_inspector.py results/gold/runs/<run_id>.json` builds a matrix of every case against every check for one run. Read the trends page within one `ff` only.
-2. **Check flakiness and diff.**
-   ```bash
-   uv run python tools/flakiness.py results/gold/runs/<run_id>.json --per-case
-   uv run python tools/diff_runs.py results/gold/runs/<baseline>.json results/gold/runs/<run_id>.json
-   ```
-   Diff only against a comparable run ([Comparing two runs](results/README.md#comparing-two-runs)). If none exists, say so in the recommendations doc rather than diffing against something else.
-3. **Write `results/gold/recommendations/<run_id>.md`** with four sections:
-   - what to report to the agent team, with the failing and flapping rows as evidence;
-   - what the run says about the case set (stale expectations, coverage gaps, cases ready to leave probation);
-   - what it says about the harness;
-   - what to watch on the next run.
-
-   `results/gold/recommendations/20260801T093002Z.md` shows the shape.
-4. **Commit** the run JSON, the rendered reports and the recommendations doc together, in one commit. After `git add`-ing the run JSON, regenerate the run index (`uv run python tools/build_run_index.py`; it enumerates tracked and staged files, so add the run first) and commit `results/index.json` in the same commit; CI gates its freshness.
-
-The `gold-run` skill runs these steps, and the `triage-run` skill helps fill in step 3.
-
-## Changing cases
-
-Edit GOLD cases in `cases/v2` only; `cases/v1` is frozen ([The two stores](cases/README.md#the-two-stores)). Read [cases/README.md](cases/README.md) before writing or editing a case: it says what makes a good case and how a case's [status](cases/README.md#status-lifecycle) moves.
-
-After any change to a case file (query, expected values, status, group, notes, or a new or deleted case), run all three of these and commit their output in the same commit as the edit:
-
-```bash
-uv run python tools/check.py --fix            # recompute uids and MANIFEST.json (v2 by default)
-uv run python tools/coverage_doc.py           # regenerate cases/v2/COVERAGE.md
-uv run python tools/audit_cases.py --strict   # depth rule and DON'Ts, as CI runs it
-```
-
-CI runs `check.py` (without `--fix`) on every store (`cases/v1`, `cases/v2`, `cases/challenge`), `coverage_doc.py --check` (v2 and challenge) and `audit_cases.py --strict`, and fails the PR if a uid or manifest is out of date, COVERAGE.md is stale, or the audit finds a violation ([The audit gate](cases/README.md#the-audit-gate)).
-
-Editing the query or any expected value gives the case a new uid, so earlier results no longer match it and a `done` case needs verifying again. That is intended: it keeps every score pinned to the content it measured. Say in the PR which cases changed and why; the PR is the only record of the reason.
-
-When project-zeno adds, removes or changes a dataset, refresh the catalogue snapshot with `uv run python tools/sync_zeno_catalog.py`, then run `coverage_doc.py` and commit both.
+`uv run evals prune-artifacts --suite <suite>` deletes the raw artifacts of all but the newest 5 runs.
 
 ## How scoring reads
 
-Every check scores `1.0` (pass), `0.0` (fail) or `null` (not evaluated). Each check's documentation says whether a missing input counts as `null` or `0.0`, because a `null` that should have been a fail hides a regression.
+Every check is tri-state: `1.0` for a pass, `0.0` for a fail, or `null` when it was not evaluated. Each check's documentation says whether a missing input scores `null` or `0.0`, because a `null` that should have been a fail hides a failure.
 
-Checks roll up into five buckets, one per stage of the agent's work, so a failure points at the stage that broke:
+Checks roll up into five buckets, one per stage of the agent's work:
 
 | Bucket | The question it answers |
 |---|---|
-| Retrieval | Did the agent understand the question and fetch the right data (place, dataset, dates)? |
+| Retrieval | Did the agent understand the question and fetch the right data: place, dataset, dates? |
 | Analysis | Are the numbers right? |
 | Explanation | Is the prose faithful to the data? |
 | Output | Are charts and dashboards presented correctly? |
 | Scope | Did it do the right kind of work: answer with data, suggest datasets, ask the user to choose, or decline? |
 
-Most checks belong to one bucket. A few are shared by two, because their failure cannot be pinned on one, and bucket tables report the two kinds separately. The [evaluators README index](src/goldset/evaluators/README.md#index) maps every check to its bucket.
+Most checks belong to one bucket. A few are shared by two, because their failure cannot be pinned on one, and bucket tables report the two kinds apart. Info-only checks are recorded and reported but never change a verdict: they are new or unreliable checks that have not yet earned a vote. The [evaluators README](src/goldset/evaluators/README.md#index) maps every check to its bucket and lists the info-only ones.
 
-Info-only checks are recorded and reported but never affect a row verdict or the release gate. They are new or unreliable checks that have not yet earned a vote; [Info-only checks](src/goldset/evaluators/README.md#info-only-checks) lists them with the condition each must meet to gate again.
+**Verdicts.** Read a run through verdicts and bucket tallies, never a flat mean.
 
-A run is read through row verdicts and per-bucket tallies, never a flat mean. Each row (one case's result) gets one verdict:
+- An **attempt**, one trial of one case, passes when every gating check it scored passed. It fails when one scored `0.0`, or when the agent sent no reply (`no_answer`). An attempt the harness could not score, because it failed after the reply or the judge failed, is left out.
+- A **row**, one case's result in a run, gets one verdict from its attempts:
+  - `pass`: most of its scored attempts passed;
+  - `fail`: they did not, and a tie fails;
+  - `error`: no attempt could be scored. It never counts as a fail; rerun the case before you trust it;
+  - `uncovered`: no gating check was evaluated. It never counts as a pass.
 
-- `pass`: every gating check that was evaluated passed;
-- `fail`: at least one gating check scored `0.0`;
-- `error`: the API or the judge failed, so the row measured nothing reliable; rerun it before trusting it. It never counts as a fail;
-- `uncovered`: no gating check was evaluated, so it never counts as a pass.
+CHALLENGE rates and the BENCHMARK North Star are both the share of measured rows whose verdict is `pass`. The scorecards page headline is stricter: the share of questions right on every trial. [benchmarks/README.md, Metrics](benchmarks/README.md#metrics) defines the BENCHMARK rates, and [results/README.md, Scoring change log](results/README.md#scoring-change-log) says when these rules last changed.
 
-An attempt that got no reply (Horizon's stream stalled, dropped or failed: `no_answer`) is a failed attempt, not an error; an attempt the harness could not score is left out, and a row is an error only when no attempt could be scored.
+**Multi-turn cases** run all their turns in one conversation. Per-turn checks carry the turn number, as in `t2.aoi_id_match`, and `state_delta` scores the expected changes between turns. A turn that errors ends its conversation. Only GOLD has multi-turn cases today.
 
-**Multi-turn cases** run all their turns in one thread. Per-turn checks are prefixed with the turn number (`t2.aoi_id_match`), and `state_delta` scores the expected changes between turns. A turn that errors ends its conversation, so later turns are not scored against a broken thread.
+**Silence is not a pass.** Each report's reconciliation line compares the checks a case's expected values imply with those actually evaluated. `tools/flakiness.py` marks a partial sample INSUFFICIENT DATA instead of calling it stable.
 
-The tools fail loudly when nothing was measured: `flakiness.py` marks a partial sample INSUFFICIENT DATA instead of calling it stable, `diff_runs.py --fail-on-coverage-loss` fails when checks stop being evaluated, and each report's reconciliation line compares the checks a case should have produced with those actually evaluated.
+## Repository layout and docs
 
-## Repository layout
+| Path | What it holds | Doc |
+|---|---|---|
+| `cases/` | the shared case reference, and `zeno_catalog.json`, the snapshot of the agent's dataset catalogue | [cases/README.md](cases/README.md) |
+| `cases/challenge/` | CHALLENGE cases, `MANIFEST.json`, `TARGETS.yml` and the generated `COVERAGE.md` | [README](cases/challenge/README.md), [CHANGELOG](cases/challenge/CHANGELOG.md), [COVERAGE](cases/challenge/COVERAGE.md) |
+| `cases/v2/`, `cases/v1/` | GOLD legacy copy: the working set and the frozen import of the retired Google Sheet | [cases/GOLD-AUTHORING.md](cases/GOLD-AUTHORING.md) |
+| `benchmarks/` | BENCHMARK manifests, and `overlays/` for the plain baseline | [benchmarks/README.md](benchmarks/README.md) |
+| `generation/` | the pipeline that generates CHALLENGE's numeric cases | [generation/README.md](generation/README.md) |
+| `seeds/` | the CSVs that CHALLENGE cases and BENCHMARK versions were built from | [seeds/README.md](seeds/README.md) |
+| `results/` | one ledger per suite, and `index.json`, the generated index of committed runs | [results/README.md](results/README.md) |
+| `results/plain/` | the plain baseline's runs, references, scores and reports | [results/plain/README.md](results/plain/README.md) |
+| `src/goldset/` | the library and the `evals` command | [CLAUDE.md, Module map](CLAUDE.md#module-map) |
+| `src/goldset/evaluators/` | every check: what it reads, when it scores `null` or `0.0`, how to triage it | [evaluators README](src/goldset/evaluators/README.md) |
+| `tools/` | command-line tools over `src/goldset`, and which files are generated | [tools/README.md](tools/README.md) |
+| `schema/` | JSON Schemas for case files and BENCHMARK page data | |
+| `templates/` | HTML templates for the run reports | |
+| `tests/` | the tests; they need no network | |
+| `docs/` | the glossary and the GOLD legacy notes | [glossary](docs/glossary.md), [gold-legacy](docs/gold-legacy.md) |
+| `.claude/skills/` | Claude Code skills | [below](#claude-code-skills) |
+| `.github/workflows/ci.yml` | the checks on every pull request, and a manual GOLD staging run | |
 
-```
-cases/v2/                     the working case set: one YAML per case in group folders, plus MANIFEST.json
-cases/v1/                     the frozen import of the retired Google Sheet (same layout)
-cases/v2/COVERAGE.md          generated coverage report; never edit by hand
-cases/challenge/              the CHALLENGE case set: set, cohort, case (cases/challenge/README.md)
-cases/zeno_catalog.json       snapshot of the agent's dataset catalogue, read by coverage_doc.py
-benchmarks/                   BENCHMARK manifests: frozen uid subsets of CHALLENGE
-                              (benchmarks/README.md)
-schema/case.schema.json       the case file contract; tests validate every case against it
-src/goldset/                  the library and the `gold` CLI: case store and hashing, runner,
-                              evaluators, buckets, ledger (module map in CLAUDE.md)
-tools/                        command-line tools over src/goldset (see tools/README.md)
-templates/                    HTML templates for the rendered reports
-tests/                        the test suite; needs no network
-results/gold/runs/            the committed GOLD run ledger (contract: results/README.md)
-results/gold/reports/         rendered HTML reports
-results/gold/recommendations/ one action doc per official run
-results/gold/campaigns/       write-ups of multi-run validation efforts
-results/gold/artifacts/       raw agent state per case and trial (gitignored)
-results/challenge/            committed CHALLENGE run ledger + rollup recommendations
-                              (rates, not regressions; see cases/challenge/README.md)
-results/benchmark/            committed BENCHMARK run ledger (gold run --benchmark)
-.claude/skills/               Claude Code workflow skills (see Further reading)
-.github/workflows/ci.yml      checks on every PR, plus a manually triggered staging run
-```
+## Claude Code skills
 
-## Further reading
+The repo commits [Claude Code](https://claude.com/claude-code) skills under `.claude/skills/`, so everyone gets the same workflows. Invoke one by name, such as `/benchmark-run`, or describe the task and the matching skill loads.
 
-| Document | What it covers |
+| Skill | Use it to |
 |---|---|
-| [CLAUDE.md](CLAUDE.md) | Rules for AI coding agents working here (identity system, run rules, working agreements) and the module map |
-| [cases/README.md](cases/README.md) | How to write a good case, the two stores, the status lifecycle and the audit gate |
-| [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md) | Generated coverage report: groups, buckets, expected fields, datasets against the agent's catalogue, parked cases, known gaps |
-| [src/goldset/evaluators/README.md](src/goldset/evaluators/README.md) | Reference for every check: what it reads, when it scores `null` or `0.0`, its bucket, and how to triage a failure |
-| [results/README.md](results/README.md) | The ledger contract, comparing two runs, and composing a current picture across runs |
-| [results/gold/recommendations/](results/gold/recommendations/) | One action doc per official run |
-| [results/gold/campaigns/](results/gold/campaigns/) | Write-ups of multi-run validation efforts |
-| [results/challenge/](results/challenge/) | The CHALLENGE ledger: same contract, pass-rate verdicts via `tools/challenge_rollup.py` |
-| [benchmarks/README.md](benchmarks/README.md) | BENCHMARK: the frozen, versioned CHALLENGE subset behind the North Star; manifest, freeze, errata, canonical runs, metric semantics |
-| [tools/README.md](tools/README.md) | Every command-line tool, grouped by what it works on, including the legacy tools |
-
-### Claude Code skills
-
-The repo commits [Claude Code](https://claude.com/claude-code) skills under `.claude/skills/`, so anyone using Claude Code here gets the same workflows. Invoke one by name (`/gold-run`) or describe the task and the matching skill loads. Each skill follows the procedures in this README and the rules in CLAUDE.md, step by step.
-
-| Skill | Use it when |
-|---|---|
-| [`gold-run`](.claude/skills/gold-run/SKILL.md) | running the set: preflight (profile, trials, build label), the run, and the after-run steps through to the commit |
-| [`case-edit`](.claude/skills/case-edit/SKILL.md) | changing any case: the uid consequences first, then the after-edit steps, with the status rules enforced |
-| [`triage-run`](.claude/skills/triage-run/SKILL.md) | analysing a finished run: failures classified as agent, stale expectation, harness or flake, and a filled-in recommendations doc |
-| [`new-case`](.claude/skills/new-case/SKILL.md) | writing a new case: an interview about the capability, which expected field switches on which check, and verified answers before `done` |
-| [`release-gate`](.claude/skills/release-gate/SKILL.md) | the two-run release verdict: comparability checks, the `diff_runs.py` gate, and reading the count against trial noise |
-| [`sync-catalog`](.claude/skills/sync-catalog/SKILL.md) | refreshing the snapshot of project-zeno's dataset catalogue and reading what it changes in coverage |
-
-## Legacy tools
-
-Cases used to live in a Google Sheet, and runs used to go through the gnw-evals harness. Both are retired: the case store is the source of truth, and `gold run` is the only runner. A few tools from that period remain for occasional use: `import_sheet.py` and `export_sheet_csv.py` (move cases between a sheet tab and the store), `export_csv.py` (write cases as a gnw-evals test CSV), `ingest_run.py` (import an old gnw-evals run into the ledger) and `parity.py` (the one-off check that `gold run` scored the same as gnw-evals). None of them is part of the normal workflow. [tools/README.md](tools/README.md#legacy-tools) says what each is still for.
+| **CHALLENGE and BENCHMARK** | |
+| `challenge-cases` | add, import, generate or revise CHALLENGE cases; run CHALLENGE and roll the run up |
+| `benchmark-run` | run a BENCHMARK version, write its page data, and rerun revised members |
+| `plain-baseline` | run or rescore the plain baseline; it stops before the step that spends API budget |
+| **Any store** | |
+| `case-edit` | change any case: the uid consequences first, then the after-edit commands |
+| `sync-catalog` | refresh the dataset catalogue snapshot and read what it changes in coverage |
+| **GOLD legacy copy only** | |
+| `gold-run` | run GOLD and finish the run |
+| `new-case` | write a GOLD case |
+| `release-gate` | give the two-run release verdict |
+| `triage-run` | classify a GOLD run's failures and draft its recommendations doc |

@@ -12,8 +12,7 @@ expected:
     details.
 notes:
   behaviour: Name current version and key changes accurately; give citation
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-268); USY-001176 Yale index (citation
-    needs)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-268); USY-001176 Yale index (citation needs)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

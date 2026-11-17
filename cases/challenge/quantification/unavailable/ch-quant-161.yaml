@@ -10,7 +10,7 @@ expected:
     or explains that it does not have the project's boundary.
 notes:
   behaviour: Clarify boundary or ask for upload; then answer with data
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-124); USY-001591 Lobé iron project
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-124); USY-001591 Lobé iron project
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

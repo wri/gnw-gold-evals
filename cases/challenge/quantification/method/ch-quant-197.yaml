@@ -12,8 +12,7 @@ expected:
 notes:
   behaviour: Name relevant datasets (2020 baseline, post-2020 loss); say tree cover loss is
     not deforestation; no compliance certification
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-276); USY-001381 ITC EUDR handbook;
-    USY-001598
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-276); USY-001381 ITC EUDR handbook; USY-001598
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'

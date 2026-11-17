@@ -28,7 +28,8 @@ from one fetch.
 
 Output is deterministic (runs sorted by run_id, no timestamp), so the
 freshness check is a plain byte compare. Regenerate and commit the index
-together with every new run (see the after-run ritual in CLAUDE.md).
+together with every new run (see the after-run steps in cases/challenge/README.md and
+benchmarks/README.md).
 """
 
 from __future__ import annotations

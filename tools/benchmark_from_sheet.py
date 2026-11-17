@@ -1,7 +1,7 @@
 """Build a curated BENCHMARK version from a reviewed sheet export.
 
     uv run python tools/benchmark_from_sheet.py \\
-        --seed seeds/benchmark-v2026-bef-2026-10-22.csv --version 2026-draft-3
+        --seed seeds/<seed>.csv --version <version>
 
 Where ``benchmark_sample.py`` draws a stratified sample, a curated version
 is a list someone chose: each sheet row names a CHALLENGE case plus the
@@ -23,7 +23,7 @@ Two sheet layouts are read, told apart by their type column:
 
 - ``benchmark_query_type`` (the proposed set, 2026-draft-2): JTBD jobs,
   impact pathways (stored by number, "x" = cross-cutting) and user groups.
-- ``query_type`` (the BEF set, from 2026-draft-3): priority use cases
+- ``query_type`` (the v2026 benchmark sheet, from 2026-draft-3): priority use cases
   ``UC1``..``UC6`` (one Y/blank column each), plus engagement, AOI type,
   capability and grounding as case notes.
 
@@ -104,16 +104,16 @@ def parse_use_cases(row: dict) -> list[str]:
     return marked
 
 
-def is_bef(row: dict) -> bool:
+def is_use_case_layout(row: dict) -> bool:
     return "query_type" in row
 
 
 def sheet_type(row: dict) -> str:
-    return row["query_type"] if is_bef(row) else row["benchmark_query_type"]
+    return row["query_type"] if is_use_case_layout(row) else row["benchmark_query_type"]
 
 
 def is_synthetic(row: dict) -> bool:
-    if is_bef(row):
+    if is_use_case_layout(row):
         return row["source"].strip().lower().startswith("new")
     return row["synthetic"].upper() == "TRUE"
 
@@ -124,7 +124,7 @@ def row_notes(row: dict) -> dict[str, str]:
         "benchmark_type": sheet_type(row),
         "synthetic": "TRUE" if is_synthetic(row) else "FALSE",
     }
-    if is_bef(row):
+    if is_use_case_layout(row):
         notes["use_cases"] = ";".join(parse_use_cases(row))
         for key in ("engagement", "aoi_type", "capability", "grounding"):
             if row.get(key, "").strip():
@@ -142,7 +142,7 @@ def row_notes(row: dict) -> dict[str, str]:
 
 
 def row_facets(row: dict) -> dict:
-    if is_bef(row):
+    if is_use_case_layout(row):
         return {"use_cases": parse_use_cases(row)}
     return {"jobs": parse_jobs(row["jtbd"]),
             "pathways": parse_pathways(row["impact_pathway"]),

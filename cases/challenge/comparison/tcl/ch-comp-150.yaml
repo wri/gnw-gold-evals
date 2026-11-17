@@ -17,7 +17,7 @@ expected:
     Nawa has lost more tree cover than Haut-Sassandra since 2021'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-062); USY-001382 ECOM cocoa; USY-001399
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-062); USY-001382 ECOM cocoa; USY-001399
     Olam
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'

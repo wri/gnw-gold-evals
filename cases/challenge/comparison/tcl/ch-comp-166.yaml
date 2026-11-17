@@ -10,7 +10,7 @@ expected:
     figure or a named protected area; does not invent a protected-area total.
 notes:
   behaviour: answer at country/PA-network level if supported; else redirect
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-168); USY-001586 Madagascar PA Outlook;
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-168); USY-001586 Madagascar PA Outlook;
     USY-001429
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'

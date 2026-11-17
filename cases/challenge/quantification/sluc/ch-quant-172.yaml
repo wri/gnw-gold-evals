@@ -16,8 +16,7 @@ expected:
     = 'Cocoa' and gas_type = 'CO2e' and year = 2023
 notes:
   behaviour: answer with data + methodology caveat; no accounting advice beyond data
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-185); USY-001650 AdAstra; USY-001651
-    Olam
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-185); USY-001650 AdAstra; USY-001651 Olam
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

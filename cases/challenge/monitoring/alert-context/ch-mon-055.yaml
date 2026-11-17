@@ -11,8 +11,8 @@ expected:
     the park's alert total instead; does not guess the split.
 notes:
   behaviour: Answer with alerts intersected with primary forest
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-038); USY-001298 Tesso Nilo; Alerts
-    JTBD (Miro) (what forest types are affected)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-038); USY-001298 Tesso Nilo; Alerts JTBD
+    (Miro) (what forest types are affected)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'

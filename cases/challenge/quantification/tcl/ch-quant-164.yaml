@@ -14,7 +14,7 @@ expected:
   data_pull: 'TRUE'
 notes:
   behaviour: Answer with primary forest extent and loss (dashboard-style stats)
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-133); Map exploration research (Malaysia
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-133); Map exploration research (Malaysia
     dashboard stats); USY-001512
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

@@ -16,7 +16,7 @@ expected:
   figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2015..2025
 notes:
   behaviour: 'answer with data: per-municipality table for Pará'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-097); USY-001228 Mighty Earth (municipal
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-097); USY-001228 Mighty Earth (municipal
     screening); USY-001513 admin-level stats request
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review

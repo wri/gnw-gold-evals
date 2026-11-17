@@ -13,7 +13,7 @@ notes:
   behaviour: Do not suggest the data can set payment amounts; it can serve as an informal
     cross-check; explain method differences from official monitoring; point to official MRV
     systems
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-174); USY-001339 Forests, People, Climate
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-174); USY-001339 Forests, People, Climate
     donors (analogue)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

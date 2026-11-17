@@ -9,8 +9,8 @@ expected:
     Maryland / Hansen et al., Landsat-based, on Global Forest Watch).
 notes:
   behaviour: Name source and method accurately
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-281); Map exploration research (trust
-    tied to knowing sources)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-281); Map exploration research (trust tied
+    to knowing sources)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'
