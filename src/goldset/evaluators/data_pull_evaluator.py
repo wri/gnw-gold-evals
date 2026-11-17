@@ -4,22 +4,27 @@ Two independent date checks live here, measuring different things:
 
 - ``evaluate_date_extraction`` reads the ``start_date``/``end_date`` **arguments the
   agent passed to its own tools** (``pull_data``, falling back to ``pick_dataset``).
-  That is the agent's interpretation of the period named in the prompt, and it is
-  deterministic - it was correct on every row observed, including a Portuguese one.
+  That is the agent's interpretation of the period named in the prompt, and it has
+  been consistent across trials and languages.
 - ``evaluate_date_selection`` compares the *recorded* range in agent state against
   the request, asking only whether the data pulled **covers** the requested period.
 
 The distinction matters because ``agent_state["start_date"]`` is unreliable: for the
 same query it has recorded the requested window, the dataset's full coverage extent
-(e.g. 2001-2025 for Hansen), and a rolling window ending today. Only the tool
-arguments consistently reflect what the agent was actually asked to look for, which
-is why extraction is the scored check and coverage is reported for diagnosis.
+(for example 2001 to 2025 for tree cover loss), and a rolling window ending today.
+Only the tool arguments consistently reflect what the agent was actually asked to
+look for, which is why extraction is the scored check and coverage is reported for
+diagnosis.
 """
 
 from datetime import date
 from typing import Any
 
-from goldset.evaluators.utils import normalize_end_date, normalize_start_date
+from goldset.evaluators.utils import (
+    last_statistics,
+    normalize_end_date,
+    normalize_start_date,
+)
 
 # Tools whose arguments carry the agent's chosen analysis window, most authoritative
 # first. `pull_data` is the actual request; `pick_dataset` is an earlier echo of it.
@@ -168,7 +173,7 @@ def evaluate_date_extraction(
         return result
 
     # Dates were expected but the agent neither scoped a request nor pulled a dated
-    # table - it did not look for a period at all, which is a failure rather than
+    # table: it did not look for a period at all, which is a failure rather than
     # an absent check.
     if not windows:
         result["date_extraction_score"] = 0.0
@@ -176,7 +181,7 @@ def evaluate_date_extraction(
 
     for name, start, end in windows:
         # An omitted bound is an open-ended request ("from 2001 onwards"), which the
-        # agent does use - e.g. pull_data(start_date="2001-01-01") with no end, and
+        # agent does use, e.g. pull_data(start_date="2001-01-01") with no end, and
         # an open end covers any expected end. A bound the case leaves out is not
         # checked either.
         start_ok = not (start and expected_start) or _covers_start(
@@ -201,16 +206,8 @@ def evaluate_date_extraction(
 
 
 def _latest_statistics(agent_state: dict[str, Any]) -> dict[str, Any]:
-    """Return the most recent statistics entry from agent state."""
-    stats = agent_state.get("statistics")
-    if not stats:
-        return {}
-    if isinstance(stats, dict):
-        return stats
-    if isinstance(stats, list) and stats:
-        last = stats[-1]
-        return last if isinstance(last, dict) else {}
-    return {}
+    """The most recent statistics entry, or {} — callers here index it freely."""
+    return last_statistics(agent_state) or {}
 
 
 def _count_rows(raw_data: Any) -> int:
@@ -251,12 +248,13 @@ def evaluate_date_selection(
 
     Containment, not equality: the agent legitimately pulls a wider range than asked
     for and slices in code, so demanding an exact match penalises correct behaviour.
-    This asks the only question the recorded range can answer - was the requested
+    This asks the only question the recorded range can answer: was the requested
     period inside the data that was pulled.
 
-    Reported for diagnosis but deliberately **excluded from overall_score**, because
-    ``agent_state["start_date"]`` is inconsistent about what it records (see the
-    module docstring). ``evaluate_date_extraction`` is the scored date check.
+    Reported for diagnosis only (``date_coverage`` is in ``buckets.INFO_ONLY``, so it
+    never affects a verdict), because ``agent_state["start_date"]`` is inconsistent
+    about what it records (see the module docstring). ``evaluate_date_extraction``
+    is the scored date check.
 
     Args:
         agent_state: Final agent state after execution
@@ -280,7 +278,6 @@ def evaluate_date_selection(
     )
     actual_end_date = agent_state.get("end_date") or stat_entry.get("end_date", "")
 
-    # If no expected dates, skip evaluation
     if not expected_start_date or not expected_end_date:
         return {
             "date_coverage_score": None,
@@ -289,11 +286,9 @@ def evaluate_date_selection(
             "actual_end_date": actual_end_date or None,
         }
 
-    # Normalize expected dates
     expected_start_str = normalize_start_date(expected_start_date)
     expected_end_str = normalize_end_date(expected_end_date)
 
-    # If expected dates are invalid, skip evaluation
     if not expected_start_str or not expected_end_str:
         return {
             "date_coverage_score": None,
@@ -302,7 +297,6 @@ def evaluate_date_selection(
             "actual_end_date": actual_end_date or None,
         }
 
-    # If actual dates are missing/None, score as 0
     if not actual_start_date or not actual_end_date:
         return {
             "date_coverage_score": 0.0,  # Missing actual = wrong
@@ -311,11 +305,9 @@ def evaluate_date_selection(
             "actual_end_date": None,
         }
 
-    # Normalize actual dates and compare
     actual_start_str = normalize_start_date(actual_start_date)
     actual_end_str = normalize_end_date(actual_end_date)
 
-    # If actual dates failed to parse, score as 0
     if not actual_start_str or not actual_end_str:
         return {
             "date_coverage_score": 0.0,  # Invalid actual = wrong
@@ -348,12 +340,13 @@ def evaluate_data_pull(
     """Check if data was successfully pulled.
 
     Clarification detection is handled separately by evaluate_clarification().
-    Date evaluation is handled separately by evaluate_date_selection().
+    Dates are checked separately by evaluate_date_extraction() (scored) and
+    evaluate_date_selection() (info-only).
 
     Args:
         agent_state: Final agent state after execution
-        expects_data_pull: Whether this test requires analytics data (gold-set
-            ``expected_answer`` or dashboard ``insight`` widgets)
+        expects_data_pull: Whether this case requires analytics data (an
+            ``expected_answer``, or an expected ``insight`` dashboard widget)
         min_rows: Minimum number of rows expected (legacy inline data only)
         query: Original user query (kept for compatibility but not used)
 
@@ -361,7 +354,8 @@ def evaluate_data_pull(
         Dict with:
         - data_pull_exists_score (0/1/None): 1.0 if data pull succeeded,
           0.0 if pull missing or failed, None if not applicable
-        - row_count (int): 1 when source_url is present, else legacy row count
+        - row_count (int): 1 when the entry has a source_url or id, else the legacy
+          inline row count
         - data_pull_success (bool): Whether data pull met success criteria
         - data_pull_error (str): Diagnostic message when evaluated and failed
 

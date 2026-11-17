@@ -48,7 +48,7 @@ def test_typoed_delta_field_fails_schema_validation():
 
 def test_schema_delta_enum_matches_snapshot_fields():
     """The schema's fieldList enum is a hand-maintained copy of the runner's
-    SNAPSHOT_FIELDS — this is the drift guard."""
+    SNAPSHOT_FIELDS; this test is the drift guard."""
     from goldset.runner.multiturn import SNAPSHOT_FIELDS
 
     enum = SCHEMA["$defs"]["fieldList"]["items"]["enum"]

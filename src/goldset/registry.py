@@ -1,10 +1,12 @@
-"""Evaluator registry: named, typed dispatch for the ported evaluators.
+"""Evaluator registry: the ordered list of evaluators run on every agent state.
 
-The runner iterates ``EVALUATORS`` in order and merges each result dict —
-the order below reproduces gnw-evals' hand-written ``_run_evaluations``
-call sequence exactly (later evaluators win key collisions, as before).
+The runner calls each spec in order and merges the result dicts, so a later
+evaluator overwrites an earlier one's key on a collision. Keep the order
+stable.
 
-PR-05 extends the spec with bucket tags; PR-03 keeps it behaviour-neutral.
+Bucket membership is not declared here. Tag every new score field in
+``buckets.py`` (``DEDICATED``, ``SHARED`` or ``INFO_ONLY``);
+``tests/test_buckets.py`` fails if one is missing.
 """
 
 from __future__ import annotations
@@ -40,6 +42,7 @@ from goldset.evaluators.figures import (
     evaluate_figure_claim,
     evaluate_figures,
 )
+from goldset.evaluators.groundtruth_checks import evaluate_ground_truth
 from goldset.evaluators.guards import evaluate_guards
 from goldset.evaluators.output_checks import (
     evaluate_chart_type,
@@ -146,6 +149,15 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         ),
         run=lambda state, expected, query, dashboard: evaluate_final_answer(
             state, expected.expected_answer, expected.expected_text, query
+        ),
+        presumes_pull=True,
+    ),
+    EvaluatorSpec(
+        name="ground_truth",
+        kind="mixed",
+        score_fields=("ground_truth_match_score", "ground_truth_answer_score"),
+        run=lambda state, expected, query, dashboard: evaluate_ground_truth(
+            state, expected
         ),
         presumes_pull=True,
     ),

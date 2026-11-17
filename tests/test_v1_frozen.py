@@ -1,15 +1,16 @@
 """Tripwire: cases/v1 is the FROZEN as-imported baseline.
 
-cases/v1 changes on deliberate sheet re-imports ONLY. All curation work
-(expectation edits, unparkings, new cases) belongs in cases/v2. Because the
-caseset_version is a hash over every case uid, ANY semantic edit under
-cases/v1 moves it and fails this test — which is the point: v2 work leaking
-into v1 should fail CI, not pass silently.
+cases/v1 changes ONLY on a deliberate re-import from the retired Google Sheet
+(legacy `tools/import_sheet.py` with `--cases-dir cases/v1`; without that
+flag it writes to v2). All curation work (expectation edits, unparkings, new
+cases) belongs in cases/v2. Because the caseset_version is a hash over every
+case uid, ANY semantic edit under cases/v1 moves it and fails this test. That
+is the point: v2 work leaking into v1 should fail CI, not pass silently.
 
-If this test fails and you did NOT just re-import the sheet into v1, revert
-the v1 change and land it in cases/v2 instead. If you DID deliberately
-re-import, update V1_CASESET_VERSION below in the same PR and say so in the
-PR description.
+If this test fails and you did NOT just re-import into v1, revert the v1
+change and land it in cases/v2 instead. If you DID deliberately re-import,
+update V1_CASESET_VERSION below in the same PR and say so in the PR
+description.
 """
 
 import json
@@ -20,8 +21,8 @@ from goldset.store import build_manifest, load_store
 ROOT = Path(__file__).resolve().parents[1]
 V1_DIR = ROOT / "cases" / "v1"
 
-# The as-imported (pre-H7) baseline. Only a deliberate sheet re-import may
-# change this constant.
+# v1's caseset_version exactly as imported from the sheet, before any
+# curation. Only a deliberate sheet re-import may change this constant.
 V1_CASESET_VERSION = "185eb0b1bb6ea24a"
 
 

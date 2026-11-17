@@ -4,9 +4,6 @@
 tools, which is the only deterministic record of the period it was asked to analyse.
 `date_coverage_score` asks whether the range recorded in agent state *covers* the
 request, since the agent legitimately pulls wider and slices in code.
-
-Usage
-$ uv run pytest tests/test_date_evaluators.py -v
 """
 
 from goldset.evaluators.data_pull_evaluator import (
@@ -201,7 +198,8 @@ def test_extraction_ignores_messages_without_tool_calls():
 
 
 def test_coverage_accepts_a_wider_recorded_range():
-    """The behaviour this change exists for: full-range pull covers the request."""
+    """The reason this check exists: the agent often pulls a dataset's full
+    range and slices it in code, and that covers the request."""
     state = {"start_date": "2001-01-01", "end_date": "2025-12-31"}
     result = evaluate_date_selection(state, "2022-01-01", "2022-12-31")
     assert result["date_coverage_score"] == 1.0

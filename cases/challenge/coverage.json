@@ -670,12 +670,12 @@
     {
       "field": "answer",
       "cases": 0,
-      "switches_on": "agent_answer, charts_answer, chart_produced"
+      "switches_on": "agent_answer, chart_produced, data_pull_exists, answered_without_data (+ charts_answer when a chart exists)"
     },
     {
       "field": "aoi_source",
       "cases": 0,
-      "switches_on": "reference only (dashboard AOI source)"
+      "switches_on": "no check of its own (dashboard_aoi_match also compares it)"
     },
     {
       "field": "chart_type",
@@ -695,12 +695,17 @@
     {
       "field": "dashboard_widgets",
       "cases": 0,
-      "switches_on": "dashboard_widgets_match, dashboard_widgets_valid"
+      "switches_on": "dashboard_widgets_match (+ dashboard_widgets_valid when a dashboard exists)"
     },
     {
       "field": "dataset_name",
       "cases": 0,
       "switches_on": "reference only"
+    },
+    {
+      "field": "ground_truth",
+      "cases": 0,
+      "switches_on": "ground_truth_match, ground_truth_answer (info-only)"
     },
     {
       "field": "scope",
@@ -710,7 +715,7 @@
     {
       "field": "suggested_datasets",
       "cases": 0,
-      "switches_on": "suggested_datasets_match"
+      "switches_on": "suggested_datasets_match (legacy: the agent now writes nudge; author nudge_type / nudge_options)"
     }
   ],
   "unknown_expected_fields": [],
@@ -1117,6 +1122,7 @@
       "dashboard_created",
       "dashboard_widgets",
       "dataset_name",
+      "ground_truth",
       "scope",
       "suggested_datasets"
     ],
@@ -1124,7 +1130,8 @@
       "answer_traceability",
       "charts_answer_judge",
       "class_value_match",
-      "date_coverage"
+      "date_coverage",
+      "ground_truth_answer"
     ],
     "catalog_datasets_no_case": [
       "12"

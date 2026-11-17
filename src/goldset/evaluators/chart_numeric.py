@@ -1,15 +1,20 @@
 """Deterministic numeric check for chart rows.
 
-`llm_judge_chart` cannot be trusted with the arithmetic. Asked about a chart whose 25
-yearly values sum to 25.31 Mha, it reported that same chart as summing to 27.4 Mha and to
-26.0 Mha, each "within tolerance" of whatever expected value it had been handed. So the
-comparison happens here instead: the expected figure is parsed from the sheet, the
-candidate figures are computed from the chart's own encoded data, and the model is left to
-judge only whether the chart is an appropriate, complete answer to the query.
+Decides whether a chart's own data contains the figure in the case's expected
+answer. The LLM chart judge is never asked to compare numbers, because its
+arithmetic is unreliable: asked about a chart whose yearly values sum to 25.31 Mha,
+it reported the same chart as summing to 27.4 Mha and to 26.0 Mha. Its view on
+whether the chart suits the query is recorded as the info-only
+`charts_answer_judge`.
 
-Support is deliberately three-valued. `None` means "no numeric claim to check" — a year, a
-bare place name, or a figure whose decimal separator is ambiguous — and leaves the verdict
-entirely to the judge.
+Candidate figures come from the chart data: leaf values, column totals and maxima,
+cross-column row sums and, when the expected figure is a percentage, each value's
+share of its column total.
+
+Support is three-valued: "supported", "unsupported", or `None` when there is no
+numeric claim to check (a year, a place name, or a figure whose decimal separator
+is ambiguous). `None` leaves `charts_answer` unscored; see `resolve_chart_verdict`
+in `llm_judges.py`.
 """
 
 from __future__ import annotations
@@ -19,9 +24,8 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
-# Scale written as a word, which the sheet uses as often as a unit prefix: "25.54 million
-# hectares" sits beside "25 Mha". Missing these was worth three false failures on the
-# 2026-07-31 run, each reported as a difference of tens of millions of percent.
+# Scale written as a word, which expected answers use as often as a unit prefix:
+# "25.54 million hectares" sits beside "25 Mha".
 _SCALE_WORDS = {
     "thousand": 1_000,
     "million": 1_000_000,
@@ -63,23 +67,20 @@ _NON_MEASURE_KEYS = frozenset(
 _AMBIGUOUS_DECIMAL = re.compile(r"^\d{1,3}\.\d{3}$")
 
 # A leading number, optionally signed, with thousands separators and a decimal
-# part. The sign is load-bearing: net-flux rows express a carbon *sink* as a
-# negative (1-055: "-286,994 Mg CO2e"), and dropping it compared +286,994
-# against a chart whose own net-flux series held -286,993.69 — an exact match
-# reported as an 86.96% miss.
+# part. The sign matters: net-flux answers express a carbon sink as a negative
+# ("-286,994 Mg CO2e"), and dropping it turns an exact match into a large miss.
 #
-# The lookbehind keeps a word-internal hyphen from reading as a minus: 1-104's
-# expectation mentions "Sentinel-2", whose 2 is positive. A hyphen preceded by
-# an alphanumeric is a separator, never a sign.
+# The lookbehind stops a word-internal hyphen reading as a minus: in "Sentinel-2"
+# the 2 is positive. A hyphen after a letter or digit is a separator, never a sign.
 _NUMBER = re.compile(r"(?<![A-Za-z0-9])(-?\d[\d,]*(?:\.\d+)?)")
 
 _YEAR = re.compile(r"^(19|20)\d{2}$")
 
 
 def format_number(value: float) -> str:
-    """Render a figure the way the sheet writes them, not as 2.5e+07.
+    """Render a figure the way expected answers write it, not as 2.5e+07.
 
-    These strings land in check reason text next to the sheet's own cells, so
+    These strings appear in check reasons beside the case's expected answer, so
     thousands separators matter more than compactness. Shared by the chart
     comparator and the answer judge's numeric override (`llm_judges.py`).
     """
@@ -90,7 +91,7 @@ def format_number(value: float) -> str:
 
 @dataclass(frozen=True)
 class ExpectedNumber:
-    """A numeric claim parsed out of an `expected_answer` cell."""
+    """A numeric claim parsed from answer text, usually a case's expected answer."""
 
     value: float
     is_percent: bool
@@ -100,8 +101,8 @@ class ExpectedNumber:
 def parse_expected_number(expected_answer: str) -> ExpectedNumber | None:
     """Pull the figure out of an expected answer, or None when there isn't one to check.
 
-    Returns None for years ("2003"), bare named entities ("Waikato"), empty cells, and
-    figures whose decimal separator is ambiguous — every case where a deterministic
+    Returns None for years ("2003"), bare named entities ("Waikato"), empty text, and
+    figures whose decimal separator is ambiguous: every input where a deterministic
     comparison would be a guess.
     """
     text = (expected_answer or "").strip()
@@ -112,16 +113,14 @@ def parse_expected_number(expected_answer: str) -> ExpectedNumber | None:
     if not match:
         return None
 
-    # Trailing separators are punctuation, not part of the number: "In 2020, 25.5
-    # Mha" matches "2020," whose trailing comma made it miss the ^(19|20)\d{2}$
-    # year guard, so the expected value became 2020 rather than abstaining. Found
-    # while documenting the evaluators (2026-08-04); no cases/v2 row has that
-    # shape, and this ensures none can.
+    # Trailing separators are punctuation, not part of the number: in "In 2020,
+    # 25.5 Mha" the token "2020," would otherwise miss the year guard and become
+    # the expected value.
     token = match.group(1).rstrip(",.")
     if not token or token == "-":
         return None
     # The year and ambiguous-separator guards describe the digits, so they are
-    # tested against the magnitude — a sign must not smuggle a value past them.
+    # tested against the magnitude: a sign must not smuggle a value past them.
     magnitude = token.lstrip("-")
     if _YEAR.match(magnitude):
         return None
@@ -211,20 +210,16 @@ def _series_aggregates(node: Any) -> list[float]:
 
 
 def _cross_column_totals(node: Any) -> list[float]:
-    """Per-record sums across measure columns, plus their grand total (H6).
+    """Per-record sums across measure columns, plus their grand total.
 
-    A chart that splits one quantity into several measure columns never draws the
-    combined figure, but a reader takes it straight off the chart. 1-002 is the
-    reference: São Paulo's alerts are plotted as `high_confidence` and
-    `highest_confidence` columns, and the answer (1,299,278.14 ha) is their sum —
-    which was not a candidate at all, so the row failed on every trial while the
-    agent's prose was right.
+    A chart that splits one quantity across several measure columns (for example
+    alerts as `high_confidence` and `highest_confidence`) never draws the combined
+    figure, but a reader takes it straight off the chart.
 
     Only record sets with at least two measure columns contribute, so
-    single-series charts gain nothing. This does widen the candidate set, and a
-    wider set is a more permissive check; the trade is deliberate, and the guard
-    against it is that label-ish columns never enter a sum (`year` + an area is
-    not a figure anyone reads).
+    single-series charts gain nothing. A wider candidate set makes the check more
+    permissive; that trade is deliberate, and label columns never enter a sum
+    (a year plus an area is not a figure anyone reads).
     """
     totals: list[float] = []
 
@@ -270,8 +265,8 @@ def _cross_column_totals(node: Any) -> list[float]:
 def _percent_candidates(node: Any) -> list[float]:
     """Each measure value as a percentage of its own column total.
 
-    Charts encode areas; the sheet often expects the share ("8.57%"), so the share has to
-    be derived here rather than asked of the model.
+    Charts encode areas, but expected answers often give a share ("8.57%"), so the
+    share is derived here rather than asked of the model.
     """
     shares: list[float] = []
 
@@ -309,7 +304,7 @@ def chart_candidate_values(charts_json: str, is_percent: bool = False) -> list[f
     """Every figure a reader could take from the chart, for matching against expected.
 
     Leaf values, column totals and column maxima; cross-column row sums and their grand
-    total (H6); plus per-column shares when the expected answer is a percentage.
+    total; plus per-column shares when the expected answer is a percentage.
     Label-ish columns (`year`, `id`, ...) are excluded from every aggregate so their sums
     don't become candidates.
     """

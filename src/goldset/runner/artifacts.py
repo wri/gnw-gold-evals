@@ -1,10 +1,10 @@
-"""Per-case raw-artifact capture: keep more than we score.
+"""Per-case raw-artefact capture: keep more than we score.
 
 The committed ledger stays small; these gzipped JSONs (gitignored, under
-``<results-dir>/artifacts/<run_id>/<uid>.json.gz`` — ``results/gold/`` for
+``<results-dir>/artifacts/<run_id>/<uid>.json.gz``: ``results/gold/`` for
 GOLD, ``results/challenge/`` for CHALLENGE) hold the signals future
-validators and triage need — decoded codeact, the tool-call sequence, the
-last statistics payload, chart specs, dashboard widget bodies — so a run
+validators and triage need (decoded codeact, the tool-call sequence, the
+last statistics payload, chart specs, dashboard widget bodies), so a run
 can be re-analysed without being re-executed.
 """
 
@@ -59,10 +59,12 @@ def _tool_calls(agent_state: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def _last_statistics(agent_state: dict[str, Any]) -> dict[str, Any] | None:
-    statistics = agent_state.get("statistics")
-    if isinstance(statistics, list):
-        statistics = statistics[-1] if statistics else None
-    if not isinstance(statistics, dict):
+    """The last pull, with its inline rows capped. See ``utils.last_statistics``
+    for the shared lookup; the slimming below is artifact-specific."""
+    from goldset.evaluators.utils import last_statistics
+
+    statistics = last_statistics(agent_state)
+    if statistics is None:
         return None
     slim = {k: v for k, v in statistics.items() if k != "data"}
     data = statistics.get("data")
@@ -88,6 +90,32 @@ def _statistics_refs(agent_state: dict[str, Any]) -> list[dict[str, Any]]:
     ]
 
 
+def _cap_table(table: dict[str, Any]) -> dict[str, Any]:
+    """One column-oriented table with each column's rows capped."""
+    slim: dict[str, Any] = {
+        key: values[:STATISTICS_ROW_LIMIT] if isinstance(values, list) else values
+        for key, values in table.items()
+    }
+    first = next((v for v in table.values() if isinstance(v, list)), None)
+    if first is not None:
+        slim["_rows_total"] = len(first)
+    return slim
+
+
+def _pulled_data(agent_state: dict[str, Any]) -> dict[str, Any] | None:
+    """The agent's raw pulled table (ground-truth runs only), rows capped.
+
+    Two shapes, both seen live. Most datasets answer flat as
+    ``{column: [values]}`` but LGMS (12) answers as ``{section: {column: [values]}}``
+    """
+    pulled = agent_state.get("pulled_data")
+    if not isinstance(pulled, dict) or not pulled:
+        return None
+    if all(isinstance(value, dict) for value in pulled.values()):
+        return {section: _cap_table(table) for section, table in pulled.items()}
+    return _cap_table(pulled)
+
+
 def build_artifact(
     agent_state: dict[str, Any],
     dashboard: dict[str, Any] | None,
@@ -105,6 +133,7 @@ def build_artifact(
         "tool_calls": _tool_calls(agent_state),
         "statistics_last": _last_statistics(agent_state),
         "statistics_refs": _statistics_refs(agent_state),
+        "pulled_data": _pulled_data(agent_state),
         "charts_data": agent_state.get("charts_data"),
         "aoi_selection": agent_state.get("aoi_selection"),
         "dataset": agent_state.get("dataset"),
@@ -121,7 +150,7 @@ def artifact_name(uid: str, trial: int) -> str:
 
 
 class ArtifactWriter:
-    """Writes one gzipped JSON per case under a run's artifact directory."""
+    """Writes one gzipped JSON per case under a run's artefact directory."""
 
     def __init__(self, artifacts_dir: Path, run_id: str):
         self._dir = artifacts_dir / run_id

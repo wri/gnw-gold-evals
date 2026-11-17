@@ -1,4 +1,4 @@
-"""Centralized clarification detection evaluator."""
+"""Centralised clarification detection evaluator."""
 
 from typing import Any
 
@@ -12,15 +12,15 @@ def evaluate_clarification(
 ) -> dict[str, Any]:
     """Detect if agent requested clarification and score it.
 
-    This is the centralized clarification check - called once per evaluation
+    This is the centralised clarification check, called once per evaluation
     before other evaluators run.
 
     Args:
         agent_state: Final agent state after execution
-        expected_clarification: Expected clarification behavior
+        expected_clarification: Expected clarification behaviour
             - True: clarification is expected
             - False: clarification is not expected
-            - None: no expectation (empty string from CSV)
+            - None: no expectation (the case sets no clarification value)
         query: Original user query for clarification detection
 
     Returns:
@@ -31,14 +31,14 @@ def evaluate_clarification(
 
     Scoring logic:
         expected=True,  actual=True  → 1.0 (correct)
-        expected=True,  actual=False → 0.0 (wrong - expected but not given)
-        expected=False, actual=True  → 0.0 (wrong - not expected but given)
+        expected=True,  actual=False → 0.0 (wrong: expected but not given)
+        expected=False, actual=True  → 0.0 (wrong: not expected but given)
         expected=False, actual=False → 1.0 (correct)
         expected=None,  actual=True  → None (not evaluated)
         expected=None,  actual=False → None (not evaluated)
 
     """
-    # No expectation — skip evaluation entirely (e.g. dashboard eval rows).
+    # No expectation: skip evaluation entirely (e.g. dashboard eval rows).
     if expected_clarification is None:
         return {
             "actual_clarification_requested": None,
@@ -46,12 +46,10 @@ def evaluate_clarification(
             "clarification_explanation": None,
         }
 
-    # If no query, can't detect clarification
     if not query:
         actual_clarification = False
         explanation = "No query provided"
     else:
-        # Call LLM judge once to detect clarification
         try:
             clarification = llm_judge_clarification(agent_state, query)
         except JudgeError as error:
@@ -64,7 +62,6 @@ def evaluate_clarification(
         actual_clarification = clarification["is_clarification"]
         explanation = clarification["explanation"]
 
-    # Calculate score based on expectation (True or False)
     if actual_clarification == expected_clarification:
         score = 1.0
     else:

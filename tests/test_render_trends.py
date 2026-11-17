@@ -48,6 +48,6 @@ def test_template_affordances():
     text = TEMPLATE.read_text()
     assert PLACEHOLDER in text
     assert 'addEventListener("drop"' in text   # standalone drag-drop mode
-    assert 'id="f-ff"' in text                 # ff filter — never trend across ff
+    assert 'id="f-ff"' in text                 # ff filter: never trend across ff
     assert "caseset" in text                   # caseset changes are surfaced
     assert "Table view" in text                # no-hover data channel

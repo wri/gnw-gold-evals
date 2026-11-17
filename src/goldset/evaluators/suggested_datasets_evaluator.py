@@ -1,4 +1,10 @@
-"""Suggested datasets evaluator."""
+"""Suggested datasets evaluator (a legacy field).
+
+The agent no longer writes ``suggested_datasets``: the ``nudge`` field replaced it,
+and dataset suggestions now arrive as a ``dataset_choice`` nudge. A case that sets
+this expectation scores 0.0 for that reason alone. For new cases, expect
+``nudge_type: dataset_choice`` or ``scope: suggest`` instead.
+"""
 
 from typing import Any
 
@@ -25,7 +31,7 @@ def evaluate_suggested_datasets(
     """
     # Actual values are extracted unconditionally (like the AOI and dataset
     # evaluators): multi-turn delta snapshots and triage need them even on
-    # turns with no expectation (PR-07). Scores stay gated on the expectation.
+    # turns with no expectation. Scores stay gated on the expectation.
     actual = agent_state.get("suggested_datasets", [])
     if isinstance(actual, str):
         raw_list = [s.strip() for s in actual.split(";") if s.strip()]

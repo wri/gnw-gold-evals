@@ -1,25 +1,24 @@
-"""Push phase 1: export the case store as sheet-uploadable CSVs.
+"""Legacy: export the case store as CSVs, for when someone wants a spreadsheet.
+
+The GOLD Google Sheet is retired: the case store is the source of truth, and
+the sheet was only ever a mirror of it. `tools/import_sheet.py` goes the
+other way.
 
     uv run python tools/export_sheet_csv.py --out scratch/push/
 
-Writes two files (docs/specs/caseset-implementation-plan.md §1.2):
+Writes two files:
 
-- ``cases.csv``     — the tab replacement (File -> Import -> Replace).
-  Carries ``uid`` and ``last_changed`` as row-wise version markers sheet
-  editors can see but must never edit; the pull ignores and re-verifies
-  both.
-- ``changelog.csv`` — append-only version history derived from git: one
-  row per uid transition per case (test_id, old_uid, new_uid, date,
-  commit, subject). Paste-append into a dedicated 'changelog' tab.
+- `cases.csv` replaces a sheet tab (File > Import > Replace). Its `uid` and
+  `last_changed` columns show editors which case version they are looking
+  at. Editors must not change them: `import_sheet.py` ignores both as case
+  content, recomputes every uid, and lists rows whose sheet uid differs.
+- `changelog.csv` has one row per uid change per case, taken from git
+  history (test_id, old_uid, new_uid, date, commit, subject). Paste-append
+  it into a 'changelog' tab.
 
-Multi-turn cases are skipped with a note (sheet projection is single-turn
-until someone needs otherwise). The repo remains the source of truth; the
-sheet is a mirror.
-
-Projection caveat: v2's pre-split history lives on the v1 paths — the
-v1/v2 copy started fresh lineages, so ``changelog.csv`` for a v2 case
-begins at the split, not at the case's original birth (accepted
-projection artifact).
+Multi-turn cases are skipped, because the sheet layout is single-turn. A v2
+case's changelog starts when cases/v2 was copied from cases/v1; earlier
+edits are in the git history of the matching cases/v1 file.
 """
 
 from __future__ import annotations
@@ -50,7 +49,7 @@ NOTE_ORDER = ["status_reason", "aoi_type"]
 def note_columns(entries: list) -> list[str]:
     """Every notes key observed across the exported cases, stable order:
     NOTE_ORDER first (always present, for sheet-layout stability), then the
-    rest sorted. Dropping unlisted keys here is not an option — the importer
+    rest sorted. Dropping unlisted keys here is not an option: the importer
     replaces ``notes`` wholesale, so a push -> sheet-edit -> re-import round
     trip would wipe any curated metadata the export left out."""
     observed = {key for _path, case in entries for key in case.notes}
@@ -94,7 +93,7 @@ def _history_entries(repo: Path, relative: str) -> list[tuple[str, ...]]:
     """(sha, date, subject, path-at-that-commit) newest first, rename-aware.
 
     ``git log --follow`` traces renames, but ``git show {sha}:{path}`` needs
-    the path the file had *at that commit* — showing the current path fails
+    the path the file had *at that commit*. Showing the current path fails
     for every pre-rename commit and drops those transitions. ``--name-status``
     yields the per-commit path: the last tab field (the post-commit path on
     R/C lines, the only path otherwise).
@@ -123,7 +122,7 @@ def uid_history(repo: Path | None, path: Path) -> list[dict[str, str]]:
         return []
     relative = str(path.resolve().relative_to(repo))
     # NB: --follow combined with --reverse silently truncates history to the
-    # earliest commit (git quirk) — fetch newest-first and reverse in code.
+    # earliest commit (git quirk), so fetch newest-first and reverse in code.
     transitions = []
     previous_uid: str | None = None
     for sha, date, subject, commit_path in reversed(
@@ -148,7 +147,9 @@ def uid_history(repo: Path | None, path: Path) -> list[dict[str, str]]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
     parser.add_argument("--out", type=Path, required=True,
                         help="directory for cases.csv + changelog.csv")

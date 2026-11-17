@@ -1,11 +1,12 @@
 """Nudge evaluator.
 
-Checks the generic ``nudge`` state field (``{type, options}``) that the agent
-emits via ``send_nudge`` or the ``pick_aoi``/``pick_dataset`` nudge migrations
-(aoi_choice, dataset_choice) - see wri/project-zeno#770. This is a deterministic
-substitute for LLM-judged clarification detection whenever a test case expects
-one of these specific nudge shapes: the nudge type and options are read
-directly off agent state instead of inferred from prose.
+A nudge is the agent's structured follow-up offer: the ``nudge`` state field,
+``{type, options, data?}``, holding a choice for the user to pick from. The
+``send_nudge`` tool sets it, as do ``pick_aoi`` and ``pick_dataset`` when they
+offer a choice of place or dataset (types ``aoi_choice`` and ``dataset_choice``).
+When a case expects a specific nudge, this check reads its type and options
+straight from state: a deterministic alternative to the LLM clarification judge,
+which infers clarification from prose.
 
 Both the nudge type and the option wording are themselves LLM-generated for
 aoi_choice/dataset_choice nudges (only the literal send_nudge-with-fixed-args
@@ -46,7 +47,7 @@ def evaluate_nudge(
             Empty/None means no type check.
         expected_nudge_options: Allowed nudge options. The agent must offer
             at least one, and may not offer any outside this set (matched by
-            substring, not exact equality - see `_option_matches`). Empty/None
+            substring, not exact equality; see `_option_matches`). Empty/None
             means no options check.
 
     Returns:
@@ -63,7 +64,7 @@ def evaluate_nudge(
     """
     # Actual values are extracted unconditionally (like the AOI and dataset
     # evaluators): multi-turn delta snapshots and triage need them even on
-    # turns with no expectation (PR-07). Scores stay gated on the expectation.
+    # turns with no expectation. Scores stay gated on the expectation.
     nudge = agent_state.get("nudge")
     nudge = nudge if isinstance(nudge, dict) else {}
 

@@ -1,4 +1,6 @@
-"""Registry completeness and behaviour parity with the hand-written sequence."""
+"""Tests for the evaluator registry (goldset.registry): evaluators run in a
+fixed order, each score field has exactly one owner, and a case with no
+expectations scores nothing and calls no LLM judge."""
 
 from goldset.eval_types import ExpectedData
 from goldset.registry import ALL_SCORE_FIELDS, EVALUATORS
@@ -18,6 +20,7 @@ EXPECTED_ORDER = (
     "date_extraction",
     "data_pull",
     "answer",
+    "ground_truth",
     "suggested_datasets",
     "nudge",
     "dashboard_created",
@@ -42,19 +45,14 @@ def test_registry_order_matches_legacy_merge_order():
 
 
 def test_every_known_score_field_is_owned_exactly_once():
-    # 28 as of 2026-08-03: charts_answer_judge_score joined as an info-only
-    # companion to charts_answer_score (H5).
-    # 29 from 2026-09-25: forbidden_tools_absent_score (CHALLENGE dataset set).
-    # 30 from 2026-10-26: accepted_nudge_match_score (BENCHMARK nudge path).
-    # 31 from 2026-10-26: accepted_blog_match_score (BENCHMARK blog path).
-    # 34 from 2026-10-27: figure_match_score, figure_claim_match_score and
-    # answer_period_match_score (BENCHMARK draft-5).
-    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 34
+    # Pinned so that adding or removing a score field is a deliberate,
+    # visible edit.
+    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 36
 
 
 def test_run_evaluations_with_no_expectations_scores_nothing():
     """No expected values -> every score None, and (critically) no judge is
-    invoked — this test passes with no ANTHROPIC_API_KEY."""
+    invoked, so this test passes with no ANTHROPIC_API_KEY."""
     runner = _Probe()
     evaluations = runner._run_evaluations(
         agent_state={"messages": [], "charts_data": []},

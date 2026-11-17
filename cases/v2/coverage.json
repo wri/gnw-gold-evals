@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "store": "v2",
-  "caseset_version": "aec8d9e5bf8512ca",
-  "case_count": 135,
+  "caseset_version": "295e4a6f3b7f8f11",
+  "case_count": 145,
   "statuses": {
-    "done": 90,
+    "done": 96,
     "not doing": 30,
-    "ready": 12,
-    "todo": 3
+    "ready": 13,
+    "todo": 6
   },
-  "active_count": 105,
+  "active_count": 115,
   "groups": [
     {
       "group": "class-comparison",
@@ -32,11 +32,12 @@
     },
     {
       "group": "context-layer",
-      "cases": 2,
-      "active": 1,
+      "cases": 11,
+      "active": 10,
       "statuses": {
-        "done": 1,
-        "not doing": 1
+        "done": 8,
+        "not doing": 1,
+        "todo": 2
       }
     },
     {
@@ -69,8 +70,9 @@
       "cases": 29,
       "active": 21,
       "statuses": {
-        "done": 20,
+        "done": 19,
         "not doing": 8,
+        "ready": 1,
         "todo": 1
       }
     },
@@ -136,11 +138,12 @@
     },
     {
       "group": "refusal",
-      "cases": 5,
-      "active": 1,
+      "cases": 6,
+      "active": 2,
       "statuses": {
         "done": 1,
-        "not doing": 4
+        "not doing": 4,
+        "todo": 1
       }
     },
     {
@@ -156,65 +159,65 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 99,
+      "dedicated": 109,
       "shared_only": 0
     },
     "analysis": {
       "dedicated": 0,
-      "shared_only": 70
+      "shared_only": 76
     },
     "explanation": {
-      "dedicated": 25,
-      "shared_only": 60
+      "dedicated": 29,
+      "shared_only": 65
     },
     "output": {
-      "dedicated": 75,
+      "dedicated": 82,
       "shared_only": 3
     },
     "scope": {
-      "dedicated": 89,
+      "dedicated": 99,
       "shared_only": 7
     }
   },
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 89,
+      "cases": 100,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "scope",
-      "cases": 88,
+      "cases": 98,
       "switches_on": "scope_match"
     },
     {
       "field": "aoi_source",
-      "cases": 83,
-      "switches_on": "reference only (dashboard AOI source)"
+      "cases": 93,
+      "switches_on": "no check of its own (dashboard_aoi_match also compares it)"
     },
     {
       "field": "dataset_name",
-      "cases": 82,
+      "cases": 93,
       "switches_on": "reference only"
     },
     {
       "field": "aoi_ids",
-      "cases": 73,
+      "cases": 81,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "answer",
-      "cases": 70,
-      "switches_on": "agent_answer, charts_answer, chart_produced"
+      "cases": 76,
+      "switches_on": "agent_answer, chart_produced, data_pull_exists, answered_without_data (+ charts_answer when a chart exists)"
     },
     {
       "field": "text",
-      "cases": 25,
+      "cases": 29,
       "switches_on": "expected_text_match"
     },
     {
       "field": "context_layer",
-      "cases": 9,
+      "cases": 19,
       "switches_on": "context_layer_match"
     },
     {
@@ -223,29 +226,29 @@
       "switches_on": "dashboard_created"
     },
     {
+      "field": "end_date",
+      "cases": 8,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
+    },
+    {
+      "field": "start_date",
+      "cases": 8,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
+    },
+    {
       "field": "class_values",
       "cases": 6,
       "switches_on": "class_value_match (info-only)"
     },
     {
-      "field": "nudge_options",
-      "cases": 6,
-      "switches_on": "nudge_match"
-    },
-    {
       "field": "dashboard_widgets",
       "cases": 5,
-      "switches_on": "dashboard_widgets_match, dashboard_widgets_valid"
+      "switches_on": "dashboard_widgets_match (+ dashboard_widgets_valid when a dashboard exists)"
     },
     {
-      "field": "end_date",
+      "field": "nudge_options",
       "cases": 5,
-      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
-    },
-    {
-      "field": "start_date",
-      "cases": 5,
-      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
+      "switches_on": "nudge_match"
     },
     {
       "field": "clarification",
@@ -254,13 +257,23 @@
     },
     {
       "field": "nudge_type",
-      "cases": 3,
+      "cases": 2,
       "switches_on": "nudge_match"
+    },
+    {
+      "field": "chart_type",
+      "cases": 1,
+      "switches_on": "chart_type_match"
     },
     {
       "field": "dataset_parameters",
       "cases": 1,
       "switches_on": "dataset_parameter_match"
+    },
+    {
+      "field": "ground_truth",
+      "cases": 1,
+      "switches_on": "ground_truth_match, ground_truth_answer (info-only)"
     },
     {
       "field": "accept_aoi_nudge_offering",
@@ -286,11 +299,6 @@
       "field": "accept_nudge_offering",
       "cases": 0,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
-    },
-    {
-      "field": "chart_type",
-      "cases": 0,
-      "switches_on": "chart_type_match"
     },
     {
       "field": "data_pull",
@@ -320,7 +328,7 @@
     {
       "field": "suggested_datasets",
       "cases": 0,
-      "switches_on": "suggested_datasets_match"
+      "switches_on": "suggested_datasets_match (legacy: the agent now writes nudge; author nudge_type / nudge_options)"
     }
   ],
   "unknown_expected_fields": [],
@@ -364,8 +372,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 42,
-        "answer_graded": 30,
+        "cases": 48,
+        "answer_graded": 36,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -379,11 +387,11 @@
           },
           {
             "name": "intact_forest",
-            "cases": 4
+            "cases": 5
           },
           {
             "name": "natural_forest",
-            "cases": 0
+            "cases": 5
           }
         ]
       },
@@ -391,8 +399,8 @@
         "dataset_id": "5",
         "dataset_name": "Tree cover gain",
         "missing_instructions": [],
-        "cases": 5,
-        "answer_graded": 5,
+        "cases": 6,
+        "answer_graded": 6,
         "parameters": [],
         "context_layers": []
       },
@@ -479,13 +487,13 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 7,
-        "answer_graded": 5,
+        "cases": 11,
+        "answer_graded": 9,
         "parameters": [],
         "context_layers": [
           {
             "name": "natural_lands",
-            "cases": 0
+            "cases": 4
           }
         ]
       },
@@ -708,6 +716,24 @@
       "status": "todo",
       "group": "comparative",
       "reason": "2026-09-16: reinstated aoi_ids and answer (see finding below); held at todo rather than promoted, pending a fresh 3-trial verification run at this uid — the finding's ~12% nudge rate means data_pull_exists/chart_produced/answered_without_data (dormant until now, since they require answer to be set) will start gating on this row, and that residual flakiness hasn't been measured against the new expectations yet."
+    },
+    {
+      "id": "1-130",
+      "status": "todo",
+      "group": "context-layer",
+      "reason": "todo 2026-10-09: blocked on project-zeno applying a 10% canopy threshold with the natural_forest layer (AJ, 2026-10-09: it currently runs natural forest loss unthresholded, which is wrong). Run 20261009T104826Z_staging_experimental (3 trials, ff=experimental) at this uid: AOI (BRA.11_1), dataset, natural_forest, text and scope pass 3/3; only agent_answer and charts_answer fail, because the agent reports 331,678 ha, the unthresholded figure to the hectare (7.62% off). Promote once the fix lands and a 3-trial run passes at this uid."
+    },
+    {
+      "id": "1-138",
+      "status": "todo",
+      "group": "refusal",
+      "reason": "todo 2026-10-15: blocked on the concession ingest on staging. #864 is deployed there (/api/metadata lists the five concession sources), but GET /api/aois?source=oil_palm returns no rows, and prod does not have #864 yet. Smoke run 20261015T173835Z_staging (1 trial, default profile, not committed): pick_aoi found no concessions, the agent fell back to the Kuantan Singingi district (IDN.24.7_1), and pick_dataset offered tree cover gain as a dataset_choice nudge because there is no concessions layer to filter by. text and scope passed and dataset_id_match failed (a nudge leaves no dataset on state), so the guard never ran. Rerun once ingest_concessions.py and build-aois have run on staging; pin aoi_ids to the concession ids that run resolves if they are stable over 3 trials."
+    },
+    {
+      "id": "1-139",
+      "status": "todo",
+      "group": "context-layer",
+      "reason": "todo 2026-10-15: blocked on the concession ingest on staging, as 1-138. Smoke run 20261015T173835Z_staging (1 trial, default profile, not committed): pick_aoi found no concessions and the agent fell back to the Kuantan Singingi district (IDN.24.7_1). pick_dataset chose Tree cover loss with context layer None, although its reasoning said the intact_forest layer filters the loss. The agent then pulled the whole district and reported \"57,502 ha of tree cover loss in intact forests within oil palm concessions\", a figure with neither filter applied (trace https://langfuse.staging.globalnaturewatch.org/project/wri_lcl/traces/4ebd47ba74061e9666687411f37f52d3). dataset_id_match passed; context_layer_match, text and scope failed. That failure is real and does not depend on #864, so this row should keep failing until it is fixed. Rerun once the concessions are ingested on staging."
     }
   ],
   "known_gaps": {
@@ -717,7 +743,6 @@
       "accept_dashboard",
       "accept_fixed_period",
       "accept_nudge_offering",
-      "chart_type",
       "data_pull",
       "date_tolerance_days",
       "figure",
@@ -729,7 +754,8 @@
       "answer_traceability",
       "charts_answer_judge",
       "class_value_match",
-      "date_coverage"
+      "date_coverage",
+      "ground_truth_answer"
     ],
     "catalog_datasets_no_case": [
       "12"
@@ -743,18 +769,12 @@
       ]
     },
     "uncovered_context_layers": {
-      "natural_forest": [
-        "4"
-      ],
       "primary_forest": [
         "7",
         "10"
       ],
       "intact_forest": [
         "10"
-      ],
-      "natural_lands": [
-        "11"
       ]
     }
   },

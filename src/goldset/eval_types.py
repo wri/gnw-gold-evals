@@ -1,4 +1,5 @@
-"""Type definitions for E2E testing framework."""
+"""Pydantic models for one trial: ``ExpectedData`` (a case's expectations) and
+``TestResult`` (the scores and diagnostics it produced)."""
 
 from itertools import product
 from typing import Any
@@ -13,28 +14,25 @@ def _parse_tri_state_bool(v: str | bool | None) -> bool | None:
     - "false", "False", "0", "no" -> False
     - "true", "True", "1", "yes" -> True
     - Boolean values pass through unchanged
+    - Any other string -> None (no expectation)
     """
     if v is None:
         return None
     if isinstance(v, bool):
         return v
     if isinstance(v, str):
-        # Empty string means no expectation
         if not v or v.strip() == "":
             return None
-        # Explicit false values
         if v.lower() in ("false", "0", "no"):
             return False
-        # Explicit true values
         if v.lower() in ("true", "1", "yes"):
             return True
-        # Default to None for any other value
         return None
     return bool(v) if v else None
 
 
 class TestResult(BaseModel):
-    """Result of a single E2E test execution."""
+    """Scores and diagnostics from one trial of a case (or of one turn)."""
 
     model_config = ConfigDict(extra="allow")
 
@@ -51,7 +49,7 @@ class TestResult(BaseModel):
     # POST /api/chat to end of stream only (no state/dashboard GETs, no judge).
     stream_duration_seconds: float | None = None
 
-    # AOI evaluation fields - separate binary scores (0/1/None)
+    # AOI evaluation fields: separate binary scores (0/1/None)
     aoi_id_match_score: float | None = None
     actual_id: str | None = None
     actual_name: str | None = None
@@ -59,7 +57,7 @@ class TestResult(BaseModel):
     actual_source: str | None = None
     match_aoi_id: bool = False
 
-    # Dataset evaluation fields - separate binary scores (0/1/None)
+    # Dataset evaluation fields: separate binary scores (0/1/None)
     dataset_id_match_score: float | None = None
     dataset_parameter_match_score: float | None = None
     context_layer_match_score: float | None = None
@@ -68,7 +66,7 @@ class TestResult(BaseModel):
     actual_dataset_parameters: str | None = None
     actual_context_layer: str | None = None
 
-    # Data pull evaluation fields - separate binary scores (0/1/None)
+    # Data pull evaluation fields: separate binary scores (0/1/None)
     data_pull_exists_score: float | None = None
     date_coverage_score: float | None = None
     date_extraction_score: float | None = None
@@ -86,7 +84,7 @@ class TestResult(BaseModel):
 
     # Answer evaluation fields
     charts_answer_score: float | None = None
-    # The chart judge's own appropriateness verdict: reported, never gating (H5).
+    # The chart judge's own appropriateness verdict: reported, never gating.
     charts_answer_judge_score: float | None = None
     chart_answer_score_reason: str | None = None
     agent_answer_score: float | None = None
@@ -123,6 +121,15 @@ class TestResult(BaseModel):
     actual_dashboard_widget_types: str | None = None
     dashboard_widgets_valid_score: float | None = None
 
+    # Ground-truth evaluation fields
+    ground_truth_match_score: float | None = None
+    ground_truth_match_score_reason: str | None = None
+    agent_ground_truth: str | None = None
+    agent_ground_truth_values: list[float | None] | None = None
+    ground_truth_answer_score: float | None = None
+    ground_truth_answer_score_reason: str | None = None
+    agent_ground_truth_answer: str | None = None
+
     # Expected data fields
     expected_aoi_ids: list[list[str]] | None = None
     expected_aoi_source: str = ""
@@ -150,10 +157,10 @@ class TestResult(BaseModel):
     # counts as wrong; any other error is the harness's and leaves it out.
     no_answer: bool = False
 
-    # Trial metadata
+    # Unused: num_trials and the *_score_std fields below are never set. Trials
+    # are merged per check, by majority, in cli.merge_trials.
     num_trials: int = 1
 
-    # Std deviation per score (only populated when num_trials > 1)
     overall_score_std: float | None = None
     aoi_id_match_score_std: float | None = None
     dataset_id_match_score_std: float | None = None
@@ -175,7 +182,7 @@ class TestResult(BaseModel):
     nudge_match_score_std: float | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        """Convert to dictionary for CSV export."""
+        """Plain dict of every field, including None values."""
         return self.model_dump(exclude_none=False)
 
 
@@ -233,7 +240,9 @@ class ExpectedData(BaseModel):
     # Insights article slugs (;-separated) an answer from search_blogs may
     # cite instead of pulling data (evaluators/accepted_blog.py).
     expected_accept_blog_sources: str = ""
-    # PR-06 additions
+    expected_ground_truth: str = ""        # the selector, from the case
+    ground_truth_values: list[float] = []  # fetched at run start, not from the case,
+    ground_truth_unresolved: str = ""      # so deliberately unprefixed
     expected_chart_type: str = ""
     expected_scope: str = ""
     expected_class_values: str = ""
@@ -344,13 +353,15 @@ class ExpectedData(BaseModel):
         is empty). Otherwise gold-set rows require a data pull when
         ``expected_answer`` is set (chart/insight answers depend on pulled
         statistics), and dashboard rows when ``expected_dashboard_widgets``
-        includes ``insight``; map-only dashboard rows do not.
+        includes ``insight``; map-only dashboard rows do not. A
+        ``ground_truth`` row grades the agent's pull itself, so it requires
+        one too.
         """
         if self.expected_clarification is True:
             return False
         if self.expected_data_pull is not None:
             return self.expected_data_pull
-        if self.expected_answer:
+        if self.expected_answer or self.expected_ground_truth:
             return True
         widgets = self.expected_dashboard_widgets or []
         return "insight" in widgets

@@ -1,5 +1,5 @@
 id: mt-012
-uid: edab678e96435330
+uid: 6e376cfa37e3d1d0
 status: not doing
 group: multiturn
 turns:
@@ -40,7 +40,13 @@ notes:
     three separate checks flapping; a row that measures nothing on two trials in three cannot
     smoke-test a refusal. The bare "Why did X change?" wording behaved the same way, so the
     fix is the turn split, not the sentence.'
-  verification: '2026-09-16: local 3-trial run 20260916T125526Z_local_experimental on the PR branch (feat/lgms-curated-charts @423488a1): t1.aoi_id_match and t1.dataset_id_match 1.0 on 3/3 and t2.state_delta 1.0 on 3/3 - the turn split fixed the instability that retired 1-126 (see supersedes). Turn 2''s decline is unverified: the upstream analytics API returned 401 Invalid or expired token on every trial (stale local WRI_BEARER_TOKEN), which project-zeno renders to the user as "No data found", so turn 1 produced no charts and turn 2 had nothing to refuse.'
+  verification: '2026-09-16: local 3-trial run 20260916T125526Z_local_experimental on the
+    PR branch (feat/lgms-curated-charts @423488a1): t1.aoi_id_match and t1.dataset_id_match
+    1.0 on 3/3 and t2.state_delta 1.0 on 3/3 - the turn split fixed the instability that retired
+    1-126 (see supersedes). Turn 2''s decline is unverified: the upstream analytics API returned
+    401 Invalid or expired token on every trial (stale local WRI_BEARER_TOKEN), which project-zeno
+    renders to the user as "No data found", so turn 1 produced no charts and turn 2 had nothing
+    to refuse.'
   status_reason: '2026-09-16: not doing on two counts. (1) Same as 1-112..1-117: LGMS is hidden
     unless ff=experimental while gold runs target the default profile. (2) The behaviour is
     unreleased - wri/project-zeno#827 was open at authoring time, and today the agent answers

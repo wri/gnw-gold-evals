@@ -5,8 +5,9 @@ absolute date strings when a run executes.  The YAML stores the template
 form (and the uid hashes it), so the case identity is stable across months
 while the prompt sent to the agent stays natural and current.
 
-Supported variables are listed in ``TEMPLATE_VARS``.  Unknown tokens are
-caught by ``validate_templates`` (called from the audit and from check.py).
+Supported variables are listed in ``TEMPLATE_VARS``. Unknown tokens are
+caught by ``validate_templates``, which ``tools/check.py`` and
+``tools/audit_cases.py`` call.
 """
 
 from __future__ import annotations

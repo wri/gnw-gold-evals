@@ -1,12 +1,12 @@
-"""Request builder and analytics client, ported from ``main`` — no network.
+"""Request builder, selector, and analytics client — no network.
 
 The reference row is **1-046** ("How many tonnes of CO2 was emitted in Ihorombe,
-Madagascar in 2019 due to tree cover loss?"): it exercises the GADM suffix
-strip and a year that the request leaves to the figure formula. The selector
-and the runner's pull re-read are not on this branch, so their tests stay on
-``main``.
+Madagascar in 2019 due to tree cover loss?"), because it exercises three things
+at once: the GADM suffix strip, a metric that is not the obvious column, and a
+year that lives in the selector rather than the request.
 """
 
+import asyncio
 import json
 from pathlib import Path
 
@@ -17,9 +17,15 @@ from goldset.groundtruth.catalog import dataset_for, datasets
 from goldset.groundtruth.client import (
     AnalyticsClient,
     AnalyticsError,
+    agent_environment,
     analytics_headers,
 )
 from goldset.groundtruth.request import RequestError, build_request, canopy_cover
+from goldset.groundtruth.selector import (
+    SelectorError,
+    apply_selector,
+    parse_selector,
+)
 from goldset.store import Case
 
 CASE_1046 = Case(
@@ -61,6 +67,61 @@ def test_1046_payload_matches_what_the_agent_sent():
         "intersections": [],
         "canopy_cover": 30,
     }
+
+
+def test_selector_picks_the_year_the_request_could_not():
+    selector = parse_selector(CASE_1046.expected["ground_truth"])
+    assert selector.aggregate == "sum"
+    assert selector.column == "carbon_emissions_MgCO2e"
+    assert selector.filter_column == "tree_cover_loss_year"
+    assert apply_selector(selector, RESULT) == pytest.approx(658496.56)
+
+
+def test_where_is_case_insensitive_but_canonicalises():
+    """The selector is hashed into the uid, so `where` and `WHERE` must not
+    mint two uids for the same test."""
+    lower = parse_selector("sum(area_ha) where tree_cover_loss_year=2019")
+    upper = parse_selector("SUM(area_ha) WHERE tree_cover_loss_year=2019")
+    assert lower == upper
+    assert lower.canonical() == "sum(area_ha) WHERE tree_cover_loss_year=2019"
+
+
+def test_bare_column_is_refused():
+    """An explicit aggregate is mandatory: 1-059 pulls 254 AOIs, so an implicit
+    reduction over a multi-row match would be silently wrong."""
+    with pytest.raises(SelectorError):
+        parse_selector("carbon_emissions_MgCO2e WHERE tree_cover_loss_year=2019")
+
+
+def test_missing_metric_errors_rather_than_passing_vacuously():
+    """The fetched data lacks the metric the case needs."""
+    with pytest.raises(SelectorError, match="not in the response"):
+        apply_selector(parse_selector("sum(nonexistent_column)"), RESULT)
+    with pytest.raises(SelectorError, match="no rows where"):
+        apply_selector(
+            parse_selector("sum(area_ha) WHERE tree_cover_loss_year=1999"), RESULT
+        )
+
+
+def test_a_null_column_is_read_around_not_crashed_on():
+    """The live 1-095 shape: at canopy_cover 10 the API returns emissions as a
+    bare null. The other columns are fine and must stay readable."""
+    table = {**RESULT, "carbon_emissions_MgCO2e": None}
+    assert apply_selector(
+        parse_selector("sum(area_ha) WHERE tree_cover_loss_year=2019"), table
+    ) == pytest.approx(1371.15)
+
+
+@pytest.mark.parametrize("selector", [
+    "sum(carbon_emissions_MgCO2e)",                            # as the metric
+    "sum(area_ha) WHERE carbon_emissions_MgCO2e=658496.56",    # as the filter
+])
+def test_needing_a_null_column_is_a_selector_error(selector):
+    """SelectorError, never TypeError: only SelectorError becomes a row error;
+    anything else escapes prefetch as a traceback."""
+    table = {**RESULT, "carbon_emissions_MgCO2e": None}
+    with pytest.raises(SelectorError, match="did not compute it"):
+        apply_selector(parse_selector(selector), table)
 
 
 def test_gadm_suffix_stripped_only_for_gadm():
@@ -141,6 +202,45 @@ def test_canopy_cover_defaults_and_pins():
     # zeno's natural forest default; a pinned value still wins
     assert canopy_cover({}, "natural_forest") == 10
     assert canopy_cover(pinned, "natural_forest") == 50
+
+
+def _pull_read_environment(run_environment: str) -> str:
+    """The ``X-environment`` the runner sends when re-reading the agent's pull."""
+    from goldset.runner.api import APITestRunner
+
+    seen: dict[str, str] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        seen["environment"] = request.headers["X-environment"]
+        return httpx.Response(200, json={"data": {"result": {"area_ha": [1.0]}}})
+
+    runner = APITestRunner(
+        api_base_url="https://api.example",
+        api_token="tok",
+        analytics_token="analytics-tok",
+        analytics_environment=agent_environment(run_environment),
+    )
+    state = {"statistics": [{"source_url": "http://analytics.example/x/1"}]}
+
+    async def read():
+        async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as client:
+            return await runner._fetch_pulled_data(client, state)
+
+    assert asyncio.run(read()) == {"area_ha": [1.0]}
+    return seen["environment"]
+
+
+def test_a_staging_run_reads_the_agents_pull_from_staging():
+    """That result belongs to the agent's deployment, which created it under its
+    own environment, so the read asks for the same one."""
+    assert _pull_read_environment("staging") == "staging"
+
+
+@pytest.mark.parametrize("run_environment", ["prod", "local", ""])
+def test_other_runs_read_the_agents_pull_from_production(run_environment):
+    """Zeno takes the environment from GNW_STAGE, which defaults to production,
+    so only a staging deployment reads staging."""
+    assert _pull_read_environment(run_environment) == "production"
 
 
 def test_ground_truth_requests_stay_on_production():
@@ -277,7 +377,9 @@ def test_client_polls_then_fetches():
     assert result.resource_id == "abc"
     assert result.metadata == {"echo": 1}
     assert result.polls == 2             # pending first: computed on request
-    assert sum(result.result["area_ha"]) == pytest.approx(3271.15)
+    assert apply_selector(
+        parse_selector("sum(area_ha)"), result.result
+    ) == pytest.approx(3271.15)
 
 
 def test_client_raises_on_failed_job():
