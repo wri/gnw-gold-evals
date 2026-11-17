@@ -15,7 +15,7 @@ they all follow.
 |---|---|
 | `check.py` | Verify the case store: every uid matches its case, every case is valid, and the manifest is current. Run `--fix` after any case edit to recompute uids and the manifest; CI runs plain `check.py` on every store (`cases/v1`, `cases/v2`, `cases/challenge`). Part of the [after-edit steps](../README.md#changing-cases). |
 | `audit_cases.py` | Check the case set against the authoring rules in `cases/README.md`: depth, coverage floors and the DON'T list. Run it before opening a case PR. CI runs it with `--strict`, which fails on depth and DON'T violations (see [the audit gate](../cases/README.md#the-audit-gate)). |
-| `coverage_doc.py` | Regenerate `cases/v2/COVERAGE.md` plus its JSON siblings (`coverage.json` and `cases_index.json`, consumed by the evals dashboard) from the store and the catalogue snapshot. Run it after any case edit or catalogue sync, and commit the result with the edit; CI's `--check` fails if any of the three committed files is out of date. |
+| `coverage_doc.py` | Regenerate a store's `COVERAGE.md` (`cases/v2` by default, `--cases-dir cases/challenge` for CHALLENGE) plus its JSON siblings (`coverage.json` and `cases_index.json`, consumed by the evals dashboard) from the store and the catalogue snapshot. Run it after any case edit or catalogue sync, and commit the result with the edit; CI's `--check` fails if any of the three committed files is out of date. |
 | `sync_zeno_catalog.py` | Refresh `cases/zeno_catalog.json`, the committed snapshot of project-zeno's dataset catalogue (dataset ids, dataset-specific parameters, context layers, instruction fields) that COVERAGE.md measures against. It also carries each dataset's analytics endpoint and date window, from which ground-truth requests are built. Run it when project-zeno adds, removes or changes a dataset. It reads `origin/main` of a sibling `project-zeno` checkout (`--zeno` for another path). Then run `coverage_doc.py`. |
 
 ## Results ledger
@@ -36,6 +36,22 @@ they all follow.
 | `render_html.py` | Standalone HTML report of one run for stakeholders; `--all` builds the cross-run page with a run selector. Refresh both after every official run. |
 | `render_inspector.py` | HTML matrix of every case against every check, with expected and measured values. Use it to find which checks failed on which cases; `--all` builds the cross-run page. |
 | `render_trends.py` | Pass-rate trends across every run in the ledger, one line per `ff`. Use it to see movement across releases; never read a trend across differing `ff`. |
+
+## CHALLENGE and BENCHMARK
+
+A CHALLENGE verdict is a pass rate, not a regression count, and a BENCHMARK
+version is a uid manifest over `cases/challenge`. Read
+[cases/challenge/README.md](../cases/challenge/README.md) and
+[benchmarks/README.md](../benchmarks/README.md) before you use these tools.
+
+| tool | what it does |
+|---|---|
+| `challenge_rollup.py` | Pass rates for one or more CHALLENGE runs: overall, per set and per cohort, with confidence intervals and the strict rate (clean on every trial), compared against `cases/challenge/TARGETS.yml`. Errored rows leave the denominator and are reported as availability. Latency is reported too. Run it after every CHALLENGE run, before the recommendations doc. `--benchmark <manifest>` rolls up a BENCHMARK run: North Star, consistency, failure modes per type and the type x stage matrix over the manifest's active members. |
+| `benchmark_sample.py` | Write a sampled BENCHMARK version (`benchmarks/<version>.json`) from the `ready` CHALLENGE cases: `--per-type` members (default 20) for each measured query type, easy and medium only for aoi and dataset. The same store and seed give the same manifest. It never regenerates a frozen version. |
+| `benchmark_from_sheet.py` | Write a curated BENCHMARK version from a reviewed sheet export (`--seed <csv> --version <v>`), one member for each sheet row. It also writes each member's sheet facets into the case `notes`, so the uids do not change. |
+| `check_benchmark.py` | Check every manifest in `benchmarks/` against `cases/challenge`: each active member's uid exists, its case is `ready`, and its frozen facets still match the case. A problem fails a frozen version and gives a warning on a draft. CI runs it. |
+| `benchmark_page.py` | Write the page data that the FE scorecards page reads (`results/benchmark/pages/<run_id>.json`) for one BENCHMARK run. Run it on the machine that ran the run, because it reads the run's agent artifacts, which are gitignored. Commit the page with the run, then regenerate `results/index.json`. `--base <run>` fills the members that a rerun did not measure from an earlier run (see [Rerunning revised members only](../benchmarks/README.md#rerunning-revised-members-only)). |
+| `plain_baseline.py` | Plain Sonnet with web search against Horizon on BENCHMARK draft-5, scored on the reply only. Output goes to `results/plain/`, never `results/benchmark/`, so the FE page cannot show it. The `ask` step spends API budget: run it only with AJ's go-ahead. |
 
 ## Legacy tools
 
