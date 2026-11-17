@@ -84,33 +84,34 @@ uv run python tools/sync_zeno_catalog.py   # refresh the dataset catalogue snaps
 
 ## Rules for runs
 
-Procedures and reasons: README ["Running the set"](README.md#running-the-set) and ["After a run"](README.md#after-a-run).
+These apply to every suite unless marked GOLD. Procedures and reasons: README ["Running a suite"](README.md#running-the-set), and each suite's after-run steps ([CHALLENGE](cases/challenge/README.md#after-every-run), [BENCHMARK](benchmarks/README.md#after-a-run), [GOLD](README.md#after-a-run)).
 
 - **Profile.** Run the default profile (no `--ff`) unless the cases under test need a feature still behind `experimental`. Never diff or trend across differing `ff`; the run_id suffix shows it (`_prod` versus `_prod_experimental`).
-- **Two tiers.** A smoke run (1 trial, the CLI default) is never committed, diffed or used as a baseline. Anything that produces a regression count or becomes a baseline uses `--trials 3`.
-- **Comparable runs only.** Both sides of a diff need the same `ff`, the same trial count and the same environment ([Comparing two runs](results/README.md#comparing-two-runs)). If no comparable run exists, say so rather than diffing against something else.
-- **Methodology note.** If check semantics changed since the previous run, pass `--note "<what changed>"` when starting `gold run`, so diffs are not read as agent changes.
-- **Ground truth.** Cases with `expected.ground_truth` fetch their expected figures from the production analytics API, whatever `--env`, once per run before the first trial. A failed fetch aborts the run before any agent call, so nothing is written. Because every run fetches afresh, two runs can differ with no agent change; `diff_runs.py` files those flips as data bumps, never regressions ([Run-time ground truth](cases/README.md#run-time-ground-truth-ground_truth)).
+- **Two tiers.** A smoke run (1 trial, the CLI default) is never committed, diffed or used as a baseline. Anything that is published, trended, produces a regression count or becomes a baseline uses `--trials 3`; CHALLENGE and BENCHMARK canonical runs are prod, default profile, 3 trials.
+- **Comparable runs only.** Both sides of a diff or a trend need the same `ff`, the same trial count and the same environment ([Comparing two runs](results/README.md#comparing-two-runs)). If no comparable run exists, say so rather than diffing against something else.
+- **Methodology note.** If check semantics changed since the previous run, pass `--note "<what changed>"` when starting `evals run`, so diffs are not read as agent changes.
+- **Ground truth** (only GOLD cases use it today). Cases with `expected.ground_truth` fetch their expected figures from the production analytics API, whatever `--env`, once per run before the first trial. A failed fetch aborts the run before any agent call, so nothing is written. Because every run fetches afresh, two runs can differ with no agent change; `diff_runs.py` files those flips as data bumps, never regressions ([Run-time ground truth](cases/README.md#run-time-ground-truth-ground_truth)).
 - **Timeouts.** A block of `ReadTimeout`s late in a run usually means too many workers (runs record `workers` and `trial_timeout` so this can be traced). Lower `--workers` before blaming the agent.
-- **Finish official runs.** An official run is not done until the four steps in README "After a run" are complete. Show the user what will be committed before committing. After `git add`-ing the run JSON, regenerate the run index (`uv run python tools/build_run_index.py`; it enumerates tracked and staged files, so add the run first) and commit `results/index.json` in the same commit; CI gates its freshness.
+- **Finish committed runs.** A run you commit is not done until its suite's after-run steps are complete (links above). Show the user what will be committed before committing. After `git add`-ing the run JSON, regenerate the run index (`uv run python tools/build_run_index.py`; it enumerates tracked and staged files, so add the run first) and commit `results/index.json` in the same commit; CI gates its freshness.
 - **The ledger is written by the harness only.** Never hand-write, edit, backfill or splice a run file; a re-ingest after a tooling fix means deleting the file visibly in a reviewable commit. To combine a full run with a scoped re-run, use `tools/compose_runs.py` ([results/README.md](results/README.md)).
 
 ## Rules for cases
 
-**COVERAGE.md must move with the case set.** Any change to a case file (query, expected values, status, group, notes, or a new or deleted case) is incomplete until `tools/check.py --fix` and `tools/coverage_doc.py` have run and their output is committed with the edit; run `tools/audit_cases.py --strict` as well. CI fails the PR on a stale uid or manifest, a stale COVERAGE.md (a changed `Last updated` date alone does not count) or an audit violation. Procedure: README ["Changing cases"](README.md#changing-cases); the `case-edit` and `new-case` skills have the steps.
+**COVERAGE.md must move with the case set.** Any change to a case file (query, expected values, status, set, group, notes, or a new or deleted case) is incomplete until `tools/check.py --fix` and `tools/coverage_doc.py` have run for that store and their output is committed with the edit. For CHALLENGE, run `tools/check_benchmark.py` as well; for GOLD, `tools/audit_cases.py --strict`. CI fails the PR on a stale uid or manifest, a stale COVERAGE.md (a changed `Last updated` date alone does not count), an audit violation or a frozen BENCHMARK member gone missing. Procedure: README ["Changing cases"](README.md#changing-cases).
 
-- For GOLD, edit `cases/v2` only. `cases/v1` is frozen, and `tests/test_v1_frozen.py` fails if it changes.
-- Status changes follow [Status lifecycle](cases/README.md#status-lifecycle). In particular, `done` needs a passing 3-trial run at the case's current uid, cited by run_id in `notes.status_reason`, and parking needs a dated `status_reason`.
+- Status changes follow [Status lifecycle](cases/README.md#status-lifecycle). Parking needs a dated `status_reason`.
+- CHALLENGE: never change a case to make it pass, and never edit a member of a frozen BENCHMARK version.
+- GOLD: edit `cases/v2` only. `cases/v1` is frozen, and `tests/test_v1_frozen.py` fails if it changes. `done` needs a passing 3-trial run at the case's current uid, cited by run_id in `notes.status_reason`. The `case-edit` and `new-case` skills have the steps.
 
 ## The identity system
 
-**WARNING**: critical for the ledger. Do not break it. Every result in `results/gold/runs/` is keyed on a case's uid, so the uid is the only link between a score and the exact case content it was measured against. If the hash changes for content that did not change, every committed run stops matching its cases and the regression history is lost. If the hash misses a change that did happen, old scores are silently attributed to the edited case, and diffs compare two different tests as if they were one. `src/goldset/canonical.py` defines the hashing; the README glossary defines [uid](README.md#uid) and [caseset_version](README.md#caseset-version).
+**WARNING**: critical for every ledger. Do not break it. Every result in `results/<suite>/runs/` (challenge, benchmark and gold) is keyed on a case's uid, and every BENCHMARK manifest lists its members by uid, so the uid is the only link between a score and the exact case content it was measured against. If the hash changes for content that did not change, every committed run stops matching its cases, every BENCHMARK version loses its members, and the result history is lost. If the hash misses a change that did happen, old scores are silently attributed to the edited case, and diffs compare two different tests as if they were one. `src/goldset/canonical.py` defines the hashing; the README glossary defines [uid](README.md#uid) and [caseset_version](README.md#caseset-version).
 
-- **uid** = `sha256(canonical_json(query + non-empty expected values))[:16]`. Changing the query or any `expected` value mints a new uid: that is the versioning mechanism, not an error. `status`, `group`, `notes`, key order, leading and trailing whitespace, and line endings never affect it, so triage never mints a version.
+- **uid** = `sha256(canonical_json(query + non-empty expected values))[:16]`. Changing the query or any `expected` value mints a new uid: that is the versioning mechanism, not an error. `status`, `set`, `group`, `notes`, key order, leading and trailing whitespace, and line endings never affect it, so triage never mints a version.
 - **Multi-turn uids** hash every turn's query and expected values in order, so reordering turns mints a new uid. In v2, each turn's `deltas` are hashed too (its `MANIFEST.json` sets `uid_includes_deltas`); frozen v1 uids leave them out.
 - **The hash covers every expected field, scored or not** (for example `dataset_name`, which no check reads). An unscored field is still part of what the case asserts, and a check may start reading it later; if the hash skipped it, an edit to it would change the case without a new uid. Do not narrow the hash to scored fields, and do not move expectations into `notes` to avoid uid churn.
 - **caseset_version** (in each store's `MANIFEST.json`) hashes the sorted uids. Results key on uid; diffs run over the uids two runs share.
-- **`id`** (such as `1-030`) is the stable lineage handle across versions.
+- **`id`** (such as `ch-aoi-001` or `1-030`) is the stable lineage handle across versions.
 - `tests/test_schema.py` validates every case file against `schema/case.schema.json`, so a malformed case fails the suite, not a run.
 
 ## Dataset coverage against project-zeno
@@ -132,11 +133,14 @@ The snapshot is also the ground-truth request table. It carries each dataset's `
   - `groundtruth/`: run-time ground truth: selector parsing, analytics requests built from the catalogue snapshot, and the fetch before the first trial.
   - `buckets.py`: the bucket map, the info-only set, row verdicts, and the reconciliation of implied with evaluated checks.
   - `ledger.py`: run records, run_ids, majority verdicts and partial files.
-  - `cli.py`: the `gold` command.
+  - `benchmark.py`: the BENCHMARK manifest contract (members, facets, errata, use cases, query types).
+  - `plain/`: the plain baseline's reference tables, Sonnet client, judges, scoring and outcomes.
+  - `cli.py`: the `evals` command (also installed as `gold`), with `--suite`.
 - `tools/`: thin CLIs over `src/goldset` (they add `src/` to `sys.path`); see `tools/README.md`.
-- `cases/v{1,2}/<group>/<id>.yaml`: one case per file, so review, blame and revert work per case. `expected:` holds the hashed expectations (keys without the `expected_` prefix); `notes:` holds unhashed annotations.
-- `results/`: the committed per-run JSON ledgers, one subtree per set (`results/gold/`, `results/challenge/`); contract in `results/README.md`. Checks are tri-state `1.0`/`0.0`/`null`.
-- `schema/case.schema.json`: the case contract. `templates/`: the HTML report templates.
+- `cases/challenge/<set>/<cohort>/<id>.yaml` and `cases/v{1,2}/<group>/<id>.yaml`: one case per file, so review, blame and revert work per case. `expected:` holds the hashed expectations (keys without the `expected_` prefix); `notes:` holds unhashed annotations.
+- `results/`: the committed per-run JSON ledgers, one subtree per suite (`results/challenge/`, `results/benchmark/`, `results/gold/`); contract in `results/README.md`. Checks are tri-state `1.0`/`0.0`/`null`. `results/benchmark/pages/` holds the page data; `results/plain/` holds the plain baseline's own files.
+- `benchmarks/`: BENCHMARK manifests and the plain baseline's overlay. `generation/`: the numeric-case generation pipeline. `seeds/`: the CSVs cases and versions were built from.
+- `schema/case.schema.json`: the case contract; `schema/benchmark_page.schema.json`: the page data contract. `templates/`: the HTML report templates.
 - The case store is the source of truth. The Google Sheet it was first imported from is retired; README ["Legacy tools"](README.md#legacy-tools) covers the remaining bridge tools.
 
 ## Working agreements
