@@ -2686,18 +2686,18 @@
       "answer_period_match": 1.0,
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": 0.0
+      "figure_match": 1.0
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing specific figures for deforestation in Brazil in 2023 (1,136,251 hectares of primary forest loss, a 35.9% decrease from 2022, and 675 million MgCO\u2082e in carbon emissions), includes methodological context and caveats, and ends with a follow-up question offering further exploration.",
+     "label_reason": "The reply directly answers the question by providing specific figures for deforestation in Brazil in 2023 (1,136,251 hectares of primary forest loss and a 35.9% decrease), includes contextual analysis, and ends with a follow-up question offering further exploration.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked 2023: The response provides figures specifically for 2023 (1,136,251 hectares of primary forest loss and 675 million MgCO\u2082e in carbon emissions), with additional context from other periods clearly labeled as historical comparison.",
+      "answer_period_match": "asked 2023: The response provides figures specifically for 2023 (1,136,251 hectares of primary forest loss and 675 million MgCO\u2082e in carbon emissions), directly matching the requested period, with additional context clearly labeled as historical comparisons.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 2,805,359.48: not in the reply, closest 1.4 million (50.1%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 1,136,251.06: reply states 1,136,251 hectares"
      }
     },
     {
@@ -2705,7 +2705,7 @@
       "answer_period_match": 1.0,
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": 0.0
+      "figure_match": 1.0
      },
      "gives_figure": true,
      "label": "answered",
@@ -2713,10 +2713,10 @@
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked 2023: The response provides figures specifically for 2023 (1,136,251 hectares of primary forest loss and 674.8 million tonnes of CO\u2082 equivalent emissions), which directly matches the requested period, with additional context from other years clearly labeled as comparison.",
+      "answer_period_match": "asked 2023: The response provides figures specifically for 2023 (1,136,251 hectares of primary forest loss and 674.8 million tonnes of CO\u2082 equivalent emissions), which directly matches the requested period.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 2,805,359.48: not in the reply, closest 1,772,217 hectares (36.8%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 1,136,251.06: reply states 1,136,251 hectares"
      }
     },
     {
@@ -2724,18 +2724,18 @@
       "answer_period_match": 1.0,
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": 0.0
+      "figure_match": 1.0
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (1.14 million hectares of primary forest loss in 2023), contextualizes it with a comparison to the previous year, and includes supporting details about emissions and methodology, without asking the user to clarify or choose before providing the answer.",
+     "label_reason": "The reply directly answers the question by providing a specific figure (1.14 million hectares of primary forest loss in 2023), contextualizes it with a percentage decrease, includes related emissions data, and offers follow-up exploration options without requiring user clarification first.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked 2023: The response provides figures specifically for 2023 (1.14 million hectares of primary forest loss and 675 million MgCO2e emissions), with additional historical context clearly labeled as comparative data from other years.",
+      "answer_period_match": "asked 2023: The response provides figures specifically for 2023 (1.14 million hectares of primary forest loss and 675 million MgCO2e emissions), directly matching the requested period, with additional historical context clearly labeled as comparative data from other years.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 2,805,359.48: not in the reply, closest 1.14 million (59.4%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 1,136,251.06: reply states 1.14 million"
      }
     }
    ],
@@ -3034,10 +3034,10 @@
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2026-10-01 to 2026-10-27 (give or take 3 days): The response provides figures for October 1 to October 23, 2026, which falls within the requested period of October 1 to October 27, 2026 (\u00b13 days), and clearly labels this period for the data presented.",
-      "expected_text_match": "The response clearly reports the natural lands figure (744.58 ha total) and provides a detailed breakdown of the split across three confidence categories (426.05 ha, 230.25 ha, and 88.28 ha), making the distribution across natural lands transparent and unambiguous.",
+      "answer_period_match": "asked from 2026-10-01 to 2026-10-27 (give or take 3 days): The response explicitly states the figures cover October 1 to October 23, 2026, which falls within the requested period of October 1 to October 27, 2026 (\u00b13 days) and is clearly labeled with the specific period covered.",
+      "expected_text_match": "The response clearly reports the natural lands figure (744.58 ha total) and provides a detailed breakdown of the split across three confidence categories (426.05 ha, 230.25 ha, and 88.28 ha), making the distribution transparent and meeting the expected behavior.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-27 = 1,070.42: not in the reply, closest 744.58 ha (30.4%)"
+      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-27 = 1,062.53: not in the reply, closest 744.58 ha (29.9%)"
      }
     },
     {
@@ -3049,14 +3049,14 @@
      },
      "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply acknowledges it cannot directly answer the question about comparing natural forest versus farmed land alerts, explains the data limitation, offers a partial approach using natural lands data, and asks the user to confirm before proceeding.",
+     "label_reason": "The reply acknowledges it cannot directly answer the question about comparing alerts on natural forest versus farmed land, explains the data limitation, offers a partial approach using natural lands data, and asks the user to confirm before proceeding.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2026-10-01 to 2026-10-27 (give or take 3 days): The response provides no figures; instead it asks a clarifying question about which dataset to use and offers options without delivering any actual data or analysis for the requested period.",
+      "answer_period_match": "asked from 2026-10-01 to 2026-10-27 (give or take 3 days): The response provides no figures or data; instead it asks a clarifying question about which dataset to use and offers options without presenting any actual answering figures for the requested period.",
       "expected_text_match": "The response fails to report the natural-lands figure as natural lands (not forest only) and does not provide a total or remainder to show the split clearly; instead, it only offers to filter by natural lands without delivering the expected comparative breakdown.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-27 = 1,070.42: not in the reply, no comparable number"
+      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-27 = 1,062.53: not in the reply, no comparable number"
      }
     },
     {
@@ -3072,10 +3072,10 @@
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2026-10-01 to 2026-10-27 (give or take 3 days): The response provides no figures or data; it only asks a clarifying question about which dataset to use and offers options for proceeding.",
-      "expected_text_match": "The response does not report natural-lands figures or provide a clear split/breakdown showing the total or remainder of natural lands versus other land types; instead, it only mentions that Integrated Alerts can filter for natural lands without providing any actual data or quantitative comparison.",
+      "answer_period_match": "asked from 2026-10-01 to 2026-10-27 (give or take 3 days): The response provides no figures or data; it only asks a clarifying question about which dataset to use and offers options without providing any actual answering figures for the requested period.",
+      "expected_text_match": "The response does not report natural-lands figures or provide a clear split showing the total or remainder of natural lands versus other land types; instead, it only mentions that Integrated Alerts can be filtered to show alerts within natural lands without providing any actual data or breakdown.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-27 = 1,070.42: not in the reply, no comparable number"
+      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-27 = 1,062.53: not in the reply, no comparable number"
      }
     }
    ],
@@ -6764,14 +6764,14 @@
      },
      "gives_figure": false,
      "label": "asked_back",
-     "label_reason": "The reply acknowledges the question but declines to provide a direct answer, instead asking the user to choose between two datasets before offering any figures or findings about natural land loss in Mato Grosso after 2020.",
+     "label_reason": "The reply acknowledges the question but declines to provide a direct answer, instead asking the user to choose between two datasets before offering any figures on natural land loss in Mato Grosso after 2020.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2021 to 2025: The response provides no actual figures for land loss; instead it asks the user to choose between two data options without presenting any answering figures for the 2021-2025 period.",
-      "expected_text_match": "The response does not explicitly state that the figure covers natural forest only (SBTN 2020 baseline) or clarify the distinction between forest loss and all natural land loss; instead it presents multiple datasets without clearly specifying the baseline or scope limitations.",
+      "answer_period_match": "asked from 2021 to 2025: The response provides no actual figures for natural land loss; instead it asks the user to choose between two data options without presenting any answering figures for the 2021-2025 period.",
+      "expected_text_match": "The response does not explicitly state that the figure covers natural forest only (SBTN 2020 baseline) or clarify the distinction between forest loss and all natural land loss; instead it presents multiple datasets without clearly explaining the baseline or scope limitations.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,549,668.24: not in the reply, no comparable number"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,292,917.14: not in the reply, no comparable number"
      }
     },
     {
@@ -6779,18 +6779,18 @@
       "answer_period_match": 1.0,
       "expected_text_match": 1,
       "figure_claim_match": null,
-      "figure_match": 0.0
+      "figure_match": 1.0
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (2,292,917 hectares) for natural land loss in Mato Grosso after 2020, along with detailed annual breakdown and contextual notes, then offers follow-up options.",
+     "label_reason": "The reply directly answers the question by providing a specific figure (2,292,917 hectares of natural forest loss between 2021-2025 after 2020) with detailed annual breakdown, and ends with a follow-up question offering further exploration.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": "asked from 2021 to 2025: The response provides figures for the exact period requested (2021-2025), with annual breakdowns for each year and a total of 2,292,917 hectares covering the full 2021-2025 period.",
-      "expected_text_match": "The response explicitly states \"This analysis uses the SBTN Natural Lands 2020 baseline\" and clarifies that it \"covers natural forest only\" by noting the baseline \"excludes plantations,\" which directly addresses the expected information that the figure covers natural forest only, not all natural land.",
+      "expected_text_match": "The response explicitly states \"This analysis uses the SBTN Natural Lands 2020 baseline\" and clarifies that the data covers natural forest (excluding plantations) with a 10% canopy cover threshold, which directly addresses the expected information that the figure covers natural forest only, not all natural land.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,549,668.24: not in the reply, closest 2,292,917 hectares (10.1%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,292,917.14: reply states 2,292,917 hectares"
      }
     },
     {
@@ -6798,28 +6798,28 @@
       "answer_period_match": 1.0,
       "expected_text_match": 1,
       "figure_claim_match": null,
-      "figure_match": 0.0
+      "figure_match": 1.0
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers the question by providing a specific figure (2.29 million hectares of natural land lost in Mato Grosso since 2020) with detailed annual breakdown, and then offers follow-up questions about investigating drivers.",
+     "label_reason": "The reply directly answers the question by providing a specific figure (2.29 million hectares of natural land lost in Mato Grosso since 2020) with detailed annual breakdown, explanatory context, and follow-up questions.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2021 to 2025: The response provides annual natural forest loss figures for 2021-2025, which exactly matches the requested period after 2020, with a total of 2,292,917 hectares clearly labeled for this timeframe.",
+      "answer_period_match": "asked from 2021 to 2025: The response provides annual natural forest loss figures for 2021-2025, which exactly matches the requested period of \"after 2020\" (from 2021 to 2025), with a clearly labeled total of 2,292,917 hectares for this period.",
       "expected_text_match": "The response explicitly states it \"follows the SBTN Natural Lands Map 2020 baseline, which identifies natural forests while excluding plantations,\" which directly conveys that the figure covers natural forest only and not all natural land.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,549,668.24: not in the reply, closest 2,292,917 hectares (10.1%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,292,917.14: reply states 2.29 million"
      }
     }
    ],
-   "benchmark": "fail",
+   "benchmark": "pass",
    "id": "ch-quant-153",
-   "outcome": "wrong",
+   "outcome": "right",
    "reference": "ok",
    "right_every_time": false,
-   "wrong_figure": true,
-   "wrong_figure_any": true
+   "wrong_figure": false,
+   "wrong_figure_any": false
   },
   "70e7c4590828689f": {
    "attempts": [
@@ -15068,7 +15068,7 @@
       "answer_period_match": 1.0,
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": 0.0
+      "figure_match": 1.0
      },
      "gives_figure": true,
      "label": "answered",
@@ -15076,10 +15076,10 @@
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2021 to 2025: The response provides figures explicitly stated as covering the 2021-2025 period, with specific annual breakdowns for each year within that range (San Mart\u00edn: 127,091 hectares total with 2024 peak at 33,838 hectares; Jun\u00edn: 57,627 hectares total with 2021 peak at 14,985 hectares).",
+      "answer_period_match": "asked from 2021 to 2025: The response provides figures explicitly stated as covering the 2021-2025 period, with specific annual breakdowns for San Mart\u00edn (127,091 hectares total with 2024 peak at 33,838 hectares) and Jun\u00edn (57,627 hectares total with 2021 peak at 14,985 hectares).",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 186,717.07: not in the reply, closest 127,091 hectares (31.9%); sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 71,287.39: not in the reply, closest 57,627 hectares (19.2%)"
+      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 127,090.54: reply states 127,091 hectares; sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 57,627.18: reply states 57,627 hectares"
      }
     },
     {
@@ -15095,9 +15095,9 @@
    "id": "ch-comp-154",
    "outcome": "right",
    "reference": "ok",
-   "right_every_time": false,
+   "right_every_time": true,
    "wrong_figure": false,
-   "wrong_figure_any": true
+   "wrong_figure_any": false
   },
   "e752e2965cb2280a": {
    "attempts": [
@@ -16767,5 +16767,5 @@
    "wrong_figure_any": false
   }
  },
- "scored": "2026-10-30T10:46:22+00:00"
+ "scored": "2026-11-17T08:18:44+00:00"
 }

@@ -2722,7 +2722,7 @@
       "answer_period_match": 1.0,
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": 0.0
+      "figure_match": 1.0
      },
      "gives_figure": true,
      "label": "answered",
@@ -2730,10 +2730,10 @@
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked 2023: The response provides multiple figures explicitly labeled for 2023 (MapBiomas RAD calendar year data showing 1.8 million hectares, and INPE PRODES data for the year ending July 31, 2023), with additional context for other periods clearly marked as such.",
+      "answer_period_match": "asked 2023: The response provides figures explicitly labeled for 2023 (1.8 million hectares nationwide by MapBiomas RAD, 454,000 hectares for the Amazon, and a 22% reduction for the year ending July 31, 2023 by INPE), with additional context for other periods clearly marked as such.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 2,805,359.48: not in the reply, closest 2 million (28.7%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 1,136,251.06: reply states 1.1 million"
      }
     },
     {
@@ -2752,7 +2752,7 @@
       "answer_period_match": "asked 2023: The response provides figures explicitly stated as being for 2023 (MapBiomas data for 1.83 million hectares and biome breakdowns) and clearly labels the INPE/PRODES figures as covering August 2022 to July 2023, making the period coverage transparent.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 2,805,359.48: not in the reply, closest 1.83 million (34.8%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 1,136,251.06: not in the reply, closest 1.11 million (2.3%)"
      }
     },
     {
@@ -2771,7 +2771,7 @@
       "answer_period_match": "asked 2023: The response provides multiple figures explicitly labeled as covering 2023 (MapBiomas RAD 2023 data for calendar year 2023, and INPE's PRODES data for August 2022 to July 2023), with additional context clearly marked as covering different periods (August 2023 to July 2024, and subsequent years).",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 2,805,359.48: not in the reply, closest 2,069,695 hectares (26.2%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year = 2023 = 1,136,251.06: not in the reply, closest 1,110,326 hectares (2.3%)"
      }
     }
    ],
@@ -3066,14 +3066,14 @@
      },
      "gives_figure": false,
      "label": "declined",
-     "label_reason": "The reply explicitly states it cannot answer the question about October 2026 alerts in Padre Abad, then provides only background context and instructions for how the user can check the data themselves, without giving any figure or finding about whether alerts fell on natural forest or farmed land.",
+     "label_reason": "The reply declines to answer the core question, explains why (no published data available and cannot query alert platforms directly), and instead provides instructions on how the user can check the data themselves.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": "asked from 2026-10-01 to 2026-10-30 (give or take 3 days): The response provides no figures for the requested period; it explicitly states it could not answer the question for October 2026 and found no published breakdown of that month's alerts.",
-      "expected_text_match": "The actual response does not report natural-lands figures or provide a clear split between natural lands and other land types; instead, it explains why the requested data cannot be provided and offers guidance on how the user can check the data themselves.",
+      "expected_text_match": "The response does not report natural-lands figures or provide a clear split between natural lands and other land types; instead, it explains why the requested data cannot be accessed and offers guidance on how the user can check the data themselves.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-30 = 1,070.42: not in the reply, closest 77% (92.8%)"
+      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-30 = 1,062.53: not in the reply, closest 77% (92.8%)"
      }
     },
     {
@@ -3085,14 +3085,14 @@
      },
      "gives_figure": false,
      "label": "declined",
-     "label_reason": "The reply explicitly states it cannot answer the question because it lacks access to live alert data for October 2026 in Padre Abad, then provides only background context (720 kha of natural forest in 2020) and instructions for the user to check the data themselves, without giving any figure or finding about where this month's alerts fell.",
+     "label_reason": "The reply explicitly states it cannot answer the question because it lacks access to live alert data for October 2026 in Padre Abad, then provides background context (720 kha of natural forest in 2020) and detailed instructions for the user to find the answer themselves, but does not provide a direct answer, yes/no, or figure for this month's alerts.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": "asked from 2026-10-01 to 2026-10-30 (give or take 3 days): The response provides no figures for the requested period; it explicitly states it could not find alert data for October 2026 in Padre Abad province and only offers background context (2020 forest statistics) and instructions for manual verification.",
-      "expected_text_match": "The response does not report natural-lands figures or provide a clear split between natural lands and other land types; instead, it explains why such data cannot be accessed and offers guidance on how the user could obtain it themselves.",
+      "expected_text_match": "The response does not report natural-lands figures or provide a clear split between natural lands and other land types; instead, it explains why such data cannot be accessed and offers instructions for the user to check it themselves.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-30 = 1,070.42: not in the reply, closest 77% (92.8%)"
+      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-30 = 1,062.53: not in the reply, closest 77% (92.8%)"
      }
     },
     {
@@ -3104,14 +3104,14 @@
      },
      "gives_figure": false,
      "label": "declined",
-     "label_reason": "The reply declines to answer the core question, explains why the data cannot be accessed, and instead provides instructions on how the user can look up the answer themselves using specific tools and methods.",
+     "label_reason": "The reply declines to answer the core question, explains why the data cannot be accessed, provides background context about available datasets, and offers instructions for the user to find the answer themselves.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": "asked from 2026-10-01 to 2026-10-30 (give or take 3 days): The response provides no figures for the requested period; it explicitly states that no October 2026 data was found and declines to answer the question.",
       "expected_text_match": "The response does not report natural-lands figures or provide a clear split between natural forest and other land types; instead, it explains why such data cannot be obtained and offers instructions for the user to perform the analysis themselves.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-30 = 1,070.42: not in the reply, closest 77% (92.8%)"
+      "figure_match": "sum(area_ha) where alert_date in 2026-10-01..2026-10-30 = 1,062.53: not in the reply, closest 77% (92.8%)"
      }
     }
    ],
@@ -6875,14 +6875,14 @@
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides an approximate figure (0.7-0.8 million hectares) for natural land loss in Mato Grosso after 2020, breaks it down by year with detailed data, and asks for clarification on which specific measure the user prefers.",
+     "label_reason": "The reply provides an approximate figure (0.7-0.8 million hectares) for natural land loss in Mato Grosso after 2020, breaks it down by year with detailed data, and asks for clarification on which specific measure the user wants.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": "asked from 2021 to 2025: The response provides figures for the exact period requested (2021-2025), with data for 2021-2024 from published reports and an estimated figure for 2025, clearly labeled as such.",
-      "expected_text_match": "The response explicitly distinguishes between \"natural forest only\" and \"all native vegetation\" and clarifies that MapBiomas tracks \"native vegetation clearing\" (not just forest), while also mentioning Global Forest Watch's separate \"natural forest loss\" metric, thereby addressing the expected distinction between forest-only and broader natural land coverage.",
+      "expected_text_match": "The response explicitly distinguishes between natural forest and all native vegetation, noting that MapBiomas tracks \"native vegetation clearing\" (which is broader) and that Global Forest Watch specifically measures \"natural forest loss,\" thereby clarifying that the figures cover different scopes and addressing the distinction between forest-only and all natural land.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,549,668.24: not in the reply, closest 0.8 million (68.6%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,292,917.14: not in the reply, closest 0.8 million (65.1%)"
      }
     },
     {
@@ -6894,33 +6894,33 @@
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply acknowledges it cannot provide a single reliable cumulative total for natural land loss in Mato Grosso after 2020, but does provide specific annual figures (390 kha for 2025 from GFW, 92.5 kha for 2024 from MapBiomas) with explanations of data limitations, and asks the user to clarify which definition of land loss they want before attempting a more complete answer.",
+     "label_reason": "The reply acknowledges it cannot provide a single cumulative total for natural land loss in Mato Grosso after 2020 due to data gaps and definitional differences, but does provide specific annual figures (390 kha for 2025 from GFW, 92.5 kha for 2024 from MapBiomas) and explains why a total cannot be calculated, then asks the user to clarify which definition they prefer.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2021 to 2025: The response provides no cumulative figures for the 2021-2025 period; it only offers partial data for individual years (2024 and 2025) and explicitly states it cannot provide a total because data for 2021-2023 is missing.",
-      "expected_text_match": "The response explicitly states that Global Forest Watch data covers \"natural forest\" specifically (43 Mha in 2020) and distinguishes this from other measurements like \"all native vegetation including Cerrado\" and \"deforestation only,\" thereby clarifying that the figure represents natural forest only, not all natural land.",
+      "answer_period_match": "asked from 2021 to 2025: The response provides no cumulative figures for the requested 2021-2025 period; it only offers partial data for individual years (2024 and 2025) and explicitly states it cannot provide a total because data for 2021-2023 is missing.",
+      "expected_text_match": "The response explicitly states that Global Forest Watch's 43 Mha baseline covers \"natural forest\" and distinguishes it from other measurements like \"all native vegetation including Cerrado,\" thereby clarifying that the figure covers natural forest only, not all natural land.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,549,668.24: not in the reply, closest 390 kha (84.7%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,292,917.14: not in the reply, closest 390 kha (83.0%)"
      }
     },
     {
      "checks": {
       "answer_period_match": 1.0,
-      "expected_text_match": 0,
+      "expected_text_match": 1,
       "figure_claim_match": null,
       "figure_match": 0.0
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply provides multiple estimates of natural land loss in Mato Grosso since 2020 (0.7 million hectares for Amazon forest, plus unquantified Cerrado/Pantanal losses, and an inference of low millions for all biomes), acknowledges data limitations and measurement differences, and suggests how to obtain a definitive figure.",
+     "label_reason": "The reply provides multiple estimates of natural land loss in Mato Grosso since 2020 (0.7 million hectares for Amazon forest, plus unquantified Cerrado/Pantanal losses, and inference of low millions for all biomes), acknowledges data limitations and measurement differences, and suggests how to obtain a definitive figure.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2021 to 2025: The response provides multiple figures explicitly labeled for the 2021-2025 period (PRODES data for 2021-2024, Global Forest Watch 2025 figure, and MapBiomas 2025 data), clearly acknowledges data limitations for the full period, and transparently labels which years are covered by each dataset.",
-      "expected_text_match": "The response does not state that the figures cover natural forest only (SBTN 2020 baseline) rather than all natural land; instead it presents multiple different datasets with varying scopes (Amazon-only deforestation, all natural forest, and native vegetation) without clarifying the SBTN 2020 baseline distinction.",
+      "answer_period_match": "asked from 2021 to 2025: The response provides multiple figures explicitly labeled with the periods they cover (2021-2024 for PRODES data, 2025 for Global Forest Watch, 2023 and 2025 for MapBiomas), clearly indicating which data spans the requested 2021-2025 period and which covers only partial periods, while acknowledging data limitations.",
+      "expected_text_match": "The response explicitly states that the Global Forest Watch figures \"cover only the Amazon part of the state\" and distinguishes between \"Amazon-biome deforestation\" versus \"All natural forest,\" clearly indicating that different figures measure different subsets of natural land rather than all natural land, which aligns with the expected distinction between natural forest only versus all natural land.",
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,549,668.24: not in the reply, closest 1 million (60.8%)"
+      "figure_match": "sum(area_ha) where tree_cover_loss_year in 2021..2025 = 2,292,917.14: not in the reply, closest 1 million (56.4%)"
      }
     }
    ],
@@ -15447,10 +15447,10 @@
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2021 to 2025: The response provides figures for 2022-2024 and acknowledges it couldn't find clean published totals for the full 2021-2025 period requested, presenting incomplete data for the asked period while also including data from 2015-2020 as context.",
+      "answer_period_match": "asked from 2021 to 2025: The response provides figures for 2022-2024 and 2015-2024, but explicitly states it \"didn't find a clean published total for 2021\u20132025\" and acknowledges missing reliable data for 2021, 2023, and 2024 for Jun\u00edn, failing to cover the complete 2021-2025 period requested.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 186,717.07: not in the reply, closest 91,004 ha (51.3%); sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 71,287.39: not in the reply, closest 69,000 ha (3.2%)"
+      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 127,090.54: not in the reply, closest 91,004 ha (28.4%); sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 57,627.18: not in the reply, closest 50,000 ha (13.2%)"
      }
     },
     {
@@ -15462,14 +15462,14 @@
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply directly answers \"yes\" to whether natural land has been converted since 2021 in both regions, provides annual forest loss figures for San Mart\u00edn and Jun\u00edn from 2021-2024, and offers context about data sources and limitations.",
+     "label_reason": "The reply directly answers \"yes\" to whether natural land has been converted since 2021 in both regions, provides annual forest loss figures in hectares for San Mart\u00edn and Jun\u00edn from 2021-2024, and offers context about data sources and limitations.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
       "answer_period_match": "asked from 2021 to 2025: The response presents incomplete data for the 2021-2025 period, with missing figures for San Mart\u00edn in 2021 and Jun\u00edn in 2022 and 2024, and includes a 2026 reference (wildfires) that falls outside the requested period, making the coverage of the asked period inconsistent and partial.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 186,717.07: not in the reply, closest 50,000 ha (73.2%); sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 71,287.39: not in the reply, closest 50,000 ha (29.9%)"
+      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 127,090.54: not in the reply, closest 50,000 ha (60.7%); sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 57,627.18: not in the reply, closest 50,000 ha (13.2%)"
      }
     },
     {
@@ -15481,14 +15481,14 @@
      },
      "gives_figure": true,
      "label": "answered",
-     "label_reason": "The reply answers the core question (yes, natural land has been converted since 2021 in both regions) with specific hectare figures for each region and year, though it acknowledges data gaps and clarifies these are regional totals not cooperative-specific, and asks for district details to provide more local figures.",
+     "label_reason": "The reply directly answers \"yes\" to whether natural land has been converted since 2021 in both regions, provides specific hectare figures for forest loss in each region across multiple years (2021\u20132024), and offers guidance on how to check the user's own plots.",
      "offer": null,
      "pulled_reference": false,
      "reasons": {
-      "answer_period_match": "asked from 2021 to 2025: The response provides figures for San Mart\u00edn covering 2021\u20132024 (with a note that 2025 data is unavailable) and Jun\u00edn with partial coverage (2022 and a long-term 2001\u20132023 figure clearly labeled as context), explicitly acknowledging gaps for 2021, 2023, and 2024 in Jun\u00edn, which aligns with the requested 2021\u20132025 period and transparently labels what data is and isn't available.",
+      "answer_period_match": "asked from 2021 to 2025: The response provides figures for 2021\u20132024 (the available data within the requested 2021\u20132025 period), clearly labels the gaps for 2025 and missing years, and explicitly states the period covered by each figure, making it transparent about data limitations.",
       "expected_text_match": null,
       "figure_claim_match": null,
-      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 186,717.07: not in the reply, closest 217,771 ha (16.6%); sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 71,287.39: not in the reply, closest 65,000 ha (8.8%)"
+      "figure_match": "sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 = 127,090.54: not in the reply, closest 65,000 ha (48.9%); sum(area_ha) where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025 = 57,627.18: not in the reply, closest 65,000 ha (12.8%)"
      }
     }
    ],
@@ -17201,5 +17201,5 @@
    "wrong_figure_any": false
   }
  },
- "scored": "2026-10-30T12:26:11+00:00"
+ "scored": "2026-11-17T08:18:52+00:00"
 }
