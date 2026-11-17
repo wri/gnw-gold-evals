@@ -1,175 +1,68 @@
-# Writing GOLD cases: what makes a good prompt
+# Cases: the shared reference
 
-GOLD is a **capability smoke test**. A case earns its place by failing when
-a release breaks a capability and passing otherwise. Everything below
-follows from that one job. Read this file before you add or edit a case.
+What every case store under `cases/` shares: the stores, the case file and its fields, what `;` means in an expected value, run-time ground truth, the status lifecycle, and the commands to run after an edit. Terms are defined in the [README glossary](../README.md#glossary).
 
-Terms are defined in the [README glossary](../README.md#glossary). A case
-is one YAML file at `cases/<store>/<group>/<id>.yaml`.
-`schema/case.schema.json` defines its fields, and the
-[check index](../src/goldset/evaluators/README.md#index) says which
-`expected` key switches on which check. The commands to run after any edit
-are in [README: Changing cases](../README.md#changing-cases).
+How to write a good case depends on the store:
 
-## The two stores
+- **CHALLENGE**: [challenge/README.md](challenge/README.md) has the doctrine and how cases get into the store; numeric cases are generated through [generation/README.md](../generation/README.md).
+- **GOLD (legacy copy)**: [GOLD-AUTHORING.md](GOLD-AUTHORING.md). GOLD moved to project-zeno `evals/gold/` on 2026-10-27; write new GOLD cases there.
 
+## The stores
+
+| Store | Suite | Layout | Notes |
+|---|---|---|---|
+| `cases/challenge/` | CHALLENGE, and the source of every BENCHMARK member | `<set>/<cohort>/<id>.yaml` | The working store. Tools that take `--suite` default to it. |
+| `cases/v2/` | GOLD (legacy copy) | `<group>/<id>.yaml` | The GOLD working set. See [The two stores](GOLD-AUTHORING.md#the-two-stores). |
+| `cases/v1/` | GOLD (legacy copy) | `<group>/<id>.yaml` | Frozen: `tests/test_v1_frozen.py` fails if it changes. |
+
+Each store has its own `MANIFEST.json`, written by `tools/check.py --fix`, with the store's [caseset_version](../README.md#caseset-version) and an id-to-uid index. `cases/challenge/` and `cases/v2/` also have a generated `COVERAGE.md`, `coverage.json` and `cases_index.json`, written by `tools/coverage_doc.py`. `cases/challenge/TARGETS.yml` holds CHALLENGE's target rates and is edited by hand.
+
+## The case file
+
+One case is one YAML file. `schema/case.schema.json` defines its fields, and `tests/test_schema.py` checks every case file against it. `src/goldset/store.py` reads the files and rejects a top-level key it does not know. A CHALLENGE case (`cases/challenge/aoi/direct/ch-aoi-001.yaml`):
+
+```yaml
+id: ch-aoi-001
+uid: d368c2c205c3e822
+status: ready
+set: aoi
+group: direct
+query: Go to Japan
+expected:
+  aoi_ids: JPN
+notes:
+  difficulty: easy
+  behaviour: select
+  lineage: baseline
+  verify_query: Japan
+  verified: prod-api 2026-09-01
+  source_tab: challenge-aoi-v1
 ```
-cases/v1/   frozen baseline, as imported from the original Google Sheet (now retired)
-cases/v2/   the curated working set: every edit and every new case lands here
-```
 
-- Tools default to v2; pass `--cases-dir cases/v1` to run or check v1.
-- Each store has its own `MANIFEST.json` holding its
-  [caseset_version](../README.md#caseset-version). A run records the store
-  (`caseset`) and caseset_version it loaded, so comparing a v1 run with a
-  v2 run is an ordinary diff over the uids both runs share.
-- v1 exists so that curation claims are measurable: run the same build
-  against both stores and compare the reports.
-- **Never edit v1.** `tests/test_v1_frozen.py` fails if its
-  caseset_version moves. v1 changed only on deliberate re-imports from the
-  sheet; the legacy `tools/import_sheet.py` writes to v2 unless you pass
-  `--cases-dir cases/v1`.
-- The stores hash multi-turn cases differently: a v2
-  [uid](../README.md#uid) also covers each turn's `deltas`, while v1 uids
-  leave them out, so v1 stays frozen.
+| Field | Hashed into the uid | What it holds |
+|---|---|---|
+| `id` | no | The stable, human-readable name: `ch-aoi-001` or `ch-quant-161` in CHALLENGE, `1-030` or `mt-005` in GOLD. It survives edits, so it links every version of one test. |
+| `uid` | it is the hash | Written by `tools/check.py --fix`. Never edit it by hand. |
+| `status` | no | `ready`, `todo`, `done` or `not doing`: see [Status lifecycle](#status-lifecycle). |
+| `set` | no | CHALLENGE only: the kind of question (`aoi`, `dataset`, `quantification`, `comparison`, `trend`, `monitoring`, `causal`, `portfolio`). It is the first directory level. |
+| `group` | no | The case's directory. In CHALLENGE it is the cohort within the set: a prompt class in `aoi`, a dataset in the numeric sets. In GOLD it is the capability the case tests. |
+| `query` | yes | The user's question. It may hold a `{template}` token, filled in when the run starts. |
+| `turns` | yes | A multi-turn case has a list of `{query, expected, deltas}` instead of `query` and `expected`. In `cases/v2` the `deltas` are hashed too. Only GOLD has multi-turn cases today. |
+| `expected` | yes, every non-empty value | The values a correct answer must contain, each a string. Each key switches on one or more checks: the [check index](../src/goldset/evaluators/README.md#index) says which. |
+| `notes` | no | Annotations, never hashed or scored. |
 
-## The four properties of a good case
+The exact uid rules are in [CLAUDE.md, The identity system](../CLAUDE.md#the-identity-system). In short: editing the query, a turn or any expected value gives the case a new uid; editing its status, set, group or notes never does.
 
-1. **Capability-anchored.** It exercises one nameable thing the product
-   does. If the case fails, an engineer knows which subsystem to look at;
-   that is what `group:` means.
-2. **Deterministic.** It fails only when the agent changes, never because
-   time passed, data was updated or a judge changed its mind.
-3. **Checkable in depth.** Its expectations imply at least two checks in at
-   least two [buckets](../README.md#bucket) (Retrieval, Analysis,
-   Explanation, Output, Scope), so a pass can't mean "measured nothing".
-   CI enforces this ([The audit gate](#the-audit-gate)).
-4. **Environment-honest.** If the capability is missing in some environment
-   or [profile](../README.md#profile), the case carries an `env_gated` note
-   so its zeros are never read as agent regressions. Today the LGMS dataset
-   (id 12) exists only on the `experimental` profile, so its cases are
-   parked while runs use the default profile. Re-check `env_gated` notes
-   when the environment changes: older notes saying that dashboards or
-   imagery need `--ff experimental` are out of date
-   ([Running the set](../README.md#running-the-set)).
+**CHALLENGE notes.** No code scores them, but people and some tools read them:
 
-## DOs
+- `difficulty` (`easy`, `medium`, `hard`): BENCHMARK sampling stratifies by it, and a version freezes it per member.
+- `behaviour`: the correct behaviour the case expects, such as `select`, `nudge`, `clarify` or `decline`.
+- `verified`, `lineage`, `source_tab`: how the expected values were verified, where the case came from, and which seed CSV `tools/import_sheet.py` read it from.
+- `expectations`, `review`: how the expected values were drafted (for example `draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv`) and the evidence for each later change.
+- `status_reason`: why a case is `todo` or `not doing`, with a date.
+- BENCHMARK membership notes: `benchmark_id` and `benchmark_type`, plus the sheet row's facets (`use_cases`, `engagement`, `aoi_type`, `capability`, `grounding`, `synthetic`, `user_story_refs`, `refresh_risk`, or `jtbd`, `impact_pathway` and `user_groups` from the older sheet layout). `tools/benchmark_from_sheet.py` writes them on every curated build and removes them from cases that leave the sheet, so a hand edit is overwritten.
 
-- **DO use absolute, closed date windows.**
-  ✔ `"…between January 2025 and April 2025…"` with
-  `start_date: '2025-01-01'`, `end_date: '2025-04-30'` (date expectations
-  belong only on date-scoped datasets; see the DON'Ts).
-- **DO give every case a `scope`**: `analyse` (the agent pulled data),
-  `suggest` (it offered datasets through a `dataset_choice` nudge),
-  `clarify` (it asked the user to choose through another kind of nudge) or
-  `refuse` (no pull and no nudge). It is the cheapest deterministic check
-  in the suite: one key, read straight off the final state. A clarifying
-  question asked in prose alone, with no nudge, classifies as `refuse`.
-- **DO name the metric unambiguously**: the class, the gas basis, the
-  confidence tier. ✔ `"gross greenhouse gas emissions from tree cover loss"`
-  ✘ `"deforestation-related carbon emissions"`. ✔ `"natural grassland"`
-  ✘ `"grassland"`. ✔ `"the short vegetation land cover class"`.
-  Measured over 312 trials, precisely worded rows trigger a dataset-choice
-  nudge on **1.2%** of trials and loosely worded ones on **38%**, and one
-  nudge fails five to seven checks at once because no data is pulled. This
-  is the AOI rule below, applied to the metric.
-- **DO steer with a framing clause when only one of two similar datasets
-  gives the intended answer.** ✔ `"Distinguishing natural from non-natural
-  land cover, …"` routes to SBTN Natural Lands rather than Global Land
-  Cover without naming either. Left unsteered, the agent may nudge between
-  the two and fail the case. If both datasets would give the same answer,
-  accept both instead (next rule).
-- **DO use `;`-alternatives where two answers are genuinely defensible and
-  the expected result is the same either way**, in preference to rewording
-  the prompt. `dataset_id: "<a>;<b>"` accepts either dataset;
-  `scope: "refuse;suggest"` accepts either behaviour. A single-value pin on
-  a row that could defensibly go either way is a flaky case you authored
-  yourself. With alternatives, the row still tests "route somewhere
-  defensible and analyse", passes on either choice and fails only on a
-  nudge. Record in `notes` why both are defensible. In some fields `;`
-  means "all of these", not "either": see
-  [`;` alternatives by field](#semicolons).
-- **DO keep a few deliberately loose sentinels.** If every row names its
-  metric precisely, nothing detects the next regression towards
-  over-nudging: rows that expect a nudge only test that the agent nudges
-  when it *should*. A sentinel has loose wording, `;`-alternatives covering
-  every defensible dataset, and `scope: analyse`, so it passes on any real
-  analysis and fails only on a nudge. **No sentinel exists today**: the
-  cases that once served were tightened, and a `notes.sentinel` entry left
-  on a tightened case is out of date. When you nominate one, say so in
-  `notes.sentinel`, and do not tighten a sentinel without nominating a
-  replacement.
-- **DO put per-class figures in `class_values`** when the query implies a
-  breakdown: ✔ `class_values: "mangroves=15,444 hectares"`. It catches a
-  wrong sub-total hiding under a correct headline. But `class_value_match`
-  is currently [info-only](../README.md#info-only): reported, never
-  gating. The
-  [info-only list](../src/goldset/evaluators/README.md#info-only-checks)
-  says what would make it gate again. If the row needs a gating Analysis
-  check, also add a verified `answer`.
-- **DO write behaviour expectations in `text`** for terminology, caveats
-  and refusals: ✔ `text: "resolution of tree cover loss is 30 x 30 meters"`
-  ✔ `text: "refuses monthly analysis because the dataset is annual"`. The
-  semantic-inclusion judge behind it is the most stable judge in the suite.
-- **DO name the admin level when the AOI is ambiguous.**
-  ✔ `"…in Puri district, Odisha, India"`, or expect the clarification
-  instead. An ambiguous AOI with a pinned expectation flaps: the agent can
-  resolve the same input to a country on one trial and a district on the
-  next. A place made of many areas ("protected areas in Colorado") may
-  resolve to a different set on every trial; check that the agent resolves
-  the AOI consistently before you invest in expectations.
-
-## DON'Ts
-
-- **DON'T name the dataset by id or product name.** ✘ `"Using the SBTN
-  Natural Lands Map…"` hands over the answer and turns `dataset_id_match`
-  into a string-copy test. The exceptions are the groups whose subject *is*
-  the dataset: `dataset-parameters`, `dataset-suggestion`, `context-layer`
-  and `dashboard`.
-- **DON'T use relative dates.** ✘ `"…in the past decade"`, ✘ `"…since 2020"`:
-  the true answer moves with every data release. The one tolerated pattern
-  is a query whose expectations are **routing-only** (`aoi_ids`,
-  `aoi_source`, `dataset_id`, `dataset_name`, `dataset_parameters`,
-  `context_layer`, `scope`, `clarification`), with no `answer`, `text` or
-  dates, because none of those drift with time. Even then, prefer closing
-  the window. If a query must name the current period (imagery that exists
-  only for the current month, say), write a template token instead:
-  `{current_month}`, `{last_month}` or `{current_year}` (`TEMPLATE_VARS` in
-  `src/goldset/templates.py`). The harness fills in the date when the run
-  starts and the uid hashes the token, so the case keeps its identity from
-  month to month. Pair a token only with expectations that hold whatever
-  date it resolves to.
-- **DON'T set date expectations on annual datasets** (tree cover loss and
-  the other yearly datasets). The agent pulls the full range and slices in
-  code, so the recorded window flips between runs while the answer stays
-  right. Let `answer` carry the year. Keep date expectations for genuinely
-  date-scoped pulls: integrated alerts (dataset 11) and the `imagery` group
-  (`DATE_SCOPED_DATASET_IDS` and `DATE_SCOPED_GROUPS` in
-  `tools/audit_cases.py`).
-- **DON'T stake a verdict on chart choice.** Chart type is the agent's
-  least deterministic output (8 of the 19 flaky rows in one 3-trial run).
-  If chart type matters, expect alternatives: `chart_type: "bar;table"`.
-  The check reads only the first chart.
-- **DON'T pin expectations that drift with data versions.** "The most
-  recent year is 2024" breaks on the next data release. Expected numbers
-  should come from closed periods on stable datasets. Better still, don't
-  pin the number at all: use `ground_truth` (below), and the harness
-  fetches it at run time.
-- **DON'T author judged-only rows** unless the capability is inherently
-  textual (the `metadata` group is the sanctioned exception). Every row
-  should carry at least one deterministic expectation besides `answer` and
-  `text`.
-- **DON'T write multi-turn turns whose text depends on the agent's
-  previous wording.** ✔ `"Puri in Odisha, India"` works whatever the
-  clarification said. ✘ `"yes, the first option"` depends on option order.
-- **DON'T edit `expected` casually.** Editing the query, any expected value
-  or (in v2) a turn's `deltas` mints a new [uid](../README.md#uid). That is
-  intended, but it resets the case's regression history, and a `done` case
-  must be verified again at the new uid. The uid covers every expected
-  field, scored or not (`dataset_name` drives no check but is hashed), so a
-  result always points at the exact content it ran against. Don't move
-  expectations into `notes` to avoid a new uid. Batch expectation edits and
-  explain them in the PR.
+GOLD's notes (`env_gated`, `sentinel` and others) are described in [GOLD-AUTHORING.md](GOLD-AUTHORING.md).
 
 <a id="semicolons"></a>
 ## `;` alternatives by field
@@ -183,19 +76,25 @@ field. Check this table before you write one.
 | `scope` | any of | the observed scope must be one of them; one invalid alternative makes the check abstain |
 | `nudge_type` | any of | the nudge's type must be one of them |
 | `chart_type` | any of | the first chart's type must be one of them |
-| `aoi_ids` | all of | the set of resolved AOI ids must equal the expected set exactly (GADM ids are compared without their `_N` suffix); there is no way to write "either of these places" |
+| `aoi_ids` | all of | the set of resolved AOI ids must equal the expected set exactly (GADM ids are compared without their `_N` suffix). `\|` separates alternative sets and `/` lists one area's equivalent records (below) |
 | `class_values` | all of | every `name=value` pair must match within the 2% tolerance |
 | `dashboard_widgets` | all of, with counts | widget types are compared as a multiset: `insight;insight;map` means exactly two insight widgets and one map widget |
 | `nudge_options` | allowed set | the agent must offer at least one option, and every option it offers must match one in the list (case-insensitive substring, either way round) |
 | `suggested_datasets` | allowed set | as `nudge_options`; legacy, because the agent no longer writes this state field |
+| `forbidden_tools` | all of | no tool in the list may appear among the agent's tool calls |
+| `accept_nudge_offering`, `accept_aoi_nudge_offering` | all of | a nudge passes when it offers every listed id; extra options are allowed |
+| `accept_blog_sources` | any of | an answer from `search_blogs` passes when it links at least one listed post |
+| `figure` | all of | each `;`-separated figure is checked on its own |
 | any other field (`answer`, `text`, dates, ...) | nothing special | the value is used whole. In `answer` the judge reads `a;b` as written, so a reply that merely names both values can pass |
+
+`|` separates fair alternatives, any one of which passes, in `aoi_ids`, `context_layer`, `accept_nudge_offering` and `figure`; it binds looser than `;`. In `aoi_ids`, `/` lists one area's equivalent records inside a `;` set (`555697863/10906;2017` is two parks, the first under either of two records). Both came with the BENCHMARK reviews of October 2026 and are documented with each check in the [evaluators README](../src/goldset/evaluators/README.md#index).
 
 ## Run-time ground truth (`ground_truth`)
 
 A numeric case can name **which figure** it is about instead of **what value**
 that figure has. The harness fetches the number from the analytics API before
-any trial runs, so the case survives every data release with its uid — and its
-regression history — intact.
+any trial runs, so the case survives every data release with its uid, and its
+result history stays intact.
 
 ```yaml
 expected:
@@ -207,22 +106,22 @@ expected:
   scope: analyse
 ```
 
-**Grammar** — `AGG(column)` or `AGG(column) WHERE column=value`, with `AGG` one
+**Grammar**: `AGG(column)` or `AGG(column) WHERE column=value`, with `AGG` one
 of `sum`, `max`, `min`, `count`. An explicit aggregate is **mandatory**: a bare
 column would be ambiguous whenever the filter matches more than one row, which
 is live (1-059 pulls 254 areas).
 
 **No new request fields.** The request is built from expectations the case
-already carries — `aoi_ids`, `aoi_source`, `dataset_id`, `context_layer`,
-`dataset_parameters`, `start_date`, `end_date` — because a GOLD case already
+already carries (`aoi_ids`, `aoi_source`, `dataset_id`, `context_layer`,
+`dataset_parameters`, `start_date`, `end_date`), because a case already
 asserts what query the agent should build. `ground_truth` is purely the
 *response* side.
 
 **Four rules, each with a case behind it:**
 
 1. **The selector names the API's column, not the agent's.** The agent renames
-   columns in its pandas codeact — 1-076's chart says `loss_area_ha` where the
-   API says `area_ha` — so authoring from an artifact's `charts_data` is a trap.
+   columns in its pandas codeact (1-076's chart says `loss_area_ha` where the
+   API says `area_ha`), so authoring from an artifact's `charts_data` is a trap.
    Read column names from project-zeno's `src/api/services/charts.py`, or from a
    raw `source_url` response.
 2. **The metric is often not the obvious column.** 1-046 asks for "tonnes of
@@ -256,128 +155,27 @@ from the prompt, because that would redo the agent's own AOI resolution and let
 an AOI regression silently corrupt the ground truth. A case with no `aoi_ids` or
 no `aoi_source` aborts the run rather than guessing.
 
-## Worked examples
-
-Each example quotes a real case file, without its `uid` and `notes`. If you
-edit one of these cases, update the quote here.
-
-**A good single-turn case** (`cases/v2/direct/1-002.yaml`):
-
-```yaml
-id: 1-002
-status: done
-group: direct
-query: How much of Sao Paulo was affected by disturbance alerts in the second half of 2024,
-  considering high and highest confidence alerts only?
-expected:
-  aoi_ids: BRA.25_1
-  aoi_source: gadm
-  dataset_id: '11'
-  dataset_name: Integrated alerts
-  start_date: '2024-07-01'
-  end_date: '2024-12-31'
-  answer: 1,299,278 hectares
-  scope: analyse
-```
-
-- It names a state (no AOI ambiguity), the confidence tiers (one reading of
-  the metric) and a closed window on a date-scoped dataset, so the answer
-  is stable.
-- Its expectations imply eight checks across all five buckets:
-  `aoi_id_match`, `dataset_id_match`, `date_extraction`,
-  `data_pull_exists`, `answered_without_data`, `agent_answer`,
-  `chart_produced` and `scope_match`. `aoi_source` and `dataset_name` imply
-  none, though both are hashed into the uid.
-- The expected number came from a real run and sits well inside the 2%
-  tolerance. A figure 1.5% off the agent's stable answer would flip to a
-  hard failure on the next data refresh with nothing else changed.
-
-**A bad case and its repair** (`cases/v1/direct/1-075.yaml`, then
-`cases/v2/direct/1-075.yaml`):
-
-```yaml
-# v1: parked
-id: 1-075
-status: not doing
-group: direct
-query: How much tree cover loss within intact forest landscapes in Sweden since 2020?
-expected:
-  aoi_ids: SWE
-  dataset_id: '4'
-  dataset_name: Tree cover loss
-  context_layer: intact_forest
-  answer: 3.3 kha
-  scope: analyse
-
-# v2: repaired and verified
-id: 1-075
-status: done
-group: direct
-query: How much tree cover loss occurred within intact forest landscapes in Sweden between
-  2020 and 2024?
-expected:
-  aoi_ids: SWE
-  dataset_id: '4'
-  dataset_name: Tree cover loss
-  context_layer: intact_forest
-  answer: 391.70 hectares
-  scope: analyse
-  aoi_source: gadm
-```
-
-"Since 2020" is an open window, so the true figure grows with every data
-release. Closing it to 2020 to 2024 fixes the answer, and the new figure
-was measured on a 3-trial run (391.70 ha on all three trials). The old
-`3.3 kha` had never been verified, and it was wrong.
-
-**A multi-turn case** (`cases/v2/multiturn/mt-005.yaml`):
-
-```yaml
-id: mt-005
-status: ready
-group: multiturn
-turns:
-- query: How much tree cover loss did Brazil have in 2022?
-  expected:
-    aoi_ids: BRA
-    dataset_id: '4'
-    scope: analyse
-- query: And for Indonesia?
-  expected:
-    aoi_ids: IDN
-    scope: analyse
-  deltas:
-    changed:
-    - aoi_ids
-    retain:
-    - dataset_id
-```
-
-All turns share one thread, and turn 2's text works whatever turn 1's reply
-said. Its `deltas` assert how the state moved since the previous turn:
-`changed` (the field must differ), `retain` (it must stay the same, which
-catches lost context) and `absent` (it must be empty, which catches
-carry-over). Each turn with `deltas` adds a `state_delta` check; the
-allowed field names are listed in `schema/case.schema.json`.
-
 ## Status lifecycle
 
 Every case has one of four statuses:
 
-- `ready`: written and expected to pass, but not yet verified at its current uid.
-- `todo`: held by a known problem; a dated `notes.status_reason` says what blocks it.
-- `done`: verified at its current uid (see below).
-- `not doing`: parked; runs skip it, and `notes.status_reason` says why.
+- `ready`: written and expected to run. In GOLD it also means not yet verified at its current uid. In CHALLENGE a case that fails stays `ready`: failure is data, and there is no verified-passing status.
+- `todo`: held by a known problem; a dated `notes.status_reason` says what blocks it (in CHALLENGE, for example, a seeded test account the case needs, or an expected value not yet pinned).
+- `done`: GOLD only: verified at its current uid (see below).
+- `not doing`: parked (GOLD) or retired (CHALLENGE); runs skip it, and `notes.status_reason` says why.
 
-`gold run` runs every status except `not doing` (`--status-exclude`
+`evals run` runs every status except `not doing` (`--status-exclude`
 defaults to `not doing`), and the audit and COVERAGE.md count the same
-cases as active. So `ready` and `todo` cases are run and scored like
-`done` ones; the progress line prints each case's status, so a failure on
-an unverified case reads differently. COVERAGE.md lists every `todo` and
-`not doing` case with its reason
-([Parked and held cases](v2/COVERAGE.md#parked-and-held-cases)).
+cases as active. CHALLENGE's canonical runs also leave out `todo`
+(`--status-exclude "not doing,todo"`), and a BENCHMARK version takes only
+`ready` cases as members. In GOLD, `ready` and `todo` cases are run and
+scored like `done` ones; the progress line prints each case's status, so a
+failure on an unverified case reads differently. COVERAGE.md lists every
+`todo` and `not doing` case with its reason
+([CHALLENGE](challenge/COVERAGE.md#parked-and-held-cases),
+[GOLD](v2/COVERAGE.md#parked-and-held-cases)).
 
-**Promoting to `done`.** A case is `done` when it passes at its current
+**Promoting to `done` (GOLD).** A case is `done` when it passes at its current
 uid on a 3-trial run with the same `ff` as the release baseline (today the
 default [profile](../README.md#profile), no `--ff`): every gating check
 that ran passed on the majority of the three [trials](../README.md#trial).
@@ -390,7 +188,7 @@ passes again.
 **Parking.** Set `status: not doing` when a case cannot earn a verdict,
 and always write a dated `notes.status_reason` with the evidence: which
 run, what the agent did on how many trials, and why no prompt edit can fix
-it (or what would). `cases/v2/parent-child/1-011.yaml` has a good example.
+it (or what would). `cases/v2/parent-child/1-011.yaml` has a good GOLD example.
 Notes are never hashed, so parking does not change the uid.
 
 **Unparking.** Treat it as probation: re-test the reason the case was
@@ -399,55 +197,24 @@ reason (closing the date window on a case parked for an ambiguous AOI,
 say) leaves the case parked. An unparked case returns as `ready` (or
 `todo`) and earns `done` like any other.
 
-## Mechanics checklist (every case PR)
+## After an edit
 
-- [ ] the four properties hold, and the expectations imply at least two
-      checks in at least two buckets
-- [ ] `env_gated` noted if the capability depends on the environment or profile
-- [ ] the status follows the [status lifecycle](#status-lifecycle); a `done`
-      case cites its verifying run
-- [ ] the after-edit commands in [README: Changing cases](../README.md#changing-cases)
-      ran clean, and their output is committed with the case
-- [ ] `uv run pytest tests/test_schema.py -q` passes (the file matches the schema)
-- [ ] if you edited a case quoted in [Worked examples](#worked-examples), the
-      quote is updated
-- [ ] the PR text says *why* the semantics changed (the uid change records *what*)
+After any change to a case file (query, expected values, status, set, group, notes, or a new or deleted case), run these for the store you changed, and commit their output in the same commit as the edit:
 
-## The audit gate
+```bash
+# CHALLENGE
+uv run python tools/check.py --fix --suite challenge      # uids and MANIFEST.json
+uv run python tools/coverage_doc.py --suite challenge     # COVERAGE.md, coverage.json, cases_index.json
+uv run python tools/check_benchmark.py                    # BENCHMARK members still match their cases
 
-CI runs `uv run python tools/audit_cases.py --strict` on every PR and every
-push to `main`. It checks every active case in v2 (any status but
-`not doing`, and every turn of a multi-turn case) and **fails the build**
-on two kinds of defect, both fixable in the case you are already editing:
+# GOLD (legacy copy): cases/v2 only
+uv run python tools/check.py --fix --suite gold
+uv run python tools/coverage_doc.py --suite gold
+uv run python tools/audit_cases.py --strict               # the depth rule and DON'Ts
+```
 
-- **Depth violations**: a case whose expectations imply fewer than two
-  checks, or checks in fewer than two buckets. A row like that can "pass"
-  while measuring almost nothing, and an unmeasured bucket must look
-  different from a passing one. The usual fix is a verified `answer`, which
-  implies checks in Retrieval, Analysis, Explanation and Output at once;
-  `scope` adds only Scope. The audit counts info-only checks too, so
-  `class_values` satisfies it without adding a gating check. The `metadata`
-  group is exempt.
-- **DON'T violations** (`dont_violations` in `tools/audit_cases.py`):
-  - relative-date words (`last`, `past`, `recent`, `latest`, `this year`,
-    `this month`, `this week`) in a query whose expectations go beyond
-    routing;
-  - `start_date` or `end_date` on a dataset that is not date-scoped (with
-    `;`-alternatives, every alternative must be date-scoped);
-  - judged-only expectations (`answer` or `text` with no deterministic
-    field and, on a multi-turn turn, no `deltas`) outside the `metadata`
-    group;
-  - an unknown `{template}` token in a query.
+`check_benchmark.py` is needed because editing the query or an expected value of a `ready` case that a draft BENCHMARK version lists gives the case a new uid, so the draft no longer runs it. The tool warns on a draft and fails on a frozen version. CI runs all of these (without `--fix`) and fails the PR when one is out of date. The audit is described in [GOLD-AUTHORING.md, The audit gate](GOLD-AUTHORING.md#the-audit-gate).
 
-Deliberately **not** gated: the coverage floors (groups or datasets with
-fewer than three active cases). Clearing those means authoring new cases,
-which is different work from fixing the one in front of you, so they stay
-report-only. The report is still worth reading.
+## The catalogue snapshot
 
-Run the audit before you open a PR; it takes about a second and is the
-same command CI runs.
-
-**A green audit is not proof.** The relative-date rule matches a fixed
-list of words, so phrasings like "since 2020" or "since the turn of the
-century" pass the audit even when paired with an `answer`. Read the rule,
-not just the exit code.
+`cases/zeno_catalog.json` is a committed copy of the agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` in wri/project-zeno), so COVERAGE.md can measure dataset coverage without network access. It also holds each dataset's analytics endpoint and date window, from which ground-truth requests are built. When project-zeno adds, removes or changes a dataset, run `uv run python tools/sync_zeno_catalog.py`, then `coverage_doc.py` for each store, and commit them together. The sync reads `origin/main` of a sibling `../project-zeno` checkout with `git show` and never touches its working tree.

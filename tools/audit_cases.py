@@ -3,7 +3,7 @@
     uv run python tools/audit_cases.py                # report (exit 0)
     uv run python tools/audit_cases.py --strict       # exit 1 on violations
 
-Encodes the authoring rules in cases/README.md (its DOs, DON'Ts and "The
+Encodes the authoring rules in cases/GOLD-AUTHORING.md (its DOs, DON'Ts and "The
 audit gate" sections):
 
 - depth: every ready, todo or done case implies at least 2 checks across at
