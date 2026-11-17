@@ -1,9 +1,13 @@
 ---
 name: gold-run
-description: Use when running the GOLD eval set or finishing a run. Covers preflight (ff, trials, build label), the run itself, then the full after-run ritual (reports, flakiness, diff, recommendations doc, commit).
+description: Use when running the GOLD eval set or finishing a GOLD run (legacy copy in this repo). Covers preflight (ff, trials, build label), the run itself, then the full after-run ritual (reports, flakiness, diff, recommendations doc, commit). Not for CHALLENGE or BENCHMARK runs.
 ---
 
 # gold-run: run the set and finish the job
+
+> GOLD moved to wri/project-zeno `evals/gold/` on 2026-10-27. This skill applies to the
+> legacy copy in this repo and will move with it. For CHALLENGE or BENCHMARK work use
+> **challenge-cases** (CHALLENGE runs) or **benchmark-run** (BENCHMARK runs).
 
 A run is not done when the JSON lands: it is done when someone can act on it.
 This skill covers preflight, the run, and the four-step after-run ritual
