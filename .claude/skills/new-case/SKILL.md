@@ -11,8 +11,8 @@ description: Use when authoring a new GOLD case ("add a GOLD case for...", legac
 
 GOLD is a capability smoke test: a case earns its place by failing when a
 capability breaks, deterministically. Full authoring rules:
-[cases/README.md](../../../cases/GOLD-AUTHORING.md). Terms are defined in the
-[README glossary](../../../README.md#glossary).
+[cases/GOLD-AUTHORING.md](../../../cases/GOLD-AUTHORING.md). Terms are defined
+in [docs/glossary.md](../../../docs/glossary.md).
 
 ## 1. Interview first
 
@@ -68,5 +68,6 @@ measures: [evaluators README index](../../../src/goldset/evaluators/README.md#in
 
 Hand off to the **case-edit** skill, or run its ritual yourself:
 `check.py --fix --suite gold`, then `coverage_doc.py --suite gold`, then `audit_cases.py --strict`,
-then commit the case, `MANIFEST.json` and `COVERAGE.md` together.
+then commit the case with `MANIFEST.json`, `COVERAGE.md`, `coverage.json` and
+`cases_index.json`.
 `tests/test_schema.py` validates the file shape in CI.

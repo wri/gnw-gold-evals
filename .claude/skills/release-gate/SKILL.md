@@ -11,7 +11,7 @@ description: Use when comparing two GOLD runs for a release verdict ("did this b
 
 GOLD's headline is a regression count between two runs. The count is only
 meaningful if the two runs are comparable; check that before diffing. Terms
-are defined in the [README glossary](../../../README.md#glossary).
+are defined in [docs/glossary.md](../../../docs/glossary.md).
 
 ## 1. Preconditions (refuse the diff if any fail)
 
