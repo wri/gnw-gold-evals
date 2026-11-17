@@ -14,7 +14,7 @@ A run names its suite, which picks the case store and the results ledger
 benchmark (--benchmark MANIFEST -> results/benchmark), or gold (cases/v2 ->
 results/gold, the legacy copy; GOLD itself lives in project-zeno
 evals/gold/). Each run writes one run record under <results-dir>/runs/. The
-profile, trial and smoke-run rules are in README.md, "Running the set".
+profile, trial and smoke-run rules are in README.md, "Running a suite".
 
 Flags always win: no environment variable changes a flag or its default.
 The environment (or a .env file) supplies secrets only:
