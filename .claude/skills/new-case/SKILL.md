@@ -1,9 +1,13 @@
 ---
 name: new-case
-description: Use when authoring a new GOLD case ("add a case for…"). Interviews for the capability, maps expected fields to checks, enforces authoring rules and verified answers before done.
+description: Use when authoring a new GOLD case ("add a GOLD case for...", legacy copy in this repo). Interviews for the capability, maps expected fields to checks, enforces authoring rules and verified answers before done. Not for CHALLENGE or BENCHMARK cases.
 ---
 
 # new-case: author a case that earns its place
+
+> GOLD moved to wri/project-zeno `evals/gold/` on 2026-10-27. This skill applies to the
+> legacy copy in this repo and will move with it. For CHALLENGE or BENCHMARK work use
+> **challenge-cases** (CHALLENGE cases, including seed and generated ones).
 
 GOLD is a capability smoke test: a case earns its place by failing when a
 capability breaks, deterministically. Full authoring rules:
@@ -50,7 +54,7 @@ measures: [evaluators README index](../../../src/goldset/evaluators/README.md#in
 
 ## 4. Verify before `done`
 
-- Run it: `uv run gold run --env staging --id <id> --verbose`. The expected
+- Run it: `uv run gold run --suite gold --env staging --id <id> --verbose`. The expected
   `answer` must come from a verified measurement (this run, or the analytics
   API directly).
 - Status ladder: land as `ready` (or `todo` with a dated blocking note) if
@@ -63,6 +67,6 @@ measures: [evaluators README index](../../../src/goldset/evaluators/README.md#in
 ## 5. Finish with the lifecycle ritual
 
 Hand off to the **case-edit** skill, or run its ritual yourself:
-`check.py --fix`, then `coverage_doc.py`, then `audit_cases.py --strict`,
+`check.py --fix --suite gold`, then `coverage_doc.py --suite gold`, then `audit_cases.py --strict`,
 then commit the case, `MANIFEST.json` and `COVERAGE.md` together.
 `tests/test_schema.py` validates the file shape in CI.

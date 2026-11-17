@@ -1,9 +1,13 @@
 ---
 name: triage-run
-description: Use when analysing a finished GOLD run ("what failed", "triage this run", "look at the results"). Produces classified failures (agent regression, stale expectation, harness defect, flake) and a filled recommendations skeleton.
+description: Use when analysing a finished GOLD run ("what failed", "triage this run"; legacy copy in this repo). Produces classified failures (agent regression, stale expectation, harness defect, flake) and a filled recommendations skeleton. Not for CHALLENGE or BENCHMARK runs.
 ---
 
 # triage-run: turn a ledger run into actions
+
+> GOLD moved to wri/project-zeno `evals/gold/` on 2026-10-27. This skill applies to the
+> legacy copy in this repo and will move with it. For CHALLENGE or BENCHMARK work use
+> **challenge-cases** (CHALLENGE runs, where failures are data) or **benchmark-run** (BENCHMARK runs).
 
 Input: a `results/gold/runs/<run_id>.json`. Output: a classified failure table and
 the four-section recommendations doc. The ledger file itself is read-only.
