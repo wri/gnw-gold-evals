@@ -164,16 +164,16 @@ Checks roll up into five buckets, one per stage of the agent's work, so a failur
 
 Most checks belong to one bucket. A few are shared by two, because their failure cannot be pinned on one, and bucket tables report the two kinds separately. The [evaluators README index](src/goldset/evaluators/README.md#index) maps every check to its bucket.
 
-Info-only checks are recorded and reported but never affect a row verdict or the release gate. They are new or unreliable checks that have not yet earned a vote; [Info-only checks](src/goldset/evaluators/README.md#info-only-checks) lists them with the condition each must meet to gate again.
+Info-only checks are recorded and reported but never affect a row verdict or GOLD's release gate. They are new or unreliable checks that have not yet earned a vote; [Info-only checks](src/goldset/evaluators/README.md#info-only-checks) lists them with the condition each must meet to gate again.
 
-A run is read through row verdicts and per-bucket tallies, never a flat mean. Each row (one case's result) gets one verdict:
+A run is read through row verdicts and per-bucket tallies, never a flat mean. Each attempt (one trial of one case) passes when every gating check it scored passed, and fails when one scored `0.0`. Each row (one case's result) gets one verdict from its attempts (since 2026-10-28; before, from each check's majority across trials):
 
-- `pass`: every gating check that was evaluated passed;
-- `fail`: at least one gating check scored `0.0`;
-- `error`: the API or the judge failed, so the row measured nothing reliable; rerun it before trusting it. It never counts as a fail;
+- `pass`: most of its scored attempts passed;
+- `fail`: they did not (a tie fails);
+- `error`: no attempt could be scored (the harness failed after the reply, or the judge failed), so the row measured nothing reliable; rerun it before trusting it. It never counts as a fail;
 - `uncovered`: no gating check was evaluated, so it never counts as a pass.
 
-An attempt that got no reply (Horizon's stream stalled, dropped or failed: `no_answer`) is a failed attempt, not an error; an attempt the harness could not score is left out, and a row is an error only when no attempt could be scored.
+An attempt that got no reply (Horizon's stream stalled, dropped or failed: `no_answer`) is a failed attempt, not an error. An attempt the harness could not score is left out (since 2026-10-27).
 
 **Multi-turn cases** run all their turns in one thread. Per-turn checks are prefixed with the turn number (`t2.aoi_id_match`), and `state_delta` scores the expected changes between turns. A turn that errors ends its conversation, so later turns are not scored against a broken thread.
 
