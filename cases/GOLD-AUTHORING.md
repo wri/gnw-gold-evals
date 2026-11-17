@@ -1,7 +1,7 @@
 # Writing GOLD cases: what makes a good prompt
 
 > **Legacy copy.** GOLD moved to [wri/project-zeno](https://github.com/wri/project-zeno) under
-> `evals/gold/` on 2026-10-27 (project-zeno PR #874), and its current authoring rules are
+> `evals/gold/` on 2026-10-27 with project-zeno pull request (PR) #874. Its current authoring rules are
 > project-zeno's `evals/gold/cases/README.md`. These rules apply to `cases/v1` and
 > `cases/v2` here until a later PR deletes them. They are not the rules for CHALLENGE,
 > which favours realism over determinism: see [challenge/README.md](challenge/README.md).
@@ -10,14 +10,14 @@
 
 GOLD is a **capability smoke test**. A case earns its place by failing when
 a release breaks a capability and passing otherwise. Everything below
-follows from that one job. Read this file before you add or edit a case.
+follows from that one job.
 
-Terms are defined in the [README glossary](../README.md#glossary). A case
+Terms are in the [glossary](../docs/glossary.md). A case
 is one YAML file at `cases/<store>/<group>/<id>.yaml`.
 `schema/case.schema.json` defines its fields, and the
 [check index](../src/goldset/evaluators/README.md#index) says which
 `expected` key switches on which check. The commands to run after any edit
-are in [README: Changing cases](../README.md#changing-cases).
+are in [cases/README.md, After an edit](README.md#after-an-edit).
 
 ## The two stores
 
@@ -26,9 +26,10 @@ cases/v1/   frozen baseline, as imported from the original Google Sheet (now ret
 cases/v2/   the curated working set: every edit and every new case lands here
 ```
 
-- Tools default to v2; pass `--cases-dir cases/v1` to run or check v1.
+- `--suite gold` selects v2. To check v1, pass `--cases-dir cases/v1`; to
+  run it, also pass `--results-dir results/gold`.
 - Each store has its own `MANIFEST.json` holding its
-  [caseset_version](../README.md#caseset-version). A run records the store
+  [caseset_version](../docs/glossary.md#caseset-version). A run records the store
   (`caseset`) and caseset_version it loaded, so comparing a v1 run with a
   v2 run is an ordinary diff over the uids both runs share.
 - v1 exists so that curation claims are measurable: run the same build
@@ -38,7 +39,7 @@ cases/v2/   the curated working set: every edit and every new case lands here
   sheet; the legacy `tools/import_sheet.py` writes to v2 unless you pass
   `--cases-dir cases/v1`.
 - The stores hash multi-turn cases differently: a v2
-  [uid](../README.md#uid) also covers each turn's `deltas`, while v1 uids
+  [uid](../docs/glossary.md#uid) also covers each turn's `deltas`, while v1 uids
   leave them out, so v1 stays frozen.
 
 ## The four properties of a good case
@@ -49,17 +50,17 @@ cases/v2/   the curated working set: every edit and every new case lands here
 2. **Deterministic.** It fails only when the agent changes, never because
    time passed, data was updated or a judge changed its mind.
 3. **Checkable in depth.** Its expectations imply at least two checks in at
-   least two [buckets](../README.md#bucket) (Retrieval, Analysis,
+   least two [buckets](../docs/glossary.md#bucket) (Retrieval, Analysis,
    Explanation, Output, Scope), so a pass can't mean "measured nothing".
    CI enforces this ([The audit gate](#the-audit-gate)).
 4. **Environment-honest.** If the capability is missing in some environment
-   or [profile](../README.md#profile), the case carries an `env_gated` note
-   so its zeros are never read as agent regressions. Today the LGMS dataset
-   (id 12) exists only on the `experimental` profile, so its cases are
+   or [profile](../docs/glossary.md#profile), the case carries an `env_gated` note
+   so its zeros are never read as agent regressions. Today the Land Greenhouse Gas
+   Monitoring System (LGMS) dataset, id 12, exists only on the `experimental` profile, so its cases are
    parked while runs use the default profile. Re-check `env_gated` notes
    when the environment changes: older notes saying that dashboards or
    imagery need `--ff experimental` are out of date
-   ([Running a suite](../README.md#running-the-set)).
+   ([Running a suite](../README.md#running-a-suite)).
 
 ## DOs
 
@@ -67,12 +68,13 @@ cases/v2/   the curated working set: every edit and every new case lands here
   ✔ `"…between January 2025 and April 2025…"` with
   `start_date: '2025-01-01'`, `end_date: '2025-04-30'` (date expectations
   belong only on date-scoped datasets; see the DON'Ts).
-- **DO give every case a `scope`**: `analyse` (the agent pulled data),
-  `suggest` (it offered datasets through a `dataset_choice` nudge),
-  `clarify` (it asked the user to choose through another kind of nudge) or
-  `refuse` (no pull and no nudge). It is the cheapest deterministic check
-  in the suite: one key, read straight off the final state. A clarifying
-  question asked in prose alone, with no nudge, classifies as `refuse`.
+- **DO give every case a `scope`.** `analyse` means the agent pulled data.
+  `suggest` means it offered datasets through a `dataset_choice` nudge.
+  `clarify` means it asked the user to choose through another kind of
+  nudge. `refuse` means no pull and no nudge. It is the cheapest
+  deterministic check in the suite: one key, read straight off the final
+  state. A clarifying question asked in prose alone, with no nudge,
+  classifies as `refuse`.
 - **DO name the metric unambiguously**: the class, the gas basis, the
   confidence tier. ✔ `"gross greenhouse gas emissions from tree cover loss"`
   ✘ `"deforestation-related carbon emissions"`. ✔ `"natural grassland"`
@@ -80,10 +82,10 @@ cases/v2/   the curated working set: every edit and every new case lands here
   Measured over 312 trials, precisely worded rows trigger a dataset-choice
   nudge on **1.2%** of trials and loosely worded ones on **38%**, and one
   nudge fails five to seven checks at once because no data is pulled. This
-  is the AOI rule below, applied to the metric.
+  is the area-of-interest (AOI) rule below, applied to the metric.
 - **DO steer with a framing clause when only one of two similar datasets
   gives the intended answer.** ✔ `"Distinguishing natural from non-natural
-  land cover, …"` routes to SBTN Natural Lands rather than Global Land
+  land cover, …"` routes to the Science Based Targets Network (SBTN) Natural Lands map rather than Global Land
   Cover without naming either. Left unsteered, the agent may nudge between
   the two and fail the case. If both datasets would give the same answer,
   accept both instead (next rule).
@@ -110,7 +112,7 @@ cases/v2/   the curated working set: every edit and every new case lands here
 - **DO put per-class figures in `class_values`** when the query implies a
   breakdown: ✔ `class_values: "mangroves=15,444 hectares"`. It catches a
   wrong sub-total hiding under a correct headline. But `class_value_match`
-  is currently [info-only](../README.md#info-only): reported, never
+  is currently [info-only](../docs/glossary.md#info-only): reported, never
   gating. The
   [info-only list](../src/goldset/evaluators/README.md#info-only-checks)
   says what would make it gate again. If the row needs a gating Analysis
@@ -140,8 +142,8 @@ cases/v2/   the curated working set: every edit and every new case lands here
   `aoi_source`, `dataset_id`, `dataset_name`, `dataset_parameters`,
   `context_layer`, `scope`, `clarification`), with no `answer`, `text` or
   dates, because none of those drift with time. Even then, prefer closing
-  the window. If a query must name the current period (imagery that exists
-  only for the current month, say), write a template token instead:
+  the window. If a query must name the current period, such as imagery
+  that exists only for the current month, write a template token instead:
   `{current_month}`, `{last_month}` or `{current_year}` (`TEMPLATE_VARS` in
   `src/goldset/templates.py`). The harness fills in the date when the run
   starts and the uid hashes the token, so the case keeps its identity from
@@ -151,7 +153,7 @@ cases/v2/   the curated working set: every edit and every new case lands here
   the other yearly datasets). The agent pulls the full range and slices in
   code, so the recorded window flips between runs while the answer stays
   right. Let `answer` carry the year. Keep date expectations for genuinely
-  date-scoped pulls: integrated alerts (dataset 11) and the `imagery` group
+  date-scoped pulls: integrated alerts, dataset 11, and the `imagery` group
   (`DATE_SCOPED_DATASET_IDS` and `DATE_SCOPED_GROUPS` in
   `tools/audit_cases.py`).
 - **DON'T stake a verdict on chart choice.** Chart type is the agent's
@@ -171,7 +173,7 @@ cases/v2/   the curated working set: every edit and every new case lands here
   previous wording.** ✔ `"Puri in Odisha, India"` works whatever the
   clarification said. ✘ `"yes, the first option"` depends on option order.
 - **DON'T edit `expected` casually.** Editing the query, any expected value
-  or (in v2) a turn's `deltas` mints a new [uid](../README.md#uid). That is
+  or (in v2) a turn's `deltas` mints a new [uid](../docs/glossary.md#uid). That is
   intended, but it resets the case's regression history, and a `done` case
   must be verified again at the new uid. The uid covers every expected
   field, scored or not (`dataset_name` drives no check but is hashed), so a
@@ -203,9 +205,9 @@ expected:
   scope: analyse
 ```
 
-- It names a state (no AOI ambiguity), the confidence tiers (one reading of
-  the metric) and a closed window on a date-scoped dataset, so the answer
-  is stable.
+- It names a state, so the area is not ambiguous, and the confidence
+  tiers, so the metric has one reading. Its closed window is on a
+  date-scoped dataset. So the answer is stable.
 - Its expectations imply eight checks across all five buckets:
   `aoi_id_match`, `dataset_id_match`, `date_extraction`,
   `data_pull_exists`, `answered_without_data`, `agent_answer`,
@@ -277,10 +279,10 @@ turns:
 ```
 
 All turns share one thread, and turn 2's text works whatever turn 1's reply
-said. Its `deltas` assert how the state moved since the previous turn:
-`changed` (the field must differ), `retain` (it must stay the same, which
-catches lost context) and `absent` (it must be empty, which catches
-carry-over). Each turn with `deltas` adds a `state_delta` check; the
+said. Its `deltas` assert how the state moved since the previous turn. A
+`changed` field must differ. A `retain` field must stay the same, which
+catches lost context. An `absent` field must be empty, which catches
+carry-over. Each turn with `deltas` adds a `state_delta` check; the
 allowed field names are listed in `schema/case.schema.json`.
 
 ## Mechanics checklist (every case PR)
@@ -290,7 +292,7 @@ allowed field names are listed in `schema/case.schema.json`.
 - [ ] `env_gated` noted if the capability depends on the environment or profile
 - [ ] the status follows the [status lifecycle](README.md#status-lifecycle); a `done`
       case cites its verifying run
-- [ ] the after-edit commands in [README: Changing cases](../README.md#changing-cases)
+- [ ] the after-edit commands in [cases/README.md, After an edit](README.md#after-an-edit)
       ran clean, and their output is committed with the case
 - [ ] `uv run pytest tests/test_schema.py -q` passes (the file matches the schema)
 - [ ] if you edited a case quoted in [Worked examples](#worked-examples), the
