@@ -199,34 +199,37 @@ A generated file is written by a tool and never edited by hand: change its input
 | `generation/manifests/*.csv`, `generation/<dataset>/*.md`, `generation/dataset_config.py` | hand-edited | the inputs of the generation pipeline ([generation/README.md](generation/README.md)) |
 | `seeds/*.csv` | hand-edited | sheet exports and hand-made CSVs ([seeds/README.md](seeds/README.md)) |
 | `cases/challenge/TARGETS.yml` | hand-edited | CHALLENGE's target rates |
-| `results/<suite>/recommendations/*.md`, `results/gold/campaigns/*.md` | hand-written | one doc per committed run; campaign write-ups |
+| `results/<suite>/recommendations/*.md`, `results/gold/campaigns/*.md` | hand-written | the written analysis of a run; write-ups of multi-run efforts |
 
 ## Repository layout
 
 ```
-cases/v2/                     the working case set: one YAML per case in group folders, plus MANIFEST.json
-cases/v1/                     the frozen import of the retired Google Sheet (same layout)
-cases/v2/COVERAGE.md          generated coverage report; never edit by hand
-cases/challenge/              the CHALLENGE case set: set, cohort, case (cases/challenge/README.md)
-cases/zeno_catalog.json       snapshot of the agent's dataset catalogue, read by coverage_doc.py
-benchmarks/                   BENCHMARK manifests: frozen uid subsets of CHALLENGE
-                              (benchmarks/README.md)
-schema/case.schema.json       the case file contract; tests validate every case against it
-src/goldset/                  the library and the `gold` CLI: case store and hashing, runner,
-                              evaluators, buckets, ledger (module map in CLAUDE.md)
-tools/                        command-line tools over src/goldset (see tools/README.md)
-templates/                    HTML templates for the rendered reports
+cases/challenge/              CHALLENGE: one YAML per case at <set>/<cohort>/<id>.yaml, plus MANIFEST.json,
+                              TARGETS.yml and the generated COVERAGE.md, coverage.json, cases_index.json
+cases/v2/                     GOLD legacy copy: the working set, one YAML per case in group folders,
+                              plus MANIFEST.json and the generated coverage files
+cases/v1/                     GOLD legacy copy: the frozen import of the retired Google Sheet
+cases/zeno_catalog.json       snapshot of the agent's dataset catalogue (coverage and ground truth read it)
+cases/README.md               the stores, the case file, the status lifecycle, the after-edit commands
+benchmarks/                   BENCHMARK manifests (<version>.json) and overlays/ for the plain baseline
+generation/                   the pipeline that generates CHALLENGE's numeric cases (generation/README.md)
+seeds/                        CSVs that CHALLENGE cases and BENCHMARK versions were built from (seeds/README.md)
+schema/                       JSON Schemas: case.schema.json for case files, benchmark_page.schema.json
+                              for BENCHMARK page data; tests check files against them
+src/goldset/                  the library and the evals command: case store and hashing, runner,
+                              evaluators, buckets, ledger, BENCHMARK manifests (module map in CLAUDE.md)
+src/goldset/plain/            the plain baseline's reference tables, scoring and outcomes
+tools/                        command-line tools over src/goldset (tools/README.md)
+templates/                    HTML templates for the GOLD reports
 tests/                        the test suite; needs no network
-results/gold/runs/            the committed GOLD run ledger (contract: results/README.md)
-results/gold/reports/         rendered HTML reports
-results/gold/recommendations/ one action doc per official run
-results/gold/campaigns/       write-ups of multi-run validation efforts
-results/gold/artifacts/       raw agent state per case and trial (gitignored)
-results/challenge/            committed CHALLENGE run ledger + rollup recommendations
-                              (rates, not regressions; see cases/challenge/README.md)
-results/benchmark/            committed BENCHMARK run ledger (gold run --benchmark)
-.claude/skills/               Claude Code workflow skills (see Further reading)
-.github/workflows/ci.yml      checks on every PR, plus a manually triggered staging run
+results/index.json            generated index of every committed run (challenge, benchmark, gold)
+results/challenge/            CHALLENGE ledger: runs/ and recommendations/
+results/benchmark/            BENCHMARK ledger: runs/, recommendations/ and pages/ (page data the frontend reads)
+results/plain/                plain baseline outputs (results/plain/README.md)
+results/gold/                 GOLD legacy ledger: runs/, reports/, recommendations/, campaigns/
+results/<suite>/artifacts/    raw agent state per case and trial (gitignored)
+.claude/skills/               Claude Code skills for the GOLD legacy copy
+.github/workflows/ci.yml      checks on every PR, plus a manually triggered GOLD staging run
 ```
 
 ## Further reading
@@ -234,15 +237,18 @@ results/benchmark/            committed BENCHMARK run ledger (gold run --benchma
 | Document | What it covers |
 |---|---|
 | [CLAUDE.md](CLAUDE.md) | Rules for AI coding agents working here (identity system, run rules, working agreements) and the module map |
-| [cases/README.md](cases/README.md) | How to write a good case, the two stores, the status lifecycle and the audit gate |
-| [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md) | Generated coverage report: groups, buckets, expected fields, datasets against the agent's catalogue, parked cases, known gaps |
+| [cases/README.md](cases/README.md) | The stores, the case file and its fields, the status lifecycle and the after-edit commands |
+| [cases/challenge/README.md](cases/challenge/README.md) | CHALLENGE: doctrine, running, the after-run steps, targets, and how cases get into the store |
+| [cases/challenge/CHANGELOG.md](cases/challenge/CHANGELOG.md) | How each CHALLENGE set was built, and every dated review of its expectations |
+| [cases/challenge/COVERAGE.md](cases/challenge/COVERAGE.md) | Generated coverage report for CHALLENGE |
+| [benchmarks/README.md](benchmarks/README.md) | BENCHMARK: manifests, freeze, errata, runs, the after-run steps, the page data contract, metric semantics |
+| [generation/README.md](generation/README.md) | How CHALLENGE's numeric cases are generated and reviewed |
+| [seeds/README.md](seeds/README.md) | Every seed CSV: what it is, which tool read it, whether it is still an input |
+| [results/README.md](results/README.md) | The ledger contract, comparing two runs, composing a current picture, the run index |
+| [results/plain/README.md](results/plain/README.md) | The plain baseline: steps, files, keys |
 | [src/goldset/evaluators/README.md](src/goldset/evaluators/README.md) | Reference for every check: what it reads, when it scores `null` or `0.0`, its bucket, and how to triage a failure |
-| [results/README.md](results/README.md) | The ledger contract, comparing two runs, and composing a current picture across runs |
-| [results/gold/recommendations/](results/gold/recommendations/) | One action doc per official run |
-| [results/gold/campaigns/](results/gold/campaigns/) | Write-ups of multi-run validation efforts |
-| [results/challenge/](results/challenge/) | The CHALLENGE ledger: same contract, pass-rate verdicts via `tools/challenge_rollup.py` |
-| [benchmarks/README.md](benchmarks/README.md) | BENCHMARK: the frozen, versioned CHALLENGE subset behind the North Star; manifest, freeze, errata, canonical runs, metric semantics |
-| [tools/README.md](tools/README.md) | Every command-line tool, grouped by what it works on, including the legacy tools |
+| [tools/README.md](tools/README.md) | Every command-line tool, grouped by what it works on |
+| [cases/GOLD-AUTHORING.md](cases/GOLD-AUTHORING.md) | GOLD legacy copy: how to write a GOLD case, the two stores, the audit gate |
 
 ## Glossary
 
