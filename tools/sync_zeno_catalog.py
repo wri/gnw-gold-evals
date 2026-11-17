@@ -14,9 +14,11 @@ only the snapshot:
 
 Run it whenever project-zeno adds, removes or changes a dataset. Files are
 read with `git show <ref>:<path>`, so the project-zeno working tree is never
-touched. After a sync, regenerate the coverage doc:
+touched. After a sync, regenerate the coverage doc of every store that
+reads the snapshot:
 
-    uv run python tools/coverage_doc.py
+    uv run python tools/coverage_doc.py --suite challenge
+    uv run python tools/coverage_doc.py --suite gold
 """
 
 from __future__ import annotations
@@ -168,7 +170,8 @@ def main() -> int:
     src = snapshot["source"]
     print(f"wrote {args.out}: {len(snapshot['datasets'])} datasets "
           f"@ {src['sha'][:7]} ({src['ref']})")
-    print("now regenerate: uv run python tools/coverage_doc.py")
+    print("now regenerate: uv run python tools/coverage_doc.py --suite challenge "
+          "&& uv run python tools/coverage_doc.py --suite gold")
     return 0
 
 
