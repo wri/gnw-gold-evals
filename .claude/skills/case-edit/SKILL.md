@@ -1,23 +1,23 @@
 ---
 name: case-edit
-description: Use when changing any case in any store (GOLD cases/v2 or CHALLENGE cases/challenge), whether prompt, expected values, status, notes or park/unpark. Explains uid consequences first, then runs the lifecycle for that store with an explicit --cases-dir, and enforces status-transition rules. For GOLD, also see the legacy-copy note in the body.
+description: Use when changing any case in any store (GOLD cases/v2 or CHALLENGE cases/challenge), whether prompt, expected values, status, notes or park/unpark. Explains uid consequences first, then runs the lifecycle for that store with an explicit --suite, and enforces status-transition rules. For GOLD, also see the legacy-copy note in the body.
 ---
 
 # case-edit: the case-store lifecycle
 
 One case per YAML file. Every edit ends with the after-edit ritual
-(section 5); skipping it fails CI. Terms are defined in the
-[README glossary](../../../README.md#glossary).
+(section 5); skipping it fails CI. Terms are defined in
+[docs/glossary.md](../../../docs/glossary.md).
 
 ## 1. Choose the store (first, out loud)
 
-Ask which store the case lives in, then use that store's path in every
-command below. Never rely on a default.
+Ask which store the case lives in, then pass that store's `--suite` to
+every command below. Never rely on a default.
 
-| store | `--cases-dir` | notes |
+| store | `--suite` | notes |
 |---|---|---|
-| GOLD (legacy copy, `cases/v2`) | `cases/v2` | `cases/v2/<group>/<id>.yaml`; status ladder and audit apply |
-| CHALLENGE | `cases/challenge` | `cases/challenge/<set>/<cohort>/<id>.yaml`; no status ladder, no audit; see **challenge-cases** |
+| GOLD (legacy copy, `cases/v2`) | `gold` | `cases/v2/<group>/<id>.yaml`; status ladder and audit apply |
+| CHALLENGE | `challenge` | `cases/challenge/<set>/<cohort>/<id>.yaml`; no status ladder, no audit; see **challenge-cases** |
 | `cases/v1` | none | frozen; never edit it |
 
 ## 2. Before touching the file: state the identity consequences
@@ -32,10 +32,11 @@ command below. Never rely on a default.
 - The uid hashes **all** expected fields, scored or not. Do not move
   expectations into `notes` to avoid uid churn
   (CLAUDE.md, "The identity system").
-- **CHALLENGE only:** a new uid also drops the case from every draft BENCHMARK
-  manifest that held it, and a member of a **frozen** version is never edited:
-  void it with an erratum (see **challenge-cases**). Before the edit, run
-  `grep -l <uid> benchmarks/*.json` and report the manifests.
+- **CHALLENGE only:** before the edit, run `grep -l <uid> benchmarks/*.json`
+  and report the manifests and their status. A member of a **frozen**
+  version is never edited: undo the edit, or void it with an erratum. A
+  member of a **draft** keeps its old uid in the manifest until the draft is
+  rebuilt, and CI fails until then: section 5 has the steps.
 
 ## 3. Make the edit
 
@@ -45,7 +46,7 @@ command below. Never rely on a default.
 - Multi-turn cases use `turns:` (no top-level query/expected).
 - Unknown top-level keys are rejected on read: the schema is the contract.
 - If a doc quotes the case, update the quote in the same PR:
-  `grep -rn "<id>" README.md CLAUDE.md cases/README.md cases/challenge/README.md .claude/skills`.
+  `grep -rn "<id>" README.md CLAUDE.md docs cases/README.md cases/challenge .claude/skills`.
 
 ## 4. Status transitions
 
@@ -62,18 +63,24 @@ command below. Never rely on a default.
 GOLD (`cases/v2`):
 
 ```bash
-uv run python tools/check.py --fix --cases-dir cases/v2
-uv run python tools/coverage_doc.py --cases-dir cases/v2
+uv run python tools/check.py --fix --suite gold
+uv run python tools/coverage_doc.py --suite gold
 uv run python tools/audit_cases.py --strict
 ```
 
 CHALLENGE (no audit):
 
 ```bash
-uv run python tools/check.py --fix --cases-dir cases/challenge
-uv run python tools/coverage_doc.py --cases-dir cases/challenge
+uv run python tools/check.py --fix --suite challenge
+uv run python tools/coverage_doc.py --suite challenge
 uv run python tools/check_benchmark.py
 ```
+
+If `check_benchmark.py` warns that a member of a draft lost its uid, follow
+"After an edit", steps 4 to 9, in
+[cases/challenge/README.md](../../../cases/challenge/README.md) (rebuild
+the draft, check it, regenerate `results/index.json`, check the plain
+overlay, commit together), or hand off to **challenge-cases**.
 
 Stage the case file with the store's `MANIFEST.json`, `COVERAGE.md`,
 `coverage.json` and `cases_index.json` in one commit. CI runs the tests,
