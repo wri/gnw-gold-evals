@@ -1,11 +1,13 @@
-"""gold: run evaluation cases against a live GNW agent API and record the results.
+"""Run evaluation cases against a live GNW agent API and record the results.
+
+The command is installed as both `evals` and `gold`; they are identical.
 
 Examples:
-  gold run --suite challenge --env prod --trials 3 --build "<label>"
-  gold run --benchmark benchmarks/<version>.json --env prod --trials 3
-  gold run --suite gold --api-base-url https://api.staging.globalnaturewatch.org --id 1-030
-  gold run --resume <run_id>
-  gold prune-artifacts --suite challenge --keep-runs 5
+  %(prog)s run --suite challenge --env prod --trials 3 --build "<label>"
+  %(prog)s run --benchmark benchmarks/<version>.json --env prod --trials 3
+  %(prog)s run --suite gold --api-base-url https://api.staging.globalnaturewatch.org --id 1-030
+  %(prog)s run --resume <run_id>
+  %(prog)s prune-artifacts --suite challenge --keep-runs 5
 
 A run names its suite, which picks the case store and the results ledger
 (there is no default): challenge (cases/challenge -> results/challenge),
@@ -658,8 +660,9 @@ def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
 
 
 def main() -> int:
+    # prog follows argv[0], so help, errors and the resume hint name
+    # whichever of `evals` or `gold` was invoked.
     parser = argparse.ArgumentParser(
-        prog="gold",
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
@@ -902,7 +905,8 @@ def main() -> int:
     where = (f"--suite {ledger}" if ledger
              else f"--results-dir {shlex.quote(str(args.results_dir))}")
     print(f"  in-flight ledger: {partial} "
-          f"(if killed: gold run --resume {args.run_id} {where})", flush=True)
+          f"(if killed: {parser.prog} run --resume {args.run_id} {where})",
+          flush=True)
     entries = asyncio.run(run_cases(
         args, cases, entry_sink=lambda e: append_partial_entry(partial, e),
     ))

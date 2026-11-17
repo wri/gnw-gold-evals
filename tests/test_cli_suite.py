@@ -110,6 +110,16 @@ def test_suite_challenge_files_in_the_challenge_ledger(repo, monkeypatch, capsys
     assert f"--resume {record['run_id']} --suite challenge" in out
 
 
+@pytest.mark.parametrize("argv0", ["/repo/.venv/bin/evals", "/repo/.venv/bin/gold"])
+def test_resume_hint_uses_the_invoked_name(repo, monkeypatch, capsys, argv0):
+    monkeypatch.setattr(sys, "argv", [argv0, "run", "--suite", "gold", "--env", "prod"])
+    assert cli.main() == 0
+    run_id = only_run(repo, "gold")["run_id"]
+    name = Path(argv0).name
+    assert f"(if killed: {name} run --resume {run_id} --suite gold)" in \
+        capsys.readouterr().out
+
+
 def test_suite_gold_files_in_the_gold_ledger(repo, monkeypatch):
     assert main(monkeypatch, "run", "--suite", "gold", "--env", "prod") == 0
     assert only_run(repo, "gold")["caseset"] == "v2"
