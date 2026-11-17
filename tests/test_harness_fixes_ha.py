@@ -182,24 +182,27 @@ def _answer_state(answer: str) -> dict:
 
 
 def test_h8_own_tile_domain_is_not_web_fallback():
-    """1-095 answered correctly from a real pull and linked the product's own
-    GFW dashboard; G2's premise ('came from web knowledge') was false."""
+    """1-095 linked the product's own GFW dashboard; G2's premise ('came from
+    web knowledge') was false. Checked without a pull, where G2 still fires."""
     state = _answer_state(
         "Finland lost 241,368.24 hectares in 2025 at a 10% canopy threshold. "
         "See also https://www.globalforestwatch.org/dashboards/country/FIN/ "
         "for the same figures." + " padding" * 10,
     )
+    state["statistics"] = []
     result = evaluate_guards(state, expects_data_pull=True, expected_answer="x",
                              expected_dataset_id="4")
     assert result["web_fallback_score"] == 1.0
 
 
-def test_h8_wri_org_citation_still_fires():
-    """1-030's signal must survive: a wri.org citation is the blog-skill tell."""
+def test_h8_wri_org_citation_still_fires_without_a_pull():
+    """1-030's signal must survive: a wri.org citation with no pull behind it
+    is the blog-skill tell. After a pull the check abstains (2026-10-27)."""
     state = _answer_state(
         "Ziguinchor has the most mangroves in Senegal, per "
         "https://www.wri.org/insights/mangrove-restoration." + " padding" * 10,
     )
+    state["statistics"] = []
     result = evaluate_guards(state, expects_data_pull=True, expected_answer="x",
                              expected_dataset_id="4")
     assert result["web_fallback_score"] == 0.0

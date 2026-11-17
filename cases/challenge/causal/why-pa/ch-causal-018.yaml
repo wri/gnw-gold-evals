@@ -1,0 +1,37 @@
+id: ch-causal-018
+uid: af3e3402bfbacc5c
+status: ready
+set: causal
+group: why_pa
+query: What is driving tree cover loss around Taï National Park in Côte d'Ivoire?
+expected:
+  aoi_ids: '721'
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Does not present cocoa, or any other commodity, as a finding of the data, which classes
+    loss by driver without identifying the commodity. Naming cocoa as an example of what the
+    data cannot tell apart is fine, and the reply need not mention cocoa at all.
+  figure: ratio(max(area_ha) by tree_cover_loss_driver where tree_cover_loss_driver != 'Unknown',
+    sum(area_ha) where tree_cover_loss_driver != 'Unknown') | max(area_ha) by tree_cover_loss_driver
+    where tree_cover_loss_driver != 'Unknown'
+notes:
+  difficulty: hard
+  behaviour: answer with drivers data; cocoa caveat
+  lineage: benchmark v2026 proposed set (bm26-157); USY-001399 Olam cocoa; Mars
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  user_story_refs: USY-001515 CIV/Ghana cocoa drivers
+  benchmark_id: bm26-151
+  benchmark_type: causal
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text added (cocoa not
+    named as a data finding); figure added (dominant driver share). The 3.6 ha total the agent
+    reported for a 536,000 ha park is a data issue for PZB-1406; 2026-10-28 (AJ, draft-5 failures
+    review): text says a cocoa caveat is fine (two draft-5 attempts failed although one never
+    named cocoa and the other named it only as a caveat)'

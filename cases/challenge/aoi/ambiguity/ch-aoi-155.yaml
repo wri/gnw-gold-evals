@@ -1,0 +1,29 @@
+id: ch-aoi-155
+uid: 7fa6d4f365c3c2c8
+status: ready
+set: aoi
+group: ambiguity
+query: Describe the pattern of deforestation in the Amazon.
+expected:
+  text: If it gives figures or a pattern, names the Amazon boundary (biome, basin, Legal Amazon,
+    or by country) they describe, or asks which is meant; an offer to break down later does
+    not count.
+notes:
+  behaviour: Clarify which Amazon boundary or offer country-level breakdown
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-154); Map exploration research (map
+    exploration question)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-154
+  benchmark_type: spatial
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Global / regional / biome
+  capability: Supported
+  grounding: From user research
+  user_story_refs: Map exploration research (map exploration question)
+  refresh_risk: Low
+  review: '2026-10-26 (AJ): kept as is in the why-questions review; no data requirement added.;
+    2026-10-27 draft-5 review (AJ asked to apply the review): text reworded so the judge is
+    consistent: an unnamed-boundary figure fails and a follow-up offer does not count'

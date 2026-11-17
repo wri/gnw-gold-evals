@@ -1,0 +1,33 @@
+id: ch-port-001
+uid: d79a9346a214cabf
+status: ready
+set: portfolio
+group: many-areas
+query: Here are 150 mills from the Universal Mill List. Which have deforestation within 50
+  km since 2020?
+expected:
+  text: Does not invent per-mill results or claim it can screen the whole list; explains that
+    it cannot analyse 150 mill locations with 50 km buffers in one request, and offers a workable
+    alternative (a named region, or bulk downloads or the API).
+notes:
+  behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
+    areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-080); USY-001415 PepsiCo UML
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
+    ships'
+  benchmark_id: bm26-080
+  benchmark_type: portfolio
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001415 PepsiCo UML
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded; the old text claimed a one-to-three-area limit the code
+    does not have. pick_aoi takes up to 1,000 admin sub-units of one GADM parent, but only
+    50 protected areas, KBAs, Indigenous lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py
+    SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT). Arbitrary point lists and buffers are not supported.'

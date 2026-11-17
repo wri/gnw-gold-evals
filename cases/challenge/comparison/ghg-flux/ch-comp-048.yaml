@@ -1,5 +1,5 @@
 id: ch-comp-048
-uid: 666e2112f9410727
+uid: 662d9696610da2a3
 status: ready
 set: comparison
 group: ghg-flux
@@ -9,6 +9,11 @@ expected:
   aoi_ids: GBR;CRI
   dataset_id: '6'
   data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'GBR' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'CRI'
+  figure_claim: '#1 < #2 :: The UK''s forests are the bigger net carbon sink (or the smaller
+    net source) of the two, compared with Costa Rica''s || Costa Rica''s forests are the bigger
+    net carbon sink (or the smaller net source) of the two, compared with the UK''s'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -18,3 +23,18 @@ notes:
   manifest_id: m-flux-comp-04
   lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-04a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-197
+  benchmark_type: comparison
+  synthetic: 'FALSE'
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  user_story_refs: USY-000473 Economist flux; USY-001652 UNESCO GHG
+  refresh_risk: Low
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table); claim reworded
+    2026-10-27 after the draft-5 run: ''lower (more sink-like) net flux'' made the AI reviewer
+    read the bigger sink as the weaker one'

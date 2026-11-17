@@ -1,0 +1,32 @@
+id: ch-port-009
+uid: 8bb64276ced60903
+status: todo
+set: portfolio
+group: uploaded-sites
+query: Score the farmer locations I uploaded for deforestation risk.
+expected:
+  text: Does not produce or invent per-site results; either analyses the user's areas with
+    data, or explains what it cannot do across many of the user's areas at once and offers
+    a workable alternative (one area, or bulk downloads or the API).
+notes:
+  behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
+    areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-088); USY-001407 British American Tobacco
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review'
+  synthetic: 'TRUE'
+  reclassify_when: 'Yes: expected answer becomes "answer with data" when portfolio monitoring
+    ships'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Portfolio (25 custom polygons,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-088
+  benchmark_type: portfolio
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001407 British American Tobacco
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded; the old text claimed a one-to-three-area limit the code
+    does not have. Fixture row: not run until a test account is seeded.'

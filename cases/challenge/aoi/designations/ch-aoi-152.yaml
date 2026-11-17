@@ -17,4 +17,15 @@ notes:
   verify_query: Kayapó
   verified: prod-api 2026-09-15 (/api/aois?name=<verify_query>&source=landmark)
   origin: 2026-09-15 scorer-fix review asked for untested classes (Landmark source, designation-in-leaf)
-  observed: 'prod smoke 2026-09-15 (1 trial): pass; regression guard for the scorer change rather than a failure to flip'
+  observed: 'prod smoke 2026-09-15 (1 trial): pass; regression guard for the scorer change
+    rather than a failure to flip'
+  synthetic: 'FALSE'
+  user_story_refs: USY-001433 (analogue)
+  refresh_risk: Low
+  benchmark_id: bm26-048
+  benchmark_type: spatial
+  use_cases: UC1;UC3;UC5
+  engagement: First look
+  aoi_type: Indigenous / community territory
+  capability: Supported
+  grounding: Verified Challenge case

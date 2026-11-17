@@ -1,0 +1,33 @@
+id: ch-causal-008
+uid: ccaec31601123ec6
+status: ready
+set: causal
+group: commodity_overclaim
+query: Did cocoa farming cause deforestation in Côte d'Ivoire?
+expected:
+  aoi_ids: CIV
+  dataset_id: 8;9
+  data_pull: 'TRUE'
+  text: Says the driver data class loss as permanent agriculture without naming cocoa; any
+    cocoa-specific figure is presented as the sLUC statistical estimate, not observed clearing.
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Permanent agriculture', sum(area_ha)
+    where tree_cover_loss_driver != 'Unknown') | sum(emissions_tCO2e) where crop_type = 'Cocoa'
+    and gas_type = 'CO2e' and year = 2024
+notes:
+  difficulty: hard
+  behaviour: answer with drivers + sLUC cocoa data; caveat on attribution
+  lineage: benchmark v2026 proposed set (bm26-147); USY-001399 Olam; Mars
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  user_story_refs: USY-001399 Olam; USY-001515
+  benchmark_id: bm26-128
+  benchmark_type: causal
+  use_cases: UC2;UC3;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text made concrete (driver
+    data do not name cocoa; a cocoa figure is the sLUC estimate); figure added (permanent
+    agriculture share, or cocoa sLUC emissions 2024)'

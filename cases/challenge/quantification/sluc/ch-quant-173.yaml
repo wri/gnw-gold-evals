@@ -1,0 +1,34 @@
+id: ch-quant-173
+uid: 7b9b7407bfc3e41a
+status: ready
+set: quantification
+group: sluc
+query: What are the land-use change emissions linked to beef production in Brazil?
+expected:
+  text: Says the sLUC emission factor data do not cover beef or cattle and names the commodities
+    they do cover, from the data; does not present a crop's figure as beef.
+  aoi_ids: BRA
+  dataset_id: '9'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer if cattle in sLUC crops; else decline and say which commodities are covered
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-186); Green Markets donor deliverable
+    (FY27 slides); USY-001228
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; expectations revised 2026-10-26 (AJ, why-questions review); draft-5
+    review 2026-10-27'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-186
+  benchmark_type: quantification
+  use_cases: UC2;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
+  user_story_refs: Green Markets donor deliverable (FY27 slides); USY-001228
+  refresh_risk: Low
+  review: '2026-10-26 (AJ): why-questions must be answered from data, not blog posts; the
+    expectation now requires it. Added Brazil, sLUC (9) and a pull: the commodities the data
+    covers come from the data.; 2026-10-27 draft-5 review (AJ asked to apply the review):
+    either/or collapsed: the sLUC table lists crops only (no cattle, beef or pasture commodity;
+    checked on the pulled Brazil table 2026-10-27)'

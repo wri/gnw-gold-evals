@@ -172,11 +172,11 @@ const GROUPS = [
   ["retrieval", ["aoi_id_match","dataset_id_match","dataset_parameter_match",
     "context_layer_match","date_extraction","data_pull_exists","pull_source_match",
     "answered_without_data","state_delta"]],
-  ["analysis", ["chart_integrity"]],
-  ["explanation", ["expected_text_match","web_fallback"]],
+  ["analysis", ["chart_integrity","figure_match","answer_period_match"]],
+  ["explanation", ["expected_text_match","web_fallback","accepted_blog_match","figure_claim_match"]],
   ["output", ["chart_produced","chart_well_formed","chart_type_match",
     "dashboard_aoi_match","dashboard_widgets_match","dashboard_widgets_valid"]],
-  ["scope", ["scope_match","clarification_requested","suggested_datasets_match","nudge_match","forbidden_tools_absent"]],
+  ["scope", ["scope_match","clarification_requested","suggested_datasets_match","nudge_match","forbidden_tools_absent","accepted_nudge_match"]],
   ["shared", ["charts_answer","agent_answer","dashboard_created"]],
   ["info", ["date_coverage","answer_traceability","class_value_match"]],
 ];
@@ -191,6 +191,10 @@ const EXPECTED_FIELD = {
   dashboard_aoi_match:["aoi_ids"], class_value_match:["class_values"],
   chart_type_match:["chart_type"], scope_match:["scope"],
   forbidden_tools_absent:["forbidden_tools"],
+  accepted_nudge_match:["accept_nudge_offering","accept_aoi_nudge_offering"],
+  accepted_blog_match:["accept_blog_sources"],
+  figure_match:["figure"], figure_claim_match:["figure_claim"],
+  answer_period_match:["start_date","end_date"],
 };
 const GUARD_NOTE = {
   chart_produced:"implied by expected.answer", data_pull_exists:"implied by the expectations",
@@ -237,8 +241,26 @@ function flakySet(entry) {
   return flaky;
 }
 
+// Mirrors buckets.row_verdict: a row passes when most of its scored attempts
+// pass (ties fail); an attempt with no reply fails, one the harness could not
+// score is left out, and a row without per-trial detail is judged on its checks.
+function attemptVerdict(trial, infoOnly) {
+  if (trial.no_answer) return "fail";
+  if (trial.error) return "error";
+  return verdict({ checks: trial.checks }, infoOnly);
+}
+
 function verdict(entry, infoOnly) {
   if (entry.error || (entry.judge_errors || []).length) return "error";
+  if (entry.no_answer) return "fail";
+  const trials = Object.values(entry.trials || {}).filter(t => t && typeof t === "object");
+  if (trials.length) {
+    const scoredTrials = trials.map(t => attemptVerdict(t, infoOnly))
+      .filter(v => v === "pass" || v === "fail");
+    if (!scoredTrials.length) return "uncovered";
+    const passes = scoredTrials.filter(v => v === "pass").length;
+    return passes * 2 > scoredTrials.length ? "pass" : "fail";
+  }
   const gating = Object.entries(entry.checks || {})
     .filter(([n, v]) => v !== null && !infoOnly.has(base(n)));
   if (!gating.length) return "uncovered";

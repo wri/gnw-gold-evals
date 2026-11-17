@@ -1,0 +1,32 @@
+id: ch-mon-026
+uid: a80bef0521c0bbb6
+status: ready
+set: monitoring
+group: concession_alerts
+query: Any deforestation alerts inside oil palm concessions in Riau in the last month?
+expected:
+  text: Either reports alerts inside Riau's oil palm concessions, or explains the concession
+    limit and offers a narrower area; never presents province-wide alerts as concession alerts.
+notes:
+  difficulty: hard
+  behaviour: answer with data, or state concession layer is not available
+  lineage: benchmark v2026 proposed set (bm26-135); USY-000591 TuK concessions; USY-001404
+    Mars
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth;
+    confirm concession layer support
+  user_story_refs: USY-001417 Wilmar concessions; USY-001298 Tesso Nilo
+  benchmark_id: bm26-075
+  benchmark_type: monitoring
+  use_cases: UC2
+  engagement: First look
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: Direct from story
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids, dataset_id,
+    dates and data_pull dropped (either/or rule: the province pin passed the substitution
+    the text forbids, and the pull pins failed the honest concession-limit redirect); text
+    reworded'

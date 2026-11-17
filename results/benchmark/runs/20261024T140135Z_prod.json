@@ -1,0 +1,387 @@
+{
+  "run_id": "20261024T140135Z_prod",
+  "started": "2026-10-24T14:01:35Z",
+  "environment": "prod",
+  "build": "prod 2026-10-24 draft-4 rerun of 2 reworded members",
+  "ff": null,
+  "harness": {
+    "repo": "gnw-gold-evals",
+    "sha": "3cf8b04"
+  },
+  "judge_model": "claude-haiku-4-5",
+  "num_trials": 3,
+  "workers": 2,
+  "trial_timeout": 900.0,
+  "caseset": "challenge",
+  "caseset_version": "b0df4721464461ce",
+  "results": [
+    {
+      "uid": "76a90b4e2ee08e8c",
+      "id": "ch-port-011",
+      "checks": {
+        "agent_answer": null,
+        "answer_traceability": null,
+        "answered_without_data": null,
+        "aoi_id_match": null,
+        "chart_integrity": null,
+        "chart_produced": null,
+        "chart_type_match": null,
+        "chart_well_formed": null,
+        "charts_answer": null,
+        "charts_answer_judge": null,
+        "clarification_requested": null,
+        "class_value_match": null,
+        "context_layer_match": null,
+        "dashboard_aoi_match": null,
+        "dashboard_created": null,
+        "dashboard_widgets_match": null,
+        "dashboard_widgets_valid": null,
+        "data_pull_exists": null,
+        "dataset_id_match": null,
+        "dataset_parameter_match": null,
+        "date_coverage": null,
+        "date_extraction": null,
+        "expected_text_match": 1.0,
+        "forbidden_tools_absent": null,
+        "nudge_match": null,
+        "pull_source_match": null,
+        "scope_match": null,
+        "suggested_datasets_match": null,
+        "web_fallback": null
+      },
+      "reasons": {
+        "expected_text_match": "The response explicitly acknowledges it cannot generate a live global ranking of all 257 sites due to technical constraints, then provides a workable alternative by highlighting specific named sites with extreme tree cover loss from published research sources, which directly satisfies the expected behavior."
+      },
+      "latency_s": 50.8,
+      "stream_s": 49.66,
+      "trace_url": "https://langfuse.globalnaturewatch.org/project/wri_lcl/traces/8fbcead4fcc39ae5fcb151fd42ae68d9",
+      "trials": [
+        {
+          "checks": {
+            "aoi_id_match": null,
+            "dataset_id_match": null,
+            "dataset_parameter_match": null,
+            "context_layer_match": null,
+            "data_pull_exists": null,
+            "date_coverage": null,
+            "date_extraction": null,
+            "charts_answer": null,
+            "charts_answer_judge": null,
+            "agent_answer": null,
+            "expected_text_match": 1.0,
+            "clarification_requested": null,
+            "suggested_datasets_match": null,
+            "nudge_match": null,
+            "dashboard_created": null,
+            "dashboard_aoi_match": null,
+            "dashboard_widgets_match": null,
+            "dashboard_widgets_valid": null,
+            "chart_produced": null,
+            "answered_without_data": null,
+            "web_fallback": null,
+            "pull_source_match": null,
+            "class_value_match": null,
+            "chart_integrity": null,
+            "answer_traceability": null,
+            "chart_well_formed": null,
+            "chart_type_match": null,
+            "scope_match": null,
+            "forbidden_tools_absent": null
+          },
+          "latency_s": 26.4,
+          "stream_s": 25.23
+        },
+        {
+          "checks": {
+            "aoi_id_match": null,
+            "dataset_id_match": null,
+            "dataset_parameter_match": null,
+            "context_layer_match": null,
+            "data_pull_exists": null,
+            "date_coverage": null,
+            "date_extraction": null,
+            "charts_answer": null,
+            "charts_answer_judge": null,
+            "agent_answer": null,
+            "expected_text_match": 1.0,
+            "clarification_requested": null,
+            "suggested_datasets_match": null,
+            "nudge_match": null,
+            "dashboard_created": null,
+            "dashboard_aoi_match": null,
+            "dashboard_widgets_match": null,
+            "dashboard_widgets_valid": null,
+            "chart_produced": null,
+            "answered_without_data": null,
+            "web_fallback": null,
+            "pull_source_match": null,
+            "class_value_match": null,
+            "chart_integrity": null,
+            "answer_traceability": null,
+            "chart_well_formed": null,
+            "chart_type_match": null,
+            "scope_match": null,
+            "forbidden_tools_absent": null
+          },
+          "latency_s": 53.3,
+          "stream_s": 52.31
+        },
+        {
+          "checks": {
+            "aoi_id_match": null,
+            "dataset_id_match": null,
+            "dataset_parameter_match": null,
+            "context_layer_match": null,
+            "data_pull_exists": null,
+            "date_coverage": null,
+            "date_extraction": null,
+            "charts_answer": null,
+            "charts_answer_judge": null,
+            "agent_answer": null,
+            "expected_text_match": 1.0,
+            "clarification_requested": null,
+            "suggested_datasets_match": null,
+            "nudge_match": null,
+            "dashboard_created": null,
+            "dashboard_aoi_match": null,
+            "dashboard_widgets_match": null,
+            "dashboard_widgets_valid": null,
+            "chart_produced": null,
+            "answered_without_data": null,
+            "web_fallback": null,
+            "pull_source_match": null,
+            "class_value_match": null,
+            "chart_integrity": null,
+            "answer_traceability": null,
+            "chart_well_formed": null,
+            "chart_type_match": null,
+            "scope_match": null,
+            "forbidden_tools_absent": null
+          },
+          "latency_s": 50.8,
+          "stream_s": 49.66
+        }
+      ]
+    },
+    {
+      "uid": "dda13d644bc10370",
+      "id": "ch-quant-194",
+      "checks": {
+        "agent_answer": null,
+        "answer_traceability": null,
+        "answered_without_data": null,
+        "aoi_id_match": null,
+        "chart_integrity": null,
+        "chart_produced": null,
+        "chart_type_match": null,
+        "chart_well_formed": null,
+        "charts_answer": null,
+        "charts_answer_judge": null,
+        "clarification_requested": null,
+        "class_value_match": null,
+        "context_layer_match": null,
+        "dashboard_aoi_match": null,
+        "dashboard_created": null,
+        "dashboard_widgets_match": null,
+        "dashboard_widgets_valid": null,
+        "data_pull_exists": null,
+        "dataset_id_match": null,
+        "dataset_parameter_match": null,
+        "date_coverage": null,
+        "date_extraction": null,
+        "expected_text_match": 1.0,
+        "forbidden_tools_absent": null,
+        "nudge_match": null,
+        "pull_source_match": null,
+        "scope_match": null,
+        "suggested_datasets_match": null,
+        "web_fallback": null
+      },
+      "reasons": {
+        "expected_text_match": "The response directly states that canopy height data are not available in Horizon (\"we don't currently have a dataset that provides specific canopy height measurements\") without inventing a canopy height layer, and instead explains what data are actually available."
+      },
+      "latency_s": 9.8,
+      "stream_s": 8.66,
+      "trace_url": "https://langfuse.globalnaturewatch.org/project/wri_lcl/traces/dd1290bd1c073f36903ebce545560b50",
+      "trials": [
+        {
+          "checks": {
+            "aoi_id_match": null,
+            "dataset_id_match": null,
+            "dataset_parameter_match": null,
+            "context_layer_match": null,
+            "data_pull_exists": null,
+            "date_coverage": null,
+            "date_extraction": null,
+            "charts_answer": null,
+            "charts_answer_judge": null,
+            "agent_answer": null,
+            "expected_text_match": 0.0,
+            "clarification_requested": null,
+            "suggested_datasets_match": null,
+            "nudge_match": null,
+            "dashboard_created": null,
+            "dashboard_aoi_match": null,
+            "dashboard_widgets_match": null,
+            "dashboard_widgets_valid": null,
+            "chart_produced": null,
+            "answered_without_data": null,
+            "web_fallback": null,
+            "pull_source_match": null,
+            "class_value_match": null,
+            "chart_integrity": null,
+            "answer_traceability": null,
+            "chart_well_formed": null,
+            "chart_type_match": null,
+            "scope_match": null,
+            "forbidden_tools_absent": null
+          },
+          "latency_s": 10.0,
+          "stream_s": 9.06
+        },
+        {
+          "checks": {
+            "aoi_id_match": null,
+            "dataset_id_match": null,
+            "dataset_parameter_match": null,
+            "context_layer_match": null,
+            "data_pull_exists": null,
+            "date_coverage": null,
+            "date_extraction": null,
+            "charts_answer": null,
+            "charts_answer_judge": null,
+            "agent_answer": null,
+            "expected_text_match": 1.0,
+            "clarification_requested": null,
+            "suggested_datasets_match": null,
+            "nudge_match": null,
+            "dashboard_created": null,
+            "dashboard_aoi_match": null,
+            "dashboard_widgets_match": null,
+            "dashboard_widgets_valid": null,
+            "chart_produced": null,
+            "answered_without_data": null,
+            "web_fallback": null,
+            "pull_source_match": null,
+            "class_value_match": null,
+            "chart_integrity": null,
+            "answer_traceability": null,
+            "chart_well_formed": null,
+            "chart_type_match": null,
+            "scope_match": null,
+            "forbidden_tools_absent": null
+          },
+          "latency_s": 9.6,
+          "stream_s": 8.6
+        },
+        {
+          "checks": {
+            "aoi_id_match": null,
+            "dataset_id_match": null,
+            "dataset_parameter_match": null,
+            "context_layer_match": null,
+            "data_pull_exists": null,
+            "date_coverage": null,
+            "date_extraction": null,
+            "charts_answer": null,
+            "charts_answer_judge": null,
+            "agent_answer": null,
+            "expected_text_match": 1.0,
+            "clarification_requested": null,
+            "suggested_datasets_match": null,
+            "nudge_match": null,
+            "dashboard_created": null,
+            "dashboard_aoi_match": null,
+            "dashboard_widgets_match": null,
+            "dashboard_widgets_valid": null,
+            "chart_produced": null,
+            "answered_without_data": null,
+            "web_fallback": null,
+            "pull_source_match": null,
+            "class_value_match": null,
+            "chart_integrity": null,
+            "answer_traceability": null,
+            "chart_well_formed": null,
+            "chart_type_match": null,
+            "scope_match": null,
+            "forbidden_tools_absent": null
+          },
+          "latency_s": 9.8,
+          "stream_s": 8.66
+        }
+      ]
+    }
+  ],
+  "buckets": {
+    "retrieval": {
+      "dedicated": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "shared": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "rows_covered": 0
+    },
+    "analysis": {
+      "dedicated": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "shared": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "rows_covered": 0
+    },
+    "explanation": {
+      "dedicated": {
+        "passed": 2,
+        "evaluated": 2
+      },
+      "shared": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "rows_covered": 2
+    },
+    "output": {
+      "dedicated": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "shared": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "rows_covered": 0
+    },
+    "scope": {
+      "dedicated": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "shared": {
+        "passed": 0,
+        "evaluated": 0
+      },
+      "rows_covered": 0
+    },
+    "rows_total": 2,
+    "verdicts": {
+      "pass": 2,
+      "fail": 0,
+      "error": 0,
+      "uncovered": 0
+    }
+  },
+  "benchmark": {
+    "path": "benchmarks/2026-draft-4.json",
+    "version": "2026-draft-4",
+    "status": "draft",
+    "manifest_sha": "9506f761de8a1a09",
+    "members": 269
+  },
+  "methodology_note": "Reruns ch-quant-194 and ch-port-011, reworded after 20261024T133644Z_prod; combined with 20261023T094447Z_prod and 20261024T133644Z_prod for every other member."
+}

@@ -1,0 +1,42 @@
+id: ch-comp-173
+uid: c3d506011b4c437d
+status: ready
+set: comparison
+group: tcl
+query: Ghana's results report shows lower forest loss in 2022–2023. How does GFW's tree cover
+  loss for those years compare with 2018–2021?
+expected:
+  aoi_ids: GHA
+  dataset_id: '4'
+  start_date: '2018-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  text: Does not suggest the data can verify results or set payment amounts; it may describe
+    them as an informal cross-check.
+  figure: mean(area_ha) by tree_cover_loss_year where aoi_id = 'GHA' and tree_cover_loss_year
+    in 2022..2023 ; mean(area_ha) by tree_cover_loss_year where aoi_id = 'GHA' and tree_cover_loss_year
+    in 2018..2021
+  figure_claim: '#1 < #2 :: average annual tree cover loss in 2022 to 2023 was lower than
+    in 2018 to 2021 || average annual tree cover loss in 2022 to 2023 was not lower than in
+    2018 to 2021'
+notes:
+  behaviour: Answer with data; Do not suggest the data can set payment amounts; it can serve
+    as an informal cross-check; explain method differences from official monitoring
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-204); USY-001582 Western North REDD+
+    (analogue)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-204
+  benchmark_type: comparison
+  use_cases: UC3;UC4
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
+  user_story_refs: USY-001582 Western North REDD+ (analogue)
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text trimmed to the payment-verification
+    caveat (the figure check now covers the per-year comparison); figure check added (annual
+    mean 2022 to 2023 vs 2018 to 2021, direction claim)'

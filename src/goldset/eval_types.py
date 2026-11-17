@@ -1,5 +1,6 @@
 """Type definitions for E2E testing framework."""
 
+from itertools import product
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, field_validator
@@ -123,7 +124,7 @@ class TestResult(BaseModel):
     dashboard_widgets_valid_score: float | None = None
 
     # Expected data fields
-    expected_aoi_ids: list[str] | None = None
+    expected_aoi_ids: list[list[str]] | None = None
     expected_aoi_source: str = ""
     expected_dataset_id: str = ""
     expected_dataset_name: str = ""
@@ -144,6 +145,10 @@ class TestResult(BaseModel):
 
     # Error handling
     error: str | None = None
+    # The error left the user with no reply: Horizon stopped sending, dropped
+    # the connection or failed before the stream finished. Such an attempt
+    # counts as wrong; any other error is the harness's and leaves it out.
+    no_answer: bool = False
 
     # Trial metadata
     num_trials: int = 1
@@ -179,7 +184,9 @@ class ExpectedData(BaseModel):
 
     model_config = ConfigDict(extra="allow")
 
-    expected_aoi_ids: list[str] | None = None
+    # Alternatives, each a set of ids the selection must equal exactly
+    # (``split_aoi_ids``).
+    expected_aoi_ids: list[list[str]] | None = None
     expected_aoi_source: str = ""
     expected_dataset_id: str = ""
     expected_dataset_name: str = ""
@@ -187,11 +194,26 @@ class ExpectedData(BaseModel):
     expected_context_layer: str = ""
     expected_start_date: str = ""
     expected_end_date: str = ""
+    # Days a pulled window may fall short of an expected bound (rolling windows:
+    # "last month" can fairly be 30 days or the calendar month). 0 = none.
+    expected_date_tolerance_days: int = 0
+    # The asked figure(s) as formulas over the pulled table, and the claim the
+    # data must support (evaluators/figures.py; draft-5, 2026-10-27).
+    expected_figure: str = ""
+    expected_figure_claim: str = ""
+    # "YYYY-YYYY": the data only come as this one fixed period, so
+    # answer_period_match passes a reply that gives its figures for it and
+    # says so (AJ, 2026-10-28, ch-causal-015). Opt-in.
+    expected_accept_fixed_period: str = ""
     expected_answer: str = ""
     expected_text: str = ""
     expected_clarification: bool | None = None
     expected_suggested_datasets: list[str] = []
     expected_dashboard_created: bool | None = None
+    # A dashboard is allowed but not required: dashboard_created abstains on
+    # an unsolicited one instead of failing it (evaluate_dashboard_created).
+    # Opt-in, TRUE only.
+    expected_accept_dashboard: bool | None = None
     expected_dashboard_widgets: list[str] | None = None
     expected_nudge_type: str = ""
     expected_nudge_options: list[str] = []
@@ -202,6 +224,15 @@ class ExpectedData(BaseModel):
     # Tools the agent must not call (;-separated; CHALLENGE dataset set). Opt-in:
     # empty means no check (tool_checks.evaluate_forbidden_tools).
     expected_forbidden_tools: str = ""
+    # Dataset ids (;-separated) a dataset_choice nudge must all offer for the
+    # attempt to pass on the nudge path (evaluators/accepted_nudge.py).
+    # Opt-in: empty means a nudge is judged like any other non-pull.
+    expected_accept_nudge_offering: str = ""
+    # The same for an aoi_choice nudge: area ids (;-separated) it must offer.
+    expected_accept_aoi_nudge_offering: str = ""
+    # Insights article slugs (;-separated) an answer from search_blogs may
+    # cite instead of pulling data (evaluators/accepted_blog.py).
+    expected_accept_blog_sources: str = ""
     # PR-06 additions
     expected_chart_type: str = ""
     expected_scope: str = ""
@@ -237,13 +268,33 @@ class ExpectedData(BaseModel):
 
     @field_validator("expected_aoi_ids", mode="before")
     @classmethod
-    def split_aoi_ids(cls, v: str | list[str]) -> list[str]:
-        """Split string input into a list of strings."""
+    def split_aoi_ids(cls, v: str | list[str] | list[list[str]]) -> list[list[str]]:
+        """Parse ``aoi_ids`` into alternatives: ``|`` separates alternatives
+        and ``;`` joins the ids of one alternative, so ``A;B|C`` accepts the
+        selection {A, B} or {C}. ``|`` binds looser than ``;`` because
+        ``;`` already means "all of these" here, unlike ``dataset_id``.
+        Some places have more than one defensible area (a national park and
+        its World Heritage listing), and a single all-of set fails the
+        other one. A flat list is one alternative.
+
+        Within one area, ``/`` lists that area's equivalent records, so a
+        comparison of two parks with several records each needs no cross
+        product by hand: ``A/B;C`` expands to ``A;C|B;C`` (draft-5 review,
+        2026-10-27)."""
         if isinstance(v, list):
-            return v
+            if v and all(isinstance(item, list) for item in v):
+                return v
+            return [v] if v else []
         if isinstance(v, str):
-            # Split by comma and strip whitespace, filter out empty strings
-            return [item.strip() for item in v.split(";") if item.strip()]
+            alternatives: list[list[str]] = []
+            for alt in v.split("|"):
+                areas = [
+                    [record.strip() for record in item.split("/") if record.strip()]
+                    for item in alt.split(";")
+                    if item.strip()
+                ]
+                alternatives += [list(ids) for ids in product(*areas) if ids]
+            return alternatives
         return []
 
     @field_validator("expected_nudge_options", mode="before")
@@ -269,6 +320,15 @@ class ExpectedData(BaseModel):
     def parse_dashboard_created(cls, v: str | bool | None) -> bool | None:
         """Convert string input to boolean or None (tri-state: True/False/no-expectation)."""
         return _parse_tri_state_bool(v)
+
+    @field_validator("expected_accept_dashboard", mode="before")
+    @classmethod
+    def parse_accept_dashboard(cls, v: str | bool | None) -> bool | None:
+        """TRUE or absent; anything else is a typo that would fail silently."""
+        parsed = _parse_tri_state_bool(v)
+        if v not in (None, "") and parsed is not True:
+            raise ValueError(f"accept_dashboard must be TRUE, got {v!r}")
+        return parsed
 
     @field_validator("expected_data_pull", mode="before")
     @classmethod

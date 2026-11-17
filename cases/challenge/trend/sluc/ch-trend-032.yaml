@@ -1,5 +1,5 @@
 id: ch-trend-032
-uid: 2d1d3edefdf829a4
+uid: 3246b0c9d12604b2
 status: ready
 set: trend
 group: sluc
@@ -11,6 +11,11 @@ expected:
   start_date: '2020-01-01'
   end_date: '2024-12-31'
   data_pull: 'TRUE'
+  figure: mean(emissions_factor_tCO2e_per_tonne_production) where crop_type = 'Arabica Coffee'
+    and gas_type = 'CO2e' and year = 2020 ; mean(emissions_factor_tCO2e_per_tonne_production)
+    where crop_type = 'Arabica Coffee' and gas_type = 'CO2e' and year = 2024
+  figure_claim: '#2 < #1 :: the 2024 emission factor is lower than the 2020 one || the 2024
+    emission factor is not lower than the 2020 one'
 notes:
   crop_types: 'Arabica Coffee (unscored: no evaluator surface yet)'
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -20,3 +25,16 @@ notes:
   manifest_id: m-sluc-trend-03
   lineage: generated 2026-09-01 from phase-2 manifest; sluc-trend-03a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001651 Olam GHG data; USY-001404 Mars
+  refresh_risk: Low
+  benchmark_id: bm26-189
+  benchmark_type: trend
+  use_cases: UC2;UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (Arabica CO2e factors for 2020 and 2024 from the pulled table)'

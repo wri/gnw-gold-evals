@@ -1,0 +1,32 @@
+id: ch-quant-167
+uid: ee8e29242f63d7b4
+status: ready
+set: quantification
+group: ghg-flux
+query: Are forests in Yasuní National Park a net carbon sink or source?
+expected:
+  aoi_ids: '186'
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(carbon_net_flux_Mg_CO2e) where aoi_id = ''186'''
+  figure_claim: '#1 < 0 :: the park''s forests were a net carbon sink over 2001 to 2025 ||
+    the park''s forests were a net carbon source over 2001 to 2025'
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-171); USY-001652 UNESCO GHG in WH sites
+    & biosphere reserves
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-171
+  benchmark_type: quantification
+  use_cases: UC4
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001652 UNESCO GHG in WH sites & biosphere reserves
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (sign of the net flux decides sink or source)'

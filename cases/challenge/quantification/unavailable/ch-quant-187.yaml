@@ -1,0 +1,26 @@
+id: ch-quant-187
+uid: 111f028d72a8708a
+status: ready
+set: quantification
+group: unavailable
+query: How much social forestry area in Indonesia has been deforested?
+expected:
+  text: Either uses social forestry boundaries if they are available, or says they are not;
+    does not present national figures as social forestry figures.
+notes:
+  behaviour: Say social forestry boundaries are not available
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-262); GFW Advisory Council focus groups
+    (social forestry data request)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-262
+  benchmark_type: quantification
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: GFW Advisory Council focus groups (social forestry data request)
+  refresh_risk: Low

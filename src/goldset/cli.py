@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import os
 import subprocess
 import sys
@@ -21,6 +22,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from goldset.adapter import case_to_expected
+from goldset.benchmark import load_benchmark, manifest_sha
 from goldset.buckets import row_verdict, summarize_buckets
 from goldset.eval_types import TestResult
 from goldset.ledger import (
@@ -79,6 +81,11 @@ ACTUALS_FOR_CHECK = {
     "chart_type_match": ("actual_chart_type",),
     "scope_match": ("actual_scope",),
     "forbidden_tools_absent": ("actual_forbidden_tools_called",),
+    "accepted_nudge_match": ("actual_nudge_offered",),
+    "accepted_blog_match": ("actual_blog_sources_cited",),
+    "figure_match": ("actual_figures",),
+    "figure_claim_match": ("actual_figure_claim",),
+    "answer_period_match": ("actual_answer_period",),
     "class_value_match": ("actual_class_values",),
     "answer_traceability": ("actual_traceability_claim",),
     "dashboard_created": ("actual_dashboard_created",),
@@ -88,6 +95,30 @@ ACTUALS_FOR_CHECK = {
     "pull_source_match": ("actual_pull_source",),
 }
 ACTUAL_TRIM = 300
+
+
+def resolve_case(case: Case, now) -> Case:
+    """Expand template variables in queries and expected values (run-relative
+    date windows). The run keeps the case's original uid for the ledger."""
+
+    def _resolve_expected(expected: dict[str, str]) -> dict[str, str]:
+        return {k: resolve_templates(v, now=now) for k, v in expected.items()}
+
+    if case.is_multiturn:
+        resolved_turns = tuple(
+            {**turn, "query": resolve_templates(turn["query"], now=now),
+             "expected": _resolve_expected(turn.get("expected") or {})}
+            for turn in case.turns
+        )
+        return Case(
+            id=case.id, status=case.status, group=case.group, set=case.set,
+            expected=case.expected, notes=case.notes, turns=resolved_turns,
+        )
+    return Case(
+        id=case.id, status=case.status, group=case.group, set=case.set,
+        query=resolve_templates(case.query, now=now),
+        expected=_resolve_expected(case.expected), notes=case.notes,
+    )
 
 
 def _failed_actuals(dumped: dict, checks: dict) -> dict:
@@ -135,7 +166,7 @@ def result_to_entry(result: TestResult, uid: str) -> dict:
     if result.trace_url:
         entry["trace_url"] = result.trace_url
     if result.error:
-        entry["error"] = str(result.error)[:REASON_TRIM]
+        entry["no_answer" if result.no_answer else "error"] = str(result.error)[:REASON_TRIM]
     return entry
 
 
@@ -150,14 +181,36 @@ def latency_info(latency_s: float | None, slow_threshold: float) -> dict | None:
     return {"slow": True, "threshold_s": slow_threshold}
 
 
+def _unscored(entry: dict) -> str | None:
+    """Why the harness could not score an attempt: it failed after the reply,
+    or an AI reviewer failed. None for a scored attempt, including one that
+    got no reply (``no_answer``), which counts as wrong."""
+    if entry.get("error"):
+        return entry["error"]
+    if entry.get("judge_errors"):
+        return "AI reviewer failed: " + ", ".join(entry["judge_errors"])
+    return None
+
+
 def merge_trials(entries: list[dict]) -> dict:
-    """Fold per-trial entries into one: majority verdict + per-trial detail."""
+    """Fold per-trial entries into one: per-check majority + per-trial detail
+    (the row verdict is the majority of the attempts, ``buckets.row_verdict``).
+
+    An attempt the harness could not score stays out of the per-check
+    majority, its reason kept as its trial's ``error``. An attempt that got
+    no reply keeps ``no_answer`` on its trial and counts as a failed attempt
+    (``buckets.row_verdict``). The row carries ``error`` only when no
+    attempt could be scored (AJ, 2026-10-27)."""
     if len(entries) == 1:
         return entries[0]
+    unscored = [_unscored(e) for e in entries]
+    scored = [e for e, why in zip(entries, unscored, strict=True) if why is None]
     merged = dict(entries[-1])
-    check_names = sorted({name for e in entries for name in e["checks"]})
+    for key in ("error", "judge_errors", "no_answer"):
+        merged.pop(key, None)
+    check_names = sorted({name for e in scored for name in e["checks"]})
     merged["checks"] = {
-        name: majority([e["checks"].get(name) for e in entries])
+        name: majority([e["checks"].get(name) for e in scored])
         for name in check_names
     }
     merged["trials"] = [
@@ -165,21 +218,18 @@ def merge_trials(entries: list[dict]) -> dict:
             "checks": e["checks"],
             "latency_s": e.get("latency_s"),
             **({"stream_s": e["stream_s"]} if e.get("stream_s") is not None else {}),
+            **({"no_answer": e["no_answer"]} if e.get("no_answer") else {}),
+            **({"error": why} if why else {}),
         }
-        for e in entries
+        for e, why in zip(entries, unscored, strict=True)
     ]
-    # Errors from ANY trial must survive the merge (PR-09 H3) — the base
-    # copy above only carries the final trial's metadata.
-    judge_errors = sorted({je for e in entries for je in e.get("judge_errors", [])})
-    if judge_errors:
-        merged["judge_errors"] = judge_errors
-    else:
-        merged.pop("judge_errors", None)
-    errors = list(dict.fromkeys(e["error"] for e in entries if e.get("error")))
-    if errors:
-        merged["error"] = " | ".join(errors)[:500]
-    else:
-        merged.pop("error", None)
+    # Errors from ANY trial must survive the merge (PR-09 H3): on their
+    # trials always, and on the row when they leave nothing to score.
+    if not scored:
+        merged["error"] = " | ".join(dict.fromkeys(unscored))[:500]
+        judge_errors = sorted({je for e in entries for je in e.get("judge_errors", [])})
+        if judge_errors:
+            merged["judge_errors"] = judge_errors
     return merged
 
 
@@ -194,7 +244,42 @@ def _harness_sha() -> str:
         return "unknown"
 
 
+def benchmark_meta(path: Path) -> dict:
+    """The ``benchmark`` block a run records: which manifest (by content
+    hash, errata included) chose its cases."""
+    bench = load_benchmark(path)
+    return {
+        "path": Path(path).as_posix(),
+        "version": bench.version,
+        "status": bench.status,
+        "manifest_sha": manifest_sha(path),
+        "members": len(bench.active_members),
+    }
+
+
+def select_benchmark_cases(args: argparse.Namespace) -> list[Case]:
+    """A benchmark run's cases are exactly the manifest's active members,
+    whatever their status (the integrity check owns readiness), or the ones
+    ``--id`` names. Members missing from the store are reported, never
+    silently dropped."""
+    bench = load_benchmark(Path(args.benchmark["path"]))
+    members = bench.active_members
+    if getattr(args, "id", None):
+        ids = {i.lower() for i in args.id}
+        members = tuple(m for m in members if m.id.lower() in ids)
+    wanted = {m.uid for m in members}
+    cases = [case for _path, case, uid in load_store(args.cases_dir) if uid in wanted]
+    missing = wanted - {c.uid for c in cases}
+    if missing:
+        print(f"warning: {len(missing)} benchmark member(s) not in {args.cases_dir} "
+              "(edited or deleted since sampling); run tools/check_benchmark.py",
+              flush=True)
+    return sorted(cases, key=lambda c: (not c.is_multiturn, c.id))
+
+
 def select_cases(args: argparse.Namespace) -> list[Case]:
+    if getattr(args, "benchmark", None):
+        return select_benchmark_cases(args)
     excluded = {s.strip().lower() for s in args.status_exclude.split(",") if s.strip()}
     cases = [case for _path, case, _uid in load_store(args.cases_dir)]
     cases = [c for c in cases if c.status.lower() not in excluded]
@@ -239,28 +324,11 @@ async def run_cases(
     total_cases = len(cases)
     completed_cases = 0
 
-    def _resolve_case(case: Case) -> Case:
-        """Expand template variables in queries, preserving the original uid."""
-        if case.is_multiturn:
-            resolved_turns = tuple(
-                {**turn, "query": resolve_templates(turn["query"], now=run_started)}
-                for turn in case.turns
-            )
-            return Case(
-                id=case.id, status=case.status, group=case.group,
-                expected=case.expected, notes=case.notes, turns=resolved_turns,
-            )
-        return Case(
-            id=case.id, status=case.status, group=case.group,
-            query=resolve_templates(case.query, now=run_started),
-            expected=case.expected, notes=case.notes,
-        )
-
     async def run_one(case: Case) -> dict:
         nonlocal completed_cases
         async with semaphore:
             original_uid = case.uid
-            resolved = _resolve_case(case)
+            resolved = resolve_case(case, run_started)
             trials = []
             for trial in range(1, args.trials + 1):
                 if resolved.is_multiturn:
@@ -277,7 +345,9 @@ async def run_cases(
                 else:
                     result = await runner.run_test(
                         resolved.query,
-                        case_to_expected(case),
+                        # The resolved case: its expected dates are real dates,
+                        # not {run-14d} tokens the date checks cannot parse.
+                        case_to_expected(resolved),
                         artifact_sink=lambda a, c=case, t=trial: writer(c.uid, t, a),
                     )
                     trials.append(result_to_entry(result, original_uid))
@@ -332,6 +402,8 @@ def build_run_record(args: argparse.Namespace, manifest: dict,
         "results": entries,
         "buckets": summarize_buckets(entries),
     }
+    if getattr(args, "benchmark", None):
+        record["benchmark"] = args.benchmark
     if args.note:
         return {**record, "methodology_note": args.note}
     return record
@@ -355,6 +427,9 @@ def _finalise(args: argparse.Namespace, manifest: dict, entries: list[dict],
     line = f"wrote {path} — {len(entries)} cases, {failed} with failing checks"
     if errored:
         line += f", {errored} with ERRORS (rerun before trusting)"
+    no_reply = sum(1 for e in entries for t in (e.get("trials") or [e]) if t.get("no_answer"))
+    if no_reply:
+        line += f", {no_reply} attempt(s) got no reply (counted as wrong)"
     print(line)
     return 0
 
@@ -397,6 +472,15 @@ def resume_run(args: argparse.Namespace) -> int:
         setattr(args, field, header[field])
     # Partials written before the --set selector existed have no "set" key.
     args.set = header.get("set")
+    args.benchmark = header.get("benchmark")
+    if args.benchmark:
+        path = Path(args.benchmark["path"])
+        current = manifest_sha(path) if path.exists() else None
+        if current != args.benchmark["manifest_sha"]:
+            print(f"benchmark manifest {path} has changed since the run started "
+                  f"({args.benchmark['manifest_sha']} -> {current}); "
+                  "start a fresh run instead")
+            return 1
     args.run_id = header["run_id"]
     args.resolved_url = header["resolved_url"]
 
@@ -465,8 +549,21 @@ def main() -> int:
     run.add_argument("--set", default=None,
                      help="exact match on the case's set, the hierarchy level "
                           "above group (e.g. aoi; CHALLENGE stores only)")
+    run.add_argument("--benchmark", type=Path, default=None, metavar="MANIFEST",
+                     help="run exactly a BENCHMARK manifest's active members "
+                          "(benchmarks/<version>.json); implies its source "
+                          "--cases-dir and --results-dir results/benchmark, and "
+                          "cannot be combined with --group/--set (--id and "
+                          "--missing-from narrow it to some members)")
+    run.add_argument("--missing-from", type=Path, action="append", default=None,
+                     metavar="RUN",
+                     help="with --benchmark: run only the active members this "
+                          "earlier run did not measure, e.g. cases revised since "
+                          "(combine them with tools/benchmark_page.py --base); "
+                          "repeatable: members none of the runs measured")
     run.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
-    run.add_argument("--results-dir", type=Path, default=Path("results/gold"))
+    run.add_argument("--results-dir", type=Path, default=None,
+                     help="default results/gold (results/benchmark with --benchmark)")
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")
     run.add_argument("--trial-timeout", type=float, default=900.0,
@@ -495,6 +592,40 @@ def main() -> int:
 
     if args.command == "prune-artifacts":
         return prune_artifacts(args.results_dir, args.keep_runs)
+
+    if args.benchmark:
+        if args.group or args.set:
+            print("--benchmark selects its own cases; drop --group/--set "
+                  "(--id or --missing-from narrow it to some members)")
+            return 1
+        try:
+            args.benchmark = benchmark_meta(args.benchmark)
+        except (OSError, ValueError) as exc:
+            print(f"cannot load benchmark: {exc}")
+            return 1
+        bench = load_benchmark(Path(args.benchmark["path"]))
+        args.cases_dir = Path(bench.source.get("cases_dir", "cases/challenge"))
+        if args.missing_from:
+            measured = {e.get("uid") for path in args.missing_from for e in
+                        json.loads(path.read_text(encoding="utf-8"))["results"]}
+            names = ", ".join(path.name for path in args.missing_from)
+            unmeasured = sorted(m.id for m in bench.active_members if m.uid not in measured)
+            if not unmeasured:
+                print(f"{names} measured every active member; nothing to run")
+                return 1
+            print(f"{len(unmeasured)} active member(s) not measured by {names}")
+            args.id = [*(args.id or []), *unmeasured]
+        if args.id:
+            unknown = sorted({i.lower() for i in args.id}
+                             - {m.id.lower() for m in bench.active_members})
+            if unknown:
+                print(f"not active members of {bench.version}: {unknown}")
+                return 1
+    elif args.missing_from:
+        print("--missing-from needs --benchmark")
+        return 1
+    if args.results_dir is None:
+        args.results_dir = Path("results/benchmark" if args.benchmark else "results/gold")
 
     if args.resume:
         return resume_run(args)
@@ -553,6 +684,7 @@ def main() -> int:
         "id": args.id,
         "group": args.group,
         "set": args.set,
+        "benchmark": args.benchmark,
         "note": args.note,
     })
 

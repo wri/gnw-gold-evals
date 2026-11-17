@@ -1,0 +1,33 @@
+id: ch-comp-174
+uid: 3385220543cf26bf
+status: ready
+set: comparison
+group: ghg-flux
+query: What are the net forest GHG fluxes for Peru, Colombia and Brazil, for a forest reference
+  emission level comparison?
+expected:
+  aoi_ids: PER;COL;BRA
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'PER' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'COL' ; sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'BRA'
+  figure_claim: '#3 < 0 :: Brazil''s forests are a net carbon sink over the period || Brazil''s
+    forests are a net carbon source over the period'
+notes:
+  behaviour: answer with data (3 areas)
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-226); USY-000517 Humboldt FREL analysis
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-226
+  benchmark_type: comparison
+  use_cases: UC4;UC6
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-000517 Humboldt FREL analysis
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure check added (net
+    flux per country, sign claim for Brazil)'

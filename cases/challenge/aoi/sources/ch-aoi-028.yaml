@@ -1,11 +1,10 @@
 id: ch-aoi-028
-uid: 9c5ca1052ef1c4c8
+uid: ec76924ff13d7a88
 status: ready
 set: aoi
 group: sources
 query: Show me the Sundarbans
 expected:
-  clarification: 'TRUE'
   text: Asks whether the user means the Sundarbans in Bangladesh or in India rather than silently
     picking one
 notes:
@@ -15,3 +14,16 @@ notes:
   verify_query: Sundarbans
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
+  synthetic: 'FALSE'
+  user_story_refs: USY-001538 IOJI mangroves
+  refresh_risk: Scored info-only until clarification validator is stable
+  benchmark_id: bm26-055
+  benchmark_type: scope
+  use_cases: UC1;UC5
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): clarification dropped
+    (the text already requires the ask; one judge instead of two)'

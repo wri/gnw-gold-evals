@@ -1,11 +1,10 @@
 id: ch-aoi-116
-uid: 1c5bb28fe57e595a
+uid: c5f4e693731ac237
 status: ready
 set: aoi
 group: concepts
 query: Show me the Amazon
 expected:
-  clarification: 'TRUE'
   text: Explains that the Amazon is not a selectable administrative area and asks the user
     to specify countries or states instead; does not substitute a small similarly named area
 notes:
@@ -15,3 +14,17 @@ notes:
   verify_query: Amazon
   verified: prod-api 2026-09-01
   source_tab: challenge-aoi-v1
+  synthetic: 'FALSE'
+  user_story_refs: USY-001636 Protected Planet (regional framing)
+  refresh_risk: Scored info-only until clarification validator is stable
+  benchmark_id: bm26-162
+  benchmark_type: scope
+  use_cases: UC3;UC5;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): clarification dropped
+    (the text requires the ask); whether an ask-back listing the Amazonas states counts as
+    right awaits AJ, so the text is unchanged'

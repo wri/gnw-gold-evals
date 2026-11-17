@@ -79,3 +79,16 @@ def normalize_end_date(date_str: str | None) -> str:
         return f"{date_str}-12-31"
 
     return normalize_date(date_str)
+
+
+def parse_slugs(value) -> set[str]:
+    """``;``-separated article slugs (accept_blog_sources), lower-cased."""
+    if not value:
+        return set()
+    return {item.strip().strip("/").lower() for item in str(value).split(";") if item.strip()}
+
+
+def link_slug(link: str) -> str:
+    """The last path segment of a link, without query, anchor or punctuation."""
+    path = link.split("#", 1)[0].split("?", 1)[0].rstrip(".,;:)]>\"'").rstrip("/")
+    return path.rsplit("/", 1)[-1].lower()

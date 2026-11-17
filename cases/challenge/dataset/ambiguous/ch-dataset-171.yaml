@@ -1,5 +1,5 @@
 id: ch-dataset-171
-uid: 70fbaf7e974c13f3
+uid: 801bbfbda2079741
 status: ready
 set: dataset
 group: ambiguous
@@ -7,9 +7,24 @@ query: Show me deforestation
 expected:
   dataset_id: 4;11
   forbidden_tools: pull_data;generate_insights;create_dashboard;add_to_dashboard;add_map_widget;search_blogs;search_insights;show_imagery
+  accept_nudge_offering: 4;11
 notes:
   difficulty: hard
   behaviour: select
   lineage: loss (TCL) or alerts; both defensible
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
   source_tab: challenge-dataset-v1
+  synthetic: 'FALSE'
+  user_story_refs: USY-001508 youth advocates (general phrasing)
+  refresh_risk: Low
+  benchmark_id: bm26-287
+  benchmark_type: spatial
+  use_cases: UC3;UC5;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Verified Challenge case
+  review: '2026-10-26 (AJ): a dataset-choice nudge that offers every dataset in accept_nudge_offering
+    passes (extras allowed); a correct pull still passes. 20261023T094447Z_prod: attempt 1
+    nudged with loss (4) and alerts (11); attempt 2 selected loss; attempt 3 only asked where.'
+  expectations: accept_nudge_offering added 2026-10-26 (AJ)

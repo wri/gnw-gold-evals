@@ -1,5 +1,5 @@
 id: ch-quant-082
-uid: c51f3daa0e435286
+uid: 4098c26b3bdb1353
 status: ready
 set: quantification
 group: integrated-alerts
@@ -11,9 +11,22 @@ expected:
   start_date: '2024-01-01'
   end_date: '2024-06-30'
   data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in 2024-01-01..2024-06-30
 notes:
   judge_instruction: Headline is total alert area (area_ha) for 1 Jan to 30 Jun 2024.
   eval_subtype: disturbed_area
   manifest_id: m-ialert-quant-02
   lineage: generated 2026-09-01 from phase-2 manifest; ialert-quant-02a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-000455 CI Firecast; USY-001642 national alert monitoring
+  refresh_risk: 'Medium: alert confidence can upgrade; re-verify at refresh'
+  benchmark_id: bm26-040
+  benchmark_type: quantification
+  use_cases: UC1;UC3
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added'

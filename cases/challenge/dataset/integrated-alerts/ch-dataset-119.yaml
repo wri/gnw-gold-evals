@@ -12,3 +12,13 @@ notes:
   behaviour: select
   verified: catalog zeno@e2fb83f 2026-09-25 (selection_hints, context_layers, parameters)
   source_tab: challenge-dataset-v1
+  benchmark_id: bm26-061
+  benchmark_type: spatial
+  synthetic: 'FALSE'
+  use_cases: UC1;UC5;UC6
+  engagement: First look
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: Verified Challenge case
+  user_story_refs: USY-000884 Colombia alert-system trainings
+  refresh_risk: Low

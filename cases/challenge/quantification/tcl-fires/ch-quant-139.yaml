@@ -1,5 +1,5 @@
 id: ch-quant-139
-uid: 24650753464b7689
+uid: a85a04f1fff6cfb0
 status: ready
 set: quantification
 group: tcl-fires
@@ -13,6 +13,8 @@ expected:
   end_date: '2020-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2020 ; sum(tree_cover_loss_non_fires_area_ha)
+    where tree_cover_loss_year = 2020
 notes:
   canopy: default 30, unstated in prompt; unscored
   intersections: 'fire (unscored: no evaluator surface yet)'
@@ -24,3 +26,16 @@ notes:
   manifest_id: m-fires-quant-01
   lineage: generated 2026-09-01 from phase-2 manifest; fires-quant-01a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001592 Guardian wildfires; USY-001631 Trouw
+  refresh_risk: Low
+  benchmark_id: bm26-159
+  benchmark_type: quantification
+  use_cases: UC3;UC5;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figures added (fire and
+    non-fire)'

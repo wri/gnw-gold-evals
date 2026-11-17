@@ -1,5 +1,5 @@
 id: ch-comp-053
-uid: 0c5b2651ff7d72cb
+uid: 85a1fc1659f0af77
 status: ready
 set: comparison
 group: ghg-flux
@@ -9,6 +9,11 @@ expected:
   aoi_ids: IND;MEX
   dataset_id: '6'
   data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'IND' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'MEX'
+  figure_claim: '#2 < #1 :: Mexico''s forests are the bigger net carbon sink (or the smaller
+    net source) of the two, compared with India''s || India''s forests are the bigger net
+    carbon sink (or the smaller net source) of the two, compared with Mexico''s'
 notes:
   canopy: default 30, unstated in prompt; unscored
   gas_types: 'CO2e (unscored: no evaluator surface yet)'
@@ -18,3 +23,18 @@ notes:
   manifest_id: m-flux-comp-08
   lineage: generated 2026-09-01 from phase-2 manifest; flux-comp-08a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  benchmark_id: bm26-198
+  benchmark_type: comparison
+  synthetic: 'FALSE'
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  user_story_refs: USY-000473 Economist flux; USY-001652 UNESCO GHG
+  refresh_risk: Low
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and figure_claim
+    added (direction and the asked figures are checked from the pulled table); claim reworded
+    2026-10-27 after the draft-5 run: ''lower (more sink-like) net flux'' made the AI reviewer
+    read the bigger sink as the weaker one'

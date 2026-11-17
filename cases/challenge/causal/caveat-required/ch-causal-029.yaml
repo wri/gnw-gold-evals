@@ -1,0 +1,27 @@
+id: ch-causal-029
+uid: cf4d75fb979f8a75
+status: ready
+set: causal
+group: caveat_required
+query: Is there a relationship between forest loss and Ebola outbreak sites in West Africa?
+expected:
+  text: Explains what the data could show (tree cover loss around outbreak areas), that it
+    has no outbreak data, and that an overlap would not establish a causal link; does not
+    claim a relationship the data cannot support.
+notes:
+  behaviour: Explain what the data can support; no causal claim from overlap; note outbreak
+    data is not in the catalog
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-278); USY-001194 ProPublica Ebola
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-278
+  benchmark_type: causal
+  use_cases: UC3;UC6
+  engagement: Returning user
+  aoi_type: Global / regional / biome
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001194 ProPublica Ebola
+  refresh_risk: Low
+  review: '2026-10-26 (AJ): kept as is in the why-questions review; no data requirement added.'

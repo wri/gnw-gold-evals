@@ -19,6 +19,21 @@ from goldset.runner.artifacts import build_artifact
 from goldset.runner.base import BaseTestRunner
 
 
+def got_no_answer(error: BaseException, stream_seconds: float | None) -> bool:
+    """Whether an error left the user with no reply: it came before the
+    stream finished, and Horizon stopped sending (a read timeout or the
+    wall clock), dropped the connection or failed (5xx). Failing to connect
+    and a refused request (4xx, such as a bad token) are the harness's own."""
+    if stream_seconds is not None:
+        return False
+    if isinstance(error, httpx.HTTPStatusError):
+        return error.response.status_code >= 500
+    return isinstance(
+        error,
+        (TimeoutError, httpx.ReadTimeout, httpx.ReadError, httpx.RemoteProtocolError),
+    )
+
+
 class APITestRunner(BaseTestRunner):
     """Test runner for API endpoint execution."""
 
@@ -242,7 +257,7 @@ class APITestRunner(BaseTestRunner):
                 **kwargs,
             )
 
-        except TimeoutError:
+        except TimeoutError as e:
             message = (
                 f"trial exceeded the {self.wall_clock_limit:.0f}s "
                 "wall-clock limit (stream kept the connection alive)"
@@ -256,6 +271,7 @@ class APITestRunner(BaseTestRunner):
                 expected_data,
                 message,
                 duration_seconds=time.time() - start_time,
+                no_answer=got_no_answer(e, stream_seconds),
             )
         except Exception as e:
             # str(e) can be empty (bare exceptions print as "Error: " and
@@ -271,6 +287,7 @@ class APITestRunner(BaseTestRunner):
                 expected_data,
                 error_text,
                 duration_seconds=time.time() - start_time,
+                no_answer=got_no_answer(e, stream_seconds),
             )
 
     @staticmethod

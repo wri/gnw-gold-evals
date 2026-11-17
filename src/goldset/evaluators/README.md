@@ -151,7 +151,7 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`dataset_id_match`](#dataset_id_match) | retrieval | deterministic | gates | `dataset_id` | `dataset_evaluator.py:40` |
 | [`dataset_parameter_match`](#dataset_parameter_match) | retrieval | deterministic | gates | `dataset_parameters` **and** `dataset_id` | `dataset_evaluator.py:124-129` |
 | [`context_layer_match`](#context_layer_match) | retrieval | deterministic | gates | `context_layer` **and** `dataset_id` | `dataset_evaluator.py:132-138` |
-| [`date_extraction`](#date_extraction) | retrieval | deterministic | gates | `start_date` **and** `end_date` | `data_pull_evaluator.py:63` |
+| [`date_extraction`](#date_extraction) | retrieval | deterministic | gates | `start_date` and/or `end_date` (with `date_tolerance_days`) | `data_pull_evaluator.py:63` |
 | [`date_coverage`](#date_coverage) | — (untagged) | deterministic | **info-only** | `start_date` **and** `end_date` | `data_pull_evaluator.py:188` |
 | [`data_pull_exists`](#data_pull_exists) | retrieval | deterministic | gates | derived: `answer`, or `dashboard_widgets` containing `insight` | `data_pull_evaluator.py:284` |
 | [`answered_without_data`](#answered_without_data) | retrieval | deterministic | gates | derived: same as above | `guards.py:100-105` |
@@ -177,6 +177,11 @@ the tighter deterministic one (`tools/flakiness.py:31-40`).
 | [`nudge_match`](#nudge_match) | scope | deterministic | gates | `nudge_type` and/or `nudge_options` | `nudge_evaluator.py:35` |
 | [`scope_match`](#scope_match) | scope | deterministic | gates | `scope` | `scope_checks.py:54` |
 | [`forbidden_tools_absent`](#forbidden_tools_absent) | scope | deterministic | gates | `forbidden_tools` | `tool_checks.py` |
+| [`accepted_nudge_match`](#accepted_nudge_match) | scope | deterministic | gates (nudge path only) | `accept_nudge_offering` and/or `accept_aoi_nudge_offering` | `accepted_nudge.py` |
+| [`accepted_blog_match`](#accepted_blog_match) | explanation | deterministic | gates (blog path only) | `accept_blog_sources` | `accepted_blog.py` |
+| [`figure_match`](#figure_match) | analysis | deterministic | gates | `figure` | `figures.py` |
+| [`figure_claim_match`](#figure_claim_match) | explanation | judged (no arithmetic) | gates | `figure` **and** `figure_claim` | `figures.py` |
+| [`answer_period_match`](#answer_period_match) | analysis | judged (no arithmetic) | gates (AJ, 2026-10-27) | `start_date` and/or `end_date` | `figures.py` |
 
 Two expected fields drive **no** check of their own: `aoi_source` is read only by
 `dashboard_aoi_match` (`registry.py:160`), and `dataset_name` is read by nothing
@@ -200,10 +205,18 @@ expected area-of-interest ids. Compares the *set* of `src_id`s in
 (`aoi_evaluator.py:60-69`).
 
 **Fires on** `aoi_ids`. The value splits on `;` into a **set compared by set
-equality** (`eval_types.py:229-238`) — `;` here means "all of these", the
-opposite of the `dataset_id` and `scope` convention where `;` means
-"either of these". `cases/v2/imagery/1-104.yaml`'s `notes.rewrite` records the
-consequence: a two-level either-or AOI expectation is simply unexpressable.
+equality** (`eval_types.py`, `split_aoi_ids`). `;` here means "all of these",
+the opposite of the `dataset_id` and `scope` convention where `;` means
+"either of these". Since 2026-10-24, `|` separates **alternatives**, each its
+own `;` set, and the check passes when the selection equals any one of them:
+`555697863|10906|6060` accepts any one of the Salonga national park, World
+Heritage site or KBA, and `PER.26.3|PER8623;PER8624` accepts the province, or
+both Kakataibo reserves together. `|` binds looser than `;`. Since
+2026-10-27, `/` lists one area's equivalent records inside a `;` set:
+`555697863/10906;2017/478291` (two parks, each under any of its records)
+expands to the four whole-set alternatives. Before that,
+an either-or AOI expectation could not be expressed
+(`cases/v2/imagery/1-104.yaml`'s `notes.rewrite`).
 
 **`null` vs `0.0`**: `null` only when no `aoi_ids` expectation exists. An
 expectation with **no resolved AOI is `0.0`** (`aoi_evaluator.py:52-58`, PR-04
@@ -298,7 +311,8 @@ normalised projections, so any mismatch is `0.0`.
 intersecting layer, e.g. a land-cover or driver overlay).
 
 **Fires on** `context_layer`, again **only when `dataset_id` is set**
-(`dataset_evaluator.py:69-81`).
+(`dataset_evaluator.py:69-81`). Fair alternatives are separated by `|`
+(`primary_forest | natural_forest`, draft-5 review 2026-10-27); any one passes.
 
 **`null` vs `0.0`**: `null` with no expectation or no selected dataset. There is
 one sentinel: `context_layer: no_selection` inverts the check — it passes when
@@ -321,10 +335,14 @@ and not recorded state: `agent_state["start_date"]` has been observed recording
 the requested window, the dataset's full coverage extent, and a rolling window
 ending today, for the same query. Tool arguments are the only consistent signal.
 
-**Fires on** `start_date` **and** `end_date` together
-(`data_pull_evaluator.py:108-113`). One without the other is `null`.
+**Fires on** `start_date`, `end_date` or both; a bound the case leaves out is not
+checked. **Passes when a dated call's window contains the expected period**
+(AJ, 2026-10-27): pulling 2001 to 2025 for a 2006 to 2017 question and slicing
+in code is fine. Whether the answer then uses exactly the asked period is a
+separate question. `date_tolerance_days` lets a window fall short of a bound by
+up to N days (rolling windows).
 
-**`null` vs `0.0`**: `null` when either expected bound is missing or unparseable
+**`null` vs `0.0`**: `null` when no expected bound is given, or one is unparseable
 by `normalize_start_date`/`normalize_end_date` (`utils.py:46-81`, which accept
 `M/D/YYYY`, `YYYY-MM-DD`, and bare `YYYY` — a bare year expands to Jan 1 for a
 start and Dec 31 for an end). `0.0` when dates were expected and the agent made
@@ -556,6 +574,8 @@ axis, the field, and the padding ratio.
 - Deliberate overlap with `chart_well_formed`: a broken *spec* is an Output
   failure, a mis-joined *dataset* under a plausible spec is an Analysis failure
   (`output_checks.py:5-8`). The two reason strings read differently on purpose.
+- Tables are skipped: the FE's table widget renders only the records and the
+  title, so a table's axis fields are never drawn (AJ, 2026-10-28).
 - **The most stable check in the suite**: 0.99, ±0.01 over 94 rows in
   `20260803T201245Z`, which is why
   `results/gold/recommendations/20260803T201245Z.md` item 4 treats its verdict on
@@ -829,11 +849,15 @@ decimals is a `null`, never a guess. 0.90 ±0.05 over 86 rows in
 **Measures** whether an answer that was supposed to come from a data pull instead
 cites the web — the second half of the 1-030 signal (`guards.py:107-117`).
 
-**Fires on** the derived data-pull expectation **and** a non-empty answer.
+**Fires on** the derived data-pull expectation **and** a non-empty answer, **only
+when the attempt pulled no data** (AJ, 2026-10-27): a cited article beside pulled
+figures misleads no one, and the figure checks speak for the figures.
 
-**`null` vs `0.0`**: `null` when no pull was expected or the answer is empty.
+**`null` vs `0.0`**: `null` when no pull was expected, the answer is empty or data
+was pulled (links are still recorded).
 `0.0` when the answer contains **any** link (`https?://…` or `www.…`) outside the
-product's own domains (`guards.py:37-38`, `109-115`).
+product's own domains (`guards.py:37-38`, `109-115`), other than a post the case
+lists in `accept_blog_sources` (see [`accepted_blog_match`](#accepted_blog_match)).
 
 **Reason**: none; `actuals.web_fallback` = `actual_web_links`, up to five
 deduplicated sorted links.
@@ -900,7 +924,10 @@ whatever the analysis computed (`output_checks.py:20-60`).
 
 **`null` vs `0.0`**: `null` only when there are no charts (`:27-28`). `0.0` for a
 non-object chart entry, empty/absent record data, or an axis naming a field that
-appears in no record.
+appears in no record. A table's axes are not checked, since the FE's table
+widget renders only the records and the title (AJ, 2026-10-28: `ch-quant-157`
+failed on a table whose unused `xAxis` named a missing field); an empty table
+still fails.
 
 **Reason**: `reasons.chart_well_formed`, semicolon-joined per problem, e.g.
 `"chart 1 (pie): empty data; chart 1 (pie): xAxis references field 'driver'
@@ -947,7 +974,11 @@ row, on an unsolicited dashboard.**
 `False/True` → 0.0 (guardrail); **`None/True` → 0.0** (unsolicited creation is a
 guardrail violation on a row that never mentioned dashboards); `None/False` →
 `null`. That fifth row is the one to remember: this check can fail a case that
-set no dashboard expectation at all.
+set no dashboard expectation at all. A case where a dashboard is a fair answer
+but not a required one sets `accept_dashboard: TRUE`, and an unsolicited
+dashboard is then not scored (AJ, 2026-10-28, `ch-mon-047`: asked for a
+printable map, Horizon made a dashboard and said so). Any value but `TRUE`
+raises.
 
 **Reason**: none; `actuals.dashboard_created` = the boolean.
 
@@ -1214,6 +1245,85 @@ The full call list is in the run artifact's `tool_calls`.
 **Multi-turn caveat**: thread state accumulates messages, so a later turn sees
 earlier turns' calls. Use it on single-turn rows or turn 1 only.
 
+## `accepted_nudge_match`
+
+**Measures** whether a `dataset_choice` nudge offered every dataset the case
+lists in `accept_nudge_offering`, or an `aoi_choice` nudge every area it lists
+in `accept_aoi_nudge_offering` (`accepted_nudge.py`). Extra options are
+allowed. Fair alternative offers are separated by `|` (`4;8 | 9`): covering any
+one of them in full passes (draft-5 review, 2026-10-27). Items are matched by id from the nudge's `data` entries
+(`dataset_id`, or `src_id` with the GADM suffix dropped, as `aoi_id_match`
+does), not by label: labels overlap ("Tree cover loss" is a substring of
+"Tree cover loss by dominant driver"), which is why `nudge_match` cannot
+express the rule.
+
+**Why it exists**: AJ decided on 2026-10-26, reviewing the BENCHMARK draft-4
+failures, that a clarifying dataset choice is a right answer when it offers the
+right datasets, and later that asking which Pará is meant is fine as long as
+Pará, Brazil is offered (ch-quant-188). The case can pass on either of two
+paths, and each attempt is judged on the one it took:
+
+- **Nudge path**: the attempt ended in a nudge of a kind the case accepts and
+  pulled no data. This check scores the offer, and the evaluators the
+  registry marks `presumes_pull` are skipped and recorded `null`
+  (`PULL_PATH_CHECKS` in `buckets.py`: the dataset, date, pull, answer, guard,
+  analysis, traceability and output checks). At a `dataset_choice` nudge
+  `aoi_id_match` still scores, so a dataset choice for the wrong place fails;
+  at an `aoi_choice` nudge no area is chosen yet, so the evaluator marked
+  `presumes_area` (`aoi_id_match`) is skipped too.
+- **Pull path**: anything else. This check is `null` and every other check
+  scores as before; a prose ask-back with no nudge still fails
+  `data_pull_exists`.
+
+**Row verdict**: attempts on different paths leave each other's checks `null`,
+so a per-check majority would let a check measured on one attempt decide the
+row. Such rows were the first judged by the majority of their attempt
+verdicts; since 2026-10-28 every row is (`buckets.row_verdict`, ties fail;
+mirrored in both report templates). Reconciliation owes a row only the checks of the path
+its merged checks show.
+
+**Fires on** `accept_nudge_offering` (`;`-separated dataset ids) and
+`accept_aoi_nudge_offering` (`;`-separated area ids); every listed id must be
+offered. It is opt-in, so no GOLD row fires it.
+
+**`null` vs `0.0`**: `null` when the case accepts no nudge of the kind the
+attempt stopped at, on the pull path, and when an accepted nudge carries no
+ids (the offer is unreadable, so the check abstains; the pull checks stay
+`null` on that attempt). `0.0` when any listed id is missing from the offer.
+
+**Reason**: none; `actuals.accepted_nudge_match` = the nudge kind and the ids
+offered.
+
+## `accepted_blog_match`
+
+**Measures** whether an answer given from `search_blogs` links at least one of
+the Insights posts the case lists in `accept_blog_sources` (`accepted_blog.py`).
+Posts are listed by slug, the last segment of their URL, so the WRI and LCL
+copies of one post match alike.
+
+**Why it exists**: AJ decided on 2026-10-26, reviewing the 19 BENCHMARK "why"
+questions answered from blogs, that three are fairly answered by named posts
+(Bolivia's 2024 fires, Brazil's 2016 fires, burning in Riau) and the rest must
+be answered from data. Like the accepted nudge, it is a second path:
+
+- **Blog path**: the attempt called `search_blogs` and pulled no data. This
+  check scores the citation; the `presumes_pull` evaluators and `aoi_id_match`
+  are skipped and recorded `null`, since a blog answer needs neither.
+- **Pull path**: anything else. This check is `null`, and `web_fallback` does
+  not count links to the listed posts.
+
+Rows with an attempt on either alternative path are judged by attempt
+majority (`buckets.row_verdict`), as every row is since 2026-10-28.
+
+**Fires on** `accept_blog_sources`. Opt-in, so no GOLD row fires it.
+
+**`null` vs `0.0`**: `null` when no posts are listed and on the pull path.
+`0.0` on the blog path when the answer links none of the listed posts,
+including when it links nothing: an unattributed blog answer cannot be told
+apart from an invented one.
+
+**Reason**: none; `actuals.accepted_blog_match` = the slugs the answer linked.
+
 ---
 
 # Info-only checks, and what re-admission requires
@@ -1253,6 +1363,84 @@ knowing before you read a bucket table:
   `tools/coverage_doc.py:76` strips info-only checks before reporting coverage —
   so the reconciliation line and the coverage doc are counting slightly
   different populations.
+
+## `figure_match`
+
+**Measures** whether the reply states the asked figure, recomputed from the
+data the agent itself pulled (`figures.py`). AJ's rule for BENCHMARK draft-5
+(2026-10-27): whether the underlying data is right is out of scope; the check
+scores whether the agent did the right maths on its own table and reported
+it. The case names the figure by formula (`figure`), never by value, so it
+survives data releases.
+
+**The formula.** `figure` holds figures separated by `;`, each with fair
+alternatives separated by `|`; `ref:` marks a figure only `figure_claim` uses.
+A figure is `AGG(EXPR) [by COLUMN] [where COND [and COND]...]`: AGG is `sum`,
+`mean`, `max`, `min` or `count`; EXPR a column or columns joined with `+`;
+`by` sums EXPR per value of COLUMN before AGG runs across the groups (so
+`mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in
+2018..2022` is the average annual loss); COND is `=`, `!=`, `in A..B` or
+`in (V1, V2)`. `ratio`, `change` (second minus first) and `pct_change` combine
+two figures. Run tokens work in values. `tools/check.py` rejects a formula
+that does not parse.
+
+**The data.** Agent state carries no rows (`statistics[*].data` is empty), so
+each statistics entry's `source_url` is fetched (cached per URL). A figure is
+computed on each pulled table and on their de-duplicated union, and any
+computable candidate counts: one formula then covers a single pull and a
+comparison split over two pulls, without summing two datasets together.
+
+**The reply.** Every number in the final answer is read with the word after it
+(`thousand`, `million`, `Mha`, `Mt`, `km²` and so on); a four-digit year with
+no unit is skipped. A number matches within 2%, or within the rounding it
+states ("1.8 million" covers 1.75 to 1.85 million); shares match as a
+fraction or a percentage; signs are ignored (`figure_claim` speaks for them).
+
+**`null` vs `0.0`**: `null` with no `figure`, no readable pulled table, or no
+asked figure computable from it (a column the table lacks). `0.0` when a
+computable asked figure is not in the reply; `1.0` when all are.
+
+**Reason**: per figure, the expected value and the reply's matching number, or
+the closest one and its difference (`actual_figures`).
+
+## `figure_claim_match`
+
+**Measures** whether the reply states the conclusion the pulled data supports:
+a direction, a record or a sign. `figure_claim` is `CONDITION :: sentence if
+true || sentence if false`, CONDITION comparing figures by position
+(`#1 > #2`, `#1 < 0`). The harness computes the figures on the union of the
+pulled tables, picks the true sentence, and an AI reviewer checks that the
+reply states it; the reviewer never compares numbers.
+
+**`null` vs `0.0`**: `null` with no claim, no readable pull, or a compared
+figure that is not computable. `0.0` when the reply states the opposite,
+hedges or does not address it.
+
+## `answer_period_match`
+
+**Measures** whether the figures the reply gives as its answer cover exactly
+the asked period. AJ's rule (2026-10-27): pulling a wider window is fine
+(`date_extraction` passes it), but the answer must use the asked period. An
+AI reviewer reads which period the reply's figures cover; it does no
+arithmetic. Labelled context for other periods passes, and so does a reply
+that says the data only covers part of the period, or a fixed period, and
+labels its figures accordingly.
+
+**Fires on** `start_date`, `end_date` or both (a missing bound reads as "to
+the latest data" or "up to"), with `date_tolerance_days` passed on as "give or
+take N days". It counts toward the score from its first run, by AJ's choice
+(2026-10-27), although judged checks normally start info-only.
+
+**`accept_fixed_period`** (`YYYY-YYYY`, opt-in): the data only come as that one
+period, so a reply that gives its figures for it and says so passes, even in a
+methodology note (AJ, 2026-10-28, `ch-causal-015`, whose drivers data cover
+2001 to 2025 as a whole). The general rule above did not move Haiku on that
+case, and rewording it for every case made three unrelated draft-5 verdicts
+stricter, so the rule is spelled out in the prompt only when a case sets the
+field; without it the prompt is unchanged. Any other format raises.
+
+**`null` vs `0.0`**: `null` with no dates or no reply, and when the reviewer
+finds no figures to judge (a decline or a question).
 
 ## Adding or changing a check
 

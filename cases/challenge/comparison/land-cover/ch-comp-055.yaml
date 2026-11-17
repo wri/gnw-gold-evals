@@ -1,5 +1,5 @@
 id: ch-comp-055
-uid: 10e0ce11fc05bc4c
+uid: d2051fa985ecb061
 status: ready
 set: comparison
 group: land-cover
@@ -7,8 +7,13 @@ query: Between Brazil and the Democratic Republic of the Congo, whose land cover
   a larger area of tree cover?
 expected:
   aoi_ids: BRA;COD
-  dataset_id: '1'
+  dataset_id: 1;7
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and land_cover_class = 'Tree cover' | sum(area_ha)
+    where aoi_id = 'BRA' ; sum(area_ha) where aoi_id = 'COD' and land_cover_class = 'Tree
+    cover' | sum(area_ha) where aoi_id = 'COD'
+  figure_claim: '#1 > #2 :: Brazil has the larger area of tree cover than the DRC || The DRC
+    has the larger area of tree cover than Brazil'
 notes:
   land_cover_classes: 'tree cover (unscored: no evaluator surface yet)'
   judge_instruction: Compare the 2024 tree cover class area_ha between Brazil and the Democratic
@@ -19,3 +24,17 @@ notes:
   manifest_id: m-lc-comp-01
   lineage: generated 2026-09-01 from phase-2 manifest; lc-comp-01b
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001250 Antioquia land-use planning (analogue)
+  refresh_risk: Low
+  benchmark_id: bm26-229
+  benchmark_type: comparison
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): dataset_id 1;7 (a labelled
+    2000 tree cover snapshot is a fair reading of the question); figure with both readings
+    and figure_claim added'

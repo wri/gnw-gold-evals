@@ -6,6 +6,7 @@ from types import SimpleNamespace
 
 import pytest
 
+from goldset.eval_types import ExpectedData
 from goldset.evaluators import answer_evaluator, clarification_evaluator
 from goldset.evaluators.answer_evaluator import (
     _serialize_charts_json,
@@ -13,7 +14,10 @@ from goldset.evaluators.answer_evaluator import (
 )
 from goldset.evaluators.aoi_evaluator import evaluate_aoi_selection
 from goldset.evaluators.clarification_evaluator import evaluate_clarification
-from goldset.evaluators.dashboard_evaluator import evaluate_dashboard_widgets
+from goldset.evaluators.dashboard_evaluator import (
+    evaluate_dashboard_created,
+    evaluate_dashboard_widgets,
+)
 from goldset.evaluators.llm_judges import JudgeError
 
 JUDGES_SOURCE = (
@@ -25,7 +29,7 @@ JUDGES_SOURCE = (
 # --- F1: expected AOIs + none resolved -> 0.0, not silence
 
 def test_f1_missing_aoi_fails_when_expected():
-    result = evaluate_aoi_selection({}, ["BRA.25_1"], "query")
+    result = evaluate_aoi_selection({}, [["BRA.25_1"]], "query")
     assert result["aoi_id_match_score"] == 0.0
 
 
@@ -65,6 +69,19 @@ def test_f3_empty_dashboard_fails_validity_when_widgets_were_expected():
     # no dashboard at all is still "nothing to check"
     assert evaluate_dashboard_widgets(None, None)[
         "dashboard_widgets_valid_score"] is None
+
+
+def test_accept_dashboard_lets_an_unsolicited_dashboard_abstain():
+    # ch-mon-047 (draft-5): a printable map asked for, a dashboard made instead
+    made = {"dashboard_id": "9a78113e"}
+    assert evaluate_dashboard_created(made, None)["dashboard_created_score"] == 0.0
+    assert evaluate_dashboard_created(made, None, True)["dashboard_created_score"] is None
+    assert evaluate_dashboard_created({}, None, True)["dashboard_created_score"] is None
+    # an explicit expectation still wins
+    assert evaluate_dashboard_created(made, False, True)["dashboard_created_score"] == 0.0
+    assert ExpectedData(expected_accept_dashboard="TRUE").expected_accept_dashboard is True
+    with pytest.raises(ValueError, match="accept_dashboard"):
+        ExpectedData(expected_accept_dashboard="ANY")
 
 
 # --- F4: judge outage -> None + judge_errors, never a verdict

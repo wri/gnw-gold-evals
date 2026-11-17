@@ -1304,6 +1304,1511 @@
           }
         }
       }
+    ],
+    "benchmark": [
+      {
+        "run_id": "20260929T132417Z_prod",
+        "path": "results/benchmark/runs/20260929T132417Z_prod.json",
+        "started": "2026-09-29T13:24:17Z",
+        "environment": "prod",
+        "build": "prod 2026-09-29",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "a713cbf"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "First BENCHMARK 2026-draft canonical run",
+        "caseset": "challenge",
+        "caseset_version": "72fafbb2ec30afd2",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 384,
+              "evaluated": 406
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 97
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 55,
+              "evaluated": 57
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 57
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 104,
+              "evaluated": 116
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 63
+          },
+          "output": {
+            "dedicated": {
+              "passed": 57,
+              "evaluated": 57
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 57
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 22,
+              "evaluated": 22
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 22
+          },
+          "rows_total": 100,
+          "verdicts": {
+            "pass": 86,
+            "fail": 14,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft.json",
+          "version": "2026-draft",
+          "status": "draft",
+          "manifest_sha": "e9d9e8ef939fa3df",
+          "members": 100
+        },
+        "canonical": true,
+        "canonical_reasons": []
+      },
+      {
+        "run_id": "20261001T144123Z_prod",
+        "path": "results/benchmark/runs/20261001T144123Z_prod.json",
+        "started": "2026-10-01T14:41:23Z",
+        "environment": "prod",
+        "build": "prod 2026-10-01",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "ad238d9"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "First run of curated BENCHMARK 2026-draft-2 (v2026 proposed set); 63 drafted expectations unreviewed",
+        "caseset": "challenge",
+        "caseset_version": "124f96526065f24a",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 860,
+              "evaluated": 946
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 187
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 140,
+              "evaluated": 142
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 142
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 278,
+              "evaluated": 331
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 178
+          },
+          "output": {
+            "dedicated": {
+              "passed": 142,
+              "evaluated": 142
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 142
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 16,
+              "evaluated": 20
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 20
+          },
+          "rows_total": 199,
+          "verdicts": {
+            "pass": 156,
+            "fail": 42,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-2.json",
+          "version": "2026-draft-2",
+          "status": "draft",
+          "manifest_sha": "7e98608cbcb9d609",
+          "members": 199
+        },
+        "canonical": true,
+        "canonical_reasons": []
+      },
+      {
+        "run_id": "20261023T094447Z_prod",
+        "path": "results/benchmark/runs/20261023T094447Z_prod.json",
+        "started": "2026-10-23T09:44:47Z",
+        "environment": "prod",
+        "build": "prod 2026-10-23",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "5d081a8"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "First run of curated BENCHMARK 2026-draft-3 (v2026 BEF sheet, 2026-10-22); 139 drafted expectations unreviewed; 30 fixture rows excluded",
+        "caseset": "challenge",
+        "caseset_version": "a25ea96aa7dc5330",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 826,
+              "evaluated": 1015
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 201
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 160,
+              "evaluated": 162
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 162
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 368,
+              "evaluated": 459
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 256
+          },
+          "output": {
+            "dedicated": {
+              "passed": 163,
+              "evaluated": 163
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 162
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 14,
+              "evaluated": 15
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 16
+          },
+          "rows_total": 269,
+          "verdicts": {
+            "pass": 170,
+            "fail": 99,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-3.json",
+          "version": "2026-draft-3",
+          "status": "draft",
+          "manifest_sha": "c21d6c4d8f7dad87",
+          "members": 269
+        },
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261023T094447Z_prod.json"
+      },
+      {
+        "run_id": "20261024T133644Z_prod",
+        "path": "results/benchmark/runs/20261024T133644Z_prod.json",
+        "started": "2026-10-24T13:36:44Z",
+        "environment": "prod",
+        "build": "prod 2026-10-24 draft-4 rerun of revised members",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "321c9c8"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 26 members of 2026-draft-4 revised on 2026-10-24; combined with 20261023T094447Z_prod for every other member. Check semantics changed: aoi_ids accepts | alternatives (any-of).",
+        "caseset": "challenge",
+        "caseset_version": "7addf595495181bb",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 55,
+              "evaluated": 68
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 15
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 11,
+              "evaluated": 11
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 11
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 33,
+              "evaluated": 45
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 26
+          },
+          "output": {
+            "dedicated": {
+              "passed": 11,
+              "evaluated": 11
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 11
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 26,
+          "verdicts": {
+            "pass": 18,
+            "fail": 8,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "4fa85615b7ef7aa0",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "247 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261024T140135Z_prod",
+        "path": "results/benchmark/runs/20261024T140135Z_prod.json",
+        "started": "2026-10-24T14:01:35Z",
+        "environment": "prod",
+        "build": "prod 2026-10-24 draft-4 rerun of 2 reworded members",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "3cf8b04"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 2,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns ch-quant-194 and ch-port-011, reworded after 20261024T133644Z_prod; combined with 20261023T094447Z_prod and 20261024T133644Z_prod for every other member.",
+        "caseset": "challenge",
+        "caseset_version": "b0df4721464461ce",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 2
+          },
+          "output": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 2,
+          "verdicts": {
+            "pass": 2,
+            "fail": 0,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "9506f761de8a1a09",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "267 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T152452Z_prod",
+        "path": "results/benchmark/runs/20261026T152452Z_prod.json",
+        "started": "2026-10-26T15:24:52Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of 17 nudge-accepting members",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "47d59b0"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 17 members of 2026-draft-4 that gained accept_nudge_offering or accept_aoi_nudge_offering on 2026-10-26; combined with 20261023T094447Z_prod, 20261024T133644Z_prod and 20261024T140135Z_prod for every other member. Check semantics changed: accepted_nudge_match scores attempts that stop at an accepted nudge (pull-path checks null there), and rows with such attempts are judged by attempt majority.",
+        "caseset": "challenge",
+        "caseset_version": "b19649d7fbf3b71a",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 40,
+              "evaluated": 44
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 15
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 12,
+              "evaluated": 15
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 7
+          },
+          "output": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 12,
+              "evaluated": 18
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 17
+          },
+          "rows_total": 17,
+          "verdicts": {
+            "pass": 12,
+            "fail": 5,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "843d6f6207e9805a",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "252 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T161639Z_prod",
+        "path": "results/benchmark/runs/20261026T161639Z_prod.json",
+        "started": "2026-10-26T16:16:39Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of 9 why-question members",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "fdd9deb"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 9 members of 2026-draft-4 revised in AJ's why-questions review on 2026-10-26: three accept a blog answer (accept_blog_sources), six now require data. Combined with 20261023T094447Z_prod, 20261024T133644Z_prod, 20261024T140135Z_prod and 20261026T152452Z_prod for every other member. Check semantics changed: accepted_blog_match scores attempts that answer from search_blogs without a pull (pull-path checks and aoi_id_match null there), web_fallback ignores accepted posts, and rows with an attempt on an alternative path are judged by attempt majority.",
+        "caseset": "challenge",
+        "caseset_version": "e465ae337a5fb9a5",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 34
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 9
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 19
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 9
+          },
+          "output": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 9,
+          "verdicts": {
+            "pass": 3,
+            "fail": 6,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "a3d936fd9c03726b",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "264 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T170459Z_prod",
+        "path": "results/benchmark/runs/20261026T170459Z_prod.json",
+        "started": "2026-10-26T17:04:59Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of 5 why-question members",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "6540a83"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 5 members of 2026-draft-4 revised in AJ's why-questions review on 2026-10-26: ch-causal-002, -003 and -022 accept a blog answer (accept_blog_sources); ch-trend-081 and ch-quant-173 now require data. Combined with 20261023T094447Z_prod, 20261024T133644Z_prod, 20261024T140135Z_prod and 20261026T152452Z_prod for every other member. Supersedes 20261026T161639Z_prod, which measured nine revisions before four were reverted in review. Check semantics changed: accepted_blog_match scores attempts that answer from search_blogs without a pull (pull-path checks and aoi_id_match null there), and web_fallback ignores accepted posts.",
+        "caseset": "challenge",
+        "caseset_version": "c936492a6b5e56bd",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 13
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 3
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 9
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "output": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 5,
+          "verdicts": {
+            "pass": 3,
+            "fail": 2,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "875d68283fbcd215",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "264 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T182653Z_prod",
+        "path": "results/benchmark/runs/20261026T182653Z_prod.json",
+        "started": "2026-10-26T18:26:53Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of 8 Ghana questions moved to Cote d'Ivoire",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "d0c88d0"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns the 8 members of 2026-draft-4 moved from Ghana to similar areas in Cote d'Ivoire on 2026-10-26 while PZB-1408 (Ghana sub-national GADM ids rejected by the analytics API) is open. Combined with 20261023T094447Z_prod, 20261024T133644Z_prod, 20261024T140135Z_prod, 20261026T152452Z_prod and 20261026T170459Z_prod for every other member. No check semantics changed.",
+        "caseset": "challenge",
+        "caseset_version": "fcc36e990adc633a",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 31,
+              "evaluated": 35
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 7
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 15,
+              "evaluated": 18
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 7
+          },
+          "output": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 8,
+          "verdicts": {
+            "pass": 5,
+            "fail": 2,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "43d7d6208e0bc8f6",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "261 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261026T183522Z_prod",
+        "path": "results/benchmark/runs/20261026T183522Z_prod.json",
+        "started": "2026-10-26T18:35:22Z",
+        "environment": "prod",
+        "build": "prod 2026-10-26 draft-4 rerun of ch-mon-045 after a ReadTimeout",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "d0c88d0"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 3,
+        "trial_timeout": 900.0,
+        "methodology_note": "Reruns ch-mon-045, which errored (ReadTimeout) in 20261026T182653Z_prod; combined with that run and its bases for every other member. No check semantics changed.",
+        "caseset": "challenge",
+        "caseset_version": "fcc36e990adc633a",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "output": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 1,
+          "verdicts": {
+            "pass": 0,
+            "fail": 0,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-4.json",
+          "version": "2026-draft-4",
+          "status": "draft",
+          "manifest_sha": "43d7d6208e0bc8f6",
+          "members": 269
+        },
+        "composed_with": [
+          "20261023T094447Z_prod",
+          "20261024T133644Z_prod",
+          "20261024T140135Z_prod",
+          "20261026T152452Z_prod",
+          "20261026T170459Z_prod",
+          "20261026T182653Z_prod"
+        ],
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261026T183522Z_prod.json"
+      },
+      {
+        "run_id": "20261027T094141Z_prod",
+        "path": "results/benchmark/runs/20261027T094141Z_prod.json",
+        "started": "2026-10-27T09:41:41Z",
+        "environment": "prod",
+        "build": "draft-5 2026-10-27 (benchmark-draft-5 98345be)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "98345be"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "draft-5: new checks figure_match, figure_claim_match and answer_period_match; date_extraction passes a containing window, reads the pulled window when no call carries dates and now scores rolling windows (resolved dates); web_fallback fires only without a pull; revised expectations from the draft-5 review (cases/challenge/README.md, 2026-10-27)",
+        "caseset": "challenge",
+        "caseset_version": "003ec8939c01da39",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 932,
+              "evaluated": 1040
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 206
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 381,
+              "evaluated": 396
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 163
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 285,
+              "evaluated": 381
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 242
+          },
+          "output": {
+            "dedicated": {
+              "passed": 160,
+              "evaluated": 161
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 160
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 25,
+              "evaluated": 28
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 1
+            },
+            "rows_covered": 28
+          },
+          "rows_total": 269,
+          "verdicts": {
+            "pass": 192,
+            "fail": 76,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "7b07ab276a917165",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "14 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261027T103249Z_prod",
+        "path": "results/benchmark/runs/20261027T103249Z_prod.json",
+        "started": "2026-10-27T10:32:49Z",
+        "environment": "prod",
+        "build": "draft-5 rerun after judge fixes (ea4f431)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "ea4f431"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "figure_claim_match fails only a contradiction; answer_period_match judges the stated period; zero figures stated in words match; three net-flux claims reworded",
+        "caseset": "challenge",
+        "caseset_version": "b0b5a1738ab7af95",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 171,
+              "evaluated": 177
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 30
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 69,
+              "evaluated": 77
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 31
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 40,
+              "evaluated": 56
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 31
+          },
+          "output": {
+            "dedicated": {
+              "passed": 30,
+              "evaluated": 30
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 30
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "rows_total": 32,
+          "verdicts": {
+            "pass": 19,
+            "fail": 12,
+            "error": 1,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "351ecd19ae5bbe53",
+          "members": 269
+        },
+        "composed_with": [
+          "20261027T094141Z_prod"
+        ],
+        "canonical": false,
+        "canonical_reasons": [
+          "11 active member(s) not in the run and its base"
+        ],
+        "page": "results/benchmark/pages/20261027T103249Z_prod.json"
+      },
+      {
+        "run_id": "20261028T121113Z_prod",
+        "path": "results/benchmark/runs/20261028T121113Z_prod.json",
+        "started": "2026-10-28T12:11:13Z",
+        "environment": "prod",
+        "build": "draft-5 rerun after AJ's 28 Oct calls (8dc02de)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "8dc02de"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 6,
+        "trial_timeout": 900.0,
+        "methodology_note": "Check semantics changed since 20261027T103249Z_prod: chart_well_formed and chart_integrity skip table charts (c1c6c84); new opt-in accept_fixed_period for answer_period_match (b9e1ca3); five members revised (8dc02de). ch-quant-157 is unchanged and rerun for the table rule.",
+        "caseset": "challenge",
+        "caseset_version": "45a3459ea5da3b8e",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 27,
+              "evaluated": 27
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 9,
+              "evaluated": 9
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 10
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "output": {
+            "dedicated": {
+              "passed": 5,
+              "evaluated": 5
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "rows_total": 6,
+          "verdicts": {
+            "pass": 5,
+            "fail": 1,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "758fb04faebc72bc",
+          "members": 269
+        },
+        "composed_with": [
+          "20261027T094141Z_prod",
+          "20261027T103249Z_prod"
+        ],
+        "canonical": false,
+        "canonical_reasons": [
+          "6 active member(s) not in the run and its bases"
+        ],
+        "page": "results/benchmark/pages/20261028T121113Z_prod.json"
+      },
+      {
+        "run_id": "20261028T123356Z_prod",
+        "path": "results/benchmark/runs/20261028T123356Z_prod.json",
+        "started": "2026-10-28T12:33:56Z",
+        "environment": "prod",
+        "build": "draft-5 rerun after AJ's second round of 28 Oct calls (4529a59)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "4529a59"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 6,
+        "trial_timeout": 900.0,
+        "methodology_note": "Check semantics changed since 20261028T121113Z_prod: new opt-in accept_dashboard for dashboard_created (856a344); six members revised (4529a59): ch-mon-057 asks about June 2026, two trend claims reworded, ch-mon-047 accepts a dashboard, ch-causal-019 and ch-causal-022 accept a dataset choice.",
+        "caseset": "challenge",
+        "caseset_version": "ca87ae3624fe89f5",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 20,
+              "evaluated": 20
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 8
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 9,
+              "evaluated": 11
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 6
+          },
+          "output": {
+            "dedicated": {
+              "passed": 6,
+              "evaluated": 6
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 5
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "rows_total": 6,
+          "verdicts": {
+            "pass": 4,
+            "fail": 2,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "74fd29622795c749",
+          "members": 269
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "264 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261028T124051Z_prod",
+        "path": "results/benchmark/runs/20261028T124051Z_prod.json",
+        "started": "2026-10-28T12:40:51Z",
+        "environment": "prod",
+        "build": "draft-5 rerun of ch-mon-047 after its second rewording (d9bd180)",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "d9bd180"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 3,
+        "trial_timeout": 900.0,
+        "methodology_note": "ch-mon-047 text reworded a second time (printable dashboard named as a pass); accept_dashboard (856a344) as in 20261028T123356Z_prod.",
+        "caseset": "challenge",
+        "caseset_version": "d1d6c95aaad4cdce",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 1,
+              "evaluated": 1
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "output": {
+            "dedicated": {
+              "passed": 2,
+              "evaluated": 2
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 1
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 0
+          },
+          "rows_total": 1,
+          "verdicts": {
+            "pass": 1,
+            "fail": 0,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-draft-5.json",
+          "version": "2026-draft-5",
+          "status": "draft",
+          "manifest_sha": "7f656e5de2671788",
+          "members": 269
+        },
+        "composed_with": [
+          "20261027T094141Z_prod",
+          "20261027T103249Z_prod",
+          "20261028T121113Z_prod",
+          "20261028T123356Z_prod"
+        ],
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261028T124051Z_prod.json"
+      }
     ]
+  },
+  "benchmarks": {
+    "2026-draft-2": {
+      "path": "benchmarks/2026-draft-2.json",
+      "status": "retired",
+      "frozen": null,
+      "members": 199,
+      "voided": 0,
+      "runs": [
+        "20261001T144123Z_prod"
+      ],
+      "canonical_runs": [
+        "20261001T144123Z_prod"
+      ]
+    },
+    "2026-draft-3": {
+      "path": "benchmarks/2026-draft-3.json",
+      "status": "retired",
+      "frozen": null,
+      "members": 269,
+      "voided": 0,
+      "runs": [
+        "20261023T094447Z_prod"
+      ],
+      "canonical_runs": [
+        "20261023T094447Z_prod"
+      ]
+    },
+    "2026-draft-4": {
+      "path": "benchmarks/2026-draft-4.json",
+      "status": "retired",
+      "frozen": null,
+      "members": 269,
+      "voided": 0,
+      "runs": [
+        "20261024T133644Z_prod",
+        "20261024T140135Z_prod",
+        "20261026T152452Z_prod",
+        "20261026T161639Z_prod",
+        "20261026T170459Z_prod",
+        "20261026T182653Z_prod",
+        "20261026T183522Z_prod"
+      ],
+      "canonical_runs": [
+        "20261026T183522Z_prod"
+      ]
+    },
+    "2026-draft-5": {
+      "path": "benchmarks/2026-draft-5.json",
+      "status": "draft",
+      "frozen": null,
+      "members": 269,
+      "voided": 0,
+      "runs": [
+        "20261027T094141Z_prod",
+        "20261027T103249Z_prod",
+        "20261028T121113Z_prod",
+        "20261028T123356Z_prod",
+        "20261028T124051Z_prod"
+      ],
+      "canonical_runs": [
+        "20261028T124051Z_prod"
+      ]
+    },
+    "2026-draft": {
+      "path": "benchmarks/2026-draft.json",
+      "status": "retired",
+      "frozen": null,
+      "members": 100,
+      "voided": 0,
+      "runs": [
+        "20260929T132417Z_prod"
+      ],
+      "canonical_runs": [
+        "20260929T132417Z_prod"
+      ]
+    }
   }
 }

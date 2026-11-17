@@ -1,0 +1,25 @@
+id: ch-trend-087
+uid: 5eaa0f906eeaf0c2
+status: ready
+set: trend
+group: method
+query: Can I compare tree cover loss before and after 2015, given the changes in methods?
+expected:
+  text: Explains that the tree cover loss method changed over time (notably from 2011 and
+    2015), so comparisons across those years need caution, and how to compare responsibly.
+notes:
+  behaviour: Explain method change and comparison caveats
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-283); USY-001446; GFW Advisory Council
+    focus groups
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-283
+  benchmark_type: trend
+  use_cases: UC3;UC6
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001446; GFW Advisory Council focus groups
+  refresh_risk: Low

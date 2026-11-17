@@ -1,0 +1,27 @@
+id: ch-mon-024
+uid: abe8e4c3398592c8
+status: ready
+set: monitoring
+group: no_aoi
+query: Any new alerts in my area?
+expected:
+  clarification: 'TRUE'
+notes:
+  difficulty: medium
+  behaviour: 'clarify: ask which area'
+  lineage: benchmark v2026 proposed set (bm26-133); —
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  build_notes: Scope row; info-only until clarification validator stable
+  user_story_refs: —
+  benchmark_id: bm26-014
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user
+  aoi_type: None (data or method question)
+  capability: Supported (correct answer is to decline or clarify)
+  grounding: Direct from story
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text dropped (it duplicated
+    clarification_requested)'

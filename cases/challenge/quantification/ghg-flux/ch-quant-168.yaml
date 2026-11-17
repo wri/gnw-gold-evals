@@ -1,0 +1,35 @@
+id: ch-quant-168
+uid: 04f16660228d6185
+status: ready
+set: quantification
+group: ghg-flux
+query: What are the gross emissions and removals from forests in Salonga National Park?
+expected:
+  aoi_ids: 555697863|10906|6060
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  accept_nudge_offering: '6'
+  figure: sum(carbon_gross_emissions_Mg_CO2e) ; sum(carbon_gross_removals_Mg_CO2e)
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-172); USY-001328 UNESCO WH GHG report
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review; accept_nudge_offering
+    added 2026-10-26 (AJ); draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-172
+  benchmark_type: quantification
+  use_cases: UC4
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001328 UNESCO WH GHG report
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): any of the three Salonga records, as ch-trend-079. 20261023T094447Z_prod:
+    all 3 attempts used 10906, then asked which dataset to use. 2026-10-26 (AJ): a dataset-choice
+    nudge that offers every dataset in accept_nudge_offering passes (extras allowed); a correct
+    pull still passes. 20261024T133644Z_prod: all 3 attempts nudged with net flux (6) and
+    tree cover loss (4).; 2026-10-27 draft-5 review (AJ asked to apply the review): figure
+    added (gross emissions and gross removals)'

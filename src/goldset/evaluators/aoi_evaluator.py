@@ -7,7 +7,7 @@ from goldset.evaluators.utils import normalize_gadm_id
 
 def evaluate_aoi_selection(
     agent_state: dict[str, Any],
-    expected_aoi_ids: list[str],
+    expected_aoi_ids: list[list[str]],
     query: str = "",
 ) -> dict[str, Any]:
     """Check if the correct AOI was selected.
@@ -17,7 +17,9 @@ def evaluate_aoi_selection(
 
     Args:
         agent_state: Final agent state after execution
-        expected_aoi_ids: Expected AOI IDs (e.g., ["BRA", "USA.5_1"])
+        expected_aoi_ids: Alternative expected AOI id sets; the selection
+            passes when it equals any one of them (e.g., [["BRA"]], or
+            [["555697863"], ["10906"]] for either of two areas)
         query: Original user query (kept for compatibility but not used)
 
     Returns:
@@ -57,14 +59,14 @@ def evaluate_aoi_selection(
         result["aoi_id_match_score"] = 0.0
         return result
 
-    # STEP 3: Normalize and compare AOI IDs
-    normalized_actual, normalized_expected = _normalize_aoi_ids(
-        actual_data["raw_ids"],
-        expected_aoi_ids,
-        actual_data["source"],
+    # STEP 3: Normalize and compare AOI IDs against each alternative
+    match_aoi_id = any(
+        set(normalized_actual) == set(normalized_expected)
+        for normalized_actual, normalized_expected in (
+            _normalize_aoi_ids(actual_data["raw_ids"], alternative, actual_data["source"])
+            for alternative in expected_aoi_ids
+        )
     )
-
-    match_aoi_id = set(normalized_actual) == set(normalized_expected)
     result["match_aoi_id"] = match_aoi_id
     result["aoi_id_match_score"] = 1.0 if match_aoi_id else 0.0
 

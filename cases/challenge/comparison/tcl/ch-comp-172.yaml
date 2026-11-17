@@ -1,0 +1,35 @@
+id: ch-comp-172
+uid: 7f46ed78c7415c5e
+status: todo
+set: comparison
+group: tcl
+query: A project developer says deforestation in our project area fell by half after 2020.
+  Does the tree cover loss data look consistent with that?
+expected:
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Compares loss before and after 2020 in the project area and does not suggest the data
+    can verify the developer's claim for crediting purposes; it may describe it as an informal
+    cross-check.
+notes:
+  behaviour: Compare pre/post-2020 loss for the preloaded area; Do not suggest the data can
+    set payment amounts; it can serve as an informal cross-check; explain method differences
+    from official monitoring
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-203); USY-001338 TNC avoided conversion;
+    USY-001379 Wells for Zoé (analogue)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-203
+  benchmark_type: comparison
+  use_cases: UC3;UC4
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: Story analogue
+  user_story_refs: USY-001338 TNC avoided conversion; USY-001379 Wells for Zoé (analogue)
+  refresh_risk: Low

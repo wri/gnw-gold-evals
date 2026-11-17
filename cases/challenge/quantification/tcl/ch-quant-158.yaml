@@ -1,0 +1,28 @@
+id: ch-quant-158
+uid: 61ded8af5a8a4360
+status: todo
+set: quantification
+group: tcl
+query: What share of our sourcing area had tree cover loss in 2023?
+expected:
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+notes:
+  behaviour: answer with data for the preloaded custom area
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-116); USY-001416 Philip Morris
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  status_reason: 'needs a seeded test account (FIXTURE: Test Area A (single custom polygon,
+    preloaded in test account)); not runnable yet'
+  benchmark_id: bm26-116
+  benchmark_type: quantification
+  use_cases: UC2;UC4
+  engagement: Returning user
+  aoi_type: Custom area (fixture)
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001416 Philip Morris
+  refresh_risk: Low

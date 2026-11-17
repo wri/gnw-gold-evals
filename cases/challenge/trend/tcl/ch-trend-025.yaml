@@ -18,3 +18,6 @@ notes:
   manifest_id: m-tcl-trend-15
   lineage: gnw-evals eval-metrics-slice-1 tcl-trend-15a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001284 India loss; USY-001383 GEF-9 targets; RF-UK Gabon/CAFI
+  refresh_risk: Low

@@ -1,14 +1,18 @@
 id: ch-comp-100
-uid: e41aaf5300c3d3fc
+uid: 2938047081a6486b
 status: ready
 set: comparison
 group: tree-cover
 query: 'Which has more tree cover: Brazil or the Democratic Republic of the Congo?'
 expected:
   aoi_ids: BRA;COD
-  dataset_id: '7'
-  context_layer: no_selection
+  dataset_id: 7;1
   data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' | sum(area_ha) where aoi_id = 'BRA' and land_cover_class
+    = 'Tree cover' ; sum(area_ha) where aoi_id = 'COD' | sum(area_ha) where aoi_id = 'COD'
+    and land_cover_class = 'Tree cover'
+  figure_claim: '#1 > #2 :: Brazil has more tree cover than the DRC || The DRC has more tree
+    cover than Brazil'
 notes:
   canopy: default 30, unstated in prompt; unscored
   judge_instruction: Compare tree cover area_ha in the fixed 2000 snapshot at the default
@@ -18,3 +22,17 @@ notes:
   manifest_id: m-tc-comp-01
   lineage: generated 2026-09-01 from phase-2 manifest; tc-comp-01a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001250 Antioquia land-use planning (analogue)
+  refresh_risk: Low
+  benchmark_id: bm26-253
+  benchmark_type: comparison
+  use_cases: UC4;UC5
+  engagement: First look
+  aoi_type: Multiple named areas
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): dataset_id 7;1 (the 2024
+    land cover tree class is a fair reading); context_layer dropped (either reading answers
+    fairly); figure with both readings and figure_claim added'

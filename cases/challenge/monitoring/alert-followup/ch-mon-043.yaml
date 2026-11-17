@@ -1,0 +1,31 @@
+id: ch-mon-043
+uid: 14a55a95fcc8c506
+status: ready
+set: monitoring
+group: alert_followup
+query: Can you show me satellite imagery for last week's alerts in Kerinci Seblat National
+  Park so I can check whether they are real before sending a team?
+expected:
+  text: Either shows satellite imagery for the recent alerts in Kerinci Seblat National Park,
+    or says plainly that it cannot and suggests where to get imagery; does not claim to have
+    shown imagery it did not show.
+notes:
+  behaviour: Show imagery if available; otherwise say so and suggest where to get it
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-019); USY-001153 JPIK Kerinci Seblat;
+    Alerts JTBD (Miro) (before/after imagery); GFW Advisory Council focus groups (Planet imagery
+    most valued)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-019
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Protected area
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: USY-001153 JPIK Kerinci Seblat; Alerts JTBD (Miro) (before/after imagery);
+    GFW Advisory Council focus groups (Planet imagery most valued)
+  refresh_risk: Alert confidence can upgrade

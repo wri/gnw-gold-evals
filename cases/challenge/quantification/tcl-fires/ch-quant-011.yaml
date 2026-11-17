@@ -1,5 +1,5 @@
 id: ch-quant-011
-uid: 690b48011d1721ce
+uid: 94b8e88f576fd50a
 status: ready
 set: quantification
 group: tcl-fires
@@ -12,6 +12,8 @@ expected:
   end_date: '2020-12-31'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2020 ; sum(tree_cover_loss_non_fires_area_ha)
+    where tree_cover_loss_year = 2020
 notes:
   intersections: 'fire (unscored: no evaluator surface yet)'
   judge_instruction: Loss is split into fire-driven and non-fire area, and the two sum to
@@ -21,3 +23,16 @@ notes:
   manifest_id: m-tcl-quant-11
   lineage: gnw-evals eval-metrics-slice-1 gt-quant-11
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001592 Guardian wildfires; USY-001631 Trouw
+  refresh_risk: Low
+  benchmark_id: bm26-140
+  benchmark_type: causal
+  use_cases: UC3;UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figures added (2020 fire
+    and non-fire loss)'

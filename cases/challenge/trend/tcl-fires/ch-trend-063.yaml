@@ -21,3 +21,6 @@ notes:
   manifest_id: m-fires-trend-02
   lineage: generated 2026-09-01 from phase-2 manifest; fires-trend-02a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-000509 Malaysia; USY-001217 Puerto Suárez; USY-001516 UNESCO
+  refresh_risk: Low

@@ -1,0 +1,29 @@
+id: ch-mon-061
+uid: acc2e7386e13e9ae
+status: ready
+set: monitoring
+group: alert_method
+query: We saw clearing in the field near Isiolo last month but got no alerts. Why might the
+  alerts have missed it?
+expected:
+  text: Explains why alerts can miss clearing (for example vegetation type, minimum detectable
+    size, cloud cover and detection limits) without claiming whether the clearing near Isiolo
+    did or did not happen.
+notes:
+  behaviour: Explain alert coverage, vegetation types and detection limits
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-058); USY-001634 Save Beisa; GFW Advisory
+    Council focus groups (forests that won't show up in satellites)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  benchmark_id: bm26-058
+  benchmark_type: monitoring
+  use_cases: UC1;UC6
+  engagement: Returning user
+  aoi_type: Subnational
+  capability: Supported
+  grounding: From user research
+  user_story_refs: USY-001634 Save Beisa; GFW Advisory Council focus groups (forests that
+    won't show up in satellites)
+  refresh_risk: Alert confidence can upgrade

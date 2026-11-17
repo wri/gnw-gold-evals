@@ -1,0 +1,39 @@
+id: ch-causal-010
+uid: 92e8f497775edd01
+status: ready
+set: causal
+group: caveat_required
+query: Why was Gabon's tree cover loss higher in 2016–2017 than its 2006–2015 average, when
+  it reported lower emissions?
+expected:
+  aoi_ids: GAB
+  dataset_id: 4;8
+  start_date: '2006-01-01'
+  end_date: '2017-12-31'
+  data_pull: 'TRUE'
+  text: Caveats that selective logging is not captured by satellite tree cover loss data.
+  figure: mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2016..2017 ;
+    mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2006..2015
+  figure_claim: '#1 > #2 :: tree cover loss in 2016 to 2017 was above the 2006 to 2015 average
+    || tree cover loss in 2016 to 2017 was not above the 2006 to 2015 average'
+notes:
+  difficulty: hard
+  behaviour: answer with data; must caveat that selective logging is not captured by satellite
+    loss data
+  lineage: benchmark v2026 proposed set (bm26-149); Rainforest Foundation UK vs CAFI results-based
+    payment
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  user_story_refs: 'Impact-pathway PDF: Rainforest Foundation UK vs CAFI (not in story CSV)'
+  benchmark_id: bm26-192
+  benchmark_type: causal
+  use_cases: UC3;UC4
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Story analogue
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure and claim added
+    (2016 to 2017 against 2006 to 2015 mean annual loss). The review doubted the direction
+    of the selective-logging caveat; the LCL post on aligning flux with country reporting
+    does not settle it, so the text is unchanged pending AJ'

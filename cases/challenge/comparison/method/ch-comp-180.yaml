@@ -1,0 +1,27 @@
+id: ch-comp-180
+uid: 30c74cafa2cf4310
+status: ready
+set: comparison
+group: method
+query: Why do GFW's numbers for Brazil differ from PRODES?
+expected:
+  text: Explains the main definitional and method differences between GFW tree cover loss
+    and PRODES (for example tree cover loss versus clear-cut deforestation, PRODES's Amazon
+    scope and August–July year, minimum mapping unit) without claiming either is wrong.
+notes:
+  behaviour: Explain definitional and method differences; no claim that either is wrong
+  lineage: 'benchmark v2026 BEF sheet 2026-10-22 (bm26-284); Jobs matrix #8 (compare global
+    vs national data); GFW Advisory Council focus groups'
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-284
+  benchmark_type: comparison
+  use_cases: UC3;UC4;UC6
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: From user research
+  user_story_refs: 'Jobs matrix #8 (compare global vs national data); GFW Advisory Council
+    focus groups'
+  refresh_risk: Low

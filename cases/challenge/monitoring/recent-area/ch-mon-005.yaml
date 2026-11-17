@@ -1,0 +1,36 @@
+id: ch-mon-005
+uid: 54aeb2328319ae47
+status: ready
+set: monitoring
+group: recent_area
+query: Were there deforestation alerts in Salonga National Park in the last two weeks, and
+  how much area?
+expected:
+  aoi_ids: 555697863/10906/6060
+  dataset_id: '11'
+  start_date: '{run-14d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-14d}..{run}
+notes:
+  difficulty: medium
+  behaviour: answer with data
+  lineage: benchmark v2026 proposed set (bm26-114); USY-001516 World Heritage forests
+  expectations: 'draft 2026-10-01: Claude, from seeds/benchmark-v2026-proposed.csv; needs
+    human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-01'
+  build_notes: Needs relative-date expectations resolved at run time + live ground truth
+  user_story_refs: USY-001516 UNESCO WH forests
+  benchmark_id: bm26-006
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): aoi_ids now accepts the
+    World Heritage (10906) and KBA (6060) Salonga records as ch-trend-079 and ch-aoi-138 do;
+    figure added (14-day alert area from the pulled table)'

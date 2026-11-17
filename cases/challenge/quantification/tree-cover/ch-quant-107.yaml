@@ -1,5 +1,5 @@
 id: ch-quant-107
-uid: c061c972dec04129
+uid: 456f89d7df953066
 status: ready
 set: quantification
 group: tree-cover
@@ -10,6 +10,8 @@ expected:
   dataset_parameters: '[{"name":"canopy_cover","values":[75]}]'
   context_layer: no_selection
   data_pull: 'TRUE'
+  figure: sum(area_ha)
+  text: States the figure is the year 2000 baseline.
 notes:
   judge_instruction: Fixed 2000 snapshot; the stated 75% canopy threshold must be applied.
     Headline is tree cover area_ha, never a percentage.
@@ -17,3 +19,16 @@ notes:
   manifest_id: m-tc-quant-04
   lineage: generated 2026-09-01 from phase-2 manifest; tc-quant-04a
   verified: expected values constructed mechanically from manifest + catalog (zeno@31a4d1e)
+  synthetic: 'FALSE'
+  user_story_refs: USY-001250 Antioquia land-use planning (analogue)
+  refresh_risk: Low
+  benchmark_id: bm26-265
+  benchmark_type: quantification
+  use_cases: UC4;UC5;UC6
+  engagement: First look
+  aoi_type: Country
+  capability: Supported
+  grounding: Verified Challenge case
+  expectations: draft-5 review 2026-10-27
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added; text requires
+    the year 2000 baseline to be stated'

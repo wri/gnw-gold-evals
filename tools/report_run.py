@@ -102,6 +102,9 @@ def render(
             failed = [n for n, v in entry["checks"].items()
                       if v == 0.0 and not is_info_only(n)]
             status = (status_by_uid or {}).get(entry.get("uid") or "", "stale_case")
+            no_reply = sum(1 for t in entry.get("trials") or [] if t.get("no_answer"))
+            if no_reply:
+                failed.append(f"no reply on {no_reply} attempt(s)")
             lines.append(
                 f"- {entry['id']} (status: {status}): {', '.join(sorted(failed))}"
             )
@@ -120,7 +123,15 @@ def render(
         for entry in errored:
             cause = entry.get("error") or f"judge errors: {entry.get('judge_errors')}"
             lines.append(f"- {entry['id']}: {cause}")
-    slow = [e for e in entries if (e.get("info") or {}).get("slow")]
+    unscored = [
+        f"- {e['id']} attempt {i}: {t['error']}"
+        for e in entries if row_verdict(e) != "error"
+        for i, t in enumerate(e.get("trials") or [], start=1) if t.get("error")
+    ]
+    if unscored:
+        lines += ["", "## Attempts the harness could not score (left out of the verdict)", "",
+                  *unscored]
+    slow =[e for e in entries if (e.get("info") or {}).get("slow")]
     if slow:
         lines += ["", "Slow rows (> threshold): "
                   + ", ".join(f"{e['id']} ({e.get('latency_s')}s)" for e in slow)]

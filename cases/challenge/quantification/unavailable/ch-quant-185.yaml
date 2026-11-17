@@ -1,0 +1,27 @@
+id: ch-quant-185
+uid: d1c5ceb6d43c2e70
+status: ready
+set: quantification
+group: unavailable
+query: Which areas of Guatemala had coffee planted in 2020?
+expected:
+  text: Either uses a coffee crop map if one is available, or says crop-specific maps are
+    not available and offers cropland from land cover instead; does not present general cropland
+    as coffee.
+notes:
+  behaviour: Say crop maps are not available; offer cropland from land cover
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-244); Map exploration research ("áreas
+    con café sembrado en Guatemala")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-244
+  benchmark_type: quantification
+  use_cases: UC5
+  engagement: First look
+  aoi_type: Country
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: Map exploration research ("áreas con café sembrado en Guatemala")
+  refresh_risk: Low

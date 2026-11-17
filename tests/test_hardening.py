@@ -61,7 +61,7 @@ def test_h2_drifted_row_goes_stale_not_rekeyed():
 
 # --- H3: errors from any trial survive the merge
 
-def test_h3_merge_trials_unions_errors():
+def test_h3_merge_trials_keeps_errors():
     trials = [
         {"uid": "u", "id": "x", "checks": {"aoi_id_match": 1.0},
          "judge_errors": ["agent_answer"], "error": "trial 1 blew up"},
@@ -69,8 +69,16 @@ def test_h3_merge_trials_unions_errors():
         {"uid": "u", "id": "x", "checks": {"aoi_id_match": 1.0}},
     ]
     merged = merge_trials(trials)
-    assert merged["judge_errors"] == ["agent_answer"]  # was dropped before
-    assert "trial 1 blew up" in merged["error"]
+    # The unscored attempt keeps its error; the row is scored on the rest.
+    assert merged["trials"][0]["error"] == "trial 1 blew up"
+    assert "error" not in merged and "judge_errors" not in merged
+    # Nothing left to score: the row errors and keeps every reason.
+    merged = merge_trials([
+        {"uid": "u", "id": "x", "checks": {}, "judge_errors": ["agent_answer"]},
+        {"uid": "u", "id": "x", "checks": {}, "error": "trial 2 blew up"},
+    ])
+    assert merged["judge_errors"] == ["agent_answer"]
+    assert "trial 2 blew up" in merged["error"]
 
 
 # --- H4: multiturn cases contribute implied checks

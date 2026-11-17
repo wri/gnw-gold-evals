@@ -1,0 +1,33 @@
+id: ch-mon-039
+uid: 5e8c1cee53474c50
+status: ready
+set: monitoring
+group: recent_presence
+query: Have there been any deforestation alerts in Boumba Bek National Park this month?
+expected:
+  aoi_ids: '308624'
+  dataset_id: '11'
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {month_start}..{run}
+notes:
+  behaviour: answer with data
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-013); USY-001572 Boumba Bek monitoring
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time'
+  benchmark_id: bm26-013
+  benchmark_type: monitoring
+  use_cases: UC1
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001572 Boumba Bek monitoring
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): figure added (month-to-date
+    alert area; 0 ha for an empty window)'

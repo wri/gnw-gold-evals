@@ -23,7 +23,9 @@ perform on prompts like X?" with a **pass rate per cohort**. Plan of record:
 - **The headline is a rate, never a regression count.** Verdicts come from
   `tools/challenge_rollup.py`: pass rates overall, per set, and per
   cohort/difficulty within each set, with Wilson 95% confidence intervals,
-  against `TARGETS.yml`.
+  against `TARGETS.yml`. A case passes when most of its attempts were right
+  (AJ, 2026-10-28; before, when each check passed on most attempts), so
+  rates in reports written before then are not comparable point for point.
 - **Every case still has a defined correct behaviour**, including the ones
   expected to fail today. `notes.behaviour` records it: `select` (right
   AOI(s) chosen), `nudge` (asks with the right options), `clarify` /
@@ -112,9 +114,13 @@ on 2026-09-15.
 
 Known scoring gaps accepted for batch 1 (candidates for future evaluators):
 
-- `aoi_ids` is all-of exact set match; there is no any-of. Cases with more
-  than one defensible answer either expect a nudge or pin the most defensible
-  id, with the alternative recorded in `notes.lineage`.
+- `aoi_ids` is all-of exact set match. Until 2026-10-24 there was no any-of,
+  so cases with more than one defensible answer either expect a nudge or pin
+  the most defensible id, with the alternative recorded in `notes.lineage`.
+  `|` now separates alternative sets (`555697863|10906`; see
+  `src/goldset/evaluators/README.md`, `aoi_id_match`), and `/` lists one
+  area's equivalent records within a set (`555697863/10906;2017`); batch 1
+  rows keep their pinned ids.
 - No `aoi_absent` check: "must not substitute a wrong area" is approximated
   with `clarification` and `text` judges.
 - The scope classifier has no class for "resolved an AOI and stopped", so
@@ -227,3 +233,190 @@ Latency is half of that verdict, so:
 - **Prod latency is reference only.** It includes internet round-trips and
   prod infrastructure (autoscaling, other users' load), so a prod vs local
   gap says nothing about the selector.
+
+## Batch 4: the benchmark v2026 cases (`monitoring`, `causal`, AOI-level)
+
+63 cases from the proposed BENCHMARK v2026 set
+(`seeds/benchmark-v2026-proposed.csv`, rows marked NEW), written from
+GFW/LCL user stories rather than observed traffic, so every one is tagged
+`notes.synthetic: TRUE`. Expectations were **drafted, not reviewed**
+(`notes.expectations`); AOI ids were resolved against prod `/api/aois` on
+2026-10-01. Review them before the November freeze.
+
+| set | n | what it adds |
+|---|---|---|
+| `monitoring` (new) | 30 | near-real-time integrated alerts (dataset 11) for parks, Indigenous territories, states and districts; rolling windows use run-relative date tokens (`{run-30d}`, `{last_month_start}`, `{current_year}-01-01`) with `date_tolerance_days`; 4 non-English; 3 scope rows (no area given, email subscription, coordinate buffer) judged by `text` |
+| `causal` (new) | 18 | driver and fire attribution; judged `text` checks for not over-claiming a commodity, checking the question's premise, and the selective-logging caveat |
+| quantification / comparison / trend | 15 | the same analyses at protected-area, Indigenous-territory and sub-national level (every earlier analytic row is country-level) |
+
+- Questions that name no dates carry no expected window: the window is
+  the agent's call, and an expected one would fail correct answers.
+- `ch-mon-028` (triage across a user's saved areas) is `todo`: it needs a
+  seeded test account.
+- Protected-area (WDPA) analytics fail upstream while PZB-1406 is open;
+  those rows count as failures, as any user would see them.
+
+## Batch 5: the v2026 BEF sheet (`portfolio` set, plus monitoring, numeric and causal rows)
+
+168 cases from the BEF benchmark sheet of 2026-10-22
+(`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows): the rows that no
+existing case answers. The sheet's other 131 rows reuse existing cases (98
+real-traffic cases by `challenge_id`, 33 earlier synthetic cases by query
+text). Every new case is synthetic and its expectations are **drafted, not
+reviewed** (`notes.expectations`); AOI ids were resolved against prod
+`/api/aois` on 2026-10-23, with doubtful or unpinned ones explained in
+`notes.verified`. Review them before the November freeze.
+
+| set | new | what it adds |
+|---|---|---|
+| `portfolio` (new) | 27 | many areas at once (ranking every state, screening uploaded sites, saved-area triage), judged by `text`; drafted as redirects to one to three named areas, revised 2026-10-24 to the real limits (below); `notes.reclassify_when` says when the fixture rows flip to "answer with data" |
+| `monitoring` | 36 | alert follow-up (imagery, clusters, coordinates, prioritising), alert context (natural lands, primary forest, mangroves, park buffers), alert method questions, unsupported actions and fixture rows |
+| `quantification` / `comparison` / `trend` | 93 | subnational, protected-area and Indigenous-territory analyses, two-to-three-area comparisons, and data or method questions (`method` cohort, `text` only), unavailable data (`unavailable`) and many-area redirects (`many-areas`) |
+| `causal` | 11 | alert causes, driver shares, commodity over-claims and premise checks |
+| `aoi` | 1 | an ambiguous Amazon question |
+
+- **Fixture rows are `todo`.** 29 new rows (plus `ch-mon-028`) need a seeded
+  test account with a custom area or a 25-polygon portfolio; their
+  `status_reason` names the fixture, and BENCHMARK `2026-draft-3` lists them
+  as excluded (AJ, 2026-10-23).
+- **Unconfirmed capabilities run now.** Rows the sheet marks "Confirm with
+  engineering" (imagery, alert clusters, coordinate export, VIIRS, concession
+  and buffer analysis, production forests) carry an either/or `text`
+  expectation that accepts a correct answer or an honest "not available";
+  `notes.capability_check` marks them for engineering to confirm (AJ,
+  2026-10-23). Concession areas (logging, mining, oil palm) are in the AOI
+  index, so the Lomié and mining-overlay rows may deserve a firmer
+  expectation once confirmed.
+- **Open-ended windows end in 2025.** Tree cover loss, fires, drivers and
+  flux run to 2025 (catalog `content_date`), so "since 2021" expects
+  2021-01-01 to 2025-12-31 where the sheet wrote 2024-12-31; each case says
+  so in `notes.build_notes`. Questions that name no window carry none, as in
+  Batch 4.
+- Each member's sheet facets (use cases, engagement, AOI type, capability,
+  grounding) are case notes written by `tools/benchmark_from_sheet.py`.
+
+### Expectation review after the first draft-3 run (2026-10-24)
+
+The first `2026-draft-3` run (`20261023T094447Z_prod`; recommendations in
+`results/benchmark/recommendations/`) showed some drafted expectations were
+wrong. AJ's decisions, applied to 44 cases (26 run, 18 fixture rows); each
+case's `notes.review` gives its evidence:
+
+- **Many areas: the real limits.** `pick_aoi` takes up to 1,000 admin
+  sub-units of one GADM parent, but only 50 protected areas, KBAs,
+  Indigenous lands or concessions (project-zeno
+  `src/agent/subagents/pick_aoi/tool.py`). Rows within the limit now expect
+  an answer with data (every municipality of Pará, every department of
+  Bolivia, African countries, Brazilian states, districts of two countries);
+  the rest keep a redirect worded to the real limit, never "one to three
+  named areas". The sheet's `capability` facet still says "Not yet" for the
+  reclassified rows; fix it in the sheet before the next curation.
+- **Either/or rows** whose decline branch selects no dataset carry no
+  dataset or date checks.
+- **Defensible alternatives:** emissions from loss accept tree cover loss
+  (`6;4`), land cover accepts natural lands (`1;3`), and four AOIs use the
+  `|` any-of syntax (Salonga, Kakataibo, Mahakam Delta).
+- **Confirmed capability:** alerts on natural lands (`ch-mon-058`) now expect
+  data with `context_layer: natural_lands`.
+- **Method questions:** three judged texts were relaxed where careful
+  answers failed on an optional detail (`ch-quant-194`, `-197`, `-205`), and
+  `ch-quant-184`'s premise was fixed. Printable maps (`ch-mon-047`) stay
+  strict: a dashboard is not a printable map.
+- **After the first rerun** (`20261024T133644Z_prod`), two texts were
+  reworded again: `ch-quant-194` drops its optional "may point to" clause,
+  which the judge read as required, and `ch-port-011` accepts either an
+  honest "cannot select these sites as a group" or a ranking cited from
+  published research.
+
+### Clarifying dataset choices (2026-10-26)
+
+Reviewing the draft-4 failures, AJ decided that asking which dataset to use
+is a right answer when the choice offered is the right one. Sixteen members
+asked back on every attempt. Fourteen of them now carry
+`accept_nudge_offering` (their `dataset_id` set): an attempt that ends in a
+`dataset_choice` nudge offering every listed dataset passes, extra options
+allowed, and a correct pull still passes. The check and the attempt-majority
+verdict are documented in `src/goldset/evaluators/README.md`
+(`accepted_nudge_match`). The other two are not dataset choices and are
+unchanged: `ch-aoi-090` asks which Pará and `ch-mon-027` never nudges.
+Replayed on their 23 and 24 Oct attempts, 9 of the 14 would pass; the 5 that
+still fail never offered SBTN Natural Lands (`ch-comp-154`, `-157`,
+`ch-quant-175`, `-180`) or offered only the sLUC emission factors
+(`ch-comp-155`). The members' new uids are unmeasured until rerun.
+
+AJ then reviewed the 18 members that pulled on some attempts and asked on
+others, and opted in three more: `ch-causal-025` (`4;8`) and `ch-causal-015`
+(`8;10`) accept a dataset choice, and `ch-quant-188` accepts an area choice
+through `accept_aoi_nudge_offering` (`BRA.14`): asking which Pará is meant is
+fine as long as Pará, Brazil is offered. Replayed, `ch-causal-025` would pass
+(it failed) and the other two still pass. The other 15 keep their
+expectations: their failures are agent fixes or correct as they stand.
+
+### "Why" questions answered from blogs (2026-10-26)
+
+Nineteen members answered from `search_blogs` instead of the data. A search of
+the corpus the tool reads (WRI and Land & Carbon Lab Insights; the list is in
+the GNW workspace, `experiments/2026-10-26-search-blogs-corpus/`) found posts
+that fairly answer three of them. AJ decided those three may pass on a blog
+answer and the rest must be answered from data, then kept four as they
+were:
+
+- `ch-causal-002` (Bolivia 2024), `ch-causal-003` (Brazil 2016) and
+  `ch-causal-022` (Riau) carry `accept_blog_sources`, the slugs of the posts
+  that answer them; an answer from `search_blogs` that links one passes, and
+  `web_fallback` ignores those posts on a pull (`accepted_blog_match` in
+  `src/goldset/evaluators/README.md`).
+- Ten of the other 16 already required a pull. Two now do: `ch-trend-081`
+  (pull flag added) and `ch-quant-173` (Brazil, sLUC and a pull). AJ kept
+  `ch-causal-029`, `ch-quant-166`, `ch-aoi-155` and `ch-quant-190` as they
+  were (text expectations only); a data requirement was drafted for each and
+  dropped in review.
+
+### Ghana questions moved to Côte d'Ivoire (2026-10-26)
+
+The analytics API rejects every Ghana sub-national GADM id: GADM 4.1 writes
+them without the dot (`GHA15_2`), and the fix is PZB-1408, planned for the
+next sprint. Until then AJ moved the eight Ghana members to similar areas in
+Côte d'Ivoire, Ghana's cocoa-belt neighbour: Western region to Cavally
+(`ch-causal-001`), Western North to Nawa (`ch-comp-149`, `ch-mon-011`),
+Western North and Ashanti to Nawa and Haut-Sassandra (`ch-comp-150`), the
+Offinso districts to Cavally, Guémon and Tonkpi (`ch-comp-163`) and to
+San-Pédro (`ch-mon-041`, `ch-mon-045`), and the Ghana Cocoa Belt to Côte
+d'Ivoire's cocoa belt (`ch-causal-026`). Each case keeps its Ghana version
+in `notes.ghana_original`. The benchmark sheet matches these rows by query
+text, so `seeds/benchmark-v2026-bef-2026-10-26.csv` is the 22 October export
+with those eight queries substituted, and `2026-draft-4` is built from it.
+Restore the Ghana versions, and the 22 October seed, once PZB-1408 is fixed.
+
+### Draft-5 review: could this answer mislead the user? (2026-10-27)
+
+Before the draft-5 run, every draft-4 member was reviewed against one question
+from AJ: could this answer mislead the user? Each case is scored only on the one
+to three things that could mislead for it; a check that fails an answer that
+would mislead no one was eased, and a misleading answer that passed got the
+lightest check that catches it. The per-question findings and decisions are in
+the review doc ("BENCHMARK draft-4 critical review", claude.ai artifact
+68PEmch8CvCEJwgB2xtmTy). Applied to 213 case files:
+
+- **Figures from the agent's own pull.** About 170 members gained a `figure`
+  formula (and some a `figure_claim`), checked by `figure_match` and
+  `figure_claim_match` against the table the agent itself pulled; data quality
+  is out of scope. Column names and values were confirmed against real pulled
+  tables. See `src/goldset/evaluators/README.md`.
+- **Periods.** `date_extraction` passes a pull that contains the asked window;
+  `answer_period_match` checks the answer uses exactly the asked period.
+- **Fair alternatives.** New `/` records per area in `aoi_ids`, `|` alternatives
+  in `context_layer` and in the nudge accept fields, plus the expectations the
+  review proposed (datasets that can answer the question, defensible area
+  records, sharper `text` that writes the fact in, tone and format clauses
+  dropped).
+- **Ghana.** `ch-quant-180` (Ashanti to Haut-Sassandra) and `ch-port-017`
+  (Côte d'Ivoire only) moved like the eight 2026-10-26 Ghana questions;
+  `notes.ghana_original` keeps the old wording.
+- **Not applied, for AJ:** `ch-quant-164` and `ch-aoi-090` (would reverse his
+  calls), `forbidden_tools` on the dataset questions (set-level), the
+  `ch-causal-010` caveat direction and the `ch-aoi-116` branch. Prose
+  ask-backs are not yet accepted (no harness support).
+
+Each edited case records the change in `notes.review` and stamps
+`notes.expectations` with "draft-5 review 2026-10-27".

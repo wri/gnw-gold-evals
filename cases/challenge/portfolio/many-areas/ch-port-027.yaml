@@ -1,0 +1,26 @@
+id: ch-port-027
+uid: 49a8d29a6204e323
+status: ready
+set: portfolio
+group: many-areas
+query: Prepare a table of tree cover loss in each of Madagascar's protected areas every year
+  since 2015 for our annual report.
+expected:
+  text: Explains that it cannot produce a yearly table for every protected area in Madagascar
+    at once and offers the national total or one or a few named protected areas; does not
+    invent per-area figures.
+notes:
+  behaviour: 'Redirect: many areas; offer national total or a named PA'
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-181); USY-001586 Madagascar PA Outlook
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review'
+  synthetic: 'TRUE'
+  benchmark_id: bm26-181
+  benchmark_type: portfolio
+  use_cases: UC2;UC4
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: 'Not yet: expect clear redirect'
+  grounding: Direct from story
+  user_story_refs: USY-001586 Madagascar PA Outlook
+  refresh_risk: Low

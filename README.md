@@ -92,6 +92,9 @@ cases/v1, cases/v2      one YAML per case, grouped by capability; MANIFEST.json 
 results/gold/           committed GOLD run ledger + reports (contract: results/README.md)
 results/challenge/      committed CHALLENGE run ledger + rollup recommendations
                         (rates, not regressions — see cases/challenge/README.md)
+benchmarks/             BENCHMARK manifests: frozen uid subsets of CHALLENGE
+                        (benchmarks/README.md)
+results/benchmark/      committed BENCHMARK run ledger (gold run --benchmark)
 schema/case.schema.json the case contract; every file validated in tests
 src/goldset/            store, canonical hashing, ledger, adapter, buckets,
                         evaluator registry, runner/ (API + multiturn), cli (gold)
@@ -149,6 +152,9 @@ loads. Rules live in CLAUDE.md; these encode the *procedures* around them.
   docs (the run isn't done until one exists)
 - [results/challenge/](results/challenge/) — the CHALLENGE ledger: same
   contract, pass-rate verdicts via `tools/challenge_rollup.py`
+- [benchmarks/README.md](benchmarks/README.md) — BENCHMARK: the frozen,
+  versioned CHALLENGE subset behind the North Star; manifest, freeze,
+  errata, canonical runs, metric semantics
 - [results/gold/campaigns/](results/gold/campaigns/) — campaign narratives
 - [tools/README.md](tools/README.md) — every CLI, grouped by lifecycle
 
@@ -163,7 +169,10 @@ a team checkout that has them.
   into **five buckets** (retrieval, analysis, explanation, output, scope);
   a run's verdict comes from per-row verdicts and per-bucket tallies, never
   a flat mean. Errored rows are errors, not measurements — they are excluded
-  from tallies rather than banking partial passes.
+  from tallies rather than banking partial passes. An attempt that got no
+  reply (Horizon's stream stalled, dropped or failed: `no_answer`) is a
+  failed attempt, not an error; an attempt the harness could not score is
+  left out, and a row is an error only when no attempt could be scored.
 - **Which check answers for which bucket** (full map with descriptions and
   case examples: [`docs/evaluator-map.html`](docs/evaluator-map.html);
   † = shared between two buckets, ° = info-only, never gates):

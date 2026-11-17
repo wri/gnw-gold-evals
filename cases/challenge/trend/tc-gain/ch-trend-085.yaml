@@ -1,0 +1,34 @@
+id: ch-trend-085
+uid: d96b3f6899389352
+status: ready
+set: trend
+group: tc-gain
+query: Is El Salvador making progress on its 20x20 restoration pledge? What does the tree
+  cover gain data show?
+expected:
+  aoi_ids: SLV
+  dataset_id: '5'
+  data_pull: 'TRUE'
+  text: Reports tree cover gain for El Salvador and caveats that the gain data end in 2020
+    and do not measure progress on a restoration pledge directly.
+  figure: sum(area_ha) | sum(area_ha) where tree_cover_gain_period = '2015-2020'
+notes:
+  behaviour: Answer with gain/cover data; caveat that gain data period ends 2020 and is not
+    a pledge tracker
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-225); USY-001364 El Salvador 20x20
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  benchmark_id: bm26-225
+  benchmark_type: trend
+  use_cases: UC4;UC5
+  engagement: Returning user
+  aoi_type: Country
+  capability: Supported
+  grounding: Direct from story
+  user_story_refs: USY-001364 El Salvador 20x20
+  refresh_risk: Low
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): dataset_id 5;7 to 5 (tree
+    cover is a 2000 snapshot and cannot show gain); figure added (2000 to 2020 or 2015 to
+    2020 gain from the pulled table)'

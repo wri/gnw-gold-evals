@@ -1,0 +1,45 @@
+id: ch-mon-058
+uid: 2b1989a6523a7bdd
+status: ready
+set: monitoring
+group: alert_context
+query: Did the alerts in Padre Abad province this month fall in natural forest or on land
+  that was already farmed?
+expected:
+  aoi_ids: PER.26.3
+  dataset_id: '11'
+  context_layer: natural_lands
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Reports the natural-lands figure as natural lands (not forest only) and gives the
+    total or remainder so the split is clear.
+  figure: sum(area_ha) where alert_date in {month_start}..{run}
+notes:
+  behaviour: answer with alerts restricted to natural lands
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-054); USY-001248 Kakataibo; GFW Advisory
+    Council focus groups (local context to understand alerts)
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
+  synthetic: 'TRUE'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-23'
+  build_notes: 'Relative dates: resolve window at run time; AOI id to verify'
+  capability_check: 'confirmed 2026-10-24: integrated alerts carries a natural_lands context
+    layer (zeno catalog integrated_alerts.yml)'
+  benchmark_id: bm26-054
+  benchmark_type: monitoring
+  use_cases: UC1;UC5
+  engagement: Returning user (arrived from alert notification)
+  aoi_type: Subnational
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: USY-001248 Kakataibo; GFW Advisory Council focus groups (local context
+    to understand alerts)
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-24 (AJ): either/or -> answer with data. 20261023T094447Z_prod: all 3 attempts
+    asked which dataset to use although the natural lands layer answers it.; 2026-10-27 draft-5
+    review (AJ asked to apply the review): text reworded (natural lands named as such, with
+    the total or remainder); figure added (month-to-date alert area, computed per pulled table,
+    so the natural-lands pull gives the natural-lands figure; the share is not expressible)'

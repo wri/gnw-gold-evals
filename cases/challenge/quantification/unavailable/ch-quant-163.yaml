@@ -1,0 +1,30 @@
+id: ch-quant-163
+uid: 0857eb275c074465
+status: ready
+set: quantification
+group: unavailable
+query: 'What''s the story behind this coordinate: 3.8°S, 73.2°W? Has there been loss there
+  recently?'
+expected:
+  text: Either asks for an area, or names the enclosing administrative area, says it approximates
+    the point, and reports its loss from pulled data; does not describe loss at the point
+    from general knowledge or articles.
+notes:
+  behaviour: Decline point lookup or ask for an area; must not guess
+  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-126); GFW Advisory Council focus groups
+    ("we tell the story behind a coordinate")
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    needs human review; draft-5 review 2026-10-27'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_id: bm26-126
+  benchmark_type: quantification
+  use_cases: UC3
+  engagement: Returning user
+  aoi_type: Point
+  capability: Confirm with engineering
+  grounding: From user research
+  user_story_refs: GFW Advisory Council focus groups ("we tell the story behind a coordinate")
+  refresh_risk: Alert confidence can upgrade
+  review: '2026-10-27 draft-5 review (AJ asked to apply the review): text tightened: a proxy
+    area must be named as such and its loss reported from pulled data, not from general knowledge'
