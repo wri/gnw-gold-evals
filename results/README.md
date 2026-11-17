@@ -94,37 +94,6 @@ Trimmed from a GOLD run, `results/gold/runs/20260831T163347Z_prod.json`; runs in
 }
 ```
 
-A ground-truth case (one with `expected.ground_truth`) adds an object to
-its entry, and the run gains a summary:
-
-```jsonc
-// on the entry
-"ground_truth": {
-  "selector": "sum(carbon_emissions_MgCO2e) WHERE tree_cover_loss_year=2019",
-  "values": [658496.56],            // fetched at run start, one fetch per run
-  "digest": "…",                    // absent when `unresolved` is set
-  "dataset_id": "4",
-  "content_date_fixed": false,
-  "resource_id": "09272a7f-…",
-  "fetched_at": "2026-09-14T12:00:05Z",
-  "request": {"endpoint": "/v0/land_change/tree_cover_loss/analytics",
-              "payload": {"aoi": {"type": "admin", "ids": ["MDG.3.4"]}}},
-  "metadata": {"aoi": {"provider": "gadm", "version": "4.1"}},  // the server's echo
-  "agent_values": [[658496.56]],    // per trial, aligned with `trials`: the agent's
-                                    // own pulled figure for each value; null where
-                                    // its pull lacked one
-  "unresolved": "column 'x' not in the response"  // only when the selector missed
-}
-
-// on the run, present when any entry has one
-"ground_truth": {
-  "base_url": "https://analytics.globalnaturewatch.org",
-  "cases": 1,
-  "prefetch_seconds": 3.4,          // summed across sessions on a resumed run
-  "tolerance": 0.02                 // relative tolerance the run graded with
-}
-```
-
 `validate_run` in `src/goldset/ledger.py` requires `run_id`, `started`,
 `environment`, `build`, `ff`, `harness`, `judge_model`, `num_trials`,
 `caseset_version` and `results`. Runs before 2026-08-04 lack `workers`,
@@ -198,17 +167,6 @@ Optional fields, written only when they apply:
   `latency_s`, `trace_url` and `turns_detail` come from the last trial. The row's verdict is the
   majority of its attempts' verdicts (`buckets.row_verdict`, since
   2026-10-28), not a reading of those per-check majorities.
-- **Ground truth is recorded, not trusted.** A case carrying
-  `expected.ground_truth` is graded against values fetched from the
-  production analytics API before any trial, and its entry records what was
-  fetched and how. The API exposes no data-version field, so `digest` (a hash
-  of the values the selector picked, not of the whole response) is the only
-  sign that data moved: a digest that differs between two runs means that
-  case's data changed. It is omitted on an unresolved selector, where it
-  would be the same constant for every such case and prove nothing.
-  `tools/diff_runs.py` reads it to file data bumps (see
-  [Comparing two runs](#comparing-two-runs)), and reads `agent_values` to
-  flag a bump that may hide a real agent break.
 - **No fabricated or backfilled runs.** A run file is written by
   `evals run` (or, for legacy runs, `tools/ingest_run.py`) from real harness
   output, never by hand.
@@ -301,3 +259,48 @@ A benchmark run whose page data is committed
 for the frontend's AI accuracy scorecards page) also carries `page`, that
 file's path. A run whose page combines it with earlier runs carries
 `composed_with`, and is judged canonical over the runs together.
+
+## GOLD legacy copy only
+
+A ground-truth case (one with `expected.ground_truth`) adds an object to
+its entry, and the run gains a summary:
+
+```jsonc
+// on the entry
+"ground_truth": {
+  "selector": "sum(carbon_emissions_MgCO2e) WHERE tree_cover_loss_year=2019",
+  "values": [658496.56],            // fetched at run start, one fetch per run
+  "digest": "…",                    // absent when `unresolved` is set
+  "dataset_id": "4",
+  "content_date_fixed": false,
+  "resource_id": "09272a7f-…",
+  "fetched_at": "2026-09-14T12:00:05Z",
+  "request": {"endpoint": "/v0/land_change/tree_cover_loss/analytics",
+              "payload": {"aoi": {"type": "admin", "ids": ["MDG.3.4"]}}},
+  "metadata": {"aoi": {"provider": "gadm", "version": "4.1"}},  // the server's echo
+  "agent_values": [[658496.56]],    // per trial, aligned with `trials`: the agent's
+                                    // own pulled figure for each value; null where
+                                    // its pull lacked one
+  "unresolved": "column 'x' not in the response"  // only when the selector missed
+}
+
+// on the run, present when any entry has one
+"ground_truth": {
+  "base_url": "https://analytics.globalnaturewatch.org",
+  "cases": 1,
+  "prefetch_seconds": 3.4,          // summed across sessions on a resumed run
+  "tolerance": 0.02                 // relative tolerance the run graded with
+}
+```
+
+- **Ground truth is recorded, not trusted.** A case carrying
+  `expected.ground_truth` is graded against values fetched from the
+  production analytics API before any trial, and its entry records what was
+  fetched and how. The API exposes no data-version field, so `digest` (a hash
+  of the values the selector picked, not of the whole response) is the only
+  sign that data moved: a digest that differs between two runs means that
+  case's data changed. It is omitted on an unresolved selector, where it
+  would be the same constant for every such case and prove nothing.
+  `tools/diff_runs.py` reads it to file data bumps (see
+  [Comparing two runs](#comparing-two-runs)), and reads `agent_values` to
+  flag a bump that may hide a real agent break.
