@@ -176,8 +176,10 @@ class APITestRunner(BaseTestRunner):
 
             # Hard per-trial deadline: the 240s httpx timeout is per read, so a
             # stream that keeps sending keepalives never trips it. The wall
-            # clock bounds the whole trial; TimeoutError becomes an error row
-            # via the handler below.
+            # clock bounds the whole trial. The handler below records a
+            # timeout with the stream still open as `no_answer` (a failed
+            # attempt); it is an error only when the stream had finished and
+            # the state fetch ran over.
             with anyio.fail_after(self.wall_clock_limit):
                 async with httpx.AsyncClient(timeout=240.0) as client:
                     async with client.stream(
