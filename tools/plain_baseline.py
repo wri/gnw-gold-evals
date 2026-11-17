@@ -6,6 +6,7 @@
     uv run python tools/plain_baseline.py references --for <id>        # after the Sonnet run
     uv run python tools/plain_baseline.py score --for horizon-draft5 --uids <file>
     uv run python tools/plain_baseline.py score --for <id>
+    uv run python tools/plain_baseline.py score --for <id> --uids <file> --merge  # rescore some
     uv run python tools/plain_baseline.py outcomes --for <id>          # overlay changed: no API
     uv run python tools/plain_baseline.py report --sonnet <id>
 
@@ -300,8 +301,12 @@ def cmd_score(args: argparse.Namespace) -> int:
     }
     for (uid, i, _), result in zip(jobs, scored, strict=True):
         questions[uid]["attempts"][i] = result
-    _outcomes(questions, calls)
     path = OUT / "scores" / f"{args.for_}.json"
+    if args.merge:
+        if not path.exists():
+            raise SystemExit(f"--merge: no stored scores at {path}")
+        questions = {**_read(path)["questions"], **questions}
+    _outcomes(questions, calls)
     _write(path, {"for": args.for_, "scored": datetime.now(UTC).isoformat(timespec="seconds"),
                   "overlay": header, "questions": questions})
     print(f"wrote {path}: {outcome.summarise(questions.values())}")
@@ -475,6 +480,8 @@ def main() -> int:
     p = sub.add_parser("score", help="score one assistant's attempts (Haiku judge calls)")
     p.add_argument("--for", dest="for_", required=True, help=f"'{HORIZON}' or a Sonnet run id")
     p.add_argument("--uids", help="file of uids to limit to")
+    p.add_argument("--merge", action="store_true",
+                   help="keep the stored scores of every question not rescored")
     p.set_defaults(func=cmd_score)
 
     p = sub.add_parser("outcomes", help="re-apply the overlay to stored scores (no API calls)")
