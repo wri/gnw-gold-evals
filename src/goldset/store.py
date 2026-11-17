@@ -12,7 +12,7 @@ sit side by side (``aoi/``, ...). ``set`` is organisational like ``group``:
 never hashed into the uid, so assigning or renaming it mints no versions.
 
 Case files are the source of truth and are edited by hand. After any edit,
-follow the after-edit ritual in README.md, "Changing cases": its first step,
+follow the after-edit ritual in cases/README.md, "After an edit": its first step,
 ``tools/check.py --fix``, recomputes uids and the manifest, and
 ``tools/check.py`` alone verifies them (CI runs it). ``write_case`` output is
 deterministic, so rewriting an unchanged case produces a byte-identical file.

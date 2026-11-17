@@ -21,7 +21,6 @@ GOLD, the capability regression suite this repo was first built for, now lives i
 
 A BENCHMARK version is a list of uids, not a copy of the cases. The live version, `2026-draft-5`, is a draft. Freezing a version, so that its members never change, is the intended end state, but no version is frozen yet.
 
-<a id="glossary"></a>
 ## Core concepts
 
 Every other doc uses these terms. The [glossary](docs/glossary.md) defines the rest.
@@ -67,7 +66,6 @@ Each job has one doc that owns it, and most have a Claude Code skill that walks 
 | Anything GOLD | project-zeno `evals/gold/`; for this copy, [docs/gold-legacy.md](docs/gold-legacy.md) | `gold-run`, `new-case`, `release-gate`, `triage-run` |
 | Work here as an AI coding agent | [CLAUDE.md](CLAUDE.md) | |
 
-<a id="setup"></a>
 ## Quick start
 
 You need Python 3.11 or later and [uv](https://docs.astral.sh/uv/).
@@ -88,7 +86,6 @@ Cases with ground truth also call the analytics API, with `ANALYTICS_API_TOKEN` 
 
 The Python package is called `goldset` for historical reasons. A rename would touch most files for no gain.
 
-<a id="running-the-set"></a>
 ## Running a suite
 
 `evals run` and `gold run` are the same command; `gold` is the older name. A run must name its suite, so that it never lands in the wrong ledger:
@@ -124,7 +121,7 @@ uv run evals run --help                                                        #
 
 **Killed runs.** A run appends each finished case to `results/<suite>/runs/<run_id>.partial.jsonl`, which is gitignored. `uv run evals run --resume <run_id>` finishes it. With neither `--suite` nor `--results-dir`, it searches the three ledgers and uses the run only if exactly one holds it. The run's settings come from the partial file, so other flags are ignored. It refuses if the case set changed, and the record carries `resumed: true`.
 
-**Workers and timeouts.** `--workers` sets how many cases run at once: 10 by default, capped at 20. The BENCHMARK run command in [benchmarks/README.md](benchmarks/README.md#runs) uses 5. The worker count is recorded on the run and has no effect on whether a run is canonical. An attempt gets `no_answer`, a failed attempt, when the stream sends nothing for 240 seconds or is still open at `--trial-timeout`, 900 seconds by default. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before you blame the agent.
+**Workers and timeouts.** `--workers` sets how many cases run at once: 10 by default, capped at 20. [benchmarks/README.md](benchmarks/README.md#runs) says to leave it at the default for a BENCHMARK run. The worker count is recorded on the run and has no effect on whether a run is canonical. An attempt gets `no_answer`, a failed attempt, when the stream sends nothing for 240 seconds or is still open at `--trial-timeout`, 900 seconds by default. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before you blame the agent.
 
 `uv run evals prune-artifacts --suite <suite>` deletes the raw artifacts of all but the newest 5 runs.
 

@@ -124,6 +124,8 @@ uv run python tools/check_benchmark.py                    # BENCHMARK members st
 
 **GOLD legacy copy.** Edit `cases/v2` only. Run `check.py --fix --suite gold` and `coverage_doc.py --suite gold` instead of the first two commands, then `uv run python tools/audit_cases.py --strict`. The audit is described in [GOLD-AUTHORING.md, The audit gate](GOLD-AUTHORING.md#the-audit-gate).
 
+**A member of a BENCHMARK draft.** When the edited case is a member of a benchmark draft, the steps continue in [challenge/README.md, After an edit](challenge/README.md#after-an-edit). A draft warning from `tools/check_benchmark.py` fails CI: `test_committed_manifests_are_clean` in `tests/test_check_benchmark.py` requires every committed manifest to report no errors and no warnings.
+
 ## The catalogue snapshot
 
 `cases/zeno_catalog.json` is a committed copy of the agent's dataset catalogue, `src/agent/datasets/catalog/*.yml` in wri/project-zeno. COVERAGE.md measures dataset coverage against it without network access. It also holds each dataset's analytics endpoint and date window, from which ground-truth requests are built.

@@ -2,8 +2,8 @@
 
 The GOLD Google Sheet is retired and the case store is the source of truth.
 Use this only to bring in cases kept in a spreadsheet with the sheet's
-columns, then treat the result like any case edit (README.md, "Changing
-cases"). It writes to cases/v2 by default. cases/v1 is the frozen baseline
+columns, then treat the result like any case edit (cases/README.md, "After an
+edit"). It writes to cases/v2 by default. cases/v1 is the frozen baseline
 (tests/test_v1_frozen.py), so pass `--cases-dir cases/v1` only for a
 deliberate re-import of it.
 

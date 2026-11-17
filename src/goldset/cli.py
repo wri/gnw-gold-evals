@@ -14,7 +14,7 @@ A run names its suite, which picks the case store and the results ledger
 benchmark (--benchmark MANIFEST -> results/benchmark), or gold (cases/v2 ->
 results/gold, the legacy copy; GOLD itself lives in project-zeno
 evals/gold/). Each run writes one run record under <results-dir>/runs/. The
-profile, trial and smoke-run rules are in README.md, "Running the set".
+profile, trial and smoke-run rules are in README.md, "Running a suite".
 
 Flags always win: no environment variable changes a flag or its default.
 The environment (or a .env file) supplies secrets only:
@@ -733,8 +733,10 @@ def main() -> int:
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")
     run.add_argument("--trial-timeout", type=float, default=900.0,
-                     help="hard per-trial time limit in seconds; a trial that "
-                          "exceeds it is recorded as an error")
+                     help="hard per-trial time limit in seconds; an attempt "
+                          "still streaming at the limit is recorded as "
+                          "no_answer (a failed attempt), and only a timeout "
+                          "after the stream finished is an error")
     run.add_argument("--note", default=None,
                      help="methodology note recorded on the run (e.g. after a "
                           "check-semantics change, so diffs aren't read as agent movement)")

@@ -9,7 +9,7 @@ legacy GOLD copy (cases/v2), and `--cases-dir` any other store.
 After hand-editing a case YAML, run `check.py --fix`: the case's uid then
 identifies its new content, and the manifest's caseset_version moves with
 it. This is only the first step of the after-edit ritual: finish it
-(README.md, "Changing cases") before committing, or CI fails on a stale
+(cases/README.md, "After an edit") before committing, or CI fails on a stale
 COVERAGE.md.
 
 uids follow the store's `uid_includes_deltas` manifest flag. When it is set

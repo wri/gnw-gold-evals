@@ -1,6 +1,6 @@
 # Evaluators: check reference
 
-The triage reference for every check the GOLD harness emits: what it measures, what `1.0`, `0.0` and `null` mean, where its evidence lands in the run record, and how to triage a failure. Terms are defined in the [README glossary](../../../README.md#glossary). If this file and the code disagree, the code is right: fix this file in the same PR.
+The triage reference for every check the GOLD harness emits: what it measures, what `1.0`, `0.0` and `null` mean, where its evidence lands in the run record, and how to triage a failure. Terms are defined in the [glossary](../../../docs/glossary.md). If this file and the code disagree, the code is right: fix this file in the same PR.
 
 This file quotes no pass rates or stability figures, because they change with every case and agent edit. For current ones, run `uv run python tools/flakiness.py results/gold/runs/<run_id>.json --per-case` on the latest 3-trial run in `results/gold/runs/`.
 
@@ -257,7 +257,7 @@ Retrieval · gating · deterministic · `groundtruth_checks.evaluate_ground_trut
 
 **Triage.**
 - Only the last pull is graded. A trial that pulls more than once (a retry with corrected parameters, or two areas pulled separately) is graded on its final pull, as every check that reads `statistics` is. `agent_values` and the artefact describe the last pull only, so look for earlier pulls in the trace at `trace_url`. Several areas in one request are fine: the selector spans every id the request names.
-- A flip between two runs while the case's `digest` moved is a data bump, not a regression: `tools/diff_runs.py` lists it separately and flags it when the agent's figure matches neither run's values ([Comparing two runs](../../../results/README.md#comparing-two-runs)).
+- A flip between two runs while the case's `digest` moved is a data bump, not a regression: `tools/diff_runs.py` lists it separately and flags it when the agent's figure matches neither run's values ([Data bumps](../../../docs/gold-legacy.md#data-bumps)).
 - An unresolved selector is reported when the run starts (the prefetch line names the cases) and every trial of the case errors. Fix the selector against the API's column names ([cases/README.md](../../../cases/README.md#run-time-ground-truth-ground_truth), rule 1); it is not an agent failure.
 - It shares an evaluator with the judged `ground_truth_answer`, whose `kind` is `mixed`, so `tools/flakiness.py` holds it to the judged stability limit.
 
