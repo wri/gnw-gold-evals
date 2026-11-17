@@ -1,5 +1,13 @@
 # Writing GOLD cases: what makes a good prompt
 
+> **Legacy copy.** GOLD moved to [wri/project-zeno](https://github.com/wri/project-zeno) under
+> `evals/gold/` on 2026-10-27 (project-zeno PR #874), and its current authoring rules are
+> project-zeno's `evals/gold/cases/README.md`. These rules apply to `cases/v1` and
+> `cases/v2` here until a later PR deletes them. They are not the rules for CHALLENGE,
+> which favours realism over determinism: see [challenge/README.md](challenge/README.md).
+> What every store shares (the case file, the `;` rules, ground truth, the status
+> lifecycle) is in [README.md](README.md).
+
 GOLD is a **capability smoke test**. A case earns its place by failing when
 a release breaks a capability and passing otherwise. Everything below
 follows from that one job. Read this file before you add or edit a case.
@@ -51,7 +59,7 @@ cases/v2/   the curated working set: every edit and every new case lands here
    parked while runs use the default profile. Re-check `env_gated` notes
    when the environment changes: older notes saying that dashboards or
    imagery need `--ff experimental` are out of date
-   ([Running the set](../README.md#running-the-set)).
+   ([Running a suite](../README.md#running-the-set)).
 
 ## DOs
 
@@ -88,7 +96,7 @@ cases/v2/   the curated working set: every edit and every new case lands here
   defensible and analyse", passes on either choice and fails only on a
   nudge. Record in `notes` why both are defensible. In some fields `;`
   means "all of these", not "either": see
-  [`;` alternatives by field](#semicolons).
+  [`;` alternatives by field](README.md#semicolons).
 - **DO keep a few deliberately loose sentinels.** If every row names its
   metric precisely, nothing detects the next regression towards
   over-nudging: rows that expect a nudge only test that the agent nudges
@@ -153,7 +161,7 @@ cases/v2/   the curated working set: every edit and every new case lands here
 - **DON'T pin expectations that drift with data versions.** "The most
   recent year is 2024" breaks on the next data release. Expected numbers
   should come from closed periods on stable datasets. Better still, don't
-  pin the number at all: use `ground_truth` (below), and the harness
+  pin the number at all: use `ground_truth` ([Run-time ground truth](README.md#run-time-ground-truth-ground_truth)), and the harness
   fetches it at run time.
 - **DON'T author judged-only rows** unless the capability is inherently
   textual (the `metadata` group is the sanctioned exception). Every row
@@ -280,7 +288,7 @@ allowed field names are listed in `schema/case.schema.json`.
 - [ ] the four properties hold, and the expectations imply at least two
       checks in at least two buckets
 - [ ] `env_gated` noted if the capability depends on the environment or profile
-- [ ] the status follows the [status lifecycle](#status-lifecycle); a `done`
+- [ ] the status follows the [status lifecycle](README.md#status-lifecycle); a `done`
       case cites its verifying run
 - [ ] the after-edit commands in [README: Changing cases](../README.md#changing-cases)
       ran clean, and their output is committed with the case
