@@ -11,7 +11,7 @@ description: Use when analysing a finished GOLD run ("what failed", "triage this
 
 Input: a `results/gold/runs/<run_id>.json`. Output: a classified failure table and
 the four-section recommendations doc. The ledger file itself is read-only.
-Terms are defined in the [README glossary](../../../README.md#glossary).
+Terms are defined in [docs/glossary.md](../../../docs/glossary.md).
 
 ## 1. Context before rows
 
@@ -20,7 +20,7 @@ Read the run header first and state it:
 - `ff` (also the run_id suffix), read together with the run date. Before
   2026-08-31 dashboards and imagery existed only behind `ff=experimental`;
   from that date the default profile has them. What each profile holds:
-  [README, Running the set](../../../README.md#running-the-set).
+  "Running GOLD here" in [docs/gold-legacy.md](../../../docs/gold-legacy.md).
 - `num_trials`: a 1-trial run is a smoke run, and its "failures" may be trial
   noise.
 - `caseset` / `caseset_version`: if the version differs from that store's
@@ -49,7 +49,7 @@ Read the run header first and state it:
 |---|---|
 | **agent regression** | previously-passing uid now fails consistently across trials; actuals show changed behaviour |
 | **stale expectation** | agent output is defensibly right; expected value predates a data/product change |
-| **harness defect** | reason text contradicts actuals; check fired on the wrong artefact; parse failure |
+| **harness defect** | reason text contradicts actuals; check fired on the wrong artifact; parse failure |
 | **flake** | trial disagreement, nudge-dependent routing, borderline tolerance |
 
 Rules of thumb:
@@ -64,7 +64,7 @@ Rules of thumb:
 ## 4. Deliverable
 
 Fill `results/gold/recommendations/<run_id>.md` with the four sections the
-after-run ritual requires ([README, After a run](../../../README.md#after-a-run));
+after-run ritual requires ("After a GOLD run" in [docs/gold-legacy.md](../../../docs/gold-legacy.md));
 `results/gold/recommendations/20260801T093002Z.md` is the model:
 
 1. **File upstream:** agent behaviour, with failing and flapping row lists.

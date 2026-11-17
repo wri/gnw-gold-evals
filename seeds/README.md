@@ -1,43 +1,65 @@
 # Seeds
 
 CSV files that CHALLENGE cases and BENCHMARK versions were built from. No
-run reads them. Once a case is in the store, its YAML file is the source
-of truth, and later edits go to the case files, not to these CSVs. How the
-three import paths fit together: [cases/challenge/README.md, How cases get
+run reads them. They are used in two ways:
+
+- The `challenge-*` files were each **imported once** into case files.
+  Since then the case YAML files are the source of truth, and edits go to
+  them, never to these CSVs.
+- The `benchmark-*` files are **read again** by
+  `tools/benchmark_from_sheet.py` every time a curated BENCHMARK version is
+  built or rebuilt. Each manifest names the file it was built from in
+  `sampling.seed_file`.
+
+How the ways cases come into the store fit together:
+[cases/challenge/README.md, How cases get
 here](../cases/challenge/README.md#how-cases-get-here).
 
-Two layouts appear here:
+## Layouts
 
-- **Sheet layout** (the `challenge-*` files): one row per case, with
-  `test_id`, `status`, `test_group`, `query`, `expected_*` columns that
+- **Case sheet layout** (the `challenge-*` files): one row per case, with
+  `test_id`, `status`, `test_group`, `query` and `expected_*` columns that
   become the case's `expected` block, and other columns that become
   `notes`. `tools/import_sheet.py --csv` reads it.
 - **Benchmark sheet layout** (the `benchmark-*` files): one row per
-  BENCHMARK question, naming its CHALLENGE case by `challenge_id` or by
-  exact query text, plus the facets the scorecards page groups by.
-  `tools/benchmark_from_sheet.py --seed` reads it and tells the two
-  versions apart by their type column: `benchmark_query_type` (the
-  proposed set) or `query_type` (the BEF sheet).
+  BENCHMARK question. A row names its CHALLENGE case by `challenge_id` or by
+  exact query text, and carries the facets the scorecards page groups by.
+  `tools/benchmark_from_sheet.py --seed` reads it and tells two versions of
+  the layout apart by their type column: `benchmark_query_type` (the
+  proposed set) or `query_type` (the later sheet, whose exports carry `bef`
+  in their file names).
 
 ## The files
 
-| File | What it is | Suite | Read by | Status |
-|---|---|---|---|---|
-| `challenge-aoi-v1.csv` | 131 AOI prompts in the sheet layout, with expected ids verified against prod `/api/aois` on 2026-09-01 | CHALLENGE `aoi` set | `tools/import_sheet.py --csv`, on 2026-09-01: each of those cases has `notes.source_tab: challenge-aoi-v1` | History. The draft-5 review (2026-10-27) changed five of its cases since (`ch-aoi-028`, `-091`, `-116`, `-118`, `-119`), so it no longer matches the store |
-| `challenge-dataset-v1.csv` | 200 dataset-selection prompts ("show X on the map") in the sheet layout, with expected values from the project-zeno catalogue at `e2fb83f` | CHALLENGE `dataset` set | `tools/import_sheet.py --csv --set map`, on 2026-09-25, when it was `challenge-map-v1.csv`; the set and the file were renamed on 2026-09-29 | History. One case changed since (`ch-dataset-171` gained `accept_nudge_offering`) |
-| `benchmark-v2026-proposed.csv` | The proposed v2026 BENCHMARK set: 199 rows in the older benchmark layout (JTBD jobs, impact pathways, user groups) | BENCHMARK `2026-draft-2`; CHALLENGE Batch 4 | `tools/benchmark_from_sheet.py --seed` built `2026-draft-2`. A Claude Code session drafted 63 CHALLENGE cases from its NEW rows on 2026-10-01 (`notes.expectations` says so); one of them, `ch-mon-028`, was later removed from the CSV | History: `2026-draft-2` is retired |
-| `benchmark-v2026-bef-2026-10-22.csv` | The BEF benchmark sheet exported on 2026-10-22: 299 rows in the BEF layout (use cases UC1 to UC6, engagement, AOI type, capability, grounding, fixture) | BENCHMARK `2026-draft-3`; CHALLENGE Batch 5 | `tools/benchmark_from_sheet.py --seed` built `2026-draft-3`. A Claude Code session drafted 168 CHALLENGE cases from its rows on 2026-10-23 | History (`2026-draft-3` is retired), and the file to restore the Ghana questions from once PZB-1408 is fixed. **Do not rename it**: 168 case files record this file name in `notes.expectations` |
-| `benchmark-v2026-bef-2026-10-26.csv` | The 22 October export with the queries of eight Ghana questions moved to Côte d'Ivoire, because the analytics API rejects Ghana's sub-national GADM ids (PZB-1408) | BENCHMARK `2026-draft-4` | `tools/benchmark_from_sheet.py --seed` | History: `2026-draft-4` is retired |
-| `benchmark-v2026-bef-2026-10-27.csv` | The 26 October file with four more queries changed in the draft-5 review (two moved off Ghana, two reworded) and one row's dates | BENCHMARK `2026-draft-5` | `tools/benchmark_from_sheet.py --seed` | **Input.** Rebuilding `2026-draft-5`, or building the `2026` version from it, reads this file |
+| File | What it is | Status |
+|---|---|---|
+| `challenge-aoi-v1.csv` | 131 area prompts in the case sheet layout | imported once (2026-09-01) into the `aoi` set; history |
+| `challenge-dataset-v1.csv` | 200 "show X on the map" prompts in the case sheet layout | imported once (2026-09-25) into the `dataset` set; history |
+| `benchmark-v2026-proposed.csv` | the proposed v2026 BENCHMARK set, 199 rows, with Jobs to be Done numbers, impact pathways and user groups | built `2026-draft-2`; history |
+| `benchmark-v2026-bef-2026-10-22.csv` | the benchmark sheet exported on 2026-10-22, 299 rows, with the use cases UC1 to UC6 of [benchmarks/README.md](../benchmarks/README.md) and other facets | built `2026-draft-3`; history. It holds the original wording of the questions later moved off Ghana |
+| `benchmark-v2026-bef-2026-10-26.csv` | the 2026-10-22 export with eight Ghana questions moved to Côte d'Ivoire | built `2026-draft-4`; history |
+| `benchmark-v2026-bef-2026-10-27.csv` | the 2026-10-26 file with four more queries and one row's dates changed | **input**: rebuilding `2026-draft-5` reads it |
+
+The Ghana questions moved because the analytics API rejects Ghana's
+sub-national GADM ids; the fix is the project-zeno Jira ticket PZB-1408
+([cases/challenge/CHANGELOG.md](../cases/challenge/CHANGELOG.md)).
 
 ## Rules
 
-- **Do not import a seed CSV again.** `tools/import_sheet.py` writes the
-  CSV's values over the cases it imported before, so a second import
-  would undo every edit made to those cases since.
+- **Do not import a `challenge-*` seed again.** `tools/import_sheet.py`
+  writes the CSV's values over the cases it imported before, so a second
+  import would undo every edit made to those cases since.
+- **Do not edit a committed seed.** When a member's query changes, copy the
+  input seed to a new dated file (`benchmark-v2026-bef-<YYYY-MM-DD>.csv`),
+  change that row, and rebuild the draft from the new file
+  ([After an edit](../cases/challenge/README.md#after-an-edit)). The old
+  file becomes history, and each manifest keeps naming the exact input it
+  was built from.
 - **Do not rename a seed.** Case notes and BENCHMARK manifests
-  (`sampling.seed_file`) record seed file names.
-- `cases/challenge/MANIFEST.json` still names `challenge-map-v1.csv` in its
-  `source` field: `tools/check.py --fix` keeps the `source` it finds, and
-  the last import before the rename wrote that name. It is a label, not a
+  (`sampling.seed_file`) record seed file names: for example, every case
+  drafted from `benchmark-v2026-bef-2026-10-22.csv` names it in
+  `notes.expectations`.
+- `cases/challenge/MANIFEST.json` still names `challenge-map-v1.csv`, the
+  dataset seed's name before the set was renamed, in its `source` field.
+  `tools/check.py --fix` keeps the `source` it finds. It is a label, not a
   path, and nothing else reads it.

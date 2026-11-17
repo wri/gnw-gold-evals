@@ -7,9 +7,13 @@ For each manifest: structural validation (``goldset.benchmark``), then per
 active (non-voided) member: the uid exists in the source store, the case is
 ``ready``, and the frozen facets (id, set, cohort, difficulty, stages) still
 match the live case. A problem is an **error** on a frozen version (exit 1)
-and a **warning** on a draft: editing a CHALLENGE case that a draft sampled
+and a **warning** on a draft: editing a CHALLENGE case that a draft lists
 is allowed, but it must be visible, because it silently shrinks the draft.
-Retired versions are validated structurally only.
+The fix differs: rebuild a draft with the tool that wrote it; never edit a
+frozen member (undo the edit, or void the member with an erratum). The tool
+exits 0 on a warning, but tests/test_check_benchmark.py fails on any
+warning in a committed manifest, so CI does too. Retired versions are
+validated structurally only.
 """
 
 from __future__ import annotations
@@ -27,18 +31,28 @@ from goldset.benchmark import Benchmark, load_benchmark  # noqa: E402
 from goldset.store import load_store  # noqa: E402
 
 
+def remedy(bench: Benchmark) -> str:
+    """What to do about a member problem: it depends on the version's status."""
+    if bench.status == "frozen":
+        return ("never edit a frozen member: undo the case edit, or void the "
+                "member with an erratum (benchmarks/README.md)")
+    tool = bench.raw.get("sampling", {}).get("tool", "the tool that wrote it")
+    return f"rebuild the draft with {tool} (benchmarks/README.md)"
+
+
 def member_problems(bench: Benchmark, repo_root: Path) -> list[str]:
     cases_dir = repo_root / bench.source.get("cases_dir", "cases/challenge")
     by_uid = {uid: case for _p, case, uid in load_store(cases_dir)}
+    fix = remedy(bench)
     problems = []
     for m in bench.active_members:
         case = by_uid.get(m.uid)
         if case is None:
-            problems.append(f"{m.id} ({m.uid}): uid not in {cases_dir} — "
-                            "the case was edited or deleted; void it with an erratum")
+            problems.append(f"{m.id} ({m.uid}): uid not in {cases_dir}: "
+                            f"the case was edited or deleted; {fix}")
             continue
         if case.status != "ready":
-            problems.append(f"{m.id} ({m.uid}): status {case.status!r}, not ready")
+            problems.append(f"{m.id} ({m.uid}): status {case.status!r}, not ready; {fix}")
         live = {"id": case.id, "set": case.set, "cohort": case.group,
                 "difficulty": case.notes.get("difficulty", ""),
                 "stages": tuple(stages_for(case))}
@@ -46,7 +60,7 @@ def member_problems(bench: Benchmark, repo_root: Path) -> list[str]:
                   "difficulty": m.difficulty, "stages": m.stages}
         drift = [k for k in live if live[k] != frozen[k]]
         if drift:
-            problems.append(f"{m.id} ({m.uid}): frozen {drift} differ from the live case")
+            problems.append(f"{m.id} ({m.uid}): frozen {drift} differ from the live case; {fix}")
     return problems
 
 
