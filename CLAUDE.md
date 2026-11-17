@@ -54,18 +54,29 @@ uv sync                                                        # install (Python
 uv run pytest -q                                               # full suite, no network
 uv run pytest tests/test_canonical.py -q                       # one file
 uv run pytest tests/test_store.py::test_write_read_round_trip  # one test
-uv run ruff check src tools tests                              # lint, as CI runs it
+uv run ruff check src tools tests generation                   # lint, as CI runs it
 
-# Runs. Tokens: STAGING_API_TOKEN / PROD_API_TOKEN, else API_TOKEN;
-# .env is loaded automatically (README "Setup").
-uv run gold run --env staging --build "<label>"              # smoke: 1 trial, 10 workers
-uv run gold run --env staging --trials 3 --build "<label>"   # official / release gate
-uv run gold run --resume <run_id>                            # finish a killed run
-uv run gold run --dry-run                                    # list selected cases, no API calls
+# Runs: `evals` (`gold` is the older name for the same command). There is no
+# default suite: pass --suite, --benchmark or --cases-dir. Tokens:
+# STAGING_API_TOKEN / PROD_API_TOKEN, else API_TOKEN; .env is loaded
+# automatically (README "Setup").
+uv run evals run --suite challenge --env prod --trials 3 \
+  --status-exclude "not doing,todo" --build "<label>"                # canonical CHALLENGE
+uv run evals run --suite challenge --set aoi --env staging --build "<label>"   # smoke: 1 trial
+uv run evals run --benchmark benchmarks/2026-draft-5.json --env prod --trials 3 --build "<label>"
+uv run evals run --suite challenge --resume <run_id>               # finish a killed run (its suite)
+uv run evals run --suite challenge --dry-run                       # list selected cases, no API calls
+uv run python tools/challenge_rollup.py results/challenge/runs/<run_id>.json
 
-# After any case edit: all three, committed with the edit
-uv run python tools/check.py --fix
-uv run python tools/coverage_doc.py
+# After any CHALLENGE case edit, committed with the edit
+uv run python tools/check.py --fix --suite challenge
+uv run python tools/coverage_doc.py --suite challenge
+uv run python tools/check_benchmark.py
+
+# GOLD legacy copy
+uv run evals run --suite gold --env staging --trials 3 --build "<label>"   # official / release gate
+uv run python tools/check.py --fix --suite gold
+uv run python tools/coverage_doc.py --suite gold
 uv run python tools/audit_cases.py --strict
 
 uv run python tools/sync_zeno_catalog.py   # refresh the dataset catalogue snapshot
