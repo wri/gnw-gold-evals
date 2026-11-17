@@ -1,6 +1,6 @@
 ---
 name: case-edit
-description: Use when changing any case in any store (GOLD cases/v2, CHALLENGE cases/challenge): prompt, expected values, status, notes, park/unpark. Explains uid consequences first, then runs the lifecycle for that store with an explicit --cases-dir, and enforces status-transition rules. For GOLD, also see the legacy-copy note in the body.
+description: Use when changing any case in any store (GOLD cases/v2 or CHALLENGE cases/challenge), whether prompt, expected values, status, notes or park/unpark. Explains uid consequences first, then runs the lifecycle for that store with an explicit --cases-dir, and enforces status-transition rules. For GOLD, also see the legacy-copy note in the body.
 ---
 
 # case-edit: the case-store lifecycle
