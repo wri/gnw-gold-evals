@@ -78,11 +78,11 @@ diffs, or CI baseline logic. The ledger contract
 
 1. **Rollup**: `tools/challenge_rollup.py` as above; read rates against
    `TARGETS.yml`.
-2. **Write `results/challenge/recommendations/<run_id>.md`** — the run is
+2. **Write `results/challenge/recommendations/<run_id>.md`**: the run is
    not done until someone can act on it. Cover: what to file upstream
    (agent behaviour, with failing rows and trace URLs as evidence), what
    the run says about the case set (expectation reviews, scoring gaps,
-   todo pinning — remember failures are data, never fix a case to make it
+   todo pinning; remember failures are data, never fix a case to make it
    pass), what it says about the harness, and a next-run watchlist. Frame
    everything as rates vs targets, never regression counts.
    `results/challenge/recommendations/20260901T131519Z_prod.md` is the

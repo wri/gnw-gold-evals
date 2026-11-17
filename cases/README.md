@@ -93,8 +93,8 @@ field. Check this table before you write one.
 
 A numeric case can name **which figure** it is about instead of **what value**
 that figure has. The harness fetches the number from the analytics API before
-any trial runs, so the case survives every data release with its uid — and its
-regression history — intact.
+any trial runs, so the case survives every data release with its uid, and its
+result history stays intact.
 
 ```yaml
 expected:
@@ -106,22 +106,22 @@ expected:
   scope: analyse
 ```
 
-**Grammar** — `AGG(column)` or `AGG(column) WHERE column=value`, with `AGG` one
+**Grammar**: `AGG(column)` or `AGG(column) WHERE column=value`, with `AGG` one
 of `sum`, `max`, `min`, `count`. An explicit aggregate is **mandatory**: a bare
 column would be ambiguous whenever the filter matches more than one row, which
 is live (1-059 pulls 254 areas).
 
 **No new request fields.** The request is built from expectations the case
-already carries — `aoi_ids`, `aoi_source`, `dataset_id`, `context_layer`,
-`dataset_parameters`, `start_date`, `end_date` — because a case already
+already carries (`aoi_ids`, `aoi_source`, `dataset_id`, `context_layer`,
+`dataset_parameters`, `start_date`, `end_date`), because a case already
 asserts what query the agent should build. `ground_truth` is purely the
 *response* side.
 
 **Four rules, each with a case behind it:**
 
 1. **The selector names the API's column, not the agent's.** The agent renames
-   columns in its pandas codeact — 1-076's chart says `loss_area_ha` where the
-   API says `area_ha` — so authoring from an artifact's `charts_data` is a trap.
+   columns in its pandas codeact (1-076's chart says `loss_area_ha` where the
+   API says `area_ha`), so authoring from an artifact's `charts_data` is a trap.
    Read column names from project-zeno's `src/api/services/charts.py`, or from a
    raw `source_url` response.
 2. **The metric is often not the obvious column.** 1-046 asks for "tonnes of
