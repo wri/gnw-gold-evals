@@ -9,7 +9,7 @@ expected:
     it instead; does not claim to have marked anything.
 notes:
   behaviour: Say marking false positives is not supported; suggest how to record it
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-027); Alerts JTBD (Miro) (mark and report
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-027); Alerts JTBD (Miro) (mark and report
     false positives)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

@@ -11,8 +11,8 @@ expected:
 notes:
   behaviour: Say production-forest boundaries are not available; offer tree cover or primary
     forest
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-243); Map exploration research ("ver
-    extensión de bosques de producción en Perú")
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-243); Map exploration research ("ver extensión
+    de bosques de producción en Perú")
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'

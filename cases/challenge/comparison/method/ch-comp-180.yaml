@@ -10,8 +10,8 @@ expected:
     scope and August–July year, minimum mapping unit) without claiming either is wrong.
 notes:
   behaviour: Explain definitional and method differences; no claim that either is wrong
-  lineage: 'benchmark v2026 BEF sheet 2026-10-22 (bm26-284); Jobs matrix #8 (compare global
-    vs national data); GFW Advisory Council focus groups'
+  lineage: 'v2026 benchmark sheet 2026-10-22 (bm26-284); Jobs matrix #8 (compare global vs
+    national data); GFW Advisory Council focus groups'
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

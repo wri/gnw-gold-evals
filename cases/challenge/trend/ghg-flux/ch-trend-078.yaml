@@ -19,7 +19,7 @@ expected:
     from tree cover loss fell between 2020 and 2024'
 notes:
   behaviour: Answer with data
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-176); USY-001123 IPCC; USY-001180
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-176); USY-001123 IPCC; USY-001180
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
     2026-10-27'

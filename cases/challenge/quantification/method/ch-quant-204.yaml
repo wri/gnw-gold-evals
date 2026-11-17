@@ -9,7 +9,7 @@ expected:
     analysis is reliable.
 notes:
   behaviour: Explain resolution and recommended scale
-  lineage: 'benchmark v2026 BEF sheet 2026-10-22 (bm26-297); Map exploration research (geographer:
+  lineage: 'v2026 benchmark sheet 2026-10-22 (bm26-297); Map exploration research (geographer:
     indicate recommended scales)'
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

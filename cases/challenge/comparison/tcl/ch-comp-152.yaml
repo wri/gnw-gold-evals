@@ -17,8 +17,7 @@ expected:
     lost more tree cover than Mato Grosso since 2021'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-064); USY-001228 Mighty Earth / JBS
-    Rondônia
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-064); USY-001228 Mighty Earth / JBS Rondônia
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

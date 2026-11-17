@@ -9,7 +9,7 @@ expected:
     once and offers to analyse a named territory (or asks which); does not invent a total.
 notes:
   behaviour: 'redirect or clarify: many territories; offer a named territory'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-187); USY-001636 Protected Planet 30x30
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-187); USY-001636 Protected Planet 30x30
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

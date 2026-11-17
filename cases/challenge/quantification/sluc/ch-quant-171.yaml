@@ -18,7 +18,7 @@ expected:
     = 'CO2e' and year = 2024 and aoi_id = 'BRA'
 notes:
   behaviour: answer with data if subnational sLUC exists; else national value with caveat
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-184); USY-001649 Blonk; USY-001650 AdAstra
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-184); USY-001649 Blonk; USY-001650 AdAstra
     corporate inventories
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'

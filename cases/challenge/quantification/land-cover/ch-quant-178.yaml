@@ -11,7 +11,7 @@ expected:
     land cover for a different area as if it were Sinjajevina.
 notes:
   behaviour: answer with land cover data, or clarify boundary
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-237); USY-001430 Save Sinjajevina
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-237); USY-001430 Save Sinjajevina
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

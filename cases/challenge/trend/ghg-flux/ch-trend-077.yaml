@@ -13,8 +13,8 @@ expected:
 notes:
   behaviour: Answer with annual flux for the preloaded area, or totals with caveat if annual
     not available
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-175); USY-001563 WWF-US landscapes;
-    Portfolio monitoring research (carbon/restoration projects)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-175); USY-001563 WWF-US landscapes; Portfolio
+    monitoring research (carbon/restoration projects)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

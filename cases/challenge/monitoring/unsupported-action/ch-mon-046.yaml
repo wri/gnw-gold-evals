@@ -10,7 +10,7 @@ expected:
     from Global Forest Watch or the API); does not claim to have produced a file.
 notes:
   behaviour: Provide a download if supported; otherwise explain how to get one
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-022); USY-001218 Charagua MODIF; Alerts
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-022); USY-001218 Charagua MODIF; Alerts
     JTBD (Miro) (download alert points)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

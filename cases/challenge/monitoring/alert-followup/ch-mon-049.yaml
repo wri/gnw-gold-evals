@@ -13,8 +13,8 @@ expected:
 notes:
   behaviour: Suggest prioritization using size, recency, confidence and context; defer final
     choice to local knowledge
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-025); USY-001596 Ituri; GFW Advisory
-    Council focus groups (prioritization by size, history, access)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-025); USY-001596 Ituri; GFW Advisory Council
+    focus groups (prioritization by size, history, access)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

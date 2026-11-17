@@ -9,7 +9,7 @@ expected:
     and points to the documentation on how to report it, without inventing error ranges.
 notes:
   behaviour: Explain uncertainty sources accurately; point to documentation
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-293); USY-000517 FREL analysis
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-293); USY-000517 FREL analysis
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

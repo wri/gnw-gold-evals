@@ -11,8 +11,8 @@ expected:
     global; does not attach other datasets' accuracy figures to it or invent a DRC range.
 notes:
   behaviour: Explain accuracy assessment and uncertainty honestly; no invented error bars
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-166); USY-001602 Guardian Ebola; GFW
-    Advisory Council focus groups (journalists fear wrong information)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-166); USY-001602 Guardian Ebola; GFW Advisory
+    Council focus groups (journalists fear wrong information)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

@@ -20,7 +20,7 @@ expected:
     loss than 2019'
 notes:
   behaviour: Answer with data; check the premise
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-208); USY-001555 Bolivia fires documentary
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-208); USY-001555 Bolivia fires documentary
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

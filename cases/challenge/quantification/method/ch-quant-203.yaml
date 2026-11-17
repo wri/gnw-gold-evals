@@ -9,7 +9,7 @@ expected:
     points to the methodology documentation.
 notes:
   behaviour: Explain method accurately; point to documentation
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-294); USY-001651 Olam GHG data
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-294); USY-001651 Olam GHG data
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

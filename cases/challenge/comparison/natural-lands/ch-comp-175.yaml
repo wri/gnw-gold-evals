@@ -16,8 +16,7 @@ expected:
     = 'BRA.12' and land_cover_class in ('Cropland', 'Cultivated grasslands')
 notes:
   behaviour: answer with data
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-230); USY-001293 Sicredi degraded-land
-    lending
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-230); USY-001293 Sicredi degraded-land lending
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

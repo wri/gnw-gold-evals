@@ -11,7 +11,7 @@ expected:
   data_pull: 'TRUE'
 notes:
   behaviour: answer with data for the preloaded custom area
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-116); USY-001416 Philip Morris
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-116); USY-001416 Philip Morris
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

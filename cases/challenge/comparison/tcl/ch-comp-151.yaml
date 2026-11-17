@@ -19,8 +19,8 @@ expected:
     in 2023'
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-063); USY-001417 Wilmar; USY-001415
-    PepsiCo palm
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-063); USY-001417 Wilmar; USY-001415 PepsiCo
+    palm
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

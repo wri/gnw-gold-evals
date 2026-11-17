@@ -11,8 +11,8 @@ expected:
 notes:
   behaviour: Explain known false-positive sources and seasonality; do not dismiss or confirm
     without evidence
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-057); USY-001579 IFCAS Lampung; Alerts
-    JTBD (Miro) (clouds, seasonality, false positives)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-057); USY-001579 IFCAS Lampung; Alerts JTBD
+    (Miro) (clouds, seasonality, false positives)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'

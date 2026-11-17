@@ -11,7 +11,7 @@ expected:
     invent per-area figures.
 notes:
   behaviour: 'Redirect: many areas; offer national total or a named PA'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-181); USY-001586 Madagascar PA Outlook
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-181); USY-001586 Madagascar PA Outlook
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

@@ -12,7 +12,7 @@ expected:
   accept_dashboard: 'TRUE'
 notes:
   behaviour: Produce or point to a printable map export, or say not supported yet
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-023); USY-000960 Aru; GFW Advisory Council
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-023); USY-000960 Aru; GFW Advisory Council
     focus groups (map exports for community meetings)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'

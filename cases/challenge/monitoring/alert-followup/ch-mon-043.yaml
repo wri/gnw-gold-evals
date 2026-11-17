@@ -11,8 +11,8 @@ expected:
     shown imagery it did not show.
 notes:
   behaviour: Show imagery if available; otherwise say so and suggest where to get it
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-019); USY-001153 JPIK Kerinci Seblat;
-    Alerts JTBD (Miro) (before/after imagery); GFW Advisory Council focus groups (Planet imagery
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-019); USY-001153 JPIK Kerinci Seblat; Alerts
+    JTBD (Miro) (before/after imagery); GFW Advisory Council focus groups (Planet imagery
     most valued)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

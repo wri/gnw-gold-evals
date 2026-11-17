@@ -18,7 +18,7 @@ expected:
   figure: sum(area_ha) where alert_date in {month_start}..{run}
 notes:
   behaviour: answer with alerts restricted to natural lands
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-054); USY-001248 Kakataibo; GFW Advisory
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-054); USY-001248 Kakataibo; GFW Advisory
     Council focus groups (local context to understand alerts)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review

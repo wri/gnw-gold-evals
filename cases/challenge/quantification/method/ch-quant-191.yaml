@@ -10,7 +10,7 @@ expected:
     what that means for the smallest clearings it can detect.
 notes:
   behaviour: Answer accurately (30 m pixels; detection limits)
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-269); GFW Advisory Council focus groups
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-269); GFW Advisory Council focus groups
     ("what does the pixel mean?")
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

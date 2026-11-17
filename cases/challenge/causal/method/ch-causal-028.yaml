@@ -11,7 +11,7 @@ expected:
     or who cleared).
 notes:
   behaviour: Explain driver classes and what they can and cannot distinguish
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-277); USY-001446 Wageningen rebuttal
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-277); USY-001446 Wageningen rebuttal
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'
   synthetic: 'TRUE'

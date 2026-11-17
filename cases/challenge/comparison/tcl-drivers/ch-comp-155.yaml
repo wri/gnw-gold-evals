@@ -14,7 +14,7 @@ expected:
   accept_nudge_offering: 4;8 | 9
 notes:
   behaviour: 'answer with data (2–3 named areas: supported)'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-067); USY-001512 Malaysia EUDR
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-067); USY-001512 Malaysia EUDR
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; accept_nudge_offering added 2026-10-26 (AJ); draft-5 review 2026-10-27'
   synthetic: 'TRUE'

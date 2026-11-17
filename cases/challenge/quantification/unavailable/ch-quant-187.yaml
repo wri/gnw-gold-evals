@@ -9,7 +9,7 @@ expected:
     does not present national figures as social forestry figures.
 notes:
   behaviour: Say social forestry boundaries are not available
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-262); GFW Advisory Council focus groups
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-262); GFW Advisory Council focus groups
     (social forestry data request)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

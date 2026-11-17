@@ -9,7 +9,7 @@ expected:
   data_pull: 'TRUE'
 notes:
   behaviour: answer with data for the preloaded custom area
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-170); USY-001563 WWF-US project landscapes;
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-170); USY-001563 WWF-US project landscapes;
     USY-001607 ZSL TRIDOM
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review'

@@ -10,8 +10,8 @@ expected:
 notes:
   behaviour: 'redirect: do not fabricate a portfolio answer; explain the real limit (too many
     areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative'
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-094); USY-001633 Matsés; USY-001576
-    Wampis (network view)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-094); USY-001633 Matsés; USY-001576 Wampis
+    (network view)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     revised 2026-10-24 from run evidence (see review); needs human review'
   synthetic: 'TRUE'

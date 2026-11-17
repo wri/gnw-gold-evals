@@ -10,8 +10,8 @@ expected:
     not count.
 notes:
   behaviour: Clarify which Amazon boundary or offer country-level breakdown
-  lineage: benchmark v2026 BEF sheet 2026-10-22 (bm26-154); Map exploration research (map
-    exploration question)
+  lineage: v2026 benchmark sheet 2026-10-22 (bm26-154); Map exploration research (map exploration
+    question)
   expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
     needs human review; draft-5 review 2026-10-27'
   synthetic: 'TRUE'
