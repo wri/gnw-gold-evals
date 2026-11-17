@@ -1,9 +1,13 @@
 ---
 name: new-case
-description: Use when authoring a new GOLD case ("add a case for…"). Interviews for the capability, maps expected fields to checks, enforces authoring rules and verified answers before done.
+description: Use when authoring a new GOLD case ("add a GOLD case for...", legacy copy in this repo). Interviews for the capability, maps expected fields to checks, enforces authoring rules and verified answers before done. Not for CHALLENGE or BENCHMARK cases.
 ---
 
 # new-case: author a case that earns its place
+
+> GOLD moved to wri/project-zeno `evals/gold/` on 2026-10-27. This skill applies to the
+> legacy copy in this repo and will move with it. For CHALLENGE or BENCHMARK work use
+> **challenge-cases** (CHALLENGE cases, including seed and generated ones).
 
 GOLD is a capability smoke test: a case earns its place by failing when a
 capability breaks, deterministically. Full authoring rules:
