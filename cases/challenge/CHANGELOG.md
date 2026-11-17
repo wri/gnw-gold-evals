@@ -189,8 +189,8 @@ the freeze.
 ## Batch 5: the v2026 benchmark sheet (`portfolio` set, plus monitoring, numeric and causal rows)
 
 168 cases written by hand on 2026-10-23 from the benchmark sheet exported
-on 2026-10-22 (`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows; the
-sheet's file names carry `bef`): the rows that no existing case answers.
+on 2026-10-22 (`seeds/benchmark-v2026-bef-2026-10-22.csv`, 299 rows): the
+rows that no existing case answers.
 The sheet's other 131 rows reuse existing cases (98 real-traffic cases by
 `challenge_id`, 33 earlier synthetic cases by query text). Every new case
 is synthetic and its expectations are **drafted, not reviewed**

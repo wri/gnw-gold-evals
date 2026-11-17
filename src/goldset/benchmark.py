@@ -46,7 +46,7 @@ assert set(STAGE_ORDER) == set(BUCKETS)
 # into Geospatial (find the place) and Dataset (find the data) — two
 # separate types, never pooled (AJ, 2026-09-29). A type with no sets is
 # listed so reports can say "not yet measured" rather than omit it.
-# Portfolio (many areas at once) came with the v2026 BEF sheet (AJ, 2026-10-23).
+# Portfolio (many areas at once) came with the v2026 benchmark sheet (AJ, 2026-10-23).
 QUERY_TYPES: tuple[dict[str, Any], ...] = (
     {"key": "refusal", "label": "Refusal", "sets": []},
     {"key": "identification", "label": "Identification", "sets": []},
@@ -70,7 +70,7 @@ MEMBER_FIELDS = ("uid", "id", "type", "set", "cohort", "difficulty", "stages")
 # 2026-draft-3), and whether the question is synthetic.
 OPTIONAL_LIST_FIELDS = ("jobs", "pathways", "user_groups", "use_cases")
 
-# Priority use cases of the v2026 BEF sheet (AJ, 2026-10-23).
+# Priority use cases of the v2026 benchmark sheet (AJ, 2026-10-23).
 USE_CASES = {
     "UC1": "Alert monitoring and response",
     "UC2": "Supply chain and sourcing",

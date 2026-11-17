@@ -26,8 +26,7 @@ here](../cases/challenge/README.md#how-cases-get-here).
   exact query text, and carries the facets the scorecards page groups by.
   `tools/benchmark_from_sheet.py --seed` reads it and tells two versions of
   the layout apart by their type column: `benchmark_query_type` (the
-  proposed set) or `query_type` (the later sheet, whose exports carry `bef`
-  in their file names).
+  proposed set) or `query_type` (the later v2026 benchmark sheet).
 
 ## The files
 
@@ -50,14 +49,14 @@ sub-national GADM ids; the fix is the project-zeno Jira ticket PZB-1408
   writes the CSV's values over the cases it imported before, so a second
   import would undo every edit made to those cases since.
 - **Do not edit a committed seed.** When a member's query changes, copy the
-  input seed to a new dated file (`benchmark-v2026-bef-<YYYY-MM-DD>.csv`),
+  input seed to a new dated file (`benchmark-v2026-sheet-<YYYY-MM-DD>.csv`),
   change that row, and rebuild the draft from the new file
   ([After an edit](../cases/challenge/README.md#after-an-edit)). The old
   file becomes history, and each manifest keeps naming the exact input it
   was built from.
 - **Do not rename a seed.** Case notes and BENCHMARK manifests
   (`sampling.seed_file`) record seed file names: for example, every case
-  drafted from `benchmark-v2026-bef-2026-10-22.csv` names it in
+  drafted from the 2026-10-22 export of the benchmark sheet names it in
   `notes.expectations`.
 - `cases/challenge/MANIFEST.json` still names `challenge-map-v1.csv`, the
   dataset seed's name before the set was renamed, in its `source` field.

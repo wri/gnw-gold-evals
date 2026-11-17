@@ -84,7 +84,7 @@ in the CHALLENGE README:
    `uv run python tools/benchmark_from_sheet.py --seed <seed> --version <v>`.
    If a query changed, the tool stops ("query differs from the sheet's" or
    "no CHALLENGE case has this query"): copy the seed to a new dated file
-   `seeds/benchmark-v2026-bef-<YYYY-MM-DD>.csv`, put the new query in that
+   `seeds/benchmark-v2026-sheet-<YYYY-MM-DD>.csv`, put the new query in that
    row, and rebuild from the new file. Never edit or rename the old seed.
    Read `git diff` on the case files: the rebuild rewrites members' sheet
    notes.

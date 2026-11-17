@@ -85,12 +85,12 @@ def test_parse_pathways(text, want):
     assert bfs.parse_pathways(text) == want
 
 
-BEF_COLS = ["benchmark_id", "query", "tags", "UC1", "UC2", "UC3", "UC4", "UC5", "UC6",
+USE_CASE_COLS = ["benchmark_id", "query", "tags", "UC1", "UC2", "UC3", "UC4", "UC5", "UC6",
             "query_type", "engagement", "aoi_type", "capability", "source", "grounding",
             "story_refs", "challenge_id", "refresh_risk"]
 
 
-def bef_setup(tmp_path, rows):
+def use_case_setup(tmp_path, rows):
     cases = [
         Case(id="ch-quant-001", status="ready", group="tcl", set="quantification", query="How much?",
              expected={"dataset_id": "4", "data_pull": "TRUE"},
@@ -104,15 +104,15 @@ def bef_setup(tmp_path, rows):
     for c in cases:
         write_case(root, c)
     write_manifest(root, build_manifest(cases, "t"))
-    seed = tmp_path / "bef.csv"
+    seed = tmp_path / "sheet.csv"
     with seed.open("w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(BEF_COLS)
+        w.writerow(USE_CASE_COLS)
         w.writerows(rows)
     return root, seed
 
 
-BEF_ROWS = [
+USE_CASE_ROWS = [
     ["bm26-001", "How much?", "UC4;UC3", "", "", "Y", "Y", "", "", "quantification", "First look",
      "Country", "Supported", "Existing Challenge case", "Verified Challenge case", "", "ch-quant-001", "Low"],
     ["bm26-002", "Rank every state", "UC2", "", "Y", "", "", "", "", "portfolio", "First look",
@@ -121,8 +121,8 @@ BEF_ROWS = [
 ]
 
 
-def test_bef_sheet_maps_use_cases_and_portfolio(tmp_path):
-    root, seed = bef_setup(tmp_path, BEF_ROWS)
+def test_use_case_sheet_maps_use_cases_and_portfolio(tmp_path):
+    root, seed = use_case_setup(tmp_path, USE_CASE_ROWS)
     data = bfs.build(seed, root, "t-draft-3", "2026-10-23", write_tags=True)
     assert from_dict(data).validate() == []
     by_id = {m["id"]: m for m in data["members"]}
@@ -133,8 +133,8 @@ def test_bef_sheet_maps_use_cases_and_portfolio(tmp_path):
     assert {t["key"]: t["measured"] for t in data["types"]}["portfolio"] is True
 
 
-def test_bef_tagging_replaces_old_facets_and_untags_dropped_cases(tmp_path):
-    root, seed = bef_setup(tmp_path, BEF_ROWS)
+def test_use_case_sheet_tagging_replaces_old_facets_and_untags_dropped_cases(tmp_path):
+    root, seed = use_case_setup(tmp_path, USE_CASE_ROWS)
     before = {c.id: u for _p, c, u in load_store(root)}
     bfs.build(seed, root, "t-draft-3", "2026-10-23", write_tags=True)
     after = {c.id: (u, c) for _p, c, u in load_store(root)}
@@ -146,15 +146,15 @@ def test_bef_tagging_replaces_old_facets_and_untags_dropped_cases(tmp_path):
     assert "benchmark_id" not in dropped and dropped["synthetic"] == "TRUE"
 
 
-def test_bef_tags_must_match_uc_columns(tmp_path):
-    rows = [BEF_ROWS[0][:2] + ["UC1"] + BEF_ROWS[0][3:]]
-    root, seed = bef_setup(tmp_path, rows)
+def test_use_case_sheet_tags_must_match_uc_columns(tmp_path):
+    rows = [USE_CASE_ROWS[0][:2] + ["UC1"] + USE_CASE_ROWS[0][3:]]
+    root, seed = use_case_setup(tmp_path, rows)
     with pytest.raises(SystemExit, match="disagree"):
         bfs.build(seed, root, "t", "2026-10-23", write_tags=False)
 
 
 def test_challenge_id_must_match_the_sheet_query(tmp_path):
-    rows = [["bm26-001", "Something else"] + BEF_ROWS[0][2:]]
-    root, seed = bef_setup(tmp_path, rows)
+    rows = [["bm26-001", "Something else"] + USE_CASE_ROWS[0][2:]]
+    root, seed = use_case_setup(tmp_path, rows)
     with pytest.raises(SystemExit, match="query differs"):
         bfs.build(seed, root, "t", "2026-10-23", write_tags=False)

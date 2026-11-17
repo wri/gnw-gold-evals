@@ -235,7 +235,7 @@ For a member of a draft (the live draft is curated from a seed CSV):
    If you changed a query, the tool stops with "query differs from the
    sheet's" (the row names its case by `challenge_id`) or "no CHALLENGE
    case has this query" (the row is matched by its text). Then copy the seed
-   to a new dated file, `seeds/benchmark-v2026-bef-<YYYY-MM-DD>.csv`, put
+   to a new dated file, `seeds/benchmark-v2026-sheet-<YYYY-MM-DD>.csv`, put
    the new query in that row, and rebuild with `--seed` set to the new file.
    Never edit or rename the old seed ([seeds/README.md](../../seeds/README.md)).
    The rebuild also rewrites each member's sheet notes in its case file:

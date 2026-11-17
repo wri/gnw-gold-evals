@@ -46,7 +46,7 @@ Definitions only. Counts are in each store's COVERAGE.md ([CHALLENGE](../cases/c
 - **COVERAGE.md**: a generated report of what a store covers: groups, buckets, expected fields, datasets, and held or parked cases. `cases/challenge/` and `cases/v2/` each have one.
 - **catalogue snapshot**: `cases/zeno_catalog.json`, a committed copy of the agent's dataset catalogue. COVERAGE.md is generated from it without network access, and ground-truth requests are built from it.
 - **seed**: a CSV under `seeds/` that cases or a BENCHMARK version were built from. See [seeds/README.md](../seeds/README.md).
-- **benchmark sheet**: a reviewed spreadsheet with one row per BENCHMARK question, exported to a seed CSV. The current one is the BEF sheet, whose exports are `seeds/benchmark-v2026-bef-*.csv`. Its rows carry the use cases UC1 to UC6.
+- **benchmark sheet**: a reviewed spreadsheet with one row per BENCHMARK question, exported to a seed CSV. The current one is the v2026 benchmark sheet, whose dated exports are listed in [seeds/README.md](../seeds/README.md#the-files). Its rows carry the use cases UC1 to UC6.
 
 ## BENCHMARK versions
 
