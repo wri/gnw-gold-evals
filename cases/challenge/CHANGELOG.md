@@ -5,7 +5,9 @@ The doctrine and the procedures are in [README.md](README.md).
 
 Abbreviations used here: PZB-NNNN is a ticket in the project-zeno Jira
 project. GFW is Global Forest Watch and LCL is Land & Carbon Lab, whose user
-stories several sets were written from. TCL is tree cover loss.
+stories several sets were written from. TCL is tree cover loss. AOI is an
+area of interest. sLUC is the statistical land-use change emission factors
+dataset (id 9).
 
 ## Batch 1: the `aoi` set
 
@@ -104,8 +106,6 @@ project-zeno catalogue at e2fb83f (`selection_hints`, `context_layers`,
 | context-layer | 15 | `dataset_id` + `context_layer` (primary or intact asks, and `no_selection` opt-outs) |
 | ambiguous | 15 | 11 pinned `select` rows with `;` alternatives, 4 pinned `nudge` rows (`dataset_choice` + options) |
 | unmappable (sLUC, climate and other asks outside the catalogue) | 15 | `dataset_id: no_selection` (sLUC `9;no_selection`) + `text` |
-
-sLUC is the statistical land-use change emission factors dataset (id 9).
 
 Every row also sets `forbidden_tools` (pull_data, generate_insights,
 create_dashboard, add_to_dashboard, add_map_widget, search_blogs,

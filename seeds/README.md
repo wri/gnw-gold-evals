@@ -36,7 +36,7 @@ here](../cases/challenge/README.md#how-cases-get-here).
 | `challenge-aoi-v1.csv` | 131 area prompts in the case sheet layout | imported once (2026-09-01) into the `aoi` set; history |
 | `challenge-dataset-v1.csv` | 200 "show X on the map" prompts in the case sheet layout | imported once (2026-09-25) into the `dataset` set; history |
 | `benchmark-v2026-proposed.csv` | the proposed v2026 BENCHMARK set, 199 rows, with Jobs to be Done numbers, impact pathways and user groups | built `2026-draft-2`; history |
-| `benchmark-v2026-bef-2026-10-22.csv` | the benchmark sheet exported on 2026-10-22, 299 rows, with use cases UC1 to UC6 and other facets | built `2026-draft-3`; history. It holds the original wording of the questions later moved off Ghana |
+| `benchmark-v2026-bef-2026-10-22.csv` | the benchmark sheet exported on 2026-10-22, 299 rows, with the use cases UC1 to UC6 of [benchmarks/README.md](../benchmarks/README.md) and other facets | built `2026-draft-3`; history. It holds the original wording of the questions later moved off Ghana |
 | `benchmark-v2026-bef-2026-10-26.csv` | the 2026-10-22 export with eight Ghana questions moved to Côte d'Ivoire | built `2026-draft-4`; history |
 | `benchmark-v2026-bef-2026-10-27.csv` | the 2026-10-26 file with four more queries and one row's dates changed | **input**: rebuilding `2026-draft-5` reads it |
 

@@ -117,11 +117,11 @@ point here.
    raw artifacts in `results/challenge/artifacts/<run_id>/` are gitignored
    and stay in this checkout; the rollup output is not committed.
 
-## Targets (the OKR loop)
+## Targets
 
-`TARGETS.yml` mirrors the store hierarchy: a challenge-wide `overall`, then
-per-set blocks (`sets.<set>.overall` and `sets.<set>.targets.<cohort>`).
-Each cycle, add or extend a cohort whose prompts do not yet pass, set its
+Targets work as a loop of objectives and key results. `TARGETS.yml`
+mirrors the store hierarchy: a challenge-wide `overall`, then per-set
+blocks (`sets.<set>.overall` and `sets.<set>.targets.<cohort>`). Each cycle, add or extend a cohort whose prompts do not yet pass, set its
 target, and commit the baseline rollup showing the rate below target: that
 commit is the commitment. At the end of the cycle, one canonical run and its
 rollup answer "the system now handles N% of prompts of this type".
