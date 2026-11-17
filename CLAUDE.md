@@ -1,140 +1,88 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. Terms are defined in the [README glossary](README.md#glossary).
+Rules and routing for Claude Code and other AI coding agents in this repo. What the repo is and how it works: [README.md](README.md). Terms: [docs/glossary.md](docs/glossary.md).
 
-## What this repo is
+## Routing
 
-The quality and accuracy evals for the GNW / Project Zeno agent: cases, harness and results ledgers in one versioned repo. It runs three things:
-
-- **CHALLENGE** (`cases/challenge/`, `results/challenge/`): realistic cases whose verdicts are pass rates per set and cohort.
-- **BENCHMARK** (`benchmarks/`, `results/benchmark/`): frozen uid manifests over CHALLENGE, giving the North Star rate and the page data the frontend scorecards page shows.
-- **The plain baseline** (`tools/plain_baseline.py`, `results/plain/`): Sonnet with web search on the BENCHMARK questions, scored on its reply.
-
-GOLD, the capability regression suite, moved to wri/project-zeno `evals/gold/` on 2026-10-27 (project-zeno PR #874). `cases/v1`, `cases/v2`, `results/gold/`, the six skills in `.claude/skills/` and the manual CI release gate are a legacy copy, kept until a later PR deletes it once its case notes are reconciled with project-zeno. Do new GOLD work in project-zeno. Rules marked GOLD apply to this copy only.
-
-Before proposing changes, read `README.md`, `cases/README.md`, `results/README.md` and the doc of the suite you touch. Where a rule below rests on a design decision, its reason is given with it.
-
-## CHALLENGE (quality rates, not regressions)
-
-`cases/challenge/` holds CHALLENGE (plan of record: `PRDs/challenge-set.md` in the GNW workspace). Read `cases/challenge/README.md` before touching the set; how each set was built is in `cases/challenge/CHANGELOG.md`. The short version:
-
-- The store is hierarchical, **set → cohort → case**, via the optional `set:` case field (`cases/challenge/<set>/<cohort>/<id>.yaml`; the sets are listed in its README). Run one set with `--set <name>`. Like `group`, `set` is never hashed into the uid.
-- Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`), never regression counts. Many cases are *expected to fail*: do not triage those failures as regressions, and never "fix" a case to make it pass.
-- Canonical published series: **prod, default profile, 3 trials**, run with `evals run --suite challenge --env prod --trials 3 --status-exclude "not doing,todo"`. Its ledger is `results/challenge/` and never mixes with another suite's runs, trends or diffs.
-- After a run: rollup, then `results/challenge/recommendations/<run_id>.md`, then one commit with the run and a regenerated `results/index.json` ("After every run" in `cases/challenge/README.md`).
-- After any case edit, run `tools/check.py --fix --suite challenge`, `tools/coverage_doc.py --suite challenge` and `tools/check_benchmark.py`, and commit their output with the edit (CI gates all three): editing a `ready` member of a draft BENCHMARK version gives it a new uid, so the draft stops running it.
-- The GOLD skills (gold-run, case-edit, new-case, release-gate, triage-run, sync-catalog) and `audit_cases.py --strict` apply to `cases/v2` only.
-
-## BENCHMARK (frozen subset of CHALLENGE, the North Star exam)
-
-`benchmarks/<version>.json` is a **uid manifest** over `cases/challenge`, not a case store: read `benchmarks/README.md` first. Key rules:
-
-- Membership is by uid, and type/cohort/difficulty/stages are frozen per member. Editing a member case drops it (new uid); `tools/check_benchmark.py` (CI) errors on frozen versions and warns on drafts. Never edit a member of a frozen version: void it with an erratum and add new CHALLENGE cases.
-- Build a version by sampling (`tools/benchmark_sample.py --version <v>`: 20 per measured type; aoi and dataset easy+medium only) or by curating from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv> --version <v>`: one member per row). Current draft: `2026-draft-5` (269 members, from `seeds/benchmark-v2026-bef-2026-10-27.csv`). Regeneration is deliberate, never CI's. Frozen manifests are never regenerated.
-- Rolling-window questions use run-relative date tokens in expected values (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`, `{last_month_end}`) plus `date_tolerance_days`; the uid hashes the token.
-- Run with `evals run --benchmark benchmarks/<v>.json --env prod --trials 3` (no ff); results go to `results/benchmark/`. Only canonical runs are trend points (`results/index.json` flags them).
-- After a run, in order: `tools/challenge_rollup.py --benchmark`; `tools/benchmark_page.py` on the machine that ran the run (it reads the run's gitignored artefacts); `git add` the run and its page; `tools/build_run_index.py`; the recommendations doc; one commit ("After a run" in `benchmarks/README.md`).
-- **The page data is a cross-repo contract.** wri/project-zeno-next (`src/features/ai-accuracy-scorecards`) parses `results/benchmark/pages/<run_id>.json` strictly and shows only runs its `model/releases.ts` pins to a commit of this repo. Change the shape only with the frontend; schema: `schema/benchmark_page.schema.json`.
-- To rerun only members revised since a run, add `--missing-from <run>.json` to `evals run --benchmark`, then write the page with `benchmark_page.py <rerun>.json --base <run>.json` (both flags repeat for a chain of reruns); the index judges the combination canonical (`benchmarks/README.md`, "Rerunning revised members only").
-- After an erratum or a freeze, regenerate `results/index.json`.
-- An attempt that got no reply (`no_answer` on its trial: the stream sent nothing for 240 s, hit the wall clock, dropped or returned a 5xx) is a wrong attempt. An attempt the harness could not score keeps its trial `error` and is left out; a member errors only when no attempt was scored (AJ, 2026-10-27; earlier runs errored the whole member on any errored attempt).
-
-## Plain baseline
-
-- `tools/plain_baseline.py` writes to `results/plain/` only, never to `results/benchmark/`, so the frontend cannot show its results.
-- Its `ask` step spends API budget: run it only with AJ's go-ahead (`--dry-run` prints the projected cost).
-- It scores the `2026-draft-5` members. Per-question calls go in `benchmarks/overlays/2026-draft-5.plain.json`, keyed by uid, never in the case files: editing a member case would drop it from draft-5.
-- The agent's side is rescored from the draft-5 runs' gitignored artefacts, so do it on the machine that ran draft-5. Steps, files and keys: `results/plain/README.md`.
+- Find the job in [README, Start here](README.md#start-here). It names the one doc that owns the procedure and the skill that walks it. Follow that doc; do not rebuild a procedure from this file.
+- CHALLENGE, BENCHMARK and the plain baseline are live here. GOLD lives in wri/project-zeno `evals/gold/`: do new GOLD work there. `cases/v1`, `cases/v2`, `results/gold/`, the skills `gold-run`, `new-case`, `release-gate` and `triage-run`, and the manual CI staging run are a legacy copy ([docs/gold-legacy.md](docs/gold-legacy.md)). Rules marked GOLD apply to that copy only.
+- Where a rule below rests on a design decision, its reason is given with it.
 
 ## Commands
 
 ```bash
-uv sync                                                        # install (Python 3.11+)
-uv run pytest -q                                               # full suite, no network
-uv run pytest tests/test_canonical.py -q                       # one file
-uv run pytest tests/test_store.py::test_write_read_round_trip  # one test
-uv run ruff check src tools tests generation                   # lint, as CI runs it
-
-# Runs: `evals` (`gold` is the older name). No default suite: pass --suite,
-# --benchmark or --cases-dir. Tokens and .env: README "Setup".
-uv run evals run --suite challenge --env prod --trials 3 --status-exclude "not doing,todo"
-uv run evals run --benchmark benchmarks/2026-draft-5.json --env prod --trials 3
-uv run evals run --suite challenge --set aoi --env staging     # smoke: 1 trial
-uv run evals run --suite challenge --resume <run_id>           # finish a killed run (its suite)
-uv run evals run --suite challenge --dry-run                   # list selected cases, no API calls
-
-# After a case edit (GOLD: --suite gold, plus audit_cases.py --strict)
-uv run python tools/check.py --fix --suite challenge
-uv run python tools/coverage_doc.py --suite challenge
-uv run python tools/check_benchmark.py
-
-uv run python tools/sync_zeno_catalog.py   # refresh the dataset catalogue snapshot
+uv sync                                          # install (Python 3.11+)
+uv run pytest -q                                 # every test; no network
+uv run pytest tests/test_canonical.py -q         # one file
+uv run ruff check src tools tests generation     # lint, as CI runs it
+uv run evals run --suite challenge --dry-run     # list a run's cases; no API calls
 ```
 
 ## Rules for runs
 
-These apply to every suite unless marked GOLD. Procedures and reasons: README ["Running a suite"](README.md#running-the-set), and each suite's after-run steps ([CHALLENGE](cases/challenge/README.md#after-every-run), [BENCHMARK](benchmarks/README.md#after-a-run), [GOLD](README.md#after-a-run)).
-
-- **Profile.** Run the default profile (no `--ff`) unless the cases under test need a feature still behind `experimental`. Never diff or trend across differing `ff`; the run_id suffix shows it (`_prod` versus `_prod_experimental`).
-- **Two tiers.** A smoke run (1 trial, the CLI default) is never committed, diffed or used as a baseline. Anything that is published, trended, produces a regression count or becomes a baseline uses `--trials 3`; CHALLENGE and BENCHMARK canonical runs are prod, default profile, 3 trials.
-- **Comparable runs only.** Both sides of a diff or a trend need the same `ff`, the same trial count and the same environment ([Comparing two runs](results/README.md#comparing-two-runs)). If no comparable run exists, say so rather than diffing against something else.
-- **Methodology note.** If check semantics changed since the previous run, pass `--note "<what changed>"` when starting `evals run`, so diffs are not read as agent changes.
-- **Ground truth** (GOLD cases only today). Cases with `expected.ground_truth` fetch their expected figures from the production analytics API, whatever `--env`, once per run; a failed fetch aborts the run before any agent call. Two runs can therefore differ with no agent change; `diff_runs.py` files those flips as data bumps, never regressions ([Run-time ground truth](cases/README.md#run-time-ground-truth-ground_truth)).
-- **Timeouts.** A block of `ReadTimeout`s late in a run usually means too many workers (runs record `workers` and `trial_timeout` so this can be traced). Lower `--workers` before blaming the agent.
-- **Finish committed runs.** A run you commit is not done until its suite's after-run steps are complete (links above). Show the user what will be committed before committing. After `git add`-ing the run JSON, regenerate `results/index.json` (`tools/build_run_index.py` reads tracked and staged files only) and commit it in the same commit; CI gates its freshness.
-- **The ledger is written by the harness only.** Never hand-write, edit, backfill or splice a run file; a re-ingest after a tooling fix means deleting the file visibly in a reviewable commit. To combine a full run with a scoped re-run, use `tools/compose_runs.py` ([results/README.md](results/README.md)).
+- **Name the suite.** Pass `--suite challenge`, `--benchmark benchmarks/<version>.json` or `--suite gold`. There is no default, so a run never lands in another suite's ledger.
+- **Tiers, profile and comparability** are owned by [README, Running a suite](README.md#running-a-suite). In short: smoke runs have 1 trial and are never committed; canonical runs have 3 trials and the default profile; never compare or trend across differing `ff`, trial count or environment.
+- **Never commit a smoke run or an `--env local` run.** A local stack matches neither staging nor prod. The ledgers hold earlier exceptions, such as CHALLENGE's 1-trial runs of 2026-09-01 and local runs of 2026-09-25. Do not add more.
+- **Ask the user before you spend API budget** with `generation/generate_cases.py` or the plain baseline's `ask` and `score` steps. `generate_cases.py --dry-run` and `ask --dry-run` cost nothing.
+- **Pass `--note`** when check semantics changed since the previous run, so the change is not read as agent movement.
+- **Finish a committed run.** It is done only when its suite's after-run steps are done: [CHALLENGE](cases/challenge/README.md#after-every-run), [BENCHMARK](benchmarks/README.md#after-a-run). The `challenge-cases` and `benchmark-run` skills walk them. Show the user what will be committed before you commit.
+- **Regenerate `results/index.json`** with `tools/build_run_index.py` after you stage a run, and after any manifest change: a rebuild, an erratum or a freeze. The index reads the staged runs and `benchmarks/*.json`, and CI checks that it is fresh.
+- **The ledger is written by the harness only.** Never hand-write, edit, backfill or splice a run file: its header describes how its own rows were produced. A re-ingest after a tooling fix means deleting the file visibly in a reviewable commit. To combine a full run with a scoped rerun, use `tools/compose_runs.py`, or `tools/benchmark_page.py --base` for BENCHMARK.
+- **The BENCHMARK page data is a cross-repo contract.** wri/project-zeno-next parses it strictly, so change its shape only together with the frontend ([Page data contract](benchmarks/README.md#page-data-contract)).
+- **The plain baseline writes to `results/plain/` only**, never to `results/benchmark/`, so the frontend can never show it ([results/plain/README.md](results/plain/README.md)).
 
 ## Rules for cases
 
-**COVERAGE.md must move with the case set.** Any change to a case file (query, expected values, status, set, group, notes, or a new or deleted case) is incomplete until the after-edit commands for its store (see Commands) have run and their output is committed with the edit. CI fails the PR on a stale uid or manifest, a stale COVERAGE.md (a changed `Last updated` date alone does not count), an audit violation or a frozen BENCHMARK member gone missing. Procedure: README ["Changing cases"](README.md#changing-cases).
-
-- Status changes follow [Status lifecycle](cases/README.md#status-lifecycle). Parking needs a dated `status_reason`.
-- CHALLENGE: never change a case to make it pass, and never edit a member of a frozen BENCHMARK version.
-- GOLD: edit `cases/v2` only. `cases/v1` is frozen, and `tests/test_v1_frozen.py` fails if it changes. `done` needs a passing 3-trial run at the case's current uid, cited by run_id in `notes.status_reason`. The `case-edit` and `new-case` skills have the steps.
+- **Never fix a case to make it pass.** CHALLENGE cases are expected to fail today: a failure is data, not a defect, and never a regression.
+- **Never edit a member of a frozen BENCHMARK version.** Void it with an erratum and add new CHALLENGE cases. No version is frozen yet; editing a member of a draft drops it from the draft until the draft is rebuilt, and `tools/check_benchmark.py` warns.
+- **Run the after-edit commands** for the store after any change to a case file, and commit their output with the edit ([cases/README.md, After an edit](cases/README.md#after-an-edit)). CI fails the pull request otherwise.
+- **Generated files are never hand-edited.** Change the inputs and rerun the tool. [tools/README.md, Generated or hand-edited](tools/README.md#generated-or-hand-edited) lists which files are which.
+- **A pull request that changes cases says which and why.** The uid records what changed; only the pull request records the reason.
+- **Never import a seed CSV again, and never rename one.** A second import writes the CSV's values over every edit made since, and case notes and manifests record seed file names ([seeds/README.md](seeds/README.md#rules)).
+- **`tools/import_sheet.py` writes to `cases/v2` unless `--cases-dir` is given.** Pass `--cases-dir cases/challenge` for CHALLENGE.
+- **Plain-baseline calls per question go in `benchmarks/overlays/2026-draft-5.plain.json`**, keyed by uid, never in the case files: an edit to a member case would drop it from the draft.
+- **Status changes follow the [status lifecycle](cases/README.md#status-lifecycle).** Parking needs a dated `notes.status_reason`.
+- **GOLD:** edit `cases/v2` only. `cases/v1` is frozen, and `tests/test_v1_frozen.py` fails if it changes.
 
 ## The identity system
 
-**WARNING**: critical for every ledger. Do not break it. Every result in `results/<suite>/runs/` (challenge, benchmark and gold) is keyed on a case's uid, and every BENCHMARK manifest lists its members by uid, so the uid is the only link between a score and the exact case content it was measured against. If the hash changes for content that did not change, every committed run stops matching its cases, every BENCHMARK version loses its members, and the result history is lost. If the hash misses a change that did happen, old scores are silently attributed to the edited case, and diffs compare two different tests as if they were one. `src/goldset/canonical.py` defines the hashing; the README glossary defines [uid](README.md#uid) and [caseset_version](README.md#caseset-version).
+**WARNING**: critical for every ledger. Do not break it. Every result in `results/<suite>/runs/` is keyed on a case's uid, and every BENCHMARK manifest lists its members by uid, so the uid is the only link between a score and the exact case content it measured. If the hash changes for content that did not change, every committed run stops matching its cases, every BENCHMARK version loses its members, and the history is lost. If the hash misses a change that did happen, old scores are attributed to the edited case, and comparisons treat two different tests as one. `src/goldset/canonical.py` defines the hashing.
 
 - **uid** = `sha256(canonical_json(query + non-empty expected values))[:16]`. Changing the query or any `expected` value mints a new uid: that is the versioning mechanism, not an error. `status`, `set`, `group`, `notes`, key order, leading and trailing whitespace, and line endings never affect it, so triage never mints a version.
-- **Multi-turn uids** hash every turn's query and expected values in order, so reordering turns mints a new uid. In v2, each turn's `deltas` are hashed too (its `MANIFEST.json` sets `uid_includes_deltas`); frozen v1 uids leave them out.
-- **The hash covers every expected field, scored or not** (for example `dataset_name`, which no check reads). An unscored field is still part of what the case asserts, and a check may start reading it later; if the hash skipped it, an edit to it would change the case without a new uid. Do not narrow the hash to scored fields, and do not move expectations into `notes` to avoid uid churn.
-- **caseset_version** (in each store's `MANIFEST.json`) hashes the sorted uids. Results key on uid; diffs run over the uids two runs share.
-- **`id`** (such as `ch-aoi-001` or `1-030`) is the stable lineage handle across versions.
-- `tests/test_schema.py` validates every case file against `schema/case.schema.json`, so a malformed case fails the suite, not a run.
+- **Multi-turn uids** hash every turn's query and expected values in order, so reordering turns mints a new uid. In `cases/v2` each turn's `deltas` are hashed too, because its `MANIFEST.json` sets `uid_includes_deltas`. The frozen `cases/v1` uids leave them out.
+- **The hash covers every expected field, scored or not**, such as `dataset_name`, which no check reads. An unscored field is still part of what the case asserts, and a check may start reading it later. If the hash skipped it, an edit to it would change the case without a new uid. Do not narrow the hash to scored fields, and do not move expectations into `notes` to avoid a new uid.
+- **caseset_version**, in each store's `MANIFEST.json`, hashes the sorted uids. Comparisons run over the uids two runs share.
+- **`id`**, such as `ch-aoi-001`, is the stable name across versions.
+- `tests/test_schema.py` validates every case file against `schema/case.schema.json`, so a malformed case fails the tests, not a run.
 
-## Dataset coverage against project-zeno
+## Dataset catalogue
 
-COVERAGE.md's "Dataset coverage" section measures the case set against the agent's dataset catalogue (`src/agent/datasets/catalog/*.yml` in wri/project-zeno), read from the committed snapshot `cases/zeno_catalog.json` so that CI needs no network. When project-zeno adds, removes or changes a dataset, run `tools/sync_zeno_catalog.py`, then `tools/coverage_doc.py`, and commit both together. The sync reads `origin/main` of the sibling checkout `../project-zeno` with `git show` and never touches its working tree (`--zeno` and `--ref` override the defaults). The `sync-catalog` skill has the steps.
+`cases/zeno_catalog.json` is a committed snapshot of project-zeno's dataset catalogue, so CI needs no network. Refresh it with the `sync-catalog` skill when project-zeno's datasets change ([cases/README.md, The catalogue snapshot](cases/README.md#the-catalogue-snapshot)). `src/goldset/groundtruth/catalog.py` builds ground-truth requests from the snapshot. It hardcodes the payload shape and the area type map from project-zeno's `_build_payload` and `_get_aoi_type`, so change those only after a reviewed upstream change.
 
-The snapshot is also the ground-truth request table: `src/goldset/groundtruth/catalog.py` builds every analytics request from each dataset's endpoint and date window in it, so a window that grows upstream cannot leave ground truth computed over the old one. Payload shape, the 4/8/10 `intersections` split and the AOI type map are code in project-zeno (`_build_payload`, `_get_aoi_type`), so `catalog.py` hardcodes them and they change only with a reviewed upstream change. A dataset missing from the snapshot fails the run loudly.
+## Module map
 
-## Architecture
+Under `src/goldset/`; the tools in `tools/` are thin command-line wrappers ([tools/README.md](tools/README.md)).
 
-- `src/goldset/`: the library.
-  - `canonical.py`: uid and caseset_version hashing.
-  - `store.py`: the `Case` dataclass, case YAML read and write, manifests. Unknown top-level keys are rejected on read.
-  - `templates.py`: `{token}` dates in queries, resolved when a run starts (the uid hashes the token).
-  - `adapter.py`, `eval_types.py`: turn a case's expectations into the harness's typed inputs, and define its result type.
-  - `runner/`: API calls (`api.py`), multi-turn threads (`multiturn.py`), raw artefact capture (`artifacts.py`).
-  - `evaluators/` and `registry.py`: the checks, and the order the runner calls them in.
-  - `models.py`: the LLM judge client; `judge_config.py`: the judge backend (`--judge-backend`) and the model name recorded on runs.
-  - `groundtruth/`: run-time ground truth: selector parsing, analytics requests built from the catalogue snapshot, and the fetch before the first trial.
-  - `buckets.py`: the bucket map, the info-only set, row verdicts, and the reconciliation of implied with evaluated checks.
-  - `ledger.py`: run records, run_ids, majority verdicts and partial files.
-  - `benchmark.py`: the BENCHMARK manifest contract (members, facets, errata, use cases, query types).
-  - `plain/`: the plain baseline's reference tables, Sonnet client, judges, scoring and outcomes.
-  - `cli.py`: the `evals` command (also installed as `gold`), with `--suite`.
-- `tools/`: thin CLIs over `src/goldset` (they add `src/` to `sys.path`); see `tools/README.md`.
-- `cases/challenge/<set>/<cohort>/<id>.yaml` and `cases/v{1,2}/<group>/<id>.yaml`: one case per file, so review, blame and revert work per case. `expected:` holds the hashed expectations (keys without the `expected_` prefix); `notes:` holds unhashed annotations.
-- `results/`: the committed per-run JSON ledgers, one subtree per suite (`results/challenge/`, `results/benchmark/`, `results/gold/`); contract in `results/README.md`. Checks are tri-state `1.0`/`0.0`/`null`. `results/benchmark/pages/` holds the page data; `results/plain/` holds the plain baseline's own files.
-- `benchmarks/`: BENCHMARK manifests and the plain baseline's overlay. `generation/`: the numeric-case generation pipeline. `seeds/`: the CSVs cases and versions were built from.
-- `schema/case.schema.json`: the case contract; `schema/benchmark_page.schema.json`: the page data contract. `templates/`: the HTML report templates.
-- The case store is the source of truth. The Google Sheet it was first imported from is retired; README ["Legacy tools"](README.md#legacy-tools) covers the remaining bridge tools.
+| Module | Holds |
+|---|---|
+| `canonical.py` | uid and caseset_version hashing |
+| `store.py` | the `Case` dataclass, case YAML read and write, manifests; unknown top-level keys are rejected |
+| `suites.py` | which store and ledger each suite uses |
+| `templates.py` | date tokens in queries, resolved when a run starts |
+| `adapter.py`, `eval_types.py` | a case's expectations as the evaluators' typed input, and the result type |
+| `runner/` | agent API calls, multi-turn threads, raw artifact capture |
+| `evaluators/`, `registry.py` | the checks, and the order the runner calls them in |
+| `buckets.py` | the bucket map, the info-only set, attempt and row verdicts |
+| `ledger.py` | run records, run_ids, majorities, partial files |
+| `benchmark.py` | the BENCHMARK manifest contract |
+| `groundtruth/` | run-time ground truth: selectors, requests, the fetch before the first trial |
+| `plain/` | the plain baseline's logic |
+| `models.py`, `judge_config.py` | the LLM judge client and backend |
+| `cli.py` | the `evals` command, also installed as `gold` |
 
 ## Working agreements
 
 - Numbers in code; structure and semantics to the judge. No LLM judge is ever asked to do arithmetic.
-- Every check's documentation decides whether a missing input scores `null` (not evaluated) or `0.0` (fail), and says why.
-- A new judged check starts info-only and gates only once it shows a standard deviation of at most 0.10 over a 3-trial run (`tools/flakiness.py`). The three judged checks inherited from gnw-evals (`agent_answer`, `expected_text_match`, `clarification_requested`) already gated and still do.
+- Every check's documentation says whether a missing input scores `null` or `0.0`, and why.
+- A new judged check starts info-only. It gates only once it shows a standard deviation of at most 0.10 over a 3-trial run (`tools/flakiness.py`). The three judged checks inherited from gnw-evals (`agent_answer`, `expected_text_match`, `clarification_requested`) already gated and still do.
 - Judge structured outputs put the reasoning field before the score field.
