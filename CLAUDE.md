@@ -14,87 +14,30 @@ GOLD, the capability regression suite, moved to wri/project-zeno `evals/gold/` o
 
 Before proposing changes, read `README.md`, `cases/README.md`, `results/README.md` and the doc of the suite you touch. Where a rule below rests on a design decision, its reason is given with it.
 
-## The CHALLENGE set (second case set — quality rates, not regressions)
+## CHALLENGE (quality rates, not regressions)
 
-`cases/challenge/` houses the CHALLENGE set, the quality/accuracy
-counterpart to GOLD (plan of record: `PRDs/challenge-set.md` in the GNW
-workspace). Everything about it that differs from GOLD is deliberate and
-documented in `cases/challenge/README.md` — read that before touching the
-set. The short version:
+`cases/challenge/` holds CHALLENGE (plan of record: `PRDs/challenge-set.md` in the GNW workspace). Read `cases/challenge/README.md` before touching the set; how each set was built is in `cases/challenge/CHANGELOG.md`. The short version:
 
-- The store is hierarchical — **set → cohort → case** — via the optional
-  `set:` case field (`cases/challenge/<set>/<cohort>/<id>.yaml`). Sets:
-  `aoi` (cohorts = prompt classes) and the numeric intents
-  `quantification`/`trend`/`comparison` (cohorts = datasets; ported from
-  gnw-evals eval-metrics-slice-1, authored via `generation/` — see
-  `generation/README.md`), and `dataset` (dataset-selection prompts, phrased as
-  "show X on the map", that should run `pick_dataset` alone; hand-authored in
-  `seeds/challenge-dataset-v1.csv`), plus `monitoring` and `causal` (benchmark
-  v2026 cases, `seeds/benchmark-v2026-proposed.csv`; Batch 4 in the README)
-  and `portfolio` (many areas at once, from the v2026 BEF sheet; Batch 5).
-  Run one set with `gold run --set <name>`. Like
-  `group`, `set` is never hashed into the uid.
-- Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`),
-  never regression counts. Many cases are *expected to fail*: do not triage
-  those failures as regressions, and never "fix" a case to make it pass.
-- Canonical published series: **prod, default profile, 3 trials**, run with
-  `--cases-dir cases/challenge --results-dir results/challenge
-  --status-exclude "not doing,todo"`. Its ledger lives under
-  `results/challenge/` and never mixes with GOLD's runs, trends, or diffs.
-- The after-run ritual applies to CHALLENGE too, adapted to rates: rollup,
-  then a recommendations doc in `results/challenge/recommendations/<run_id>.md`,
-  then commit run + rollup + recommendations together (see "After every
-  run" in `cases/challenge/README.md`).
-- The GOLD skills (gold-run, case-edit, new-case, release-gate, triage-run)
-  and `audit_cases.py --strict` apply to `cases/v2` only.
-- Identity and ledger discipline are unchanged: after any case edit, run
-  `tools/check.py --fix --cases-dir cases/challenge` and
-  `tools/coverage_doc.py --cases-dir cases/challenge`, and commit both with
-  the edit (CI gates both).
+- The store is hierarchical, **set → cohort → case**, via the optional `set:` case field (`cases/challenge/<set>/<cohort>/<id>.yaml`). Sets: `aoi` (cohorts are prompt classes), the numeric intents `quantification`, `trend` and `comparison` (cohorts are datasets; generated through `generation/`, see `generation/README.md`), `dataset` (dataset-selection prompts, phrased as "show X on the map", that should run `pick_dataset` alone), `monitoring` and `causal` (from the proposed v2026 benchmark sheet) and `portfolio` (many areas at once, from the v2026 BEF sheet). Run one set with `evals run --suite challenge --set <name>`. Like `group`, `set` is never hashed into the uid.
+- Verdicts are **pass rates per set and cohort** (`tools/challenge_rollup.py`), never regression counts. Many cases are *expected to fail*: do not triage those failures as regressions, and never "fix" a case to make it pass.
+- Canonical published series: **prod, default profile, 3 trials**, run with `evals run --suite challenge --env prod --trials 3 --status-exclude "not doing,todo"`. Its ledger is `results/challenge/` and never mixes with another suite's runs, trends or diffs.
+- After a run: rollup, then a recommendations doc in `results/challenge/recommendations/<run_id>.md`, then commit the run and the doc together with a regenerated `results/index.json` ("After every run" in `cases/challenge/README.md`).
+- After any case edit, run `tools/check.py --fix --suite challenge`, `tools/coverage_doc.py --suite challenge` and `tools/check_benchmark.py`, and commit their output with the edit (CI gates all three). Editing a `ready` case that a draft BENCHMARK version lists gives it a new uid, so the draft stops running it; `check_benchmark.py` warns.
+- The GOLD skills (gold-run, case-edit, new-case, release-gate, triage-run, sync-catalog) and `audit_cases.py --strict` apply to `cases/v2` only.
 
-## BENCHMARK (frozen subset of CHALLENGE — the North Star exam)
+## BENCHMARK (frozen subset of CHALLENGE, the North Star exam)
 
-`benchmarks/<version>.json` is a **uid manifest** over `cases/challenge`, not
-a case store: read `benchmarks/README.md` first. Key rules:
+`benchmarks/<version>.json` is a **uid manifest** over `cases/challenge`, not a case store: read `benchmarks/README.md` first. Key rules:
 
-- Membership is by uid, and type/cohort/difficulty/stages are frozen per
-  member. Editing a member case drops it (new uid); `tools/check_benchmark.py`
-  (CI) errors on frozen versions and warns on drafts. Never edit a member
-  of a frozen version: void it with an erratum and add new CHALLENGE cases.
-- Build a version by sampling (`tools/benchmark_sample.py --version <v>`:
-  20 per measured type; aoi and dataset easy+medium only) or by curating
-  from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv>
-  --version <v>`: one member per row, with its use cases UC1–UC6, or jobs,
-  impact pathways and user groups for the older sheet layout). Current
-  draft: `2026-draft-5` (curated from the BEF sheet, 269; draft-4 after
-  the 2026-10-27 review, "could this answer mislead the user?", with
-  figure formulas checked against each attempt's own pull). Regeneration is
-  deliberate, never CI's. Frozen manifests are never regenerated.
-- Rolling-window questions use run-relative date tokens in expected values
-  (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`,
-  `{last_month_end}`) plus `date_tolerance_days`; the uid hashes the token.
-- Run with `gold run --benchmark benchmarks/<v>.json --env prod --trials 3`
-  (no ff); results go to `results/benchmark/`. Only canonical runs are trend
-  points (`results/index.json` flags them). Roll up with
-  `tools/challenge_rollup.py --benchmark benchmarks/<v>.json <run>.json`.
-- Then write the page data the FE accuracy-benchmarks page reads:
-  `tools/benchmark_page.py results/benchmark/runs/<run_id>.json` writes
-  `results/benchmark/pages/<run_id>.json`. It needs the run's local agent
-  artifacts (gitignored), so do it on the machine that ran the run, and
-  commit it with the run before regenerating `results/index.json`.
-- To rerun only members revised since a run, add `--missing-from
-  <run>.json` to `gold run --benchmark`, then write the page with
-  `benchmark_page.py <rerun>.json --base <run>.json` (both flags repeat for
-  a chain of reruns); the index judges the combination canonical (`benchmarks/README.md`, "Rerunning revised
-  members only").
+- Membership is by uid, and type/cohort/difficulty/stages are frozen per member. Editing a member case drops it (new uid); `tools/check_benchmark.py` (CI) errors on frozen versions and warns on drafts. Never edit a member of a frozen version: void it with an erratum and add new CHALLENGE cases.
+- Build a version by sampling (`tools/benchmark_sample.py --version <v>`: 20 per measured type; aoi and dataset easy+medium only) or by curating from a reviewed sheet (`tools/benchmark_from_sheet.py --seed <csv> --version <v>`: one member per row, with its use cases UC1–UC6, or jobs, impact pathways and user groups for the older sheet layout). Current draft: `2026-draft-5` (269 members, curated from `seeds/benchmark-v2026-bef-2026-10-27.csv` after the 2026-10-27 review, "could this answer mislead the user?"). Regeneration is deliberate, never CI's. Frozen manifests are never regenerated.
+- Rolling-window questions use run-relative date tokens in expected values (`{run-30d}`, `{run}`, `{month_start}`, `{last_month_start}`, `{last_month_end}`) plus `date_tolerance_days`; the uid hashes the token.
+- Run with `evals run --benchmark benchmarks/<v>.json --env prod --trials 3` (no ff); results go to `results/benchmark/`. Only canonical runs are trend points (`results/index.json` flags them).
+- After a run, in order: `tools/challenge_rollup.py --benchmark benchmarks/<v>.json <run>.json`; `tools/benchmark_page.py results/benchmark/runs/<run_id>.json` on the machine that ran the run (it reads the run's gitignored artifacts); `git add` the run and its page; `tools/build_run_index.py`; the recommendations doc; one commit. Steps: "After a run" in `benchmarks/README.md`.
+- **The page data is a cross-repo contract.** wri/project-zeno-next (`src/features/ai-accuracy-scorecards`) parses `results/benchmark/pages/<run_id>.json` strictly and shows only the runs its `model/releases.ts` pins to a commit of this repo, so a new page reaches users only with a frontend release. Change the page's shape only together with the frontend; the schema is `schema/benchmark_page.schema.json`.
+- To rerun only members revised since a run, add `--missing-from <run>.json` to `evals run --benchmark`, then write the page with `benchmark_page.py <rerun>.json --base <run>.json` (both flags repeat for a chain of reruns); the index judges the combination canonical (`benchmarks/README.md`, "Rerunning revised members only").
 - After an erratum or a freeze, regenerate `results/index.json`.
-- An attempt that got no reply (`no_answer` on its trial: the stream sent
-  nothing for 240 s, hit the wall clock, dropped or returned a 5xx) is a
-  wrong attempt. An attempt the harness could not score keeps its trial
-  `error` and is left out; a member errors only when no attempt was scored
-  (AJ, 2026-10-27). Runs recorded before then errored the whole member on
-  any errored attempt, so a member can move from error to fail across that
-  date.
+- An attempt that got no reply (`no_answer` on its trial: the stream sent nothing for 240 s, hit the wall clock, dropped or returned a 5xx) is a wrong attempt. An attempt the harness could not score keeps its trial `error` and is left out; a member errors only when no attempt was scored (AJ, 2026-10-27). Runs recorded before then errored the whole member on any errored attempt, so a member can move from error to fail across that date.
 
 ## Plain baseline
 
