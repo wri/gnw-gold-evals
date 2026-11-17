@@ -1,112 +1,103 @@
-## GOLD (legacy copy)
+# GOLD legacy copy
 
-GOLD asks one question before each release: did an agent change break a capability that used to work? Its headline is a regression count between two runs, and its cases favour determinism over realism. On 2026-10-27 it moved to [wri/project-zeno](https://github.com/wri/project-zeno) under `evals/gold/` (project-zeno PR #874), with its own README, CLAUDE.md, case store (`evals/gold/cases/v2`) and ledger (`evals/gold/results/`). Run, author and gate GOLD there.
+GOLD is the capability regression suite. It asks one question before each release: did an agent change break a capability that used to work? Its headline is a regression count between two runs, and its cases favour determinism over realism.
 
-The copy here stays until a later PR deletes it, after its case notes are reconciled with project-zeno. Until then:
+GOLD moved to [wri/project-zeno](https://github.com/wri/project-zeno) under `evals/gold/` on 2026-10-27, with its own README, CLAUDE.md, case store and ledger. Run, author and gate GOLD there: its [`evals/gold/README.md`](https://github.com/wri/project-zeno/blob/main/evals/gold/README.md) is the current version of everything below.
 
-- CI still checks `cases/v1`, `cases/v2` and `results/gold/` (uids, manifests, COVERAGE.md, the audit and the run index), so an edit to them follows [Changing cases](#changing-cases).
-- The authoring rules for `cases/v2`, the two stores and the audit gate are in [cases/GOLD-AUTHORING.md](cases/GOLD-AUTHORING.md).
-- The six Claude Code skills under `.claude/skills/` and the manual `staging-run` CI job work on this copy only. The skills use the older `gold` command name. They are not yet ported to project-zeno.
-- Its other records: [cases/v2/COVERAGE.md](cases/v2/COVERAGE.md) (generated coverage report), [results/gold/recommendations/](results/gold/recommendations/) (action docs written after official runs) and [results/gold/campaigns/](results/gold/campaigns/) (write-ups of multi-run validation efforts).
+The copy in this repo stays until a later pull request deletes it. That waits until its case notes are reconciled with project-zeno. This page is what someone needs to run or gate the copy until then. Terms marked *(GOLD)* in the [glossary](glossary.md) apply here only.
 
-The sections below are what someone needs to run or gate this copy before it is deleted. The current versions are in project-zeno's [`evals/gold/README.md`](https://github.com/wri/project-zeno/blob/main/evals/gold/README.md).
+## What is still here
 
-### The release gate
+| Item | Where |
+|---|---|
+| The working case set and the frozen import of the retired Google Sheet | `cases/v2/`, `cases/v1/` |
+| How to write a GOLD case, the two stores, the audit gate | [cases/GOLD-AUTHORING.md](../cases/GOLD-AUTHORING.md) |
+| The ledger, reports, recommendations docs and campaign write-ups | `results/gold/` |
+| Four skills that work on this copy only | `gold-run`, `new-case`, `release-gate`, `triage-run` in `.claude/skills/` |
+| A manual release-gate job | `staging-run` in `.github/workflows/ci.yml` |
 
-Before a release, diff an official run of the candidate build against the baseline: the most recent committed official run that is comparable with it. If there is none, first make one with the build currently released.
+CI still checks `cases/v1`, `cases/v2` and `results/gold/`. An edit to a GOLD case therefore follows the GOLD note in [cases/README.md, After an edit](../cases/README.md#after-an-edit). The skills use the older command name, `gold run`, which is the same command as `evals run`.
+
+## Running GOLD here
+
+```bash
+uv run evals run --suite gold --env staging --trials 3 --build "<label>"
+```
+
+The tiers, profile and comparability rules are in [README, Running a suite](../README.md#running-a-suite). Two things apply to GOLD only:
+
+- GOLD cases that need the `experimental` profile are parked (`not doing`) while canonical runs use the default profile. Each one's `status_reason` says when to bring it back.
+- Every GOLD run before 2026-08-31 used `ff=experimental`, because dashboards and satellite imagery were only on that profile until then. Do not compare those runs with later default-profile runs.
+
+GOLD's canonical runs are 3-trial, default-profile runs on the environment of their baseline, usually staging. project-zeno's GOLD docs call them official runs.
+
+## Regression diffs
+
+`tools/diff_runs.py <older> <newer>` compares two runs check by check, on every case both runs scored. It reports:
+
+- regressions (pass to fail) and recoveries (fail to pass), counted per check, not per case;
+- coverage changes: a check that started or stopped being evaluated;
+- data bumps (below).
+
+The count means something only when the two runs are comparable: same `ff`, same trial count of 3, same environment. Check this before you diff, and before you trust a count someone else produced.
+
+The `caseset_version` may differ. The diff covers only the uids present in both runs, so added, removed or edited cases show up as "only in A" or "only in B", never as regressions. Report the number of shared cases with the result, because a small overlap makes a weak verdict. `--strict` refuses any pair whose `caseset_version` differs.
+
+**Info-only checks never gate.** They appear in the diff, but `--fail-on-regression` and `--fail-on-coverage-loss` ignore them, including multi-turn ones under a `t<N>.` prefix. The headline splits regressions and lost checks into gating and info-only counts. The flags read `gating_regressions` and `gating_coverage_lost` in the JSON report.
+
+**Methodology notes.** If the newer run carries a `methodology_note`, movement on the checks it names comes from a harness change, not from the agent.
+
+<a id="data-bumps"></a>
+### Data bumps
+
+A ground-truth case is graded against values fetched when the run starts, so a data release can flip it with no agent change. When a ground-truth check flips and the case's `digest` moved, the diff lists it as a data bump. Its cause is one of:
+
+- `data`: the same request returned different numbers;
+- `request`: the harness built a different request, so a harness change;
+- `fixed_dataset`: a dataset declared never to change has changed.
+
+Bumps are never counted as regressions or recoveries, and never gate. A `ground_truth_match` bump whose agent figure matches neither run's values, or that has no figure, is flagged `possible_hidden_regression`. Review it before you trust the regression count: a break that lands in the same run as a data change would otherwise never be counted.
+
+## The release gate
+
+Before a release, diff a canonical run of the candidate build against the baseline. The baseline is the newest committed canonical run that is comparable with it. If there is none, first make one with the build currently released.
 
 ```bash
 uv run python tools/diff_runs.py results/gold/runs/<baseline>.json results/gold/runs/<candidate>.json \
   --fail-on-regression --fail-on-coverage-loss
 ```
 
-`--fail-on-regression` exits 1 on any regression in a gating check; `--fail-on-coverage-loss` also fails when a gating check stopped being evaluated. The count only means something if the two runs are comparable: same `ff`, same trial count (3) and same environment. [Comparing two runs](results/README.md#comparing-two-runs) gives the conditions and the evidence behind them; the `release-gate` skill walks through the verdict. Ground-truth flips caused by a data change are reported as [data bumps](#data-bump), not regressions; review any flagged as a possible hidden regression before trusting the count.
+`--fail-on-regression` exits 1 on any regression in a gating check. `--fail-on-coverage-loss` also fails when a gating check stopped being evaluated. Review every data bump flagged as a possible hidden regression before you trust the count. The `release-gate` skill walks through the verdict.
 
-### After a run
+**Picking a baseline.** `tools/find_baseline.py <new run>` prints the newest run in `results/gold/runs/` that matches the new run on environment, `ff`, trial count and case store (`caseset`). It exits non-zero with the reason when none does. The CI release gate uses it. Runs from before 2026-08-04 record no `caseset`, so they never match.
 
-An official run is not finished when its JSON lands; it is finished when someone can act on it. Smoke runs skip these steps and are never committed. If check semantics changed since the previous run, the run should already carry `--note` (see [Running a suite](#running-the-set)).
+## After a GOLD run
+
+A canonical run is finished when someone can act on it. Smoke runs skip these steps and are never committed.
 
 1. **Render the reports.**
    ```bash
    uv run python tools/render_html.py results/gold/runs/<run_id>.json   # results/gold/reports/<run_id>.html
-   uv run python tools/render_html.py --all        # results/gold/reports/all-runs.html
-   uv run python tools/render_inspector.py --all   # results/gold/reports/all-runs_inspector.html
-   uv run python tools/render_trends.py            # results/gold/reports/trends.html
+   uv run python tools/render_html.py --all --suite gold        # results/gold/reports/all-runs.html
+   uv run python tools/render_inspector.py --all --suite gold   # results/gold/reports/all-runs_inspector.html
+   uv run python tools/render_trends.py --suite gold            # results/gold/reports/trends.html
    ```
-   For a quick read, `uv run python tools/report_run.py results/gold/runs/<run_id>.json` prints a Markdown summary, and `render_inspector.py results/gold/runs/<run_id>.json` builds a matrix of every case against every check for one run. Read the trends page within one `ff` only.
+   For a quick read, `uv run python tools/report_run.py results/gold/runs/<run_id>.json` prints a Markdown summary. Read the trends page within one `ff` only.
 2. **Check flakiness and diff.**
    ```bash
    uv run python tools/flakiness.py results/gold/runs/<run_id>.json --per-case
    uv run python tools/diff_runs.py results/gold/runs/<baseline>.json results/gold/runs/<run_id>.json
    ```
-   Diff only against a comparable run ([Comparing two runs](results/README.md#comparing-two-runs)). If none exists, say so in the recommendations doc rather than diffing against something else.
-3. **Write `results/gold/recommendations/<run_id>.md`** with four sections:
-   - what to report to the agent team, with the failing and flapping rows as evidence;
-   - what the run says about the case set (stale expectations, coverage gaps, cases ready to leave probation);
-   - what it says about the harness;
-   - what to watch on the next run.
+   If no comparable run exists, say so in the recommendations doc rather than diff against something else.
+3. **Write `results/gold/recommendations/<run_id>.md`** with four sections: what to report to the agent team, with the failing and flapping rows as evidence; what the run says about the case set; what it says about the harness; what to watch on the next run. `results/gold/recommendations/20260801T093002Z.md` shows the shape.
+4. **Commit** the run, the reports and the recommendations doc in one commit. Stage the run first, then regenerate `results/index.json` with `uv run python tools/build_run_index.py` and commit it in the same commit.
 
-   `results/gold/recommendations/20260801T093002Z.md` shows the shape.
-4. **Commit** the run JSON, the rendered reports and the recommendations doc together, in one commit. After `git add`-ing the run JSON, regenerate the run index (`uv run python tools/build_run_index.py`; it enumerates tracked and staged files, so add the run first) and commit `results/index.json` in the same commit; CI gates its freshness.
+The `gold-run` skill runs these steps, and the `triage-run` skill helps with step 3.
 
-The `gold-run` skill runs these steps, and the `triage-run` skill helps fill in step 3.
+## Legacy tools
 
-### Claude Code skills
+Cases used to live in a Google Sheet, and runs used to go through the gnw-evals harness. Both are retired. [tools/README.md, GOLD legacy copy tools](../tools/README.md#gold-legacy-copy-tools) lists the tools from that period and what each is still for.
 
-The repo commits [Claude Code](https://claude.com/claude-code) skills under `.claude/skills/`, so anyone using Claude Code here gets the same workflows. All six are for the GOLD legacy copy. Invoke one by name (`/gold-run`) or describe the task and the matching skill loads. Each skill follows the procedures in this README and the rules in CLAUDE.md, step by step.
+## Ledger reset of 2026-08-04
 
-| Skill | Use it when |
-|---|---|
-| [`gold-run`](.claude/skills/gold-run/SKILL.md) | running the set: preflight (profile, trials, build label), the run, and the after-run steps through to the commit |
-| [`case-edit`](.claude/skills/case-edit/SKILL.md) | changing any case: the uid consequences first, then the after-edit steps, with the status rules enforced |
-| [`triage-run`](.claude/skills/triage-run/SKILL.md) | analysing a finished run: failures classified as agent, stale expectation, harness or flake, and a filled-in recommendations doc |
-| [`new-case`](.claude/skills/new-case/SKILL.md) | writing a new case: an interview about the capability, which expected field switches on which check, and verified answers before `done` |
-| [`release-gate`](.claude/skills/release-gate/SKILL.md) | the two-run release verdict: comparability checks, the `diff_runs.py` gate, and reading the count against trial noise |
-| [`sync-catalog`](.claude/skills/sync-catalog/SKILL.md) | refreshing the snapshot of project-zeno's dataset catalogue and reading what it changes in coverage |
-
-### Legacy tools
-
-Cases used to live in a Google Sheet, and runs used to go through the gnw-evals harness. Both are retired: the case store is the source of truth, and `evals run` is the only runner. A few tools from that period remain for occasional use: `import_sheet.py` and `export_sheet_csv.py` (move cases between a sheet tab and the store), `export_csv.py` (write cases as a gnw-evals test CSV), `ingest_run.py` (import an old gnw-evals run into the ledger) and `parity.py` (the one-off check that the harness scored the same as gnw-evals). None of them is part of the normal GOLD workflow, though `import_sheet.py` also imported CHALLENGE's seed CSVs ([seeds/README.md](seeds/README.md)). [tools/README.md](tools/README.md#legacy-tools) says what each is still for.
-
-## Moved from results/README.md
-
-### Picking a baseline
-
-To pick a GOLD baseline, `tools/find_baseline.py <new run>` prints the newest
-run in `results/gold/runs/` that meets all three conditions and also loaded the
-same store (`caseset`), and exits non-zero with the reason when none does.
-The CI release gate uses it. Runs from before 2026-08-04 record no
-`caseset`, so they never match.
-
-### Info-only checks in a diff
-
-**Info-only checks never gate.** Checks in `buckets.INFO_ONLY` (see
-[Info-only checks](../src/goldset/evaluators/README.md#info-only-checks)),
-including multi-turn ones under a `t<N>.` prefix, appear in the diff, but
-`--fail-on-regression` and `--fail-on-coverage-loss` ignore them. The
-headline splits regressions and lost checks into gating and info-only
-counts, and the JSON report's `gating_regressions` and
-`gating_coverage_lost` are what the two flags read. If the newer run carries a `methodology_note`, movement on the
-checks it names comes from a harness change, not from the agent.
-
-### Data bumps
-
-**Data bumps are not regressions.** A ground-truth case is graded against
-values fetched when the run starts, so a data release can flip it with no
-agent change. When a ground-truth check flips and the case's `digest` moved,
-the diff lists it as a data bump with its cause: `data` (same request,
-different numbers), `request` (GOLD's own request changed, so a harness
-change) or `fixed_dataset` (a dataset declared never to change has changed).
-Bumps are never counted as regressions or recoveries and never gate. A
-`ground_truth_match` bump whose agent figure matches neither run's values,
-or that has no figure, is flagged `possible_hidden_regression`: review it
-before trusting the regression count, because a break that lands in the
-same run as a data change would otherwise never be counted.
-
-## Ledger resets
-
-- **2026-08-04: GOLD v2 baseline reset.** Runs scored against intermediate v2
-  curation states (2026-08-02 and 2026-08-03) and their reports were
-  deleted, so the v2 record starts at the first official v2 run. They remain
-  in git history. The v1 runs from 2026-07-31 and 2026-08-01, and the
-  recommendations and campaign docs from that period, were kept.
+Runs scored against intermediate v2 curation states of 2026-08-02 and 2026-08-03 were deleted, with their reports, so the v2 record starts at the first canonical v2 run. They remain in git history. The v1 runs of 2026-07-31 and 2026-08-01, and the recommendations and campaign docs of that period, were kept.
