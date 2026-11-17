@@ -63,6 +63,8 @@ date-scoping flakiness (the biggest slice-1 retrieval drag; every dated
 row scores `date_extraction`), and alert routing after DIST-ALERT's
 removal (all alert cells expect integrated alerts, id 11).
 
+How to pin the `todo` rows: [README.md, Pinning the todo rows](README.md#pinning-the-todo-rows).
+
 ## Batch 3: the `dataset` set
 
 200 dataset-selection prompts (`cases/challenge/dataset/<cohort>/`, ids
@@ -110,6 +112,9 @@ Scoring decisions and gaps:
   neither required nor penalised.
 - `text` is the only judged check (15 rows, one Haiku call each per trial).
 - Dates are deliberately unscored (the set is date-free).
+
+The comparison protocol and latency rules for the jev verdict are in
+[README.md, Comparing two builds locally](README.md#comparing-two-builds-locally).
 
 ## Batch 4: the benchmark v2026 cases (`monitoring`, `causal`, AOI-level)
 
