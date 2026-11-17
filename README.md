@@ -38,42 +38,54 @@ Results are keyed by case content, not by case name. Every case has a [uid](#uid
 You need Python 3.11 or later and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-uv sync                               # install, including the dev tools
-uv run python -m pytest -q            # the full suite; needs no network or secrets
-uv run ruff check src tools tests     # lint, as CI runs it
+uv sync                                        # install, including the dev tools
+uv run python -m pytest -q                     # the full suite; needs no network or secrets
+uv run ruff check src tools tests generation   # lint, as CI runs it
 ```
 
-Live runs need two secrets, set in your shell or in a `.env` file at the repo root (gitignored; `gold run` loads it before checking for a token):
+The harness command is `evals` (`uv run evals run ...`). `gold` is the older name for the same command and still works, so older notes and the GOLD skills use it. The Python package is still called `goldset`: the name is historic, and over 300 import lines in more than 100 files use it, so a rename would touch most of the code for no gain.
+
+Live runs need two secrets, set in your shell or in a `.env` file at the repo root (gitignored; `evals run` loads it before checking for a token):
 
 - **An API token for the target environment**: `STAGING_API_TOKEN` for `--env staging`, `PROD_API_TOKEN` for `--env prod`. If that variable is not set, the CLI falls back to `API_TOKEN`, which is also the only one `--env local` reads. So a stale environment-specific token in `.env` wins over a fresh `API_TOKEN`.
 - **Judge credentials**: `ANTHROPIC_API_KEY` for the default judge. With `--judge-backend openrouter-jev-decisions` the judge is TypeSafe JEV through OpenRouter Decisions, which needs `OPENROUTER_API_KEY` instead.
 
 Cases with `expected.ground_truth` also call the production analytics API. They use `ANALYTICS_API_TOKEN` when it is set, and the API token otherwise.
 
-## Running the set
+<a id="running-the-set"></a>
+## Running a suite
 
-`gold run` sends every case in `cases/v2` whose status is not `not doing` to the agent, scores it, and writes one run record to `results/gold/runs/<run_id>.json`, plus raw agent state under `results/gold/artifacts/<run_id>/` (gitignored).
+`evals run` sends the selected cases to the agent, scores them, and writes one run record to `results/<suite>/runs/<run_id>.json`, plus raw agent state under `results/<suite>/artifacts/<run_id>/` (gitignored). `--suite` picks the case store and the results directory together:
+
+| `--suite` | Cases from | Results to |
+|---|---|---|
+| `challenge` | `cases/challenge` | `results/challenge` |
+| `benchmark` | `cases/challenge` | `results/benchmark` |
+| `gold` | `cases/v2` | `results/gold` (legacy copy) |
+
+`--benchmark MANIFEST` implies `--suite benchmark` and runs exactly that version's members. There is no default suite: a run with none of `--suite`, `--benchmark` or `--cases-dir` stops with an error, so a run never lands in the wrong ledger by accident. An explicit `--cases-dir` or `--results-dir` still works and overrides the suite.
 
 ```bash
-uv run gold run --env staging --build "<label>"              # smoke run: 1 trial
-uv run gold run --env staging --trials 3 --build "<label>"   # official run
-uv run gold run --env staging --id 1-030 --verbose           # one case (repeat --id for more)
-uv run gold run --dry-run                                    # list the selected cases; no API calls
-uv run gold run --help                                       # every flag
+uv run evals run --suite challenge --dry-run                                   # list the selected cases; no API calls
+uv run evals run --suite challenge --set aoi --env staging --build "<label>"   # smoke run of one set: 1 trial
+uv run evals run --suite challenge --id ch-aoi-001 --env staging --verbose     # one case (repeat --id for more)
+uv run evals run --help                                                        # every flag
 ```
+
+By default every case whose status is not `not doing` runs (`--status-exclude` defaults to `not doing`). CHALLENGE's canonical runs also leave out `todo` cases: pass `--status-exclude "not doing,todo"`.
 
 **Choose the tier before you start.**
 
 - A **smoke run** (1 trial, the default) answers a quick question in minutes, such as "did my prompt rewrite stop the nudge?". It is never committed, never diffed and never used as a baseline.
-- An **official run** (`--trials 3`) is anything that produces a regression count or becomes a baseline. It needs three trials because the agent is not deterministic: two single trials of the same build differ by more spurious regressions than a real build change produced ([Comparing two runs](results/README.md#comparing-two-runs) has the evidence). Give it a meaningful `--build` label, such as the agent build string or a purpose like `post-fix-validation`, not the default `unknown`.
+- A run you will publish, trend or diff uses `--trials 3`. For CHALLENGE and BENCHMARK that is the **canonical run**: prod, default profile, 3 trials. For GOLD it is the **official run**: anything that produces a regression count or becomes a baseline. Three trials are needed because the agent is not deterministic: two single trials of the same build differ by more spurious regressions than a real build change produced ([Comparing two runs](results/README.md#comparing-two-runs) has the evidence). Give the run a meaningful `--build` label, such as the agent build string or a purpose like `post-fix-validation`, not the default `unknown`.
 
-**Use the default tool profile.** Leave out `--ff` unless the cases under test need a feature still behind the `experimental` profile, such as the LGMS dataset (id 12). The run records its `ff`, and the run_id ends with it (`20260831T163347Z_prod` versus `20260831T155003Z_prod_experimental`). Never diff or trend two runs with different `ff`: the profiles offer different tools, so the diff would measure the profile, not the release. Cases that need `experimental` are parked (`not doing`) while official runs use the default profile; each one's `status_reason` says when to bring it back. Until late August 2026, dashboards and satellite imagery existed only behind `experimental`, so every run before 2026-08-31 used `ff=experimental`; do not compare those runs with later default-profile runs.
+**Use the default tool profile.** Leave out `--ff` unless the cases under test need a feature still behind the `experimental` profile, such as the LGMS dataset (id 12). The run records its `ff`, and the run_id ends with it (`20260831T163347Z_prod` versus `20260831T155003Z_prod_experimental`). Never diff or trend two runs with different `ff`: the profiles offer different tools, so the diff would measure the profile, not the release. GOLD cases that need `experimental` are parked (`not doing`) while official runs use the default profile; each one's `status_reason` says when to bring it back. Until late August 2026, dashboards and satellite imagery existed only behind `experimental`, so every GOLD run before 2026-08-31 used `ff=experimental`; do not compare those runs with later default-profile runs.
 
 **Record semantic changes.** If check semantics changed since the previous run, pass `--note "<what changed>"`. It is stored on the run, so later diffs are not read as agent changes.
 
 **Local runs.** `--env local` targets a project-zeno API on `http://localhost:8000` (`make api` in a project-zeno checkout) and reads only `API_TOKEN`. Local runs are smoke runs: a local stack does not match staging or prod, so never commit or diff them.
 
-**Killed runs.** A run appends each finished case to `results/gold/runs/<run_id>.partial.jsonl` (gitignored), so a killed run loses only the cases that were in progress. `uv run gold run --resume <run_id>` finishes it: the settings come from that file (every other flag except `--results-dir` is ignored), it refuses if the case set has changed, and the final record carries `resumed: true`.
+**Killed runs.** A run appends each finished case to `results/<suite>/runs/<run_id>.partial.jsonl` (gitignored), so a killed run loses only the cases that were in progress. `uv run evals run --suite <suite> --resume <run_id>` finishes it, with the suite the run used, because the partial file is found under that suite's results directory. The settings come from that file (every other flag except `--results-dir` is ignored), it refuses if the case set has changed, and the final record carries `resumed: true`.
 
 **Workers and timeouts.** By default 10 cases run at once (the hard cap is 20), and a trial that takes over 900 seconds becomes an error row. Runs record both settings. A block of timeouts late in a run usually means the API is overloaded: lower `--workers` before blaming the agent.
 
