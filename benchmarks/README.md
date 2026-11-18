@@ -77,6 +77,10 @@ English manifest is never changed for them.
   it.** The North Star is the English version's rate. A companion is run and
   reported as its own version, and its rates are read per language against
   the same pairs in English.
+- **A reply in the wrong language is never a fail.** The info-only check
+  `reply_language_match` records whether each reply is in the question's
+  language (`src/goldset/evaluators/README.md`). It runs on English
+  questions too, so each language has a rate, and it changes no verdict.
 
 Write the expectations once, then build and check:
 

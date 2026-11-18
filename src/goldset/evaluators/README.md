@@ -10,9 +10,9 @@ An evaluator is a function in this directory. It receives the agent's final stat
 
 Every check is `1.0` (pass), `0.0` (fail) or `null` (not evaluated). Each entry below says when an absence scores `null` (the check does not apply) and when it scores `0.0` (something that should be there is missing). That choice matters most: an absence that should fail but scores `null` raises the pass rate without anyone noticing. So an expected AOI that never resolved scores `0.0`, not `null`.
 
-Most checks are opt-in: they run only when the case sets a particular expected value. The exceptions run on any row with the relevant output: `chart_integrity`, `chart_well_formed`, `answer_traceability`, `dashboard_widgets_valid`, and `dashboard_created` (an unsolicited dashboard fails).
+Most checks are opt-in: they run only when the case sets a particular expected value. The exceptions run on any row with the relevant output: `chart_integrity`, `chart_well_formed`, `answer_traceability`, `dashboard_widgets_valid`, `dashboard_created` (an unsolicited dashboard fails), and `reply_language_match` (any row with a final message).
 
-The run report's reconciliation line compares the checks a case's expected values imply (`buckets.implied_checks`) with the checks that evaluated. Checks that may legitimately abstain (`charts_answer`, `web_fallback`, `pull_source_match`, the dashboard sub-checks, `date_coverage`) are never implied, so every miss on that line is a real hole.
+The run report's reconciliation line compares the checks a case's expected values imply (`buckets.implied_checks`) with the checks that evaluated. Checks that may legitimately abstain (`charts_answer`, `web_fallback`, `pull_source_match`, the dashboard sub-checks, `date_coverage`, `reply_language_match`) are never implied, so every miss on that line is a real hole.
 
 ### Verdicts: gating, info-only and error
 
@@ -87,6 +87,7 @@ This is the canonical check-to-bucket map; other docs link here. Bucket tags com
 | [`forbidden_tools_absent`](#forbidden_tools_absent) | scope | gating | deterministic | `tool_checks.evaluate_forbidden_tools` | `forbidden_tools` |
 | [`accepted_nudge_match`](#accepted_nudge_match) | scope | gating (nudge path only) | deterministic | `accepted_nudge.evaluate_accepted_nudge` | `accept_nudge_offering` or `accept_aoi_nudge_offering` |
 | [`suggested_datasets_match`](#suggested_datasets_match) | scope | gating (legacy) | deterministic | `suggested_datasets_evaluator.evaluate_suggested_datasets` | `suggested_datasets` (legacy: the agent no longer writes this field) |
+| [`reply_language_match`](#reply_language_match) | none | info-only | deterministic | `reply_language.evaluate_reply_language` | any row with a final message (reads the case's `language`, English when unset) |
 
 Two expected fields switch on no check of their own: `aoi_source` is read only by `dashboard_aoi_match`, and `dataset_name` by no check at all (it still counts toward the uid, like every expected value). Do not read either as coverage.
 
@@ -659,6 +660,24 @@ Scope · gating · deterministic · `suggested_datasets_evaluator.evaluate_sugge
 - Do not write new cases against this field. Use `nudge_type: dataset_choice` (`nudge_match`) or `scope: suggest` (`scope_match`).
 - The check stays because the frozen v1 store still has cases that set the field.
 
+## `reply_language_match`
+
+No bucket · info-only · deterministic · `reply_language.evaluate_reply_language` · runs when: the row has a final message (no expectation needed; English cases too)
+
+**Measures.** Whether the final reply is in the case's language: `language` on the case (`es` or `id`), English when unset. The detector tells the three languages apart by counting each one's function words (articles, prepositions, conjunctions; `reply_language.FUNCTION_WORDS`) in the reply's prose. Fenced and inline code, markdown table rows and URLs are removed first, and words are lower-cased runs of letters, so numbers drop out. Dataset names, units and place names carry almost no function words, so a Spanish reply that quotes English dataset names still reads as Spanish. No package and no model is involved.
+
+**Scores.** `1.0` when the detected language is the case's · `0.0` when it is clearly another of the three · `null` when there is no final message, or the reply is undecided: the leading language has fewer than 4 function words (`MIN_HITS`; a reply too short to read, such as "Sí." or a bare table), or fewer than twice the runner-up's count (`MIN_RATIO`; a reply that mixes two languages). An undecided reply scores `null` and not `0.0` because it is no evidence of the wrong language, and a `0.0` there would pull the reply-language rate down for replies nobody would call wrong.
+
+**Evidence.** `reasons.reply_language_match` (every scored or undecided row): the detected language, or `undecided`, with the three counts, for example `es (function words: en 1, es 20, id 0)` · `actuals.reply_language_match` (failing rows only): `actual_reply_language`, the detected language.
+
+**Triage.**
+- Never file a finding on this check alone. It sits in no bucket and never affects a verdict, a rate or the release gate. Read it as a rate per language: the share of scored attempts at `1.0`.
+- Only English, Spanish and Indonesian are told apart. A reply in Portuguese reads as Spanish and one in Malay as Indonesian, so the check cannot catch those two mix-ups.
+- A reply about a place whose name carries function words ("Madre de Dios", "La Paz") gives the wrong language a few counts; the ratio rule absorbs them in any reply with a few sentences of prose.
+- In a multi-turn case every turn is read in the case's one language.
+
+**Why it is built this way.** AJ's decision for the languages companion (2026-11-18): a right answer in English to a Spanish question does not mislead the user, so the wrong language is reported beside the accuracy figures and never fails a question. It runs on English cases too, so the English rate exists as the baseline for the other two. Runs recorded before the check have no such key; every reader takes a missing check as `null`.
+
 ## Info-only checks
 
 An info-only check (`buckets.INFO_ONLY`) is recorded and reported but never affects a row verdict or the release gate: `tools/diff_runs.py` lists its regressions but never fails `--fail-on-regression` or `--fail-on-coverage-loss` on them (its headline shows them as a separate info-only count), `tools/flakiness.py` labels it `info-only` instead of holding it to a stability limit, and COVERAGE.md leaves it out of its coverage counts.
@@ -670,12 +689,13 @@ An info-only check (`buckets.INFO_ONLY`) is recorded and reported but never affe
 | `class_value_match` | Its expected figures were copied from unverified working notes, so its failures reported bad expectations, not bad behaviour. | A review that verifies its cases' expected figures against the source data. |
 | `ground_truth_answer` | It is judged, and every new judged check starts info-only. `ground_truth_match` already gates the same figure deterministically, so gating the prose too would count one failure twice. | A standard deviation of at most 0.10 over 3 trials. |
 | `charts_answer_judge` | It is the chart judge's framing opinion, which flipped between identical trials; `charts_answer` gates on the code comparison alone. | A standard deviation of at most 0.10 over 3 trials. [cases/README.md](../../../cases/README.md) separately rules out failing a case on chart choice. |
+| `reply_language_match` | By decision, not by reliability: a right answer in the wrong language does not mislead the user (AJ, 2026-11-18). | A product decision that the reply language is part of a right answer. No threshold applies. |
 
 New judged checks start info-only and gate only once a 3-trial run shows a standard deviation of at most 0.10. Three judged checks gate without having passed that step (`agent_answer`, `expected_text_match` and `clarification_requested`), because they came from the earlier gnw-evals harness already gating; `tools/flakiness.py` still holds them to the judged limit. The BENCHMARK draft-5 judged checks `figure_claim_match` and `answer_period_match` also gate from their first run, by AJ's choice (2026-10-27). `figure_claim_match` needs `figure_claim`, which no GOLD case sets; `answer_period_match` runs on any case with `start_date` or `end_date`, GOLD cases included.
 
 Two interactions to keep in mind when reading a bucket table:
 
-- `date_coverage` and `charts_answer_judge` sit in no bucket. `answer_traceability` and `class_value_match` are tagged to explanation and analysis, and `ground_truth_answer` is shared between analysis and explanation. `buckets.summarize_buckets` does not filter info-only checks, so they count toward those buckets' pass and evaluated tallies and `rows_covered`, while never touching a verdict.
+- `date_coverage`, `charts_answer_judge` and `reply_language_match` sit in no bucket. `answer_traceability` and `class_value_match` are tagged to explanation and analysis, and `ground_truth_answer` is shared between analysis and explanation. `buckets.summarize_buckets` does not filter info-only checks, so they count toward those buckets' pass and evaluated tallies and `rows_covered`, while never touching a verdict.
 - `buckets.implied_checks` implies `class_value_match` whenever `class_values` is set, so its absence shows on the reconciliation line, while COVERAGE.md leaves info-only checks out of its coverage counts. The two count slightly different populations.
 
 ## Adding a check

@@ -34,6 +34,8 @@ perform on prompts like X?" with a **pass rate per cohort**. Plan of record:
   the same question; `tools/check.py` fails if the pair's expectations
   differ, so the pair's score gap measures the language alone. `twin` is
   never hashed.
+  Whether the reply itself is in the case's language is the info-only
+  `reply_language_match`: it is reported as a rate and never fails a case.
 - **Every case still has a defined correct behaviour**, including the ones
   expected to fail today. `notes.behaviour` records it: `select` (right
   AOI(s) chosen), `nudge` (asks with the right options), `clarify` /
