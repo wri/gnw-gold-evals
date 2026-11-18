@@ -90,7 +90,7 @@ assert tuple(FUNCTION_WORDS) == LANGUAGES
 # compares two languages.
 DECOY_WORDS: dict[str, frozenset[str]] = {
     "fr": frozenset(
-        "le la les l un une des du de d et est sont été était être que qui "
+        "le la les l un une des du de d et est sont était être que qui "
         "dans pour par sur avec sans sous au aux ce cet cette ces ne pas "
         "plus ou où mais donc car comme aussi très il elle ils elles nous "
         "vous je tu sa son ses leur leurs qu à y entre selon ont a été "
@@ -141,8 +141,10 @@ def detect_language(text: str) -> tuple[str | None, dict[str, int]]:
         hits.items(), key=lambda item: -item[1]
     )[:2]
     shared = _VOCABULARIES[leader] & _VOCABULARIES[second]
-    own = sum(1 for word in words if word in _VOCABULARIES[leader] - shared)
-    runner_up = sum(1 for word in words if word in _VOCABULARIES[second] - shared)
+    leader_own = _VOCABULARIES[leader] - shared
+    second_own = _VOCABULARIES[second] - shared
+    own = sum(1 for word in words if word in leader_own)
+    runner_up = sum(1 for word in words if word in second_own)
     if top < MIN_HITS or own < MIN_RATIO * runner_up:
         return None, hits
     return leader, hits
@@ -160,11 +162,9 @@ def evaluate_reply_language(
     evidence of the wrong language: a ``0.0`` there would report "Sí." or a
     bare table as a reply in the wrong language and pull the rate down.
 
-    A reply detected as a decoy language (``fr``, ``pt``) is that language
-    and scores ``0.0`` against any case language. A case in ``en`` whose
-    ``query`` is clearly in another language is an older question that could
-    not take a ``language``; its expected language is unknown, so it scores
-    ``null`` with a reason.
+    A decoy-language reply (``fr``, ``pt``) scores ``0.0``; an ``en`` case
+    whose ``query`` reads as another language scores ``null`` with a reason
+    (see the module docstring).
     """
     require_language(language)
     result: dict[str, Any] = {
