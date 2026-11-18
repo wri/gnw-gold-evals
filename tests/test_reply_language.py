@@ -339,7 +339,8 @@ def test_the_ledger_keeps_the_detected_language_of_a_wrong_reply():
 def test_committed_runs_without_the_check_still_read():
     # Runs recorded before the check have no such key anywhere; a missing
     # check is a null, so every reader takes them as before.
-    path = sorted((ROOT / "results/benchmark/runs").glob("*.json"))[-1]
+    # Pinned: "newest run" breaks as soon as a run records the check.
+    path = ROOT / "results/benchmark/runs/20261028T124051Z_prod.json"
     run = json.loads(path.read_text(encoding="utf-8"))
     assert all(CHECK not in e.get("checks", {}) for e in run["results"])
     bench = load_benchmark(ROOT / run["benchmark"]["path"])
