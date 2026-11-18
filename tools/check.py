@@ -3,6 +3,9 @@
     uv run python tools/check.py          # verify; nonzero exit on drift (CI)
     uv run python tools/check.py --fix    # recompute uids + manifest after edits
 
+Both check the CHALLENGE store, cases/challenge. `--suite gold` checks the
+legacy GOLD copy (cases/v2), and `--cases-dir` any other store.
+
 After hand-editing a case YAML, run `check.py --fix`: the case's uid then
 identifies its new content, and the manifest's caseset_version moves with
 it. This is only the first step of the after-edit ritual: finish it
@@ -33,6 +36,7 @@ from goldset.store import (
     write_case,
     write_manifest,
 )
+from goldset.suites import SUITE_NAMES, SUITES
 from goldset.templates import validate_templates
 
 
@@ -40,7 +44,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
-    parser.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
+    parser.add_argument("--suite", choices=SUITE_NAMES, default="challenge",
+                        help="check this suite's case store (default: challenge; "
+                             "benchmark reads the same store)")
+    parser.add_argument("--cases-dir", type=Path, default=None,
+                        help="a store to check instead of the suite's")
     parser.add_argument("--fix", action="store_true")
     parser.add_argument(
         "--uid-includes-deltas", action="store_true",
@@ -51,6 +59,8 @@ def main() -> int:
     args = parser.parse_args()
     if args.uid_includes_deltas and not args.fix:
         parser.error("--uid-includes-deltas changes identities; it needs --fix")
+    if args.cases_dir is None:
+        args.cases_dir = SUITES[args.suite].cases_dir
 
     uid_includes_deltas = (
         args.uid_includes_deltas or store_uid_includes_deltas(args.cases_dir)

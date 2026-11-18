@@ -1,7 +1,7 @@
 [project]
 name = "gnw-gold-evals"
 version = "0.1.0"
-description = "GOLD regression suite for the Global Nature Watch agent: content-addressed case store, evaluation harness and results ledger."
+description = "CHALLENGE and BENCHMARK evaluation harness for the Global Nature Watch agent: content-addressed case store, harness and results ledgers. GOLD lives in project-zeno (evals/gold/)."
 requires-python = ">=3.11"
 dependencies = [
     "pyyaml>=6.0",
@@ -14,6 +14,7 @@ dependencies = [
 ]
 
 [project.scripts]
+evals = "goldset.cli:main"
 gold = "goldset.cli:main"
 
 [dependency-groups]

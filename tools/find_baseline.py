@@ -16,6 +16,10 @@ back to whatever run happens to sort last.
 
 In CI the directory holds the committed ledger plus the fresh run, so the
 answer is the newest comparable committed run.
+
+``--runs-dir`` defaults to the directory the new run is in, its own ledger,
+so a run is never compared across suites by omission; ``--suite`` names
+another ledger.
 """
 
 from __future__ import annotations
@@ -26,7 +30,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from goldset.ledger import read_run
+from goldset.ledger import RUNS_DIRNAME, read_run
+from goldset.suites import SUITE_NAMES, SUITES
 
 # caseset is absent (None) on runs that predate the field, and None never
 # equals "v1"/"v2", so an unknown store is never guessed to match. Two such
@@ -69,8 +74,14 @@ def main() -> int:
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )
     parser.add_argument("new_run", type=Path, help="the run to find a baseline for")
-    parser.add_argument("--runs-dir", type=Path, default=Path("results/gold/runs"))
+    parser.add_argument("--suite", choices=SUITE_NAMES, default=None,
+                        help="search this suite's ledger instead of the new run's")
+    parser.add_argument("--runs-dir", type=Path, default=None,
+                        help="search this directory instead of the new run's")
     args = parser.parse_args()
+    if args.runs_dir is None:
+        args.runs_dir = (SUITES[args.suite].results_dir / RUNS_DIRNAME if args.suite
+                         else args.new_run.parent)
 
     baseline = find_baseline(args.new_run, args.runs_dir)
     if baseline is None:

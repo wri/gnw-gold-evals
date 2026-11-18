@@ -1,14 +1,20 @@
-"""gold: run GOLD cases against a live GNW agent API and record the results.
+"""Run evaluation cases against a live GNW agent API and record the results.
+
+The command is installed as both `evals` and `gold`; they are identical.
 
 Examples:
-  gold run --env staging --trials 3
-  gold run --api-base-url https://api.staging.globalnaturewatch.org --id 1-030
-  gold run --resume <run_id>
-  gold prune-artifacts --keep-runs 5
+  %(prog)s run --suite challenge --env prod --trials 3 --build "<label>"
+  %(prog)s run --benchmark benchmarks/<version>.json --env prod --trials 3
+  %(prog)s run --suite gold --api-base-url https://api.staging.globalnaturewatch.org --id 1-030
+  %(prog)s run --resume <run_id>
+  %(prog)s prune-artifacts --suite challenge --keep-runs 5
 
-Each run writes one run record under <results-dir>/runs/ (results/gold/ by
-default, results/benchmark/ with --benchmark). The profile, trial and
-smoke-run rules are in README.md, "Running the set".
+A run names its suite, which picks the case store and the results ledger
+(there is no default): challenge (cases/challenge -> results/challenge),
+benchmark (--benchmark MANIFEST -> results/benchmark), or gold (cases/v2 ->
+results/gold, the legacy copy; GOLD itself lives in project-zeno
+evals/gold/). Each run writes one run record under <results-dir>/runs/. The
+profile, trial and smoke-run rules are in README.md, "Running the set".
 
 Flags always win: no environment variable changes a flag or its default.
 The environment (or a .env file) supplies secrets only:
@@ -29,6 +35,7 @@ import asyncio
 import dataclasses
 import json
 import os
+import shlex
 import subprocess
 import sys
 import time
@@ -59,6 +66,15 @@ from goldset.ledger import (
     write_run,
 )
 from goldset.store import Case, load_store, read_manifest
+from goldset.suites import (
+    SUITE_NAMES,
+    SUITES_HELP,
+    SuiteError,
+    ledger_suite,
+    locate_resume_dir,
+    resolve_results_dir,
+    resolve_run_dirs,
+)
 from goldset.templates import resolve_templates
 
 ENV_URLS = {
@@ -644,13 +660,17 @@ def prune_artifacts(results_dir: Path, keep_runs: int) -> int:
 
 
 def main() -> int:
+    # prog follows argv[0], so help, errors and the resume hint name
+    # whichever of `evals` or `gold` was invoked.
     parser = argparse.ArgumentParser(
-        prog="gold",
         description=__doc__,
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     sub = parser.add_subparsers(dest="command", required=True)
     run = sub.add_parser("run", help="run cases against a live API")
+    run.add_argument("--suite", choices=SUITE_NAMES, default=None,
+                     help="the case store and results ledger to use; there is "
+                          f"no default. Choose {SUITES_HELP}")
     run.add_argument("--env", choices=sorted(ENV_URLS), default="staging")
     run.add_argument("--api-base-url", default=None,
                      help="explicit URL; overrides --env")
@@ -679,7 +699,11 @@ def main() -> int:
     # of timeouts late in a run usually means load, and that cannot be diagnosed
     # without knowing the concurrency.
     run.add_argument("--workers", type=int, default=10)
-    run.add_argument("--status-exclude", default="not doing")
+    run.add_argument("--status-exclude", default=None,
+                     help="comma-separated case statuses to skip. Default: "
+                          "'not doing,todo' for the CHALLENGE store (its todo "
+                          "rows are not pinned yet), 'not doing' otherwise. "
+                          "Not used by --benchmark: the manifest names the cases")
     run.add_argument("--id", action="append", default=None,
                      help="run only this case id (repeatable)")
     run.add_argument("--group", default=None, help="substring match on group")
@@ -688,19 +712,24 @@ def main() -> int:
                           "above group (e.g. aoi; CHALLENGE stores only)")
     run.add_argument("--benchmark", type=Path, default=None, metavar="MANIFEST",
                      help="run exactly a BENCHMARK manifest's active members "
-                          "(benchmarks/<version>.json); implies its source "
-                          "--cases-dir and --results-dir results/benchmark, and "
-                          "cannot be combined with --group/--set (--id and "
-                          "--missing-from narrow it to some members)")
+                          "(benchmarks/<version>.json); implies --suite "
+                          "benchmark: the manifest's source store and "
+                          "results/benchmark. Cannot be combined with "
+                          "--group/--set (--id and --missing-from narrow it to "
+                          "some members)")
     run.add_argument("--missing-from", type=Path, action="append", default=None,
                      metavar="RUN",
                      help="with --benchmark: run only the active members this "
                           "earlier run did not measure, e.g. cases revised since "
                           "(combine them with tools/benchmark_page.py --base); "
                           "repeatable: members none of the runs measured")
-    run.add_argument("--cases-dir", type=Path, default=Path("cases/v2"))
+    run.add_argument("--cases-dir", type=Path, default=None,
+                     help="overrides the suite's store. Alone, a known store "
+                          "picks its suite (cases/challenge: challenge, "
+                          "cases/v2: gold); any other store needs --results-dir")
     run.add_argument("--results-dir", type=Path, default=None,
-                     help="default results/gold (results/benchmark with --benchmark)")
+                     help="overrides the suite's ledger. A store and a ledger "
+                          "of different suites are refused")
     run.add_argument("--slow-threshold", type=float, default=180.0,
                      help="seconds; slower rows get an info flag (never scored)")
     run.add_argument("--trial-timeout", type=float, default=900.0,
@@ -716,21 +745,31 @@ def main() -> int:
     run.add_argument("--resume", default=None, metavar="RUN_ID",
                      help="finish a killed run from its .partial.jsonl. The "
                           "run's settings come from that file, so other flags "
-                          "are ignored, except --results-dir (which must match "
-                          "the original run) and --verbose.")
+                          "are ignored, except --verbose and the ledger: "
+                          "--results-dir, or --suite (benchmark needs no "
+                          "manifest here), or neither to search the three "
+                          "suites' ledgers for the run.")
     run.add_argument("--verbose", action="store_true")
 
     prune = sub.add_parser(
         "prune-artifacts",
         help="delete raw artifact dirs beyond the newest N runs (ledger is untouched)",
     )
-    prune.add_argument("--results-dir", type=Path, default=Path("results/gold"))
+    prune.add_argument("--suite", choices=SUITE_NAMES, default=None,
+                       help="the ledger to prune; required unless --results-dir")
+    prune.add_argument("--results-dir", type=Path, default=None)
     prune.add_argument("--keep-runs", type=int, default=5)
     args = parser.parse_args()
 
     if args.command == "prune-artifacts":
-        return prune_artifacts(args.results_dir, args.keep_runs)
+        try:
+            results_dir = resolve_results_dir(args.suite, args.results_dir)
+        except SuiteError as error:
+            print(error)
+            return 1
+        return prune_artifacts(results_dir, args.keep_runs)
 
+    manifest_cases_dir = None
     if args.benchmark:
         if args.group or args.set:
             print("--benchmark selects its own cases; drop --group/--set "
@@ -742,7 +781,7 @@ def main() -> int:
             print(f"cannot load benchmark: {exc}")
             return 1
         bench = load_benchmark(Path(args.benchmark["path"]))
-        args.cases_dir = Path(bench.source.get("cases_dir", "cases/challenge"))
+        manifest_cases_dir = Path(bench.source.get("cases_dir", "cases/challenge"))
         if args.missing_from:
             measured = {e.get("uid") for path in args.missing_from for e in
                         json.loads(path.read_text(encoding="utf-8"))["results"]}
@@ -762,11 +801,36 @@ def main() -> int:
     elif args.missing_from:
         print("--missing-from needs --benchmark")
         return 1
-    if args.results_dir is None:
-        args.results_dir = Path("results/benchmark" if args.benchmark else "results/gold")
 
     if args.resume:
+        try:
+            args.results_dir = locate_resume_dir(
+                args.resume,
+                suite=args.suite or ("benchmark" if args.benchmark else None),
+                results_dir=args.results_dir,
+            )
+        except SuiteError as error:
+            print(error)
+            return 1
         return resume_run(args)
+
+    try:
+        dirs = resolve_run_dirs(
+            suite=args.suite,
+            manifest_cases_dir=manifest_cases_dir,
+            cases_dir=args.cases_dir,
+            results_dir=args.results_dir,
+        )
+    except SuiteError as error:
+        print(error)
+        return 1
+    args.cases_dir, args.results_dir = dirs.cases_dir, dirs.results_dir
+    if args.status_exclude is None:
+        args.status_exclude = dirs.status_exclude
+    selection = (f"members of {args.benchmark['version']}" if args.benchmark
+                 else f"status excluded: {args.status_exclude}")
+    print(f"suite {dirs.suite or '(none)'}: {args.cases_dir} -> {args.results_dir}; "
+          f"{selection}", flush=True)
 
     manifest = read_manifest(args.cases_dir)
     if manifest is None:
@@ -837,8 +901,12 @@ def main() -> int:
 
     print(f"run {args.run_id}: {len(cases)} cases x {args.trials} trial(s) "
           f"against {args.resolved_url}", flush=True)
+    ledger = ledger_suite(args.results_dir)
+    where = (f"--suite {ledger}" if ledger
+             else f"--results-dir {shlex.quote(str(args.results_dir))}")
     print(f"  in-flight ledger: {partial} "
-          f"(if killed: gold run --resume {args.run_id})", flush=True)
+          f"(if killed: {parser.prog} run --resume {args.run_id} {where})",
+          flush=True)
     entries = asyncio.run(run_cases(
         args, cases, entry_sink=lambda e: append_partial_entry(partial, e),
     ))

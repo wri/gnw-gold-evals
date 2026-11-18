@@ -40,7 +40,7 @@ jobs:
           uv run python tools/check.py --cases-dir cases/challenge
       - name: COVERAGE.md is up to date (generated, never hand-edited; GOLD and CHALLENGE)
         run: |
-          uv run python tools/coverage_doc.py --check
+          uv run python tools/coverage_doc.py --check --cases-dir cases/v2
           uv run python tools/coverage_doc.py --check --cases-dir cases/challenge
       - name: Run index freshness (results/index.json derived, never hand-edited)
         run: uv run python tools/build_run_index.py --check
@@ -67,13 +67,13 @@ jobs:
           API_TOKEN: ${{ secrets.API_TOKEN_STAGING }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          uv run gold run --env staging --trials 3 --workers "${{ inputs.workers }}" \
+          uv run gold run --suite gold --env staging --trials 3 --workers "${{ inputs.workers }}" \
             --build "${{ inputs.build_label }}"
       - name: Regression gate vs newest comparable committed run
         run: |
           set -euo pipefail
           NEW=$(ls results/gold/runs/*.json | sort | tail -1)
-          PREV=$(uv run python tools/find_baseline.py "$NEW")
+          PREV=$(uv run python tools/find_baseline.py "$NEW" --runs-dir results/gold/runs)
           uv run python tools/diff_runs.py "$PREV" "$NEW" --fail-on-regression
       - name: Upload run ledger (results/gold/runs/)
         if: always()
