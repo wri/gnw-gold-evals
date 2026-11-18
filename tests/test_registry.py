@@ -37,6 +37,7 @@ EXPECTED_ORDER = (
     "figures",
     "figure_claim",
     "answer_period",
+    "reply_language",
 )
 
 
@@ -47,7 +48,7 @@ def test_registry_order_matches_legacy_merge_order():
 def test_every_known_score_field_is_owned_exactly_once():
     # Pinned so that adding or removing a score field is a deliberate,
     # visible edit.
-    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 36
+    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 37
 
 
 def test_run_evaluations_with_no_expectations_scores_nothing():

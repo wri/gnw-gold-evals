@@ -102,6 +102,7 @@ SHARED: dict[str, tuple[str, str]] = {
 # class_value_match: its expected figures are not all verified yet.
 # charts_answer_judge: the judge's view of chart choice, which flaps between trials.
 # ground_truth_answer: judged, so info-only until it shows std <= 0.10 over 3 trials.
+# reply_language_match: a right answer in the wrong language does not mislead.
 INFO_ONLY: frozenset[str] = frozenset(
     {
         "date_coverage",
@@ -109,6 +110,7 @@ INFO_ONLY: frozenset[str] = frozenset(
         "class_value_match",
         "charts_answer_judge",
         "ground_truth_answer",
+        "reply_language_match",
     }
 )
 

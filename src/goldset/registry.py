@@ -48,6 +48,7 @@ from goldset.evaluators.output_checks import (
     evaluate_chart_type,
     evaluate_chart_well_formed,
 )
+from goldset.evaluators.reply_language import evaluate_reply_language
 from goldset.evaluators.scope_checks import evaluate_scope
 from goldset.evaluators.tool_checks import evaluate_forbidden_tools
 
@@ -319,6 +320,16 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected.expected_accept_fixed_period,
         ),
         presumes_pull=True,
+    ),
+    # Runs on every case, English included, so each language has a rate to
+    # read beside the others. It presumes no pull: a nudge is a reply too.
+    EvaluatorSpec(
+        name="reply_language",
+        kind="deterministic",
+        score_fields=("reply_language_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_reply_language(
+            state, expected.language
+        ),
     ),
 )
 

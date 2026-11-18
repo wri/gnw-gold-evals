@@ -1,13 +1,36 @@
 """reply_language_match: does the final reply use the case's language?"""
 
+import json
+import sys
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
 
-from goldset.evaluators.reply_language import (
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "tools"))
+
+import benchmark_page as bp  # noqa: E402
+import challenge_rollup as cr  # noqa: E402
+
+from goldset.benchmark import load_benchmark  # noqa: E402
+from goldset.buckets import (  # noqa: E402
+    attempt_verdict,
+    buckets_for,
+    implied_checks,
+    is_info_only,
+    row_verdict,
+    summarize_buckets,
+)
+from goldset.cli import result_to_entry  # noqa: E402
+from goldset.eval_types import ExpectedData  # noqa: E402
+from goldset.eval_types import TestResult as Result  # noqa: E402
+from goldset.evaluators.reply_language import (  # noqa: E402
     detect_language,
     evaluate_reply_language,
 )
+from goldset.registry import EVALUATORS  # noqa: E402
+from goldset.runner.base import BaseTestRunner  # noqa: E402
 
 SPANISH = (
     "Según los datos de alertas, en el departamento de Ucayali se detectaron "
@@ -166,3 +189,113 @@ def test_a_decomposed_accent_still_counts():
 def test_an_unknown_case_language_fails_loudly():
     with pytest.raises(ValueError, match="language must be one of"):
         evaluate_reply_language(_state(SPANISH), "pt")
+
+
+# --- wiring: registered for every case, info-only, never part of a verdict ---
+
+CHECK = "reply_language_match"
+GATING_PASS = {"aoi_id_match": 1.0, "dataset_id_match": 1.0}
+GATING_FAIL = {"aoi_id_match": 0.0, "dataset_id_match": 1.0}
+
+
+def _entry(*trials):
+    if len(trials) == 1:
+        return {"uid": "u", "id": "c", "checks": dict(trials[0])}
+    final = {
+        name: 1.0 if sum(t[name] == 1.0 for t in trials) * 2 > len(trials) else 0.0
+        for name in trials[0]
+    }
+    return {"uid": "u", "id": "c", "checks": final,
+            "trials": [{"checks": dict(t)} for t in trials]}
+
+
+def _with_wrong_language(entry):
+    out = {**entry, "checks": {**entry["checks"], CHECK: 0.0}}
+    if "trials" in entry:
+        out["trials"] = [
+            {**t, "checks": {**t["checks"], CHECK: 0.0}} for t in entry["trials"]
+        ]
+    return out
+
+
+ENTRIES = [
+    _entry(GATING_PASS),
+    _entry(GATING_FAIL),
+    _entry({"aoi_id_match": None}),  # uncovered: the check must not cover it
+    _entry(GATING_PASS, GATING_PASS, GATING_PASS),
+    _entry(GATING_PASS, GATING_PASS, GATING_FAIL),
+    _entry(GATING_FAIL, GATING_FAIL, GATING_PASS),
+]
+
+
+def test_registered_for_every_case_and_info_only():
+    [spec] = [s for s in EVALUATORS if s.name == "reply_language"]
+    assert spec.kind == "deterministic"
+    assert spec.score_fields == (f"{CHECK}_score",)
+    assert not spec.presumes_pull and not spec.presumes_area
+    assert is_info_only(CHECK) and is_info_only(f"t2.{CHECK}")
+    assert buckets_for(CHECK) == ()
+    # It may abstain (a short or mixed reply), so no case implies it.
+    assert CHECK not in implied_checks({"aoi_ids": "BRA", "answer": "1"})
+
+
+def test_the_runner_scores_a_case_with_no_other_expectation():
+    class Probe(BaseTestRunner):
+        async def run_test(self, query, expected_data):  # pragma: no cover
+            raise NotImplementedError
+
+    for language, text, score in (("es", SPANISH, 1.0), ("en", SPANISH, 0.0)):
+        evaluations = Probe()._run_evaluations(
+            _state(text), ExpectedData(language=language), "q", None
+        )
+        assert evaluations[f"{CHECK}_score"] == score
+        assert evaluations["judge_errors"] == []
+
+
+@pytest.mark.parametrize("entry", ENTRIES)
+def test_a_wrong_language_changes_no_verdict(entry):
+    wrong = _with_wrong_language(entry)
+    assert row_verdict(wrong) == row_verdict(entry)
+    assert cr.strict_clean(wrong) == cr.strict_clean(entry)
+    assert cr.primary_failure(wrong) == cr.primary_failure(entry)
+    for before, after in zip(entry.get("trials", []), wrong.get("trials", [])):
+        assert attempt_verdict(after) == attempt_verdict(before)
+        assert bp.trial_ok(after) == bp.trial_ok(before)
+
+
+def test_a_wrong_language_changes_no_rate_or_bucket():
+    wrong = [_with_wrong_language(e) for e in ENTRIES]
+    assert summarize_buckets(wrong) == summarize_buckets(ENTRIES)
+    three_trial = [e for e in ENTRIES if "trials" in e]
+    assert bp.group_stats([_with_wrong_language(e) for e in three_trial]) == (
+        bp.group_stats(three_trial)
+    )
+    assert bp.failed_checks(_with_wrong_language(three_trial[-1])) == (
+        bp.failed_checks(three_trial[-1])
+    )
+
+
+def test_the_ledger_keeps_the_detected_language_of_a_wrong_reply():
+    evaluation = evaluate_reply_language(_state(ENGLISH), "es")
+    result = Result(
+        thread_id="t", query="q", overall_score=0.0, execution_time="now",
+        **evaluation,
+    )
+    entry = result_to_entry(result, "u")
+    assert entry["checks"][CHECK] == 0.0
+    assert entry["actuals"][CHECK] == "en"
+    assert entry["reasons"][CHECK].startswith("en (function words: en ")
+
+
+def test_committed_runs_without_the_check_still_read():
+    # Runs recorded before the check have no such key anywhere; a missing
+    # check is a null, so every reader takes them as before.
+    path = sorted((ROOT / "results/benchmark/runs").glob("*.json"))[-1]
+    run = json.loads(path.read_text(encoding="utf-8"))
+    assert all(CHECK not in e.get("checks", {}) for e in run["results"])
+    bench = load_benchmark(ROOT / run["benchmark"]["path"])
+    rollup = cr.rollup_benchmark(run, bench)
+    assert rollup["run_id"] == run["run_id"]
+    summary = summarize_buckets(run["results"])
+    assert summary["rows_total"] == len(run["results"])
+    assert sum(summary["verdicts"].values()) == len(run["results"])

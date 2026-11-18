@@ -116,6 +116,7 @@ ACTUALS_FOR_CHECK = {
     "pull_source_match": ("actual_pull_source",),
     "ground_truth_match": ("agent_ground_truth",),
     "ground_truth_answer": ("agent_ground_truth_answer",),
+    "reply_language_match": ("actual_reply_language",),
 }
 ACTUAL_TRIM = 300
 
