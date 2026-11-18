@@ -137,6 +137,129 @@ def test_reads_numbers_with_scales_and_skips_years():
     assert stated["18,136 km²"].value == pytest.approx(1813600)
 
 
+def _local(answer, language):
+    return {s.text: s for s in stated_numbers(answer, language)}
+
+
+def test_an_unknown_language_fails_loudly():
+    with pytest.raises(ValueError, match="language"):
+        stated_numbers("12 ha", "fr")
+
+
+def test_english_cases_keep_the_english_reading():
+    # The frozen English BENCHMARK must score as before: "1.209" is 1.209.
+    (stated,) = stated_numbers("about 1.209 Mha")
+    assert stated.value == pytest.approx(1.209e6)
+    assert stated.other is None
+
+
+def test_reads_indonesian_replies_from_the_traces():
+    # Replies Horizon gave Indonesian users (traces, 2026).
+    stated = _local(
+        "Indonesia kehilangan total **33.124.943,21 ha** (sekitar 10,46%)."
+        " Emisi mencapai **53,17 juta MgCO2e**, fluks neto **+1,72 Miliar MgCO2e**."
+        " Pada tahun **2016** luasnya **321.221 hektar**; fluks bersih negatif"
+        " sebesar -7.856,30 tCO2e pada periode 2001-2025.",
+        "id",
+    )
+    assert stated["33.124.943,21 ha"].value == pytest.approx(33124943.21)
+    assert stated["33.124.943,21 ha"].precision == pytest.approx(0.005)
+    assert stated["10,46%"].value == pytest.approx(10.46)
+    assert stated["10,46%"].percent
+    assert stated["53,17 juta"].value == pytest.approx(53.17e6)
+    assert stated["1,72 Miliar"].value == pytest.approx(1.72e9)
+    # The reply's own numbers show the comma is its decimal mark.
+    assert stated["321.221 hektar"].value == 321221
+    assert stated["321.221 hektar"].other is None
+    assert stated["-7.856,30 tCO2e"].value == pytest.approx(-7856.30)
+    assert not {"2016", "2001", "2025"} & set(stated)
+
+
+def test_reads_spanish_replies_in_either_convention():
+    # Horizon's Spanish replies use both conventions (traces, 2026).
+    english_form = _local(
+        "Se registraron **434,487.33 ha**; el motor principal afectó"
+        " **1.33 millones de hectáreas** y cerca de **19,582 hectáreas** en Oaxaca.",
+        "es",
+    )
+    assert english_form["434,487.33 ha"].value == pytest.approx(434487.33)
+    assert english_form["1.33 millones"].value == pytest.approx(1.33e6)
+    assert english_form["19,582 hectáreas"].value == 19582
+    assert english_form["19,582 hectáreas"].other is None
+    local_form = _local(
+        "Cuerpos de agua: 1,10% (0,32 Mha). Pérdida: 393.170 hectáreas.", "es"
+    )
+    assert local_form["1,10%"].value == pytest.approx(1.10)
+    assert local_form["0,32 Mha"].value == pytest.approx(0.32e6)
+    assert local_form["393.170 hectáreas"].value == 393170
+
+
+@pytest.mark.parametrize(
+    ("answer", "language", "text", "value"),
+    [
+        ("unas 3 mil hectáreas", "es", "3 mil", 3e3),
+        ("2,5 mil millones de toneladas", "es", "2,5 mil millones", 2.5e9),
+        ("1,2 billones de toneladas", "es", "1,2 billones", 1.2e12),
+        ("un 12,5 por ciento", "es", "12,5por ciento", 12.5),
+        ("sekitar 450 ribu hektar", "id", "450 ribu", 450e3),
+        ("2,11 juta ha", "id", "2,11 juta", 2.11e6),
+        ("3,4 triliun ton", "id", "3,4 triliun", 3.4e12),
+        ("sebesar 4,9 persen", "id", "4,9persen", 4.9),
+        ("18.136 km²", "id", "18.136 km²", 1813600),
+    ],
+)
+def test_reads_local_scale_and_percent_words(answer, language, text, value):
+    assert _local(answer, language)[text].value == pytest.approx(value)
+
+
+def test_a_number_with_no_clear_reading_keeps_both():
+    # Nothing in the reply settles the mark, so Horizon's habit in the case
+    # language gives the first reading and the other is kept.
+    (stated,) = stated_numbers("Se perdieron 19,582 hectáreas.", "es")
+    assert stated.value == 19582
+    assert stated.other.value == pytest.approx(19.582)
+    (stated,) = stated_numbers("Total kehilangan 64.435 hektar.", "id")
+    assert stated.value == 64435
+    assert stated.other.value == pytest.approx(64.435)
+    # A reply that mixes both conventions settles nothing either.
+    mixed = _local("1,5 Mha y 2.5 Mha, con 1.209 ha", "es")
+    assert mixed["1.209 ha"].other is not None
+
+
+def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
+    figure = "sum(area_ha)"  # 1,050 over both areas
+
+    def score(answer, language):
+        state, tables = _state(answer, TCL)
+        pulled(tables)
+        return evaluate_figures(state, figure, language)
+
+    assert score("Total: 1.050 hektar.", "id")["figure_match_score"] == 1.0
+    assert score("Total: 1,050 hectáreas.", "es")["figure_match_score"] == 1.0
+    # Horizon's Spanish replies mostly write 1,050; "1.050" alone reads as
+    # 1.05 first, and 1,050 is only its second reading.
+    unsure = score("Total: 1.050 hectáreas.", "es")
+    assert unsure["figure_match_score"] is None
+    assert "reads two ways" in unsure["figure_match_reason"]
+    # "1,05 kha" shows the reply's decimal mark, so "1.050" is 1,050.
+    settled = score("Total: 1.050 hectáreas (1,05 kha).", "es")
+    assert settled["figure_match_score"] == 1.0
+    assert score("Total: 2.345 hectáreas.", "es")["figure_match_score"] == 0.0
+
+
+def test_a_zero_figure_may_be_stated_in_local_words(pulled):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    for answer, language in [
+        ("No se registró ninguna pérdida en el territorio.", "es"),
+        ("Tidak ada kehilangan tutupan pohon di wilayah ini.", "id"),
+        ("No loss was recorded in the territory.", "id"),
+    ]:
+        state, tables = _state(answer, empty_year)
+        pulled(tables)
+        result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+        assert result["figure_match_score"] == 1.0, answer
+
+
 def test_figure_match_passes_rounding_and_fails_a_wrong_figure(pulled):
     figure = "sum(area_ha) where tree_cover_loss_year in 2018..2021"
     state, tables = _state("Loss totalled about 1,050 hectares.", TCL)
