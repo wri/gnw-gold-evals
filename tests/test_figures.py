@@ -500,3 +500,39 @@ def test_a_zero_figure_may_be_stated_in_words(pulled):
     pulled(tables)
     assert evaluate_figures(state, "sum(area_ha)")["figure_match_score"] == 1.0
 
+
+
+@pytest.mark.parametrize("space", [" ", " ", " "])
+def test_a_fixed_space_groups_thousands(space):
+    (stated,) = stated_numbers(f"Se perdieron 1{space}209 ha.", "es")
+    assert stated.value == 1209
+    (stated,) = stated_numbers(f"Total 12{space}345{space}678 hektar.", "id")
+    assert stated.value == 12345678
+
+
+def test_a_plain_space_keeps_the_joined_number_and_its_parts():
+    # "5 200 ha" may be one figure or a list, so neither reading hides the other.
+    values = {s.text: s.value for s in stated_numbers("unas 5 200 ha", "es")}
+    assert values == {"5 200 ha": 5200, "5": 5, "200 ha": 200}
+    # The unit and percent belong to the last part and to the joined number.
+    assert any(s.percent and s.value == 200 for s in stated_numbers("el 5 200 %", "es"))
+
+
+def test_a_four_digit_head_is_not_grouping():
+    values = [s.value for s in stated_numbers("en 2024 120 ha", "es")]
+    assert values == [120]
+
+
+def test_the_english_path_reads_a_spaced_number_as_before():
+    # The unit slot takes "209", so only the 1 is a number: unchanged.
+    assert [s.value for s in stated_numbers("1 209 ha")] == [1]
+    assert [s.value for s in stated_numbers("1\u00a0209 ha")] == [1]
+
+
+def test_a_spaced_figure_matches_in_either_reading(pulled):
+    state, tables = _state("Se perdieron 1 050 hectáreas.", TCL)
+    pulled(tables)
+    assert evaluate_figures(state, "sum(area_ha)", "es")["figure_match_score"] == 1.0
+    state, tables = _state("Quedan 3 050 hectáreas.", TCL)
+    pulled(tables)
+    assert evaluate_figures(state, "sum(area_ha)", "es")["figure_match_score"] == 0.0

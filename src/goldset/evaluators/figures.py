@@ -488,6 +488,8 @@ def stated_numbers(answer: str, language: str = "en") -> list[Stated]:
 #    (the mark its clear numbers agree on) gives the first reading.
 # 3. Failing that, Horizon's habit in the case language gives the first.
 #
+# Spaces group thousands too ("1 209"); see ``_spaced_readings``.
+#
 # A shape-ambiguous number always keeps its second reading, however sure the
 # first looks: a reply mixes conventions, so a figure that matches only the
 # second reading abstains (AJ, 2026-11-18: abstain when a number has no clear
@@ -521,14 +523,39 @@ _LOCAL_SCALES = {
 _LOCAL_UNITS = (*_UNITS, "hectárea", "hectáreas", "hectarea", "hectareas",
                 "hektar", "hektare", "tonelada", "toneladas", "ton")
 _KM2_PHRASE = r"kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
+# Space-grouped thousands: a head of one to three digits, then groups of
+# exactly three ("1 209", "12 345 678"). A head of four digits ("2024 120")
+# is no grouping.
+_SPACE_GROUPED = r"\d{1,3}(?:[ \u00a0\u202f\u2009]\d{3})+(?!\d)"
 _LOCAL_NUMBER = re.compile(
-    r"(?<![\w.])(-?\d+(?:[.,]\d+)*)"
+    r"(?<![\w.])(-?(?:" + _SPACE_GROUPED + r"|\d+)(?:[.,]\d+)*)"
     r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen)?"
     r"\s*(miles\s+de\s+millones|mil\s+millones|" + _KM2_PHRASE
     + r"|[^\W\d_][^\W_]*)?",
     re.I,
 )
 _KM2_WORDS = re.compile(_KM2_PHRASE)
+_GROUP_SPACE = re.compile(r"[ \u00a0\u202f\u2009]")
+
+
+def _spaced_readings(raw: str) -> list[tuple[str, str, bool]]:
+    """(number, text, carries the reply's suffix) readings of a matched number.
+
+    A no-break, narrow no-break or thin space only groups digits, so the
+    number is read joined. A plain space may separate two figures in a list
+    ("5 200 ha" for "5" and "200 ha"), so the joined number and its parts
+    are all stated: either reading can match, and neither can hide the other.
+    """
+    pieces = _GROUP_SPACE.split(raw)
+    joined = "".join(pieces)
+    if len(pieces) == 1:
+        return [(raw, raw, True)]
+    if " " not in raw:
+        return [(joined, raw, True)]
+    last = len(pieces) - 1
+    return [(joined, raw, True)] + [
+        (piece, piece, index == last) for index, piece in enumerate(pieces)
+    ]
 
 
 def _decimal_mark(number: str) -> str | None:
@@ -583,42 +610,48 @@ def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
     # A decomposed accent would cut "millón" short at the "o".
     answer = unicodedata.normalize("NFC", answer)
     matches = list(_LOCAL_NUMBER.finditer(answer))
-    reply_mark = _reply_decimal_mark([m[1] for m in matches])
+    reply_mark = _reply_decimal_mark(
+        ["".join(_GROUP_SPACE.split(m[1])) for m in matches]
+    )
     found = []
     for m in matches:
-        number, percent = m[1], m[2]
-        word = " ".join((m[3] or "").lower().split())
-        scale = _LOCAL_SCALES[language].get(word, 1.0)
-        if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
-            scale = 100.0  # km² to hectares
-        measured = scale != 1.0 or word in _LOCAL_UNITS
-        plain = "." not in number and "," not in number
-        if plain and not (percent or measured) and re.fullmatch(
-            r"(19|20)\d\d", number.lstrip("-")
-        ):
-            continue  # a year, not a figure
-        text = number + (percent or "") + (" " + m[3] if measured else "")
-        mark = _decimal_mark(number)
-        if mark is None:
-            # The reply's mark, else the usual one, only picks the first reading.
-            usual = reply_mark or _USUAL_DECIMAL_MARK[language]
-            marks = [usual, "." if usual == "," else ","]
-        else:
-            # No decimal part: the decimal mark is the one the grouping leaves.
-            marks = [mark or ("," if "." in number else ".")]
-        readings = [_read(number, m_) for m_ in marks]
-        if readings[0] is None:
-            continue  # "1.23.4567": not a number this parser can read
+        for number, shown, carries in _spaced_readings(m[1]):
+            percent = m[2] if carries else None
+            suffix = m[3] if carries else None
+            word = " ".join((suffix or "").lower().split())
+            scale = _LOCAL_SCALES[language].get(word, 1.0)
+            if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
+                scale = 100.0  # km² to hectares
+            measured = scale != 1.0 or word in _LOCAL_UNITS
+            plain = "." not in number and "," not in number
+            if plain and not (percent or measured) and re.fullmatch(
+                r"(19|20)\d\d", number.lstrip("-")
+            ):
+                continue  # a year, not a figure
+            text = shown + (percent or "") + (" " + suffix if measured else "")
+            mark = _decimal_mark(number)
+            if mark is None:
+                # The reply's mark, else the usual one, only picks the first
+                # reading.
+                usual = reply_mark or _USUAL_DECIMAL_MARK[language]
+                marks = [usual, "." if usual == "," else ","]
+            else:
+                # No decimal part: the decimal mark is the one the grouping
+                # leaves.
+                marks = [mark or ("," if "." in number else ".")]
+            readings = [_read(number, m_) for m_ in marks]
+            if readings[0] is None:
+                continue  # "1.23.4567": not a number this parser can read
 
-        def stated_as(reading: tuple[float, float]) -> Stated:
-            return Stated(
-                reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text
-            )
+            def stated_as(reading: tuple[float, float]) -> Stated:
+                return Stated(
+                    reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text
+                )
 
-        first = stated_as(readings[0])
-        if len(readings) > 1 and readings[1] is not None:
-            first = replace(first, other=stated_as(readings[1]))
-        found.append(first)
+            first = stated_as(readings[0])
+            if len(readings) > 1 and readings[1] is not None:
+                first = replace(first, other=stated_as(readings[1]))
+            found.append(first)
     return found
 
 
