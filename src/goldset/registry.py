@@ -328,7 +328,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         kind="deterministic",
         score_fields=("reply_language_match_score",),
         run=lambda state, expected, query, dashboard: evaluate_reply_language(
-            state, expected.language
+            state, expected.language, query
         ),
     ),
 )

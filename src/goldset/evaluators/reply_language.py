@@ -17,9 +17,21 @@ to a Spanish question does not mislead the user, so the wrong language is
 reported as a rate beside the accuracy figures and never fails a question
 (AJ, 2026-11-18).
 
-Limits. Only the three languages are told apart: a reply in Portuguese
-reads as Spanish and one in Malay as Indonesian, their nearest neighbours.
-A place name can lend a few words to the wrong side ("Madre de Dios",
+French and Portuguese are decoys: they are counted so that a reply in either
+is reported as such (``fr``, ``pt``) and scores 0.0 against English, Spanish
+or Indonesian, and they are never a case's language. Their lists may share
+words with another list ("de", "que"), and a word that two languages share
+does not count when those two are compared.
+
+A case that sets no language is English, but the older non-English questions
+in the stores cannot take a ``language`` without a new uid. When such a
+case's own query is clearly not English, its reply is not scored (null), as
+the expected language is unknown.
+
+Limits. Only English, Spanish and Indonesian are told apart from every other
+language but French and Portuguese: a reply in any other language is
+undecided or reads as its nearest neighbour, and Malay still reads as
+Indonesian. A place name can lend a few words to the wrong side ("Madre de Dios",
 "La Paz"); ``MIN_RATIO`` absorbs that in any reply with real prose.
 """
 
@@ -73,6 +85,28 @@ FUNCTION_WORDS: dict[str, frozenset[str]] = {
 }
 assert tuple(FUNCTION_WORDS) == LANGUAGES
 
+# Decoy languages: counted, never a case's language. They may share words
+# with a listed language; ``detect_language`` ignores shared words when it
+# compares two languages.
+DECOY_WORDS: dict[str, frozenset[str]] = {
+    "fr": frozenset(
+        "le la les l un une des du de d et est sont été était être que qui "
+        "dans pour par sur avec sans sous au aux ce cet cette ces ne pas "
+        "plus ou où mais donc car comme aussi très il elle ils elles nous "
+        "vous je tu sa son ses leur leurs qu à y entre selon ont a été "
+        "dont lors chez vers".split()
+    ),
+    "pt": frozenset(
+        "o os as um uma uns umas do da dos das no na nos nas num numa em com "
+        "não nem é são foi foram era eram ser sido está estão tem têm há mais "
+        "mas também já ainda muito muitos seu sua seus suas esse essa isso "
+        "isto ao aos à às pelo pela pelos pelas que se de por para entre "
+        "sobre como quando onde porque então e ou ele ela eles elas nós "
+        "você vocês".split()
+    ),
+}
+_VOCABULARIES = {**FUNCTION_WORDS, **DECOY_WORDS}
+
 _FENCED_CODE = re.compile(r"```.*?(```|\Z)", re.DOTALL)
 _INLINE_CODE = re.compile(r"`[^`\n]*`")
 _TABLE_ROW = re.compile(r"^[ \t]*\|.*$", re.MULTILINE)
@@ -92,25 +126,30 @@ def prose_words(text: str) -> list[str]:
 def detect_language(text: str) -> tuple[str | None, dict[str, int]]:
     """The reply's language, and each language's function-word count.
 
+    The language is one of ``LANGUAGES`` or a decoy (``fr``, ``pt``).
     ``None`` when no language reaches ``MIN_HITS`` or the leader has less
-    than ``MIN_RATIO`` times the runner-up's count.
+    than ``MIN_RATIO`` times the runner-up's count. That ratio leaves out the
+    words both languages list.
     """
     words = prose_words(text)
     hits = {
         language: sum(1 for word in words if word in vocabulary)
-        for language, vocabulary in FUNCTION_WORDS.items()
+        for language, vocabulary in _VOCABULARIES.items()
     }
-    # A stable sort, so a tie keeps LANGUAGES order; a tie is undecided anyway.
-    (leader, top), (_second, runner_up) = sorted(
+    # A stable sort, so a tie keeps listed order; a tie is undecided anyway.
+    (leader, top), (second, _next) = sorted(
         hits.items(), key=lambda item: -item[1]
     )[:2]
-    if top < MIN_HITS or top < MIN_RATIO * runner_up:
+    shared = _VOCABULARIES[leader] & _VOCABULARIES[second]
+    own = sum(1 for word in words if word in _VOCABULARIES[leader] - shared)
+    runner_up = sum(1 for word in words if word in _VOCABULARIES[second] - shared)
+    if top < MIN_HITS or own < MIN_RATIO * runner_up:
         return None, hits
     return leader, hits
 
 
 def evaluate_reply_language(
-    agent_state: dict[str, Any], language: str = "en"
+    agent_state: dict[str, Any], language: str = "en", query: str = ""
 ) -> dict[str, Any]:
     """reply_language_match: the final reply is in the case's language.
 
@@ -120,6 +159,12 @@ def evaluate_reply_language(
     Those score ``null`` and not ``0.0`` because an undecided reply is no
     evidence of the wrong language: a ``0.0`` there would report "Sí." or a
     bare table as a reply in the wrong language and pull the rate down.
+
+    A reply detected as a decoy language (``fr``, ``pt``) is that language
+    and scores ``0.0`` against any case language. A case in ``en`` whose
+    ``query`` is clearly in another language is an older question that could
+    not take a ``language``; its expected language is unknown, so it scores
+    ``null`` with a reason.
     """
     if language not in LANGUAGES:
         raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
@@ -137,6 +182,12 @@ def evaluate_reply_language(
     result["reply_language_match_reason"] = (
         f"{detected or 'undecided'} (function words: {counts})"
     )
-    if detected:
+    query_language = detect_language(query)[0] if language == "en" else None
+    if query_language not in (None, "en"):
+        result["reply_language_match_reason"] += (
+            f"; not scored: the query reads as {query_language} but the case "
+            "sets no language"
+        )
+    elif detected:
         result["reply_language_match_score"] = 1.0 if detected == language else 0.0
     return result

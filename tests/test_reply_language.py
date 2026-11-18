@@ -88,6 +88,13 @@ MALAY = (
     "tersebut berada di bahagian Kapit, dan angka ini lebih tinggi daripada "
     "tempoh yang sama pada tahun lepas kerana pembalakan."
 )
+FRENCH = (
+    "Selon les données d'alertes, dans le département de l'Ucayali, environ "
+    "12 480 hectares de perturbation ont été détectés entre janvier et juin "
+    "2026. La plupart des alertes se trouvent dans la province de Coronel "
+    "Portillo, et le rythme est plus élevé que pendant la même période de "
+    "l'année dernière."
+)
 HALF_AND_HALF = (
     "Según los datos, en el departamento de Ucayali se detectaron alertas "
     "entre enero y junio. The alerts are mostly in the east of the region, "
@@ -122,7 +129,9 @@ def test_code_and_urls_do_not_vote():
         "```python\nfor the in of: and is to with this that\n```\n"
         "`the of and to in is` https://example.org/the/of/and/to/in/is"
     )
-    assert detect_language(text) == (None, {"en": 0, "es": 0, "id": 0})
+    assert detect_language(text) == (
+        None, {"en": 0, "es": 0, "id": 0, "fr": 0, "pt": 0}
+    )
 
 
 @pytest.mark.parametrize("text", ["", "   \n", "Sí.", "Ya", "1,234 ha"])
@@ -139,15 +148,60 @@ def test_a_reply_in_two_languages_is_undecided():
     assert hits["es"] and hits["en"]
 
 
-def test_portuguese_reads_as_spanish_the_nearest_language():
-    # Only en, es and id are told apart. Portuguese shares enough function
-    # words with Spanish (de, que, se, por, entre) to read as Spanish.
-    assert detect_language(PORTUGUESE)[0] == "es"
+def test_portuguese_and_french_are_told_apart_from_spanish():
+    assert detect_language(PORTUGUESE)[0] == "pt"
+    assert detect_language(FRENCH)[0] == "fr"
 
 
 def test_malay_reads_as_indonesian_the_nearest_language():
     # Malay and Indonesian share their function words (di, dan, yang, pada).
     assert detect_language(MALAY)[0] == "id"
+
+
+def test_a_french_or_portuguese_reply_scores_zero_against_every_language():
+    for text, language in ((FRENCH, "fr"), (PORTUGUESE, "pt")):
+        for case_language in ("en", "es", "id"):
+            result = evaluate_reply_language(_state(text), case_language)
+            assert result["reply_language_match_score"] == 0.0
+            assert result["actual_reply_language"] == language
+
+
+def test_a_decoy_is_never_a_case_language():
+    for language in ("fr", "pt"):
+        with pytest.raises(ValueError, match="language must be one of"):
+            evaluate_reply_language(_state(FRENCH), language)
+
+
+def test_a_spanish_query_on_an_unlabelled_case_is_not_scored():
+    query = "¿Cuánta cobertura arbórea se perdió en el departamento de Ucayali?"
+    result = evaluate_reply_language(_state(SPANISH), "en", query)
+    assert result["reply_language_match_score"] is None
+    assert "query reads as es" in result["reply_language_match_reason"]
+    assert result["actual_reply_language"] == "es"
+    # An English query, or one too short to read, keeps the English rule.
+    english = "How much tree cover was lost in the department of Ucayali?"
+    assert evaluate_reply_language(_state(SPANISH), "en", english)[
+        "reply_language_match_score"
+    ] == 0.0
+    assert evaluate_reply_language(_state(SPANISH), "en", "Ucayali?")[
+        "reply_language_match_score"
+    ] == 0.0
+    # A labelled case is scored whatever its query.
+    assert evaluate_reply_language(_state(SPANISH), "es", query)[
+        "reply_language_match_score"
+    ] == 1.0
+
+
+def test_the_runner_passes_the_query_to_the_check():
+    class Probe(BaseTestRunner):
+        async def run_test(self, query, expected_data):  # pragma: no cover
+            raise NotImplementedError
+
+    query = "¿Cuánta cobertura arbórea se perdió en el departamento de Ucayali?"
+    evaluations = Probe()._run_evaluations(
+        _state(SPANISH), ExpectedData(), query, None
+    )
+    assert evaluations[f"{CHECK}_score"] is None
 
 
 def test_scores_match_mismatch_and_undecided():
