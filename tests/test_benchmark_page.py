@@ -437,6 +437,59 @@ def test_companion_headline_covers_every_companion_member(tmp_path):
     assert bp.build_page(run, bench, cases, art, bases)["summary"]["scored"] == 5
 
 
+def erratum(uid):
+    return {"uid": uid, "date": "2026-11-19", "reason": "wrong expectation"}
+
+
+def test_a_twin_voided_in_the_paired_version_is_not_paired(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    twin_1 = bench.raw["members"][0]["twin_uid"]
+    paired = from_dict({**bench.raw, "version": "t", "pairs_with": "",
+                        "members": [], "errata": [erratum(twin_1)]})
+    page = bp.build_page(run, bench, cases, art, bases, paired)
+    es = next(block for block in page["languages"] if block["key"] == "es")
+    assert (es["pairs"], es["unpaired"]) == (1, 2)
+    # The same twin, voided in the companion itself.
+    voided = from_dict({**bench.raw, "errata": [erratum(twin_1)]})
+    page = bp.build_page(run, voided, cases, art, bases)
+    es = next(block for block in page["languages"] if block["key"] == "es")
+    assert (es["pairs"], es["unpaired"]) == (1, 2)
+
+
+def test_each_language_records_where_its_twins_ran(tmp_path, capsys):
+    blocks = languages(tmp_path)
+    # es-1's twin ran in the base (26 days earlier), es-2's in the companion.
+    assert blocks["es"]["twin_runs"] == ["base", "languages"]
+    assert blocks["es"]["max_days_apart"] == 26
+    assert blocks["id"]["twin_runs"] == ["base"]
+    assert "up to 26 days" in capsys.readouterr().err
+
+
+def test_twins_from_the_same_day_raise_no_warning(tmp_path, capsys):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    run["started"] = "2026-10-23T18:00:00Z"
+    page = bp.build_page(run, bench, cases, art, bases)
+    es = next(block for block in page["languages"] if block["key"] == "es")
+    assert es["max_days_apart"] == 0
+    assert capsys.readouterr().err == ""
+
+
+def test_no_pairs_means_no_days_apart(tmp_path):
+    run, bench, cases, art, _bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art)
+    blocks = {block["key"]: block for block in page["languages"]}
+    assert blocks["id"]["max_days_apart"] is None and blocks["id"]["twin_runs"] == []
+
+
+def test_sources_count_the_twins_drawn_from_each_run(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art, bases)
+    sources = {s["run_id"]: s for s in page["run"]["sources"]}
+    # The base holds twins only: no question of the page, two twins drawn.
+    assert sources["base"]["questions"] == 0 and sources["base"]["twins_drawn"] == 2
+    assert sources["languages"]["twins_drawn"] == 1
+
+
 # --- the paired interval -------------------------------------------------------
 
 def test_paired_difference_with_no_discordant_pair_keeps_a_width():

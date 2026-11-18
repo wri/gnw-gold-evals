@@ -123,6 +123,12 @@ byte-identical to what the tool wrote before
 frontend adds a parser**: the FE parses the page strictly and shows only the
 runs it pins, so do not pin a companion page before then.
 
+On a combined page, each `run.sources` entry of a companion page also has
+`twins_drawn`: how many twins of the measured pairs came from that run. A
+base that holds only twins shows `questions: 0`, because its twins are no
+members of the companion; `twins_drawn` says it was used. The tool reads the
+`pairs_with` manifest from the same directory and stops if it is missing.
+
 `languages` is a list with one object per language of the manifest, `es`
 before `id`:
 
@@ -130,8 +136,10 @@ before `id`:
 |---|---|
 | `key` | `es` or `id`. |
 | `pairs` | Pairs measured: the question and its English twin both have a pass or fail verdict. Every figure below is over these pairs. |
-| `unpaired` | Questions whose twin has no result in the run or its bases. Left out, never a fail. |
+| `unpaired` | Questions whose twin has no result in the run or its bases, or whose twin an erratum voids (in the companion or the `pairs_with` version). Left out, never a fail. |
 | `unscored` | Pairs with an errored or uncovered side. Left out, as errors leave every rate. |
+| `twin_runs` | The ids of the runs the measured pairs' twins came from, sorted. |
+| `max_days_apart` | The largest gap in calendar days between a question's run and its twin's run, over the measured pairs; null with none. Above 0 the agent may have changed between the two sides, so that change is inside `gap`. Above 1 the tool prints a warning to stderr: rerun the twins, or read the gap with care. |
 | `native` | The questions in the language: `every_time` (right on every scored attempt) and `majority` (right on most), each `{n, passed, rate, ci_low, ci_high}` with a Wilson 95% interval. The two standards are the page's own. |
 | `english` | The same two rates for the English twins of the same pairs. |
 | `gap` | The paired gap on the `majority` rate, native minus English: `difference`, `ci_low`, `ci_high`, and the discordant pairs `native_only` and `english_only` (right on that side only). `difference` is null with no pairs. |

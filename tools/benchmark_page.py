@@ -47,8 +47,13 @@ time and question count, oldest first); every question carries the
 manifest has members with a ``language`` also carries ``languages``: per
 language, the questions asked in it against their English twins. A twin
 that is a member of the ``pairs_with`` version is not in the companion run;
-pass the English run with ``--base`` and its results are matched by uid. No
-other page has the key, and the FE does not parse it yet.
+pass the English run with ``--base`` and its results are matched by uid. A
+twin voided by an erratum (in the companion or the ``pairs_with`` version) is
+not paired. Each language records ``twin_runs`` and ``max_days_apart``: a gap
+above 0 days means the agent may have changed between a question and its
+twin, which then sits inside the language gap (a warning above 1 day), and
+each ``run.sources`` entry gains ``twins_drawn``. No other page has the key,
+and the FE does not parse it yet.
 """
 
 from __future__ import annotations
@@ -59,6 +64,7 @@ import gzip
 import json
 import re
 import sys
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -297,32 +303,59 @@ def reply_language_rate(entries: list[dict[str, Any]]) -> dict[str, Any]:
             "rate": matched / len(scored) if scored else None}
 
 
+def days_apart(started_a: str, started_b: str) -> int:
+    """Calendar days between two runs' start stamps."""
+    def day(stamp: str):
+        return datetime.fromisoformat(stamp.replace("Z", "+00:00")).date()
+    return abs((day(started_a) - day(started_b)).days)
+
+
 def languages_block(
-    bench: Benchmark, by_uid: dict[str, dict]
-) -> list[dict[str, Any]]:
-    """Per language, the questions asked in it against their English twins.
+    bench: Benchmark,
+    by_uid: dict[str, dict],
+    source: dict[str, tuple[str, Path]],
+    started: dict[str, str],
+    voided: set[str],
+) -> tuple[list[dict[str, Any]], set[str]]:
+    """Per language, the questions asked in it against their English twins,
+    and the uids of the twins those pairs drew on.
 
     Every figure is over the measured pairs: both the question and its twin
-    have a pass or fail verdict. A twin with no result is ``unpaired`` and a
+    have a pass or fail verdict. A twin with no result, or voided by an
+    erratum in this version or the ``pairs_with`` one, is ``unpaired`` and a
     pair with an errored or uncovered side is ``unscored``; neither is a
     fail, because nothing was measured.
+
+    ``twin_runs`` and ``max_days_apart`` say which runs the twins came from
+    and how far apart in days a twin's run and its native question's run
+    were. Above 0 the agent may have changed between the two sides, and that
+    change then sits inside the language gap.
     """
-    out = []
+    out, drawn = [], set()
     for language in MEMBER_LANGUAGES:
         mine = [m for m in bench.active_members if m.language == language]
         if not mine:
             continue
-        pairs, unpaired, unscored = [], 0, 0
+        pairs, unpaired, unscored, gaps, twin_runs = [], 0, 0, [], set()
         for m in mine:
             if m.uid not in by_uid:  # not run; a page without bases allows it
                 continue
             native, twin = by_uid[m.uid], by_uid.get(m.twin_uid)
-            if twin is None:
+            if twin is None or m.twin_uid in voided:
                 unpaired += 1
             elif {row_verdict(native), row_verdict(twin)} <= {"pass", "fail"}:
                 pairs.append((native, twin))
+                drawn.add(m.twin_uid)
+                twin_run = source[m.twin_uid][0]
+                twin_runs.add(twin_run)
+                gaps.append(days_apart(started[source[m.uid][0]], started[twin_run]))
             else:
                 unscored += 1
+        max_days = max(gaps, default=None)
+        if max_days and max_days > 1:
+            print(f"warning: {language}: twins ran up to {max_days} days from "
+                  "their questions; the gap includes any agent change in between",
+                  file=sys.stderr)
         native = [n for n, _ in pairs]
         english = [e for _, e in pairs]
         right = [(row_verdict(n) == "pass", row_verdict(e) == "pass")
@@ -337,6 +370,8 @@ def languages_block(
             "pairs": len(pairs),
             "unpaired": unpaired,
             "unscored": unscored,
+            "twin_runs": sorted(twin_runs),
+            "max_days_apart": max_days,
             "native": pair_rates(native),
             "english": pair_rates(english),
             # Native minus English on the majority rate.
@@ -347,7 +382,7 @@ def languages_block(
             "failure_modes": stats["failure_modes"],
             "failure_modes_by_standard": stats["failure_modes_by_standard"],
         })
-    return out
+    return out, drawn
 
 
 def combine(run: dict[str, Any], artifacts: Path, bases: list[tuple[dict[str, Any], Path]]
@@ -364,7 +399,9 @@ def combine(run: dict[str, Any], artifacts: Path, bases: list[tuple[dict[str, An
 
 
 def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
-               artifacts: Path, bases: list[tuple[dict[str, Any], Path]] = ()) -> dict[str, Any]:
+               artifacts: Path, bases: list[tuple[dict[str, Any], Path]] = (),
+               paired: Benchmark | None = None) -> dict[str, Any]:
+    """``paired`` is the ``pairs_with`` version, whose errata void twins."""
     by_uid, source = combine(run, artifacts, bases)
     if bases:
         uncovered = [m.id for m in bench.active_members if m.uid not in by_uid]
@@ -437,11 +474,21 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
     run_block = {"run_id": run["run_id"], "started": run["started"],
                  "environment": run.get("environment"), "ff": run.get("ff"),
                  "num_trials": trials, "harness_sha": (run.get("harness") or {}).get("sha")}
+    languages, drawn = None, set()
+    if any(m.language for m in bench.active_members):
+        voided = bench.voided_uids | (paired.voided_uids if paired else set())
+        started = {r["run_id"]: r["started"] for r in (run, *(b for b, _ in bases))}
+        languages, drawn = languages_block(bench, by_uid, source, started, voided)
     if bases:
         counts = collections.Counter(source[m.uid][0] for m in members)
         ordered = [*sorted((b for b, _ in bases), key=lambda b: b["started"]), run]
         run_block["sources"] = [{"run_id": r["run_id"], "started": r["started"],
                                  "questions": counts[r["run_id"]]} for r in ordered]
+        if languages is not None:
+            # A base can hold only twins, which are no "questions" of the page.
+            twins = collections.Counter(source[uid][0] for uid in drawn)
+            for entry_ in run_block["sources"]:
+                entry_["twins_drawn"] = twins[entry_["run_id"]]
     page = {
         "schema_version": SCHEMA_VERSION,
         "generated_by": "tools/benchmark_page.py",
@@ -467,8 +514,8 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
     }
     # Only a manifest with members in another language gets the block: the FE
     # parses the page strictly, so every other page must keep its exact keys.
-    if any(m.language for m in bench.active_members):
-        page["languages"] = languages_block(bench, by_uid)
+    if languages is not None:
+        page["languages"] = languages
     return page
 
 
@@ -524,7 +571,13 @@ def main() -> int:
         bases.append((base, run_artifacts(root, base)))
     bench = load_benchmark(manifest)
     cases = {uid: c for _p, c, uid in load_store(root / bench.source["cases_dir"])}
-    page = build_page(run, bench, cases, artifacts, bases)
+    paired = None
+    if bench.pairs_with:
+        paired_path = manifest.parent / f"{bench.pairs_with}.json"
+        if not paired_path.exists():
+            raise SystemExit(f"pairs_with {bench.pairs_with!r}: no {paired_path}")
+        paired = load_benchmark(paired_path)
+    page = build_page(run, bench, cases, artifacts, bases, paired)
 
     out = root / "results" / "benchmark" / "pages" / f"{run['run_id']}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
