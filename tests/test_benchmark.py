@@ -1,6 +1,7 @@
 """BENCHMARK manifest contract (goldset.benchmark)."""
 
 import json
+from pathlib import Path
 
 import pytest
 
@@ -10,14 +11,18 @@ from goldset.benchmark import (
     from_dict,
     load_benchmark,
     manifest_sha,
+    render,
 )
+
+REPO = Path(__file__).resolve().parents[1]
 
 
 def member(uid="u1", id="ch-aoi-001", type="geospatial", **kw):
+    optional = {k: kw[k] for k in ("language", "twin_uid") if k in kw}
     return {"uid": uid, "id": id, "type": type, "set": kw.get("set", "aoi"),
             "cohort": kw.get("cohort", "direct"),
             "difficulty": kw.get("difficulty", "easy"),
-            "stages": kw.get("stages", ["retrieval"])}
+            "stages": kw.get("stages", ["retrieval"]), **optional}
 
 
 def manifest(**kw):
@@ -31,6 +36,7 @@ def manifest(**kw):
         "types": list(QUERY_TYPES),
         "members": kw.get("members", [member()]),
         "errata": kw.get("errata", []),
+        **({"pairs_with": kw["pairs_with"]} if "pairs_with" in kw else {}),
     }
 
 
@@ -69,6 +75,12 @@ def test_errata_void_members():
     (manifest(members=[member(stages=["fetch"])]), "unknown stages"),
     (manifest(errata=[{"uid": "nope", "date": "d", "reason": "r"}]), "does not name a member"),
     (manifest(errata=[{"uid": "u1"}]), "date and a reason"),
+    (manifest(members=[member(language="fr", twin_uid="u2")]), "language 'fr'"),
+    (manifest(members=[member(language="en", twin_uid="u2")]), "language 'en'"),
+    (manifest(members=[member(language="es")]), "needs a twin_uid"),
+    (manifest(members=[member(language="id", twin_uid="u1")]), "its own twin"),
+    (manifest(pairs_with=2026), "not a version name"),
+    (manifest(pairs_with="2026-draft"), "pair with itself"),
 ])
 def test_validate_rejects(data, needle):
     problems = from_dict(data).validate()
@@ -93,3 +105,27 @@ def test_load_raises_on_invalid_and_sha_is_stable(tmp_path):
     bad.write_text(json.dumps(manifest(status="frozen")))
     with pytest.raises(ValueError, match="frozen date"):
         load_benchmark(bad)
+
+
+def test_language_facets_load_and_are_written_only_when_set():
+    spanish = member("u2", "ch-aoi-002", language="es", twin_uid="u1")
+    bench = from_dict(manifest(members=[member(), spanish], pairs_with="2026"))
+    assert bench.validate() == []
+    assert bench.pairs_with == "2026"
+    english, native = bench.members
+    assert (native.language, native.twin_uid) == ("es", "u1")
+    assert native.to_dict() == spanish
+    assert (english.language, english.twin_uid) == ("", "")
+    assert english.to_dict() == member()
+    assert from_dict(manifest()).pairs_with == ""
+
+
+def test_committed_manifests_round_trip_unchanged():
+    paths = sorted((REPO / "benchmarks").glob("*.json"))
+    assert paths
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        bench = from_dict(json.loads(text))
+        assert render(bench.raw) == text, path
+        assert not any(m.language or m.twin_uid for m in bench.members), path
+        assert bench.pairs_with == "", path
