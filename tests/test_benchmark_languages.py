@@ -201,3 +201,28 @@ def test_a_missing_paired_version_stops_the_build(tmp_path, monkeypatch):
     with pytest.raises(SystemExit, match="--pairs-with t: no benchmarks"):
         run_main(tmp_path, "--pairs-with", "t")
     assert not Path("benchmarks/t-languages.json").exists()
+
+
+def test_a_rerun_keeps_the_drafts_pairing(tmp_path, monkeypatch):
+    _root, made, paired = setup(tmp_path)
+    monkeypatch.chdir(tmp_path)
+    Path("benchmarks").mkdir()
+    Path("benchmarks/t.json").write_text(render(paired.raw), encoding="utf-8")
+    assert run_main(tmp_path, "--pairs-with", "t") == 0
+    out = Path("benchmarks/t-languages.json")
+    first = out.read_text(encoding="utf-8")
+    assert run_main(tmp_path) == 0  # no flag: the draft's own is used
+    assert out.read_text(encoding="utf-8") == first
+    assert json.loads(first)["pairs_with"] == "t"
+
+
+def test_a_rerun_with_another_pairing_stops(tmp_path, monkeypatch):
+    _root, made, paired = setup(tmp_path)
+    monkeypatch.chdir(tmp_path)
+    Path("benchmarks").mkdir()
+    Path("benchmarks/t.json").write_text(render(paired.raw), encoding="utf-8")
+    assert run_main(tmp_path, "--pairs-with", "t") == 0
+    before = Path("benchmarks/t-languages.json").read_text(encoding="utf-8")
+    with pytest.raises(SystemExit, match="pairs with 't', not 'u'"):
+        run_main(tmp_path, "--pairs-with", "u")
+    assert Path("benchmarks/t-languages.json").read_text(encoding="utf-8") == before

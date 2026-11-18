@@ -22,8 +22,9 @@ Members, from the ``ready`` cases of the store:
 A pair with a case that is not ``ready`` is left out and listed under
 ``sampling.excluded``. A case in another language without a twin, or whose
 expectations differ from its twin's, stops the build. Re-running over an
-existing draft keeps its creation date and errata. A frozen manifest is
-never rewritten.
+existing draft keeps its creation date, errata and ``pairs_with`` (a flag
+that names another version stops the run). A frozen manifest is never
+rewritten.
 """
 
 from __future__ import annotations
@@ -161,11 +162,20 @@ def main(argv: list[str] | None = None) -> int:
     if existing and existing.status != "draft":
         print(f"{out} is {existing.status}: frozen manifests are never rewritten")
         return 1
+    # A rerun keeps the draft's pairing: dropping it would turn every twin
+    # the English version holds into a new member.
+    kept = existing.pairs_with if existing else ""
+    if args.pairs_with and kept and args.pairs_with != kept:
+        raise SystemExit(
+            f"{out} pairs with {kept!r}, not {args.pairs_with!r}; "
+            "delete the draft to pair it with another version"
+        )
+    pairs_with = args.pairs_with or kept
     paired = None
-    if args.pairs_with:
-        paired_path = args.out_dir / f"{args.pairs_with}.json"
+    if pairs_with:
+        paired_path = args.out_dir / f"{pairs_with}.json"
         if not paired_path.exists():
-            raise SystemExit(f"--pairs-with {args.pairs_with}: no {paired_path}")
+            raise SystemExit(f"--pairs-with {pairs_with}: no {paired_path}")
         paired = load_benchmark(paired_path)
     created = existing.raw.get("created") if existing else date.today().isoformat()
     data = build(args.cases_dir, args.version, paired, created)
