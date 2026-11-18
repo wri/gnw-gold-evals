@@ -42,6 +42,13 @@ ff and trial count, and together cover every active member. The page's
 time and question count, oldest first); every question carries the
 ``run_id`` it came from. ``tools/build_run_index.py`` reads
 ``sources`` to judge the combination canonical.
+
+**Languages** (a companion manifest, ``benchmarks/README.md``): a page whose
+manifest has members with a ``language`` also carries ``languages``: per
+language, the questions asked in it against their English twins. A twin
+that is a member of the ``pairs_with`` version is not in the companion run;
+pass the English run with ``--base`` and its results are matched by uid. No
+other page has the key, and the FE does not parse it yet.
 """
 
 from __future__ import annotations
@@ -61,6 +68,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import challenge_rollup as cr  # noqa: E402
 
 from goldset.benchmark import (  # noqa: E402
+    MEMBER_LANGUAGES,
     STAGE_ORDER,
     USE_CASES,
     Benchmark,
@@ -102,6 +110,7 @@ PLACES = {
     "Custom area (fixture)": "Own area",
 }
 ANSWER_EXCERPT_CHARS = 220
+REPLY_LANGUAGE_CHECK = "reply_language_match"
 
 
 def trial_ok(trial: dict[str, Any]) -> bool:
@@ -125,16 +134,20 @@ def attempt_error(trial: dict[str, Any]) -> dict[str, str] | None:
     return None
 
 
+def right_every_time(entry: dict[str, Any]) -> bool:
+    return all(trial_ok(t) for t in scored_trials(entry))
+
+
 def group_stats(entries: list[dict[str, Any]]) -> dict[str, Any]:
     verdicts = [row_verdict(e) for e in entries]
     scored = [e for e, v in zip(entries, verdicts) if v in ("pass", "fail")]
     n = len(scored)
     passed = sum(1 for v in verdicts if v == "pass")
-    every = sum(1 for e in scored if all(trial_ok(t) for t in scored_trials(e)))
+    every = sum(1 for e in scored if right_every_time(e))
     any_ = sum(1 for e in scored if any(trial_ok(t) for t in scored_trials(e)))
     modes = collections.Counter(cr.primary_failure(e) for e, v in zip(entries, verdicts) if v == "fail")
     wrong = {
-        "every_time": lambda e: not all(trial_ok(t) for t in scored_trials(e)),
+        "every_time": lambda e: not right_every_time(e),
         "majority": lambda e: row_verdict(e) == "fail",
         "any_time": lambda e: not any(trial_ok(t) for t in scored_trials(e)),
     }
@@ -255,6 +268,88 @@ def stage_checks(members, by_uid) -> dict[str, dict[str, int]]:
     return out
 
 
+def rate_with_interval(passed: int, n: int) -> dict[str, Any]:
+    low, high = cr.wilson(passed, n)
+    return {"n": n, "passed": passed, "rate": passed / n if n else None,
+            "ci_low": low, "ci_high": high}
+
+
+def pair_rates(entries: list[dict[str, Any]]) -> dict[str, Any]:
+    """The page's two accuracy standards over one side of the pairs."""
+    n = len(entries)
+    return {
+        "every_time": rate_with_interval(sum(map(right_every_time, entries)), n),
+        "majority": rate_with_interval(
+            sum(row_verdict(e) == "pass" for e in entries), n),
+    }
+
+
+def reply_language_rate(entries: list[dict[str, Any]]) -> dict[str, Any]:
+    """Share of scored attempts whose reply was in the question's language.
+    An attempt the check could not call (null, or a run recorded before the
+    check) is left out and counted as ``undecided``."""
+    values = [(t.get("checks") or {}).get(REPLY_LANGUAGE_CHECK)
+              for e in entries for t in scored_trials(e)]
+    scored = [v for v in values if v is not None]
+    matched = sum(v == 1.0 for v in scored)
+    return {"matched": matched, "scored": len(scored),
+            "undecided": len(values) - len(scored),
+            "rate": matched / len(scored) if scored else None}
+
+
+def languages_block(
+    bench: Benchmark, by_uid: dict[str, dict]
+) -> list[dict[str, Any]]:
+    """Per language, the questions asked in it against their English twins.
+
+    Every figure is over the measured pairs: both the question and its twin
+    have a pass or fail verdict. A twin with no result is ``unpaired`` and a
+    pair with an errored or uncovered side is ``unscored``; neither is a
+    fail, because nothing was measured.
+    """
+    out = []
+    for language in MEMBER_LANGUAGES:
+        mine = [m for m in bench.active_members if m.language == language]
+        if not mine:
+            continue
+        pairs, unpaired, unscored = [], 0, 0
+        for m in mine:
+            if m.uid not in by_uid:  # not run; a page without bases allows it
+                continue
+            native, twin = by_uid[m.uid], by_uid.get(m.twin_uid)
+            if twin is None:
+                unpaired += 1
+            elif {row_verdict(native), row_verdict(twin)} <= {"pass", "fail"}:
+                pairs.append((native, twin))
+            else:
+                unscored += 1
+        native = [n for n, _ in pairs]
+        english = [e for _, e in pairs]
+        right = [(row_verdict(n) == "pass", row_verdict(e) == "pass")
+                 for n, e in pairs]
+        native_only = sum(n and not e for n, e in right)
+        english_only = sum(e and not n for n, e in right)
+        difference, low, high = cr.paired_difference(
+            native_only, english_only, len(pairs))
+        stats = group_stats(native)
+        out.append({
+            "key": language,
+            "pairs": len(pairs),
+            "unpaired": unpaired,
+            "unscored": unscored,
+            "native": pair_rates(native),
+            "english": pair_rates(english),
+            # Native minus English on the majority rate.
+            "gap": {"native_only": native_only, "english_only": english_only,
+                    "difference": difference, "ci_low": low, "ci_high": high},
+            "reply_language": {"native": reply_language_rate(native),
+                               "english": reply_language_rate(english)},
+            "failure_modes": stats["failure_modes"],
+            "failure_modes_by_standard": stats["failure_modes_by_standard"],
+        })
+    return out
+
+
 def combine(run: dict[str, Any], artifacts: Path, bases: list[tuple[dict[str, Any], Path]]
             ) -> tuple[dict[str, dict], dict[str, tuple[str, Path]]]:
     """Results by uid, and each uid's (run_id, artifacts dir). The newest
@@ -347,7 +442,7 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
         ordered = [*sorted((b for b, _ in bases), key=lambda b: b["started"]), run]
         run_block["sources"] = [{"run_id": r["run_id"], "started": r["started"],
                                  "questions": counts[r["run_id"]]} for r in ordered]
-    return {
+    page = {
         "schema_version": SCHEMA_VERSION,
         "generated_by": "tools/benchmark_page.py",
         "run": run_block,
@@ -370,6 +465,11 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
         "use_cases": use_cases,
         "questions": questions,
     }
+    # Only a manifest with members in another language gets the block: the FE
+    # parses the page strictly, so every other page must keep its exact keys.
+    if any(m.language for m in bench.active_members):
+        page["languages"] = languages_block(bench, by_uid)
+    return page
 
 
 def render(page: dict[str, Any]) -> str:
