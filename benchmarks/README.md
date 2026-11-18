@@ -156,11 +156,12 @@ pair the plain Wald interval has zero width; this one keeps about
 ±1.96/(pairs + 2). The interval is centred on the adjusted difference, and
 `difference` is the observed one.
 
-On a companion page, `summary`, `types`, `use_cases` and `stages` cover
-every member of the companion together: both languages and the English
-twins the companion holds. That is not a language rate and not the North
-Star; read the languages from this block and the North Star from the
-English version's page.
+On a companion page, `summary`, `types`, `use_cases` and `stages` cover only
+the members without a `language`: the English twins the companion holds. The
+rate of each language is in this block alone, so no figure of the page mixes
+languages. `questions` still lists every member. The twins held here are a
+few questions, not the North Star: read that from the English version's
+page.
 
 ## Rules
 

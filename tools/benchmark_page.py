@@ -52,7 +52,10 @@ twin voided by an erratum (in the companion or the ``pairs_with`` version) is
 not paired. Each language records ``twin_runs`` and ``max_days_apart``: a gap
 above 0 days means the agent may have changed between a question and its
 twin, which then sits inside the language gap (a warning above 1 day), and
-each ``run.sources`` entry gains ``twins_drawn``. No other page has the key,
+each ``run.sources`` entry gains ``twins_drawn``. On such a page ``summary``,
+``types``, ``use_cases`` and ``stages`` cover only the members without a
+``language`` (the English twins the companion holds); ``questions`` still
+lists every member. No other page has the key,
 and the FE does not parse it yet.
 """
 
@@ -415,10 +418,14 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
     if missing:
         raise SystemExit(f"member cases not in the store (edited since the run?): {missing[:5]}")
     trials = int(run["num_trials"])
+    # A languages companion holds questions in other languages, whose rates
+    # live in the ``languages`` block; the page's own groups cover only the
+    # members without a language (its English twins), so no rate mixes them.
+    headline = [m for m in members if not m.language] if bench.pairs_with else members
 
     types = []
     for qtype in bench.types:
-        mine = [m for m in members if m.type == qtype["key"]]
+        mine = [m for m in headline if m.type == qtype["key"]]
         row = {"key": qtype["key"], "label": qtype["label"],
                "description": TYPE_DESCRIPTIONS.get(qtype["key"], ""), "measured": bool(mine)}
         if mine:
@@ -437,13 +444,13 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
 
     use_cases = []
     for key, label in USE_CASES.items():
-        mine = [m for m in members if key in m.use_cases]
+        mine = [m for m in headline if key in m.use_cases]
         if mine:
             use_cases.append({"key": key, "label": label,
                               **group_stats([by_uid[m.uid] for m in mine]),
                               "composition": composition(mine, cases)})
 
-    entries = [by_uid[m.uid] for m in members]
+    entries = [by_uid[m.uid] for m in headline]
     complete = [e for e in entries if row_verdict(e) == "pass"]
     questions = []
     for m in members:
@@ -503,10 +510,10 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
             "consistency": {"complete": len(complete),
                             "clean": sum(cr.strict_clean(e) for e in complete)},
             "attempt_rates": [sum(trial_ok(e["trials"][i]) for e in entries) / len(entries)
-                              for i in range(trials)],
-            "datasets_covered": len({d for m in members for d in dataset_names(cases[m.uid])}),
+                              for i in range(trials)] if entries else [],
+            "datasets_covered": len({d for m in headline for d in dataset_names(cases[m.uid])}),
         },
-        "stages": [{"key": s, **stage_checks(members, by_uid)[s]} for s in STAGE_ORDER],
+        "stages": [{"key": s, **stage_checks(headline, by_uid)[s]} for s in STAGE_ORDER],
         "unattributed": sum(1 for e in entries
                             if row_verdict(e) == "fail" and cr.primary_failure(e) == "unattributed"),
         "types": types,

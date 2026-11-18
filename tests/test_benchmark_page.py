@@ -429,12 +429,14 @@ def test_companion_without_its_base_reports_every_base_twin_unpaired(tmp_path):
     assert blocks["id"]["gap"]["difference"] is None
 
 
-def test_companion_headline_covers_every_companion_member(tmp_path):
-    """Recorded, not endorsed: the summary of a companion page mixes both
-    languages and the English twins the companion holds. The languages
-    block is the per-language reading; the North Star is the English page."""
+def test_companion_headline_covers_only_members_without_a_language(tmp_path):
+    """The summary of a companion page counts the English twin it holds and
+    no question in another language; those live in the languages block."""
     run, bench, cases, art, bases = languages_setup(tmp_path)
-    assert bp.build_page(run, bench, cases, art, bases)["summary"]["scored"] == 5
+    page = bp.build_page(run, bench, cases, art, bases)
+    assert page["summary"]["scored"] == 1
+    assert sum(t.get("scored", 0) for t in page["types"]) == 1
+    assert len(page["questions"]) == 5
 
 
 def erratum(uid):
