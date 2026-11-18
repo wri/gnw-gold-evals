@@ -1,0 +1,27 @@
+id: ch-quant-261-id
+uid: d56b04ec03b4fab9
+status: ready
+set: quantification
+group: tree-cover
+language: id
+twin: ch-quant-261
+query: luasan hutan sekunder di jawa barat
+expected:
+  aoi_ids: IDN.9
+  dataset_id: 7;3
+  data_pull: 'TRUE'
+  text: Gives the closest available data (for example tree cover or natural forest) and explains
+    that secondary forest is not mapped as such.
+  accept_nudge_offering: 7 | 3
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-050); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-050
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Jawa Barat (province)
+  precedent: ch-quant-175
+  language_review: subagent review 2026-11-18; native speaker not yet

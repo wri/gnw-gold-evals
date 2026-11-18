@@ -1,0 +1,23 @@
+id: ch-quant-232-es
+uid: b1fb971d9bb29d0f
+status: ready
+set: quantification
+group: method
+language: es
+twin: ch-quant-232
+query: Tienes información sobre alertas de deforestación?
+expected:
+  text: 'Says yes: Horizon has integrated disturbance alerts (the alerts that people call
+    deforestation alerts), covering 1 December 2023 to the present, and does not claim alert
+    coverage before December 2023 or invent other alert layers.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-036); real es user prompt,
+    trace trace 2026-04'
+  pair_id: es-n-036
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-192; ch-quant-194; ch-quant-193
+  language_review: subagent review 2026-11-18; native speaker not yet

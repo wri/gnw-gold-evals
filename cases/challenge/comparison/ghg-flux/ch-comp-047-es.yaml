@@ -1,0 +1,24 @@
+id: ch-comp-047-es
+uid: d1a62a19dabeefdd
+status: ready
+set: comparison
+group: ghg-flux
+language: es
+twin: ch-comp-047
+query: 'Una consulta rápida: entre Perú y Bolivia, ¿los bosques de qué país terminan liberando
+  más CO2e neto en total? ¿O alguno de los dos en realidad funciona más como sumidero de carbono?'
+expected:
+  aoi_ids: PER;BOL
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'PER' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'BOL'
+  figure_claim: '#1 < #2 :: Peru''s forests are the bigger net carbon sink (or the smaller
+    net source) of the two, compared with Bolivia''s || Bolivia''s forests are the bigger
+    net carbon sink (or the smaller net source) of the two, compared with Peru''s'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-047 (es-t-023)'
+  pair_id: es-t-023
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

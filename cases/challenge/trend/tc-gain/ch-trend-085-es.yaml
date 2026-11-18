@@ -1,0 +1,22 @@
+id: ch-trend-085-es
+uid: ddf2fa40519518ed
+status: ready
+set: trend
+group: tc-gain
+language: es
+twin: ch-trend-085
+query: ¿Está avanzando El Salvador en su compromiso de restauración 20x20? ¿Qué muestran los
+  datos de ganancia de cobertura arbórea?
+expected:
+  aoi_ids: SLV
+  dataset_id: '5'
+  data_pull: 'TRUE'
+  text: Reports tree cover gain for El Salvador and caveats that the gain data end in 2020
+    and do not measure progress on a restoration pledge directly.
+  figure: sum(area_ha) | sum(area_ha) where tree_cover_gain_period = '2015-2020'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-trend-085 (es-t-030)'
+  pair_id: es-t-030
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

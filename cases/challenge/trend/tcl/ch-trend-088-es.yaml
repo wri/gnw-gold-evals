@@ -1,0 +1,24 @@
+id: ch-trend-088-es
+uid: 68a068825445121a
+status: ready
+set: trend
+group: tcl
+language: es
+twin: ch-trend-088
+query: cómo ha cambiado la pérdida de cobertura arbórea año con año en Chiapas?
+expected:
+  aoi_ids: MEX.5
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  figure: max(area_ha) by tree_cover_loss_year | min(area_ha) by tree_cover_loss_year | sum(area_ha)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-004); real es user prompt,
+    trace trace 2026-02'
+  pair_id: es-n-004
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-trend-079; ch-trend-074; ch-port-017
+  language_review: subagent review 2026-11-18; native speaker not yet

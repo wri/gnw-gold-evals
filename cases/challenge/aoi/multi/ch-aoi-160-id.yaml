@@ -1,0 +1,23 @@
+id: ch-aoi-160-id
+uid: ff2227dbda0874a0
+status: ready
+set: aoi
+group: multi
+language: id
+twin: ch-aoi-160
+query: alih fungsi lahan di pulau kalimantan, indonesia
+expected:
+  text: Covers all five Indonesian provinces of Kalimantan and says so, or says which provinces
+    it covered, or asks which are meant; does not present one province as the whole island.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-049); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-049
+  benchmark_type: scope
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: the five Indonesian provinces of Kalimantan
+  precedent: ch-aoi-091; ch-aoi-116
+  language_review: subagent review 2026-11-18; native speaker not yet

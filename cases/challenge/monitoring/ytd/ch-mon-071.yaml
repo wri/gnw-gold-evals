@@ -1,0 +1,26 @@
+id: ch-mon-071
+uid: ecb2fc4ed7c18aa7
+status: ready
+set: monitoring
+group: ytd
+query: latest deforestation alerts 2026 in central kalimantan
+expected:
+  aoi_ids: IDN.14
+  dataset_id: '11'
+  start_date: '{current_year}-01-01'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {current_year}-01-01..{run}
+  text: States the period the alerts cover and that they are vegetation disturbance alerts.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-mon-071-id (id-n-004);
+    real id user prompt, trace trace 2026-09'
+  pair_id: id-n-004
+  benchmark_type: monitoring
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kalimantan Tengah (province)
+  precedent: ch-mon-035; ch-mon-004; ch-mon-013

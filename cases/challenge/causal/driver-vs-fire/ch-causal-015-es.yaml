@@ -1,0 +1,27 @@
+id: ch-causal-015-es
+uid: c602f0bd9e0bd13b
+status: ready
+set: causal
+group: driver_vs_fire
+language: es
+twin: ch-causal-015
+query: ¿Qué causó más pérdida de cobertura arbórea en Madre de Dios entre 2015 y 2023, los
+  incendios o la agricultura?
+expected:
+  aoi_ids: PER.18
+  dataset_id: 8;10
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  accept_nudge_offering: '8'
+  accept_fixed_period: 2001-2025
+  figure: 'ref: sum(area_ha) where tree_cover_loss_driver = ''Wildfire'' ; ref: sum(area_ha)
+    where tree_cover_loss_driver in (''Permanent agriculture'', ''Shifting cultivation'')'
+  figure_claim: '#1 > #2 :: fires are a bigger cause of tree cover loss than agriculture ||
+    agriculture is a bigger cause of tree cover loss than fires'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-causal-015 (es-t-019)'
+  pair_id: es-t-019
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

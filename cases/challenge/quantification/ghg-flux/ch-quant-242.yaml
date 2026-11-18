@@ -1,0 +1,24 @@
+id: ch-quant-242
+uid: eb9baf90d682c144
+status: ready
+set: quantification
+group: ghg-flux
+query: Make an analysis of net carbon emissions in Poso district
+expected:
+  aoi_ids: IDN.27.8
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(carbon_net_flux_Mg_CO2e)'
+  figure_claim: '#1 < 0 :: Poso''s forests were a net carbon sink over 2001 to 2025 || Poso''s
+    forests were a net carbon source over 2001 to 2025'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-242-id (id-n-018);
+    real id user prompt, trace trace 2026-07'
+  pair_id: id-n-018
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Poso (kabupaten, Sulawesi Tengah)
+  precedent: ch-quant-167; ch-quant-047

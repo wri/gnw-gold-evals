@@ -1,0 +1,24 @@
+id: ch-mon-037-es
+uid: 8be7d0ed416876dc
+status: ready
+set: monitoring
+group: monthly_recent
+language: es
+twin: ch-mon-037
+query: Resume las alertas de perturbación en la provincia de Padre Abad de los últimos 6 meses,
+  mes por mes
+expected:
+  aoi_ids: PER.26.3
+  dataset_id: '11'
+  start_date: '{run-182d}'
+  end_date: '{run}'
+  date_tolerance_days: '31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-182d}..{run} | sum(area_ha) where alert_date
+    in {last_month_start}..{last_month_end}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-037 (es-t-003)'
+  pair_id: es-t-003
+  use_cases: UC1
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

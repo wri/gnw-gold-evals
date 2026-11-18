@@ -1,0 +1,25 @@
+id: ch-comp-156-es
+uid: 7b555c910f200d5d
+status: ready
+set: comparison
+group: tcl
+language: es
+twin: ch-comp-156
+query: Compara la pérdida de cobertura arbórea en Boquerón y Alto Paraguay desde 2021 para
+  nuestra política de abastecimiento de carne vacuna.
+expected:
+  aoi_ids: PRY.5;PRY.1
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'PRY.5' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'PRY.1' and tree_cover_loss_year in 2021..2025
+  figure_claim: '#1 > #2 :: Boquerón lost more tree cover than Alto Paraguay since 2021 ||
+    Alto Paraguay lost more tree cover than Boquerón since 2021'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-156 (es-t-008)'
+  pair_id: es-t-008
+  use_cases: UC2
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

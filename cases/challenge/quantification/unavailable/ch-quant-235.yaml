@@ -1,0 +1,20 @@
+id: ch-quant-235
+uid: 18ef57cd6b98b7fc
+status: ready
+set: quantification
+group: unavailable
+query: How many palm oil mills are there in Mukomuko district?
+expected:
+  text: Says it has no data on palm oil mills and gives no mill count for Mukomuko as if from
+    data; may offer tree cover loss or land cover for Mukomuko instead.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-235-id (id-n-008);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-008
+  benchmark_type: quantification
+  use_cases: UC2
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Mukomuko (kabupaten, Bengkulu)
+  precedent: ch-quant-185; ch-quant-187; ch-quant-192

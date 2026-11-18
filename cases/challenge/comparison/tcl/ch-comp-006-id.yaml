@@ -1,0 +1,26 @@
+id: ch-comp-006-id
+uid: b7a18347112f9477
+status: ready
+set: comparison
+group: tcl
+language: id
+twin: ch-comp-006
+query: Bagaimana kehilangan tutupan pohon Indonesia di semua tipe hutan pada tahun 2020 dibandingkan
+  dengan tahun 2015, dan seberapa besar selisihnya?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2015 ; sum(area_ha) where tree_cover_loss_year
+    = 2020 ; change(sum(area_ha) where tree_cover_loss_year = 2020, sum(area_ha) where tree_cover_loss_year
+    = 2015) | pct_change(sum(area_ha) where tree_cover_loss_year = 2015, sum(area_ha) where
+    tree_cover_loss_year = 2020)
+  figure_claim: '#2 < #1 :: Indonesia''s tree cover loss in 2020 was lower than in 2015 ||
+    Indonesia''s tree cover loss in 2020 was higher than in 2015'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-006 (id-t-009)'
+  pair_id: id-t-009
+  use_cases: UC3;UC4;UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

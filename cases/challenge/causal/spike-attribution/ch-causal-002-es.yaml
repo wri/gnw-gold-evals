@@ -1,0 +1,24 @@
+id: ch-causal-002-es
+uid: b07585b41e062fda
+status: ready
+set: causal
+group: spike_attribution
+language: es
+twin: ch-causal-002
+query: ¿Qué causó el pico de pérdida de cobertura arbórea en Bolivia en 2024?
+expected:
+  aoi_ids: BOL
+  dataset_id: '10'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  accept_blog_sources: amazon-forest-fires-2024;forest-carbon-sink-shrinking-fires-deforestation;global-trends-forest-fires;climate-fire-feedback-loop-explained
+  figure: ratio(sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2024,
+    sum(area_ha) where tree_cover_loss_year = 2024) | sum(tree_cover_loss_from_fires_area_ha)
+    where tree_cover_loss_year = 2024
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-causal-002 (es-t-018)'
+  pair_id: es-t-018
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

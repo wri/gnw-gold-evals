@@ -1,0 +1,29 @@
+id: ch-quant-252-id
+uid: f15f472073c29f07
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-252
+query: Buatkan analisis deforestasi di Bukit Soeharto 5 tahun terakhir
+expected:
+  aoi_ids: '20416'
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2021..2025 | sum(area_ha) where tree_cover_loss_year
+    in 2020..2024
+  date_tolerance_days: '366'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-034); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-034
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Bukit Soeharto (Taman Hutan Raya)
+  precedent: ch-quant-151; ch-quant-164
+  language_review: subagent review 2026-11-18; native speaker not yet

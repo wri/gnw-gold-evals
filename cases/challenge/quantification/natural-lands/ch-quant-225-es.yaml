@@ -1,0 +1,24 @@
+id: ch-quant-225-es
+uid: 92fe41a400b2978b
+status: ready
+set: quantification
+group: natural-lands
+language: es
+twin: ch-quant-225
+query: cual el area de manglares en mexico?
+expected:
+  aoi_ids: MEX
+  data_pull: 'TRUE'
+  dataset_id: '3'
+  figure: sum(area_ha) where natural_lands_class = 'Mangroves'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-025); real es user prompt,
+    trace trace 2026-06'
+  pair_id: es-n-025
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-092; ch-quant-157
+  language_review: subagent review 2026-11-18; native speaker not yet

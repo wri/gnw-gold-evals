@@ -1,0 +1,26 @@
+id: ch-quant-217-es
+uid: 4e1797670490aca5
+status: ready
+set: quantification
+group: many-areas
+language: es
+twin: ch-quant-217
+query: Realiza un analisis de los cantones con más incendios de la provincia de Loja, Ecuador
+expected:
+  aoi_ids: ECU.12.1_1;ECU.12.2_1;ECU.12.3_1;ECU.12.4_1;ECU.12.5_1;ECU.12.6_1;ECU.12.7_1;ECU.12.8_1;ECU.12.9_1;ECU.12.10_1;ECU.12.11_1;ECU.12.12_1;ECU.12.13_1;ECU.12.14_1;ECU.12.15_1;ECU.12.16_1
+  data_pull: 'TRUE'
+  dataset_id: '10'
+  figure: max(tree_cover_loss_from_fires_area_ha) by aoi_id
+  text: Ranks Loja's cantons by tree cover loss from fires from the pulled data, and says
+    it is fire-driven tree cover loss, not a count of fires.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-017); real es user prompt,
+    trace trace 2026-10'
+  pair_id: es-n-017
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-causal-027; ch-port-017; ch-quant-189
+  language_review: subagent review 2026-11-18; native speaker not yet

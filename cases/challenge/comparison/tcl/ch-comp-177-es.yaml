@@ -1,0 +1,24 @@
+id: ch-comp-177-es
+uid: f8bf14de1deae442
+status: ready
+set: comparison
+group: tcl
+language: es
+twin: ch-comp-177
+query: Dame la pérdida anual de cobertura arbórea de Perú, Bolivia y Ecuador de 2001 a 2024
+  en una tabla que pueda descargar.
+expected:
+  aoi_ids: PER;BOL;ECU
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Gives annual tree cover loss for Peru, Bolivia and Ecuador from 2001 to 2024 as a
+    table in the reply, or creates an insight whose provenance drawer downloads the CSV; names
+    no button, panel, file or link that does not exist.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-177 (es-t-042)'
+  pair_id: es-t-042
+  use_cases: UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,22 @@
+id: ch-quant-258
+uid: 0281eb907e7738be
+status: ready
+set: quantification
+group: unavailable
+query: Show the boundary polygon of the KARST ECOSYSTEM or karst GEOLOGY within the administrative
+  area of Gunungkidul district, DIY
+expected:
+  dataset_id: no_selection
+  text: Explains that no karst ecosystem or geology layer is available; showing the Gunungkidul
+    boundary is fine; presenting another dataset as if it showed karst is not.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-258-id (id-n-044);
+    real id user prompt, trace trace 2026-07'
+  pair_id: id-n-044
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Gunung Kidul (kabupaten, Yogyakarta)
+  precedent: ch-dataset-193

@@ -1,0 +1,26 @@
+id: ch-comp-160-es
+uid: 737dce4c0b4f77f0
+status: ready
+set: comparison
+group: tcl-fires
+language: es
+twin: ch-comp-160
+query: Compara la pérdida de cobertura arbórea por incendios en Santa Cruz y Beni en 2024.
+expected:
+  aoi_ids: BOL.8;BOL.3
+  dataset_id: '10'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  accept_aoi_nudge_offering: BOL.8
+  figure: sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'BOL.8' and tree_cover_loss_year
+    = 2024 ; sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'BOL.3' and tree_cover_loss_year
+    = 2024
+  figure_claim: '#1 > #2 :: Santa Cruz lost more tree cover to fires than Beni in 2024 ||
+    Beni lost more tree cover to fires than Santa Cruz in 2024'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-160 (es-t-010)'
+  pair_id: es-t-010
+  use_cases: UC2
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,31 @@
+id: ch-trend-097-id
+uid: 5af9f69c925818ea
+status: ready
+set: trend
+group: tcl
+language: id
+twin: ch-trend-097
+query: saya tertarik untuk mengetahui provinsi denpasar, deforestasi tren 10 tahun belakangan
+expected:
+  aoi_ids: IDN.2.4
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2016..2025 | sum(area_ha) where tree_cover_loss_year
+    in 2015..2024
+  date_tolerance_days: '366'
+  text: Says which area it analysed (Denpasar city in Bali, not a province); does not present
+    Bali province as Denpasar.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-036); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-036
+  benchmark_type: trend
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Denpasar (kota, Bali)
+  precedent: ch-trend-079; id-n-011
+  language_review: subagent review 2026-11-18; native speaker not yet

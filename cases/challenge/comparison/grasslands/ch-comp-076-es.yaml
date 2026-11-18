@@ -1,0 +1,25 @@
+id: ch-comp-076-es
+uid: cdb4b2c07f7a8c9c
+status: ready
+set: comparison
+group: grasslands
+language: es
+twin: ch-comp-076
+query: A ver, este, en Bolivia, ¿se perdió más pastizal natural/seminatural entre 2010 y 2015,
+  o en el tramo siguiente, de 2016 a 2021? ¿En cuál de los dos periodos fue peor?
+expected:
+  aoi_ids: BOL
+  dataset_id: '2'
+  data_pull: 'TRUE'
+  figure: change(sum(area_ha) where year = 2015, sum(area_ha) where year = 2010) ; change(sum(area_ha)
+    where year = 2021, sum(area_ha) where year = 2016) | change(sum(area_ha) where year =
+    2021, sum(area_ha) where year = 2015)
+  figure_claim: '#1 > #2 :: Bolivia lost more natural/semi-natural grassland in 2010 to 2015
+    than in 2016 to 2021 || Bolivia lost more natural/semi-natural grassland in 2016 to 2021
+    than in 2010 to 2015'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-076 (es-t-032)'
+  pair_id: es-t-032
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

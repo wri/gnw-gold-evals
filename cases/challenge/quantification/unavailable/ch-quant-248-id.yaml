@@ -1,0 +1,25 @@
+id: ch-quant-248-id
+uid: 3d6d7e98f98c0cf3
+status: ready
+set: quantification
+group: unavailable
+language: id
+twin: ch-quant-248
+query: tunjukan lahan restorasi gambut tersukses di indonesia
+expected:
+  dataset_id: no_selection
+  text: Explains that no peat restoration data or measure of restoration success is available,
+    so it cannot show or rank the most successful sites; mentioning tree cover loss or alerts
+    as related data is fine; presenting them as proof of restoration success is not.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-027); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-027
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Indonesia
+  precedent: ch-dataset-193; ch-dataset-186; id-n-044
+  language_review: subagent review 2026-11-18; native speaker not yet

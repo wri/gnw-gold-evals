@@ -1,0 +1,27 @@
+id: ch-mon-067
+uid: ec0517d3abe971eb
+status: ready
+set: monitoring
+group: alert_context
+query: Can you tell me the area of alerts in March 2026 in Chaco province that fall on forest
+  cover?
+expected:
+  aoi_ids: ARG.3
+  context_layer: natural_lands
+  data_pull: 'TRUE'
+  dataset_id: '11'
+  end_date: '2026-03-31'
+  figure: sum(area_ha) where alert_date in 2026-03-01..2026-03-31
+  start_date: '2026-03-01'
+  text: Reports the March 2026 alert area that falls on forest (or on natural lands, named
+    as such) in Chaco province, and does not present the province total as the forest figure.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-mon-067-es (es-n-002);
+    real es user prompt, trace trace 2026-04'
+  pair_id: es-n-002
+  benchmark_type: monitoring
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-mon-058

@@ -1,0 +1,24 @@
+id: ch-quant-083-id
+uid: 3bc1fefc809cfe06
+status: ready
+set: quantification
+group: integrated-alerts
+language: id
+twin: ch-quant-083
+query: Untuk Indonesia, bagaimana rincian total luas peringatan gangguan dari 1 Januari sampai
+  31 Desember 2024 menurut tingkat kepercayaan (rendah, tinggi, tertinggi), dalam hektare?
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_confidence = 'low' and alert_date in 2024-01-01..2024-12-31
+    ; sum(area_ha) where alert_confidence = 'high' and alert_date in 2024-01-01..2024-12-31
+    ; sum(area_ha) where alert_confidence = 'highest' and alert_date in 2024-01-01..2024-12-31
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-083 (id-t-004)'
+  pair_id: id-t-004
+  use_cases: UC1;UC3
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

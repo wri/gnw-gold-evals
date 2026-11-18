@@ -1,0 +1,22 @@
+id: ch-quant-226-es
+uid: 7d975eb1f7c48bbc
+status: ready
+set: quantification
+group: grasslands
+language: es
+twin: ch-quant-226
+query: Me puedes dar un mapa de los pastos en españa
+expected:
+  aoi_ids: ESP
+  dataset_id: 2;1
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-027); real es user prompt,
+    trace trace 2025-11'
+  pair_id: es-n-027
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-181; ch-quant-176
+  language_review: subagent review 2026-11-18; native speaker not yet

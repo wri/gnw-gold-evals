@@ -1,0 +1,20 @@
+id: ch-quant-228
+uid: 3cba61778e9a5173
+status: ready
+set: quantification
+group: unavailable
+query: What is the current area of mining in Bolívar state, Venezuela?
+expected:
+  text: Says that no data on the extent of mining are available; may offer related data named
+    as such (for example tree cover loss by driver, where the hard commodities class includes
+    mining); does not present another class as the area of mining.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-228-es (es-n-029);
+    real es user prompt, trace trace 2025-11'
+  pair_id: es-n-029
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-192; ch-quant-200; ch-causal-027

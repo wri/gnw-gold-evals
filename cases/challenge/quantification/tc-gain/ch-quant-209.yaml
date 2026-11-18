@@ -1,0 +1,23 @@
+id: ch-quant-209
+uid: 6847284abfd4e0dc
+status: ready
+set: quantification
+group: tc-gain
+query: forest gain in Costa Rica
+expected:
+  aoi_ids: CRI
+  data_pull: 'TRUE'
+  dataset_id: '5'
+  figure: sum(area_ha) where tree_cover_gain_period in ('2000-2005', '2005-2010', '2010-2015',
+    '2015-2020') | sum(area_ha)
+  text: States the period the gain figure covers (2000 to 2020).
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-209-es (es-n-007);
+    real es user prompt, trace trace 2026-02'
+  pair_id: es-n-007
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-179; ch-quant-115; ch-quant-103

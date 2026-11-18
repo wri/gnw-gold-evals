@@ -1,0 +1,22 @@
+id: ch-trend-052-id
+uid: c4e0ae147c08f3db
+status: ready
+set: trend
+group: integrated-alerts
+language: id
+twin: ch-trend-052
+query: Bagaimana pola luas peringatan deforestasi dari bulan ke bulan di Indonesia, dari Januari
+  sampai Desember 2024?
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in 2024-01-01..2024-12-31
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-trend-052 (id-t-003)'
+  pair_id: id-t-003
+  use_cases: UC1;UC3;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

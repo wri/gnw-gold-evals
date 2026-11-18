@@ -1,0 +1,24 @@
+id: ch-quant-229-es
+uid: 8bd1b44822217ace
+status: ready
+set: quantification
+group: method
+language: es
+twin: ch-quant-229
+query: Dame una lista de todos los insumos y capas que utilizas para realizar los analisis
+  en esta plataforma
+expected:
+  text: Lists datasets that Horizon really has (for example tree cover loss, loss by driver,
+    loss from fires, tree cover, tree cover gain, land cover, grasslands, natural lands, forest
+    carbon flux, integrated alerts) without inventing layers.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-033); real es user prompt,
+    trace trace 2026-02'
+  pair_id: es-n-033
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-205; ch-quant-198
+  language_review: subagent review 2026-11-18; native speaker not yet

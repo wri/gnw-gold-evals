@@ -1,0 +1,21 @@
+id: ch-aoi-159
+uid: 2e4b32b992b27445
+status: ready
+set: aoi
+group: multi
+query: Present the administrative village boundaries in Kaimana district
+expected:
+  aoi_ids: IDN.22.2.1.1_1;IDN.22.2.1.2_1;IDN.22.2.1.3_1;IDN.22.2.1.4_1;IDN.22.2.1.5_1;IDN.22.2.1.6_1;IDN.22.2.1.7_1;IDN.22.2.1.8_1;IDN.22.2.1.9_1;IDN.22.2.1.10_1;IDN.22.2.1.11_1;IDN.22.2.1.12_1;IDN.22.2.1.13_1;IDN.22.2.1.14_1;IDN.22.2.1.15_1;IDN.22.2.2.1_1;IDN.22.2.2.2_1;IDN.22.2.2.3_1;IDN.22.2.2.4_1;IDN.22.2.2.5_1;IDN.22.2.2.6_1;IDN.22.2.2.7_1;IDN.22.2.2.8_1;IDN.22.2.2.9_1;IDN.22.2.2.10_1;IDN.22.2.3.1_1;IDN.22.2.3.2_1;IDN.22.2.3.3_1;IDN.22.2.3.4_1;IDN.22.2.3.5_1;IDN.22.2.3.6_1;IDN.22.2.3.7_1;IDN.22.2.3.8_1;IDN.22.2.3.9_1;IDN.22.2.3.10_1;IDN.22.2.3.11_1;IDN.22.2.3.12_1;IDN.22.2.3.13_1;IDN.22.2.3.14_1;IDN.22.2.3.15_1;IDN.22.2.3.16_1;IDN.22.2.3.17_1;IDN.22.2.3.18_1;IDN.22.2.3.19_1;IDN.22.2.4.1_1;IDN.22.2.4.2_1;IDN.22.2.4.3_1;IDN.22.2.4.4_1;IDN.22.2.4.5_1;IDN.22.2.4.6_1;IDN.22.2.4.7_1;IDN.22.2.5.1_1;IDN.22.2.5.2_1;IDN.22.2.5.3_1;IDN.22.2.5.4_1;IDN.22.2.5.5_1;IDN.22.2.5.6_1;IDN.22.2.5.7_1;IDN.22.2.5.8_1;IDN.22.2.5.9_1;IDN.22.2.5.10_1;IDN.22.2.5.11_1;IDN.22.2.5.12_1;IDN.22.2.5.13_1;IDN.22.2.5.14_1;IDN.22.2.5.15_1;IDN.22.2.5.16_1;IDN.22.2.5.17_1;IDN.22.2.5.18_1;IDN.22.2.5.19_1;IDN.22.2.5.20_1;IDN.22.2.5.21_1;IDN.22.2.5.22_1;IDN.22.2.5.23_1;IDN.22.2.5.24_1;IDN.22.2.6.1_1;IDN.22.2.6.2_1;IDN.22.2.6.3_1;IDN.22.2.6.4_1;IDN.22.2.6.5_1;IDN.22.2.7.1_1;IDN.22.2.7.2_1;IDN.22.2.7.3_1;IDN.22.2.7.4_1;IDN.22.2.7.5_1;IDN.22.2.7.6_1|IDN.22.2
+  text: Selects the villages of Kaimana, or Kaimana itself with a clear statement that village
+    boundaries are not shown; does not select an unrelated area.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-aoi-159-id (id-n-045);
+    real id user prompt, trace trace 2026-07'
+  pair_id: id-n-045
+  benchmark_type: spatial
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: villages (kampung) of Kaimana (kabupaten, Papua Barat)
+  precedent: ch-port-018 (id-list form); ch-aoi-088

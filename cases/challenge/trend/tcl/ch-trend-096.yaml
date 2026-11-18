@@ -1,0 +1,22 @@
+id: ch-trend-096
+uid: 4344318b32d8ee55
+status: ready
+set: trend
+group: tcl
+query: how has deforestation been in the Lake Toba area, North Sumatra, Indonesia from 2004
+  to 2024?
+expected:
+  text: Says which area its figures cover, or asks which districts around Lake Toba are meant;
+    if it uses the area named Lake Toba, says that this is the lake itself, not the surrounding
+    landscape.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-trend-096-id (id-n-022);
+    real id user prompt, trace trace 2026-01'
+  pair_id: id-n-022
+  benchmark_type: trend
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Lake Toba (Danau Toba), Sumatera Utara
+  precedent: ch-trend-072; ch-quant-162

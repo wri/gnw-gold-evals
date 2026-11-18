@@ -1,0 +1,21 @@
+id: ch-quant-167-es
+uid: c7962d2b5e4c3c76
+status: ready
+set: quantification
+group: ghg-flux
+language: es
+twin: ch-quant-167
+query: ¿Los bosques del Parque Nacional Yasuní son un sumidero neto o una fuente neta de carbono?
+expected:
+  aoi_ids: '186'
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(carbon_net_flux_Mg_CO2e) where aoi_id = ''186'''
+  figure_claim: '#1 < 0 :: the park''s forests were a net carbon sink over 2001 to 2025 ||
+    the park''s forests were a net carbon source over 2001 to 2025'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-167 (es-t-025)'
+  pair_id: es-t-025
+  use_cases: UC4
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

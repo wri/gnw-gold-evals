@@ -1,0 +1,21 @@
+id: ch-quant-230
+uid: 11fe73a70677e4e2
+status: ready
+set: quantification
+group: method
+query: How correct is the information for Guatemala, given that there are oil palm areas that
+  are counted as deforestation
+expected:
+  text: Explains that tree cover loss includes the harvest or replanting of tree plantations
+    such as oil palm and is not the same as deforestation; may point to a forest filter that
+    narrows it (primary or natural forest); does not claim the loss figures exclude plantations.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-230-es (es-n-034);
+    real es user prompt, trace trace 2026-10'
+  pair_id: es-n-034
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-166; ch-quant-197

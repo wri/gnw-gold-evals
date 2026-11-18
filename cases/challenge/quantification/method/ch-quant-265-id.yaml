@@ -1,0 +1,22 @@
+id: ch-quant-265-id
+uid: 383738c1dafa587f
+status: ready
+set: quantification
+group: method
+language: id
+twin: ch-quant-265
+query: apakah tree cover loss juga menghitung hutan tanaman juga
+expected:
+  text: Says tree cover loss counts loss of any tree cover above the canopy threshold, including
+    harvesting in plantation forests, so it is not the same as deforestation of natural forest.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-054); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-054
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-197; ch-quant-191
+  language_review: subagent review 2026-11-18; native speaker not yet

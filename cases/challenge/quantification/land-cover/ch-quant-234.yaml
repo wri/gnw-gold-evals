@@ -1,0 +1,25 @@
+id: ch-quant-234
+uid: 71f5ea4abf10a20b
+status: ready
+set: quantification
+group: land-cover
+query: How much baseline rice field area (lahan baku sawah) is there in Merauke district in
+  2024?
+expected:
+  aoi_ids: IDN.23.16
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class = 'Cropland'
+  text: Gives cropland area from the land cover data and says it is cropland in general, not
+    the official "lahan baku sawah" (rice field) figure.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-234-id (id-n-007);
+    real id user prompt, trace trace 2026-03'
+  pair_id: id-n-007
+  benchmark_type: quantification
+  use_cases: UC2
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Merauke (kabupaten)
+  precedent: ch-quant-180; ch-quant-061

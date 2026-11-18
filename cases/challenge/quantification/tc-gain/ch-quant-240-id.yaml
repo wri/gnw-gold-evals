@@ -1,0 +1,29 @@
+id: ch-quant-240-id
+uid: 53c2e5879f5bf188
+status: ready
+set: quantification
+group: tc-gain
+language: id
+twin: ch-quant-240
+query: Berapa luas penambahan tutupan pohon di Provinsi Jawa Tengah antara tahun 2000 dan
+  2020?
+expected:
+  aoi_ids: IDN.10
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_gain_period in ('2000-2005', '2005-2010', '2010-2015',
+    '2015-2020')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-016); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-016
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Jawa Tengah (province)
+  precedent: ch-quant-115
+  language_review: subagent review 2026-11-18; native speaker not yet

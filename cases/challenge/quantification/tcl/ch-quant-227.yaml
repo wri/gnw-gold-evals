@@ -1,0 +1,20 @@
+id: ch-quant-227
+uid: d2ee94475b1fe69c
+status: ready
+set: quantification
+group: tcl
+query: I'm looking for a map and numbers on deforestation in La Moskitia in Honduras
+expected:
+  text: Either analyses a named area that stands for La Moskitia (for example Gracias a Dios
+    department) and says which area it used, or asks which area is meant; does not present
+    figures for another area as La Moskitia without saying so.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-227-es (es-n-028);
+    real es user prompt, trace trace 2025-11'
+  pair_id: es-n-028
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-178

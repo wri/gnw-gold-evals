@@ -1,0 +1,23 @@
+id: ch-quant-254-id
+uid: 9c49ca3774ec9f19
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-254
+query: tree cover loss 2010-2025 di kecamatan girimulyo, kabupaten kulon progo berapa?
+expected:
+  text: Declines to analyse tree cover loss at sub-district (kecamatan) level, and may offer
+    Kulon Progo district instead; never labels a district figure as Girimulyo's.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-037); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-037
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Girimulyo (kecamatan), Kulon Progo, Yogyakarta
+  precedent: ch-refusal-039 (not a member)
+  language_review: subagent review 2026-11-18; native speaker not yet

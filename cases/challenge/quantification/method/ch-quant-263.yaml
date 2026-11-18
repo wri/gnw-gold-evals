@@ -1,0 +1,19 @@
+id: ch-quant-263
+uid: 57abc8529ca0d631
+status: ready
+set: quantification
+group: method
+query: where does the map data in this Global Nature Watch come from?
+expected:
+  text: Names the sources of the datasets it offers as the catalogue documents them, without
+    inventing sources.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-263-id (id-n-052);
+    real id user prompt, trace trace 2026-02'
+  pair_id: id-n-052
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-198; ch-quant-205

@@ -1,0 +1,24 @@
+id: ch-mon-072
+uid: 84b5b7bbff9cde6f
+status: ready
+set: monitoring
+group: active_fire
+query: show the points of forest disturbance caused by forest fires in Ujung Kulon National
+  Park for October 2026
+expected:
+  aoi_ids: 2349|67726|15871
+  text: Either reports disturbance alerts for Ujung Kulon National Park for October 2026 and
+    says alerts do not record fire as their cause, or says fire detections (hotspots) are
+    not available here; does not present disturbance alerts or annual fire-driven loss as
+    fire detections.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-mon-072-id (id-n-006);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-006
+  benchmark_type: monitoring
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Ujung Kulon National Park
+  precedent: ch-mon-042; ch-mon-053; ch-mon-057

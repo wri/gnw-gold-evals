@@ -1,0 +1,20 @@
+id: ch-quant-212
+uid: 48764b7e0086b632
+status: ready
+set: quantification
+group: unavailable
+query: I want to know the total carbon stock in Manu, Madre de Dios, Peru, for the year 2024.
+expected:
+  text: Either says that carbon stock data are not available and offers forest carbon flux
+    (emissions, removals, net flux) for Manu instead, or reports a stock from a real dataset;
+    does not present a flux figure as a carbon stock.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-212-es (es-n-010);
+    real es user prompt, trace trace 2025-12'
+  pair_id: es-n-010
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-201; ch-quant-200; ch-quant-185

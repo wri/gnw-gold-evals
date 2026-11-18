@@ -1,0 +1,18 @@
+id: ch-quant-185-es
+uid: 43e96b9441fc512f
+status: ready
+set: quantification
+group: unavailable
+language: es
+twin: ch-quant-185
+query: ¿En qué zonas de Guatemala había café sembrado en 2020?
+expected:
+  text: Either uses a coffee crop map if one is available, or says crop-specific maps are
+    not available and offers cropland from land cover instead; does not present general cropland
+    as coffee.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-185 (es-t-040)'
+  pair_id: es-t-040
+  use_cases: UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

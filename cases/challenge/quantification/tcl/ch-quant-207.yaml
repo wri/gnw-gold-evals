@@ -1,0 +1,23 @@
+id: ch-quant-207
+uid: 9adfc42ced169947
+status: ready
+set: quantification
+group: tcl
+query: what was the forest cover loss from 2010 to 2016 in Guatemala
+expected:
+  aoi_ids: GTM
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2016-12-31'
+  figure: sum(area_ha) where tree_cover_loss_year in 2010..2016
+  start_date: '2010-01-01'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-207-es (es-n-003);
+    real es user prompt, trace trace 2026-11'
+  pair_id: es-n-003
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-156; ch-quant-003

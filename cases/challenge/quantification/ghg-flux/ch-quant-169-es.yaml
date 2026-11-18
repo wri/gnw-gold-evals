@@ -1,0 +1,25 @@
+id: ch-quant-169-es
+uid: aa1e58e473c2218b
+status: ready
+set: quantification
+group: ghg-flux
+language: es
+twin: ch-quant-169
+query: ¿Cuáles fueron las emisiones brutas por pérdida de bosque en Colombia en 2023? Las
+  necesitamos para el seguimiento de la NDC.
+expected:
+  aoi_ids: COL
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  text: Gives Colombia's 2023 gross emissions from forest loss and caveats that the method
+    differs from the national inventory used for NDC tracking.
+  context_layer: no_selection
+  figure: sum(carbon_emissions_MgCO2e) where tree_cover_loss_year = 2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-169 (es-t-026)'
+  pair_id: es-t-026
+  use_cases: UC4
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

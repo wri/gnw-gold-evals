@@ -1,0 +1,25 @@
+id: ch-trend-072-es
+uid: a8abaac8ef65e845
+status: ready
+set: trend
+group: tcl
+language: es
+twin: ch-trend-072
+query: ¿La pérdida de cobertura arbórea en Madre de Dios, Perú, ha venido aumentando o disminuyendo
+  de 2015 a 2023?
+expected:
+  aoi_ids: PER.18
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where tree_cover_loss_year = 2015 ; ref: sum(area_ha) where tree_cover_loss_year
+    = 2023'
+  figure_claim: '#2 > #1 :: tree cover loss in 2023 was above 2015, so loss rose over the
+    period || tree cover loss in 2023 was below 2015, so loss fell over the period'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-trend-072 (es-t-041)'
+  pair_id: es-t-041
+  use_cases: UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

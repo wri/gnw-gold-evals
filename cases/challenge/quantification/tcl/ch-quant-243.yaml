@@ -1,0 +1,24 @@
+id: ch-quant-243
+uid: d1d02ab421743bbe
+status: ready
+set: quantification
+group: tcl
+query: I want to get forest cover loss data for the Gunung Mutis area from 2000 to 2025
+expected:
+  aoi_ids: 8719|15961
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2001..2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-243-id (id-n-020);
+    real id user prompt, trace trace 2026-07'
+  pair_id: id-n-020
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Gunung Mutis (Cagar Alam)
+  precedent: ch-quant-156; ch-quant-151

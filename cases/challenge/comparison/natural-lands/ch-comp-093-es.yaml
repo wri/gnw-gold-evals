@@ -1,0 +1,28 @@
+id: ch-comp-093-es
+uid: d11a4c05b2afcd78
+status: ready
+set: comparison
+group: natural-lands
+language: es
+twin: ch-comp-093
+query: 'Estoy comparando perfiles de uso del suelo para un informe: en proporción, ¿cuál tiene
+  una mayor parte de su territorio cubierta por tierras naturales, Costa Rica o el Reino Unido?'
+expected:
+  aoi_ids: GBR;CRI
+  dataset_id: '3'
+  data_pull: 'TRUE'
+  figure: ratio(sum(area_ha) where aoi_id = 'CRI' and natural_lands_class in ('Natural forests',
+    'Mangroves', 'Natural peat forests', 'Wetland natural forests', 'Natural short vegetation',
+    'Natural peat short vegetation', 'Wetland natural short vegetation', 'Natural water',
+    'Bare'), sum(area_ha) where aoi_id = 'CRI') ; ratio(sum(area_ha) where aoi_id = 'GBR'
+    and natural_lands_class in ('Natural forests', 'Mangroves', 'Natural peat forests', 'Wetland
+    natural forests', 'Natural short vegetation', 'Natural peat short vegetation', 'Wetland
+    natural short vegetation', 'Natural water', 'Bare'), sum(area_ha) where aoi_id = 'GBR')
+  figure_claim: '#1 > #2 :: Costa Rica has the larger share of its land that is natural ||
+    The United Kingdom has the larger share of its land that is natural'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-093 (es-t-033)'
+  pair_id: es-t-033
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

@@ -1,0 +1,25 @@
+id: ch-port-030-id
+uid: cb75510d0ea1b87c
+status: ready
+set: portfolio
+group: many-areas
+language: id
+twin: ch-port-030
+query: tunjukkan analisa deforestasi yang terjadi di konsesi-konsesi yang ada di Kalimantan
+  Tengah
+expected:
+  text: Does not invent per-concession figures; either analyses concessions in Kalimantan
+    Tengah within the limit and says which ones it covered, or explains that there are too
+    many to analyse at once and offers a single concession, a concession type or a district.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-021); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-021
+  benchmark_type: portfolio
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: concessions in Kalimantan Tengah
+  precedent: ch-port-016; ch-quant-184; ch-mon-026
+  language_review: subagent review 2026-11-18; native speaker not yet

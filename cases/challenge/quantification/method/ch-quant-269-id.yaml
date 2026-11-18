@@ -1,0 +1,23 @@
+id: ch-quant-269-id
+uid: b17d081a30ee5185
+status: ready
+set: quantification
+group: method
+language: id
+twin: ch-quant-269
+query: Kenapa file geojson saya tidak bisa di upload
+expected:
+  text: Explains likely reasons or the upload requirements as the app documents them (supported
+    formats, valid geometry), or asks for the error message; does not claim to have seen or
+    fixed the file.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-059); real id user prompt,
+    trace trace 2026-05'
+  pair_id: id-n-059
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-mon-046; ch-quant-193
+  language_review: subagent review 2026-11-18; native speaker not yet

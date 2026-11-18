@@ -1,0 +1,26 @@
+id: ch-quant-259-id
+uid: c73d1d4746d82136
+status: ready
+set: quantification
+group: unavailable
+language: id
+twin: ch-quant-259
+query: bagaimana DAS Jambo Aye di Aceh mengalami kehilangan tutupan hutan selama bertahun
+  tahun? apakah DAS ini masih tergolong DAS yang sehat dan ideal?
+expected:
+  text: Either asks for the watershed boundary (or an upload), or says it has no watershed
+    boundaries and offers the enclosing districts as an approximation; does not present a
+    district's loss as the Jambo Aye watershed's, and does not rule on whether the watershed
+    is "healthy" from tree cover loss alone.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-046); real id user prompt,
+    trace trace 2026-08'
+  pair_id: id-n-046
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: DAS Jambo Aye (watershed), Aceh
+  precedent: ch-quant-161; ch-quant-178
+  language_review: subagent review 2026-11-18; native speaker not yet

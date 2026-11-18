@@ -1,0 +1,19 @@
+id: ch-quant-226
+uid: 9d753388b2f04401
+status: ready
+set: quantification
+group: grasslands
+query: Can you give me a map of the pastures in Spain
+expected:
+  aoi_ids: ESP
+  dataset_id: 2;1
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-226-es (es-n-027);
+    real es user prompt, trace trace 2025-11'
+  pair_id: es-n-027
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-181; ch-quant-176

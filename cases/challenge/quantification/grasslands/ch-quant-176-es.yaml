@@ -1,0 +1,22 @@
+id: ch-quant-176-es
+uid: da5f16878c4e5606
+status: ready
+set: quantification
+group: grasslands
+language: es
+twin: ch-quant-176
+query: ¿Qué porcentaje de España son pastizales naturales, para el indicador B1 del Marco
+  Mundial de Biodiversidad?
+expected:
+  aoi_ids: ESP
+  dataset_id: '2'
+  data_pull: 'TRUE'
+  text: Gives the share of Spain that is natural or semi-natural grassland, stating the year
+    and the national area used as the denominator.
+  figure: sum(area_ha) where year = 2022
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-176 (es-t-028)'
+  pair_id: es-t-028
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,18 @@
+id: ch-mon-046-es
+uid: 3a84602ab399799d
+status: ready
+set: monitoring
+group: unsupported_action
+language: es
+twin: ch-mon-046
+query: Descarga las alertas de los últimos 30 días en Charagua Iyambae en formato CSV.
+expected:
+  text: Either provides a CSV download of the last 30 days of alerts in Charagua Iyambae,
+    or explains that it cannot produce one here and says how to get one (for example a download
+    from Global Forest Watch or the API); does not claim to have produced a file.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-046 (es-t-005)'
+  pair_id: es-t-005
+  use_cases: UC1
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

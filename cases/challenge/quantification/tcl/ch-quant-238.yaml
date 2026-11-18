@@ -1,0 +1,26 @@
+id: ch-quant-238
+uid: 5ebad6f770dbb34c
+status: ready
+set: quantification
+group: tcl
+query: how much deforestation has there been in Indonesia in the last 5 years
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2021..2025 | sum(area_ha) where tree_cover_loss_year
+    in 2020..2024
+  date_tolerance_days: '366'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-238-id (id-n-011);
+    real id user prompt, trace trace 2026-02'
+  pair_id: id-n-011
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Indonesia
+  precedent: ch-quant-003; ch-quant-164; ch-quant-009

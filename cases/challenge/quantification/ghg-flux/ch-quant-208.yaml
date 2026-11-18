@@ -1,0 +1,21 @@
+id: ch-quant-208
+uid: 4214aa3979fbe785
+status: ready
+set: quantification
+group: ghg-flux
+query: Emissions absorption in the province of Cáceres, Spain
+expected:
+  aoi_ids: ESP.11.2
+  data_pull: 'TRUE'
+  dataset_id: '6'
+  figure: sum(carbon_gross_removals_Mg_CO2e) | sum(carbon_net_flux_Mg_CO2e)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-208-es (es-n-006);
+    real es user prompt, trace trace 2026-07'
+  pair_id: es-n-006
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-168; ch-quant-188

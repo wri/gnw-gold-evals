@@ -1,0 +1,19 @@
+id: ch-quant-170-es
+uid: fb79ce477c851e17
+status: ready
+set: quantification
+group: method
+language: es
+twin: ch-quant-170
+query: ¿Podemos usar la pérdida de cobertura arbórea de GFW para calcular cuánto se le debería
+  pagar a nuestra provincia en un programa REDD+ jurisdiccional?
+expected:
+  text: Does not suggest that tree cover loss data can set payment amounts under a jurisdictional
+    REDD+ program; may say they can serve as an informal cross-check alongside the official
+    monitoring system.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-170 (es-t-035)'
+  pair_id: es-t-035
+  use_cases: UC4
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

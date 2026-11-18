@@ -1,0 +1,27 @@
+id: ch-quant-237-id
+uid: 4785bb6b8f28979e
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-237
+query: Berapa jumlah total deforetasi di maluku utara dari tahun 2000 hingga saat ini
+expected:
+  aoi_ids: IDN.18
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2001..2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-010); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-010
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Maluku Utara (province)
+  precedent: ch-quant-156; ch-quant-164
+  language_review: subagent review 2026-11-18; native speaker not yet

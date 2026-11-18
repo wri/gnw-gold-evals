@@ -1,0 +1,21 @@
+id: ch-quant-215
+uid: 1be367f21319de5c
+status: ready
+set: quantification
+group: tcl
+query: show me the historical deforestation of Mérida, Yucatán
+expected:
+  aoi_ids: MEX.31.50
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  figure: sum(area_ha)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-215-es (es-n-015);
+    real es user prompt, trace trace 2026-01'
+  pair_id: es-n-015
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-009; ch-comp-152; ch-quant-162

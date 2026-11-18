@@ -1,0 +1,17 @@
+id: ch-quant-187-id
+uid: 48020d6f2d456660
+status: ready
+set: quantification
+group: unavailable
+language: id
+twin: ch-quant-187
+query: Berapa luas areal perhutanan sosial di Indonesia yang sudah terdeforestasi?
+expected:
+  text: Either uses social forestry boundaries if they are available, or says they are not;
+    does not present national figures as social forestry figures.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-187 (id-t-018)'
+  pair_id: id-t-018
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

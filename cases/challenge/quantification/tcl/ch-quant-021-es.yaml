@@ -1,0 +1,24 @@
+id: ch-quant-021-es
+uid: 4b69d9d8028d74b4
+status: ready
+set: quantification
+group: tcl
+language: es
+twin: ch-quant-021
+query: ¿Cuántas hectáreas de cobertura arbórea se perdieron en Costa Rica, considerando todos
+  los tipos de bosque, de 2001 a 2023, usando un umbral de densidad de dosel del 25%?
+expected:
+  aoi_ids: CRI
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2023-12-31'
+  dataset_parameters: '[{"name":"canopy_cover","values":[25]}]'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2001..2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-021 (es-t-016)'
+  pair_id: es-t-016
+  use_cases: UC3;UC4;UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

@@ -1,0 +1,24 @@
+id: ch-aoi-158-id
+uid: 33ff4bf7d70737bc
+status: ready
+set: aoi
+group: concepts
+language: id
+twin: ch-aoi-158
+query: munculkan tnks yang hanya berada diwilayah administrasi provinsi bengkulu
+expected:
+  text: Recognises TNKS as Kerinci Seblat National Park; either shows the park and says it
+    cannot clip it to Bengkulu province, or offers the Bengkulu districts that overlap it;
+    does not select an unrelated area.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-033); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-033
+  benchmark_type: scope
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kerinci Seblat National Park, the part in Bengkulu
+  precedent: ch-aoi-116; ch-aoi-118; ch-mon-036
+  language_review: subagent review 2026-11-18; native speaker not yet

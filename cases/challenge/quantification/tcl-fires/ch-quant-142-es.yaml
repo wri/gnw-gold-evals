@@ -1,0 +1,23 @@
+id: ch-quant-142-es
+uid: 481f8d22c5b5ce42
+status: ready
+set: quantification
+group: tcl-fires
+language: es
+twin: ch-quant-142
+query: ¿Cuál fue la pérdida total de cobertura arbórea por incendios en Bolivia, considerando
+  todos los tipos de bosque, entre 2015 y 2020, en hectáreas?
+expected:
+  aoi_ids: BOL
+  dataset_id: '10'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2015..2020
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-142 (es-t-020)'
+  pair_id: es-t-020
+  use_cases: UC3;UC5;UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

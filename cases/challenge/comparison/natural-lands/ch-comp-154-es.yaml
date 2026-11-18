@@ -1,0 +1,25 @@
+id: ch-comp-154-es
+uid: 8596b613180c47ee
+status: ready
+set: comparison
+group: natural-lands
+language: es
+twin: ch-comp-154
+query: ¿Se han convertido tierras naturales desde 2021 en San Martín o Junín, donde están
+  nuestras cooperativas cacaoteras?
+expected:
+  aoi_ids: PER.23;PER.12
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  accept_nudge_offering: '4'
+  context_layer: natural_forest
+  figure: sum(area_ha) where aoi_id = 'PER.23' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'PER.12' and tree_cover_loss_year in 2021..2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-154 (es-t-007)'
+  pair_id: es-t-007
+  use_cases: UC2
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

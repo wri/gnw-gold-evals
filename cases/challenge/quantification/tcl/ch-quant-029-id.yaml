@@ -1,0 +1,23 @@
+id: ch-quant-029-id
+uid: b6e5f4a4c9d2107b
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-029
+query: Saya sedang mendalami jejak iklim Indonesia. Bisa beri tahu berapa emisi gas rumah
+  kaca dari kehilangan tutupan pohon di semua tipe hutan di sana antara tahun 2015 dan 2020?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(carbon_emissions_MgCO2e) where tree_cover_loss_year in 2015..2020
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-029 (id-t-017)'
+  pair_id: id-t-017
+  use_cases: UC4;UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

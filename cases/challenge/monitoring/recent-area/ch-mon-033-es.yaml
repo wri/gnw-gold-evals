@@ -1,0 +1,24 @@
+id: ch-mon-033-es
+uid: 63bfbb12909f25f3
+status: ready
+set: monitoring
+group: recent_area
+language: es
+twin: ch-mon-033
+query: ¿Cuántas hectáreas de alertas de perturbación se detectaron en el Territorio Indígena
+  Guarayos en los últimos 3 meses?
+expected:
+  aoi_ids: BOL277/BOL290 | BOL277;BOL290
+  dataset_id: '11'
+  start_date: '{run-90d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  accept_aoi_nudge_offering: BOL277;BOL290
+  figure: sum(area_ha) where alert_date in {run-90d}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-033 (es-t-001)'
+  pair_id: es-t-001
+  use_cases: UC1
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

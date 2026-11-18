@@ -1,0 +1,25 @@
+id: ch-quant-213
+uid: cdba885a010788c7
+status: ready
+set: quantification
+group: tcl
+query: cover loss in the Araucarias biosphere reserve from 1993 to 2026
+expected:
+  aoi_ids: '5196'
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2025-12-31'
+  figure: sum(area_ha) where tree_cover_loss_year in 2001..2025
+  start_date: '2001-01-01'
+  text: Says that the tree cover loss data cover 2001 to 2025 only, so 1993 to 2000 and 2026
+    are not included.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-213-es (es-n-011);
+    real es user prompt, trace trace 2026-02'
+  pair_id: es-n-011
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-trend-079; ch-quant-151

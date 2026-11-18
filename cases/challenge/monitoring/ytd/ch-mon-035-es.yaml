@@ -1,0 +1,22 @@
+id: ch-mon-035-es
+uid: 74b55444a0966cef
+status: ready
+set: monitoring
+group: ytd
+language: es
+twin: ch-mon-035
+query: ¿Ha habido alertas en el territorio Wampis desde enero?
+expected:
+  aoi_ids: '555721646'
+  dataset_id: '11'
+  start_date: '{current_year}-01-01'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {current_year}-01-01..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-035 (es-t-002)'
+  pair_id: es-t-002
+  use_cases: UC1
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

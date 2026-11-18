@@ -1,0 +1,23 @@
+id: ch-comp-043-id
+uid: d9bfd61b3060d2e9
+status: ready
+set: comparison
+group: ghg-flux
+language: id
+twin: ch-comp-043
+query: Hutan negara mana yang secara keseluruhan menjadi sumber emisi bersih gas rumah kaca
+  yang lebih besar, hutan Brasil atau hutan Indonesia?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'BRA' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'IDN'
+  figure_claim: '#2 > #1 :: Indonesia''s forests are the larger net source of greenhouse gas
+    emissions || Brazil''s forests are the larger net source of greenhouse gas emissions'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-043 (id-t-013)'
+  pair_id: id-t-013
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

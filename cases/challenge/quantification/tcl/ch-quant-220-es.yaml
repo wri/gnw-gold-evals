@@ -1,0 +1,26 @@
+id: ch-quant-220-es
+uid: f8c0ec1d546674a3
+status: ready
+set: quantification
+group: tcl
+language: es
+twin: ch-quant-220
+query: cuál es el estado del bosque de tariquia y su zona circundante en el sur de bolivia?
+expected:
+  aoi_ids: 20041|14386
+  data_pull: 'TRUE'
+  dataset_id: 4;7
+  text: Describes the forest inside Tariquía from pulled data (tree cover or tree cover loss);
+    any statement about the surrounding area comes from a second pulled area or is declared
+    not analysed; no narrative about the surroundings from general knowledge.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-020); real es user prompt,
+    trace trace 2026-02'
+  pair_id: es-n-020
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-162; ch-quant-186
+  language_review: subagent review 2026-11-18; native speaker not yet

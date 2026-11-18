@@ -1,0 +1,23 @@
+id: ch-comp-174-es
+uid: 113bc5f17c15cd1d
+status: ready
+set: comparison
+group: ghg-flux
+language: es
+twin: ch-comp-174
+query: ¿Cuáles son los flujos netos de GEI de los bosques de Perú, Colombia y Brasil, para
+  una comparación de niveles de referencia de emisiones forestales?
+expected:
+  aoi_ids: PER;COL;BRA
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'PER' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'COL' ; sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'BRA'
+  figure_claim: '#3 < 0 :: Brazil''s forests are a net carbon sink over the period || Brazil''s
+    forests are a net carbon source over the period'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-174 (es-t-031)'
+  pair_id: es-t-031
+  use_cases: UC4;UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

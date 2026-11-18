@@ -1,0 +1,20 @@
+id: ch-quant-182-es
+uid: c9fafa2ffe9f25a6
+status: ready
+set: quantification
+group: land-cover
+language: es
+twin: ch-quant-182
+query: ¿Qué tipos de cobertura del suelo componen el paisaje Kakataibo en Padre Abad?
+expected:
+  aoi_ids: PER.26.3|PER8623|PER8624|PER8623;PER8624
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class = 'Tree cover' | ratio(sum(area_ha) where land_cover_class
+    = 'Tree cover', sum(area_ha))
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-182 (es-t-039)'
+  pair_id: es-t-039
+  use_cases: UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

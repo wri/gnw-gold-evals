@@ -1,0 +1,25 @@
+id: ch-mon-030-id
+uid: 7c1bb0606833f0e0
+status: ready
+set: monitoring
+group: by_confidence
+language: id
+twin: ch-mon-030
+query: Berapa banyak peringatan dengan tingkat kepercayaan tinggi di Taman Nasional Tesso
+  Nilo dalam 30 hari terakhir?
+expected:
+  aoi_ids: '317197'
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-30d}..{run} and alert_confidence in ('high',
+    'highest') | sum(area_ha) where alert_date in {run-30d}..{run} and alert_confidence =
+    'high'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-030 (id-t-001)'
+  pair_id: id-t-001
+  use_cases: UC1
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

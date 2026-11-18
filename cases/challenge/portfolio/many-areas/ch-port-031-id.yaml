@@ -1,0 +1,30 @@
+id: ch-port-031-id
+uid: a68e7c8527d67c17
+status: ready
+set: portfolio
+group: many-areas
+language: id
+twin: ch-port-031
+query: Tampilkan 5 kabupaten yang mengalami deforestasi tertinggi di Provinsi Aceh, tahun
+  2024 dan 2025
+expected:
+  aoi_ids: IDN.1.1_1;IDN.1.2_1;IDN.1.3_1;IDN.1.4_1;IDN.1.5_1;IDN.1.6_1;IDN.1.7_1;IDN.1.8_1;IDN.1.9_1;IDN.1.10_1;IDN.1.11_1;IDN.1.12_1;IDN.1.13_1;IDN.1.14_1;IDN.1.15_1;IDN.1.16_1;IDN.1.17_1;IDN.1.18_1;IDN.1.19_1;IDN.1.20_1;IDN.1.21_1;IDN.1.22_1;IDN.1.23_1
+  dataset_id: '4'
+  start_date: '2024-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2024..2025
+  text: Names five districts ranked by tree cover loss and says whether the ranking covers
+    2024 and 2025 together.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-039); real id user prompt,
+    trace trace 2026-03'
+  pair_id: id-n-039
+  benchmark_type: portfolio
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: all kabupaten and kota of Aceh
+  precedent: ch-port-018; ch-port-003; ch-causal-027
+  language_review: subagent review 2026-11-18; native speaker not yet

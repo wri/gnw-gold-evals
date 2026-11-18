@@ -1,0 +1,22 @@
+id: ch-quant-055-es
+uid: 75799b5bc3bde6e9
+status: ready
+set: quantification
+group: ghg-flux
+language: es
+twin: ch-quant-055
+query: oye y cuanto es el total neto de co2e que sale de (o entra a) los bosques de peru en
+  general, o sea desde siempre
+expected:
+  aoi_ids: PER
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e)
+  figure_claim: '#1 < 0 :: Peru''s forests were a net carbon sink over 2001 to 2025 || Peru''s
+    forests were a net carbon source over 2001 to 2025'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-055 (es-t-015)'
+  pair_id: es-t-015
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

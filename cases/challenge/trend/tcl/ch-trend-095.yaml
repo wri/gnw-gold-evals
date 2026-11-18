@@ -1,0 +1,21 @@
+id: ch-trend-095
+uid: 94345d420450b6be
+status: ready
+set: trend
+group: tcl
+query: how much tree cover was lost on the island of Java from 2016 to 2025? write the trend
+  insight per year
+expected:
+  text: Covers all six provinces of Java and says so, or says which provinces it covered,
+    or asks which provinces are meant; does not present one province as Java.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-trend-095-id (id-n-019);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-019
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Banten; Jakarta Raya; Jawa Barat; Jawa Tengah; Jawa Timur; Yogyakarta
+  precedent: ch-trend-079; ch-quant-003; ch-aoi-091

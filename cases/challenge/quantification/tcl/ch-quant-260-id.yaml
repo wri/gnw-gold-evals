@@ -1,0 +1,27 @@
+id: ch-quant-260-id
+uid: a5ff5c905d0112eb
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-260
+query: berapa deforestasi yang terjadi di riau tahun 2023?
+expected:
+  aoi_ids: IDN.24
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-047); real id user prompt,
+    trace trace 2026-07'
+  pair_id: id-n-047
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Riau (province)
+  precedent: ch-quant-151; ch-causal-005
+  language_review: subagent review 2026-11-18; native speaker not yet

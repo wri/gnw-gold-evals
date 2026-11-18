@@ -1,0 +1,27 @@
+id: ch-quant-241-id
+uid: 6455a065459f2bb2
+status: ready
+set: quantification
+group: tcl-fires
+language: id
+twin: ch-quant-241
+query: berapa hektar karhutla yang terjadi di kalimantan tengah
+expected:
+  aoi_ids: IDN.14
+  dataset_id: '10'
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha)
+  text: Says the figure is tree cover loss from fires, not the total burned area, and states
+    the years it covers.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-017); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-017
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kalimantan Tengah (province)
+  precedent: ch-quant-142; ch-comp-178
+  language_review: subagent review 2026-11-18; native speaker not yet

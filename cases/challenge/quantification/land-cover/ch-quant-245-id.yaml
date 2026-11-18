@@ -1,0 +1,26 @@
+id: ch-quant-245-id
+uid: 5aa970e9c61d4ba7
+status: ready
+set: quantification
+group: land-cover
+language: id
+twin: ch-quant-245
+query: Tutupan lahan di Belitung Indonesia tahun 2024
+expected:
+  aoi_ids: IDN.3.6|IDN.3.6;IDN.3.5
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class = 'Tree cover' | ratio(sum(area_ha) where land_cover_class
+    = 'Tree cover', sum(area_ha))
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-024); real id user prompt,
+    trace trace 2026-04'
+  pair_id: id-n-024
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Belitung (kabupaten, Bangka Belitung)
+  precedent: ch-quant-182
+  language_review: subagent review 2026-11-18; native speaker not yet

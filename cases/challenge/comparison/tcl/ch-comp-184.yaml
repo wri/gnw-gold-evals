@@ -1,0 +1,24 @@
+id: ch-comp-184
+uid: 1af7ace1c38967ad
+status: ready
+set: comparison
+group: tcl
+query: Compare tree cover loss in Ketapang and Kayong Utara districts
+expected:
+  aoi_ids: IDN.12.4;IDN.12.3
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'IDN.12.4' ; sum(area_ha) where aoi_id = 'IDN.12.3'
+  figure_claim: '#1 > #2 :: Ketapang lost more tree cover than Kayong Utara || Kayong Utara
+    lost more tree cover than Ketapang'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-comp-184-id (id-n-041);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-041
+  benchmark_type: comparison
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Ketapang; Kayong Utara (kabupaten, Kalimantan Barat)
+  precedent: ch-comp-150; ch-comp-156

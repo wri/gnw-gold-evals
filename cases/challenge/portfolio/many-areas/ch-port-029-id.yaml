@@ -1,0 +1,28 @@
+id: ch-port-029-id
+uid: b7770fed753acfbb
+status: ready
+set: portfolio
+group: many-areas
+language: id
+twin: ch-port-029
+query: daerah mana di indonesia yang memiliki nilai emisi karbon terbesar?
+expected:
+  dataset_id: 6;4
+  data_pull: 'TRUE'
+  text: Ranks provinces (or says which level it used) by forest-related emissions from the
+    data, names the highest, and says the figure covers emissions from forests or tree cover
+    loss only, not all carbon emissions.
+  figure: max(carbon_gross_emissions_Mg_CO2e) by aoi_id | max(carbon_emissions_MgCO2e) by
+    aoi_id
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-015); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-015
+  benchmark_type: portfolio
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: all provinces of Indonesia
+  precedent: ch-port-003; ch-port-017; ch-quant-168
+  language_review: subagent review 2026-11-18; native speaker not yet
