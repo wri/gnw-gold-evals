@@ -293,7 +293,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         kind="deterministic",
         score_fields=("figure_match_score",),
         run=lambda state, expected, query, dashboard: evaluate_figures(
-            state, expected.expected_figure
+            state, expected.expected_figure, expected.language
         ),
         presumes_pull=True,
     ),

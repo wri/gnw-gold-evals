@@ -6,6 +6,10 @@ expected value therefore mints a new uid; metadata (status, group, notes)
 does not participate, so triage annotations never masquerade as a new
 version of the test.
 
+A case's ``language`` participates when it is not English: it sets how the
+reply's numbers are read, so it changes the score. English is left out of
+the payload, so no uid minted before the field existed changes.
+
 A multi-turn case's uid covers every turn's query and expectations, in order.
 In v2 it also covers each turn's ``deltas``. v1 is frozen and its uids do not,
 so they never change (see ``conversation_uid``).
@@ -23,6 +27,8 @@ import json
 from collections.abc import Iterable, Mapping
 
 UID_LENGTH = 16
+# The languages a case's query can be in. English is the default.
+LANGUAGES = ("en", "es", "id")
 
 
 def normalize_text(value: object) -> str:
@@ -33,24 +39,31 @@ def normalize_text(value: object) -> str:
     return text.strip()
 
 
-def canonical_payload(query: str, expected: Mapping[str, object]) -> str:
+def canonical_payload(
+    query: str, expected: Mapping[str, object], language: str = "en"
+) -> str:
     """Deterministic JSON string a case uid is computed over.
 
     Empty expectations are dropped, so adding an empty key to a case never
-    changes its identity. Key order never matters.
+    changes its identity. Key order never matters. ``language`` is in the
+    payload only when it is not English (see the module doc).
     """
     clean = {key: normalize_text(value) for key, value in expected.items()}
     clean = {key: value for key, value in clean.items() if value}
     payload = {"expected": clean, "query": normalize_text(query)}
+    if language != "en":
+        payload["language"] = language
     return json.dumps(
         payload, sort_keys=True, ensure_ascii=False, separators=(",", ":")
     )
 
 
-def case_uid(query: str, expected: Mapping[str, object]) -> str:
+def case_uid(
+    query: str, expected: Mapping[str, object], language: str = "en"
+) -> str:
     """uid = sha256(canonical payload), truncated to UID_LENGTH hex chars."""
     digest = hashlib.sha256(
-        canonical_payload(query, expected).encode("utf-8")
+        canonical_payload(query, expected, language).encode("utf-8")
     ).hexdigest()
     return digest[:UID_LENGTH]
 

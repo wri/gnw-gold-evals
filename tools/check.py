@@ -24,8 +24,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from goldset.canonical import normalize_text
 from goldset.evaluators.figures import validate as validate_figures
 from goldset.store import (
+    Case,
     build_manifest,
     load_store,
     read_manifest,
@@ -34,6 +36,34 @@ from goldset.store import (
     write_manifest,
 )
 from goldset.templates import validate_templates
+
+
+def twin_problems(cases: list[Case]) -> list[str]:
+    """A case in another language and its English twin must hold the same
+    expectations: the pair's score gap then measures the language alone."""
+    by_id = {case.id: case for case in cases}
+    problems = []
+    for case in cases:
+        if not case.twin:
+            continue
+        twin = by_id.get(case.twin)
+        if twin is None:
+            problems.append(f"{case.id}: twin {case.twin!r} is not in this store")
+        elif twin.language != "en":
+            problems.append(f"{case.id}: twin {case.twin} must be an English case")
+        else:
+            differing = sorted(
+                key
+                for key in case.expected.keys() | twin.expected.keys()
+                if normalize_text(case.expected.get(key))
+                != normalize_text(twin.expected.get(key))
+            )
+            if differing:
+                problems.append(
+                    f"{case.id}: expected differs from its twin {case.twin} in "
+                    f"{differing}"
+                )
+    return problems
 
 
 def main() -> int:
@@ -83,6 +113,8 @@ def main() -> int:
                 print(f"fixed uid: {path} {stored_uid or '(none)'} -> {case.uid}")
             else:
                 problems.append(f"{path}: stored uid {stored_uid!r} != {case.uid}")
+
+    problems += twin_problems([case for _p, case, _u in entries])
 
     ids = [case.id for _p, case, _u in entries]
     duplicates = sorted({i for i in ids if ids.count(i) > 1})

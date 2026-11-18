@@ -101,3 +101,81 @@ def test_load_store_sorted_and_manifest_deterministic(tmp_path):
     assert [c["id"] for c in manifest["cases"]] == ["1-001", "1-002"]
     again = build_manifest([CASE, other], "test")
     assert manifest == again
+
+
+# ------------------------------------------------------- language and twin
+
+
+def test_english_is_the_default_and_leaves_the_uid_and_file_unchanged():
+    from goldset.canonical import case_uid
+    from goldset.store import case_to_dict
+
+    case = Case(id="a", status="ready", group="g", query="q", expected={"x": "1"})
+    assert case.language == "en"
+    assert case.uid == case_uid("q", {"x": "1"}) == "caaa67cd293dfec6"
+    assert "language" not in case_to_dict(case)
+    assert "twin" not in case_to_dict(case)
+
+
+def test_another_language_is_part_of_the_uid_and_round_trips(tmp_path):
+    from goldset.store import read_case, write_case
+
+    english = Case(id="a", status="ready", group="g", query="q", expected={"x": "1"})
+    spanish = Case(id="a-es", status="ready", group="g", query="q",
+                   expected={"x": "1"}, language="es", twin="a")
+    assert spanish.uid != english.uid
+    # The twin is a pointer, not content.
+    assert spanish.uid == Case(id="b", status="ready", group="g", query="q",
+                               expected={"x": "1"}, language="es").uid
+    loaded, stored_uid = read_case(write_case(tmp_path, spanish))
+    assert (loaded.language, loaded.twin, stored_uid) == ("es", "a", spanish.uid)
+
+
+def test_language_and_twin_are_validated():
+    def problems(**fields):
+        base = {"id": "a", "status": "ready", "group": "g", "query": "q"}
+        return Case(**{**base, **fields}).validate()
+
+    assert problems(language="es", twin="b") == []
+    assert "language" in problems(language="fr")[0]
+    assert "names a twin" in problems(twin="b")[0]
+    assert "its own twin" in problems(language="id", twin="a")[0]
+    turns = ({"query": "q1"}, {"query": "q2"})
+    assert "must be in English" in problems(query="", turns=turns, language="es")[0]
+
+
+def test_a_twin_must_be_an_english_case_with_the_same_expectations():
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+    from check import twin_problems
+
+    def case(id, expected, language="en", twin=""):
+        return Case(id=id, status="ready", group="g", query=id, expected=expected,
+                    language=language, twin=twin)
+
+    english = case("a", {"aoi_id": "BRA", "figure": "sum(area_ha)"})
+    same = case("a-es", {"figure": "sum(area_ha) ", "aoi_id": "BRA"}, "es", "a")
+    assert twin_problems([english, same]) == []
+    differs = case("a-id", {"aoi_id": "BRA", "figure": "mean(area_ha)"}, "id", "a")
+    assert "['figure']" in twin_problems([english, differs])[0]
+    assert "not in this store" in twin_problems([same])[0]
+    chained = case("a-id", same.expected, "id", "a-es")
+    assert "must be an English case" in twin_problems([english, same, chained])[0]
+
+
+def test_the_case_language_reaches_figure_match(monkeypatch):
+    from goldset import registry
+    from goldset.adapter import case_to_expected
+
+    case = Case(id="a-id", status="ready", group="g", query="q",
+                expected={"figure": "sum(area_ha)"}, language="id", twin="a")
+    seen = {}
+    monkeypatch.setattr(
+        registry, "evaluate_figures",
+        lambda state, figure, language: seen.update(language=language) or {},
+    )
+    spec = next(s for s in registry.EVALUATORS if s.name == "figures")
+    spec.run({}, case_to_expected(case), "q", None)
+    assert seen == {"language": "id"}

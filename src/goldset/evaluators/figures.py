@@ -47,6 +47,7 @@ from typing import Any
 
 import httpx
 
+from goldset.canonical import LANGUAGES
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
 from goldset.evaluators.chart_numeric import format_number
 
@@ -496,7 +497,6 @@ def stated_numbers(answer: str, language: str = "en") -> list[Stated]:
 # that show a convention (traces to 2026-10-20): Spanish 657 dot-decimal to
 # 26 comma-decimal; Indonesian 135 comma-decimal to 12 dot-decimal.
 
-LANGUAGES = ("en", "es", "id")
 _USUAL_DECIMAL_MARK = {"es": ".", "id": ","}
 
 # "billón" is the long-scale billion, 10^12. "mil" is Spanish only: in an

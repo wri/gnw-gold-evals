@@ -26,6 +26,14 @@ perform on prompts like X?" with a **pass rate per cohort**. Plan of record:
   against `TARGETS.yml`. A case passes when most of its attempts were right
   (AJ, 2026-10-28; before, when each check passed on most attempts), so
   rates in reports written before then are not comparable point for point.
+- **Questions in other languages are a facet, not a set.** A Spanish or
+  Indonesian case carries `language: es` or `language: id` and sits in its
+  type's set, beside the English cases. The language sets how `figure_match`
+  reads the reply's numbers, so it is part of the uid (English, the default,
+  is not written and changes no uid). `twin` names the English case that asks
+  the same question; `tools/check.py` fails if the pair's expectations
+  differ, so the pair's score gap measures the language alone. `twin` is
+  never hashed.
 - **Every case still has a defined correct behaviour**, including the ones
   expected to fail today. `notes.behaviour` records it: `select` (right
   AOI(s) chosen), `nudge` (asks with the right options), `clarify` /
