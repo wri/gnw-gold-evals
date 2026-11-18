@@ -79,6 +79,7 @@ from goldset.benchmark import (  # noqa: E402
     USE_CASES,
     Benchmark,
     load_benchmark,
+    load_paired,
     manifest_sha,
 )
 from goldset.buckets import (  # noqa: E402
@@ -573,10 +574,10 @@ def main() -> int:
     cases = {uid: c for _p, c, uid in load_store(root / bench.source["cases_dir"])}
     paired = None
     if bench.pairs_with:
-        paired_path = manifest.parent / f"{bench.pairs_with}.json"
-        if not paired_path.exists():
-            raise SystemExit(f"pairs_with {bench.pairs_with!r}: no {paired_path}")
-        paired = load_benchmark(paired_path)
+        try:
+            paired = load_paired(bench.pairs_with, manifest.parent)
+        except FileNotFoundError as exc:
+            raise SystemExit(f"pairs_with {bench.pairs_with!r}: {exc}")
     page = build_page(run, bench, cases, artifacts, bases, paired)
 
     out = root / "results" / "benchmark" / "pages" / f"{run['run_id']}.json"

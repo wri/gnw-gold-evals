@@ -293,6 +293,18 @@ def load_benchmark(path: Path) -> Benchmark:
     return bench
 
 
+def load_paired(pairs_with: str, manifests_dir: Path) -> Benchmark:
+    """The ``pairs_with`` version's manifest, read from ``manifests_dir``.
+
+    Raises ``FileNotFoundError`` when it is missing and ``ValueError`` when
+    it is invalid; each caller decides whether that stops or is reported.
+    """
+    path = Path(manifests_dir) / f"{pairs_with}.json"
+    if not path.exists():
+        raise FileNotFoundError(f"{path} does not exist")
+    return load_benchmark(path)
+
+
 def render(data: dict[str, Any]) -> str:
     """Deterministic serialisation, so regenerating a manifest from the
     same inputs is a byte-identical no-op."""

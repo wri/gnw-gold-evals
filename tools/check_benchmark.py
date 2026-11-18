@@ -26,9 +26,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from benchmark_sample import stages_for  # noqa: E402
+from benchmark_sample import live_facets  # noqa: E402
 
-from goldset.benchmark import Benchmark, load_benchmark  # noqa: E402
+from goldset.benchmark import Benchmark, load_benchmark, load_paired  # noqa: E402
 from goldset.store import Case, load_store  # noqa: E402
 
 
@@ -42,13 +42,9 @@ def pair_problems(
     # Without the paired version, membership there cannot be judged.
     paired_version_read = True
     if bench.pairs_with:
-        other = manifests_dir / f"{bench.pairs_with}.json"
         try:
-            twin_members |= load_benchmark(other).member_uids
-        except FileNotFoundError:
-            paired_version_read = False
-            problems.append(f"pairs_with {bench.pairs_with!r}: {other} does not exist")
-        except ValueError as exc:
+            twin_members |= load_paired(bench.pairs_with, manifests_dir).member_uids
+        except (FileNotFoundError, ValueError) as exc:
             paired_version_read = False
             problems.append(f"pairs_with {bench.pairs_with!r}: {exc}")
     by_id = {case.id: case for case in by_uid.values()}
@@ -103,10 +99,8 @@ def member_problems(
             continue
         if case.status != "ready":
             problems.append(f"{m.id} ({m.uid}): status {case.status!r}, not ready")
-        live = {"id": case.id, "set": case.set, "cohort": case.group,
-                "difficulty": case.notes.get("difficulty", ""),
-                "stages": tuple(stages_for(case))}
-        frozen = {"id": m.id, "set": m.set, "cohort": m.cohort,
+        live = live_facets(case)
+        frozen = {"uid": m.uid, "id": m.id, "set": m.set, "cohort": m.cohort,
                   "difficulty": m.difficulty, "stages": m.stages}
         drift = [k for k in live if live[k] != frozen[k]]
         if drift:

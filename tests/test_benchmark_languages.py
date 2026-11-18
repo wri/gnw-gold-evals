@@ -207,7 +207,7 @@ def test_a_frozen_companion_is_never_rewritten(tmp_path, monkeypatch, capsys):
 def test_a_missing_paired_version_stops_the_build(tmp_path, monkeypatch):
     setup(tmp_path)
     monkeypatch.chdir(tmp_path)
-    with pytest.raises(SystemExit, match="--pairs-with t: no benchmarks"):
+    with pytest.raises(SystemExit, match="--pairs-with t: .*does not exist"):
         run_main(tmp_path, "--pairs-with", "t")
     assert not Path("benchmarks/t-languages.json").exists()
 

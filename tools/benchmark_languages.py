@@ -40,7 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from benchmark_from_sheet import member_type  # noqa: E402
-from benchmark_sample import stages_for  # noqa: E402
+from benchmark_sample import live_facets  # noqa: E402
 
 from goldset.benchmark import (  # noqa: E402
     QUERY_TYPES,
@@ -50,6 +50,7 @@ from goldset.benchmark import (  # noqa: E402
     Member,
     from_dict,
     load_benchmark,
+    load_paired,
     render,
 )
 from goldset.store import Case, load_store, read_manifest, twin_problem  # noqa: E402
@@ -65,12 +66,6 @@ def type_of(case: Case) -> str:
     if case.set not in SET_TYPES:
         raise SystemExit(f"{case.id}: no query type measures the set {case.set!r}")
     return SET_TYPES[case.set]
-
-
-def live_facets(case: Case) -> dict:
-    return {"uid": case.uid, "id": case.id, "set": case.set, "cohort": case.group,
-            "difficulty": case.notes.get("difficulty", ""),
-            "stages": tuple(stages_for(case))}
 
 
 def build(cases_dir: Path, version: str, paired: Benchmark | None,
@@ -164,10 +159,10 @@ def main(argv: list[str] | None = None) -> int:
     pairs_with = args.pairs_with or kept
     paired = None
     if pairs_with:
-        paired_path = args.out_dir / f"{pairs_with}.json"
-        if not paired_path.exists():
-            raise SystemExit(f"--pairs-with {pairs_with}: no {paired_path}")
-        paired = load_benchmark(paired_path)
+        try:
+            paired = load_paired(pairs_with, args.out_dir)
+        except FileNotFoundError as exc:
+            raise SystemExit(f"--pairs-with {pairs_with}: {exc}")
     created = existing.raw.get("created") if existing else date.today().isoformat()
     data = build(args.cases_dir, args.version, paired, created)
     if existing:

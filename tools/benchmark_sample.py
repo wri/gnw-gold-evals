@@ -59,6 +59,13 @@ def stages_for(case: Case) -> list[str]:
     return [s for s in STAGE_ORDER if s in exercised]
 
 
+def live_facets(case: Case) -> dict:
+    """The facets a member freezes, as the live case has them now."""
+    return {"uid": case.uid, "id": case.id, "set": case.set, "cohort": case.group,
+            "difficulty": case.notes.get("difficulty", ""),
+            "stages": tuple(stages_for(case))}
+
+
 def eligible(cases: list[Case], set_name: str) -> list[Case]:
     allowed = DIFFICULTY_FILTER.get(set_name)
     # Other languages join through the languages companion, not the sample.
