@@ -329,3 +329,28 @@ def read_manifest(root: Path) -> dict | None:
     if not path.exists():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def expected_differences(case: Case, twin: Case) -> list[str]:
+    """The expected keys on which two cases disagree."""
+    return sorted(
+        key
+        for key in case.expected.keys() | twin.expected.keys()
+        if normalize_text(case.expected.get(key))
+        != normalize_text(twin.expected.get(key))
+    )
+
+
+def twin_problem(case: Case, by_id: dict[str, Case]) -> str:
+    """Why the twin a case names is not a valid other half of its pair, or
+    "". The twin must exist, be an English case and hold the same
+    expectations, so the pair's score gap measures the language alone."""
+    twin = by_id.get(case.twin)
+    if twin is None:
+        return f"twin {case.twin!r} is not in the store"
+    if twin.language != "en":
+        return f"twin {case.twin} must be an English case"
+    differing = expected_differences(case, twin)
+    if differing:
+        return f"expected differs from its twin {case.twin} in {differing}"
+    return ""

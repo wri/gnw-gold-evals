@@ -28,9 +28,13 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from check import expected_differences  # noqa: E402
-
-from goldset.store import Case, case_path, load_store, write_case  # noqa: E402
+from goldset.store import (  # noqa: E402
+    Case,
+    case_path,
+    expected_differences,
+    load_store,
+    write_case,
+)
 
 
 def require_pair(source: Case, target: Case) -> None:

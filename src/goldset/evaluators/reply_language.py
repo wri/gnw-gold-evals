@@ -41,7 +41,7 @@ import re
 import unicodedata
 from typing import Any
 
-from goldset.canonical import LANGUAGES
+from goldset.canonical import LANGUAGES, require_language
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
 
 # The leading language needs this many function words. Fewer is a reply too
@@ -166,8 +166,7 @@ def evaluate_reply_language(
     not take a ``language``; its expected language is unknown, so it scores
     ``null`` with a reason.
     """
-    if language not in LANGUAGES:
-        raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
+    require_language(language)
     result: dict[str, Any] = {
         "reply_language_match_score": None,
         "reply_language_match_reason": None,

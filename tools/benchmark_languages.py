@@ -20,8 +20,9 @@ Members, from the ``ready`` cases of the store:
   because a Spanish and an Indonesian case can share one twin.
 
 A pair with a case that is not ``ready`` is left out and listed under
-``sampling.excluded``. A case in another language without a twin, or whose
-expectations differ from its twin's, stops the build. Re-running over an
+``sampling.excluded``, and so is a case in another language that names no
+twin. A twin that is missing from the store, is not English or holds other
+expectations (``goldset.store.twin_problem``) stops the build. Re-running over an
 existing draft keeps its creation date, errata and ``pairs_with`` (a flag
 that names another version stops the run). A frozen manifest is never
 rewritten.
@@ -40,7 +41,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from benchmark_from_sheet import member_type  # noqa: E402
 from benchmark_sample import stages_for  # noqa: E402
-from check import expected_differences  # noqa: E402
 
 from goldset.benchmark import (  # noqa: E402
     QUERY_TYPES,
@@ -52,7 +52,7 @@ from goldset.benchmark import (  # noqa: E402
     load_benchmark,
     render,
 )
-from goldset.store import Case, load_store, read_manifest  # noqa: E402
+from goldset.store import Case, load_store, read_manifest, twin_problem  # noqa: E402
 
 SET_TYPES = {name: t["key"] for t in QUERY_TYPES for name in t["sets"]}
 
@@ -65,23 +65,6 @@ def type_of(case: Case) -> str:
     if case.set not in SET_TYPES:
         raise SystemExit(f"{case.id}: no query type measures the set {case.set!r}")
     return SET_TYPES[case.set]
-
-
-def english_twin(native: Case, by_id: dict[str, Case]) -> Case:
-    twin = by_id.get(native.twin)
-    if twin is None:
-        raise SystemExit(
-            f"{native.id}: twin {native.twin or '(none)'!r} is not in the store"
-        )
-    if twin.language != "en":
-        raise SystemExit(f"{native.id}: twin {twin.id} must be an English case")
-    differing = expected_differences(native, twin)
-    if differing:
-        raise SystemExit(
-            f"{native.id}: expected differs from its twin {twin.id} in "
-            f"{differing}; run tools/twin_case.py"
-        )
-    return twin
 
 
 def live_facets(case: Case) -> dict:
@@ -100,7 +83,15 @@ def build(cases_dir: Path, version: str, paired: Benchmark | None,
     for native in sorted(cases, key=lambda c: c.id):
         if native.language == "en":
             continue
-        twin = english_twin(native, by_id)
+        if not native.twin:
+            excluded.append({"id": native.id, "twin": "", "status": native.status,
+                             "reason": "names no twin"})
+            continue
+        problem = twin_problem(native, by_id)
+        if problem:
+            hint = "; run tools/twin_case.py" if "differs" in problem else ""
+            raise SystemExit(f"{native.id}: {problem}{hint}")
+        twin = by_id[native.twin]
         not_ready = [c for c in (native, twin) if c.status != "ready"]
         if not_ready:
             excluded.append({

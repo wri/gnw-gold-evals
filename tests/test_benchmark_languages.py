@@ -141,7 +141,6 @@ def test_a_pair_that_is_not_ready_is_excluded(tmp_path):
 
 
 @pytest.mark.parametrize("override, needle", [
-    ({"es-1": case("es-1", "¿Cuánto?", LOSS, "es")}, "twin '.none.' is not in"),
     ({"es-1": case("es-1", "¿Cuánto?", LOSS, "es", "gone")}, "twin 'gone' is not in"),
     ({"es-1": case("es-1", "¿Cuánto?", LOSS, "es", "id-1")}, "must be an English"),
     ({"es-1": case("es-1", "¿Cuánto?", {"dataset_id": "9"}, "es", "en-1")},
@@ -155,6 +154,16 @@ def test_bad_pairs_stop_the_build(tmp_path, override, needle):
     root, _made, paired = setup(tmp_path, cases(**override))
     with pytest.raises(SystemExit, match=needle):
         bl.build(root, "t-languages", paired, "2026-11-18")
+
+
+def test_a_case_without_a_twin_is_excluded_not_fatal(tmp_path):
+    made = cases(**{"es-1": case("es-1", "¿Cuánto?", LOSS, "es")})
+    root, made, paired = setup(tmp_path, made)
+    data = bl.build(root, "t-languages", paired, "2026-11-18")
+    assert {"id": "es-1", "twin": "", "status": "ready",
+            "reason": "names no twin"} in data["sampling"]["excluded"]
+    assert "es-1" not in [m["id"] for m in data["members"]]
+    assert "es-2" in [m["id"] for m in data["members"]]
 
 
 def run_main(tmp_path, *extra):

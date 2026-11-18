@@ -31,6 +31,12 @@ UID_LENGTH = 16
 LANGUAGES = ("en", "es", "id")
 
 
+def require_language(language: str) -> None:
+    """Raise for a language no case can be in."""
+    if language not in LANGUAGES:
+        raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
+
+
 def normalize_text(value: object) -> str:
     """Normalise a value for hashing: str, unified newlines, stripped."""
     if value is None:

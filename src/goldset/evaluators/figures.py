@@ -47,7 +47,7 @@ from typing import Any
 
 import httpx
 
-from goldset.canonical import LANGUAGES
+from goldset.canonical import require_language
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
 from goldset.evaluators.chart_numeric import format_number
 from goldset.evaluators.reply_language import detect_language
@@ -458,10 +458,11 @@ def stated_numbers(
     number whose shape reads two ways, when the reply is known to follow
     another language's habit. English cases ignore it.
     """
-    if language not in LANGUAGES:
-        raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
+    require_language(language)
     if language != "en":
-        return _stated_numbers_local(answer or "", language, usual_mark)
+        # A decomposed accent would cut "millón" short at the "o".
+        answer = unicodedata.normalize("NFC", answer or "")
+        return _stated_numbers_local(answer, language, usual_mark)
     found = []
     for m in _NUMBER.finditer(answer or ""):
         whole, decimals, percent = m[1], m[2] or "", m[3]
@@ -586,10 +587,10 @@ def _decimal_mark(number: str) -> str | None:
 
 
 def _read(number: str, decimal: str) -> tuple[float, float] | None:
-    """(value, step of the last stated digit) with ``decimal`` as the decimal
-    mark; None when the grouping is not in threes."""
+    """(value, step of the last stated digit) with ``decimal`` ("." or ",")
+    as the decimal mark; None when the grouping is not in threes."""
     group = "," if decimal == "." else "."
-    whole, _, fraction = number.partition(decimal) if decimal else (number, "", "")
+    whole, _, fraction = number.partition(decimal)
     if group in fraction:
         return None
     head, *groups = whole.lstrip("-").split(group)
@@ -640,8 +641,7 @@ def _reply_decimal_mark(matches: list[re.Match[str]], language: str) -> str | No
 def _stated_numbers_local(
     answer: str, language: str, usual_mark: str | None = None
 ) -> list[Stated]:
-    # A decomposed accent would cut "millón" short at the "o".
-    answer = unicodedata.normalize("NFC", answer)
+    """``stated_numbers`` for a non-English case; ``answer`` is NFC."""
     matches = list(_LOCAL_NUMBER.finditer(answer))
     reply_mark = _reply_decimal_mark(matches, language)
     found = []
@@ -799,8 +799,7 @@ def evaluate_figures(
     column it lacks). ``0.0`` when a computable figure is missing from the
     reply; ``1.0`` when every computable one is there.
     """
-    if language not in LANGUAGES:
-        raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
+    require_language(language)
     result: dict[str, Any] = {
         "figure_match_score": None,
         "figure_match_reason": None,
@@ -814,15 +813,16 @@ def evaluate_figures(
         result["figure_match_reason"] = "no pulled table could be read; abstained"
         return result
     answer = extract_final_answer_text(agent_state.get("messages", []))
-    if language != "en":
-        # A decomposed accent would split a word for the zero-word search too.
+    if language == "en":
+        stated = stated_numbers(answer)
+    else:
+        # Normalised here, once, for the zero-word search as well: a
+        # decomposed accent would split a word there too.
         answer = unicodedata.normalize("NFC", answer)
-    # Horizon may answer a Spanish or Indonesian case in English, and an
-    # English reply writes "1,209" for 1209 whatever the case language.
-    usual_mark = None
-    if language != "en" and detect_language(answer)[0] == "en":
-        usual_mark = "."
-    stated = stated_numbers(answer, language, usual_mark=usual_mark)
+        # Horizon may answer a Spanish or Indonesian case in English, and an
+        # English reply writes "1,209" for 1209 whatever the case language.
+        usual_mark = "." if detect_language(answer)[0] == "en" else None
+        stated = _stated_numbers_local(answer, language, usual_mark)
     parts, scored, missed = [], 0, 0
     for figure in figures:
         if figure.ref:
