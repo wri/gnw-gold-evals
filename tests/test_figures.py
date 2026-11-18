@@ -206,6 +206,10 @@ def test_reads_spanish_replies_in_either_convention():
         ("3,4 triliun ton", "id", "3,4 triliun", 3.4e12),
         ("sebesar 4,9 persen", "id", "4,9persen", 4.9),
         ("18.136 km²", "id", "18.136 km²", 1813600),
+        ("un 12,5 porciento", "es", "12,5porciento", 12.5),
+        ("unos 25 kilómetros cuadrados", "es", "25 kilómetros cuadrados", 2500),
+        ("seluas 25 kilometer persegi", "id", "25 kilometer persegi", 2500),
+        ("1,2 millo\u0301n de hectáreas", "es", "1,2 millón", 1.2e6),
     ],
 )
 def test_reads_local_scale_and_percent_words(answer, language, text, value):
@@ -253,11 +257,26 @@ def test_a_zero_figure_may_be_stated_in_local_words(pulled):
         ("No se registró ninguna pérdida en el territorio.", "es"),
         ("Tidak ada kehilangan tutupan pohon di wilayah ini.", "id"),
         ("No loss was recorded in the territory.", "id"),
+        ("No se han registrado alertas ni perdida de bosque.", "es"),
+        ("No hay cambios en la cobertura.", "es"),
+        ("Tidak ditemukan adanya kehilangan tutupan pohon.", "id"),
+        ("Belum ada peringatan di wilayah ini.", "id"),
     ]:
         state, tables = _state(answer, empty_year)
         pulled(tables)
         result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
         assert result["figure_match_score"] == 1.0, answer
+    # Sentences that use a zero word but do not state a zero figure.
+    for answer, language in [
+        ("La meta es deforestación cero; sin embargo las alertas aumentaron.", "es"),
+        ("Más que en ningún otro año; sin datos de pérdida para 2021.", "es"),
+        ("Komitmen emisi nol bersih; tidak ada data kehilangan.", "id"),
+        ("Dihitung tanpa memperhitungkan emisi.", "id"),
+    ]:
+        state, tables = _state(answer, empty_year)
+        pulled(tables)
+        result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+        assert result["figure_match_score"] == 0.0, answer
 
 
 def test_figure_match_passes_rounding_and_fails_a_wrong_figure(pulled):

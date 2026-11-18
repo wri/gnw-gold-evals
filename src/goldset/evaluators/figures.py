@@ -40,6 +40,7 @@ from __future__ import annotations
 
 import math
 import re
+import unicodedata
 from dataclasses import dataclass, field
 from functools import lru_cache
 from typing import Any
@@ -512,10 +513,12 @@ _LOCAL_UNITS = (*_UNITS, "hectárea", "hectáreas", "hectarea", "hectareas",
                 "hektar", "hektare", "tonelada", "toneladas", "ton")
 _LOCAL_NUMBER = re.compile(
     r"(?<![\w.])(-?\d+(?:[.,]\d+)*)"
-    r"\s*(%|percent|per cent|por ciento|persen)?"
-    r"\s*(mil\s+millones|[^\W\d_][^\W_]*)?",
+    r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen)?"
+    r"\s*(mil\s+millones|kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
+    r"|[^\W\d_][^\W_]*)?",
     re.I,
 )
+_KM2_WORDS = re.compile(r"kil[oó]metros? cuadrados?|(?:kilometer|km) persegi")
 
 
 def _decimal_mark(number: str) -> str | None:
@@ -564,6 +567,8 @@ def _reply_decimal_mark(numbers: list[str]) -> str | None:
 
 
 def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
+    # A decomposed accent would cut "millón" short at the "o".
+    answer = unicodedata.normalize("NFC", answer)
     matches = list(_LOCAL_NUMBER.finditer(answer))
     reply_mark = _reply_decimal_mark([m[1] for m in matches])
     found = []
@@ -571,7 +576,7 @@ def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
         number, percent = m[1], m[2]
         word = " ".join((m[3] or "").lower().split())
         scale = _LOCAL_SCALES.get(word, 1.0)
-        if word.startswith(_KM2):
+        if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
             scale = 100.0  # km² to hectares
         measured = scale != 1.0 or word in _LOCAL_UNITS
         plain = "." not in number and "," not in number
@@ -633,17 +638,24 @@ _ZERO_WORDS = re.compile(
     r"(loss|alerts?|change|gain|emissions|disturbances?|deforestation))\b",
     re.I,
 )
+# A bare "cero" or "nol" is not enough: "deforestación cero" and "emisi nol
+# bersih" name a target, and "sin datos de pérdida" reports no data, not zero.
 _LOCAL_ZERO_WORDS = {
     "es": re.compile(
-        r"\b(cero|ningún|ningun|ninguna|ninguno|(?:sin|no hubo|no se registr\w+) "
-        r"(?:[\w-]+ ){0,2}(pérdidas?|alertas?|cambios?|ganancias?|emisiones|"
-        r"perturbaci\w+|deforestación))\b",
+        r"\b(?:cero (?:hect[áa]reas|ha)|(?:no (?:se )?(?:ha |han )?"
+        r"(?:registr|detect|observ|report|encontr|identific)\w+|no hay|no existen?"
+        r"|no ha habido|no hubo|tampoco hubo|no presenta|sin|ning[úu]n|ningun[ao]"
+        r"|cero) (?:(?!embargo|contar|incluir|datos)[\w-]+ ){0,2}"
+        r"(?:p[ée]rdidas?|alertas?|cambios?|ganancias?|emisiones|perturbaci\w+"
+        r"|deforestaci[óo]n))\b",
         re.I,
     ),
     "id": re.compile(
-        r"\b(nol|nihil|(?:tidak ada|tanpa|tidak terdapat) (?:[\w-]+ ){0,2}"
-        r"(kehilangan|peringatan|perubahan|penambahan|emisi|gangguan|"
-        r"deforestasi))\b",
+        r"\b(?:nihil|nol (?:hektare?|ha|peringatan)|(?:tidak ada|tak ada|belum ada"
+        r"|tanpa|tidak terdapat|tidak ditemukan|tidak terdeteksi|tidak tercatat"
+        r"|tidak terjadi|tidak mengalami) (?:(?!data|memperhitungkan)[\w-]+ ){0,2}"
+        r"(?:kehilangan|peringatan|perubahan|penambahan|emisi|gangguan"
+        r"|deforestasi))\b",
         re.I,
     ),
 }
