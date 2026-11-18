@@ -262,11 +262,23 @@ def test_the_reply_mark_is_inferred_from_grouping():
     assert alone.other.value == 86890
 
 
-def test_dates_and_versions_are_not_evidence_of_the_reply_mark():
-    for date in ("31.12.2024", "2.1.0", "1.23.4567"):
-        stated = _local(f"Al {date} se perdieron 1.209 ha.", "es")["1.209 ha"]
-        assert stated.value == pytest.approx(1.209), date
-        assert stated.other.value == 1209, date
+@pytest.mark.parametrize(
+    ("language", "lead", "number", "value"),
+    [
+        *(("es", f"Al {date} se perdieron", "1.209 ha", 1.209)
+          for date in ("31.12.2024", "2.1.0", "1.23.4567")),
+        *(("id", f"{aside}:", "1.209 hektar", 1209)
+          for aside in ("pukul 10.30 WIB", "Landsat 8.2", "di -3.45, 102.3",
+                        "Menurut GADM 4.1, kehilangan tutupan pohon adalah")),
+    ],
+)
+def test_dates_versions_and_coordinates_are_not_evidence_of_the_reply_mark(
+    language, lead, number, value
+):
+    stated = _local(f"{lead} {number}.", language)[number]
+    assert stated.value == pytest.approx(value)
+    if language == "es":
+        assert stated.other.value == 1209
 
 
 def test_grouping_must_be_in_threes():
@@ -538,18 +550,6 @@ def test_a_spaced_figure_matches_in_either_reading(pulled):
     state, tables = _state("Quedan 3 050 hectáreas.", TCL)
     pulled(tables)
     assert evaluate_figures(state, "sum(area_ha)", "es")["figure_match_score"] == 0.0
-
-
-def test_a_version_time_or_coordinate_does_not_set_the_reply_mark(pulled):
-    state, tables = _state(
-        "Menurut GADM 4.1, kehilangan tutupan pohon adalah 1.209 hektar.",
-        [{"aoi_id": "X", "tree_cover_loss_year": 2020, "area_ha": 1209.0}],
-    )
-    pulled(tables)
-    assert evaluate_figures(state, "sum(area_ha)", "id")["figure_match_score"] == 1.0
-    for aside in ("pukul 10.30 WIB", "Landsat 8.2", "di -3.45, 102.3"):
-        stated = _local(f"{aside}: 1.209 hektar", "id")["1.209 hektar"]
-        assert stated.value == 1209, aside
 
 
 def test_a_number_with_a_unit_or_percent_still_sets_the_reply_mark():

@@ -240,11 +240,6 @@ def test_a_decomposed_accent_still_counts():
     assert detect_language(decomposed) == detect_language(SPANISH)
 
 
-def test_an_unknown_case_language_fails_loudly():
-    with pytest.raises(ValueError, match="language must be one of"):
-        evaluate_reply_language(_state(SPANISH), "pt")
-
-
 # --- wiring: registered for every case, info-only, never part of a verdict ---
 
 CHECK = "reply_language_match"

@@ -166,16 +166,22 @@ def test_a_twin_must_be_an_english_case_with_the_same_expectations():
 
 
 def test_the_case_language_reaches_figure_match(monkeypatch):
+    from types import SimpleNamespace
+
     from goldset import registry
     from goldset.adapter import case_to_expected
+    from goldset.evaluators import figures
 
+    # Dot-grouped "1.209" is 1209 only when the case's language is read.
+    monkeypatch.setattr(
+        figures, "_fetch", lambda url: (("area_ha",), ((1209.0,),))
+    )
+    state = {
+        "messages": [SimpleNamespace(content="Kehilangan tutupan pohon 1.209 hektar.")],
+        "statistics": [{"source_url": "https://analytics/0", "data": {}}],
+    }
     case = Case(id="a-id", status="ready", group="g", query="q",
                 expected={"figure": "sum(area_ha)"}, language="id", twin="a")
-    seen = {}
-    monkeypatch.setattr(
-        registry, "evaluate_figures",
-        lambda state, figure, language: seen.update(language=language) or {},
-    )
     spec = next(s for s in registry.EVALUATORS if s.name == "figures")
-    spec.run({}, case_to_expected(case), "q", None)
-    assert seen == {"language": "id"}
+    result = spec.run(state, case_to_expected(case), "q", None)
+    assert result["figure_match_score"] == 1.0
