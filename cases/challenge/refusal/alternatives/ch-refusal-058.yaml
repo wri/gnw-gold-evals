@@ -1,0 +1,18 @@
+id: ch-refusal-058
+uid: 0bddc7a71abf5024
+status: ready
+set: refusal
+group: alternatives
+query: How much tree cover was lost around logging roads in the Central African Republic?
+expected:
+  text: Says there is no logging road data. Offers tree cover loss attributed to logging in
+    the driver data, or logging concession areas, without presenting either as loss along
+    roads.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Sep 2026: logging roads'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,18 @@
+id: ch-refusal-053
+uid: fd1bf0e052442e2e
+status: ready
+set: refusal
+group: alternatives
+query: Recent conversion of flooded grasslands and savannas in the Pantanal
+expected:
+  text: Offers land cover change from 2015 to 2024 (for example wetland, short vegetation
+    and cropland classes) or natural grassland extent, rather than only summarising published
+    research.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Sep 2026: answered from research only'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

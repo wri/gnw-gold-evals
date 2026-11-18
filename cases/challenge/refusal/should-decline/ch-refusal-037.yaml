@@ -1,0 +1,17 @@
+id: ch-refusal-037
+uid: 493577ce5acb5e7f
+status: ready
+set: refusal
+group: should-decline
+query: Tampilkan citra satelit Lombok Timur tahun 2001
+expected:
+  text: Says Sentinel-2 imagery starts in 2015 and there is none for 2001, and does not show
+    other imagery as if it were from 2001.
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: beyond-coverage
+  priority: P1
+  lineage: 'traces Sep 2026: imagery for 2001'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

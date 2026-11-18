@@ -1,0 +1,17 @@
+id: ch-refusal-055
+uid: aeba3b15f8744e9a
+status: ready
+set: refusal
+group: alternatives
+query: How much has Kigali expanded since 2015?
+expected:
+  text: Offers the built-up land class in land cover change from 2015 to 2024, and says it
+    shows the start and end states only.
+notes:
+  difficulty: easy
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: urban expansion via land cover built-up
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

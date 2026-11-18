@@ -432,3 +432,57 @@ the review doc ("BENCHMARK draft-4 critical review", claude.ai artifact
 
 Each edited case records the change in `notes.review` and stamps
 `notes.expectations` with "draft-5 review 2026-10-27".
+
+## Batch 6: the `refusal` set
+
+79 prompts (`cases/challenge/refusal/<cohort>/`, ids `ch-refusal-001..079`)
+that measure how the agent declines. Built 2026-11-06 from production traces
+(external users, August to November 2026) where the agent answered something
+it should have declined, offered a poor or wrong alternative, or declined
+something it can do. Prompts are paraphrased from those traces (this repo is
+public, so no user wording, names or trace ids are stored here); per-row
+lineage is in `seeds/challenge-refusal-v1.csv`. Cohorts follow the product
+priorities set on 2026-11-06:
+
+| cohort | n | priority | what passes |
+|---|---|---|---|
+| should-decline | 45 | P1 | says plainly what is not available and gives no figure for it (families: no-data, forecast-opinion, invented-estimate, verdict, beyond-coverage, pushback) |
+| alternatives | 15 | P2 | declines and offers the right alternative, described correctly (dataset and imagery families) |
+| should-answer | 10 | P3 | does the analysis or shows the imagery instead of declining |
+| app-help | 9 | P1/P3 | gives UI steps only for what the app has (verified against project-zeno-next main), and says so when it has no such feature |
+
+Behaviours (`notes.behaviour`):
+
+- `decline`: state the gap plainly, give no figure for it, and do not run a
+  substitute analysis unasked (`forbidden_tools: pull_data;generate_insights`
+  where set). Published research may be mentioned only when labelled as
+  research, never as Global Nature Watch data.
+- `decline-offer`: as `decline`, plus name the right alternative and do not
+  describe it as measuring the thing asked for.
+- `answer`: do it. These rows score retrieval like the numeric sets.
+- `guide`: UI steps for features on production only; never invent a menu or
+  button.
+
+Scoring decisions and gaps:
+
+- `scope: refuse;suggest` only means "no data pull". An answer written from
+  general knowledge or blog search with no pull also classifies as `refuse`,
+  so `text` carries the P1 judgement on every decline row.
+- `text` is judged (Haiku) on 76 of the 79 rows. Seven `should-answer` data
+  rows also carry deterministic `aoi_ids`, `dataset_id` and pull checks, and
+  the 2 imagery rows carry `aoi_ids`. `ch-refusal-032` (a concession named in
+  the data) carries `dataset_id` and pull checks but no `aoi_ids`. All
+  `aoi_ids` were verified against prod `/api/aois` on 2026-11-06.
+- There is no required-tool check, so the imagery rows rely on `text`.
+- `forbidden_tools` on multi-turn rows would see turn 1's calls, so the five
+  pushback rows score `text` per turn only.
+- `ch-refusal-035` (tree cover loss in 2026) becomes answerable when the
+  2026 data is released; retire or rewrite it then.
+- The app-help expectations follow project-zeno-next main at e250c300.
+  Re-verify them when the Areas panel, the chart Download menu or thread
+  sharing changes.
+
+First use: a local `main` vs local branch pair to test a rewritten
+`capabilities` skill in project-zeno (same commit base, same stack, same
+`--trials`). Only the canonical series (prod, default profile, 3 trials) is
+published.

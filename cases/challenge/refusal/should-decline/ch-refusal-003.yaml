@@ -1,0 +1,18 @@
+id: ch-refusal-003
+uid: 9980492b9d21d665
+status: ready
+set: refusal
+group: should-decline
+query: Did drought cause the spikes in fire-related tree cover loss in Madagascar?
+expected:
+  text: Says there is no drought or weather data, so it cannot say whether drought caused
+    any spike. If it shows tree cover loss due to fires, it does not attribute any year's
+    spike to drought or name drought years.
+notes:
+  difficulty: hard
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Oct 2026: drought years read into the fire chart'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,19 @@
+id: ch-refusal-028
+uid: c8dd79afc28a1474
+status: ready
+set: refusal
+group: should-decline
+query: 'Which type of permanent agriculture caused the tree cover loss in Petén: cattle, oil
+  palm or soy?'
+expected:
+  text: Says the driver data groups this loss as permanent agriculture without separating
+    cattle, oil palm or soy, and does not name a specific commodity as a finding from the
+    data.
+notes:
+  difficulty: hard
+  behaviour: decline
+  family: invented-estimate
+  priority: P1
+  lineage: 'traces Sep 2026: cattle named as the permanent-agriculture type from research'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

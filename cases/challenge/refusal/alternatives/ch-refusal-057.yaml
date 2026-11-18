@@ -1,0 +1,17 @@
+id: ch-refusal-057
+uid: b700797cfa11e10d
+status: ready
+set: refusal
+group: alternatives
+query: I need annual forest carbon emissions and removals for Sabah, 2015 to 2024
+expected:
+  text: Explains that net flux (emissions and removals) is one total for 2001 to 2025, and
+    offers annual gross emissions from tree cover loss, saying these exclude removals.
+notes:
+  difficulty: hard
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Nov 2026: net flux by year'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

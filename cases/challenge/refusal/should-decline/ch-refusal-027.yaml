@@ -1,0 +1,18 @@
+id: ch-refusal-027
+uid: 056d35e6a66b95d1
+status: ready
+set: refusal
+group: should-decline
+query: What was the net greenhouse gas flux of Indonesia's forests from 2021 to 2025?
+expected:
+  text: Says forest net flux is one total for 2001 to 2025 and cannot be given for 2021 to
+    2025. It gives no 2021-2025 net flux figure (the full-period total divided by years is
+    not a figure for that period).
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: invented-estimate
+  priority: P1
+  lineage: 'traces Nov 2026: net flux sub-period'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,18 @@
+id: ch-refusal-048
+uid: 7169e44364929867
+status: ready
+set: refusal
+group: alternatives
+query: Show fire hotspots in West Kalimantan for August and September 2026
+expected:
+  text: Says there is no fire hotspot or active fire data. Offers integrated alerts for that
+    period, saying they are not fire-specific, and/or tree cover loss due to fires (annual,
+    up to 2025). Does not claim that integrated alerts stop in 2025.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Oct 2026: hotspots; alerts wrongly said to end in 2025'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

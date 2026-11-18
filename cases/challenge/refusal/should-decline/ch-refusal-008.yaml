@@ -1,0 +1,18 @@
+id: ch-refusal-008
+uid: 216c7ac4bf5a4414
+status: ready
+set: refusal
+group: should-decline
+query: How many people live inside the Kayapó Indigenous Territory?
+expected:
+  text: Says there is no population data and gives no population figure.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: easy
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Sep-Oct 2026: population asks'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

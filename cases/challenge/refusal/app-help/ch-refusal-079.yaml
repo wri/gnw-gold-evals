@@ -1,0 +1,18 @@
+id: ch-refusal-079
+uid: 89a9eb3c620c63ae
+status: ready
+set: refusal
+group: app-help
+query: Você consegue me enviar o shapefile dos alertas?
+expected:
+  text: Says it cannot send files in the chat and does not describe an export button that
+    the app does not have. It may point to Global Forest Watch for the source alert data.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: guide
+  family: ui-decline
+  priority: P1/P3
+  lineage: 'traces Oct 2026: alerts shapefile'
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

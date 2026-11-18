@@ -1,0 +1,18 @@
+id: ch-refusal-050
+uid: aad4fab8b2545afc
+status: ready
+set: refusal
+group: alternatives
+query: Which oil palm areas drove the tree cover loss in Riau?
+expected:
+  text: 'Explains that oil palm is not a separate driver class: in the driver data it falls
+    under permanent agriculture, not ''hard commodities'' (which means mining and energy).
+    It may offer oil palm concession areas or loss by driver.'
+notes:
+  difficulty: hard
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Oct 2026: oil palm described as ''commodity-driven'''
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

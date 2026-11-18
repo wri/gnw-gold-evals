@@ -1,0 +1,17 @@
+id: ch-refusal-052
+uid: a42a96d3dbfed674
+status: ready
+set: refusal
+group: alternatives
+query: ¿Me podrías identificar las zonas con mayor sobrepastoreo en la región Piura, Perú?
+expected:
+  text: Says there is no grazing or overgrazing data. Offers natural grassland extent or land
+    cover change as indirect evidence and says they do not measure grazing.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Sep 2026: overgrazing'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

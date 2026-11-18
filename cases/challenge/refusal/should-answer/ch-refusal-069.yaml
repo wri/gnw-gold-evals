@@ -1,0 +1,19 @@
+id: ch-refusal-069
+uid: 115cf03cd822a20e
+status: ready
+set: refusal
+group: should-answer
+query: Show Planet imagery for Iranduba, Amazonas, Brazil for July 2026
+expected:
+  aoi_ids: BRA.4.28_2
+  text: Shows Planet imagery (the monthly mosaic) for July 2026, or says it renders near recent
+    alerts when zoomed in. Does not say Planet imagery is unavailable.
+notes:
+  difficulty: medium
+  behaviour: answer
+  family: imagery
+  priority: P3
+  lineage: 'traces Sep 2026: Planet refused inside the Amazon'
+  verified: prod /api/aois 2026-11-06; show_planet_imagery footprint (Amazon biome, from Sep
+    2020)
+  source_tab: challenge-refusal-v1

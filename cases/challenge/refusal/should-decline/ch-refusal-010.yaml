@@ -1,0 +1,19 @@
+id: ch-refusal-010
+uid: 7b73065d6c7da087
+status: ready
+set: refusal
+group: should-decline
+query: Sekarang coba cari tahu berapa luas areal kelapa global?
+expected:
+  text: Says there is no crop planted-area data for coconut and gives no global coconut area.
+    It does not answer about oil palm instead of coconut.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: hard
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Oct 2026: coconut area answered with oil palm figures'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,17 @@
+id: ch-refusal-061
+uid: f5fdf07b9b9a1e29
+status: ready
+set: refusal
+group: alternatives
+query: Show Sentinel-2 imagery for the whole of Nicaragua
+expected:
+  text: Says the country is too large for one image and asks for or suggests a smaller area,
+    without claiming to show the whole country.
+notes:
+  difficulty: easy
+  behaviour: decline-offer
+  family: imagery
+  priority: P2
+  lineage: 'traces Oct-Nov 2026: imagery for large areas'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

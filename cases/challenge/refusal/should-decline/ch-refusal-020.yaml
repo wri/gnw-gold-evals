@@ -1,0 +1,19 @@
+id: ch-refusal-020
+uid: 3ff54e3769373118
+status: ready
+set: refusal
+group: should-decline
+query: Predict how much tree cover Pará will lose in 2030
+expected:
+  text: Says it cannot project future tree cover loss and gives no 2030 figure. It may offer
+    historical annual loss.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: easy
+  behaviour: decline
+  family: forecast-opinion
+  priority: P1
+  lineage: projection control (no projections in catalog)
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

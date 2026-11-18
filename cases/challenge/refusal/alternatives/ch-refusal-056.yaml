@@ -1,0 +1,17 @@
+id: ch-refusal-056
+uid: ea5ad69e2ca42c18
+status: ready
+set: refusal
+group: alternatives
+query: Can I have forest cover data for Sri Lanka for each year from 2001 to 2025?
+expected:
+  text: Explains there is no annual tree cover series, and offers tree cover in 2000 together
+    with annual tree cover loss from 2001 to 2025.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Oct 2026: annual forest cover'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

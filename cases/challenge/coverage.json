@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "d1d6c95aaad4cdce",
-  "case_count": 949,
+  "caseset_version": "8a1d077199906132",
+  "case_count": 1028,
   "statuses": {
-    "ready": 914,
+    "ready": 993,
     "todo": 35
   },
-  "active_count": 949,
+  "active_count": 1028,
   "groups": [
     {
       "group": "acronyms",
@@ -58,6 +58,14 @@
       }
     },
     {
+      "group": "alternatives",
+      "cases": 15,
+      "active": 15,
+      "statuses": {
+        "ready": 15
+      }
+    },
+    {
       "group": "ambiguity",
       "cases": 11,
       "active": 11,
@@ -71,6 +79,14 @@
       "active": 15,
       "statuses": {
         "ready": 15
+      }
+    },
+    {
+      "group": "app-help",
+      "cases": 9,
+      "active": 9,
+      "statuses": {
+        "ready": 9
       }
     },
     {
@@ -397,6 +413,22 @@
       }
     },
     {
+      "group": "should-answer",
+      "cases": 10,
+      "active": 10,
+      "statuses": {
+        "ready": 10
+      }
+    },
+    {
+      "group": "should-decline",
+      "cases": 45,
+      "active": 45,
+      "statuses": {
+        "ready": 45
+      }
+    },
+    {
       "group": "sluc",
       "cases": 36,
       "active": 36,
@@ -546,7 +578,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 825,
+      "dedicated": 835,
       "shared_only": 0
     },
     "analysis": {
@@ -554,7 +586,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 195,
+      "dedicated": 271,
       "shared_only": 0
     },
     "output": {
@@ -562,49 +594,49 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 245,
+      "dedicated": 296,
       "shared_only": 0
     }
   },
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 712,
+      "cases": 721,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 613,
+      "cases": 622,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 516,
+      "cases": 525,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
       "field": "start_date",
-      "cases": 323,
+      "cases": 326,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "end_date",
-      "cases": 322,
+      "cases": 325,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
-      "field": "forbidden_tools",
-      "cases": 200,
-      "switches_on": "forbidden_tools_absent"
-    },
-    {
       "field": "text",
-      "cases": 194,
+      "cases": 270,
       "switches_on": "expected_text_match"
     },
     {
+      "field": "forbidden_tools",
+      "cases": 237,
+      "switches_on": "forbidden_tools_absent"
+    },
+    {
       "field": "context_layer",
-      "cases": 181,
+      "cases": 183,
       "switches_on": "context_layer_match"
     },
     {
@@ -621,6 +653,11 @@
       "field": "date_tolerance_days",
       "cases": 44,
       "switches_on": "date_extraction (days a window may fall short of a bound)"
+    },
+    {
+      "field": "scope",
+      "cases": 42,
+      "switches_on": "scope_match"
     },
     {
       "field": "dataset_parameters",
@@ -708,11 +745,6 @@
       "switches_on": "ground_truth_match, ground_truth_answer (info-only)"
     },
     {
-      "field": "scope",
-      "cases": 0,
-      "switches_on": "scope_match"
-    },
-    {
       "field": "suggested_datasets",
       "cases": 0,
       "switches_on": "suggested_datasets_match (legacy: the agent now writes nudge; author nudge_type / nudge_options)"
@@ -741,8 +773,8 @@
         "dataset_id": "2",
         "dataset_name": "Global natural/semi-natural grassland extent",
         "missing_instructions": [],
-        "cases": 55,
-        "answer_graded": 2,
+        "cases": 56,
+        "answer_graded": 3,
         "parameters": [],
         "context_layers": []
       },
@@ -759,8 +791,8 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 172,
-        "answer_graded": 24,
+        "cases": 175,
+        "answer_graded": 26,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -778,7 +810,7 @@
           },
           {
             "name": "natural_forest",
-            "cases": 2
+            "cases": 3
           }
         ]
       },
@@ -842,8 +874,8 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 42,
-        "answer_graded": 9,
+        "cases": 43,
+        "answer_graded": 10,
         "parameters": [],
         "context_layers": []
       },
@@ -851,8 +883,8 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 71,
-        "answer_graded": 6,
+        "cases": 72,
+        "answer_graded": 7,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -874,13 +906,13 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 104,
-        "answer_graded": 19,
+        "cases": 107,
+        "answer_graded": 20,
         "parameters": [],
         "context_layers": [
           {
             "name": "natural_lands",
-            "cases": 1
+            "cases": 2
           }
         ]
       },
@@ -897,8 +929,8 @@
     "unknown_dataset_ids": []
   },
   "multi_turn": {
-    "conversations": 0,
-    "turns": 0,
+    "conversations": 5,
+    "turns": 10,
     "delta_assertions": {}
   },
   "parked": [
@@ -1123,7 +1155,6 @@
       "dashboard_widgets",
       "dataset_name",
       "ground_truth",
-      "scope",
       "suggested_datasets"
     ],
     "info_only_checks": [
@@ -1166,6 +1197,10 @@
       },
       "dataset": {
         "overall": 0.8,
+        "targets": {}
+      },
+      "refusal": {
+        "overall": null,
         "targets": {}
       }
     },

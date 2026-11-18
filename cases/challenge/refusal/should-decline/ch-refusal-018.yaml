@@ -1,0 +1,19 @@
+id: ch-refusal-018
+uid: 3994da6488e813f3
+status: ready
+set: refusal
+group: should-decline
+query: How is this year's Amazon fire season expected to compare with previous years?
+expected:
+  text: Says there are no fire forecasts or seasonal outlooks in Global Nature Watch and gives
+    no prediction for the season.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: forecast-opinion
+  priority: P1
+  lineage: 'traces Sep 2026: fire season outlook answered from research'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

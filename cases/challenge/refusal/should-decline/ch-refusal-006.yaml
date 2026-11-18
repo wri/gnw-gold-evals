@@ -1,0 +1,20 @@
+id: ch-refusal-006
+uid: 4c10eeccc9ad1d06
+status: ready
+set: refusal
+group: should-decline
+query: How much carbon is stored in the forests of Puerto Gaitán, Colombia?
+expected:
+  text: Says there is no carbon stock (stored biomass carbon) data and gives no stored-carbon
+    figure. If it offers net greenhouse gas flux or emissions from tree cover loss, it says
+    these are flows, not the carbon stored.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Oct 2026: carbon stock asks'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

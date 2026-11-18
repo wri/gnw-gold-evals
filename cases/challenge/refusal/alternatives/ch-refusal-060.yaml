@@ -1,0 +1,17 @@
+id: ch-refusal-060
+uid: a1125f823f864915
+status: ready
+set: refusal
+group: alternatives
+query: Show Planet imagery from 2018 for Iranduba, Amazonas, Brazil
+expected:
+  text: Says Planet mosaics start in September 2020, so there is none for 2018, and offers
+    Sentinel-2 imagery for 2018 instead.
+notes:
+  difficulty: hard
+  behaviour: decline-offer
+  family: imagery
+  priority: P2
+  lineage: 'traces Sep 2026: Planet 2018; reason given was wrong'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1
