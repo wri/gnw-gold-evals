@@ -589,7 +589,7 @@ def _decimal_mark(number: str) -> str | None:
 def _read(number: str, decimal: str) -> tuple[float, float] | None:
     """(value, step of the last stated digit) with ``decimal`` ("." or ",")
     as the decimal mark; None when the grouping is not in threes."""
-    group = "," if decimal == "." else "."
+    group = _other_mark(decimal)
     whole, _, fraction = number.partition(decimal)
     if group in fraction:
         return None
@@ -598,6 +598,22 @@ def _read(number: str, decimal: str) -> tuple[float, float] | None:
         return None
     value = float(whole.replace(group, "") + ("." + fraction if fraction else ""))
     return value, 10.0 ** (-len(fraction)) if fraction else 1.0
+
+
+def _other_mark(mark: str) -> str:
+    """The decimal mark that is not ``mark``."""
+    return "," if mark == "." else "."
+
+
+def _suffix_word(suffix: str | None) -> str:
+    """The word after a number, lower-cased with its spaces collapsed."""
+    return " ".join((suffix or "").lower().split())
+
+
+def _stated_as(
+    reading: tuple[float, float], scale: float, percent: str | None, text: str
+) -> Stated:
+    return Stated(reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text)
 
 
 def _word_scale(word: str, language: str) -> tuple[float, bool]:
@@ -622,7 +638,7 @@ def _reply_decimal_mark(matches: list[re.Match[str]], language: str) -> str | No
         number = "".join(_GROUP_SPACE.split(m[1]))
         mark = _decimal_mark(number)
         if mark:
-            word = " ".join((m[3] or "").lower().split())
+            word = _suffix_word(m[3])
             if (
                 ("." in number and "," in number)
                 or m[2]
@@ -632,14 +648,14 @@ def _reply_decimal_mark(matches: list[re.Match[str]], language: str) -> str | No
         elif mark == "" and ("." in number or "," in number):
             # "1.234.567" groups with dots, so its decimal mark is the comma;
             # a date or version ("31.12.2024") groups in nothing and says nothing.
-            implied = "," if "." in number else "."
+            implied = _other_mark("." if "." in number else ",")
             if _read(number, implied):
                 marks.add(implied)
     return marks.pop() if len(marks) == 1 else None
 
 
 def _stated_numbers_local(
-    answer: str, language: str, usual_mark: str | None = None
+    answer: str, language: str, usual_mark: str | None
 ) -> list[Stated]:
     """``stated_numbers`` for a non-English case; ``answer`` is NFC."""
     matches = list(_LOCAL_NUMBER.finditer(answer))
@@ -649,7 +665,7 @@ def _stated_numbers_local(
         for number, shown, carries in _spaced_readings(m[1]):
             percent = m[2] if carries else None
             suffix = m[3] if carries else None
-            word = " ".join((suffix or "").lower().split())
+            word = _suffix_word(suffix)
             scale, measured = _word_scale(word, language)
             plain = "." not in number and "," not in number
             if plain and not (percent or measured) and re.fullmatch(
@@ -662,23 +678,20 @@ def _stated_numbers_local(
                 # The reply's mark, else the usual one, only picks the first
                 # reading.
                 usual = reply_mark or usual_mark or _USUAL_DECIMAL_MARK[language]
-                marks = [usual, "." if usual == "," else ","]
+                marks = [usual, _other_mark(usual)]
             else:
                 # No decimal part: the decimal mark is the one the grouping
                 # leaves.
-                marks = [mark or ("," if "." in number else ".")]
+                marks = [mark or _other_mark("." if "." in number else ",")]
             readings = [_read(number, m_) for m_ in marks]
             if readings[0] is None:
                 continue  # "1.23.4567": not a number this parser can read
 
-            def stated_as(reading: tuple[float, float]) -> Stated:
-                return Stated(
-                    reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text
-                )
-
-            first = stated_as(readings[0])
+            first = _stated_as(readings[0], scale, percent, text)
             if len(readings) > 1 and readings[1] is not None:
-                first = replace(first, other=stated_as(readings[1]))
+                first = replace(
+                    first, other=_stated_as(readings[1], scale, percent, text)
+                )
             found.append(first)
     return found
 
@@ -718,7 +731,7 @@ _ZERO_WORDS = re.compile(
 # "no data" or an idiom ("sin embargo", "sin información", "sin duda") are
 # excluded between the cue and the noun.
 _ES_SKIP = (
-    "embargo|contar|incluir|datos|informaci[óo]n|informacion|registros?"
+    "embargo|contar|incluir|datos|informaci[óo]n|registros?"
     "|precedentes|importar|duda"
 )
 _LOCAL_ZERO_WORDS = {
@@ -813,16 +826,15 @@ def evaluate_figures(
         result["figure_match_reason"] = "no pulled table could be read; abstained"
         return result
     answer = extract_final_answer_text(agent_state.get("messages", []))
-    if language == "en":
-        stated = stated_numbers(answer)
-    else:
-        # Normalised here, once, for the zero-word search as well: a
-        # decomposed accent would split a word there too.
+    usual_mark = None
+    if language != "en":
+        # Normalised here as well as in ``stated_numbers``, for the zero-word
+        # search: a decomposed accent would split a word there too.
         answer = unicodedata.normalize("NFC", answer)
         # Horizon may answer a Spanish or Indonesian case in English, and an
         # English reply writes "1,209" for 1209 whatever the case language.
         usual_mark = "." if detect_language(answer)[0] == "en" else None
-        stated = _stated_numbers_local(answer, language, usual_mark)
+    stated = stated_numbers(answer, language, usual_mark=usual_mark)
     parts, scored, missed = [], 0, 0
     for figure in figures:
         if figure.ref:
