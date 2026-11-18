@@ -74,3 +74,97 @@ def test_facet_drift_is_reported(tmp_path, monkeypatch):
 def test_committed_manifests_are_clean():
     for path in sorted((REPO / "benchmarks").glob("*.json")):
         assert cb.check(path, REPO) == ([], []), path
+
+
+# ------------------------------------------------------------ language pairs
+
+
+def pair_store(tmp_path):
+    english = Case(id="ch-quant-001", status="ready", group="tcl",
+                   set="quantification", query="How much forest was lost?",
+                   expected={"dataset_id": "4"})
+    spanish = Case(id="ch-quant-002", status="ready", group="tcl",
+                   set="quantification", query="¿Cuánto bosque se perdió?",
+                   expected={"dataset_id": "4"}, language="es",
+                   twin="ch-quant-001")
+    for case in (english, spanish):
+        write_case(tmp_path / "cases", case)
+    return english, spanish
+
+
+def pair_member(case, **facets):
+    return {"uid": case.uid, "id": case.id, "type": "quantification",
+            "set": case.set, "cohort": case.group, "difficulty": "",
+            "stages": bs.stages_for(case), **facets}
+
+
+def pair_manifest(tmp_path, version, members, **keys):
+    data = {"schema_version": 1, "version": version, "status": "draft",
+            "frozen": None, "source": {"cases_dir": "cases"}, "sampling": {},
+            "types": [{"key": "quantification"}], "members": members,
+            "errata": [], **keys}
+    path = tmp_path / "benchmarks" / f"{version}.json"
+    path.parent.mkdir(exist_ok=True)
+    path.write_text(json.dumps(data))
+    return path
+
+
+def test_a_pair_inside_one_manifest_passes(tmp_path):
+    english, spanish = pair_store(tmp_path)
+    members = [pair_member(english, twin_uid=spanish.uid),
+               pair_member(spanish, language="es", twin_uid=english.uid)]
+    path = pair_manifest(tmp_path, "t-languages", members)
+    assert cb.check(path, tmp_path) == ([], [])
+
+
+def test_a_twin_in_the_paired_version_passes(tmp_path):
+    english, spanish = pair_store(tmp_path)
+    pair_manifest(tmp_path, "t", [pair_member(english)])
+    native = pair_member(spanish, language="es", twin_uid=english.uid)
+    path = pair_manifest(tmp_path, "t-languages", [native], pairs_with="t")
+    assert cb.check(path, tmp_path) == ([], [])
+
+
+def test_a_twin_that_is_no_member_is_reported(tmp_path):
+    english, spanish = pair_store(tmp_path)
+    pair_manifest(tmp_path, "t", [])
+    native = pair_member(spanish, language="es", twin_uid=english.uid)
+    for keys, where in (({}, "of this version"),
+                        ({"pairs_with": "t"}, "this version or of t")):
+        path = pair_manifest(tmp_path, "t-languages", [native], **keys)
+        _, warnings = cb.check(path, tmp_path)
+        assert len(warnings) == 1 and where in warnings[0], warnings
+
+
+def test_a_missing_paired_version_is_one_clear_problem(tmp_path):
+    english, spanish = pair_store(tmp_path)
+    native = pair_member(spanish, language="es", twin_uid=english.uid)
+    path = pair_manifest(tmp_path, "t-languages", [native], pairs_with="t")
+    errors, warnings = cb.check(path, tmp_path)
+    assert errors == [] and len(warnings) == 1
+    assert "pairs_with 't'" in warnings[0] and "does not exist" in warnings[0]
+    data = {**json.loads(path.read_text()), "status": "frozen",
+            "frozen": "2026-11-18"}
+    path.write_text(json.dumps(data))
+    errors, warnings = cb.check(path, tmp_path)
+    assert warnings == [] and len(errors) == 1
+
+
+def test_pair_facets_are_checked_against_the_cases(tmp_path):
+    english, spanish = pair_store(tmp_path)
+
+    def problems(*members):
+        return cb.check(pair_manifest(tmp_path, "t-languages", list(members)),
+                        tmp_path)[1]
+
+    wrong_language = problems(
+        pair_member(english),
+        pair_member(spanish, language="id", twin_uid=english.uid))
+    assert len(wrong_language) == 1
+    assert "differs from the case's 'es'" in wrong_language[0]
+    wrong_twin = problems(
+        pair_member(english),
+        pair_member(spanish, language="es", twin_uid="0" * 16))
+    assert any("not the uid of the case's twin" in p for p in wrong_twin)
+    not_named = problems(pair_member(english, twin_uid="0" * 16))
+    assert any("names ch-quant-001 as its twin" in p for p in not_named)
