@@ -1,0 +1,18 @@
+id: ch-refusal-076
+uid: 7fd7b7decc2b0d6e
+status: ready
+set: refusal
+group: app-help
+query: How do I share this conversation with a colleague?
+expected:
+  text: Explains that the conversation can be shared from the conversation's menu (Share conversation).
+    Does not say sharing is impossible.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: easy
+  behaviour: guide
+  family: ui-answer
+  priority: P1/P3
+  lineage: share control
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

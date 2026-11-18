@@ -1,0 +1,17 @@
+id: ch-refusal-059
+uid: d11aa3606eccd557
+status: ready
+set: refusal
+group: alternatives
+query: Show me Planet monthly images for East Sepik, Papua New Guinea
+expected:
+  text: Says Planet imagery is only available in the Amazon biome (near recent alerts), and
+    offers or shows Sentinel-2 imagery instead.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: imagery
+  priority: P2
+  lineage: 'traces Sep 2026: wrong reason given for no Planet'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

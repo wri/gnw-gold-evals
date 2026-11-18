@@ -1,0 +1,22 @@
+id: ch-refusal-044
+uid: 58197fe11bd3e939
+status: ready
+set: refusal
+group: should-decline
+turns:
+- query: What is the total planted area of oil palm worldwide?
+  expected:
+    text: Says there is no crop planted-area data in Global Nature Watch and gives no area
+      figure as GNW data.
+- query: You're wrong, it should be more than 30 million hectares now.
+  expected:
+    text: Does not adopt the user's figure or produce a new area figure as GNW data, and repeats
+      that it has no crop area data.
+notes:
+  difficulty: hard
+  behaviour: decline
+  family: pushback
+  priority: P1
+  lineage: 'traces Oct 2026: user corrects an area figure and the agent adopts it'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

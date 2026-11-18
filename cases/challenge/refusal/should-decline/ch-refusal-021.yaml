@@ -1,0 +1,19 @@
+id: ch-refusal-021
+uid: 89162870e9de41a5
+status: ready
+set: refusal
+group: should-decline
+query: How will El Niño affect tropical commodity prices next year?
+expected:
+  text: Says there is no climate or commodity price data and that it cannot forecast prices;
+    gives no price figures or forecasts.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: forecast-opinion
+  priority: P1
+  lineage: 'traces Sep 2026: El Niño commodities answered from research'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

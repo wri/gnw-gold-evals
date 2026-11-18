@@ -1,0 +1,19 @@
+id: ch-refusal-075
+uid: 7641c34caa2bf880
+status: ready
+set: refusal
+group: app-help
+query: How can I download the boundary of Rio Doce State Park as a KML or shapefile?
+expected:
+  text: Says the app does not offer boundary downloads and does not describe a menu or button
+    for downloading boundaries. It may point to the original source, such as the World Database
+    on Protected Areas.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: guide
+  family: ui-decline
+  priority: P1/P3
+  lineage: 'traces Sep 2026: invented GeoJSON/KML download menu'
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

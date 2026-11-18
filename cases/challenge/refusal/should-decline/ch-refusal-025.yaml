@@ -1,0 +1,19 @@
+id: ch-refusal-025
+uid: 54852a11ead9adba
+status: ready
+set: refusal
+group: should-decline
+query: 'What was the net forest change in Cù Lao Dung, Vietnam, from 2001 to 2020: gain minus
+  loss?'
+expected:
+  text: Says a net change cannot be calculated by subtracting tree cover loss from tree cover
+    gain because the two datasets use different methods. It gives no net figure and does not
+    conclude that gain exceeded loss or the reverse.
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: invented-estimate
+  priority: P1
+  lineage: 'traces Oct 2026: gain compared with loss as a net result'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

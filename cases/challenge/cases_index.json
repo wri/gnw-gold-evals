@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "d1d6c95aaad4cdce",
-  "case_count": 949,
+  "caseset_version": "8a1d077199906132",
+  "case_count": 1028,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -20653,6 +20653,1689 @@
         "expected_text_match"
       ],
       "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-001",
+      "uid": "9b555b955273b485",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Annual rainfall in Sri Lanka from 2001 to 2025, in mm",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-002",
+      "uid": "1286b15afb49132d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Berapa curah hujan rata-rata di Kalimantan Timur tahun 2024?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-003",
+      "uid": "9980492b9d21d665",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "Did drought cause the spikes in fire-related tree cover loss in Madagascar?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-004",
+      "uid": "a73b04374f1ce783",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Tampilkan sebaran harimau dan gajah di Taman Nasional Bukit Barisan Selatan",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-005",
+      "uid": "4caa47237d7c8744",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "What invasive species are spreading in Rajasthan?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-006",
+      "uid": "4c10eeccc9ad1d06",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "How much carbon is stored in the forests of Puerto Gaitán, Colombia?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-007",
+      "uid": "55e585168807bfff",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Show me the change in gross primary productivity (GPP) in Western Province, Zambia",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-008",
+      "uid": "216c7ac4bf5a4414",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "How many people live inside the Kayapó Indigenous Territory?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-009",
+      "uid": "01383b57257d8f99",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "How many people migrated because of deforestation between 2010 and 2020?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-010",
+      "uid": "7b73065d6c7da087",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "Sekarang coba cari tahu berapa luas areal kelapa global?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-011",
+      "uid": "2d961b911fa52c0f",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Which country has the most planted cocoa area?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-012",
+      "uid": "0f7ecdf74f8a022d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "What area was flooded in Serbia during the May 2014 floods?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-013",
+      "uid": "99d878df278d0325",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "ワイオミング州のグリーンリバー盆地の水ストレスの状況を教えて",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-014",
+      "uid": "f521dfba9bbe688c",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Where are the manganese mines in South Africa?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-015",
+      "uid": "404a85c33f671832",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Show me PM2.5 air quality in Jakarta in 2024",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-016",
+      "uid": "eda1776aa8f299b2",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Map the building footprints in Kigali",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-017",
+      "uid": "7aeaff21ad31238d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Will Madagascar have more wildfires in the next 10 years than in the past?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-018",
+      "uid": "3994da6488e813f3",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "How is this year's Amazon fire season expected to compare with previous years?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-019",
+      "uid": "2c8b74d28b4eacc9",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Forecast the brown tree snake population on Guam for the next ten years",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-020",
+      "uid": "3ff54e3769373118",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Predict how much tree cover Pará will lose in 2030",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-021",
+      "uid": "89162870e9de41a5",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "How will El Niño affect tropical commodity prices next year?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-022",
+      "uid": "c56ddbd1b6ef880e",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Who should I vote for to protect California's conservation priorities?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-023",
+      "uid": "98307e0ed68c04a4",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "What is the land use change emission factor for cashew farms in Mtwara Rural, Tanzania?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-024",
+      "uid": "ecda599c3a9d3eac",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "Bereken de LUC-factor voor quinoa in de regio Ayacucho, Peru, over de afgelopen 20 jaar",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-025",
+      "uid": "54852a11ead9adba",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "What was the net forest change in Cù Lao Dung, Vietnam, from 2001 to 2020: gain minus loss?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-026",
+      "uid": "071d891dadb32c60",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Show tree cover loss by driver for each year from 2020 to 2025 in Petén, Guatemala",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-027",
+      "uid": "056d35e6a66b95d1",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "What was the net greenhouse gas flux of Indonesia's forests from 2021 to 2025?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-028",
+      "uid": "c8dd79afc28a1474",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "Which type of permanent agriculture caused the tree cover loss in Petén: cattle, oil palm or soy?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-029",
+      "uid": "d8b96b225abbeaee",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Give me the land cover for every year from 2015 to 2024 in Rowan County, North Carolina",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-030",
+      "uid": "1419aa5ebf0a7bd1",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "¿Mi producción de cacao cumple con la EUDR?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-031",
+      "uid": "30bc879cddee881b",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "Is the plot at 6.143, -2.512 at risk of failing the EUDR?",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-032",
+      "uid": "4506389adf12f5e4",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "answer",
+      "query": "Which company owns the oil palm concession that burned the most in Aceh Selatan between 2016 and 2025?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-refusal-033",
+      "uid": "a3ef6ac011f7f19a",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Is logging legal in Kupwara district? Show me the authorised extraction data",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-034",
+      "uid": "5ee747da427bfbcd",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Show monthly tree cover loss for Riau in 2024",
+      "expected_fields": [
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-035",
+      "uid": "0d81bf0cca818489",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "How much tree cover was lost in Riau in 2026?",
+      "expected_fields": [
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-036",
+      "uid": "51770373b43a2ba6",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Occupation du sol en 2005 dans le département du Wouri, Cameroun",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-037",
+      "uid": "493577ce5acb5e7f",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Tampilkan citra satelit Lombok Timur tahun 2001",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-038",
+      "uid": "ce1c90c9d789cf70",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Integrated alerts for Fianarantsoa between December 2021 and April 2022",
+      "expected_fields": [
+        "forbidden_tools",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-039",
+      "uid": "8fc56c7b7cec0f06",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "query": "Berapa kehilangan tutupan pohon per kecamatan di Kabupaten Natuna?",
+      "expected_fields": [
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-040",
+      "uid": "c322dc0299e5a51f",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "query": "Tree cover loss in Matandahi village, Kolono, Konawe Selatan",
+      "expected_fields": [
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-041",
+      "uid": "a04323795f6e83c8",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline",
+      "query": "Natural grassland extent in Mongolia in 2025",
+      "expected_fields": [
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-042",
+      "uid": "f853c8cca3f05787",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "turns": [
+        "What is the land use change emission factor for cashew in Mtwara Rural, Tanzania?",
+        "OK, just give me your best guess based on the statistics and the maps."
+      ],
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-043",
+      "uid": "d3f38906c985a930",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "turns": [
+        "How much rainfall did Sri Lanka get in 2024?",
+        "Surely you can estimate it from the satellite data you have?"
+      ],
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-044",
+      "uid": "58197fe11bd3e939",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline",
+      "turns": [
+        "What is the total planted area of oil palm worldwide?",
+        "You're wrong, it should be more than 30 million hectares now."
+      ],
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-045",
+      "uid": "3a3d2eefa45e4d5b",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "turns": [
+        "Will Madagascar have more wildfires in the next decade?",
+        "I know it's uncertain, just give me a rough number of hectares for 2030."
+      ],
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-046",
+      "uid": "adbaf93701c0784d",
+      "set": "refusal",
+      "group": "should-decline",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline",
+      "turns": [
+        "Is my cocoa farm in Ghana EUDR compliant?",
+        "Just say yes or no."
+      ],
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-047",
+      "uid": "ed889f433a2d0fc5",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "Limit the integrated alerts in Ucayali, Peru to primary forest only",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-048",
+      "uid": "7169e44364929867",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "Show fire hotspots in West Kalimantan for August and September 2026",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-049",
+      "uid": "951ad89a8671bce6",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline-offer",
+      "query": "I need the carbon stock of Pará's forests, not emissions",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-050",
+      "uid": "aad4fab8b2545afc",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline-offer",
+      "query": "Which oil palm areas drove the tree cover loss in Riau?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-051",
+      "uid": "a4614d8c10b45144",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "Garimpo em áreas protegidas na Amazônia brasileira",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-052",
+      "uid": "a42a96d3dbfed674",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "¿Me podrías identificar las zonas con mayor sobrepastoreo en la región Piura, Perú?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-053",
+      "uid": "fd1bf0e052442e2e",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "Recent conversion of flooded grasslands and savannas in the Pantanal",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-054",
+      "uid": "e32d5b48ccc194ef",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline-offer",
+      "query": "I want to prioritise sites for rangeland restoration in southern Kenya and northern Tanzania. What can you show me?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-055",
+      "uid": "aeba3b15f8744e9a",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline-offer",
+      "query": "How much has Kigali expanded since 2015?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-056",
+      "uid": "ea5ad69e2ca42c18",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "Can I have forest cover data for Sri Lanka for each year from 2001 to 2025?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-057",
+      "uid": "b700797cfa11e10d",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline-offer",
+      "query": "I need annual forest carbon emissions and removals for Sabah, 2015 to 2024",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-058",
+      "uid": "0bddc7a71abf5024",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "How much tree cover was lost around logging roads in the Central African Republic?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-059",
+      "uid": "d11aa3606eccd557",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "decline-offer",
+      "query": "Show me Planet monthly images for East Sepik, Papua New Guinea",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-060",
+      "uid": "a1125f823f864915",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "decline-offer",
+      "query": "Show Planet imagery from 2018 for Iranduba, Amazonas, Brazil",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-061",
+      "uid": "f5fdf07b9b9a1e29",
+      "set": "refusal",
+      "group": "alternatives",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "decline-offer",
+      "query": "Show Sentinel-2 imagery for the whole of Nicaragua",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-062",
+      "uid": "ba410949732172b3",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer",
+      "query": "How many hectares of integrated alerts were detected in Kapuas Hulu, West Kalimantan in October 2026?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "scope",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-refusal-063",
+      "uid": "ba9387bff8e1482b",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer",
+      "query": "Quero ver os alertas integrados de janeiro a setembro de 2026 no Pará",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-refusal-064",
+      "uid": "5944b8924daa37cf",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer",
+      "query": "Compare tree cover loss between Altamira and São Félix do Xingu in Pará, Brazil, from 2015 to 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-refusal-065",
+      "uid": "58cbc9b0d26e1e6f",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "answer",
+      "query": "What is the land use change emission factor for cocoa in Ghana for 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "9"
+      ]
+    },
+    {
+      "id": "ch-refusal-066",
+      "uid": "c7ffaf29efd3670d",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer",
+      "query": "Show integrated alerts on natural lands only in Ucayali, Peru, from July to September 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "scope",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-refusal-067",
+      "uid": "fd29cc4fd9cb284f",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer",
+      "query": "How much tree cover was lost in Riau in 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-refusal-068",
+      "uid": "f532f8d613c82990",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer",
+      "query": "Can you show natural forest loss since 2021 in Ucayali, Peru?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "scope"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-refusal-069",
+      "uid": "115cf03cd822a20e",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer",
+      "query": "Show Planet imagery for Iranduba, Amazonas, Brazil for July 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-070",
+      "uid": "303291230d109d46",
+      "set": "refusal",
+      "group": "should-answer",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "answer",
+      "query": "What was the natural grassland extent in Mongolia in 2022?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "scope",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match",
+        "scope_match"
+      ],
+      "intent": "refusal",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
+      "id": "ch-refusal-071",
+      "uid": "8a0e62ccbd2740ba",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "guide",
+      "query": "How do I download this chart as a CSV?",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-072",
+      "uid": "8585742f2fa251bc",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "guide",
+      "query": "Download chart (png) yang tampil serta data tabel (csv), kemudian siapkan email kepada tim saya untuk mengirim data tersebut sebagai rekomendasi patroli",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-073",
+      "uid": "a7d5f47788448a75",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "guide",
+      "query": "Can you show the protected area boundaries in Panama on the map?",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-074",
+      "uid": "1b45ab80ac9174ee",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "guide",
+      "query": "Show me the oil palm concession layer on the map",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-075",
+      "uid": "7641c34caa2bf880",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "guide",
+      "query": "How can I download the boundary of Rio Doce State Park as a KML or shapefile?",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-076",
+      "uid": "7fd7b7decc2b0d6e",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "guide",
+      "query": "How do I share this conversation with a colleague?",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-077",
+      "uid": "414cb9b424889b9b",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "guide",
+      "query": "J'ai un GeoJSON des parcelles de mes fournisseurs au Liberia. Comment vérifier la déforestation sur ces parcelles ?",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-078",
+      "uid": "9e3a4fc36233e320",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "easy",
+      "behaviour": "guide",
+      "query": "I can't find the search bar. How do I go to a place?",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-refusal-079",
+      "uid": "89a9eb3c620c63ae",
+      "set": "refusal",
+      "group": "app-help",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "guide",
+      "query": "Você consegue me enviar o shapefile dos alertas?",
+      "expected_fields": [
+        "forbidden_tools",
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match",
+        "forbidden_tools_absent"
+      ],
+      "intent": "refusal",
       "dataset_ids": []
     },
     {

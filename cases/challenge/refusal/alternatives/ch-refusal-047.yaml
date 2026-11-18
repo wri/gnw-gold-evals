@@ -1,0 +1,18 @@
+id: ch-refusal-047
+uid: ed889f433a2d0fc5
+status: ready
+set: refusal
+group: alternatives
+query: Limit the integrated alerts in Ucayali, Peru to primary forest only
+expected:
+  text: Says integrated alerts cannot be limited to primary forest, and offers the natural
+    lands filter for integrated alerts, or tree cover loss within primary forest, as the alternative.
+notes:
+  difficulty: medium
+  behaviour: decline-offer
+  family: dataset
+  priority: P2
+  lineage: 'traces Sep 2026: alerts filtered to primary forest; natural_lands context layer
+    not offered'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

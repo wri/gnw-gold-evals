@@ -1,0 +1,19 @@
+id: ch-refusal-016
+uid: eda1776aa8f299b2
+status: ready
+set: refusal
+group: should-decline
+query: Map the building footprints in Kigali
+expected:
+  text: Says there is no building footprint data and does not present any other layer as building
+    footprints. It may offer the built-up land class in land cover as a coarser option.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: easy
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Oct 2026: building data ask'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

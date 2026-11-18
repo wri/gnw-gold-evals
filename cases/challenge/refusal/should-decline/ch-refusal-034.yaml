@@ -1,0 +1,18 @@
+id: ch-refusal-034
+uid: 5ee747da427bfbcd
+status: ready
+set: refusal
+group: should-decline
+query: Show monthly tree cover loss for Riau in 2024
+expected:
+  text: Says tree cover loss is annual and cannot be shown by month, and presents no monthly
+    loss figures. It may offer integrated alerts for monthly disturbance.
+  scope: refuse;suggest
+notes:
+  difficulty: easy
+  behaviour: decline
+  family: beyond-coverage
+  priority: P1
+  lineage: 1-089 pattern, Riau variant
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

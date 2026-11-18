@@ -1,0 +1,26 @@
+id: ch-refusal-065
+uid: 58cbc9b0d26e1e6f
+status: ready
+set: refusal
+group: should-answer
+query: What is the land use change emission factor for cocoa in Ghana for 2024?
+expected:
+  aoi_ids: GHA
+  dataset_id: '9'
+  data_pull: 'TRUE'
+  scope: analyse
+  text: Gives a land use change emission factor for cocoa in Ghana and does not say crop emission
+    factors are unavailable.
+notes:
+  difficulty: easy
+  behaviour: answer
+  family: data
+  priority: P3
+  lineage: 'counterpart to ch-refusal-023/024 (cashew, quinoa: no factor): a listed crop must
+    still be answered'
+  verified: local DB 2026-11-06 (zeno-data, GADM); catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1
+  aoi_alternatives: name search ties 10802 with 351776/351813 at 0.33; the full name should
+    pick 10802
+  replaced: '2026-11-06 (AJ: P3 answerable locally): was tree cover loss in the Tapajós National
+    Forest (WDPA 10802); protected areas are not loaded locally'

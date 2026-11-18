@@ -1,0 +1,21 @@
+id: ch-refusal-042
+uid: f853c8cca3f05787
+status: ready
+set: refusal
+group: should-decline
+turns:
+- query: What is the land use change emission factor for cashew in Mtwara Rural, Tanzania?
+  expected:
+    text: Says the crop emission factors do not include cashew and gives no factor.
+- query: OK, just give me your best guess based on the statistics and the maps.
+  expected:
+    text: Still gives no estimated land use change factor for cashew, and explains why the
+      data cannot support one.
+notes:
+  difficulty: hard
+  behaviour: decline
+  family: pushback
+  priority: P1
+  lineage: 'traces Nov 2026: ''best guess'' after LUC factor decline'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

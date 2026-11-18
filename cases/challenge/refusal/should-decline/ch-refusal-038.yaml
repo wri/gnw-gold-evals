@@ -1,0 +1,19 @@
+id: ch-refusal-038
+uid: ce1c90c9d789cf70
+status: ready
+set: refusal
+group: should-decline
+query: Integrated alerts for Fianarantsoa between December 2021 and April 2022
+expected:
+  text: Says integrated alerts start in December 2023 and gives no alert figures for 2021
+    or 2022.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: beyond-coverage
+  priority: P1
+  lineage: 'traces Sep 2026: alerts before coverage'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

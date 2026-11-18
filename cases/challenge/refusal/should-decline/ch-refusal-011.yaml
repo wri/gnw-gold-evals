@@ -1,0 +1,19 @@
+id: ch-refusal-011
+uid: 2d961b911fa52c0f
+status: ready
+set: refusal
+group: should-decline
+query: Which country has the most planted cocoa area?
+expected:
+  text: Says there is no crop planted-area data in Global Nature Watch and gives no planted-area
+    figure as GNW data. If it names countries from published research, it says so.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: decline
+  family: no-data
+  priority: P1
+  lineage: 'traces Sep 2026: cocoa area answered from research'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,18 @@
+id: ch-refusal-074
+uid: 1b45ab80ac9174ee
+status: ready
+set: refusal
+group: app-help
+query: Show me the oil palm concession layer on the map
+expected:
+  text: Points to the oil palm concessions boundary layer (Areas panel, Boundaries tab) or
+    selects oil palm concessions. Does not say concession layers are unavailable.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: guide
+  family: ui-answer
+  priority: P1/P3
+  lineage: 'traces Nov 2026: ''concession layers not in catalog'''
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

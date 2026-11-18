@@ -1,0 +1,18 @@
+id: ch-refusal-071
+uid: 8a0e62ccbd2740ba
+status: ready
+set: refusal
+group: app-help
+query: How do I download this chart as a CSV?
+expected:
+  text: Explains the Download menu on the chart card, which offers the data as CSV and the
+    chart as an image (PNG). Does not say downloads are impossible.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: easy
+  behaviour: guide
+  family: ui-answer
+  priority: P1/P3
+  lineage: 'traces Oct 2026: download asks'
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

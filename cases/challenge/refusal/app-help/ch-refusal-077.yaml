@@ -1,0 +1,19 @@
+id: ch-refusal-077
+uid: 414cb9b424889b9b
+status: ready
+set: refusal
+group: app-help
+query: J'ai un GeoJSON des parcelles de mes fournisseurs au Liberia. Comment vérifier la déforestation
+  sur ces parcelles ?
+expected:
+  text: Explains that the file can be uploaded as a custom area in the app and then analysed.
+    Does not claim it can read the file in the chat.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: medium
+  behaviour: guide
+  family: ui-answer
+  priority: P1/P3
+  lineage: 'traces Oct 2026: supplier GeoJSON'
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1

@@ -1,0 +1,20 @@
+id: ch-refusal-024
+uid: ecda599c3a9d3eac
+status: ready
+set: refusal
+group: should-decline
+query: Bereken de LUC-factor voor quinoa in de regio Ayacucho, Peru, over de afgelopen 20
+  jaar
+expected:
+  text: Says the crop emission factors do not include quinoa and does not calculate or estimate
+    a land use change factor for quinoa from other data.
+  scope: refuse;suggest
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: hard
+  behaviour: decline
+  family: invented-estimate
+  priority: P1
+  lineage: 'traces Nov 2026: LUC factor for quinoa (Dutch)'
+  verified: catalog zeno@6942ee47 2026-11-06
+  source_tab: challenge-refusal-v1

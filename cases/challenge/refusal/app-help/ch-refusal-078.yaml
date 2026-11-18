@@ -1,0 +1,17 @@
+id: ch-refusal-078
+uid: 9e3a4fc36233e320
+status: ready
+set: refusal
+group: app-help
+query: I can't find the search bar. How do I go to a place?
+expected:
+  text: Offers to find and select the place if the user types its name in the chat.
+  forbidden_tools: pull_data;generate_insights
+notes:
+  difficulty: easy
+  behaviour: guide
+  family: ui-answer
+  priority: P1/P3
+  lineage: 'traces Oct 2026: invented magnifying-glass search'
+  verified: project-zeno-next main@e250c300 2026-11-06
+  source_tab: challenge-refusal-v1
