@@ -161,6 +161,8 @@ def test_a_twin_must_be_an_english_case_with_the_same_expectations():
     differs = case("a-id", {"aoi_id": "BRA", "figure": "mean(area_ha)"}, "id", "a")
     assert "['figure']" in twin_problems([english, differs])[0]
     assert "not in the store" in twin_problems([same])[0]
+    untwinned = case("a-id", english.expected, "id")
+    assert twin_problems([english, untwinned]) == ["a-id: names no twin"]
     chained = case("a-id", same.expected, "id", "a-es")
     assert "must be an English case" in twin_problems([english, same, chained])[0]
 

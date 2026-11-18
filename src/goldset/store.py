@@ -343,8 +343,11 @@ def expected_differences(case: Case, twin: Case) -> list[str]:
 
 def twin_problem(case: Case, by_id: dict[str, Case]) -> str:
     """Why the twin a case names is not a valid other half of its pair, or
-    "". The twin must exist, be an English case and hold the same
-    expectations, so the pair's score gap measures the language alone."""
+    "". A case in another language must name a twin, which must exist, be an
+    English case and hold the same expectations, so the pair's score gap
+    measures the language alone."""
+    if not case.twin:
+        return "names no twin"
     twin = by_id.get(case.twin)
     if twin is None:
         return f"twin {case.twin!r} is not in the store"

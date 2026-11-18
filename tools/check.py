@@ -39,13 +39,14 @@ from goldset.templates import validate_templates
 
 
 def twin_problems(cases: list[Case]) -> list[str]:
-    """A case in another language and its English twin must hold the same
-    expectations (``goldset.store.twin_problem``)."""
+    """A case in another language must name an English twin that holds the
+    same expectations (``goldset.store.twin_problem``)."""
     by_id = {case.id: case for case in cases}
     return [
         f"{case.id}: {problem}"
         for case in cases
-        if case.twin and (problem := twin_problem(case, by_id))
+        if (case.twin or case.language != "en")
+        and (problem := twin_problem(case, by_id))
     ]
 
 
