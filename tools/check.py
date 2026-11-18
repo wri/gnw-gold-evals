@@ -38,6 +38,16 @@ from goldset.store import (
 from goldset.templates import validate_templates
 
 
+def expected_differences(case: Case, twin: Case) -> list[str]:
+    """The expected keys on which two cases disagree."""
+    return sorted(
+        key
+        for key in case.expected.keys() | twin.expected.keys()
+        if normalize_text(case.expected.get(key))
+        != normalize_text(twin.expected.get(key))
+    )
+
+
 def twin_problems(cases: list[Case]) -> list[str]:
     """A case in another language and its English twin must hold the same
     expectations: the pair's score gap then measures the language alone."""
@@ -52,12 +62,7 @@ def twin_problems(cases: list[Case]) -> list[str]:
         elif twin.language != "en":
             problems.append(f"{case.id}: twin {case.twin} must be an English case")
         else:
-            differing = sorted(
-                key
-                for key in case.expected.keys() | twin.expected.keys()
-                if normalize_text(case.expected.get(key))
-                != normalize_text(twin.expected.get(key))
-            )
+            differing = expected_differences(case, twin)
             if differing:
                 problems.append(
                     f"{case.id}: expected differs from its twin {case.twin} in "
