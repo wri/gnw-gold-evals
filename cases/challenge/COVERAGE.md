@@ -8,7 +8,7 @@ Terms are defined in the [README glossary](../../README.md#glossary).
 
 `caseset_version d1d6c95aaad4cdce` · 949 cases · ready 914 · todo 35 · **949 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-11-17_
+_Last updated: 2026-11-18_
 
 ## Groups
 
@@ -217,7 +217,7 @@ answer-graded column) exercise the other three.
   Their checks cannot fire until a case sets the field. Leave
   `suggested_datasets` unused: it is legacy (the agent now writes
   `nudge`), so author `nudge_type` / `nudge_options` instead.
-- Info-only checks: answer_traceability, charts_answer_judge, class_value_match, date_coverage, ground_truth_answer. They run and are
+- Info-only checks: answer_traceability, charts_answer_judge, class_value_match, date_coverage, ground_truth_answer, reply_language_match. They run and are
   reported but never affect a verdict, so the bucket coverage above
   excludes them. Why each is info-only, and what would make it gate:
   [evaluators README](../../src/goldset/evaluators/README.md#info-only-checks).

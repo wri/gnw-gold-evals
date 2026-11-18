@@ -1131,7 +1131,8 @@
       "charts_answer_judge",
       "class_value_match",
       "date_coverage",
-      "ground_truth_answer"
+      "ground_truth_answer",
+      "reply_language_match"
     ],
     "catalog_datasets_no_case": [
       "12"
