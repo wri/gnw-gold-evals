@@ -318,7 +318,9 @@ def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
     state, tables = _state("### 1.1 Ringkasan\nTotal kehilangan 64.435 hektar.", [
         {"aoi_id": "X", "tree_cover_loss_year": 2020, "area_ha": 64435.0}])
     pulled(tables)
-    assert evaluate_figures(state, "sum(area_ha)", "id")["figure_match_score"] is None
+    # A section number ("1.1") is no evidence of the reply's mark, so the
+    # Indonesian habit reads "64.435" as 64435.
+    assert evaluate_figures(state, "sum(area_ha)", "id")["figure_match_score"] == 1.0
     assert score("Total: 2.345 hectáreas.", "es")["figure_match_score"] == 0.0
 
 
@@ -536,3 +538,26 @@ def test_a_spaced_figure_matches_in_either_reading(pulled):
     state, tables = _state("Quedan 3 050 hectáreas.", TCL)
     pulled(tables)
     assert evaluate_figures(state, "sum(area_ha)", "es")["figure_match_score"] == 0.0
+
+
+def test_a_version_time_or_coordinate_does_not_set_the_reply_mark(pulled):
+    state, tables = _state(
+        "Menurut GADM 4.1, kehilangan tutupan pohon adalah 1.209 hektar.",
+        [{"aoi_id": "X", "tree_cover_loss_year": 2020, "area_ha": 1209.0}],
+    )
+    pulled(tables)
+    assert evaluate_figures(state, "sum(area_ha)", "id")["figure_match_score"] == 1.0
+    for aside in ("pukul 10.30 WIB", "Landsat 8.2", "di -3.45, 102.3"):
+        stated = _local(f"{aside}: 1.209 hektar", "id")["1.209 hektar"]
+        assert stated.value == 1209, aside
+
+
+def test_a_number_with_a_unit_or_percent_still_sets_the_reply_mark():
+    # The comma is this Spanish reply's decimal mark, against the usual dot.
+    stated = _local("10,46% y luego 321.221 hectáreas", "es")["321.221 hectáreas"]
+    assert stated.value == 321221 and stated.other.value == pytest.approx(321.221)
+    # Both marks, or grouping in threes, count without a unit.
+    assert _local("1.209,32 y 5.100 ha", "es")["5.100 ha"].value == 5100
+    assert _local("1.234.567 y 5.100 ha", "es")["5.100 ha"].value == 5100
+    # A bare clear number ("12,5") is no longer enough: it may be a time.
+    assert _local("a las 12,5 y 5.100 ha", "es")["5.100 ha"].value == pytest.approx(5.1)

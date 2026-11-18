@@ -590,13 +590,35 @@ def _read(number: str, decimal: str) -> tuple[float, float] | None:
     return value, 10.0 ** (-len(fraction)) if fraction else 1.0
 
 
-def _reply_decimal_mark(numbers: list[str]) -> str | None:
-    """The decimal mark the reply's clear numbers agree on, if they do."""
+def _word_scale(word: str, language: str) -> tuple[float, bool]:
+    """(scale, whether the word makes the number a measure) for the word
+    after a number."""
+    scale = _LOCAL_SCALES[language].get(word, 1.0)
+    if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
+        scale = 100.0  # km² to hectares
+    return scale, scale != 1.0 or word in _LOCAL_UNITS
+
+
+def _reply_decimal_mark(matches: list[re.Match[str]], language: str) -> str | None:
+    """The decimal mark the reply's clear numbers agree on, if they do.
+
+    A number is evidence only when it cannot be a version, a time or a
+    coordinate ("GADM 4.1", "10.30"): it shows both marks ("1.209,32"),
+    repeats one as grouping in threes ("1.234.567"), or has one clear mark
+    and a percent sign, scale word or unit after it ("10,46%", "2,5 juta").
+    """
     marks = set()
-    for number in numbers:
+    for m in matches:
+        number = "".join(_GROUP_SPACE.split(m[1]))
         mark = _decimal_mark(number)
         if mark:
-            marks.add(mark)
+            word = " ".join((m[3] or "").lower().split())
+            if (
+                ("." in number and "," in number)
+                or m[2]
+                or _word_scale(word, language)[1]
+            ):
+                marks.add(mark)
         elif mark == "" and ("." in number or "," in number):
             # "1.234.567" groups with dots, so its decimal mark is the comma;
             # a date or version ("31.12.2024") groups in nothing and says nothing.
@@ -610,19 +632,14 @@ def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
     # A decomposed accent would cut "millón" short at the "o".
     answer = unicodedata.normalize("NFC", answer)
     matches = list(_LOCAL_NUMBER.finditer(answer))
-    reply_mark = _reply_decimal_mark(
-        ["".join(_GROUP_SPACE.split(m[1])) for m in matches]
-    )
+    reply_mark = _reply_decimal_mark(matches, language)
     found = []
     for m in matches:
         for number, shown, carries in _spaced_readings(m[1]):
             percent = m[2] if carries else None
             suffix = m[3] if carries else None
             word = " ".join((suffix or "").lower().split())
-            scale = _LOCAL_SCALES[language].get(word, 1.0)
-            if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
-                scale = 100.0  # km² to hectares
-            measured = scale != 1.0 or word in _LOCAL_UNITS
+            scale, measured = _word_scale(word, language)
             plain = "." not in number and "," not in number
             if plain and not (percent or measured) and re.fullmatch(
                 r"(19|20)\d\d", number.lstrip("-")
