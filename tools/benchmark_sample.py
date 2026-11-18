@@ -61,8 +61,9 @@ def stages_for(case: Case) -> list[str]:
 
 def eligible(cases: list[Case], set_name: str) -> list[Case]:
     allowed = DIFFICULTY_FILTER.get(set_name)
+    # Other languages join through the languages companion, not the sample.
     pool = [c for c in cases if c.set == set_name and c.status == "ready"
-            and not c.is_multiturn]
+            and not c.is_multiturn and c.language == "en"]
     if allowed:
         pool = [c for c in pool if c.notes.get("difficulty") in allowed]
     return pool

@@ -170,6 +170,17 @@ def _query_key(text: str) -> str:
 
 
 def resolve(row: dict, by_id: dict[str, Case], by_query: dict[str, Case]) -> Case:
+    case = _find(row, by_id, by_query)
+    if case.language != "en":
+        raise SystemExit(
+            f"{row['benchmark_id']}: {case.id} is in {case.language!r}; the "
+            "English version holds English cases, and other languages go in "
+            "the languages companion"
+        )
+    return case
+
+
+def _find(row: dict, by_id: dict[str, Case], by_query: dict[str, Case]) -> Case:
     if row.get("challenge_id", "").strip():
         case = by_id.get(row["challenge_id"].strip())
         if case is None:

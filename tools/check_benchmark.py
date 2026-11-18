@@ -6,8 +6,9 @@
 For each manifest: structural validation (``goldset.benchmark``), then per
 active (non-voided) member: the uid exists in the source store, the case is
 ``ready``, and the frozen facets (id, set, cohort, difficulty, stages) still
-match the live case. A member with a ``language`` or a ``twin_uid`` is also
-checked as half of a pair: its case has that language, the case's ``twin``
+match the live case. Every member's language must match its case's, so an
+English version cannot hold a case in another language. A member with a
+``language`` or a ``twin_uid`` is also checked as half of a pair: its case has that language, the case's ``twin``
 is the case ``twin_uid`` names, and that twin is an active member of this
 version or of the ``pairs_with`` version. A problem is an **error** on a
 frozen version (exit 1) and a **warning** on a draft: editing a CHALLENGE
@@ -53,7 +54,7 @@ def pair_problems(
     by_id = {case.id: case for case in by_uid.values()}
     for m in bench.active_members:
         case = by_uid.get(m.uid)
-        if case is None or not (m.language or m.twin_uid):
+        if case is None:
             continue
         label = f"{m.id} ({m.uid})"
         if case.language != (m.language or "en"):
@@ -61,6 +62,8 @@ def pair_problems(
                 f"{label}: language {m.language or 'en'!r} differs from the "
                 f"case's {case.language!r}"
             )
+        if not (m.language or m.twin_uid):
+            continue
         if m.language:
             twin = by_id.get(case.twin)
             if twin is None or twin.uid != m.twin_uid:

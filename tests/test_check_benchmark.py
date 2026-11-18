@@ -168,3 +168,13 @@ def test_pair_facets_are_checked_against_the_cases(tmp_path):
     assert any("not the uid of the case's twin" in p for p in wrong_twin)
     not_named = problems(pair_member(english, twin_uid="0" * 16))
     assert any("names ch-quant-001 as its twin" in p for p in not_named)
+
+
+def test_an_english_version_cannot_hold_a_language_case(tmp_path):
+    english, spanish = pair_store(tmp_path)
+    # A plain member (no language, no twin_uid) whose case is in Spanish.
+    path = pair_manifest(tmp_path, "t", [pair_member(english),
+                                         pair_member(spanish)])
+    _, warnings = cb.check(path, tmp_path)
+    assert len(warnings) == 1
+    assert "differs from the case's 'es'" in warnings[0]
