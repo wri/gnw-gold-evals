@@ -40,6 +40,7 @@ import csv
 import json
 import re
 import sys
+from dataclasses import replace
 from datetime import date
 from pathlib import Path
 
@@ -150,8 +151,8 @@ def row_facets(row: dict) -> dict:
 
 
 def with_notes(case: Case, notes: dict[str, str]) -> Case:
-    return Case(id=case.id, status=case.status, group=case.group, query=case.query,
-                expected=case.expected, notes=notes, turns=case.turns, set=case.set)
+    # replace() keeps every other field, so a language case stays itself.
+    return replace(case, notes=notes)
 
 
 def tag(case: Case, row: dict) -> Case:
