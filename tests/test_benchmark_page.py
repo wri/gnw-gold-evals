@@ -18,6 +18,7 @@ from goldset.store import Case  # noqa: E402
 
 PASS = {"aoi_id_match": 1.0, "dataset_id_match": 1.0}
 FAIL_RETRIEVAL = {"aoi_id_match": 0.0, "dataset_id_match": 1.0}
+ENGLISH_PAGE = Path(__file__).parent / "fixtures" / "benchmark_page_english.json"
 
 
 def case(cid, query, **notes):
@@ -173,6 +174,16 @@ def test_page_groups_carry_failure_modes_by_standard(tmp_path):
         "every_time": {"retrieval": 2}, "majority": {"retrieval": 1}, "any_time": {}}
     assert all("failure_modes_by_standard" in g for g in page["types"] if g["measured"])
     assert all("failure_modes_by_standard" in g for g in page["use_cases"])
+
+
+def test_english_page_is_byte_identical_to_the_pinned_page(tmp_path):
+    """The FE parses the page strictly, so a manifest with no member in
+    another language must write exactly what it wrote before the languages
+    block existed. The fixture was written by the tool as it was then."""
+    run, bench, cases, art = setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art)
+    assert "languages" not in page
+    assert bp.render(page) == ENGLISH_PAGE.read_text(encoding="utf-8")
 
 
 def rerun_setup(tmp_path):

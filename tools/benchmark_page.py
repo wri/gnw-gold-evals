@@ -372,6 +372,11 @@ def build_page(run: dict[str, Any], bench: Benchmark, cases: dict[str, Case],
     }
 
 
+def render(page: dict[str, Any]) -> str:
+    """The page file's exact bytes."""
+    return json.dumps(page, ensure_ascii=False, separators=(",", ":")) + "\n"
+
+
 def run_artifacts(root: Path, run: dict[str, Any]) -> Path:
     artifacts = root / "results" / "benchmark" / "artifacts" / run["run_id"]
     if not artifacts.is_dir():
@@ -423,7 +428,7 @@ def main() -> int:
 
     out = root / "results" / "benchmark" / "pages" / f"{run['run_id']}.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(page, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    out.write_text(render(page), encoding="utf-8")
     s = page["summary"]
     print(f"wrote {out}: every time {s['every_time']:.1%}, majority {s['majority']:.1%} "
           f"({s['passed']}/{s['scored']}), {s['errors']} errored")
