@@ -50,6 +50,7 @@ import httpx
 from goldset.canonical import LANGUAGES
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
 from goldset.evaluators.chart_numeric import format_number
+from goldset.evaluators.reply_language import detect_language
 
 TOLERANCE = 0.02
 FETCH_TIMEOUT_S = 30.0
@@ -448,12 +449,19 @@ class Stated:
     other: Stated | None = None
 
 
-def stated_numbers(answer: str, language: str = "en") -> list[Stated]:
-    """Every number in the reply, scaled by the words after it."""
+def stated_numbers(
+    answer: str, language: str = "en", *, usual_mark: str | None = None
+) -> list[Stated]:
+    """Every number in the reply, scaled by the words after it.
+
+    ``usual_mark`` replaces the case language's usual decimal mark for a
+    number whose shape reads two ways, when the reply is known to follow
+    another language's habit. English cases ignore it.
+    """
     if language not in LANGUAGES:
         raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
     if language != "en":
-        return _stated_numbers_local(answer or "", language)
+        return _stated_numbers_local(answer or "", language, usual_mark)
     found = []
     for m in _NUMBER.finditer(answer or ""):
         whole, decimals, percent = m[1], m[2] or "", m[3]
@@ -486,7 +494,8 @@ def stated_numbers(answer: str, language: str = "en") -> list[Stated]:
 #    It has one reading.
 # 2. When its shape reads two ways ("1.209"), the reply's own convention
 #    (the mark its clear numbers agree on) gives the first reading.
-# 3. Failing that, Horizon's habit in the case language gives the first.
+# 3. Failing that, Horizon's habit in the case language gives the first; a
+#    reply that is plainly English follows the English habit instead.
 #
 # Spaces group thousands too ("1 209"); see ``_spaced_readings``.
 #
@@ -628,7 +637,9 @@ def _reply_decimal_mark(matches: list[re.Match[str]], language: str) -> str | No
     return marks.pop() if len(marks) == 1 else None
 
 
-def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
+def _stated_numbers_local(
+    answer: str, language: str, usual_mark: str | None = None
+) -> list[Stated]:
     # A decomposed accent would cut "millón" short at the "o".
     answer = unicodedata.normalize("NFC", answer)
     matches = list(_LOCAL_NUMBER.finditer(answer))
@@ -650,7 +661,7 @@ def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
             if mark is None:
                 # The reply's mark, else the usual one, only picks the first
                 # reading.
-                usual = reply_mark or _USUAL_DECIMAL_MARK[language]
+                usual = reply_mark or usual_mark or _USUAL_DECIMAL_MARK[language]
                 marks = [usual, "." if usual == "," else ","]
             else:
                 # No decimal part: the decimal mark is the one the grouping
@@ -806,7 +817,12 @@ def evaluate_figures(
     if language != "en":
         # A decomposed accent would split a word for the zero-word search too.
         answer = unicodedata.normalize("NFC", answer)
-    stated = stated_numbers(answer, language)
+    # Horizon may answer a Spanish or Indonesian case in English, and an
+    # English reply writes "1,209" for 1209 whatever the case language.
+    usual_mark = None
+    if language != "en" and detect_language(answer)[0] == "en":
+        usual_mark = "."
+    stated = stated_numbers(answer, language, usual_mark=usual_mark)
     parts, scored, missed = [], 0, 0
     for figure in figures:
         if figure.ref:

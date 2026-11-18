@@ -561,3 +561,33 @@ def test_a_number_with_a_unit_or_percent_still_sets_the_reply_mark():
     assert _local("1.234.567 y 5.100 ha", "es")["5.100 ha"].value == 5100
     # A bare clear number ("12,5") is no longer enough: it may be a time.
     assert _local("a las 12,5 y 5.100 ha", "es")["5.100 ha"].value == pytest.approx(5.1)
+
+
+def test_an_english_reply_to_a_local_case_uses_the_english_mark(pulled):
+    state, tables = _state(
+        "Tree cover loss was 1,209 hectares in the selected area during the year.",
+        [{"aoi_id": "X", "tree_cover_loss_year": 2020, "area_ha": 1209.0}],
+    )
+    pulled(tables)
+    for language in ("id", "es"):
+        result = evaluate_figures(state, "sum(area_ha)", language)
+        assert result["figure_match_score"] == 1.0, language
+    # The public reader still follows the case language unless told.
+    (stated,) = stated_numbers("Se perdieron 1,209 hectáreas.", "es")
+    assert stated.value == 1209
+    (stated,) = stated_numbers("Hilang 1,209 hektar.", "id")
+    assert stated.value == pytest.approx(1.209)
+    (stated,) = stated_numbers("Hilang 1,209 hektar.", "id", usual_mark=".")
+    assert stated.value == 1209
+
+
+def test_a_local_reply_keeps_the_case_languages_habit(pulled):
+    state, tables = _state(
+        "Kehilangan tutupan pohon adalah 1,209 hektar di area yang dipilih"
+        " pada tahun tersebut.",
+        [{"aoi_id": "X", "tree_cover_loss_year": 2020, "area_ha": 1209.0}],
+    )
+    pulled(tables)
+    # Indonesian writes the comma as decimal, so 1209 is only the second reading.
+    result = evaluate_figures(state, "sum(area_ha)", "id")
+    assert result["figure_match_score"] is None
