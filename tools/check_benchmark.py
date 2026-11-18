@@ -6,14 +6,12 @@
 For each manifest: structural validation (``goldset.benchmark``), then per
 active (non-voided) member: the uid exists in the source store, the case is
 ``ready``, and the frozen facets (id, set, cohort, difficulty, stages) still
-match the live case. Every member's language must match its case's, so an
-English version cannot hold a case in another language. A member with a
-``language`` or a ``twin_uid`` is also checked as half of a pair: its case has that language, the case's ``twin``
-is the case ``twin_uid`` names, and that twin is an active member of this
-version or of the ``pairs_with`` version. A problem is an **error** on a
-frozen version (exit 1) and a **warning** on a draft: editing a CHALLENGE
-case that a draft sampled is allowed, but it must be visible, because it
-silently shrinks the draft.
+match the live case. A member's language must match its case's. A member
+with a ``language`` or a ``twin_uid`` is also checked as half of a pair (see
+``benchmarks/README.md``, "Languages companion"). A problem is an **error**
+on a frozen version (exit 1) and a **warning** on a draft: editing a
+CHALLENGE case that a draft sampled is allowed, but it must be visible,
+because it silently shrinks the draft.
 Retired versions are validated structurally only.
 """
 
