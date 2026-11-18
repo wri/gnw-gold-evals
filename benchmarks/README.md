@@ -28,6 +28,8 @@ North Star.
   explanation > output`.
 - `sampling`: the full record (tool, seed, eligibility, per-stratum allocation).
 - `errata[]`: `{uid, date, reason}` voids.
+- `pairs_with` (optional): on a languages companion, the English version
+  its members pair with (see [Languages companion](#languages-companion)).
 
 ### Current versions
 
@@ -51,6 +53,52 @@ A version is either **sampled** (`tools/benchmark_sample.py`, stratified
 from CHALLENGE) or **curated** (`tools/benchmark_from_sheet.py`, one member
 per row of a reviewed sheet export, with the row's use-case facets). Both
 write the same manifest contract.
+
+## Languages companion
+
+The questions in Spanish and Indonesian sit in a companion manifest,
+`benchmarks/<version>-languages.json`, beside the English version. The
+English manifest is never changed for them.
+
+- Each question in another language is its own CHALLENGE case, with its own
+  uid, in its type's set. It names an English `twin` that holds the same
+  expectations (`cases/challenge/README.md`), so the score gap of a pair
+  measures the language alone.
+- The companion's top-level `pairs_with` names the English version, for
+  example `"pairs_with": "2026"`.
+- A member can carry two more optional facets, written only when set:
+  `language` (`es` or `id`; absent means English) and `twin_uid` (the uid of
+  its pair). A member with a `language` always has a `twin_uid`.
+- The twin is either a member of the companion or a member of the
+  `pairs_with` version. The companion names those English members by uid and
+  does not hold them. It does hold the English twins that were written for a
+  question in another language and are not in the English version.
+- **The language rates sit beside the English headline and never count in
+  it.** The North Star is the English version's rate. A companion is run and
+  reported as its own version, and its rates are read per language against
+  the same pairs in English.
+
+Write the expectations once, then build and check:
+
+```bash
+# Copy expected from one case of a pair to the other (either direction).
+uv run python tools/twin_case.py --from <case id> --to <case id>
+uv run python tools/check.py --fix --cases-dir cases/challenge
+uv run python tools/coverage_doc.py --cases-dir cases/challenge
+
+uv run python tools/benchmark_languages.py \
+  --version 2026-languages --pairs-with 2026
+uv run python tools/check_benchmark.py
+```
+
+`benchmark_languages.py` selects every `ready` case with a `language`, plus
+those cases' twins that are not members of the `pairs_with` version. A
+member whose twin is in that version takes the twin's type and optional
+facets (use cases and the rest), so both halves of a pair sit in the same
+groups. `check_benchmark.py` checks each pair against the store: the case's
+language, that `twin_uid` is the uid of the case's `twin`, and that the twin
+is an active member of the companion or of the `pairs_with` version. If the
+`pairs_with` manifest is missing, it reports that as one problem.
 
 ## Rules
 
