@@ -168,9 +168,10 @@ def test_reads_indonesian_replies_from_the_traces():
     assert stated["10,46%"].percent
     assert stated["53,17 juta"].value == pytest.approx(53.17e6)
     assert stated["1,72 Miliar"].value == pytest.approx(1.72e9)
-    # The reply's own numbers show the comma is its decimal mark.
+    # The reply's own numbers show the comma is its decimal mark, so that is
+    # the first reading; the other is kept.
     assert stated["321.221 hektar"].value == 321221
-    assert stated["321.221 hektar"].other is None
+    assert stated["321.221 hektar"].other.value == pytest.approx(321.221)
     assert stated["-7.856,30 tCO2e"].value == pytest.approx(-7856.30)
     assert not {"2016", "2001", "2025"} & set(stated)
 
@@ -185,13 +186,15 @@ def test_reads_spanish_replies_in_either_convention():
     assert english_form["434,487.33 ha"].value == pytest.approx(434487.33)
     assert english_form["1.33 millones"].value == pytest.approx(1.33e6)
     assert english_form["19,582 hectáreas"].value == 19582
-    assert english_form["19,582 hectáreas"].other is None
+    # Here the English mark leads, and the local reading is kept.
+    assert english_form["19,582 hectáreas"].other.value == pytest.approx(19.582)
     local_form = _local(
         "Cuerpos de agua: 1,10% (0,32 Mha). Pérdida: 393.170 hectáreas.", "es"
     )
     assert local_form["1,10%"].value == pytest.approx(1.10)
     assert local_form["0,32 Mha"].value == pytest.approx(0.32e6)
     assert local_form["393.170 hectáreas"].value == 393170
+    assert local_form["393.170 hectáreas"].other.value == pytest.approx(393.17)
 
 
 @pytest.mark.parametrize(
@@ -230,6 +233,60 @@ def test_a_number_with_no_clear_reading_keeps_both():
     assert mixed["1.209 ha"].other is not None
 
 
+def test_a_clear_number_does_not_settle_an_ambiguous_one():
+    # The reply's mark only orders the readings; the other is always kept.
+    (stated,) = [s for s in stated_numbers("Pico de 16,08 millones y 8,374 ha", "es")
+                 if s.text.startswith("8,374")]
+    assert stated.value == pytest.approx(8.374)
+    assert stated.other.value == 8374
+
+
+def test_a_clear_shape_has_one_reading():
+    assert _local("unas 0,125 ha", "es")["0,125 ha"].value == pytest.approx(0.125)
+    assert _local("unas 0,125 ha", "es")["0,125 ha"].other is None
+    assert _local("seluas 0.123 ha", "id")["0.123 ha"].value == pytest.approx(0.123)
+    assert _local("seluas 0.123 ha", "id")["0.123 ha"].other is None
+    # More than three whole digits cannot be grouped, so the mark is decimal.
+    stated = _local("unas 1234,567 ha", "es")["1234,567 ha"]
+    assert stated.value == pytest.approx(1234.567)
+    assert stated.other is None
+
+
+def test_the_reply_mark_is_inferred_from_grouping():
+    # "12.802.558" groups with dots, so the comma is the reply's decimal mark.
+    stated = _local("12.802.558 ha y luego 86.890 ha", "es")["86.890 ha"]
+    assert stated.value == 86890
+    assert stated.other.value == pytest.approx(86.89)
+    alone = _local("solo 86.890 ha", "es")["86.890 ha"]
+    assert alone.value == pytest.approx(86.89)
+    assert alone.other.value == 86890
+
+
+def test_dates_and_versions_are_not_evidence_of_the_reply_mark():
+    for date in ("31.12.2024", "2.1.0", "1.23.4567"):
+        stated = _local(f"Al {date} se perdieron 1.209 ha.", "es")["1.209 ha"]
+        assert stated.value == pytest.approx(1.209), date
+        assert stated.other.value == 1209, date
+
+
+def test_grouping_must_be_in_threes():
+    assert stated_numbers("1.23.4567 ha", "es") == []
+    assert stated_numbers("1,23,4567 ha", "id") == []
+
+
+def test_a_year_with_a_unit_or_percent_is_a_figure():
+    assert "2024" not in _local("en 2024 hubo", "es")
+    assert _local("unas 2024 ha", "es")["2024 ha"].value == 2024
+    assert _local("un 2024%", "es")["2024%"].percent
+
+
+def test_scale_words_belong_to_their_language():
+    assert _local("2 miles de millones de ha", "es")["2 miles de millones"].value == 2e9
+    assert _local("5 mil hectáreas", "id")["5"].value == 5
+    assert _local("5 ribu hektar", "es")["5"].value == 5
+    assert _local("450 rb hektar", "id")["450 rb"].value == 450e3
+
+
 def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
     figure = "sum(area_ha)"  # 1,050 over both areas
 
@@ -248,6 +305,20 @@ def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
     # "1,05 kha" shows the reply's decimal mark, so "1.050" is 1,050.
     settled = score("Total: 1.050 hectáreas (1,05 kha).", "es")
     assert settled["figure_match_score"] == 1.0
+    state, tables = _state(
+        "Pico de **16,08 millones de hectáreas** en 2017; pérdida neta de unas"
+        " **8,374 hectáreas**.",
+        [{"aoi_id": "X", "tree_cover_loss_year": 2020, "area_ha": 8374.0}],
+    )
+    pulled(tables)
+    assert evaluate_figures(state, "sum(area_ha)", "es")["figure_match_score"] is None
+    # A clear number elsewhere does not turn the other reading into a fail.
+    mixed = "Pico de **16,08 millones de hectáreas** en 2017; unas **1,050 hectáreas**."
+    assert score(mixed, "es")["figure_match_score"] is None
+    state, tables = _state("### 1.1 Ringkasan\nTotal kehilangan 64.435 hektar.", [
+        {"aoi_id": "X", "tree_cover_loss_year": 2020, "area_ha": 64435.0}])
+    pulled(tables)
+    assert evaluate_figures(state, "sum(area_ha)", "id")["figure_match_score"] is None
     assert score("Total: 2.345 hectáreas.", "es")["figure_match_score"] == 0.0
 
 
@@ -261,6 +332,9 @@ def test_a_zero_figure_may_be_stated_in_local_words(pulled):
         ("No hay cambios en la cobertura.", "es"),
         ("Tidak ditemukan adanya kehilangan tutupan pohon.", "id"),
         ("Belum ada peringatan di wilayah ini.", "id"),
+        ("Se mantiene en cero alertas este año.", "es"),
+        ("Se reportaron cero hectáreas de pérdida.", "es"),
+        ("No se registro\u0301 ninguna pe\u0301rdida.", "es"),
     ]:
         state, tables = _state(answer, empty_year)
         pulled(tables)
@@ -272,11 +346,28 @@ def test_a_zero_figure_may_be_stated_in_local_words(pulled):
         ("Más que en ningún otro año; sin datos de pérdida para 2021.", "es"),
         ("Komitmen emisi nol bersih; tidak ada data kehilangan.", "id"),
         ("Dihitung tanpa memperhitungkan emisi.", "id"),
+        ("Hay un compromiso de cero deforestación en la región.", "es"),
+        ("El objetivo es cero emisiones netas.", "es"),
+        ("Hubo niveles sin precedentes de pérdida.", "es"),
+        ("Sin información de pérdida para 2021.", "es"),
+        ("No hay información sobre pérdidas.", "es"),
+        ("Sin duda la pérdida fue grande.", "es"),
+        ("Se vigila sin importar las alertas.", "es"),
+        ("Sin contar la pérdida de 2020.", "es"),
+        ("Sin incluir alertas de 2021.", "es"),
+        ("Tidak ada informasi kehilangan.", "id"),
     ]:
         state, tables = _state(answer, empty_year)
         pulled(tables)
         result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
         assert result["figure_match_score"] == 0.0, answer
+
+
+def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
+    with pytest.raises(ValueError, match="language"):
+        evaluate_figures({}, "", "fr")
+    with pytest.raises(ValueError, match="language"):
+        evaluate_figures({}, "sum(area_ha)", "fr")
 
 
 def test_figure_match_passes_rounding_and_fails_a_wrong_figure(pulled):

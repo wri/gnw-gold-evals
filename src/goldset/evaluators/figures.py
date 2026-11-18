@@ -41,7 +41,7 @@ from __future__ import annotations
 import math
 import re
 import unicodedata
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from functools import lru_cache
 from typing import Any
 
@@ -443,8 +443,7 @@ class Stated:
     precision: float  # half the last stated digit, in the same units
     percent: bool
     text: str
-    # The second reading of a number such as "1.209", when neither the reply
-    # nor the case language settles which mark is the decimal one.
+    # The second reading of a number whose shape reads two ways ("1.209").
     other: Stated | None = None
 
 
@@ -483,11 +482,15 @@ def stated_numbers(answer: str, language: str = "en") -> list[Stated]:
 # number is read in this order:
 #
 # 1. By its own shape, when that is clear: "1.209,32", "12,5", "1.234.567".
-# 2. By the reply's own convention, when its clear numbers agree on one.
-# 3. By Horizon's habit in that language. Then the reading is a guess, so the
-#    number keeps its second reading: a figure that matches only the second
-#    reading abstains (AJ, 2026-11-18: abstain when a number has no clear
-#    reading).
+#    It has one reading.
+# 2. When its shape reads two ways ("1.209"), the reply's own convention
+#    (the mark its clear numbers agree on) gives the first reading.
+# 3. Failing that, Horizon's habit in the case language gives the first.
+#
+# A shape-ambiguous number always keeps its second reading, however sure the
+# first looks: a reply mixes conventions, so a figure that matches only the
+# second reading abstains (AJ, 2026-11-18: abstain when a number has no clear
+# reading) and never fails. A wrong figure matches neither reading.
 #
 # The habit is measured, not assumed. Of Horizon's replies to external users
 # that show a convention (traces to 2026-10-20): Spanish 657 dot-decimal to
@@ -496,29 +499,36 @@ def stated_numbers(answer: str, language: str = "en") -> list[Stated]:
 LANGUAGES = ("en", "es", "id")
 _USUAL_DECIMAL_MARK = {"es": ".", "id": ","}
 
+# "billón" is the long-scale billion, 10^12. "mil" is Spanish only: in an
+# Indonesian reply it is not a scale, and "ribu" is not one in a Spanish reply.
 _LOCAL_SCALES = {
-    **_SCALES,
-    # Spanish. "billón" is the long-scale billion, 10^12.
-    "mil": 1e3, "miles": 1e3,
-    "millón": 1e6, "millon": 1e6, "millones": 1e6,
-    "mil millones": 1e9, "millardo": 1e9, "millardos": 1e9,
-    "billón": 1e12, "billon": 1e12, "billones": 1e12,
-    # Indonesian.
-    "ribu": 1e3, "rb": 1e3,
-    "juta": 1e6, "jt": 1e6,
-    "miliar": 1e9, "milyar": 1e9,
-    "triliun": 1e12, "trilyun": 1e12,
+    "es": {
+        **_SCALES,
+        "mil": 1e3, "miles": 1e3,
+        "millón": 1e6, "millon": 1e6, "millones": 1e6,
+        "mil millones": 1e9, "miles de millones": 1e9,
+        "millardo": 1e9, "millardos": 1e9,
+        "billón": 1e12, "billon": 1e12, "billones": 1e12,
+    },
+    "id": {
+        **_SCALES,
+        "ribu": 1e3, "rb": 1e3,
+        "juta": 1e6, "jt": 1e6,
+        "miliar": 1e9, "milyar": 1e9,
+        "triliun": 1e12, "trilyun": 1e12,
+    },
 }
 _LOCAL_UNITS = (*_UNITS, "hectárea", "hectáreas", "hectarea", "hectareas",
                 "hektar", "hektare", "tonelada", "toneladas", "ton")
+_KM2_PHRASE = r"kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
 _LOCAL_NUMBER = re.compile(
     r"(?<![\w.])(-?\d+(?:[.,]\d+)*)"
     r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen)?"
-    r"\s*(mil\s+millones|kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
-    r"|[^\W\d_][^\W_]*)?",
+    r"\s*(miles\s+de\s+millones|mil\s+millones|" + _KM2_PHRASE
+    + r"|[^\W\d_][^\W_]*)?",
     re.I,
 )
-_KM2_WORDS = re.compile(r"kil[oó]metros? cuadrados?|(?:kilometer|km) persegi")
+_KM2_WORDS = re.compile(_KM2_PHRASE)
 
 
 def _decimal_mark(number: str) -> str | None:
@@ -561,8 +571,11 @@ def _reply_decimal_mark(numbers: list[str]) -> str | None:
         if mark:
             marks.add(mark)
         elif mark == "" and ("." in number or "," in number):
-            # "1.234.567" groups with dots, so its decimal mark is the comma.
-            marks.add("," if "." in number else ".")
+            # "1.234.567" groups with dots, so its decimal mark is the comma;
+            # a date or version ("31.12.2024") groups in nothing and says nothing.
+            implied = "," if "." in number else "."
+            if _read(number, implied):
+                marks.add(implied)
     return marks.pop() if len(marks) == 1 else None
 
 
@@ -575,7 +588,7 @@ def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
     for m in matches:
         number, percent = m[1], m[2]
         word = " ".join((m[3] or "").lower().split())
-        scale = _LOCAL_SCALES.get(word, 1.0)
+        scale = _LOCAL_SCALES[language].get(word, 1.0)
         if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
             scale = 100.0  # km² to hectares
         measured = scale != 1.0 or word in _LOCAL_UNITS
@@ -586,25 +599,26 @@ def _stated_numbers_local(answer: str, language: str) -> list[Stated]:
             continue  # a year, not a figure
         text = number + (percent or "") + (" " + m[3] if measured else "")
         mark = _decimal_mark(number)
-        unsure = mark is None and reply_mark is None
         if mark is None:
-            mark = reply_mark or _USUAL_DECIMAL_MARK[language]
-        if mark == "":
+            # The reply's mark, else the usual one, only picks the first reading.
+            usual = reply_mark or _USUAL_DECIMAL_MARK[language]
+            marks = [usual, "." if usual == "," else ","]
+        else:
             # No decimal part: the decimal mark is the one the grouping leaves.
-            mark = "," if "." in number else "."
-        readings = [_read(number, mark)]
-        if unsure:
-            readings.append(_read(number, "." if mark == "," else ","))
-        stated = [
-            Stated(value * scale, 0.5 * step * scale, bool(percent), text)
-            for value, step in filter(None, readings)
-        ]
-        if not stated:
+            marks = [mark or ("," if "." in number else ".")]
+        readings = [_read(number, m_) for m_ in marks]
+        if readings[0] is None:
             continue  # "1.23.4567": not a number this parser can read
-        first, *rest = stated
-        found.append(
-            Stated(first.value, first.precision, first.percent, text, *rest)
-        )
+
+        def stated_as(reading: tuple[float, float]) -> Stated:
+            return Stated(
+                reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text
+            )
+
+        first = stated_as(readings[0])
+        if len(readings) > 1 and readings[1] is not None:
+            first = replace(first, other=stated_as(readings[1]))
+        found.append(first)
     return found
 
 
@@ -638,14 +652,23 @@ _ZERO_WORDS = re.compile(
     r"(loss|alerts?|change|gain|emissions|disturbances?|deforestation))\b",
     re.I,
 )
-# A bare "cero" or "nol" is not enough: "deforestación cero" and "emisi nol
-# bersih" name a target, and "sin datos de pérdida" reports no data, not zero.
+# "cero" counts only before a loss noun ("cero alertas"): "deforestación cero"
+# and "cero emisiones netas" name a target. Words that turn the phrase into
+# "no data" or an idiom ("sin embargo", "sin información", "sin duda") are
+# excluded between the cue and the noun.
+_ES_SKIP = (
+    "embargo|contar|incluir|datos|informaci[óo]n|informacion|registros?"
+    "|precedentes|importar|duda"
+)
 _LOCAL_ZERO_WORDS = {
     "es": re.compile(
-        r"\b(?:cero (?:hect[áa]reas|ha)|(?:no (?:se )?(?:ha |han )?"
+        r"\b(?:cero (?:hect[áa]reas|ha)"
+        r"|cero (?:(?!"+_ES_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:p[ée]rdidas?|alertas?|cambios?|ganancias?|perturbaci\w+)"
+        r"|(?:no (?:se )?(?:ha |han )?"
         r"(?:registr|detect|observ|report|encontr|identific)\w+|no hay|no existen?"
-        r"|no ha habido|no hubo|tampoco hubo|no presenta|sin|ning[úu]n|ningun[ao]"
-        r"|cero) (?:(?!embargo|contar|incluir|datos)[\w-]+ ){0,2}"
+        r"|no ha habido|no hubo|tampoco hubo|no presenta|sin|ning[úu]n|ningun[ao])"
+        r" (?:(?!"+_ES_SKIP+r")[\w-]+ ){0,2}"
         r"(?:p[ée]rdidas?|alertas?|cambios?|ganancias?|emisiones|perturbaci\w+"
         r"|deforestaci[óo]n))\b",
         re.I,
@@ -653,7 +676,8 @@ _LOCAL_ZERO_WORDS = {
     "id": re.compile(
         r"\b(?:nihil|nol (?:hektare?|ha|peringatan)|(?:tidak ada|tak ada|belum ada"
         r"|tanpa|tidak terdapat|tidak ditemukan|tidak terdeteksi|tidak tercatat"
-        r"|tidak terjadi|tidak mengalami) (?:(?!data|memperhitungkan)[\w-]+ ){0,2}"
+        r"|tidak terjadi|tidak mengalami) (?:(?!data|memperhitungkan|informasi)"
+        r"[\w-]+ ){0,2}"
         r"(?:kehilangan|peringatan|perubahan|penambahan|emisi|gangguan"
         r"|deforestasi))\b",
         re.I,
@@ -706,14 +730,16 @@ def evaluate_figures(
     """figure_match: every asked figure the data can give appears in the reply.
 
     ``language`` is the case's language; it sets how the reply's numbers are
-    read. A figure the reply states only as a number that reads two ways
-    ("1.209", with nothing to settle it) abstains.
+    read. A figure the reply states only as the second reading of a number
+    whose shape reads two ways ("1.209") abstains.
 
     ``null`` when the case names no figure, or no asked figure can be computed
     from what was pulled (nothing pulled, a table that cannot be read, a
     column it lacks). ``0.0`` when a computable figure is missing from the
     reply; ``1.0`` when every computable one is there.
     """
+    if language not in LANGUAGES:
+        raise ValueError(f"language must be one of {LANGUAGES}, got {language!r}")
     result: dict[str, Any] = {
         "figure_match_score": None,
         "figure_match_reason": None,
@@ -727,6 +753,9 @@ def evaluate_figures(
         result["figure_match_reason"] = "no pulled table could be read; abstained"
         return result
     answer = extract_final_answer_text(agent_state.get("messages", []))
+    if language != "en":
+        # A decomposed accent would split a word for the zero-word search too.
+        answer = unicodedata.normalize("NFC", answer)
     stated = stated_numbers(answer, language)
     parts, scored, missed = [], 0, 0
     for figure in figures:
