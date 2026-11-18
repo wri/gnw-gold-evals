@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "8a909a3c6658e9e2",
+  "caseset_version": "8a1d077199906132",
   "case_count": 1028,
   "cases": [
     {
@@ -21293,13 +21293,13 @@
     },
     {
       "id": "ch-refusal-031",
-      "uid": "434e6bd05d493b7c",
+      "uid": "30bc879cddee881b",
       "set": "refusal",
       "group": "should-decline",
       "status": "ready",
       "difficulty": "hard",
       "behaviour": "decline",
-      "query": "Is the plot at 115.279, 31.6476 at risk of failing the EUDR?",
+      "query": "Is the plot at 6.143, -2.512 at risk of failing the EUDR?",
       "expected_fields": [
         "forbidden_tools",
         "scope",

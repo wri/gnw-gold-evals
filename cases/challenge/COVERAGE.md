@@ -6,7 +6,7 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version 8a909a3c6658e9e2` · 1028 cases · ready 993 · todo 35 · **1028 active** (everything but `not doing` runs by default)
+`caseset_version 8a1d077199906132` · 1028 cases · ready 993 · todo 35 · **1028 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-11-18_
 
