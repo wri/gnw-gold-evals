@@ -165,6 +165,13 @@ Optional fields, written only when they apply:
   run file with different content; byte-identical re-ingest (idempotence) is
   allowed. Re-ingesting after a tooling fix means deleting the file first,
   visibly, in a reviewable commit.
+- **Rescored runs.** `tools/rescore_run.py` is the only sanctioned way to
+  change an uncommitted run's scores after a check fix. It recomputes one
+  deterministic check from the saved agent states and rewrites the file in
+  place, never one tracked at HEAD. It adds a top-level `rescored` list
+  (one entry per rescore: `check`, `harness_sha`, `at`, `note` (the `--note` text), and the counts
+  `trials_changed`, `check_verdicts_changed`, `overall_verdicts_changed`) and
+  appends a sentence with that note to `methodology_note`. `harness` stays as the run wrote it.
 - **In-flight state is a sidecar, never the run file.** While a run
   executes, completed entries stream to `results/<set>/runs/<run_id>.partial.jsonl`
   (gitignored, fsynced per case). The immutable run JSON is still written
