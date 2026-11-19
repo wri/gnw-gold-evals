@@ -105,6 +105,22 @@ def test_members_are_the_other_languages_and_their_new_english_twins(tmp_path):
     assert bl.build(root, "t-languages", paired, "2026-11-18") == data
 
 
+def test_portuguese_and_french_questions_join_the_companion(tmp_path):
+    # Nothing in the tool is per language: any case language pairs the same way.
+    made = cases(**{
+        "pt-1": case("pt-1", "Quanta floresta foi perdida?", LOSS, "pt", "en-1"),
+        "fr-1": case("fr-1", "Combien de forêt a été perdue ?", LOSS, "fr", "en-1"),
+    })
+    root, made, paired = setup(tmp_path, made)
+    data = bl.build(root, "t-languages", paired, "2026-11-19")
+    assert from_dict(data).validate() == []
+    by_id = {m["id"]: m for m in data["members"]}
+    for code in ("pt", "fr"):
+        member = by_id[f"{code}-1"]
+        assert (member["language"], member["twin_uid"], member["type"]) == (
+            code, made["en-1"].uid, "trend")
+
+
 def test_without_a_paired_version_every_twin_is_a_member(tmp_path):
     root, made, _paired = setup(tmp_path)
     data = bl.build(root, "t-languages", None, "2026-11-18")
