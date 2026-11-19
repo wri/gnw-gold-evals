@@ -1,5 +1,5 @@
 {
-  "caseset_version": "8ba4e687003ecb3a",
+  "caseset_version": "d0c0e72b3b6d6336",
   "case_count": 1285,
   "source": "challenge-map-v1.csv",
   "cases": [
@@ -2812,14 +2812,14 @@
     },
     {
       "id": "ch-comp-182",
-      "uid": "a1c4e19c6dbbd9fe",
+      "uid": "05b4b6a5c04bfe73",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready"
     },
     {
       "id": "ch-comp-182-es",
-      "uid": "8c8d5e32a0b943f5",
+      "uid": "6986d08a64cd37e7",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready"
@@ -4807,14 +4807,14 @@
     },
     {
       "id": "ch-mon-069",
-      "uid": "49f2a903ac29fa2d",
+      "uid": "1645c4bd67c6189f",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready"
     },
     {
       "id": "ch-mon-069-id",
-      "uid": "ee28a59e55957ae0",
+      "uid": "29bfba1daecb90b7",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready"
@@ -6949,14 +6949,14 @@
     },
     {
       "id": "ch-quant-221",
-      "uid": "4cc884ae316d0544",
+      "uid": "56ac9b1b9c1bb5ce",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready"
     },
     {
       "id": "ch-quant-221-es",
-      "uid": "263453285820374a",
+      "uid": "7f66d2392e4f9646",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready"
@@ -7117,28 +7117,28 @@
     },
     {
       "id": "ch-quant-233",
-      "uid": "9b0ec8408723dd06",
+      "uid": "6eddad723de38ab0",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready"
     },
     {
       "id": "ch-quant-233-es",
-      "uid": "503fee0d1d1903db",
+      "uid": "541ca641ed78bf37",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready"
     },
     {
       "id": "ch-quant-234",
-      "uid": "71f5ea4abf10a20b",
+      "uid": "24c7845598ac6c13",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready"
     },
     {
       "id": "ch-quant-234-id",
-      "uid": "5b95caf56f290e4b",
+      "uid": "57212e0d1bf9116b",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready"
@@ -7159,14 +7159,14 @@
     },
     {
       "id": "ch-quant-236",
-      "uid": "14af01d7cb549fae",
+      "uid": "cd739459ee7e440c",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready"
     },
     {
       "id": "ch-quant-236-id",
-      "uid": "7813e94869d4a547",
+      "uid": "9a36bd7631f5ccfc",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready"
@@ -7579,14 +7579,14 @@
     },
     {
       "id": "ch-quant-266",
-      "uid": "ba9ffa623987052d",
+      "uid": "98c81d87d19b7cc8",
       "set": "quantification",
       "group": "method",
       "status": "ready"
     },
     {
       "id": "ch-quant-266-id",
-      "uid": "6654e0eb3ea5a870",
+      "uid": "70773819fdf013a8",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -7635,14 +7635,14 @@
     },
     {
       "id": "ch-quant-270",
-      "uid": "9d3effaf4d23b3e5",
+      "uid": "ee6ed3421466b38d",
       "set": "quantification",
       "group": "method",
       "status": "ready"
     },
     {
       "id": "ch-quant-270-id",
-      "uid": "a1793e71111776d9",
+      "uid": "cf63e3c727b2b0cb",
       "set": "quantification",
       "group": "method",
       "status": "ready"

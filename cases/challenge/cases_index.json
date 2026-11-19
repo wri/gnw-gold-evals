@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "8ba4e687003ecb3a",
+  "caseset_version": "d0c0e72b3b6d6336",
   "case_count": 1285,
   "cases": [
     {
@@ -9491,18 +9491,20 @@
     },
     {
       "id": "ch-comp-182",
-      "uid": "a1c4e19c6dbbd9fe",
+      "uid": "05b4b6a5c04bfe73",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready",
       "query": "Compare the current native forest cover with that of the last 20 years in the department of Rocha (Uruguay). In the places where the forest was transformed, indicate which activity or land use caused it.",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -9518,18 +9520,20 @@
     },
     {
       "id": "ch-comp-182-es",
-      "uid": "8c8d5e32a0b943f5",
+      "uid": "6986d08a64cd37e7",
       "set": "comparison",
       "group": "land-cover",
       "status": "ready",
       "query": "Compara la cobertura de bosque nativo actual con la de los últimos 20 años en el departamento de Rocha (Uruguay). En los sitios donde se transformó el bosque, indica cuál fue la actividad o uso del suelo que lo generó.",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -16157,7 +16161,7 @@
     },
     {
       "id": "ch-mon-069",
-      "uid": "49f2a903ac29fa2d",
+      "uid": "1645c4bd67c6189f",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
@@ -16187,7 +16191,7 @@
     },
     {
       "id": "ch-mon-069-id",
-      "uid": "ee28a59e55957ae0",
+      "uid": "29bfba1daecb90b7",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
@@ -23876,13 +23880,14 @@
     },
     {
       "id": "ch-quant-221",
-      "uid": "4cc884ae316d0544",
+      "uid": "56ac9b1b9c1bb5ce",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready",
       "query": "which municipalities in the state of Campeche in Mexico have the greatest forest cover loss between 2000 and 2026",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
@@ -23893,6 +23898,7 @@
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
@@ -23905,13 +23911,14 @@
     },
     {
       "id": "ch-quant-221-es",
-      "uid": "263453285820374a",
+      "uid": "7f66d2392e4f9646",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready",
       "query": "cuáles son los municipios del estado de Campeche en México con mayor pérdida de cobertura forestal entre 2000 y 2026",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
@@ -23922,6 +23929,7 @@
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
         "date_extraction",
@@ -24358,7 +24366,7 @@
     },
     {
       "id": "ch-quant-233",
-      "uid": "9b0ec8408723dd06",
+      "uid": "6eddad723de38ab0",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready",
@@ -24374,7 +24382,7 @@
     },
     {
       "id": "ch-quant-233-es",
-      "uid": "503fee0d1d1903db",
+      "uid": "541ca641ed78bf37",
       "set": "quantification",
       "group": "unavailable",
       "status": "ready",
@@ -24390,12 +24398,13 @@
     },
     {
       "id": "ch-quant-234",
-      "uid": "71f5ea4abf10a20b",
+      "uid": "24c7845598ac6c13",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "How much baseline rice field area (lahan baku sawah) is there in Merauke district in 2024?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -24403,6 +24412,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -24416,12 +24426,13 @@
     },
     {
       "id": "ch-quant-234-id",
-      "uid": "5b95caf56f290e4b",
+      "uid": "57212e0d1bf9116b",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "Berapa jumlah lahan baku sawah yang ada di Kabupaten Merauke pada tahun 2024?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -24429,6 +24440,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -24474,12 +24486,13 @@
     },
     {
       "id": "ch-quant-236",
-      "uid": "14af01d7cb549fae",
+      "uid": "cd739459ee7e440c",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "How much has rice field area increased in South Sumatra, Indonesia?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -24487,6 +24500,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -24500,12 +24514,13 @@
     },
     {
       "id": "ch-quant-236-id",
-      "uid": "7813e94869d4a547",
+      "uid": "9a36bd7631f5ccfc",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "Berapa penamabahan lahan sawah di south sumatera indonesia",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -24513,6 +24528,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -25882,7 +25898,7 @@
     },
     {
       "id": "ch-quant-266",
-      "uid": "ba9ffa623987052d",
+      "uid": "98c81d87d19b7cc8",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -25898,7 +25914,7 @@
     },
     {
       "id": "ch-quant-266-id",
-      "uid": "6654e0eb3ea5a870",
+      "uid": "70773819fdf013a8",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -26010,7 +26026,7 @@
     },
     {
       "id": "ch-quant-270",
-      "uid": "9d3effaf4d23b3e5",
+      "uid": "ee6ed3421466b38d",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -26026,7 +26042,7 @@
     },
     {
       "id": "ch-quant-270-id",
-      "uid": "a1793e71111776d9",
+      "uid": "cf63e3c727b2b0cb",
       "set": "quantification",
       "group": "method",
       "status": "ready",

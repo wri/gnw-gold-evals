@@ -1,5 +1,5 @@
 id: ch-quant-236-id
-uid: 7813e94869d4a547
+uid: 9a36bd7631f5ccfc
 status: ready
 set: quantification
 group: land-cover
@@ -9,6 +9,7 @@ query: Berapa penamabahan lahan sawah di south sumatera indonesia
 expected:
   aoi_ids: IDN.31
   dataset_id: '1'
+  accept_nudge_offering: '1'
   data_pull: 'TRUE'
   text: Reports the change in cropland area from the land cover data, states the years it
     compares, and says the class is cropland in general, not rice fields only.

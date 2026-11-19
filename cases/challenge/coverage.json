@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "8ba4e687003ecb3a",
+  "caseset_version": "d0c0e72b3b6d6336",
   "case_count": 1285,
   "statuses": {
     "ready": 1250,
@@ -594,7 +594,7 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 306,
+      "dedicated": 312,
       "shared_only": 0
     }
   },
@@ -641,7 +641,7 @@
     },
     {
       "field": "context_layer",
-      "cases": 203,
+      "cases": 205,
       "switches_on": "context_layer_match"
     },
     {
@@ -666,7 +666,7 @@
     },
     {
       "field": "accept_nudge_offering",
-      "cases": 28,
+      "cases": 34,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {

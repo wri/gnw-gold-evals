@@ -6,9 +6,9 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version 8ba4e687003ecb3a` · 1285 cases · ready 1250 · todo 35 · **1285 active** (everything but `not doing` runs by default)
+`caseset_version d0c0e72b3b6d6336` · 1285 cases · ready 1250 · todo 35 · **1285 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-11-18_
+_Last updated: 2026-11-19_
 
 ## Groups
 
@@ -104,7 +104,7 @@ exists.
 | analysis | 0 | 0 | 0 | 0% |
 | explanation | 436 | 0 | 436 | 34% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 306 | 0 | 306 | 24% |
+| scope | 312 | 0 | 312 | 24% |
 
 ## Expected-field census (active cases)
 
@@ -118,12 +118,12 @@ exists.
 | end_date | 418 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | figure | 320 | figure_match (computed from the agent's own pulled table) |
 | forbidden_tools | 237 | forbidden_tools_absent |
-| context_layer | 203 | context_layer_match |
+| context_layer | 205 | context_layer_match |
 | figure_claim | 97 | figure_claim_match (the conclusion the pulled data supports) |
 | date_tolerance_days | 68 | date_extraction (days a window may fall short of a bound) |
 | scope | 42 | scope_match |
 | dataset_parameters | 40 | dataset_parameter_match |
-| accept_nudge_offering | 28 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| accept_nudge_offering | 34 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | clarification | 15 | clarification_requested |
 | nudge_type | 12 | nudge_match |
 | accept_aoi_nudge_offering | 6 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |

@@ -1,19 +1,19 @@
 id: ch-mon-069
-uid: 49f2a903ac29fa2d
+uid: 1645c4bd67c6189f
 status: ready
 set: monitoring
 group: recent_default
 query: show the latest forest disturbances in Indonesia, especially Bengkulu province
 expected:
-  aoi_ids: IDN.5
+  aoi_ids: IDN.5|IDN;IDN.5
   dataset_id: '11'
   start_date: '{run-90d}'
   end_date: '{run}'
   date_tolerance_days: '62'
   data_pull: 'TRUE'
   text: States the time window the alerts it reports cover.
-  figure: sum(area_ha) where alert_date in {run-30d}..{run} | sum(area_ha) where alert_date
-    in {run-90d}..{run}
+  figure: sum(area_ha) where aoi_id = 'IDN.5' and alert_date in {run-30d}..{run} | sum(area_ha)
+    where aoi_id = 'IDN.5' and alert_date in {run-90d}..{run}
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-mon-069-id (id-n-002);
     real id user prompt, trace trace 2026-09'

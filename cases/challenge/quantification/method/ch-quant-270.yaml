@@ -1,11 +1,13 @@
 id: ch-quant-270
-uid: 9d3effaf4d23b3e5
+uid: ee6ed3421466b38d
 status: ready
 set: quantification
 group: method
 query: what data can I get for Bengkulu province
 expected:
   text: Lists the datasets it can analyse for Bengkulu without inventing datasets or figures.
+    Date ranges of datasets and names of imagery sources in a capability list are not invented
+    figures.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-270-id (id-n-060);
     real id user prompt, trace trace 2026-10'

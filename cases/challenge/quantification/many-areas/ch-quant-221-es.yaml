@@ -1,5 +1,5 @@
 id: ch-quant-221-es
-uid: 263453285820374a
+uid: 7f66d2392e4f9646
 status: ready
 set: quantification
 group: many-areas
@@ -12,10 +12,12 @@ expected:
   data_pull: 'TRUE'
   dataset_id: '4'
   end_date: '2025-12-31'
-  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2001..2025
-  start_date: '2001-01-01'
-  text: Ranks Campeche's municipalities by tree cover loss from the pulled data and says the
-    data cover 2001 to 2025.
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2001..2025 | max(area_ha) by
+    aoi_id where tree_cover_loss_year in 2002..2025
+  start_date: '2002-01-01'
+  context_layer: no_selection | primary_forest
+  text: Ranks Campeche's municipalities by tree cover loss from the pulled data and says which
+    years the data cover.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-021); real es user prompt,
     trace trace 2026-11'

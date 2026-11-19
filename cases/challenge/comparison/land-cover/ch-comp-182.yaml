@@ -1,5 +1,5 @@
 id: ch-comp-182
-uid: a1c4e19c6dbbd9fe
+uid: 05b4b6a5c04bfe73
 status: ready
 set: comparison
 group: land-cover
@@ -8,6 +8,7 @@ query: Compare the current native forest cover with that of the last 20 years in
   or land use caused it.
 expected:
   aoi_ids: URY.14
+  accept_nudge_offering: 4;8
   data_pull: 'TRUE'
   dataset_id: 1;4;8
   text: Reports the change in forest or tree cover in Rocha from pulled data, and attributes
