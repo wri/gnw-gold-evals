@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "d0c0e72b3b6d6336",
-  "case_count": 1285,
+  "caseset_version": "25d5261e3ecbc8fd",
+  "case_count": 1287,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -6661,12 +6661,13 @@
     },
     {
       "id": "ch-comp-090-id",
-      "uid": "7f7ebbc300a9e822",
+      "uid": "b7a0e59e99f000af",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready",
       "query": "Negara mana yang memiliki lahan alami lebih luas, Brasil atau Indonesia?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -6674,6 +6675,7 @@
         "figure_claim"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -9628,6 +9630,34 @@
       "dataset_ids": [
         "4"
       ]
+    },
+    {
+      "id": "ch-comp-185",
+      "uid": "bda039a34748a306",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Which country has more natural land, Brazil or Indonesia?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-dataset-001",
@@ -24870,25 +24900,28 @@
     },
     {
       "id": "ch-quant-243",
-      "uid": "d1d02ab421743bbe",
+      "uid": "4dd3aa4940f306f6",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
       "query": "I want to get forest cover loss data for the Gunung Mutis area from 2000 to 2025",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
-        "figure",
-        "start_date"
+        "start_date",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction"
+        "date_extraction",
+        "expected_text_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -24897,25 +24930,28 @@
     },
     {
       "id": "ch-quant-243-id",
-      "uid": "be224000492dcaa3",
+      "uid": "fe73ffc5d470502a",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
       "query": "Saya ingin dapatkan data kehilangan tutupan hutan wilayah Gunung Mutis dari tahun 2000 - 2025",
       "expected_fields": [
         "aoi_ids",
+        "context_layer",
         "data_pull",
         "dataset_id",
         "end_date",
-        "figure",
-        "start_date"
+        "start_date",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
+        "context_layer_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction"
+        "date_extraction",
+        "expected_text_match"
       ],
       "intent": "quantification",
       "dataset_ids": [
@@ -25994,7 +26030,7 @@
     },
     {
       "id": "ch-quant-269",
-      "uid": "5895a0efbc53f94a",
+      "uid": "2ffa0a77cf2b4cff",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -26010,7 +26046,7 @@
     },
     {
       "id": "ch-quant-269-id",
-      "uid": "b17d081a30ee5185",
+      "uid": "a19bd6cf0e63aa16",
       "set": "quantification",
       "group": "method",
       "status": "ready",
@@ -29243,7 +29279,7 @@
     },
     {
       "id": "ch-trend-052-id",
-      "uid": "c4e0ae147c08f3db",
+      "uid": "64c595ba025e3278",
       "set": "trend",
       "group": "integrated-alerts",
       "status": "ready",
@@ -29253,15 +29289,16 @@
         "data_pull",
         "dataset_id",
         "end_date",
-        "figure",
-        "start_date"
+        "start_date",
+        "text"
       ],
       "implied_checks": [
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
         "dataset_id_match",
-        "date_extraction"
+        "date_extraction",
+        "expected_text_match"
       ],
       "intent": "trend",
       "dataset_ids": [
@@ -30891,6 +30928,35 @@
       "dataset_ids": [
         "4"
       ]
+    },
+    {
+      "id": "ch-trend-098",
+      "uid": "8dfbc6a8c70b2ffe",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "What was the month-by-month pattern of deforestation alert area in Indonesia from January to December 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "monthly_trend"
     }
   ]
 }

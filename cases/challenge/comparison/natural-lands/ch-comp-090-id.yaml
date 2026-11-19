@@ -1,10 +1,10 @@
 id: ch-comp-090-id
-uid: 7f7ebbc300a9e822
+uid: b7a0e59e99f000af
 status: ready
 set: comparison
 group: natural-lands
 language: id
-twin: ch-comp-090
+twin: ch-comp-185
 query: Negara mana yang memiliki lahan alami lebih luas, Brasil atau Indonesia?
 expected:
   aoi_ids: BRA;IDN
@@ -19,6 +19,7 @@ expected:
     'Bare')
   figure_claim: '#1 > #2 :: Brazil has more natural land than Indonesia || Indonesia has more
     natural land than Brazil'
+  accept_nudge_offering: '3'
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-090 (id-t-020)'
   pair_id: id-t-020

@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "d0c0e72b3b6d6336",
-  "case_count": 1285,
+  "caseset_version": "25d5261e3ecbc8fd",
+  "case_count": 1287,
   "statuses": {
-    "ready": 1250,
+    "ready": 1252,
     "todo": 35
   },
-  "active_count": 1285,
+  "active_count": 1287,
   "groups": [
     {
       "group": "acronyms",
@@ -261,10 +261,10 @@
     },
     {
       "group": "integrated-alerts",
-      "cases": 56,
-      "active": 56,
+      "cases": 57,
+      "active": 57,
       "statuses": {
-        "ready": 56
+        "ready": 57
       }
     },
     {
@@ -325,10 +325,10 @@
     },
     {
       "group": "natural-lands",
-      "cases": 45,
-      "active": 45,
+      "cases": 46,
+      "active": 46,
       "statuses": {
-        "ready": 44,
+        "ready": 45,
         "todo": 1
       }
     },
@@ -578,7 +578,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 1023,
+      "dedicated": 1025,
       "shared_only": 0
     },
     "analysis": {
@@ -586,7 +586,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 436,
+      "dedicated": 440,
       "shared_only": 0
     },
     "output": {
@@ -594,44 +594,44 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 312,
+      "dedicated": 314,
       "shared_only": 0
     }
   },
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 899,
+      "cases": 901,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 802,
+      "cases": 804,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 697,
+      "cases": 699,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
       "field": "text",
-      "cases": 434,
+      "cases": 438,
       "switches_on": "expected_text_match"
     },
     {
       "field": "start_date",
-      "cases": 419,
+      "cases": 420,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "end_date",
-      "cases": 418,
+      "cases": 419,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "figure",
-      "cases": 320,
+      "cases": 318,
       "switches_on": "figure_match (computed from the agent's own pulled table)"
     },
     {
@@ -641,12 +641,12 @@
     },
     {
       "field": "context_layer",
-      "cases": 205,
+      "cases": 207,
       "switches_on": "context_layer_match"
     },
     {
       "field": "figure_claim",
-      "cases": 97,
+      "cases": 98,
       "switches_on": "figure_claim_match (the conclusion the pulled data supports)"
     },
     {
@@ -666,7 +666,7 @@
     },
     {
       "field": "accept_nudge_offering",
-      "cases": 34,
+      "cases": 36,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {
@@ -782,7 +782,7 @@
         "dataset_id": "3",
         "dataset_name": "SBTN Natural Lands Map",
         "missing_instructions": [],
-        "cases": 59,
+        "cases": 60,
         "answer_graded": 8,
         "parameters": [],
         "context_layers": []
@@ -792,7 +792,7 @@
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
         "cases": 261,
-        "answer_graded": 60,
+        "answer_graded": 62,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -906,8 +906,8 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 128,
-        "answer_graded": 34,
+        "cases": 129,
+        "answer_graded": 36,
         "parameters": [],
         "context_layers": [
           {

@@ -1,5 +1,5 @@
 id: ch-quant-243-id
-uid: be224000492dcaa3
+uid: fe73ffc5d470502a
 status: ready
 set: quantification
 group: tcl
@@ -10,10 +10,12 @@ query: Saya ingin dapatkan data kehilangan tutupan hutan wilayah Gunung Mutis da
 expected:
   aoi_ids: 8719|15961
   dataset_id: '4'
-  start_date: '2001-01-01'
+  start_date: '2002-01-01'
   end_date: '2025-12-31'
   data_pull: 'TRUE'
-  figure: sum(area_ha) where tree_cover_loss_year in 2001..2025
+  context_layer: no_selection | primary_forest
+  text: Says the data were pulled for Gunung Mutis, names the forest layer used, and says
+    which years the data cover; the years it states match the pulled data.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-020); real id user prompt,
     trace trace 2026-07'

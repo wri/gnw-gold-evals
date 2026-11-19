@@ -7,7 +7,7 @@
   "pairs_with": "2026",
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "d0c0e72b3b6d6336"
+    "caseset_version": "25d5261e3ecbc8fd"
   },
   "sampling": {
     "tool": "tools/benchmark_languages.py",
@@ -456,21 +456,18 @@
       "twin_uid": "7c307853a940e649"
     },
     {
-      "uid": "7f7ebbc300a9e822",
+      "uid": "b7a0e59e99f000af",
       "id": "ch-comp-090-id",
       "type": "comparison",
       "set": "comparison",
       "cohort": "natural-lands",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval"
       ],
-      "use_cases": [
-        "UC4",
-        "UC5"
-      ],
       "language": "id",
-      "twin_uid": "84219951f56b9748"
+      "twin_uid": "bda039a34748a306"
     },
     {
       "uid": "d11a4c05b2afcd78",
@@ -775,6 +772,18 @@
       ],
       "language": "id",
       "twin_uid": "1af7ace1c38967ad"
+    },
+    {
+      "uid": "bda039a34748a306",
+      "id": "ch-comp-185",
+      "type": "comparison",
+      "set": "comparison",
+      "cohort": "natural-lands",
+      "difficulty": "",
+      "stages": [
+        "scope",
+        "retrieval"
+      ]
     },
     {
       "uid": "0ad840843238ae1d",
@@ -2584,28 +2593,30 @@
       "twin_uid": "eb9baf90d682c144"
     },
     {
-      "uid": "d1d02ab421743bbe",
+      "uid": "4dd3aa4940f306f6",
       "id": "ch-quant-243",
       "type": "quantification",
       "set": "quantification",
       "cohort": "tcl",
       "difficulty": "",
       "stages": [
-        "retrieval"
+        "retrieval",
+        "explanation"
       ]
     },
     {
-      "uid": "be224000492dcaa3",
+      "uid": "fe73ffc5d470502a",
       "id": "ch-quant-243-id",
       "type": "quantification",
       "set": "quantification",
       "cohort": "tcl",
       "difficulty": "",
       "stages": [
-        "retrieval"
+        "retrieval",
+        "explanation"
       ],
       "language": "id",
-      "twin_uid": "d1d02ab421743bbe"
+      "twin_uid": "4dd3aa4940f306f6"
     },
     {
       "uid": "ed1ca582444e3969",
@@ -3230,7 +3241,7 @@
       "twin_uid": "03092feb360e9831"
     },
     {
-      "uid": "5895a0efbc53f94a",
+      "uid": "2ffa0a77cf2b4cff",
       "id": "ch-quant-269",
       "type": "quantification",
       "set": "quantification",
@@ -3241,7 +3252,7 @@
       ]
     },
     {
-      "uid": "b17d081a30ee5185",
+      "uid": "a19bd6cf0e63aa16",
       "id": "ch-quant-269-id",
       "type": "quantification",
       "set": "quantification",
@@ -3251,7 +3262,7 @@
         "explanation"
       ],
       "language": "id",
-      "twin_uid": "5895a0efbc53f94a"
+      "twin_uid": "2ffa0a77cf2b4cff"
     },
     {
       "uid": "ee6ed3421466b38d",
@@ -3295,22 +3306,18 @@
       "twin_uid": "835f05e2d874e479"
     },
     {
-      "uid": "c4e0ae147c08f3db",
+      "uid": "64c595ba025e3278",
       "id": "ch-trend-052-id",
       "type": "trend",
       "set": "trend",
       "cohort": "integrated-alerts",
       "difficulty": "",
       "stages": [
-        "retrieval"
-      ],
-      "use_cases": [
-        "UC1",
-        "UC3",
-        "UC5"
+        "retrieval",
+        "explanation"
       ],
       "language": "id",
-      "twin_uid": "4f1d6f90058c88b6"
+      "twin_uid": "8dfbc6a8c70b2ffe"
     },
     {
       "uid": "e1c36e5cfbaa5cfe",
@@ -3648,6 +3655,18 @@
       ],
       "language": "id",
       "twin_uid": "aed7311c91115d08"
+    },
+    {
+      "uid": "8dfbc6a8c70b2ffe",
+      "id": "ch-trend-098",
+      "type": "trend",
+      "set": "trend",
+      "cohort": "integrated-alerts",
+      "difficulty": "",
+      "stages": [
+        "retrieval",
+        "explanation"
+      ]
     }
   ],
   "errata": []

@@ -1,13 +1,14 @@
 id: ch-quant-269
-uid: 5895a0efbc53f94a
+uid: 2ffa0a77cf2b4cff
 status: ready
 set: quantification
 group: method
 query: Why can't my geojson file be uploaded
 expected:
-  text: Explains likely reasons or the upload requirements as the app documents them (supported
-    formats, valid geometry), or asks for the error message; does not claim to have seen or
-    fixed the file.
+  text: 'Explains likely reasons or the upload requirements, or asks for the error message;
+    does not claim to have seen or fixed the file. Any limits it states must not contradict
+    the app''s rules: a .geojson file up to 1 MB with polygon geometry, an area of at most
+    10,000 km²; .csv and zipped shapefiles up to 10 MB are also accepted.'
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-269-id (id-n-059);
     real id user prompt, trace trace 2026-05'
@@ -16,5 +17,6 @@ notes:
   use_cases: UC6
   synthetic: 'FALSE'
   verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
-    and prod /api/aois; no agent run yet
+    and prod /api/aois; upload rules checked 2026-11-19 against project-zeno-next src/entities/custom-area/model/upload-limits.ts;
+    no agent run yet
   precedent: ch-mon-046; ch-quant-193

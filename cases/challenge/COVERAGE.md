@@ -6,7 +6,7 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version d0c0e72b3b6d6336` · 1285 cases · ready 1250 · todo 35 · **1285 active** (everything but `not doing` runs by default)
+`caseset_version 25d5261e3ecbc8fd` · 1287 cases · ready 1252 · todo 35 · **1287 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-11-19_
 
@@ -45,7 +45,7 @@ _Last updated: 2026-11-19_
 | ghg-flux | 57 | 57 | ready 56, todo 1 |
 | global | 6 | 6 | ready 6 |
 | grasslands | 56 | 56 | ready 56 |
-| integrated-alerts | 56 | 56 | ready 56 |
+| integrated-alerts | 57 | 57 | ready 57 |
 | land-cover | 59 | 59 | ready 59 |
 | many-areas | 33 | 33 | ready 33 |
 | many_areas | 2 | 2 | ready 2 |
@@ -53,7 +53,7 @@ _Last updated: 2026-11-19_
 | monthly_recent | 3 | 3 | ready 3 |
 | multi | 14 | 14 | ready 14 |
 | multilingual | 40 | 40 | ready 40 |
-| natural-lands | 45 | 45 | ready 44, todo 1 |
+| natural-lands | 46 | 46 | ready 45, todo 1 |
 | no_aoi | 1 | 1 | ready 1 |
 | portfolio_rank | 1 | 1 | todo 1 |
 | premise_check | 3 | 3 | ready 3 |
@@ -100,30 +100,30 @@ exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 1023 | 0 | 1023 | 80% |
+| retrieval | 1025 | 0 | 1025 | 80% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 436 | 0 | 436 | 34% |
+| explanation | 440 | 0 | 440 | 34% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 312 | 0 | 312 | 24% |
+| scope | 314 | 0 | 314 | 24% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 899 | dataset_id_match |
-| aoi_ids | 802 | aoi_id_match |
-| data_pull | 697 | data_pull_exists, answered_without_data |
-| text | 434 | expected_text_match |
-| start_date | 419 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| end_date | 418 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| figure | 320 | figure_match (computed from the agent's own pulled table) |
+| dataset_id | 901 | dataset_id_match |
+| aoi_ids | 804 | aoi_id_match |
+| data_pull | 699 | data_pull_exists, answered_without_data |
+| text | 438 | expected_text_match |
+| start_date | 420 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| end_date | 419 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| figure | 318 | figure_match (computed from the agent's own pulled table) |
 | forbidden_tools | 237 | forbidden_tools_absent |
-| context_layer | 205 | context_layer_match |
-| figure_claim | 97 | figure_claim_match (the conclusion the pulled data supports) |
+| context_layer | 207 | context_layer_match |
+| figure_claim | 98 | figure_claim_match (the conclusion the pulled data supports) |
 | date_tolerance_days | 68 | date_extraction (days a window may fall short of a bound) |
 | scope | 42 | scope_match |
 | dataset_parameters | 40 | dataset_parameter_match |
-| accept_nudge_offering | 34 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| accept_nudge_offering | 36 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | clarification | 15 | clarification_requested |
 | nudge_type | 12 | nudge_match |
 | accept_aoi_nudge_offering | 6 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
@@ -160,15 +160,15 @@ answer-graded column) exercise the other three.
 |---|---|---|---|---|---|
 | 1 | Global land cover | 72 | 16 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 61 | 4 | — | — |
-| 3 | SBTN Natural Lands Map | 59 | 8 | — | — |
-| 4 | Tree cover loss | 261 | 60 | canopy_cover ×15 | primary_forest ×34, intact_forest ×4, natural_forest ×4 |
+| 3 | SBTN Natural Lands Map | 60 | 8 | — | — |
+| 4 | Tree cover loss | 261 | 62 | canopy_cover ×15 | primary_forest ×34, intact_forest ×4, natural_forest ×4 |
 | 5 | Tree cover gain | 48 | 4 | — | — |
 | 6 | Forest greenhouse gas net flux | 60 | 6 | canopy_cover ×5 | — |
 | 7 | Tree cover | 56 | 13 | canopy_cover ×12 | primary_forest ×8 |
 | 8 | Tree cover loss by dominant driver | 72 | 26 | canopy_cover ×4 | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 43 | 10 | — | — |
 | 10 | Tree cover loss due to fires | 90 | 17 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
-| 11 | Integrated alerts | 128 | 34 | — | natural_lands ×4 |
+| 11 | Integrated alerts | 129 | 36 | — | natural_lands ×4 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn

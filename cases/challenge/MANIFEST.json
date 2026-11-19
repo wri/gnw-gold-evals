@@ -1,6 +1,6 @@
 {
-  "caseset_version": "d0c0e72b3b6d6336",
-  "case_count": 1285,
+  "caseset_version": "25d5261e3ecbc8fd",
+  "case_count": 1287,
   "source": "challenge-map-v1.csv",
   "cases": [
     {
@@ -2077,7 +2077,7 @@
     },
     {
       "id": "ch-comp-090-id",
-      "uid": "7f7ebbc300a9e822",
+      "uid": "b7a0e59e99f000af",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready"
@@ -2850,6 +2850,13 @@
       "uid": "16601e626a87275d",
       "set": "comparison",
       "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-185",
+      "uid": "bda039a34748a306",
+      "set": "comparison",
+      "group": "natural-lands",
       "status": "ready"
     },
     {
@@ -7257,14 +7264,14 @@
     },
     {
       "id": "ch-quant-243",
-      "uid": "d1d02ab421743bbe",
+      "uid": "4dd3aa4940f306f6",
       "set": "quantification",
       "group": "tcl",
       "status": "ready"
     },
     {
       "id": "ch-quant-243-id",
-      "uid": "be224000492dcaa3",
+      "uid": "fe73ffc5d470502a",
       "set": "quantification",
       "group": "tcl",
       "status": "ready"
@@ -7621,14 +7628,14 @@
     },
     {
       "id": "ch-quant-269",
-      "uid": "5895a0efbc53f94a",
+      "uid": "2ffa0a77cf2b4cff",
       "set": "quantification",
       "group": "method",
       "status": "ready"
     },
     {
       "id": "ch-quant-269-id",
-      "uid": "b17d081a30ee5185",
+      "uid": "a19bd6cf0e63aa16",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -8573,7 +8580,7 @@
     },
     {
       "id": "ch-trend-052-id",
-      "uid": "c4e0ae147c08f3db",
+      "uid": "64c595ba025e3278",
       "set": "trend",
       "group": "integrated-alerts",
       "status": "ready"
@@ -8996,6 +9003,13 @@
       "uid": "5af9f69c925818ea",
       "set": "trend",
       "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-098",
+      "uid": "8dfbc6a8c70b2ffe",
+      "set": "trend",
+      "group": "integrated-alerts",
       "status": "ready"
     }
   ]
