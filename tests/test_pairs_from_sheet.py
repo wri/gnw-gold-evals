@@ -152,6 +152,7 @@ def test_one_bad_row_stops_every_row(tmp_path, capsys):
 ])
 def test_each_row_problem_is_reported(tmp_path, capsys, row, needle):
     root = store(tmp_path)
+    before = sorted(cases_in(root))
     code = run(root, sheet(tmp_path, row))
     out = capsys.readouterr().out
     if needle is None:  # a valid row in another set
@@ -159,6 +160,7 @@ def test_each_row_problem_is_reported(tmp_path, capsys, row, needle):
         return
     assert code == 1
     assert needle in out
+    assert sorted(cases_in(root)) == before
 
 
 def expected_row(body):
@@ -201,6 +203,75 @@ def test_a_native_type_must_be_the_type_its_set_measures(tmp_path, capsys):
     out = capsys.readouterr().out
     assert "type 'trend' does not fit the set quantification" in out
     assert "nothing written" in out
+
+
+def nothing_written(root, capsys, row, needle, *extra):
+    """Run one row over a store with ``extra`` cases; it must stop with
+    ``needle`` and leave the store as it was."""
+    for case in extra:
+        write_case(root, case)
+    before = sorted(cases_in(root))
+    assert run(root, sheet(root.parent, row)) == 1
+    out = capsys.readouterr().out
+    assert needle in out and "nothing written" in out
+    assert sorted(cases_in(root)) == before
+
+
+def test_an_id_the_store_already_holds_is_a_problem(tmp_path, capsys):
+    root = store(tmp_path)
+    taken = Case(id=f"{MEMBER.id}-pt", status="ready", set=MEMBER.set,
+                 group=MEMBER.group, language="pt", twin=MEMBER.id,
+                 query="Quanta cobertura arbórea o Pará perdeu?",
+                 expected=dict(LOSS))
+    nothing_written(root, capsys, translated(),
+                    "ch-quant-001-pt: the store or the sheet already has this id",
+                    taken)
+
+
+def test_a_translated_member_must_be_a_single_turn_english_case(tmp_path, capsys):
+    root = store(tmp_path)
+    spanish = Case(id="ch-quant-003-es", status="ready", set="quantification",
+                   group="tcl", language="es", twin=MEMBER.id,
+                   query="¿Cuánta cobertura arbórea perdió Pará en 2024?",
+                   expected=dict(LOSS))
+    nothing_written(root, capsys,
+                    translated(english_id=spanish.id, english_uid=spanish.uid),
+                    "member ch-quant-003-es is not a single-turn English case",
+                    spanish)
+
+
+def test_a_multi_turn_member_is_not_a_single_turn_english_case(tmp_path, capsys):
+    root = store(tmp_path)
+    thread = Case(id="ch-quant-003", status="ready", set="quantification",
+                  group="tcl", turns=(
+                      {"query": "How much tree cover did Pará lose in 2024?",
+                       "expected": dict(LOSS)},
+                      {"query": "And Acre?", "expected": {**LOSS, "aoi_ids": "BRA.1"}},
+                  ))
+    nothing_written(root, capsys,
+                    translated(english_id=thread.id, english_uid=thread.uid),
+                    "member ch-quant-003 is not a single-turn English case", thread)
+
+
+def test_a_set_with_two_id_prefixes_cannot_number_a_native_twin(tmp_path, capsys):
+    root = store(tmp_path)
+    stray = Case(id="other-quant-001", status="ready", set="quantification",
+                 group="tcl", query="How much did Pará lose?", expected=dict(LOSS))
+    nothing_written(root, capsys, native(),
+                    "no single id prefix among the numbered cases of the set "
+                    "quantification", stray)
+
+
+def test_a_case_that_fails_validation_is_a_problem():
+    # write_case refuses an invalid case, so such a member cannot be on disk:
+    # plan() is called on an in-memory store, as main() would call it.
+    odd = Case(id="ch-quant-003", status="ready", set="quantification", group="tcl",
+               query="How much did Pará lose?", expected=dict(LOSS),
+               notes={"use_cases": 5})
+    _cases, problems = pfs.plan(
+        [translated(english_id=odd.id, english_uid=odd.uid)], "pt",
+        "portuguese_query", "2026-11-25", [MEMBER, OTHER, odd])
+    assert "ch-quant-003-pt: notes.use_cases is int, expected string" in problems
 
 
 def test_a_pair_id_twice_in_the_sheet_is_a_problem(tmp_path, capsys):
