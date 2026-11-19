@@ -1,5 +1,5 @@
 id: ch-mon-073
-uid: 903c58e3a814f7a2
+uid: 63c46a025e127ed1
 status: ready
 set: monitoring
 group: many_areas
@@ -32,9 +32,9 @@ expected:
   aoi_ids: BRA.4.38;BRA.4.19;BRA.4.18;BRA.4.37;BRA.4.11;BRA.4.7;BRA.4.14;BRA.4.39;BRA.4.57;BRA.4.16;BRA.4.26;BRA.4.35;BRA.22.37
   dataset_id: '11'
   data_pull: 'TRUE'
-  text: Gives alert figures for all 13 named municipalities (each, or a total that says it
-    covers all 13) and states the time window; does not drop a named municipality without
-    saying so.
+  text: Gives alert figures for the named municipalities (each, or one total; a total for
+    the selected or listed municipalities counts as covering all 13) and states the time window;
+    does not say or imply that a named municipality was left out.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-mon-073-pt (pt-n-001);
     real pt user prompt, trace 2026-10'
@@ -47,3 +47,5 @@ notes:
   aoi_name: Manaus, Careiro da Várzea, Careiro, Manaquiri, Beruri, Autazes, Borba, Manicoré,
     Tapauá, Canutama, Humaitá, Lábrea (Amazonas) and Porto Velho (Rondônia)
   precedent: id-n-003 (ch-mon-070); ch-mon-064; ch-causal-027
+  review: '2026-11-19 pilot (run 20261119T105142Z_prod): text loosened; a total for the selected
+    municipalities counts as covering all 13, since aoi_id_match checks the selection.'

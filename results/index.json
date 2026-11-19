@@ -2823,7 +2823,7 @@
         },
         "canonical": false,
         "canonical_reasons": [
-          "205 active member(s) not in the run"
+          "204 active member(s) not in the run"
         ]
       },
       {
@@ -2917,7 +2917,7 @@
         },
         "canonical": false,
         "canonical_reasons": [
-          "441 active member(s) not in the run"
+          "442 active member(s) not in the run"
         ]
       },
       {
@@ -3015,7 +3015,7 @@
         ],
         "canonical": false,
         "canonical_reasons": [
-          "247 active member(s) not in the run and its bases"
+          "248 active member(s) not in the run and its bases"
         ],
         "page": "results/benchmark/pages/20261119T080049Z_prod.json"
       }
@@ -3101,7 +3101,7 @@
       "path": "benchmarks/2026-languages.json",
       "status": "draft",
       "frozen": null,
-      "members": 501,
+      "members": 502,
       "voided": 0,
       "runs": [
         "20261119T072356Z_prod",
@@ -3113,8 +3113,8 @@
       "path": "benchmarks/2026.json",
       "status": "frozen",
       "frozen": "2026-11-18",
-      "members": 265,
-      "voided": 4,
+      "members": 264,
+      "voided": 5,
       "runs": [
         "20261119T063036Z_prod"
       ],

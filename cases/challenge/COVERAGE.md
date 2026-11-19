@@ -6,7 +6,7 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version bc56e61f574b9f3e` · 1530 cases · ready 1495 · todo 35 · **1530 active** (everything but `not doing` runs by default)
+`caseset_version b787ce71f4eeeac8` · 1531 cases · ready 1496 · todo 35 · **1531 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-11-19_
 
@@ -38,7 +38,7 @@ _Last updated: 2026-11-19_
 | designations | 26 | 26 | ready 26 |
 | direct | 20 | 20 | ready 20 |
 | driver_check | 1 | 1 | ready 1 |
-| driver_share | 5 | 5 | ready 5 |
+| driver_share | 6 | 6 | ready 6 |
 | driver_vs_fire | 4 | 4 | ready 4 |
 | expansion | 10 | 10 | ready 6, todo 4 |
 | fire_share_pa | 2 | 2 | ready 2 |
@@ -100,28 +100,28 @@ exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 1192 | 0 | 1192 | 78% |
+| retrieval | 1193 | 0 | 1193 | 78% |
 | analysis | 0 | 0 | 0 | 0% |
-| explanation | 617 | 0 | 617 | 40% |
+| explanation | 618 | 0 | 618 | 40% |
 | output | 0 | 0 | 0 | 0% |
-| scope | 356 | 0 | 356 | 23% |
+| scope | 358 | 0 | 358 | 23% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 1056 | dataset_id_match |
-| aoi_ids | 964 | aoi_id_match |
-| data_pull | 856 | data_pull_exists, answered_without_data |
-| text | 615 | expected_text_match |
+| dataset_id | 1057 | dataset_id_match |
+| aoi_ids | 965 | aoi_id_match |
+| data_pull | 857 | data_pull_exists, answered_without_data |
+| text | 616 | expected_text_match |
 | start_date | 478 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | end_date | 476 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| figure | 452 | figure_match (computed from the agent's own pulled table) |
+| figure | 453 | figure_match (computed from the agent's own pulled table) |
 | context_layer | 240 | context_layer_match |
 | forbidden_tools | 237 | forbidden_tools_absent |
 | figure_claim | 120 | figure_claim_match (the conclusion the pulled data supports) |
 | date_tolerance_days | 81 | date_extraction (days a window may fall short of a bound) |
-| accept_nudge_offering | 77 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| accept_nudge_offering | 79 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | scope | 42 | scope_match |
 | dataset_parameters | 40 | dataset_parameter_match |
 | clarification | 15 | clarification_requested |
@@ -165,7 +165,7 @@ answer-graded column) exercise the other three.
 | 5 | Tree cover gain | 56 | 8 | — | — |
 | 6 | Forest greenhouse gas net flux | 72 | 13 | canopy_cover ×5 | — |
 | 7 | Tree cover | 75 | 30 | canopy_cover ×12 | primary_forest ×13 |
-| 8 | Tree cover loss by dominant driver | 90 | 42 | canopy_cover ×4 | — |
+| 8 | Tree cover loss by dominant driver | 91 | 43 | canopy_cover ×4 | — |
 | 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 45 | 12 | — | — |
 | 10 | Tree cover loss due to fires | 102 | 26 | canopy_cover ×4 | primary_forest ×8, intact_forest ×3 |
 | 11 | Integrated alerts | 147 | 43 | — | natural_lands ×4 |

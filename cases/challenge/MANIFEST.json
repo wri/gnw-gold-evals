@@ -1,6 +1,6 @@
 {
-  "caseset_version": "bc56e61f574b9f3e",
-  "case_count": 1530,
+  "caseset_version": "b787ce71f4eeeac8",
+  "case_count": 1531,
   "source": "challenge-map-v1.csv",
   "cases": [
     {
@@ -1405,7 +1405,7 @@
     },
     {
       "id": "ch-causal-017-fr",
-      "uid": "d713dd22534dbb65",
+      "uid": "b467ff7dd6d285e5",
       "set": "causal",
       "group": "driver_share",
       "status": "ready"
@@ -1548,6 +1548,13 @@
       "uid": "f17ab14a8af46592",
       "set": "causal",
       "group": "many_areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-causal-032",
+      "uid": "879fca00d71c21d0",
+      "set": "causal",
+      "group": "driver_share",
       "status": "ready"
     },
     {
@@ -5346,14 +5353,14 @@
     },
     {
       "id": "ch-mon-073",
-      "uid": "903c58e3a814f7a2",
+      "uid": "63c46a025e127ed1",
       "set": "monitoring",
       "group": "many_areas",
       "status": "ready"
     },
     {
       "id": "ch-mon-073-pt",
-      "uid": "bd74abf1aee0e6d4",
+      "uid": "013598a5f212985b",
       "set": "monitoring",
       "group": "many_areas",
       "status": "ready"

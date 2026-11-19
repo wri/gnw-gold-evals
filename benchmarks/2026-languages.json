@@ -7,7 +7,7 @@
   "pairs_with": "2026",
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "bc56e61f574b9f3e"
+    "caseset_version": "b787ce71f4eeeac8"
   },
   "sampling": {
     "tool": "tools/benchmark_languages.py",
@@ -561,22 +561,19 @@
       "twin_uid": "db652b6d07e80e90"
     },
     {
-      "uid": "d713dd22534dbb65",
+      "uid": "b467ff7dd6d285e5",
       "id": "ch-causal-017-fr",
       "type": "causal",
       "set": "causal",
       "cohort": "driver_share",
       "difficulty": "",
       "stages": [
+        "scope",
         "retrieval",
         "explanation"
       ],
-      "use_cases": [
-        "UC4"
-      ],
-      "synthetic": true,
       "language": "fr",
-      "twin_uid": "d50067a5a601e831"
+      "twin_uid": "879fca00d71c21d0"
     },
     {
       "uid": "ca1209b616f12360",
@@ -696,6 +693,19 @@
       ],
       "language": "id",
       "twin_uid": "efa739810c9bd6ac"
+    },
+    {
+      "uid": "879fca00d71c21d0",
+      "id": "ch-causal-032",
+      "type": "causal",
+      "set": "causal",
+      "cohort": "driver_share",
+      "difficulty": "medium",
+      "stages": [
+        "scope",
+        "retrieval",
+        "explanation"
+      ]
     },
     {
       "uid": "618ae8000d77ea1b",
@@ -2190,7 +2200,7 @@
       "twin_uid": "84b5b7bbff9cde6f"
     },
     {
-      "uid": "903c58e3a814f7a2",
+      "uid": "63c46a025e127ed1",
       "id": "ch-mon-073",
       "type": "monitoring",
       "set": "monitoring",
@@ -2202,7 +2212,7 @@
       ]
     },
     {
-      "uid": "bd74abf1aee0e6d4",
+      "uid": "013598a5f212985b",
       "id": "ch-mon-073-pt",
       "type": "monitoring",
       "set": "monitoring",
@@ -2213,7 +2223,7 @@
         "explanation"
       ],
       "language": "pt",
-      "twin_uid": "903c58e3a814f7a2"
+      "twin_uid": "63c46a025e127ed1"
     },
     {
       "uid": "d50cbd3438c371ae",

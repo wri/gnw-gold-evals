@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "bc56e61f574b9f3e",
-  "case_count": 1530,
+  "caseset_version": "b787ce71f4eeeac8",
+  "case_count": 1531,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -4074,12 +4074,13 @@
     },
     {
       "id": "ch-causal-017-fr",
-      "uid": "d713dd22534dbb65",
+      "uid": "b467ff7dd6d285e5",
       "set": "causal",
       "group": "driver_share",
       "status": "ready",
       "query": "Quelle part de la perte de couvert arboré de la RDC de 2015 à 2024 vient de l'agriculture itinérante, et quelle part de l'agriculture permanente ?",
       "expected_fields": [
+        "accept_nudge_offering",
         "aoi_ids",
         "data_pull",
         "dataset_id",
@@ -4087,6 +4088,7 @@
         "text"
       ],
       "implied_checks": [
+        "accepted_nudge_match",
         "answered_without_data",
         "aoi_id_match",
         "data_pull_exists",
@@ -4601,6 +4603,36 @@
       ],
       "intent": "causal",
       "dataset_ids": []
+    },
+    {
+      "id": "ch-causal-032",
+      "uid": "879fca00d71c21d0",
+      "set": "causal",
+      "group": "driver_share",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer with data",
+      "query": "How much of the DRC's tree cover loss from 2015 to 2024 came from shifting cultivation versus permanent agriculture?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
     },
     {
       "id": "ch-comp-001",
@@ -18064,7 +18096,7 @@
     },
     {
       "id": "ch-mon-073",
-      "uid": "903c58e3a814f7a2",
+      "uid": "63c46a025e127ed1",
       "set": "monitoring",
       "group": "many_areas",
       "status": "ready",
@@ -18089,7 +18121,7 @@
     },
     {
       "id": "ch-mon-073-pt",
-      "uid": "bd74abf1aee0e6d4",
+      "uid": "013598a5f212985b",
       "set": "monitoring",
       "group": "many_areas",
       "status": "ready",
