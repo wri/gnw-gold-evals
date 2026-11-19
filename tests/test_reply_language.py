@@ -172,6 +172,13 @@ def test_detects_each_case_language(text, language):
     assert detect_language(text)[0] == language
 
 
+def test_a_leader_with_no_word_of_its_own_is_undecided():
+    # Every word it counts is one French also lists, so French only came first
+    # by listed order: the reply is no evidence of either language.
+    text = "A perda a partir daquele ano chegou a 120 ha, segundo a análise."
+    assert detect_language(text)[0] is None
+
+
 def test_a_table_does_not_vote():
     # The table's cells are English; the prose around it is Indonesian.
     _language, hits = detect_language(INDONESIAN_WITH_TABLE)

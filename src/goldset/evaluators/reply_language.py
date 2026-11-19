@@ -161,7 +161,9 @@ def detect_language(text: str) -> tuple[str | None, dict[str, int]]:
         language: sum(1 for word in words if word in vocabulary)
         for language, vocabulary in _VOCABULARIES.items()
     }
-    # A stable sort, so a tie keeps listed order; a tie is undecided anyway.
+    # A stable sort, so a tie keeps listed order. When every word the two
+    # share is all the leader has, listed order alone made it the leader;
+    # the own-word check below leaves that reply undecided.
     (leader, top), (second, _next) = sorted(
         hits.items(), key=lambda item: -item[1]
     )[:2]
@@ -170,7 +172,7 @@ def detect_language(text: str) -> tuple[str | None, dict[str, int]]:
     second_own = _VOCABULARIES[second] - shared
     own = sum(1 for word in words if word in leader_own)
     runner_up = sum(1 for word in words if word in second_own)
-    if top < MIN_HITS or own < MIN_RATIO * runner_up:
+    if top < MIN_HITS or own == 0 or own < MIN_RATIO * runner_up:
         return None, hits
     return leader, hits
 
