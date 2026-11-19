@@ -2731,6 +2731,291 @@
         "canonical": true,
         "canonical_reasons": [],
         "page": "results/benchmark/pages/20261028T124051Z_prod.json"
+      },
+      {
+        "run_id": "20261119T063036Z_prod",
+        "path": "results/benchmark/runs/20261119T063036Z_prod.json",
+        "started": "2026-11-19T06:30:36Z",
+        "environment": "prod",
+        "build": "prod 2026-11-19",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "8b8ee76"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "languages full run: the 61 English twins that are 2026 members, 3 trials, run just before the companion",
+        "caseset": "challenge",
+        "caseset_version": "25d5261e3ecbc8fd",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 274,
+              "evaluated": 313
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 54
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 116,
+              "evaluated": 120
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 49
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 86,
+              "evaluated": 103
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 60
+          },
+          "output": {
+            "dedicated": {
+              "passed": 46,
+              "evaluated": 46
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 46
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 3,
+              "evaluated": 3
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 3
+          },
+          "rows_total": 61,
+          "verdicts": {
+            "pass": 47,
+            "fail": 14,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026.json",
+          "version": "2026",
+          "status": "frozen",
+          "manifest_sha": "fa1e8f952e6aeeb8",
+          "members": 267
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "206 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261119T072356Z_prod",
+        "path": "results/benchmark/runs/20261119T072356Z_prod.json",
+        "started": "2026-11-19T07:23:56Z",
+        "environment": "prod",
+        "build": "prod 2026-11-19",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "7a91cab"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "the 61 Spanish and Indonesian questions whose English twins are 2026 members, 3 trials; twins run the same morning as 20261119T063036Z_prod, before the production update",
+        "caseset": "challenge",
+        "caseset_version": "25d5261e3ecbc8fd",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 268,
+              "evaluated": 312
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 54
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 116,
+              "evaluated": 120
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 49
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 60,
+              "evaluated": 80
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 54
+          },
+          "output": {
+            "dedicated": {
+              "passed": 48,
+              "evaluated": 48
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 48
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 4,
+              "evaluated": 4
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 4
+          },
+          "rows_total": 61,
+          "verdicts": {
+            "pass": 43,
+            "fail": 18,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-languages.json",
+          "version": "2026-languages",
+          "status": "draft",
+          "manifest_sha": "22473f95a3bce684",
+          "members": 259
+        },
+        "canonical": false,
+        "canonical_reasons": [
+          "198 active member(s) not in the run"
+        ]
+      },
+      {
+        "run_id": "20261119T080049Z_prod",
+        "path": "results/benchmark/runs/20261119T080049Z_prod.json",
+        "started": "2026-11-19T08:00:49Z",
+        "environment": "prod",
+        "build": "prod 2026-11-19",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "7a91cab"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 10,
+        "trial_timeout": 900.0,
+        "methodology_note": "the remaining 198 companion members (99 language questions and their 99 English twins), 3 trials; with 20261119T072356Z_prod and the 2026 twins run 20261119T063036Z_prod this covers every pair on the pre-update agent",
+        "caseset": "challenge",
+        "caseset_version": "25d5261e3ecbc8fd",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 559,
+              "evaluated": 653
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 136
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 224,
+              "evaluated": 249
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 118
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 228,
+              "evaluated": 284
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 188
+          },
+          "output": {
+            "dedicated": {
+              "passed": 116,
+              "evaluated": 116
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 116
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 8,
+              "evaluated": 10
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 10
+          },
+          "rows_total": 198,
+          "verdicts": {
+            "pass": 124,
+            "fail": 74,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-languages.json",
+          "version": "2026-languages",
+          "status": "draft",
+          "manifest_sha": "22473f95a3bce684",
+          "members": 259
+        },
+        "composed_with": [
+          "20261119T063036Z_prod",
+          "20261119T072356Z_prod"
+        ],
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261119T080049Z_prod.json"
       }
     ]
   },
@@ -2810,13 +3095,29 @@
         "20260929T132417Z_prod"
       ]
     },
+    "2026-languages": {
+      "path": "benchmarks/2026-languages.json",
+      "status": "draft",
+      "frozen": null,
+      "members": 259,
+      "voided": 0,
+      "runs": [
+        "20261119T072356Z_prod",
+        "20261119T080049Z_prod"
+      ],
+      "canonical_runs": [
+        "20261119T080049Z_prod"
+      ]
+    },
     "2026": {
       "path": "benchmarks/2026.json",
       "status": "frozen",
       "frozen": "2026-11-18",
-      "members": 269,
-      "voided": 0,
-      "runs": [],
+      "members": 267,
+      "voided": 2,
+      "runs": [
+        "20261119T063036Z_prod"
+      ],
       "canonical_runs": []
     }
   }
