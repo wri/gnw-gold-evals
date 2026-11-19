@@ -30,20 +30,27 @@ states any computable candidate: one formula can then cover both a single
 pull and a comparison split over two pulls, without summing two datasets
 into one figure. A figure that cannot be computed (no table, a column the
 table lacks) abstains rather than fails.
+
+Replies to Spanish and Indonesian cases are read with ``language`` set (see
+"local number formats" below). English cases take the original parser,
+unchanged, so the frozen English BENCHMARK scores as before.
 """
 
 from __future__ import annotations
 
 import math
 import re
-from dataclasses import dataclass, field
+import unicodedata
+from dataclasses import dataclass, field, replace
 from functools import lru_cache
 from typing import Any
 
 import httpx
 
+from goldset.canonical import require_language
 from goldset.evaluators.answer_evaluator import extract_final_answer_text
 from goldset.evaluators.chart_numeric import format_number
+from goldset.evaluators.reply_language import detect_language
 
 TOLERANCE = 0.02
 FETCH_TIMEOUT_S = 30.0
@@ -438,10 +445,24 @@ class Stated:
     precision: float  # half the last stated digit, in the same units
     percent: bool
     text: str
+    # The second reading of a number whose shape reads two ways ("1.209").
+    other: Stated | None = None
 
 
-def stated_numbers(answer: str) -> list[Stated]:
-    """Every number in the reply, scaled by the words after it."""
+def stated_numbers(
+    answer: str, language: str = "en", *, usual_mark: str | None = None
+) -> list[Stated]:
+    """Every number in the reply, scaled by the words after it.
+
+    ``usual_mark`` replaces the case language's usual decimal mark for a
+    number whose shape reads two ways, when the reply is known to follow
+    another language's habit. English cases ignore it.
+    """
+    require_language(language)
+    if language != "en":
+        # A decomposed accent would cut "millón" short at the "o".
+        answer = unicodedata.normalize("NFC", answer or "")
+        return _stated_numbers_local(answer, language, usual_mark)
     found = []
     for m in _NUMBER.finditer(answer or ""):
         whole, decimals, percent = m[1], m[2] or "", m[3]
@@ -460,6 +481,218 @@ def stated_numbers(answer: str) -> list[Stated]:
         if measured:
             text += " " + m[4]
         found.append(Stated(value * scale, 0.5 * step * scale, bool(percent), text))
+    return found
+
+
+# ------------------------------------------------- local number formats
+#
+# Indonesian and most Spanish-speaking countries write "1.209,32" where
+# English writes "1,209.32" (Mexico and Central America write it as English
+# does). Horizon's replies do not follow the case language reliably, so a
+# number is read in this order:
+#
+# 1. By its own shape, when that is clear: "1.209,32", "12,5", "1.234.567".
+#    It has one reading.
+# 2. When its shape reads two ways ("1.209"), the reply's own convention
+#    (the mark its clear numbers agree on) gives the first reading.
+# 3. Failing that, Horizon's habit in the case language gives the first; a
+#    reply that is plainly English follows the English habit instead.
+#
+# Spaces group thousands too ("1 209"); see ``_spaced_readings``.
+#
+# A shape-ambiguous number always keeps its second reading, however sure the
+# first looks: a reply mixes conventions, so a figure that matches only the
+# second reading abstains (AJ, 2026-11-18: abstain when a number has no clear
+# reading) and never fails. A wrong figure matches neither reading.
+#
+# The habit is measured, not assumed. Of Horizon's replies to external users
+# that show a convention (traces to 2026-10-20): Spanish 657 dot-decimal to
+# 26 comma-decimal; Indonesian 135 comma-decimal to 12 dot-decimal.
+
+_USUAL_DECIMAL_MARK = {"es": ".", "id": ","}
+
+# "billón" is the long-scale billion, 10^12. "mil" is Spanish only: in an
+# Indonesian reply it is not a scale, and "ribu" is not one in a Spanish reply.
+_LOCAL_SCALES = {
+    "es": {
+        **_SCALES,
+        "mil": 1e3, "miles": 1e3,
+        "millón": 1e6, "millon": 1e6, "millones": 1e6,
+        "mil millones": 1e9, "miles de millones": 1e9,
+        "millardo": 1e9, "millardos": 1e9,
+        "billón": 1e12, "billon": 1e12, "billones": 1e12,
+    },
+    "id": {
+        **_SCALES,
+        "ribu": 1e3, "rb": 1e3,
+        "juta": 1e6, "jt": 1e6,
+        "miliar": 1e9, "milyar": 1e9,
+        "triliun": 1e12, "trilyun": 1e12,
+    },
+}
+_LOCAL_UNITS = (*_UNITS, "hectárea", "hectáreas", "hectarea", "hectareas",
+                "hektar", "hektare", "tonelada", "toneladas", "ton")
+_KM2_PHRASE = r"kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
+# Space-grouped thousands: a head of one to three digits, then groups of
+# exactly three ("1 209", "12 345 678"). A head of four digits ("2024 120")
+# is no grouping.
+_SPACE_GROUPED = r"\d{1,3}(?:[ \u00a0\u202f\u2009]\d{3})+(?!\d)"
+_LOCAL_NUMBER = re.compile(
+    r"(?<![\w.])(-?(?:" + _SPACE_GROUPED + r"|\d+)(?:[.,]\d+)*)"
+    r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen)?"
+    r"\s*(miles\s+de\s+millones|mil\s+millones|" + _KM2_PHRASE
+    + r"|[^\W\d_][^\W_]*)?",
+    re.I,
+)
+_KM2_WORDS = re.compile(_KM2_PHRASE)
+_GROUP_SPACE = re.compile(r"[ \u00a0\u202f\u2009]")
+
+
+def _spaced_readings(raw: str) -> list[tuple[str, str, bool]]:
+    """(number, text, carries the reply's suffix) readings of a matched number.
+
+    A no-break, narrow no-break or thin space only groups digits, so the
+    number is read joined. A plain space may separate two figures in a list
+    ("5 200 ha" for "5" and "200 ha"), so the joined number and its parts
+    are all stated: either reading can match, and neither can hide the other.
+    """
+    pieces = _GROUP_SPACE.split(raw)
+    joined = "".join(pieces)
+    if len(pieces) == 1:
+        return [(raw, raw, True)]
+    if " " not in raw:
+        return [(joined, raw, True)]
+    last = len(pieces) - 1
+    return [(joined, raw, True)] + [
+        (piece, piece, index == last) for index, piece in enumerate(pieces)
+    ]
+
+
+def _decimal_mark(number: str) -> str | None:
+    """The decimal mark a number shows by its shape: "." or ",", "" for a
+    number that shows none (an integer with or without grouping), or None
+    when the shape reads two ways ("1.209")."""
+    dots, commas = number.count("."), number.count(",")
+    if not dots and not commas:
+        return ""
+    if dots and commas:
+        return "." if number.rfind(".") > number.rfind(",") else ","
+    mark = "." if dots else ","
+    if dots + commas > 1:
+        return ""  # a repeated mark groups thousands
+    whole, fraction = number.lstrip("-").split(mark)
+    if len(fraction) != 3 or len(whole) > 3 or whole == "0":
+        return mark
+    return None
+
+
+def _read(number: str, decimal: str) -> tuple[float, float] | None:
+    """(value, step of the last stated digit) with ``decimal`` ("." or ",")
+    as the decimal mark; None when the grouping is not in threes."""
+    group = _other_mark(decimal)
+    whole, _, fraction = number.partition(decimal)
+    if group in fraction:
+        return None
+    head, *groups = whole.lstrip("-").split(group)
+    if groups and (not 1 <= len(head) <= 3 or any(len(g) != 3 for g in groups)):
+        return None
+    value = float(whole.replace(group, "") + ("." + fraction if fraction else ""))
+    return value, 10.0 ** (-len(fraction)) if fraction else 1.0
+
+
+def _other_mark(mark: str) -> str:
+    """The decimal mark that is not ``mark``."""
+    return "," if mark == "." else "."
+
+
+def _suffix_word(suffix: str | None) -> str:
+    """The word after a number, lower-cased with its spaces collapsed."""
+    return " ".join((suffix or "").lower().split())
+
+
+def _stated_as(
+    reading: tuple[float, float], scale: float, percent: str | None, text: str
+) -> Stated:
+    return Stated(reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text)
+
+
+def _word_scale(word: str, language: str) -> tuple[float, bool]:
+    """(scale, whether the word makes the number a measure) for the word
+    after a number."""
+    scale = _LOCAL_SCALES[language].get(word, 1.0)
+    if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
+        scale = 100.0  # km² to hectares
+    return scale, scale != 1.0 or word in _LOCAL_UNITS
+
+
+def _reply_decimal_mark(matches: list[re.Match[str]], language: str) -> str | None:
+    """The decimal mark the reply's clear numbers agree on, if they do.
+
+    A number is evidence only when it cannot be a version, a time or a
+    coordinate ("GADM 4.1", "10.30"): it shows both marks ("1.209,32"),
+    repeats one as grouping in threes ("1.234.567"), or has one clear mark
+    and a percent sign, scale word or unit after it ("10,46%", "2,5 juta").
+    """
+    marks = set()
+    for m in matches:
+        number = "".join(_GROUP_SPACE.split(m[1]))
+        mark = _decimal_mark(number)
+        if mark:
+            word = _suffix_word(m[3])
+            if (
+                ("." in number and "," in number)
+                or m[2]
+                or _word_scale(word, language)[1]
+            ):
+                marks.add(mark)
+        elif mark == "" and ("." in number or "," in number):
+            # "1.234.567" groups with dots, so its decimal mark is the comma;
+            # a date or version ("31.12.2024") groups in nothing and says nothing.
+            implied = _other_mark("." if "." in number else ",")
+            if _read(number, implied):
+                marks.add(implied)
+    return marks.pop() if len(marks) == 1 else None
+
+
+def _stated_numbers_local(
+    answer: str, language: str, usual_mark: str | None
+) -> list[Stated]:
+    """``stated_numbers`` for a non-English case; ``answer`` is NFC."""
+    matches = list(_LOCAL_NUMBER.finditer(answer))
+    reply_mark = _reply_decimal_mark(matches, language)
+    found = []
+    for m in matches:
+        for number, shown, carries in _spaced_readings(m[1]):
+            percent = m[2] if carries else None
+            suffix = m[3] if carries else None
+            word = _suffix_word(suffix)
+            scale, measured = _word_scale(word, language)
+            plain = "." not in number and "," not in number
+            if plain and not (percent or measured) and re.fullmatch(
+                r"(19|20)\d\d", number.lstrip("-")
+            ):
+                continue  # a year, not a figure
+            text = shown + (percent or "") + (" " + suffix if measured else "")
+            mark = _decimal_mark(number)
+            if mark is None:
+                # The reply's mark, else the usual one, only picks the first
+                # reading.
+                usual = reply_mark or usual_mark or _USUAL_DECIMAL_MARK[language]
+                marks = [usual, _other_mark(usual)]
+            else:
+                # No decimal part: the decimal mark is the one the grouping
+                # leaves.
+                marks = [mark or _other_mark("." if "." in number else ",")]
+            readings = [_read(number, m_) for m_ in marks]
+            if readings[0] is None:
+                continue  # "1.23.4567": not a number this parser can read
+
+            first = _stated_as(readings[0], scale, percent, text)
+            if len(readings) > 1 and readings[1] is not None:
+                first = replace(
+                    first, other=_stated_as(readings[1], scale, percent, text)
+                )
+            found.append(first)
     return found
 
 
@@ -483,6 +716,8 @@ class FigureResult:
     values: list[float] = field(default_factory=list)
     matched: str | None = None
     closest: tuple[str, float] | None = None
+    # A stated number that matches only by its second reading (see Stated).
+    unsure: str | None = None
 
 
 # A zero figure is often stated in words ("no loss was recorded").
@@ -491,17 +726,69 @@ _ZERO_WORDS = re.compile(
     r"(loss|alerts?|change|gain|emissions|disturbances?|deforestation))\b",
     re.I,
 )
+# "cero" counts only before a loss noun ("cero alertas"): "deforestación cero"
+# and "cero emisiones netas" name a target. Words that turn the phrase into
+# "no data" or an idiom ("sin embargo", "sin información", "sin duda") are
+# excluded between the cue and the noun.
+_ES_SKIP = (
+    "embargo|contar|incluir|datos|informaci[óo]n|registros?"
+    "|precedentes|importar|duda"
+)
+# The negation or "without" must take the measured noun at once, after at most
+# one quantifier: a gap of up to two words let "sin distinguir las pérdidas"
+# and "tanpa membedakan kehilangan" (an infinitive, then a noun of another
+# clause) pass as a stated zero. "no hubo" and "tidak ada" need a measured
+# noun: "no hubo reducción de las pérdidas" states a change, not a zero.
+# "cambio" and "perubahan" do not count when they go on to name a measured
+# noun ("no hubo cambio en las pérdidas": the loss itself is not said to be 0).
+# "eventos de" / "hectáreas de" and "kejadian" only count a measured noun.
+_LOCAL_ZERO_WORDS = {
+    "es": re.compile(
+        r"\b(?:cero (?:hect[áa]reas|ha)"
+        r"|cero (?:(?!"+_ES_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:p[ée]rdidas?|alertas?|cambios?|ganancias?|perturbaci\w+)"
+        r"|(?:no (?:se )?(?:ha |han )?"
+        r"(?:registr|detect|observ|report|encontr|identific)\w+|no hay|no existen?"
+        r"|no ha habido|no hubo|tampoco hubo|no presenta|sin|ning[úu]n|ningun[ao])"
+        r" (?:(?:ning[úu]n|ningun[ao]s?|nuev[ao]s?) )?"
+        r"(?:(?:eventos|hect[áa]reas) de )?"
+        r"(?:p[ée]rdidas?|alertas?|ganancias?|emisiones|perturbaci\w+"
+        r"|deforestaci[óo]n"
+        r"|cambios?(?! (?:en|de) (?:(?:la|las|el|los) )?"
+        r"(?:p[ée]rdidas?|alertas?|ganancias?|emisiones|perturbaci\w+"
+        r"|deforestaci[óo]n))))\b",
+        re.I,
+    ),
+    "id": re.compile(
+        r"\b(?:nihil|nol (?:hektare?|ha|peringatan)|(?:tidak ada|tak ada|belum ada"
+        r"|tanpa|tidak terdapat|tidak ditemukan|tidak terdeteksi|tidak tercatat"
+        r"|tidak terjadi|tidak mengalami) (?:adanya )?(?:kejadian )?"
+        r"(?:kehilangan|peringatan|penambahan|emisi|gangguan|deforestasi"
+        r"|perubahan(?! (?:kehilangan|peringatan|emisi|gangguan|deforestasi))))\b",
+        re.I,
+    ),
+}
+
+
+def _zero_words(answer: str, language: str) -> re.Match[str] | None:
+    # A reply to a Spanish or Indonesian case may still be in English.
+    local = _LOCAL_ZERO_WORDS.get(language)
+    return _ZERO_WORDS.search(answer) or (local.search(answer) if local else None)
 
 
 def _check_figure(
-    figure: Figure, tables, stated: list[Stated], answer: str = ""
+    figure: Figure,
+    tables,
+    stated: list[Stated],
+    answer: str = "",
+    language: str = "en",
 ) -> FigureResult:
     result = FigureResult(figure)
     for formula in figure.alternatives:
         as_share = isinstance(formula, Combined) and formula.func == "ratio"
         for value in candidates(formula, tables):
             result.values.append(value)
-            if value == 0 and (m := _ZERO_WORDS.search(answer)):
+            if value == 0 and (m := _zero_words(answer, language)):
                 result.matched = m[0]
                 return result
             for number in stated:
@@ -513,17 +800,30 @@ def _check_figure(
                     return result
                 if result.closest is None or difference < result.closest[1]:
                     result.closest = (number.text, difference)
+            for number in stated:
+                if number.other is None or result.unsure:
+                    continue
+                difference = _close(number.other, value, as_share)
+                if difference is not None and difference <= TOLERANCE:
+                    result.unsure = number.text
     return result
 
 
-def evaluate_figures(agent_state: dict[str, Any], figure_text: str) -> dict[str, Any]:
+def evaluate_figures(
+    agent_state: dict[str, Any], figure_text: str, language: str = "en"
+) -> dict[str, Any]:
     """figure_match: every asked figure the data can give appears in the reply.
+
+    ``language`` is the case's language; it sets how the reply's numbers are
+    read. A figure the reply states only as the second reading of a number
+    whose shape reads two ways ("1.209") abstains.
 
     ``null`` when the case names no figure, or no asked figure can be computed
     from what was pulled (nothing pulled, a table that cannot be read, a
     column it lacks). ``0.0`` when a computable figure is missing from the
     reply; ``1.0`` when every computable one is there.
     """
+    require_language(language)
     result: dict[str, Any] = {
         "figure_match_score": None,
         "figure_match_reason": None,
@@ -537,17 +837,31 @@ def evaluate_figures(agent_state: dict[str, Any], figure_text: str) -> dict[str,
         result["figure_match_reason"] = "no pulled table could be read; abstained"
         return result
     answer = extract_final_answer_text(agent_state.get("messages", []))
-    stated = stated_numbers(answer)
+    usual_mark = None
+    if language != "en":
+        # Normalised here as well as in ``stated_numbers``, for the zero-word
+        # search: a decomposed accent would split a word there too.
+        answer = unicodedata.normalize("NFC", answer)
+        # Horizon may answer a Spanish or Indonesian case in English, and an
+        # English reply writes "1,209" for 1209 whatever the case language.
+        usual_mark = "." if detect_language(answer)[0] == "en" else None
+    stated = stated_numbers(answer, language, usual_mark=usual_mark)
     parts, scored, missed = [], 0, 0
     for figure in figures:
         if figure.ref:
             continue
-        checked = _check_figure(figure, tables, stated, answer)
+        checked = _check_figure(figure, tables, stated, answer, language)
         if not checked.values:
             parts.append(f"{figure.text}: not computable from the pull")
             continue
-        scored += 1
         expected = format_number(checked.values[0])
+        if not checked.matched and checked.unsure:
+            parts.append(
+                f"{figure.text} = {expected}: reply states {checked.unsure}, "
+                "which reads two ways; abstained"
+            )
+            continue
+        scored += 1
         if checked.matched:
             parts.append(f"{figure.text} = {expected}: reply states {checked.matched}")
         else:

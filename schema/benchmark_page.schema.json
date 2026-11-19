@@ -1114,6 +1114,11 @@
               "questions": {
                 "type": "integer",
                 "minimum": 0
+              },
+              "twins_drawn": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "Languages companion pages only: English twins whose results the languages block took from this run."
               }
             },
             "required": [

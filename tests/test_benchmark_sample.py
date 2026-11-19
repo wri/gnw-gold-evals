@@ -74,3 +74,14 @@ def test_too_few_eligible_cases_fails_loudly(tmp_path):
     root = make_store(tmp_path / "cases", per_set=6)
     with pytest.raises(SystemExit, match="eligible"):
         bs.build(root, "t", 20, 1, "2026-09-29")
+
+
+def test_other_languages_are_never_sampled(tmp_path):
+    root = make_store(tmp_path / "cases", per_set=10)
+    write_case(root, Case(
+        id="ch-quant-901", status="ready", group="cohort-0", set="quantification",
+        query="¿Cuánto bosque?", expected={"dataset_id": "1"}, language="es",
+        twin="ch-quant-001"))
+    cases = [c for _p, c, _u in bs.load_store(root)]
+    pool = bs.eligible(cases, "quantification")
+    assert pool and all(c.language == "en" for c in pool)

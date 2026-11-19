@@ -40,6 +40,7 @@ import csv
 import json
 import re
 import sys
+from dataclasses import replace
 from datetime import date
 from pathlib import Path
 
@@ -150,8 +151,8 @@ def row_facets(row: dict) -> dict:
 
 
 def with_notes(case: Case, notes: dict[str, str]) -> Case:
-    return Case(id=case.id, status=case.status, group=case.group, query=case.query,
-                expected=case.expected, notes=notes, turns=case.turns, set=case.set)
+    # replace() keeps every other field, so a language case stays itself.
+    return replace(case, notes=notes)
 
 
 def tag(case: Case, row: dict) -> Case:
@@ -169,6 +170,17 @@ def _query_key(text: str) -> str:
 
 
 def resolve(row: dict, by_id: dict[str, Case], by_query: dict[str, Case]) -> Case:
+    case = _find(row, by_id, by_query)
+    if case.language != "en":
+        raise SystemExit(
+            f"{row['benchmark_id']}: {case.id} is in {case.language!r}; the "
+            "English version holds English cases, and other languages go in "
+            "the languages companion"
+        )
+    return case
+
+
+def _find(row: dict, by_id: dict[str, Case], by_query: dict[str, Case]) -> Case:
     if row.get("challenge_id", "").strip():
         case = by_id.get(row["challenge_id"].strip())
         if case is None:

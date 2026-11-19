@@ -31,6 +31,7 @@ from pathlib import Path
 from typing import Any
 
 from goldset.buckets import BUCKETS
+from goldset.canonical import LANGUAGES
 
 SCHEMA_VERSION = 1
 STATUSES = ("draft", "frozen", "retired")
@@ -69,6 +70,9 @@ MEMBER_FIELDS = ("uid", "id", "type", "set", "cohort", "difficulty", "stages")
 # cross-cutting), user groups (2026-draft-2), priority use cases (from
 # 2026-draft-3), and whether the question is synthetic.
 OPTIONAL_LIST_FIELDS = ("jobs", "pathways", "user_groups", "use_cases")
+# A member's optional language facet. English is the default and is never
+# written, as on a case.
+MEMBER_LANGUAGES = tuple(code for code in LANGUAGES if code != "en")
 
 # Priority use cases of the v2026 BEF sheet (AJ, 2026-10-23).
 USE_CASES = {
@@ -116,6 +120,8 @@ class Member:
     user_groups: tuple[str, ...] = ()
     use_cases: tuple[str, ...] = ()
     synthetic: bool = False
+    language: str = ""  # "" is English
+    twin_uid: str = ""  # uid of the member's pair, in this or the paired version
 
     def to_dict(self) -> dict[str, Any]:
         out: dict[str, Any] = {
@@ -134,6 +140,11 @@ class Member:
                 out[name] = list(getattr(self, name))
         if self.synthetic:
             out["synthetic"] = True
+        # Written only when set, so a manifest without them does not change.
+        if self.language:
+            out["language"] = self.language
+        if self.twin_uid:
+            out["twin_uid"] = self.twin_uid
         return out
 
 
@@ -154,6 +165,8 @@ class Benchmark:
     types: tuple[dict[str, Any], ...]
     members: tuple[Member, ...]
     errata: tuple[Erratum, ...] = ()
+    # A languages companion names the English version its members pair with.
+    pairs_with: str = ""
     raw: dict[str, Any] = field(default_factory=dict, compare=False, repr=False)
 
     @property
@@ -180,6 +193,10 @@ class Benchmark:
             problems.append(f"status {self.status!r} not in {STATUSES}")
         if self.status == "frozen" and not self.frozen:
             problems.append("a frozen benchmark needs a frozen date")
+        if not isinstance(self.pairs_with, str):
+            problems.append(f"pairs_with {self.pairs_with!r} is not a version name")
+        elif self.pairs_with and self.pairs_with == self.version:
+            problems.append("a benchmark cannot pair with itself")
         type_keys = [t.get("key") for t in self.types]
         if len(set(type_keys)) != len(type_keys):
             problems.append("duplicate type keys")
@@ -202,6 +219,15 @@ class Benchmark:
             bad = [u for u in m.use_cases if u not in USE_CASES]
             if bad:
                 problems.append(f"{m.id}: unknown use cases {bad}")
+            if m.language and m.language not in MEMBER_LANGUAGES:
+                problems.append(
+                    f"{m.id}: language {m.language!r} is not one of "
+                    f"{MEMBER_LANGUAGES}"
+                )
+            if m.language and not m.twin_uid:
+                problems.append(f"{m.id}: a member with a language needs a twin_uid")
+            if m.twin_uid and m.twin_uid == m.uid:
+                problems.append(f"{m.id}: a member cannot be its own twin")
         for e in self.errata:
             if e.uid not in seen:
                 problems.append(f"erratum {e.uid} does not name a member")
@@ -237,6 +263,8 @@ def from_dict(data: dict[str, Any]) -> Benchmark:
             user_groups=tuple(raw.get("user_groups", ())),
             use_cases=tuple(raw.get("use_cases", ())),
             synthetic=bool(raw.get("synthetic", False)),
+            language=raw.get("language", ""),
+            twin_uid=raw.get("twin_uid", ""),
         ))
     errata = tuple(
         Erratum(uid=e["uid"], date=e.get("date", ""), reason=e.get("reason", ""))
@@ -251,6 +279,7 @@ def from_dict(data: dict[str, Any]) -> Benchmark:
         types=tuple(data.get("types", [])),
         members=tuple(members),
         errata=errata,
+        pairs_with=data.get("pairs_with", ""),
         raw=data,
     )
 
@@ -262,6 +291,18 @@ def load_benchmark(path: Path) -> Benchmark:
     if problems:
         raise ValueError(f"{path}: " + "; ".join(problems))
     return bench
+
+
+def load_paired(pairs_with: str, manifests_dir: Path) -> Benchmark:
+    """The ``pairs_with`` version's manifest, read from ``manifests_dir``.
+
+    Raises ``FileNotFoundError`` when it is missing and ``ValueError`` when
+    it is invalid; each caller decides whether that stops or is reported.
+    """
+    path = Path(manifests_dir) / f"{pairs_with}.json"
+    if not path.exists():
+        raise FileNotFoundError(f"{path} does not exist")
+    return load_benchmark(path)
 
 
 def render(data: dict[str, Any]) -> str:

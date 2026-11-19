@@ -44,6 +44,7 @@ def _to_expected(
         test_group=case.group or "unknown",
         status=case.status,
         uid=case.uid,
+        language=case.language,
         **payload,
     )
 

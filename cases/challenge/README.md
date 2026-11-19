@@ -26,6 +26,18 @@ perform on prompts like X?" with a **pass rate per cohort**. Plan of record:
   against `TARGETS.yml`. A case passes when most of its attempts were right
   (AJ, 2026-10-28; before, when each check passed on most attempts), so
   rates in reports written before then are not comparable point for point.
+- **Questions in other languages are a facet, not a set.** A Spanish or
+  Indonesian case carries `language: es` or `id` and a `twin` (the English
+  case that asks the same question; `tools/check.py` fails if the pair's
+  expectations differ) and sits in its type's set. A store run
+  (no `--benchmark`) selects **English cases only**; `gold run
+  --language es|id|all` selects another language (the run's partial header
+  records it, and a resumed run keeps it; partials from before the option
+  resume with every case). `--benchmark` runs select by manifest and refuse
+  `--language`. The uid rule is in the [README glossary](../../README.md#uid);
+  pairing and the info-only `reply_language_match` are in
+  [`benchmarks/README.md`](../../benchmarks/README.md#languages-companion)
+  and [`src/goldset/evaluators/README.md`](../../src/goldset/evaluators/README.md).
 - **Every case still has a defined correct behaviour**, including the ones
   expected to fail today. `notes.behaviour` records it: `select` (right
   AOI(s) chosen), `nudge` (asks with the right options), `clarify` /

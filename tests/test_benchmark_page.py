@@ -11,6 +11,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 
 import benchmark_page as bp  # noqa: E402
+import challenge_rollup as cr  # noqa: E402
 
 from goldset.benchmark import QUERY_TYPES, SCHEMA_VERSION, from_dict  # noqa: E402
 from goldset.buckets import row_verdict  # noqa: E402
@@ -18,6 +19,7 @@ from goldset.store import Case  # noqa: E402
 
 PASS = {"aoi_id_match": 1.0, "dataset_id_match": 1.0}
 FAIL_RETRIEVAL = {"aoi_id_match": 0.0, "dataset_id_match": 1.0}
+ENGLISH_PAGE = Path(__file__).parent / "fixtures" / "benchmark_page_english.json"
 
 
 def case(cid, query, **notes):
@@ -175,6 +177,16 @@ def test_page_groups_carry_failure_modes_by_standard(tmp_path):
     assert all("failure_modes_by_standard" in g for g in page["use_cases"])
 
 
+def test_english_page_is_byte_identical_to_the_pinned_page(tmp_path):
+    """The FE parses the page strictly, so a manifest with no member in
+    another language must write exactly what it wrote before the languages
+    block existed. The fixture was written by the tool as it was then."""
+    run, bench, cases, art = setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art)
+    assert "languages" not in page
+    assert bp.render(page) == ENGLISH_PAGE.read_text(encoding="utf-8")
+
+
 def rerun_setup(tmp_path):
     """The base run measured both members; member b was then revised (new
     uid) and rerun alone."""
@@ -256,3 +268,250 @@ def test_combined_page_chains_bases_newest_wins(tmp_path):
     assert qs["ch-mon-002"]["verdict"] == "fail"
     assert [s["run_id"] for s in page["run"]["sources"]] == ["base", "rerun", "second"]
     assert [s["questions"] for s in page["run"]["sources"]] == [1, 0, 1]
+
+
+# --- the languages block (a companion manifest) -------------------------------
+
+WRONG_LANGUAGE = {**PASS, "reply_language_match": 0.0}
+RIGHT_LANGUAGE = {**PASS, "reply_language_match": 1.0}
+UNDECIDED_LANGUAGE = {**PASS, "reply_language_match": None}
+
+
+def member(c, **extra):
+    return {"uid": c.uid, "id": c.id, "type": "monitoring", "set": "monitoring",
+            "cohort": "g", "difficulty": "", "stages": ["retrieval"], **extra}
+
+
+def mixed_entry(c, trials):
+    """``entry`` for trials that did not all score the same checks."""
+    names = {k for t in trials for k in t}
+    final = {}
+    for k in sorted(names):
+        values = [t.get(k) for t in trials if t.get(k) is not None]
+        right = sum(v == 1.0 for v in values) * 2 > len(values)
+        final[k] = (1.0 if right else 0.0) if values else None
+    return {"uid": c.uid, "id": c.id, "checks": final,
+            "trials": [{"checks": t} for t in trials],
+            "trace_url": f"https://t/{c.id}"}
+
+
+def languages_setup(tmp_path):
+    """A companion with three Spanish questions and one Indonesian. The twin
+    of es-1 is in the English version (a base run), the twin of es-2 is a
+    member of the companion, and the twin of es-3 was measured nowhere."""
+    run, bench, _cases, art = setup(tmp_path)
+    twin_1 = case("ch-mon-101", "Alerts in Loreto?")
+    twin_2 = case("ch-mon-102", "Alerts in Ucayali?")
+    twin_3 = case("ch-mon-103", "Alerts in Cusco?")
+    twin_4 = case("ch-mon-104", "Alerts in Riau?")
+    es_1 = case("ch-mon-201", "¿Alertas en Loreto?")
+    es_2 = case("ch-mon-202", "¿Alertas en Ucayali?")
+    es_3 = case("ch-mon-203", "¿Alertas en Cusco?")
+    id_1 = case("ch-mon-301", "Peringatan di Riau?")
+    companion = from_dict({
+        **bench.raw, "version": "t-languages", "pairs_with": "t",
+        "members": [
+            member(es_1, language="es", twin_uid=twin_1.uid),
+            member(es_2, language="es", twin_uid=twin_2.uid),
+            member(es_3, language="es", twin_uid=twin_3.uid),
+            member(id_1, language="id", twin_uid=twin_4.uid),
+            member(twin_2),
+        ]})
+    base = {**run, "run_id": "base", "started": "2026-10-23T09:00:00Z",
+            "results": [mixed_entry(twin_1, [PASS, PASS, PASS]),
+                        mixed_entry(twin_4, [PASS, PASS, FAIL_RETRIEVAL])]}
+    wrong, right, undecided = WRONG_LANGUAGE, RIGHT_LANGUAGE, UNDECIDED_LANGUAGE
+    companion_run = {
+        **run, "run_id": "languages", "started": "2026-11-18T09:00:00Z",
+        "results": [
+            # Right every time in English, on one attempt of three in Spanish.
+            mixed_entry(es_1, [FAIL_RETRIEVAL, FAIL_RETRIEVAL, wrong]),
+            mixed_entry(es_2, [right, right, wrong]),
+            mixed_entry(es_3, [right] * 3),
+            mixed_entry(id_1, [right, right, undecided]),
+            mixed_entry(twin_2, [right] * 3),
+        ]}
+    cases = {c.uid: c for c in (es_1, es_2, es_3, id_1, twin_2)}
+    companion_art = tmp_path / "companion-artifacts"
+    companion_art.mkdir()
+    return companion_run, companion, cases, companion_art, [(base, art)]
+
+
+def languages(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art, bases)
+    return {block["key"]: block for block in page["languages"]}
+
+
+def test_languages_block_lists_each_language_of_the_manifest(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art, bases)
+    assert [block["key"] for block in page["languages"]] == ["es", "id"]
+    assert list(page)[-1] == "languages"
+
+
+def test_a_twin_measured_nowhere_is_unpaired_and_never_a_fail(tmp_path):
+    es = languages(tmp_path)["es"]
+    assert (es["pairs"], es["unpaired"], es["unscored"]) == (2, 1, 0)
+    # es-3 passed, but without its twin it is in no paired figure.
+    assert es["native"]["majority"]["n"] == es["english"]["majority"]["n"] == 2
+
+
+def test_twin_results_come_from_the_base_run_and_from_the_companion(tmp_path):
+    es = languages(tmp_path)["es"]
+    assert es["english"]["majority"]["passed"] == 2  # one from each source
+    assert es["english"]["every_time"]["passed"] == 2
+    assert es["native"]["majority"]["passed"] == 1
+    assert es["native"]["every_time"]["passed"] == 1
+
+
+def test_rates_carry_the_wilson_interval(tmp_path):
+    majority = languages(tmp_path)["es"]["native"]["majority"]
+    low, high = cr.wilson(1, 2)
+    assert majority == {
+        "n": 2, "passed": 1, "rate": 0.5, "ci_low": low, "ci_high": high}
+
+
+def test_gap_is_native_minus_english_on_the_majority_rate(tmp_path):
+    blocks = languages(tmp_path)
+    difference, low, high = cr.paired_difference(0, 1, 2)
+    assert blocks["es"]["gap"] == {
+        "native_only": 0, "english_only": 1,
+        "difference": -0.5, "ci_low": low, "ci_high": high}
+    assert difference == -0.5 and low < -0.5 < high
+    # Both sides of the Indonesian pair pass: no discordant pair, a real width.
+    gap = blocks["id"]["gap"]
+    assert gap["difference"] == 0.0 and gap["ci_low"] < 0.0 < gap["ci_high"]
+
+
+def test_reply_language_rate_leaves_undecided_attempts_out(tmp_path):
+    blocks = languages(tmp_path)
+    # es-1: two attempts lack the check, one is wrong; es-2: right, right, wrong.
+    assert blocks["es"]["reply_language"]["native"] == {
+        "matched": 2, "scored": 4, "undecided": 2, "rate": 0.5}
+    assert blocks["id"]["reply_language"]["native"] == {
+        "matched": 2, "scored": 2, "undecided": 1, "rate": 1.0}
+    # The base run predates the check: nothing scored, no rate.
+    assert blocks["id"]["reply_language"]["english"] == {
+        "matched": 0, "scored": 0, "undecided": 3, "rate": None}
+
+
+def test_native_failures_are_counted_by_the_page_stage_attribution(tmp_path):
+    es = languages(tmp_path)["es"]
+    assert es["failure_modes"] == {"retrieval": 1}
+    assert es["failure_modes_by_standard"]["every_time"] == {"retrieval": 1}
+    assert sum(es["failure_modes"].values()) == (
+        es["pairs"] - es["native"]["majority"]["passed"])
+
+
+def test_a_wrong_reply_language_fails_no_question(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art, bases)
+    es_2 = next(q for q in page["questions"] if q["id"] == "ch-mon-202")
+    assert es_2["trials_right"] == [True, True, True] and es_2["failed_checks"] == []
+
+
+def test_an_errored_side_leaves_the_pair_unscored(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    run["results"][1]["error"] = "ReadTimeout"
+    page = bp.build_page(run, bench, cases, art, bases)
+    es = next(block for block in page["languages"] if block["key"] == "es")
+    assert (es["pairs"], es["unpaired"], es["unscored"]) == (1, 1, 1)
+
+
+def test_companion_without_its_base_reports_every_base_twin_unpaired(tmp_path):
+    run, bench, cases, art, _bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art)
+    blocks = {block["key"]: block for block in page["languages"]}
+    assert (blocks["es"]["pairs"], blocks["es"]["unpaired"]) == (1, 2)
+    assert blocks["id"]["pairs"] == 0 and blocks["id"]["unpaired"] == 1
+    assert blocks["id"]["native"]["majority"]["rate"] is None
+    assert blocks["id"]["gap"]["difference"] is None
+
+
+def test_companion_headline_covers_only_members_without_a_language(tmp_path):
+    """The summary of a companion page counts the English twin it holds and
+    no question in another language; those live in the languages block."""
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art, bases)
+    assert page["summary"]["scored"] == 1
+    assert sum(t.get("scored", 0) for t in page["types"]) == 1
+    assert len(page["questions"]) == 5
+
+
+def erratum(uid):
+    return {"uid": uid, "date": "2026-11-19", "reason": "wrong expectation"}
+
+
+def test_a_twin_voided_in_the_paired_version_is_not_paired(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    twin_1 = bench.raw["members"][0]["twin_uid"]
+    paired = from_dict({**bench.raw, "version": "t", "pairs_with": "",
+                        "members": [], "errata": [erratum(twin_1)]})
+    page = bp.build_page(run, bench, cases, art, bases, paired)
+    es = next(block for block in page["languages"] if block["key"] == "es")
+    assert (es["pairs"], es["unpaired"]) == (1, 2)
+    # The same twin, voided in the companion itself.
+    voided = from_dict({**bench.raw, "errata": [erratum(twin_1)]})
+    page = bp.build_page(run, voided, cases, art, bases)
+    es = next(block for block in page["languages"] if block["key"] == "es")
+    assert (es["pairs"], es["unpaired"]) == (1, 2)
+
+
+def test_each_language_records_where_its_twins_ran(tmp_path, capsys):
+    blocks = languages(tmp_path)
+    # es-1's twin ran in the base (26 days earlier), es-2's in the companion.
+    assert blocks["es"]["twin_runs"] == ["base", "languages"]
+    assert blocks["es"]["max_days_apart"] == 26
+    assert blocks["id"]["twin_runs"] == ["base"]
+    assert "up to 26 days" in capsys.readouterr().err
+
+
+def test_twins_from_the_same_day_raise_no_warning(tmp_path, capsys):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    run["started"] = "2026-10-23T18:00:00Z"
+    page = bp.build_page(run, bench, cases, art, bases)
+    es = next(block for block in page["languages"] if block["key"] == "es")
+    assert es["max_days_apart"] == 0
+    assert capsys.readouterr().err == ""
+
+
+def test_no_pairs_means_no_days_apart(tmp_path):
+    run, bench, cases, art, _bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art)
+    blocks = {block["key"]: block for block in page["languages"]}
+    assert blocks["id"]["max_days_apart"] is None and blocks["id"]["twin_runs"] == []
+
+
+def test_sources_count_the_twins_drawn_from_each_run(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art, bases)
+    sources = {s["run_id"]: s for s in page["run"]["sources"]}
+    # The base holds twins only: no question of the page, two twins drawn.
+    assert sources["base"]["questions"] == 0 and sources["base"]["twins_drawn"] == 2
+    assert sources["languages"]["twins_drawn"] == 1
+
+
+# --- the paired interval -------------------------------------------------------
+
+def test_paired_difference_with_no_discordant_pair_keeps_a_width():
+    difference, low, high = cr.paired_difference(0, 0, 48)
+    assert difference == 0.0
+    assert low == pytest.approx(-1.96 / 50) and high == pytest.approx(1.96 / 50)
+
+
+def test_paired_difference_matches_the_agresti_min_formula():
+    # 40 pairs: 3 right in the first only, 9 in the second only.
+    difference, low, high = cr.paired_difference(3, 9, 40)
+    assert difference == pytest.approx(-0.15)
+    centre = (3.5 - 9.5) / 42
+    half = 1.96 * ((3.5 + 9.5) - (3.5 - 9.5) ** 2 / 42) ** 0.5 / 42
+    assert (low, high) == pytest.approx((centre - half, centre + half))
+
+
+def test_paired_difference_stays_in_range_and_handles_no_pairs():
+    assert cr.paired_difference(0, 0, 0) == (None, -1.0, 1.0)
+    difference, low, high = cr.paired_difference(3, 0, 3)
+    assert difference == 1.0 and high == 1.0 and low > 0
+    with pytest.raises(ValueError, match="do not fit"):
+        cr.paired_difference(3, 2, 4)

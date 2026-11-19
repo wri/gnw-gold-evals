@@ -249,6 +249,7 @@ class ExpectedData(BaseModel):
     test_id: str = ""
     test_group: str = "unknown"
     status: str = "ready"
+    language: str = "en"  # the case's language; sets how reply numbers are read
 
     @field_validator("expected_dashboard_widgets", mode="before")
     @classmethod

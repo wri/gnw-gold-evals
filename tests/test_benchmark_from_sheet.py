@@ -158,3 +158,27 @@ def test_challenge_id_must_match_the_sheet_query(tmp_path):
     root, seed = bef_setup(tmp_path, rows)
     with pytest.raises(SystemExit, match="query differs"):
         bfs.build(seed, root, "t", "2026-10-23", write_tags=False)
+
+
+def test_tagging_keeps_language_twin_and_uid():
+    native = Case(id="ch-quant-002", status="ready", group="tcl",
+                  set="quantification", query="¿Cuánto bosque?",
+                  expected={"dataset_id": "4"}, language="es",
+                  twin="ch-quant-001")
+    for changed in (bfs.with_notes(native, {"benchmark_id": "bm-1"}),
+                    bfs.untag(native)):
+        assert (changed.language, changed.twin) == ("es", "ch-quant-001")
+        assert changed.uid == native.uid
+
+
+def test_a_row_that_resolves_to_another_language_stops_the_build():
+    native = Case(id="ch-quant-002", status="ready", group="tcl",
+                  set="quantification", query="¿Cuánto bosque?",
+                  expected={"dataset_id": "4"}, language="es",
+                  twin="ch-quant-001")
+    by_id, by_query = {native.id: native}, {bfs._query_key(native.query): native}
+    for row in ({"benchmark_id": "bm-1", "challenge_id": native.id,
+                 "query": native.query},
+                {"benchmark_id": "bm-1", "query": native.query}):
+        with pytest.raises(SystemExit, match="ch-quant-002.*'es'"):
+            bfs.resolve(row, by_id, by_query)

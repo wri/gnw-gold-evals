@@ -91,6 +91,37 @@ def wilson(passed: int, n: int, z: float = Z_95) -> tuple[float, float]:
     return (max(0.0, centre - half), min(1.0, centre + half))
 
 
+def paired_difference(
+    first_only: int, second_only: int, n: int, z: float = Z_95
+) -> tuple[float | None, float, float]:
+    """Difference of two proportions measured on the same ``n`` pairs, first
+    minus second, with its interval: (difference, low, high).
+
+    ``first_only`` and ``second_only`` are the discordant pairs (right on one
+    side only); pairs that agree move neither rate. The interval is the
+    Agresti-Min adjusted Wald interval for paired proportions (Agresti and
+    Min, 2005): add 0.5 to each of the four cells of the paired table, then
+    take the Wald interval. The plain Wald interval has zero width when no
+    pair is discordant; this one keeps a width of about 2z/(n + 2) there. The
+    difference returned is the observed one; the interval is centred on the
+    adjusted one. (None, -1.0, 1.0) when n=0.
+    """
+    if first_only < 0 or second_only < 0 or first_only + second_only > n:
+        raise ValueError(
+            f"discordant pairs {first_only} + {second_only} do not fit in {n} pairs"
+        )
+    if n == 0:
+        return (None, -1.0, 1.0)
+    b, c, total = first_only + 0.5, second_only + 0.5, n + 2
+    centre = (b - c) / total
+    half = z * math.sqrt(b + c - (b - c) ** 2 / total) / total
+    return (
+        (first_only - second_only) / n,
+        max(-1.0, centre - half),
+        min(1.0, centre + half),
+    )
+
+
 def _trial_list(entry: dict[str, Any]) -> list[dict[str, Any]]:
     """Per-trial detail as a list. The ledger writes ``trials`` as a list
     (``cli.merge_trials``); older fixtures used a dict keyed by trial, so

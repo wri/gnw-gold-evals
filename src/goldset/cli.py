@@ -40,6 +40,7 @@ from dotenv import load_dotenv
 from goldset.adapter import case_to_expected
 from goldset.benchmark import load_benchmark, manifest_sha
 from goldset.buckets import row_verdict, summarize_buckets
+from goldset.canonical import LANGUAGES
 from goldset.eval_types import TestResult
 from goldset.judge_config import (
     DEFAULT_JUDGE_BACKEND,
@@ -116,6 +117,7 @@ ACTUALS_FOR_CHECK = {
     "pull_source_match": ("actual_pull_source",),
     "ground_truth_match": ("agent_ground_truth",),
     "ground_truth_answer": ("agent_ground_truth_answer",),
+    "reply_language_match": ("actual_reply_language",),
 }
 ACTUAL_TRIM = 300
 
@@ -313,6 +315,11 @@ def select_cases(args: argparse.Namespace) -> list[Case]:
         cases = [c for c in cases if args.group.lower() in c.group.lower()]
     if args.set:
         cases = [c for c in cases if c.set.lower() == args.set.lower()]
+    # Language cases would otherwise join every store run and move the
+    # published per-set rates, which are English.
+    language = getattr(args, "language", None) or "en"
+    if language != "all":
+        cases = [c for c in cases if c.language == language]
     # Start multi-turn cases first: they take longest, and if started last (as
     # 'mt-' sorts after '1-') they leave a long tail at the end of the run.
     return sorted(cases, key=lambda c: (not c.is_multiturn, c.id))
@@ -578,6 +585,8 @@ def resume_run(args: argparse.Namespace) -> int:
         setattr(args, field, header[field])
     # Partials written before the --set selector existed have no "set" key.
     args.set = header.get("set")
+    # Partials from before --language ran every case in the store.
+    args.language = header.get("language", "all")
     args.benchmark = header.get("benchmark")
     if args.benchmark:
         path = Path(args.benchmark["path"])
@@ -686,6 +695,10 @@ def main() -> int:
     run.add_argument("--set", default=None,
                      help="exact match on the case's set, the hierarchy level "
                           "above group (e.g. aoi; CHALLENGE stores only)")
+    run.add_argument("--language", choices=(*LANGUAGES, "all"), default=None,
+                     help="store runs: run only the cases in this language "
+                          "(default en, so language cases stay out of the "
+                          "published per-set rates); not for --benchmark")
     run.add_argument("--benchmark", type=Path, default=None, metavar="MANIFEST",
                      help="run exactly a BENCHMARK manifest's active members "
                           "(benchmarks/<version>.json); implies its source "
@@ -732,9 +745,9 @@ def main() -> int:
         return prune_artifacts(args.results_dir, args.keep_runs)
 
     if args.benchmark:
-        if args.group or args.set:
-            print("--benchmark selects its own cases; drop --group/--set "
-                  "(--id or --missing-from narrow it to some members)")
+        if args.group or args.set or args.language:
+            print("--benchmark selects its own cases; drop --group/--set/"
+                  "--language (--id or --missing-from narrow it to some members)")
             return 1
         try:
             args.benchmark = benchmark_meta(args.benchmark)
@@ -762,6 +775,8 @@ def main() -> int:
     elif args.missing_from:
         print("--missing-from needs --benchmark")
         return 1
+    else:
+        args.language = args.language or "en"
     if args.results_dir is None:
         args.results_dir = Path("results/benchmark" if args.benchmark else "results/gold")
 
@@ -829,6 +844,7 @@ def main() -> int:
         "id": args.id,
         "group": args.group,
         "set": args.set,
+        "language": args.language,
         "benchmark": args.benchmark,
         "note": args.note,
         "analytics_base_url": args.analytics_base_url,

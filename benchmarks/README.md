@@ -28,6 +28,8 @@ North Star.
   explanation > output`.
 - `sampling`: the full record (tool, seed, eligibility, per-stratum allocation).
 - `errata[]`: `{uid, date, reason}` voids.
+- `pairs_with` (optional): on a languages companion, the English version
+  its members pair with (see [Languages companion](#languages-companion)).
 
 ### Current versions
 
@@ -51,6 +53,115 @@ A version is either **sampled** (`tools/benchmark_sample.py`, stratified
 from CHALLENGE) or **curated** (`tools/benchmark_from_sheet.py`, one member
 per row of a reviewed sheet export, with the row's use-case facets). Both
 write the same manifest contract.
+
+## Languages companion
+
+The questions in Spanish and Indonesian sit in a companion manifest,
+`benchmarks/<version>-languages.json`, beside the English version. The
+English manifest is never changed for them.
+
+- Each question in another language is its own CHALLENGE case, with its own
+  uid, in its type's set. It names an English `twin` that holds the same
+  expectations (`cases/challenge/README.md`), so the score gap of a pair
+  measures the language alone.
+- The companion's top-level `pairs_with` names the English version, for
+  example `"pairs_with": "2026"`.
+- A member can carry two more optional facets, written only when set:
+  `language` (`es` or `id`; absent means English) and `twin_uid` (the uid of
+  its pair). A member with a `language` always has a `twin_uid`.
+- The twin is either a member of the companion or a member of the
+  `pairs_with` version. The companion names those English members by uid and
+  does not hold them. It does hold the English twins that were written for a
+  question in another language and are not in the English version.
+- **The language rates sit beside the English headline and never count in
+  it.** The North Star is the English version's rate. A companion is run and
+  reported as its own version, and its rates are read per language against
+  the same pairs in English.
+- **A reply in the wrong language is never a fail.** The info-only check
+  `reply_language_match` records whether each reply is in the question's
+  language (`src/goldset/evaluators/README.md`). It runs on English
+  questions too, so each language has a rate, and it changes no verdict.
+
+Write the expectations once, then build and check:
+
+```bash
+# Copy expected from one case of a pair to the other (either direction).
+uv run python tools/twin_case.py --from <case id> --to <case id>
+uv run python tools/check.py --fix --cases-dir cases/challenge
+uv run python tools/coverage_doc.py --cases-dir cases/challenge
+
+uv run python tools/benchmark_languages.py \
+  --version 2026-languages --pairs-with 2026
+uv run python tools/check_benchmark.py
+```
+
+`benchmark_languages.py` selects every `ready` case with a `language`, plus
+those cases' twins that are not members of the `pairs_with` version. A
+member whose twin is in that version takes the twin's type and optional
+facets (use cases and the rest), so both halves of a pair sit in the same
+groups. `check_benchmark.py` checks each pair against the store: the case's
+language, that `twin_uid` is the uid of the case's `twin`, and that the twin
+is an active member of the companion or of the `pairs_with` version. If the
+`pairs_with` manifest is missing, it reports that as one problem.
+
+### The page's `languages` block
+
+Write a companion's page with the English run as its base, so the twins
+that are members of the `pairs_with` version have a result:
+
+```bash
+uv run python tools/benchmark_page.py results/benchmark/runs/<companion run>.json \
+  --base results/benchmark/runs/<English run>.json
+```
+
+`--base` matches results by uid, so it needs the two runs to share
+environment, ff and trial count, as for a rerun. The page of a manifest that
+has a member with a `language` then carries one more top-level key,
+`languages`. A page of any other manifest does not have the key and is
+byte-identical to what the tool wrote before
+(`tests/test_benchmark_page.py` pins it). **The block is internal until the
+frontend adds a parser**: the FE parses the page strictly and shows only the
+runs it pins, so do not pin a companion page before then.
+
+On a combined page, each `run.sources` entry of a companion page also has
+`twins_drawn`: how many twins of the measured pairs came from that run. A
+base that holds only twins shows `questions: 0`, because its twins are no
+members of the companion; `twins_drawn` says it was used. The tool reads the
+`pairs_with` manifest from the same directory and stops if it is missing.
+
+`languages` is a list with one object per language of the manifest, `es`
+before `id`:
+
+| Field | Meaning |
+|---|---|
+| `key` | `es` or `id`. |
+| `pairs` | Pairs measured: the question and its English twin both have a pass or fail verdict. Every figure below is over these pairs. |
+| `unpaired` | Questions whose twin has no result in the run or its bases, or whose twin an erratum voids (in the companion or the `pairs_with` version). Left out, never a fail. |
+| `unscored` | Pairs with an errored or uncovered side. Left out, as errors leave every rate. |
+| `twin_runs` | The ids of the runs the measured pairs' twins came from, sorted. |
+| `max_days_apart` | The largest gap in calendar days between a question's run and its twin's run, over the measured pairs; null with none. Above 0 the agent may have changed between the two sides, so that change is inside `gap`. Above 1 the tool prints a warning to stderr: rerun the twins, or read the gap with care. |
+| `native` | The questions in the language: `every_time` (right on every scored attempt) and `majority` (right on most), each `{n, passed, rate, ci_low, ci_high}` with a Wilson 95% interval. The two standards are the page's own. |
+| `english` | The same two rates for the English twins of the same pairs. |
+| `gap` | The paired gap on the `majority` rate, native minus English: `difference`, `ci_low`, `ci_high`, and the discordant pairs `native_only` and `english_only` (right on that side only). `difference` is null with no pairs. |
+| `reply_language` | For `native` and for `english`: `{matched, scored, undecided, rate}`. `rate` is the share of scored attempts whose `reply_language_match` is 1.0; attempts where the check is null or absent are left out and counted in `undecided`. Info-only: it changes no other figure. |
+| `failure_modes`, `failure_modes_by_standard` | Where the questions in the language went wrong, by the page's stage attribution, in the shape every group carries. |
+
+The gap's interval is the Agresti-Min adjusted Wald interval for a
+difference of paired proportions (Agresti and Min, 2005;
+`challenge_rollup.paired_difference`): 0.5 is added to each of the four
+cells of the paired table (both right, native only, English only, both
+wrong) before the Wald interval is taken. Pairs that agree move neither
+rate, so only the discordant counts set the difference. With no discordant
+pair the plain Wald interval has zero width; this one keeps about
+±1.96/(pairs + 2). The interval is centred on the adjusted difference, and
+`difference` is the observed one.
+
+On a companion page, `summary`, `types`, `use_cases` and `stages` cover only
+the members without a `language`: the English twins the companion holds. The
+rate of each language is in this block alone, so no figure of the page mixes
+languages. `questions` still lists every member. The twins held here are a
+few questions, not the North Star: read that from the English version's
+page.
 
 ## Rules
 

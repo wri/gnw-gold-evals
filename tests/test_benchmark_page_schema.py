@@ -119,3 +119,15 @@ def test_legacy_page_without_attempt_keys_is_accepted_but_mixed_page_is_not(buil
     assert not errors(legacy)
     legacy["summary"]["attempts"] = 1  # current marker but the rest is legacy
     assert errors(legacy)
+
+
+def test_a_languages_companion_page_conforms(tmp_path):
+    # The languages block and a base run's twins_drawn must stay inside the
+    # contract: the frontend rejects a page the schema does not allow.
+    from test_benchmark_page import languages_setup
+
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    page = bp.build_page(run, bench, cases, art, bases)
+    assert page["languages"]
+    errs = errors(json.loads(json.dumps(page)))
+    assert not errs, "\n".join(e.message[:300] for e in errs)

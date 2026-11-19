@@ -23,6 +23,14 @@ def test_case_file_conforms(path):
     assert not errors, "\n".join(e.message for e in errors)
 
 
+def test_the_language_enum_is_every_language_but_english():
+    from goldset.canonical import LANGUAGES
+
+    assert SCHEMA["properties"]["language"]["enum"] == [
+        code for code in LANGUAGES if code != "en"
+    ]
+
+
 def test_store_is_populated():
     assert CASE_FILES, "cases/ is empty — run tools/import_sheet.py"
 

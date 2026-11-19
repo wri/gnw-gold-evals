@@ -28,6 +28,7 @@ from pathlib import Path
 import yaml
 
 from goldset.canonical import (
+    LANGUAGES,
     case_uid,
     caseset_version,
     conversation_uid,
@@ -70,6 +71,8 @@ class Case:
     turns: tuple = ()
     set: str = ""  # optional hierarchy level above group (e.g. CHALLENGE "aoi")
     uid_includes_deltas: bool = False
+    language: str = "en"  # the query's language; part of the uid unless "en"
+    twin: str = ""  # id of the English case that shares this case's expectations
 
     @property
     def is_multiturn(self) -> bool:
@@ -81,7 +84,7 @@ class Case:
             return conversation_uid(
                 self.turns, include_deltas=self.uid_includes_deltas
             )
-        return case_uid(self.query, self.expected)
+        return case_uid(self.query, self.expected, self.language)
 
     def _validate_turns(self) -> list[str]:
         label = self.id or "?"
@@ -132,6 +135,20 @@ class Case:
             problems += self._validate_turns()
         elif not normalize_text(self.query):
             problems.append(f"{self.id or '?'}: empty query")
+        if self.language not in LANGUAGES:
+            problems.append(
+                f"{self.id or '?'}: language {self.language!r} is not one of "
+                f"{LANGUAGES}"
+            )
+        elif self.language != "en" and self.is_multiturn:
+            # A multi-turn uid does not cover the language.
+            problems.append(f"{self.id or '?'}: multi-turn cases must be in English")
+        if self.twin and self.language == "en":
+            problems.append(
+                f"{self.id or '?'}: only a case in another language names a twin"
+            )
+        if self.twin and self.twin == self.id:
+            problems.append(f"{self.id or '?'}: a case cannot be its own twin")
         for mapping, label in ((self.expected, "expected"), (self.notes, "notes")):
             for key, value in mapping.items():
                 if not isinstance(value, str):
@@ -160,6 +177,10 @@ def case_to_dict(case: Case) -> dict:
     if case.set:
         data["set"] = case.set
     data["group"] = case.group
+    if case.language != "en":
+        data["language"] = case.language
+    if case.twin:
+        data["twin"] = case.twin
     if case.is_multiturn:
         data["turns"] = [dict(turn) for turn in case.turns]
     else:
@@ -201,7 +222,8 @@ def read_case(path: Path, uid_includes_deltas: bool = False) -> tuple[Case, str]
     if not isinstance(raw, dict):
         raise ValueError(f"{path}: not a mapping")
     unknown = set(raw) - {
-        "id", "uid", "status", "set", "group", "query", "expected", "notes", "turns"
+        "id", "uid", "status", "set", "group", "language", "twin", "query",
+        "expected", "notes", "turns",
     }
     if unknown:
         raise ValueError(f"{path}: unknown top-level keys {sorted(unknown)}")
@@ -226,6 +248,8 @@ def read_case(path: Path, uid_includes_deltas: bool = False) -> tuple[Case, str]
         notes={str(k): str(v) for k, v in (raw.get("notes") or {}).items()},
         turns=turns,
         uid_includes_deltas=uid_includes_deltas,
+        language=str(raw.get("language", "en")),
+        twin=str(raw.get("twin", "")),
     )
     return case, str(raw.get("uid", ""))
 
@@ -305,3 +329,31 @@ def read_manifest(root: Path) -> dict | None:
     if not path.exists():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def expected_differences(case: Case, twin: Case) -> list[str]:
+    """The expected keys on which two cases disagree."""
+    return sorted(
+        key
+        for key in case.expected.keys() | twin.expected.keys()
+        if normalize_text(case.expected.get(key))
+        != normalize_text(twin.expected.get(key))
+    )
+
+
+def twin_problem(case: Case, by_id: dict[str, Case]) -> str:
+    """Why the twin a case names is not a valid other half of its pair, or
+    "". A case in another language must name a twin, which must exist, be an
+    English case and hold the same expectations, so the pair's score gap
+    measures the language alone."""
+    if not case.twin:
+        return "names no twin"
+    twin = by_id.get(case.twin)
+    if twin is None:
+        return f"twin {case.twin!r} is not in the store"
+    if twin.language != "en":
+        return f"twin {case.twin} must be an English case"
+    differing = expected_differences(case, twin)
+    if differing:
+        return f"expected differs from its twin {case.twin} in {differing}"
+    return ""

@@ -26,14 +26,28 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from goldset.evaluators.figures import validate as validate_figures
 from goldset.store import (
+    Case,
     build_manifest,
     load_store,
     read_manifest,
     store_uid_includes_deltas,
+    twin_problem,
     write_case,
     write_manifest,
 )
 from goldset.templates import validate_templates
+
+
+def twin_problems(cases: list[Case]) -> list[str]:
+    """A case in another language must name an English twin that holds the
+    same expectations (``goldset.store.twin_problem``)."""
+    by_id = {case.id: case for case in cases}
+    return [
+        f"{case.id}: {problem}"
+        for case in cases
+        if (case.twin or case.language != "en")
+        and (problem := twin_problem(case, by_id))
+    ]
 
 
 def main() -> int:
@@ -83,6 +97,8 @@ def main() -> int:
                 print(f"fixed uid: {path} {stored_uid or '(none)'} -> {case.uid}")
             else:
                 problems.append(f"{path}: stored uid {stored_uid!r} != {case.uid}")
+
+    problems += twin_problems([case for _p, case, _u in entries])
 
     ids = [case.id for _p, case, _u in entries]
     duplicates = sorted({i for i in ids if ids.count(i) > 1})
