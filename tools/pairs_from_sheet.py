@@ -50,6 +50,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from benchmark_from_sheet import member_type  # noqa: E402
+from benchmark_languages import SET_TYPES  # noqa: E402
 
 from goldset.benchmark import USE_CASES  # noqa: E402
 from goldset.canonical import LANGUAGES  # noqa: E402
@@ -183,10 +184,16 @@ def plan(rows: list[dict], language: str, column: str, day: str,
             continue
         benchmark_type = SHEET_TYPE.get(row["type"], row["type"])
         try:
-            member_type(benchmark_type, Case(id=pair_id, status="", group=cohort,
-                                             set=set_))
+            measured = member_type(benchmark_type, Case(id=pair_id, status="",
+                                                        group=cohort, set=set_))
         except (SystemExit, KeyError):
             bad(f"type {row['type']!r} does not fit the set {set_}")
+            continue
+        # The sets SET_TYPES lists each measure one type; refusal is not in it,
+        # as ``benchmark_languages.type_of`` also reads it from the note.
+        if SET_TYPES.get(set_, measured) != measured:
+            bad(f"type {row['type']!r} does not fit the set {set_}, "
+                f"which measures {SET_TYPES[set_]!r}")
             continue
         if set_ not in prefixes:
             bad(f"no single id prefix among the numbered cases of the set {set_}")

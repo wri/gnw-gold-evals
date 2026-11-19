@@ -193,6 +193,16 @@ def test_a_scalar_stays_the_text_the_sheet_holds(tmp_path, body, key, value):
     assert twin.expected[key] == value
 
 
+def test_a_native_type_must_be_the_type_its_set_measures(tmp_path, capsys):
+    # "trend" is a valid type, but the quantification set measures
+    # quantification (benchmark_languages.SET_TYPES).
+    root = store(tmp_path)
+    assert run(root, sheet(tmp_path, native(type="trend"))) == 1
+    out = capsys.readouterr().out
+    assert "type 'trend' does not fit the set quantification" in out
+    assert "nothing written" in out
+
+
 def test_a_pair_id_twice_in_the_sheet_is_a_problem(tmp_path, capsys):
     root = store(tmp_path)
     assert run(root, sheet(tmp_path, native(), native(english_query="other"))) == 1
