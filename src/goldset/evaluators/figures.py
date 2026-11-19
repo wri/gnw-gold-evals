@@ -705,7 +705,11 @@ def _stated_numbers_local(
     """``stated_numbers`` for a non-English case; ``answer`` is NFC."""
     matches = list(_LOCAL_NUMBER.finditer(answer))
     reply_mark = _reply_decimal_mark(matches, language)
-    english = language in _ENGLISH_MEANING and detect_language(answer)[0] == "en"
+    # The local meaning of a shared scale word belongs to a reply detected in
+    # the case language; a short or mixed reply gets the English one.
+    english = (
+        language in _ENGLISH_MEANING and detect_language(answer)[0] != language
+    )
     found = []
     for m in matches:
         for number, shown, carries, part in _spaced_readings(m[1]):

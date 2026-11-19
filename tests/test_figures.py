@@ -21,6 +21,7 @@ from goldset.evaluators.figures import (
     stated_numbers,
     validate,
 )
+from goldset.evaluators.reply_language import detect_language
 
 TCL = [
     {"aoi_id": "PER.12", "tree_cover_loss_year": year, "area_ha": area}
@@ -379,11 +380,19 @@ def test_portuguese_scales_are_brazilian():
 
 def test_a_french_billion_is_ten_to_the_twelfth():
     # AJ, 2026-11-19: in a French reply "billion" has its French meaning.
-    stated = _local("Les stocks atteignent 1,2 billion de tonnes de carbone.", "fr")
-    assert stated["1,2 billion"].value == pytest.approx(1.2e12)
-    assert _local("environ 2 billions de tonnes", "fr")["2 billions"].value == (
-        pytest.approx(2e12)
+    # Long enough to read as French: a short reply is undecided (below).
+    stated = _local(
+        "Les stocks de carbone de la région atteignent 1,2 billion de tonnes,"
+        " et c'est une part de la perte.",
+        "fr",
     )
+    assert stated["1,2 billion"].value == pytest.approx(1.2e12)
+    stated = _local(
+        "Selon l'analyse, environ 2 billions de tonnes de carbone sont"
+        " stockées dans les forêts de la région.",
+        "fr",
+    )
+    assert stated["2 billions"].value == pytest.approx(2e12)
 
 
 def test_an_english_reply_to_a_french_case_reads_billion_in_english():
@@ -392,6 +401,14 @@ def test_an_english_reply_to_a_french_case_reads_billion_in_english():
     english = ("The forests in the region hold about 1.2 billion tonnes of carbon,"
                " and the loss since 2001 has released a share of it.")
     assert _local(english, "fr")["1.2 billion"].value == pytest.approx(1.2e9)
+
+
+def test_an_undecided_reply_to_a_french_case_reads_billion_in_english():
+    # Too short or mixed to detect: only a reply that reads as French gets the
+    # French meaning.
+    answer = "Gabon's forests were a net sink: -1.57 billion tCO2e."
+    assert detect_language(answer)[0] != "fr"
+    assert _local(answer, "fr")["-1.57 billion"].value == pytest.approx(-1.57e9)
 
 
 def test_the_usual_portuguese_and_french_mark_is_the_comma():
