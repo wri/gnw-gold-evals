@@ -640,6 +640,26 @@ def test_an_existence_negation_still_states_a_zero(pulled, answer, language):
     assert _zero_score(pulled, answer, language) == 1.0, answer
 
 
+@pytest.mark.parametrize(("answer", "language"), [
+    ("La perte de couvert arboré a été nulle en 2021.", "fr"),
+    ("A perda de cobertura arbórea foi nula em 2021.", "pt"),
+    ("Aucun hectare n'a été perdu en 2021.", "fr"),
+    ("Nenhum hectare foi perdido em 2021.", "pt"),
+    ("Não ocorreu perda de cobertura arbórea em 2021.", "pt"),
+])
+def test_other_zero_phrasings_are_read(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 1.0, answer
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    ("La perte a atteint 120 ha. La déforestation n'est pas nulle.", "fr"),
+    ("A perda foi de 120 ha. A perda não foi nula.", "pt"),
+    ("A perda foi de 120 ha. Não ocorreu redução das perdas.", "pt"),
+])
+def test_the_new_zero_cues_keep_the_wrong_answers_wrong(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 0.0, answer
+
+
 def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
     with pytest.raises(ValueError, match="language"):
         evaluate_figures({}, "", "de")

@@ -830,14 +830,19 @@ _LOCAL_ZERO_WORDS = {
         r"|nenhum|nenhuma)"
         r" (?:(?!"+_PT_SKIP+r")[\w-]+ ){0,2}"
         r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
-        r"|perturbaç(?:ão|ões)|desmatamento)"
+        r"|perturbaç(?:ão|ões)|desmatamento|hectares?)"
         # "Não houve redução das perdas" and "sem considerar as perdas" say
         # nothing about a zero loss: these cues take the noun at once, after
         # at most a quantifier, never a verb or another noun.
-        r"|(?:n[ãa]o (?:houve|h[áa]|exist\w+|apresent\w+)|sem)"
+        r"|(?:n[ãa]o (?:houve|h[áa]|ocorreu|ocorreram|exist\w+|apresent\w+)|sem)"
         r" (?:nenhum[a]? |qualquer |novos? |novas? )?"
         r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
-        r"|perturbaç(?:ão|ões)|desmatamento))\b",
+        r"|perturbaç(?:ão|ões)|desmatamento)"
+        # "A perda foi nula"; a negation between noun and word ("não foi nula")
+        # turns it round, so none may sit between them.
+        r"|(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
+        r"|perturbaç(?:ão|ões)|desmatamento)"
+        r" (?:(?!n[ãa]o\b|nunca\b)[\w-]+ ){0,6}nul[oa]s?)\b",
         re.I,
     ),
     "fr": re.compile(
@@ -846,7 +851,7 @@ _LOCAL_ZERO_WORDS = {
         r"(?:pertes?|alertes?|changements?|gains?|perturbations?)"
         r"|aucune? (?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
         r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
-        r"|déforestation)"
+        r"|déforestation|hectares?)"
         # "pas de" and "sans" state a zero only as an existence statement:
         # "ne permettent pas de distinguer", "n'est pas de la déforestation"
         # and "sans distinguer les pertes" do not, so the noun follows at
@@ -857,7 +862,12 @@ _LOCAL_ZERO_WORDS = {
         r"|sans )"
         r"(?:(?!"+_FR_SKIP+r"|les\b|des\b|la\b|du\b)[\wé-]+ )?"
         r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
-        r"|déforestation))\b"
+        r"|déforestation)"
+        # "La perte a été nulle"; a negation between noun and word ("n'est
+        # pas nulle") turns it round, so none may sit between them.
+        r"|(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
+        r"|déforestation)"
+        r" (?:(?!pas\b|ne\b|n['’]|jamais\b)[\w’'-]+ ){0,6}nulles?)\b"
         # A sentence that opens on "Pas de" (a bullet, a title) is the same
         # existence statement; mid-sentence "pas de" is not.
         r"|(?:^|[.!?\n:;])[\s*_>•-]*pas d(?:e |['’])"
