@@ -734,6 +734,14 @@ _ES_SKIP = (
     "embargo|contar|incluir|datos|informaci[óo]n|registros?"
     "|precedentes|importar|duda"
 )
+# The negation or "without" must take the measured noun at once, after at most
+# one quantifier: a gap of up to two words let "sin distinguir las pérdidas"
+# and "tanpa membedakan kehilangan" (an infinitive, then a noun of another
+# clause) pass as a stated zero. "no hubo" and "tidak ada" need a measured
+# noun: "no hubo reducción de las pérdidas" states a change, not a zero.
+# "cambio" and "perubahan" do not count when they go on to name a measured
+# noun ("no hubo cambio en las pérdidas": the loss itself is not said to be 0).
+# "eventos de" / "hectáreas de" and "kejadian" only count a measured noun.
 _LOCAL_ZERO_WORDS = {
     "es": re.compile(
         r"\b(?:cero (?:hect[áa]reas|ha)"
@@ -742,18 +750,21 @@ _LOCAL_ZERO_WORDS = {
         r"|(?:no (?:se )?(?:ha |han )?"
         r"(?:registr|detect|observ|report|encontr|identific)\w+|no hay|no existen?"
         r"|no ha habido|no hubo|tampoco hubo|no presenta|sin|ning[úu]n|ningun[ao])"
-        r" (?:(?!"+_ES_SKIP+r")[\w-]+ ){0,2}"
-        r"(?:p[ée]rdidas?|alertas?|cambios?|ganancias?|emisiones|perturbaci\w+"
-        r"|deforestaci[óo]n))\b",
+        r" (?:(?:ning[úu]n|ningun[ao]s?|nuev[ao]s?) )?"
+        r"(?:(?:eventos|hect[áa]reas) de )?"
+        r"(?:p[ée]rdidas?|alertas?|ganancias?|emisiones|perturbaci\w+"
+        r"|deforestaci[óo]n"
+        r"|cambios?(?! (?:en|de) (?:(?:la|las|el|los) )?"
+        r"(?:p[ée]rdidas?|alertas?|ganancias?|emisiones|perturbaci\w+"
+        r"|deforestaci[óo]n))))\b",
         re.I,
     ),
     "id": re.compile(
         r"\b(?:nihil|nol (?:hektare?|ha|peringatan)|(?:tidak ada|tak ada|belum ada"
         r"|tanpa|tidak terdapat|tidak ditemukan|tidak terdeteksi|tidak tercatat"
-        r"|tidak terjadi|tidak mengalami) (?:(?!data|memperhitungkan|informasi)"
-        r"[\w-]+ ){0,2}"
-        r"(?:kehilangan|peringatan|perubahan|penambahan|emisi|gangguan"
-        r"|deforestasi))\b",
+        r"|tidak terjadi|tidak mengalami) (?:adanya )?(?:kejadian )?"
+        r"(?:kehilangan|peringatan|penambahan|emisi|gangguan|deforestasi"
+        r"|perubahan(?! (?:kehilangan|peringatan|emisi|gangguan|deforestasi))))\b",
         re.I,
     ),
 }
