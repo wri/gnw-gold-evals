@@ -95,6 +95,14 @@ FRENCH = (
     "Portillo, et le rythme est plus élevé que pendant la même période de "
     "l'année dernière."
 )
+# Modelled on Horizon's Italian replies (traces, 2026).
+ITALIAN = (
+    "Ho analizzato i dati sulla perdita di copertura arborea nella regione "
+    "della Toscana dal 2001 al 2024. La perdita totale è stata di circa "
+    "12.480 ettari, e la maggior parte degli eventi si concentra nelle "
+    "province di Grosseto e di Arezzo. Il ritmo è più alto negli ultimi "
+    "anni, anche a causa degli incendi."
+)
 HALF_AND_HALF = (
     "Según los datos, en el departamento de Ucayali se detectaron alertas "
     "entre enero y junio. The alerts are mostly in the east of the region, "
@@ -130,7 +138,7 @@ def test_code_and_urls_do_not_vote():
         "`the of and to in is` https://example.org/the/of/and/to/in/is"
     )
     assert detect_language(text) == (
-        None, {"en": 0, "es": 0, "id": 0, "fr": 0, "pt": 0}
+        None, {"en": 0, "es": 0, "id": 0, "fr": 0, "pt": 0, "it": 0}
     )
 
 
@@ -151,6 +159,11 @@ def test_a_reply_in_two_languages_is_undecided():
 def test_portuguese_and_french_are_told_apart_from_spanish():
     assert detect_language(PORTUGUESE)[0] == "pt"
     assert detect_language(FRENCH)[0] == "fr"
+
+
+def test_italian_is_told_apart_from_french_and_spanish():
+    # Without its own list an Italian reply reads as French ("la", "il", "a").
+    assert detect_language(ITALIAN)[0] == "it"
 
 
 def test_malay_reads_as_indonesian_the_nearest_language():

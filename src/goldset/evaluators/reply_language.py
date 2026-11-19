@@ -17,11 +17,11 @@ to a Spanish question does not mislead the user, so the wrong language is
 reported as a rate beside the accuracy figures and never fails a question
 (AJ, 2026-11-18).
 
-French and Portuguese are decoys: they are counted so that a reply in either
-is reported as such (``fr``, ``pt``) and scores 0.0 against English, Spanish
-or Indonesian, and they are never a case's language. Their lists may share
-words with another list ("de", "que"), and a word that two languages share
-does not count when those two are compared.
+French, Portuguese and Italian are decoys: they are counted so that a reply
+in one of them is reported as such (``fr``, ``pt``, ``it``) and scores 0.0
+against English, Spanish or Indonesian, and they are never a case's
+language. Their lists may share words with another list ("de", "que"), and a
+word that two languages share does not count when those two are compared.
 
 A case that sets no language is English, but the older non-English questions
 in the stores cannot take a ``language`` without a new uid. When such a
@@ -29,10 +29,10 @@ case's own query is clearly not English, its reply is not scored (null), as
 the expected language is unknown.
 
 Limits. Only English, Spanish and Indonesian are told apart from every other
-language but French and Portuguese: a reply in any other language is
-undecided or reads as its nearest neighbour, and Malay still reads as
-Indonesian. A place name can lend a few words to the wrong side ("Madre de Dios",
-"La Paz"); ``MIN_RATIO`` absorbs that in any reply with real prose.
+language but the decoys: a reply in any other language is undecided or reads
+as its nearest neighbour, and Malay still reads as Indonesian. A place name
+can lend a few words to the wrong side ("Madre de Dios", "La Paz");
+``MIN_RATIO`` absorbs that in any reply with real prose.
 """
 
 from __future__ import annotations
@@ -104,6 +104,19 @@ DECOY_WORDS: dict[str, frozenset[str]] = {
         "sobre como quando onde porque então e ou ele ela eles elas nós "
         "você vocês".split()
     ),
+    # Italian shares enough words with French, Spanish and Portuguese ("la",
+    # "il", "con") to read as one of them. It lists the words it shares with
+    # French and Spanish, so the ratio ignores them. "di", "e", "da" and "in"
+    # are left out: their count alone makes Italian the runner-up in
+    # Indonesian, Portuguese and English replies, which changes how those
+    # are compared.
+    "it": frozenset(
+        "il la le lo gli un una del della delle degli dello dei nel nella "
+        "nelle negli nello alla alle agli allo dal dalla dalle dagli dai sul "
+        "sulla sulle sui con su a che è sono erano essere stato stata stati "
+        "anche più questo questa questi queste quello quella quelli tra "
+        "perché quindi però molto ogni dove hanno ho".split()
+    ),
 }
 _VOCABULARIES = {**FUNCTION_WORDS, **DECOY_WORDS}
 
@@ -126,7 +139,7 @@ def prose_words(text: str) -> list[str]:
 def detect_language(text: str) -> tuple[str | None, dict[str, int]]:
     """The reply's language, and each language's function-word count.
 
-    The language is one of ``LANGUAGES`` or a decoy (``fr``, ``pt``).
+    The language is one of ``LANGUAGES`` or a decoy (``fr``, ``pt``, ``it``).
     ``None`` when no language reaches ``MIN_HITS`` or the leader has less
     than ``MIN_RATIO`` times the runner-up's count. That ratio leaves out the
     words both languages list.
@@ -162,7 +175,7 @@ def evaluate_reply_language(
     evidence of the wrong language: a ``0.0`` there would report "Sí." or a
     bare table as a reply in the wrong language and pull the rate down.
 
-    A decoy-language reply (``fr``, ``pt``) scores ``0.0``; an ``en`` case
+    A decoy-language reply (``fr``, ``pt``, ``it``) scores ``0.0``; an ``en`` case
     whose ``query`` reads as another language scores ``null`` with a reason
     (see the module docstring).
     """
