@@ -599,6 +599,47 @@ def test_a_zero_word_that_states_no_zero_figure_fails(pulled, answer, language):
     assert result["figure_match_score"] == 0.0
 
 
+def _zero_score(pulled, answer, language):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    state, tables = _state(answer, empty_year)
+    pulled(tables)
+    return evaluate_figures(state, "sum(area_ha)", language)["figure_match_score"]
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    # Each states 120 ha, so a zero is wrong; the negation is about something
+    # else (not a zero loss), and no article or infinitive may follow the cue.
+    ("La perte a atteint 120 ha. Attention : la perte de couverture arborée"
+     " n'est pas de la déforestation.", "fr"),
+    ("La perte a atteint 120 ha. Ces données ne permettent pas de distinguer"
+     " les pertes par cause.", "fr"),
+    ("La perte a atteint 120 ha. Le jeu de données ne fournit pas d'alertes"
+     " en temps réel.", "fr"),
+    ("La perte a atteint 120 ha, sans distinguer les pertes par cause.", "fr"),
+    ("A perda foi de 120 ha. Não houve redução das perdas em relação a 2020.", "pt"),
+    ("A perda foi de 120 ha, sem considerar as perdas por fogo.", "pt"),
+])
+def test_a_negation_about_something_else_states_no_zero(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 0.0, answer
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    ("Aucune perte de couvert arboré n'a été détectée en 2021.", "fr"),
+    ("Il n'y a pas eu d'alertes sur cette période.", "fr"),
+    ("Il n'y a pas de perte de couvert arboré.", "fr"),
+    ("L'analyse n'a pas détecté de perte en 2021.", "fr"),
+    ("Pas de perte de forêt primaire entre 2020 et 2024.", "fr"),
+    ("Résultat : **Pas d'alertes** dans cette zone.", "fr"),
+    ("La zone est restée sans perte de couvert arboré.", "fr"),
+    ("Não houve perda de cobertura arbórea em 2021.", "pt"),
+    ("Não houve nenhuma perda de cobertura arbórea em 2021.", "pt"),
+    ("Nenhum alerta foi registrado.", "pt"),
+    ("A área ficou sem perda de cobertura arbórea.", "pt"),
+])
+def test_an_existence_negation_still_states_a_zero(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 1.0, answer
+
+
 def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
     with pytest.raises(ValueError, match="language"):
         evaluate_figures({}, "", "de")

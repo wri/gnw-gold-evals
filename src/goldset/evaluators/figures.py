@@ -827,9 +827,15 @@ _LOCAL_ZERO_WORDS = {
         r"|perturbaç(?:ão|ões))"
         r"|(?:n[ãa]o (?:se )?(?:foi |foram |houve |há )?"
         r"(?:registr|detect|observ|report|encontr|identific|verific)\w+"
-        r"|n[ãa]o h[áa]|n[ãa]o houve|n[ãa]o exist\w+|n[ãa]o apresent\w+"
-        r"|sem|nenhum|nenhuma)"
+        r"|nenhum|nenhuma)"
         r" (?:(?!"+_PT_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
+        r"|perturbaç(?:ão|ões)|desmatamento)"
+        # "Não houve redução das perdas" and "sem considerar as perdas" say
+        # nothing about a zero loss: these cues take the noun at once, after
+        # at most a quantifier, never a verb or another noun.
+        r"|(?:n[ãa]o (?:houve|h[áa]|exist\w+|apresent\w+)|sem)"
+        r" (?:nenhum[a]? |qualquer |novos? |novas? )?"
         r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
         r"|perturbaç(?:ão|ões)|desmatamento))\b",
         re.I,
@@ -838,10 +844,26 @@ _LOCAL_ZERO_WORDS = {
         r"\b(?:z[ée]ro (?:hectares?|ha)"
         r"|z[ée]ro (?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
         r"(?:pertes?|alertes?|changements?|gains?|perturbations?)"
-        r"|(?:aucune? |sans |pas (?:eu )?d(?:e |['’]))"
-        r"(?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
+        r"|aucune? (?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
         r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
-        r"|déforestation))\b",
+        r"|déforestation)"
+        # "pas de" and "sans" state a zero only as an existence statement:
+        # "ne permettent pas de distinguer", "n'est pas de la déforestation"
+        # and "sans distinguer les pertes" do not, so the noun follows at
+        # once (after one adjective at most).
+        r"|(?:n['’]y a (?:pas (?:eu )?|eu )d(?:e |['’])"
+        r"|n['’](?:a|ont) pas (?:été )?(?:détect|enregistr|observ|constat"
+        r"|identifi|signal)\w* (?:d(?:e |['’]))?"
+        r"|sans )"
+        r"(?:(?!"+_FR_SKIP+r"|les\b|des\b|la\b|du\b)[\wé-]+ )?"
+        r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
+        r"|déforestation))\b"
+        # A sentence that opens on "Pas de" (a bullet, a title) is the same
+        # existence statement; mid-sentence "pas de" is not.
+        r"|(?:^|[.!?\n:;])[\s*_>•-]*pas d(?:e |['’])"
+        r"(?:(?!"+_FR_SKIP+r"|les\b|des\b|la\b|du\b)[\wé-]+ )?"
+        r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
+        r"|déforestation)\b",
         re.I,
     ),
 }
