@@ -169,6 +169,56 @@ def test_o2_empty_data_fails_and_pie_slices_are_info_only():
     assert ok["actual_max_pie_slices"] == 2
 
 
+WIDE_STACKED = {
+    "type": "stacked-bar", "xAxis": "alert_date", "yAxis": "area_ha",
+    "stackField": "", "seriesFields": ["Highest confidence", "Low confidence"],
+    "data": [{"alert_date": "2026-10-19", "Highest confidence": 0.13,
+              "Low confidence": 4.94}],
+}
+
+
+def test_o2_wide_stacked_bar_passes_without_y_axis_key():
+    # The FE draws one series per seriesFields column; yAxis is only a label.
+    result = evaluate_chart_well_formed(state(charts=[WIDE_STACKED]))
+    assert result["chart_well_formed_score"] == 1.0
+    assert result["chart_well_formed_reason"] is None
+
+
+def test_o2_wide_chart_missing_series_column_fails():
+    chart = {**WIDE_STACKED, "seriesFields": ["Highest confidence", "Medium"]}
+    result = evaluate_chart_well_formed(state(charts=[chart]))
+    assert result["chart_well_formed_score"] == 0.0
+    assert "seriesFields references field 'Medium' absent from data" in (
+        result["chart_well_formed_reason"])
+
+
+def test_o2_wide_chart_still_checks_x_axis():
+    chart = {**WIDE_STACKED, "xAxis": "missing"}
+    assert "xAxis references field 'missing'" in evaluate_chart_well_formed(
+        state(charts=[chart]))["chart_well_formed_reason"]
+
+
+def test_o2_empty_series_fields_keep_the_long_format_rule():
+    for empty in (None, []):
+        chart = {**WIDE_STACKED, "seriesFields": empty}
+        result = evaluate_chart_well_formed(state(charts=[chart]))
+        assert result["chart_well_formed_score"] == 0.0
+        assert "yAxis references field 'area_ha'" in (
+            result["chart_well_formed_reason"])
+    chart = {k: v for k, v in WIDE_STACKED.items() if k != "seriesFields"}
+    assert evaluate_chart_well_formed(state(charts=[chart]))[
+        "chart_well_formed_score"] == 0.0
+
+
+def test_o2_malformed_series_fields_is_a_problem_not_a_crash():
+    for bad in ("Low confidence", {"a": 1}, [1, 2], ["ok", None], [""]):
+        chart = {**WIDE_STACKED, "seriesFields": bad}
+        result = evaluate_chart_well_formed(state(charts=[chart]))
+        assert result["chart_well_formed_score"] == 0.0
+        assert "seriesFields is not a list of field names" in (
+            result["chart_well_formed_reason"])
+
+
 # --- chart_type_match
 
 def test_o3_alternatives_and_missing_chart():

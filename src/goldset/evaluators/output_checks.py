@@ -2,7 +2,10 @@
 
 ``chart_well_formed`` needs no expectation: it fails a chart whose data is empty
 or whose axis fields name keys absent from the data, since that renders badly
-whatever the analysis computed. It overlaps ``chart_integrity`` on purpose: a
+whatever the analysis computed. Two layouts exist: long format (``yAxis`` is a
+data key) and wide format, where a non-empty ``seriesFields`` lists the data
+columns the FE draws as series and ``yAxis`` is only a label, so the series
+columns are checked instead of ``yAxis``. It overlaps ``chart_integrity`` on purpose: a
 broken *spec* is an Output failure, a mis-joined *dataset* under a plausible
 spec is an Analysis failure, and the two reasons read differently.
 
@@ -44,11 +47,27 @@ def evaluate_chart_well_formed(agent_state: dict[str, Any]) -> dict[str, Any]:
         if chart.get("type") == "table":
             continue
         keys = {key for record in records for key in record}
-        for axis in ("xAxis", "yAxis"):
+        series = chart.get("seriesFields")
+        wide = series is not None and series != []
+        # Wide format: the FE draws one series per seriesFields column and uses
+        # yAxis only as a label (ChartWidget.tsx), so yAxis need not be a key.
+        axes = ("xAxis",) if wide else ("xAxis", "yAxis")
+        for axis in axes:
             field = chart.get(axis)
             if isinstance(field, str) and field and field not in keys:
                 problems.append(
                     f"{label}: {axis} references field {field!r} absent from data"
+                )
+        if wide:
+            if not isinstance(series, list) or not all(
+                isinstance(name, str) and name for name in series
+            ):
+                problems.append(f"{label}: seriesFields is not a list of field names")
+            else:
+                problems.extend(
+                    f"{label}: seriesFields references field {name!r} absent from data"
+                    for name in series
+                    if name not in keys
                 )
         if chart.get("type") == "pie":
             max_pie_slices = max(max_pie_slices, len(records))

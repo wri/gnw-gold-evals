@@ -482,11 +482,11 @@ Output · gating · deterministic · `guards.evaluate_guards` · runs when: `ans
 
 Output · gating · deterministic · `output_checks.evaluate_chart_well_formed` · runs when: the row produced charts (no expectation needed)
 
-**Measures.** Basic chart structure: each chart entry must be an object with non-empty record data, and every field its `xAxis` or `yAxis` names must exist in at least one record.
+**Measures.** Basic chart structure: each chart entry must be an object with non-empty record data, and every field its `xAxis` or `yAxis` names must exist in at least one record. A chart with a non-empty `seriesFields` list is in wide format (the FE draws one series per listed column and uses `yAxis` only as a label): then every `seriesFields` name must exist in at least one record, `yAxis` is not required to, and `xAxis` is checked as before. A `seriesFields` that is not a list of non-empty strings fails; `null`, absent or `[]` mean long format.
 
 **Scores.** `1.0` when every chart passes · `0.0` when any chart fails · `null` when there are no charts. A table's axes are not checked, since the FE's table widget renders only the records and the title (AJ, 2026-10-28: `ch-quant-157` failed on a table whose unused `xAxis` named a missing field); an empty table still fails.
 
-**Evidence.** `reasons.chart_well_formed`, one problem per chart joined by `;`, for example `chart 1 (pie): empty data` or `chart 1 (pie): xAxis references field 'driver' absent from data` · no `actuals`.
+**Evidence.** `reasons.chart_well_formed`, one problem per chart joined by `;`, for example `chart 1 (pie): empty data` or `chart 1 (pie): xAxis references field 'driver' absent from data` or `chart 0 (stacked-bar): seriesFields references field 'Low confidence' absent from data` · no `actuals`.
 
 **Triage.**
 - It overlaps `chart_integrity` on purpose and splits by cause: a broken chart spec is an output failure (this check); mis-joined data under a sound spec is an analysis failure (`chart_integrity`).

@@ -3018,6 +3018,99 @@
           "248 active member(s) not in the run and its bases"
         ],
         "page": "results/benchmark/pages/20261119T080049Z_prod.json"
+      },
+      {
+        "run_id": "20261119T115511Z_prod",
+        "path": "results/benchmark/runs/20261119T115511Z_prod.json",
+        "started": "2026-11-19T11:55:11Z",
+        "environment": "prod",
+        "build": "prod 2026-11-19 post-update",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "908d7af"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "chart_well_formed rescored at bef0cdd from the saved agent states: wide-format charts (seriesFields) accepted; yAxis is a label there.",
+        "caseset": "challenge",
+        "caseset_version": "25d5261e3ecbc8fd",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 966,
+              "evaluated": 1041
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 205
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 397,
+              "evaluated": 409
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 177
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 302,
+              "evaluated": 377
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 242
+          },
+          "output": {
+            "dedicated": {
+              "passed": 178,
+              "evaluated": 178
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 177
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 27,
+              "evaluated": 27
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 27
+          },
+          "rows_total": 267,
+          "verdicts": {
+            "pass": 211,
+            "fail": 56,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026.json",
+          "version": "2026",
+          "status": "frozen",
+          "manifest_sha": "fa1e8f952e6aeeb8",
+          "members": 267
+        },
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261119T115511Z_prod.json"
       }
     ]
   },
@@ -3116,9 +3209,12 @@
       "members": 264,
       "voided": 5,
       "runs": [
-        "20261119T063036Z_prod"
+        "20261119T063036Z_prod",
+        "20261119T115511Z_prod"
       ],
-      "canonical_runs": []
+      "canonical_runs": [
+        "20261119T115511Z_prod"
+      ]
     }
   }
 }
