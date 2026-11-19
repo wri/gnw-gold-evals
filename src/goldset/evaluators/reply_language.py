@@ -55,6 +55,9 @@ MIN_HITS = 4
 # languages (a Spanish answer with an English paragraph) and neither is "the"
 # reply language. Borrowed names stay far under it: measured Spanish and
 # Indonesian replies quoting English dataset names lead by 10 to 1 or more.
+# Plainly Portuguese and French replies lead their runner-up (often Spanish)
+# by at least 4.2 and 9.7 to 1 in 95% of them, medians 8 and 24 (Horizon's
+# replies to external users to 2026-10-19).
 MIN_RATIO = 2.0
 
 # English, Spanish and Indonesian leave out the words one of them shares with
