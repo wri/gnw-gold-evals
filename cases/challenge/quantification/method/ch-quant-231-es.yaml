@@ -1,0 +1,23 @@
+id: ch-quant-231-es
+uid: 2e453048e89cbae1
+status: ready
+set: quantification
+group: method
+language: es
+twin: ch-quant-231
+query: hola, puedes generar capas exportables en archivos .shp?
+expected:
+  text: Says plainly whether it can export shapefiles; if it cannot, says what can be downloaded
+    here or where to get the spatial data (for example Global Forest Watch or its data API);
+    does not claim to have produced a file.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-035); real es user prompt,
+    trace trace 2026-01'
+  pair_id: es-n-035
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-mon-046; ch-quant-193
+  language_review: subagent review 2026-11-18; native speaker not yet

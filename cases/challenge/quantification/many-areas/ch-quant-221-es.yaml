@@ -1,0 +1,31 @@
+id: ch-quant-221-es
+uid: 7f66d2392e4f9646
+status: ready
+set: quantification
+group: many-areas
+language: es
+twin: ch-quant-221
+query: cuáles son los municipios del estado de Campeche en México con mayor pérdida de cobertura
+  forestal entre 2000 y 2026
+expected:
+  aoi_ids: MEX.4.1_2;MEX.4.2_2;MEX.4.3_2;MEX.4.4_2;MEX.4.5_2;MEX.4.6_2;MEX.4.7_2;MEX.4.8_2;MEX.4.9_2;MEX.4.10_2;MEX.4.11_2
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2025-12-31'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2001..2025 | max(area_ha) by
+    aoi_id where tree_cover_loss_year in 2002..2025
+  start_date: '2002-01-01'
+  context_layer: no_selection | primary_forest
+  text: Ranks Campeche's municipalities by tree cover loss from the pulled data and says which
+    years the data cover.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-021); real es user prompt,
+    trace trace 2026-11'
+  pair_id: es-n-021
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-port-018; ch-port-003; ch-quant-189
+  language_review: subagent review 2026-11-18; native speaker not yet

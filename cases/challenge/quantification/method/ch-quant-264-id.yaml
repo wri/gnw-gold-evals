@@ -1,0 +1,23 @@
+id: ch-quant-264-id
+uid: 609e2698550e9ef4
+status: ready
+set: quantification
+group: method
+language: id
+twin: ch-quant-264
+query: sumber data batas desa dan data forest loss dari mana ?
+expected:
+  text: Says the tree cover loss data come from the University of Maryland (Hansen/GLAD) and
+    names the source of its administrative boundaries, including villages; does not invent
+    sources.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-053); real id user prompt,
+    trace trace 2026-05'
+  pair_id: id-n-053
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-198
+  language_review: subagent review 2026-11-18; native speaker not yet

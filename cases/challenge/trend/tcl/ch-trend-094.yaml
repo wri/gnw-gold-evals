@@ -1,0 +1,28 @@
+id: ch-trend-094
+uid: f1ca20acfe65a642
+status: ready
+set: trend
+group: tcl
+query: What does the change in forest cover in West Kalimantan from 2016 to 2026 look like?
+  What caused it? And what is the impact?
+expected:
+  aoi_ids: IDN.12
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2016..2025
+  text: Says the data end in 2025, not 2026; any cause it gives comes from the driver data
+    and is described as the dominant driver class, not as the proven cause; does not invent
+    impacts the data do not show.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-trend-094-id (id-n-013);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-013
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kalimantan Barat (province)
+  precedent: ch-trend-079; ch-trend-078

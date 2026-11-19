@@ -1,0 +1,25 @@
+id: ch-comp-125-es
+uid: 813888fa9f32e702
+status: ready
+set: comparison
+group: tcl-drivers
+language: es
+twin: ch-comp-125
+query: 'Tengo curiosidad: entre Perú y Bolivia, ¿cuál ha perdido más cobertura arbórea por
+  agricultura permanente desde 2001?'
+expected:
+  aoi_ids: PER;BOL
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  accept_nudge_offering: '8'
+  figure: sum(area_ha) where aoi_id = 'BOL' and tree_cover_loss_driver = 'Permanent agriculture'
+    ; sum(area_ha) where aoi_id = 'PER' and tree_cover_loss_driver = 'Permanent agriculture'
+  figure_claim: '#1 > #2 :: Bolivia has lost more tree cover to permanent agriculture than
+    Peru since 2001 || Peru has lost more tree cover to permanent agriculture than Bolivia
+    since 2001'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-125 (es-t-012)'
+  pair_id: es-t-012
+  use_cases: UC2;UC3
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

@@ -1,0 +1,26 @@
+id: ch-comp-176-es
+uid: 9a4aa87eaf0902ef
+status: ready
+set: comparison
+group: land-cover
+language: es
+twin: ch-comp-176
+query: ¿Cuánta tierra en Antioquia es bosque natural y cuánta es pasto? Estamos planificando
+  dónde intensificar la ganadería.
+expected:
+  aoi_ids: COL.2
+  dataset_id: 1;3
+  data_pull: 'TRUE'
+  text: Gives the areas of natural forest and of pasture-like land in Antioquia from the land
+    cover data, and is clear which land cover class it treats as pasture.
+  figure: sum(area_ha) where aoi_id = 'COL.2' and natural_lands_class in ('Natural forests',
+    'Natural peat forests', 'Wetland natural forests', 'Mangroves') | sum(area_ha) where aoi_id
+    = 'COL.2' and land_cover_class = 'Tree cover' ; sum(area_ha) where aoi_id = 'COL.2' and
+    land_cover_class = 'Cultivated grasslands' | sum(area_ha) where aoi_id = 'COL.2' and natural_lands_class
+    = 'Cropland'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-176 (es-t-036)'
+  pair_id: es-t-036
+  use_cases: UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,25 @@
+id: ch-trend-096-id
+uid: 78a60bb4c1eb7c15
+status: ready
+set: trend
+group: tcl
+language: id
+twin: ch-trend-096
+query: bagaimana deforestasi di kawasan danau toba, sumatera utara, Indonesia dari tahun 2004
+  hingga 2024 ?
+expected:
+  text: Says which area its figures cover, or asks which districts around Lake Toba are meant;
+    if it uses the area named Lake Toba, says that this is the lake itself, not the surrounding
+    landscape.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-022); real id user prompt,
+    trace trace 2026-01'
+  pair_id: id-n-022
+  benchmark_type: trend
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Lake Toba (Danau Toba), Sumatera Utara
+  precedent: ch-trend-072; ch-quant-162
+  language_review: subagent review 2026-11-18; native speaker not yet

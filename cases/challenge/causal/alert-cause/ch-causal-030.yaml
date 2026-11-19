@@ -1,0 +1,24 @@
+id: ch-causal-030
+uid: efa739810c9bd6ac
+status: ready
+set: causal
+group: alert_cause
+query: show the latest deforestation alerts in Aceh that are due to human factors, not natural
+  factors
+expected:
+  aoi_ids: IDN.1
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: States that alerts do not identify what caused them, so it cannot separate human-caused
+    from natural disturbance; does not present Aceh's alerts as human-caused.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-causal-030-id (id-n-005);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-005
+  benchmark_type: causal
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Aceh (province)
+  precedent: ch-causal-019; ch-causal-021

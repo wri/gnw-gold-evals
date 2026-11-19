@@ -1,0 +1,22 @@
+id: ch-quant-267-id
+uid: 21be935027f232d2
+status: ready
+set: quantification
+group: method
+language: id
+twin: ch-quant-267
+query: dasar perhitungan global land cover ini menggunakan apa ?
+expected:
+  text: Explains the basis of the global land cover data as the dataset documents it, naming
+    its source, without inventing sensors or methods.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-056); real id user prompt,
+    trace trace 2026-07'
+  pair_id: id-n-056
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-204; ch-quant-198
+  language_review: subagent review 2026-11-18; native speaker not yet

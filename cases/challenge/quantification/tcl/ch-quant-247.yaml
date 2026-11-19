@@ -1,0 +1,21 @@
+id: ch-quant-247
+uid: 3deac4ffda9dbef9
+status: ready
+set: quantification
+group: tcl
+query: based on the Hansen data, I want to get the deforestation value for Beginci Darat village,
+  Ketapang district, from 2020 to 2025
+expected:
+  text: Declines to analyse tree cover loss at village (desa) level, and may offer Ketapang
+    district instead; never labels a district figure as Beginci Darat's.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-247-id (id-n-026);
+    real id user prompt, trace trace 2026-06'
+  pair_id: id-n-026
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Beginci Darat (desa), Hulu Sungai, Ketapang, Kalimantan Barat
+  precedent: ch-refusal-039 (not a member); ch-quant-163

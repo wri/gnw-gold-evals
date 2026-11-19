@@ -1,0 +1,19 @@
+id: ch-quant-266
+uid: 98c81d87d19b7cc8
+status: ready
+set: quantification
+group: method
+query: what is the method for calculating carbon and the release of emissions
+expected:
+  text: Gives a sourced general explanation of how forest carbon emissions and removals are
+    estimated, which does not contradict the dataset's method and invents no figures.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-266-id (id-n-055);
+    real id user prompt, trace trace 2026-09'
+  pair_id: id-n-055
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-202; ch-quant-203

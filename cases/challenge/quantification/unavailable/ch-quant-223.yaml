@@ -1,0 +1,21 @@
+id: ch-quant-223
+uid: 61becbf6ba7fd917
+status: ready
+set: quantification
+group: unavailable
+query: What condition are the pastures in, in Tierralta, Córdoba, Colombia
+expected:
+  aoi_ids: COL.14.27
+  text: Says the data cannot measure the condition or degradation of pastures; if it reports
+    grassland extent, is clear which class it reports (natural or semi-natural grassland,
+    or cultivated grassland from land cover).
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-223-es (es-n-023);
+    real es user prompt, trace trace 2025-10'
+  pair_id: es-n-023
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-181; ch-comp-176; ch-quant-183

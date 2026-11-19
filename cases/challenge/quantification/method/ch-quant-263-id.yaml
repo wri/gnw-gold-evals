@@ -1,0 +1,22 @@
+id: ch-quant-263-id
+uid: 1e9f82b68ded3f23
+status: ready
+set: quantification
+group: method
+language: id
+twin: ch-quant-263
+query: data peta di global nature watch ini berasal dari mana saja?
+expected:
+  text: Names the sources of the datasets it offers as the catalogue documents them, without
+    inventing sources.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-052); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-052
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-198; ch-quant-205
+  language_review: subagent review 2026-11-18; native speaker not yet

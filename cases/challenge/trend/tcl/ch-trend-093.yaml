@@ -1,0 +1,22 @@
+id: ch-trend-093
+uid: 38ba2b777c34ea0a
+status: ready
+set: trend
+group: tcl
+query: please give me the annual data on deforestation or tree cover loss in Farallones de
+  Cali National Natural Park
+expected:
+  aoi_ids: 138|14437
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  figure: max(area_ha) by tree_cover_loss_year | sum(area_ha)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-trend-093-es (es-n-031);
+    real es user prompt, trace trace 2026-09'
+  pair_id: es-n-031
+  benchmark_type: trend
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-trend-079

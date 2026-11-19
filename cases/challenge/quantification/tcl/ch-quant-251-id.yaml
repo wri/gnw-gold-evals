@@ -1,0 +1,25 @@
+id: ch-quant-251-id
+uid: 36a21908a138bea2
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-251
+query: deforestasi di Batang Toru (Key Biodiversity Area)
+expected:
+  aoi_ids: '23070'
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  figure: sum(area_ha)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-031); real id user prompt,
+    trace trace 2026-01'
+  pair_id: id-n-031
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Batang Toru (Key Biodiversity Area)
+  precedent: ch-quant-162; ch-quant-151
+  language_review: subagent review 2026-11-18; native speaker not yet

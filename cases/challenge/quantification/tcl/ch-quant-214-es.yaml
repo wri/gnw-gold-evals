@@ -1,0 +1,29 @@
+id: ch-quant-214-es
+uid: b21163341610a8e1
+status: ready
+set: quantification
+group: tcl
+language: es
+twin: ch-quant-214
+query: Porcentaje de cobertura deforestada en el Bosque de protección San Matias San Carlos
+  (Pasco - Peru) durante el año 2025
+expected:
+  aoi_ids: 20182|100188
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2025-12-31'
+  figure: sum(area_ha) where tree_cover_loss_year = 2025
+  start_date: '2025-01-01'
+  text: Gives the 2025 loss as a share and states the denominator it used (for example the
+    area of the protection forest or its tree cover).
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-013); real es user prompt,
+    trace trace 2026-01'
+  pair_id: es-n-013
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: 'ch-quant-176 (share: absolute figure plus denominator text); ch-quant-151'
+  language_review: subagent review 2026-11-18; native speaker not yet

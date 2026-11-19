@@ -1,0 +1,24 @@
+id: ch-quant-230-es
+uid: 46710815ac677178
+status: ready
+set: quantification
+group: method
+language: es
+twin: ch-quant-230
+query: Que tan correcta es la información de Guatemala ya que hay áreas de palma africana
+  que se contabiliza como deforestacion
+expected:
+  text: Explains that tree cover loss includes the harvest or replanting of tree plantations
+    such as oil palm and is not the same as deforestation; may point to a forest filter that
+    narrows it (primary or natural forest); does not claim the loss figures exclude plantations.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-034); real es user prompt,
+    trace trace 2026-10'
+  pair_id: es-n-034
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-166; ch-quant-197
+  language_review: subagent review 2026-11-18; native speaker not yet

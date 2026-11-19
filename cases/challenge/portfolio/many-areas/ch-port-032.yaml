@@ -1,0 +1,24 @@
+id: ch-port-032
+uid: d605a33751e288df
+status: ready
+set: portfolio
+group: many-areas
+query: in Indonesia, make a deforestation analysis of all national parks over the last 10
+  years, sort them from the largest to the smallest, also give the area of each national park
+  and the deforestation as a percentage of the park area
+expected:
+  text: Either ranks all of Indonesia's national parks by tree cover loss from pulled data,
+    or explains that there are too many to analyse in one request and offers named parks or
+    a smaller region; does not invent a ranking, and if it analyses a subset it says which
+    parks are covered and that the list is not complete.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-port-032-id (id-n-042);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-042
+  benchmark_type: portfolio
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: all national parks of Indonesia
+  precedent: ch-port-015; ch-port-027; ch-quant-184

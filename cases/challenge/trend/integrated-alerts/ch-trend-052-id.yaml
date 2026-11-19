@@ -1,0 +1,24 @@
+id: ch-trend-052-id
+uid: 64c595ba025e3278
+status: ready
+set: trend
+group: integrated-alerts
+language: id
+twin: ch-trend-098
+query: Bagaimana pola luas peringatan deforestasi dari bulan ke bulan di Indonesia, dari Januari
+  sampai Desember 2024?
+expected:
+  aoi_ids: IDN
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: 'Describes the month-by-month pattern of alert area in Indonesia through 2024 from
+    the pulled data: names the peak month and says how the area rose and fell across the year;
+    states that these are vegetation disturbance alerts.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-trend-052 (id-t-003)'
+  pair_id: id-t-003
+  use_cases: UC1;UC3;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

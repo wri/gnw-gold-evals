@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "8a1d077199906132",
-  "case_count": 1028,
+  "caseset_version": "25d5261e3ecbc8fd",
+  "case_count": 1287,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -2938,6 +2938,218 @@
       "subtype": "ambiguity"
     },
     {
+      "id": "ch-aoi-156",
+      "uid": "df5fc7c46fa709f4",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "query": "please identify whether Sagea village, Halmahera, Indonesia is inside a Key Biodiversity Area (KBA)",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
+    },
+    {
+      "id": "ch-aoi-156-id",
+      "uid": "0a547cd740e306e6",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "query": "tolong identifikasi apakah desa Sagea, Halmahera, Indonesia masuk dalam Key Biodiversity Area (KBA)",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
+    },
+    {
+      "id": "ch-aoi-157",
+      "uid": "01a5549056b9b1b7",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "query": "Focus on the area of Gunung Halimun Salak National Park in Indonesia, based on the latest Ministry of Forestry boundary",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
+    },
+    {
+      "id": "ch-aoi-157-id",
+      "uid": "5ac389f51e21077b",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready",
+      "query": "Fokus ke areal Taman Nasional Gunung Halimun Salak di Indonesia, berdasarkan batas Kementerain Kehutana terbaru",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "designations"
+    },
+    {
+      "id": "ch-aoi-158",
+      "uid": "1ebdde9973fb3dc2",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready",
+      "query": "bring up TNKS only where it lies within the administrative area of Bengkulu province",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
+    },
+    {
+      "id": "ch-aoi-158-id",
+      "uid": "33ff4bf7d70737bc",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready",
+      "query": "munculkan tnks yang hanya berada diwilayah administrasi provinsi bengkulu",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
+    },
+    {
+      "id": "ch-aoi-159",
+      "uid": "2e4b32b992b27445",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready",
+      "query": "Present the administrative village boundaries in Kaimana district",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
+    },
+    {
+      "id": "ch-aoi-159-id",
+      "uid": "f89ae686981dd67d",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready",
+      "query": "Sajikan batas kampung sesuai administrasi di Kabupaten Kaimana",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
+    },
+    {
+      "id": "ch-aoi-160",
+      "uid": "b3a8f2a8aa166663",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready",
+      "query": "land use conversion on the island of kalimantan, indonesia",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
+    },
+    {
+      "id": "ch-aoi-160-id",
+      "uid": "ff2227dbda0874a0",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready",
+      "query": "alih fungsi lahan di pulau kalimantan, indonesia",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
+    },
+    {
+      "id": "ch-aoi-161",
+      "uid": "25ec1d0af0777247",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready",
+      "query": "do you have a Leuser Ecosystem dataset? if you do, is that the AOI, and do you have the forest estate boundaries?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
+    },
+    {
+      "id": "ch-aoi-161-id",
+      "uid": "ec9add03a0ca4754",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready",
+      "query": "apakah kamu punya dataset Leuser Ecosystem? kalau punya, itu AOI nya dan apakah kamu punya batas kawasan hutan?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
+    },
+    {
       "id": "ch-causal-001",
       "uid": "e25dbe217b87e7ec",
       "set": "causal",
@@ -2974,6 +3186,35 @@
       "difficulty": "hard",
       "behaviour": "answer with fire + driver data",
       "query": "What caused the spike in Bolivia's tree cover loss in 2024?",
+      "expected_fields": [
+        "accept_blog_sources",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "accepted_blog_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-causal-002-es",
+      "uid": "b07585b41e062fda",
+      "set": "causal",
+      "group": "spike_attribution",
+      "status": "ready",
+      "query": "¿Qué causó el pico de pérdida de cobertura arbórea en Bolivia en 2024?",
       "expected_fields": [
         "accept_blog_sources",
         "aoi_ids",
@@ -3067,6 +3308,32 @@
       "difficulty": "hard",
       "behaviour": "answer: permanent agriculture share; must NOT attribute to palm oil specifically without commodity data",
       "query": "Is palm oil what's driving tree cover loss in Riau, Indonesia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-005-id",
+      "uid": "6916f01fdcd36ce6",
+      "set": "causal",
+      "group": "commodity_overclaim",
+      "status": "ready",
+      "query": "Apakah kelapa sawit yang menjadi penyebab kehilangan tutupan pohon di Riau, Indonesia?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -3297,6 +3564,38 @@
       ]
     },
     {
+      "id": "ch-causal-012-es",
+      "uid": "31ea84a6dcd8993d",
+      "set": "causal",
+      "group": "premise_check",
+      "status": "ready",
+      "query": "¿Por qué bajó la pérdida de bosque primario en Colombia después de 2021?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-causal-013",
       "uid": "da94db99f8be9cc2",
       "set": "causal",
@@ -3362,6 +3661,38 @@
       "difficulty": "medium",
       "behaviour": "answer with drivers + fire data",
       "query": "Are fires or agriculture the bigger cause of tree cover loss in Madre de Dios, 2015–2023?",
+      "expected_fields": [
+        "accept_fixed_period",
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "10",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-015-es",
+      "uid": "c602f0bd9e0bd13b",
+      "set": "causal",
+      "group": "driver_vs_fire",
+      "status": "ready",
+      "query": "¿Qué causó más pérdida de cobertura arbórea en Madre de Dios entre 2015 y 2023, los incendios o la agricultura?",
       "expected_fields": [
         "accept_fixed_period",
         "accept_nudge_offering",
@@ -3611,6 +3942,32 @@
       ]
     },
     {
+      "id": "ch-causal-023-es",
+      "uid": "409ebc0bc0e7ce84",
+      "set": "causal",
+      "group": "commodity_overclaim",
+      "status": "ready",
+      "query": "¿Los datos de factores impulsores respaldan que se vincule la pérdida en Boquerón con nuevas estancias ganaderas? ¿Y qué es lo que no me pueden decir?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
       "id": "ch-causal-024",
       "uid": "8f1284b3ed4e4fd4",
       "set": "causal",
@@ -3757,6 +4114,56 @@
       ],
       "intent": "causal",
       "dataset_ids": []
+    },
+    {
+      "id": "ch-causal-030",
+      "uid": "efa739810c9bd6ac",
+      "set": "causal",
+      "group": "alert_cause",
+      "status": "ready",
+      "query": "show the latest deforestation alerts in Aceh that are due to human factors, not natural factors",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-causal-030-id",
+      "uid": "ddd770163f582ef7",
+      "set": "causal",
+      "group": "alert_cause",
+      "status": "ready",
+      "query": "tampilkan peringatan deforestasi terbaru di aceh yang karena faktor manusia, bukan faktor alam",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "11"
+      ]
     },
     {
       "id": "ch-comp-001",
@@ -3933,6 +4340,33 @@
         "4"
       ],
       "subtype": "two_period"
+    },
+    {
+      "id": "ch-comp-006-id",
+      "uid": "b7a18347112f9477",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Bagaimana kehilangan tutupan pohon Indonesia di semua tipe hutan pada tahun 2020 dibandingkan dengan tahun 2015, dan seberapa besar selisihnya?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-comp-007",
@@ -4952,6 +5386,31 @@
       "subtype": "two_country"
     },
     {
+      "id": "ch-comp-043-id",
+      "uid": "d9bfd61b3060d2e9",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Hutan negara mana yang secara keseluruhan menjadi sumber emisi bersih gas rumah kaca yang lebih besar, hutan Brasil atau hutan Indonesia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
       "id": "ch-comp-044",
       "uid": "3ae9bda3b8200c4c",
       "set": "comparison",
@@ -5048,6 +5507,31 @@
         "6"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-047-es",
+      "uid": "d1a62a19dabeefdd",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Una consulta rápida: entre Perú y Bolivia, ¿los bosques de qué país terminan liberando más CO2e neto en total? ¿O alguno de los dos en realidad funciona más como sumidero de carbono?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
     },
     {
       "id": "ch-comp-048",
@@ -5782,6 +6266,31 @@
       "subtype": "two_period"
     },
     {
+      "id": "ch-comp-076-es",
+      "uid": "cdb4b2c07f7a8c9c",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "A ver, este, en Bolivia, ¿se perdió más pastizal natural/seminatural entre 2010 y 2015, o en el tramo siguiente, de 2016 a 2021? ¿En cuál de los dos periodos fue peor?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
       "id": "ch-comp-077",
       "uid": "8d6852df049d4819",
       "set": "comparison",
@@ -6151,6 +6660,33 @@
       "subtype": "two_country"
     },
     {
+      "id": "ch-comp-090-id",
+      "uid": "b7a0e59e99f000af",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Negara mana yang memiliki lahan alami lebih luas, Brasil atau Indonesia?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
       "id": "ch-comp-091",
       "uid": "9b0f18582c57ec2e",
       "set": "comparison",
@@ -6223,6 +6759,31 @@
         "3"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-093-es",
+      "uid": "d11a4c05b2afcd78",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Estoy comparando perfiles de uso del suelo para un informe: en proporción, ¿cuál tiene una mayor parte de su territorio cubierta por tierras naturales, Costa Rica o el Reino Unido?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ]
     },
     {
       "id": "ch-comp-094",
@@ -6721,6 +7282,34 @@
       "subtype": "two_country"
     },
     {
+      "id": "ch-comp-112-es",
+      "uid": "93459cb0f3e810d7",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "¿Qué país tuvo mayor ganancia acumulada de cobertura arbórea entre 2000 y 2020, la República Democrática del Congo o Colombia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
       "id": "ch-comp-113",
       "uid": "9e1b10ef2ed4f5a8",
       "set": "comparison",
@@ -7065,6 +7654,33 @@
         "8"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-125-es",
+      "uid": "813888fa9f32e702",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "Tengo curiosidad: entre Perú y Bolivia, ¿cuál ha perdido más cobertura arbórea por agricultura permanente desde 2001?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ]
     },
     {
       "id": "ch-comp-126",
@@ -7783,6 +8399,34 @@
       ]
     },
     {
+      "id": "ch-comp-151-id",
+      "uid": "9e85dc2b09dc445a",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Mana yang kehilangan tutupan pohonnya paling besar pada tahun 2023: Riau, Jambi, atau Kalimantan Barat?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-comp-152",
       "uid": "2f8c4b89e9c45ff9",
       "set": "comparison",
@@ -7874,6 +8518,37 @@
       ]
     },
     {
+      "id": "ch-comp-154-es",
+      "uid": "8596b613180c47ee",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "¿Se han convertido tierras naturales desde 2021 en San Martín o Junín, donde están nuestras cooperativas cacaoteras?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-comp-155",
       "uid": "b23a45a0b36f67d7",
       "set": "comparison",
@@ -7911,6 +8586,34 @@
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Compare tree cover loss in Boquerón and Alto Paraguay since 2021 for our beef sourcing policy.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-156-es",
+      "uid": "7b555c910f200d5d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Compara la pérdida de cobertura arbórea en Boquerón y Alto Paraguay desde 2021 para nuestra política de abastecimiento de carne vacuna.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -8023,6 +8726,34 @@
       ]
     },
     {
+      "id": "ch-comp-159-es",
+      "uid": "87303e4f0eb02366",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "¿Cómo se compara la pérdida de cobertura arbórea desde 2021 en Cusco y Madre de Dios? Nuestra cartera de préstamos cubre los dos.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-comp-160",
       "uid": "2fab5352ebf26d94",
       "set": "comparison",
@@ -8030,6 +8761,36 @@
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Compare fire-driven tree cover loss in Santa Cruz and Beni in 2024.",
+      "expected_fields": [
+        "accept_aoi_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-comp-160-es",
+      "uid": "737dce4c0b4f77f0",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Compara la pérdida de cobertura arbórea por incendios en Santa Cruz y Beni en 2024.",
       "expected_fields": [
         "accept_aoi_nudge_offering",
         "aoi_ids",
@@ -8201,6 +8962,34 @@
       ]
     },
     {
+      "id": "ch-comp-165-es",
+      "uid": "49d70f492eb60018",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "¿Cuánta cobertura arbórea se perdió por incendios en Sinaloa en 2024, y fue más que en 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
       "id": "ch-comp-166",
       "uid": "9f92f470783342b1",
       "set": "comparison",
@@ -8278,6 +9067,36 @@
       "status": "ready",
       "behaviour": "Answer with data; annualize baseline correctly",
       "query": "What was Indonesia's primary forest loss in 2024 compared with its 2016–2020 average?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-169-id",
+      "uid": "e0f1bfba1faa00cd",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Berapa kehilangan hutan primer Indonesia pada tahun 2024 dibandingkan dengan rata-rata tahun 2016–2020?",
       "expected_fields": [
         "aoi_ids",
         "context_layer",
@@ -8442,6 +9261,31 @@
       ]
     },
     {
+      "id": "ch-comp-174-es",
+      "uid": "113bc5f17c15cd1d",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "¿Cuáles son los flujos netos de GEI de los bosques de Perú, Colombia y Brasil, para una comparación de niveles de referencia de emisiones forestales?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
       "id": "ch-comp-175",
       "uid": "98209fa396f952a6",
       "set": "comparison",
@@ -8496,6 +9340,33 @@
       ]
     },
     {
+      "id": "ch-comp-176-es",
+      "uid": "9a4aa87eaf0902ef",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "¿Cuánta tierra en Antioquia es bosque natural y cuánta es pasto? Estamos planificando dónde intensificar la ganadería.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
       "id": "ch-comp-177",
       "uid": "699616c418b7c943",
       "set": "comparison",
@@ -8503,6 +9374,34 @@
       "status": "ready",
       "behaviour": "Answer for three countries; provide table/download or explain how",
       "query": "Give me annual tree cover loss for Peru, Bolivia and Ecuador from 2001 to 2024 as a table I can download.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-177-es",
+      "uid": "f8bf14de1deae442",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Dame la pérdida anual de cobertura arbórea de Perú, Bolivia y Ecuador de 2001 a 2024 en una tabla que pueda descargar.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -8591,6 +9490,174 @@
       ],
       "intent": "comparison",
       "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-182",
+      "uid": "05b4b6a5c04bfe73",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Compare the current native forest cover with that of the last 20 years in the department of Rocha (Uruguay). In the places where the forest was transformed, indicate which activity or land use caused it.",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1",
+        "4",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-comp-182-es",
+      "uid": "6986d08a64cd37e7",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Compara la cobertura de bosque nativo actual con la de los últimos 20 años en el departamento de Rocha (Uruguay). En los sitios donde se transformó el bosque, indica cuál fue la actividad o uso del suelo que lo generó.",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1",
+        "4",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-comp-183",
+      "uid": "369a3258a19182af",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "is deforestation the same as tree cover loss?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-183-es",
+      "uid": "8e5b3b504ae41161",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "¿deforestación es lo mismo que perdida de cobertura arbolada?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-184",
+      "uid": "1af7ace1c38967ad",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Compare tree cover loss in Ketapang and Kayong Utara districts",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-184-id",
+      "uid": "16601e626a87275d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Bandingkan kehilangan tutupan pohon di kabupaten ketapang dan kayong utara",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-185",
+      "uid": "bda039a34748a306",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Which country has more natural land, Brazil or Indonesia?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "3"
+      ],
+      "subtype": "two_country"
     },
     {
       "id": "ch-dataset-001",
@@ -13357,6 +14424,33 @@
       ]
     },
     {
+      "id": "ch-mon-008-es",
+      "uid": "0ad840843238ae1d",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "query": "Muéstrame las alertas recientes de incendio y de deforestación alrededor de Puerto Suárez, Bolivia",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-009",
       "uid": "7b766d2f5d8da999",
       "set": "monitoring",
@@ -13853,6 +14947,22 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-mon-026-id",
+      "uid": "47e151cb04be3c09",
+      "set": "monitoring",
+      "group": "concession_alerts",
+      "status": "ready",
+      "query": "Ada peringatan deforestasi di dalam konsesi kelapa sawit di Riau dalam sebulan terakhir?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-mon-027",
       "uid": "0fb54475e69a2505",
       "set": "monitoring",
@@ -13961,6 +15071,34 @@
       ]
     },
     {
+      "id": "ch-mon-030-id",
+      "uid": "7c1bb0606833f0e0",
+      "set": "monitoring",
+      "group": "by_confidence",
+      "status": "ready",
+      "query": "Berapa banyak peringatan dengan tingkat kepercayaan tinggi di Taman Nasional Tesso Nilo dalam 30 hari terakhir?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-031",
       "uid": "4066fb04217ac32c",
       "set": "monitoring",
@@ -14047,6 +15185,36 @@
       ]
     },
     {
+      "id": "ch-mon-033-es",
+      "uid": "63bfbb12909f25f3",
+      "set": "monitoring",
+      "group": "recent_area",
+      "status": "ready",
+      "query": "¿Cuántas hectáreas de alertas de perturbación se detectaron en el Territorio Indígena Guarayos en los últimos 3 meses?",
+      "expected_fields": [
+        "accept_aoi_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-034",
       "uid": "d9c68e6300654701",
       "set": "monitoring",
@@ -14109,6 +15277,34 @@
       ]
     },
     {
+      "id": "ch-mon-035-es",
+      "uid": "74b55444a0966cef",
+      "set": "monitoring",
+      "group": "ytd",
+      "status": "ready",
+      "query": "¿Ha habido alertas en el territorio Wampis desde enero?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-036",
       "uid": "39f09b721855c9df",
       "set": "monitoring",
@@ -14148,6 +15344,34 @@
       "status": "ready",
       "behaviour": "answer with data + monthly chart",
       "query": "Summarize disturbance alerts in Padre Abad province over the last 6 months, month by month",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-037-es",
+      "uid": "8be7d0ed416876dc",
+      "set": "monitoring",
+      "group": "monthly_recent",
+      "status": "ready",
+      "query": "Resume las alertas de perturbación en la provincia de Padre Abad de los últimos 6 meses, mes por mes",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -14360,6 +15584,22 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-mon-046-es",
+      "uid": "3a84602ab399799d",
+      "set": "monitoring",
+      "group": "unsupported_action",
+      "status": "ready",
+      "query": "Descarga las alertas de los últimos 30 días en Charagua Iyambae en formato CSV.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-mon-047",
       "uid": "1c8088c4b55cdf28",
       "set": "monitoring",
@@ -14385,6 +15625,34 @@
       "status": "ready",
       "behaviour": "Short, accurate summary with numbers and dates",
       "query": "Summarize what changed in Antioquia since I last checked two weeks ago, in a few sentences I can send to the environmental authority.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-048-es",
+      "uid": "4349f683f14b1834",
+      "set": "monitoring",
+      "group": "recent_summary",
+      "status": "ready",
+      "query": "Resume qué cambió en Antioquia desde la última vez que revisé, hace dos semanas, en unas pocas frases que pueda enviar a la autoridad ambiental.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -14565,6 +15833,36 @@
       "status": "ready",
       "behaviour": "answer with data; clarify mangrove context if unsupported",
       "query": "Have there been disturbance alerts in mangrove areas of the Mahakam Delta this year?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-056-id",
+      "uid": "190079522ed4ebfc",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready",
+      "query": "Apakah tahun ini ada peringatan gangguan di kawasan mangrove Delta Mahakam?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -14788,6 +16086,310 @@
         "text"
       ],
       "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-067",
+      "uid": "ec0517d3abe971eb",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready",
+      "query": "Can you tell me the area of alerts in March 2026 in Chaco province that fall on forest cover?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-067-es",
+      "uid": "7c991d19794cd693",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready",
+      "query": "Me decis la superficie de alertas en marzo de 2026 en la provincia de Chaco que estan sobre cobertura de bosque?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-068",
+      "uid": "5f52b0f551bf36e6",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready",
+      "query": "forest fire points in east kalimantan over the last 30 years",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-068-id",
+      "uid": "22f19a00c632fb5d",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready",
+      "query": "titik kebakaran hutan di kalimantan timur selama 30 tahun terakhir",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-069",
+      "uid": "1645c4bd67c6189f",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "query": "show the latest forest disturbances in Indonesia, especially Bengkulu province",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-069-id",
+      "uid": "29bfba1daecb90b7",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "query": "tampilkan gangguan hutan terbaru di indonesia khususnya provinsi bengkulu",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-070",
+      "uid": "9d17f1570dc41e5d",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "query": "near-real-time tree cover loss alerts North Sumatra, Aceh",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-070-id",
+      "uid": "7e3e59780d944caf",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "query": "near-real time alert tree cover loss sumatera utara, aceh",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-071",
+      "uid": "ecb2fc4ed7c18aa7",
+      "set": "monitoring",
+      "group": "ytd",
+      "status": "ready",
+      "query": "latest deforestation alerts 2026 in central kalimantan",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-071-id",
+      "uid": "57218e9ee8671372",
+      "set": "monitoring",
+      "group": "ytd",
+      "status": "ready",
+      "query": "peringatan deforestasi terbaru 2026 di kalimantan tengah",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-072",
+      "uid": "84b5b7bbff9cde6f",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready",
+      "query": "show the points of forest disturbance caused by forest fires in Ujung Kulon National Park for October 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-072-id",
+      "uid": "3d5b59055874be7b",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready",
+      "query": "perlihatkan titik gangguan hutan akibat kebakaran hutan di taman nasional ujung kulon periode bulan oktober 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
         "expected_text_match"
       ],
       "intent": "monitoring",
@@ -15062,6 +16664,22 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-port-015-es",
+      "uid": "d6447f25599ccbd9",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Ordena todos los territorios indígenas del Perú según su pérdida de cobertura arbórea en 2024.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-port-016",
       "uid": "cf43e9eec74533ae",
       "set": "portfolio",
@@ -15069,6 +16687,22 @@
       "status": "ready",
       "behaviour": "redirect: do not fabricate a portfolio answer; explain the real limit (too many areas of this kind, an arbitrary list, uploads or schedules) and offer a workable alternative",
       "query": "Which oil palm concessions in Indonesia had fires in 2023?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-016-id",
+      "uid": "01526704a1beab56",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Konsesi kelapa sawit mana saja di Indonesia yang mengalami kebakaran pada tahun 2023?",
       "expected_fields": [
         "text"
       ],
@@ -15281,6 +16915,262 @@
       "status": "ready",
       "behaviour": "Redirect: many areas; offer national total or a named PA",
       "query": "Prepare a table of tree cover loss in each of Madagascar's protected areas every year since 2015 for our annual report.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-028",
+      "uid": "5ba55ff5c580fec4",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Bring up the deforestation figures per province in Indonesia",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-port-028-id",
+      "uid": "d14628689d734152",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Munculkan angka deforestasi perprovinsi di Indonesia",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-port-029",
+      "uid": "dd1b03538112627c",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "which region of Indonesia has the highest carbon emissions?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "id": "ch-port-029-id",
+      "uid": "b7770fed753acfbb",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "daerah mana di indonesia yang memiliki nilai emisi karbon terbesar?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "id": "ch-port-030",
+      "uid": "71f4c3b9a86e5b26",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "show an analysis of the deforestation in the concessions in Central Kalimantan",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-030-id",
+      "uid": "cb75510d0ea1b87c",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "tunjukkan analisa deforestasi yang terjadi di konsesi-konsesi yang ada di Kalimantan Tengah",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-031",
+      "uid": "7689872e3f307a3a",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Show the 5 districts that had the highest deforestation in Aceh Province, in 2024 and 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-port-031-id",
+      "uid": "a68e7c8527d67c17",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Tampilkan 5 kabupaten yang mengalami deforestasi tertinggi di Provinsi Aceh, tahun 2024 dan 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-port-032",
+      "uid": "d605a33751e288df",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "in Indonesia, make a deforestation analysis of all national parks over the last 10 years, sort them from the largest to the smallest, also give the area of each national park and the deforestation as a percentage of the park area",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-032-id",
+      "uid": "bda9765dee8df948",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "di Indonesia, buatkan analisis deforestasi di seluruh taman nasional selama 10 tahun terakhir, urutkan dari yang terbesar ke yang terkecil, cantumkan pula luas taman nasionalnya dan buatkan persentase deforestasi terhadap luas taman nasional juga",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-033",
+      "uid": "1cee4d2ad6d348de",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "villages in Kalteng affected by deforestation",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-033-id",
+      "uid": "8e4257c8af1c9eee",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "desa kalteng yang terdampak deforestasi",
       "expected_fields": [
         "text"
       ],
@@ -15619,6 +17509,35 @@
       "subtype": "fires_split"
     },
     {
+      "id": "ch-quant-011-id",
+      "uid": "e8a4cda04719d2df",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Dari kehilangan tutupan pohon Indonesia pada tahun 2020, berapa yang disebabkan oleh kebakaran dan berapa yang disebabkan oleh penyebab lain?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
       "id": "ch-quant-012",
       "uid": "230fc8436909c0be",
       "set": "quantification",
@@ -15924,6 +17843,37 @@
       "subtype": "canopy_threshold"
     },
     {
+      "id": "ch-quant-021-es",
+      "uid": "4b69d9d8028d74b4",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "¿Cuántas hectáreas de cobertura arbórea se perdieron en Costa Rica, considerando todos los tipos de bosque, de 2001 a 2023, usando un umbral de densidad de dosel del 25%?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "dataset_parameters",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "dataset_parameter_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-quant-022",
       "uid": "beaa731779f15389",
       "set": "quantification",
@@ -16159,6 +18109,35 @@
       "subtype": "emissions"
     },
     {
+      "id": "ch-quant-029-id",
+      "uid": "b6e5f4a4c9d2107b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Saya sedang mendalami jejak iklim Indonesia. Bisa beri tahu berapa emisi gas rumah kaca dari kehilangan tutupan pohon di semua tipe hutan di sana antara tahun 2015 dan 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-quant-030",
       "uid": "db92a96dd15e2b9e",
       "set": "quantification",
@@ -16216,6 +18195,35 @@
         "4"
       ],
       "subtype": "primary_forest"
+    },
+    {
+      "id": "ch-quant-031-id",
+      "uid": "5c99a7ab52108839",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Eh, hutan primer Indonesia itu, kira-kira berapa sih yang habis di tahun 2022? Cukup angka kasar aja, dalam hektare.",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-quant-032",
@@ -16845,6 +18853,31 @@
         "6"
       ],
       "subtype": "net_flux"
+    },
+    {
+      "id": "ch-quant-055-es",
+      "uid": "75799b5bc3bde6e9",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "oye y cuanto es el total neto de co2e que sale de (o entra a) los bosques de peru en general, o sea desde siempre",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
     },
     {
       "id": "ch-quant-056",
@@ -17577,6 +19610,33 @@
       "subtype": "by_confidence"
     },
     {
+      "id": "ch-quant-083-id",
+      "uid": "3bc1fefc809cfe06",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Untuk Indonesia, bagaimana rincian total luas peringatan gangguan dari 1 Januari sampai 31 Desember 2024 menurut tingkat kepercayaan (rendah, tinggi, tertinggi), dalam hektare?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-quant-084",
       "uid": "90bfd898af6662d4",
       "set": "quantification",
@@ -18196,6 +20256,36 @@
         "7"
       ],
       "subtype": "canopy_threshold"
+    },
+    {
+      "id": "ch-quant-107-id",
+      "uid": "6d39664c65505c6d",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "Berapa luas tutupan pohon Indonesia pada ambang kerapatan tajuk 75%?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "dataset_parameters",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "dataset_parameter_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ]
     },
     {
       "id": "ch-quant-108",
@@ -18910,6 +21000,30 @@
       "subtype": "driver_grouping"
     },
     {
+      "id": "ch-quant-134-es",
+      "uid": "470edb665b0cb2ae",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "¿Qué porcentaje de la pérdida total de cobertura arbórea del Perú desde 2001 se atribuye a la agricultura en conjunto, sumando agricultura permanente y agricultura itinerante?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
       "id": "ch-quant-135",
       "uid": "b927ae67e29aa58c",
       "set": "quantification",
@@ -19126,6 +21240,35 @@
         "10"
       ],
       "subtype": "multi_year_total"
+    },
+    {
+      "id": "ch-quant-142-es",
+      "uid": "481f8d22c5b5ce42",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "¿Cuál fue la pérdida total de cobertura arbórea por incendios en Bolivia, considerando todos los tipos de bosque, entre 2015 y 2020, en hectáreas?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
     },
     {
       "id": "ch-quant-143",
@@ -19518,6 +21661,34 @@
       ]
     },
     {
+      "id": "ch-quant-155-es",
+      "uid": "7b36150fd8b2f90f",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "¿Cuánta cobertura arbórea tiene El Salvador con un 10% de cobertura de dosel?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "dataset_parameters",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "dataset_parameter_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ]
+    },
+    {
       "id": "ch-quant-156",
       "uid": "af7738be4ece24b9",
       "set": "quantification",
@@ -19701,6 +21872,32 @@
       ]
     },
     {
+      "id": "ch-quant-162-id",
+      "uid": "1f7ecf319dfeb387",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Kehilangan hutan di sekitar Tesso Nilo itu terjadi di dalam batas taman nasional atau di kawasan sekitarnya?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-quant-163",
       "uid": "0857eb275c074465",
       "set": "quantification",
@@ -19780,6 +21977,36 @@
       ]
     },
     {
+      "id": "ch-quant-165-es",
+      "uid": "9c8ff2dc7ad20e29",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "¿Puedo decir que la pérdida de cobertura arbórea de Bolivia en 2024 fue un récord? ¿Cómo se compara con cada año desde 2001?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-quant-166",
       "uid": "71036c0b96e83439",
       "set": "quantification",
@@ -19804,6 +22031,31 @@
       "status": "ready",
       "behaviour": "answer with data",
       "query": "Are forests in Yasuní National Park a net carbon sink or source?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-167-es",
+      "uid": "c7962d2b5e4c3c76",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "¿Los bosques del Parque Nacional Yasuní son un sumidero neto o una fuente neta de carbono?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -19882,6 +22134,37 @@
       ]
     },
     {
+      "id": "ch-quant-169-es",
+      "uid": "aa1e58e473c2218b",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "¿Cuáles fueron las emisiones brutas por pérdida de bosque en Colombia en 2023? Las necesitamos para el seguimiento de la NDC.",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-quant-170",
       "uid": "1abf501a7df3b2ff",
       "set": "quantification",
@@ -19889,6 +22172,22 @@
       "status": "ready",
       "behaviour": "Do not suggest the data can set payment amounts; it can serve as an informal cross-check; explain method differences from official monitoring; point to official MRV systems",
       "query": "Can we use GFW tree cover loss to calculate how much our province should be paid under a jurisdictional REDD+ program?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-170-es",
+      "uid": "fb79ce477c851e17",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "¿Podemos usar la pérdida de cobertura arbórea de GFW para calcular cuánto se le debería pagar a nuestra provincia en un programa REDD+ jurisdiccional?",
       "expected_fields": [
         "text"
       ],
@@ -20053,6 +22352,32 @@
       ]
     },
     {
+      "id": "ch-quant-176-es",
+      "uid": "da5f16878c4e5606",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "¿Qué porcentaje de España son pastizales naturales, para el indicador B1 del Marco Mundial de Biodiversidad?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
       "id": "ch-quant-177",
       "uid": "50c496873b9dd91f",
       "set": "quantification",
@@ -20060,6 +22385,35 @@
       "status": "ready",
       "behaviour": "answer with data",
       "query": "What was tree cover loss in Antioquia, Colombia in 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-177-es",
+      "uid": "30cccf7ba82c06b5",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "¿Cuál fue la pérdida de cobertura arbórea en Antioquia, Colombia, en 2023?",
       "expected_fields": [
         "aoi_ids",
         "context_layer",
@@ -20203,6 +22557,30 @@
       ]
     },
     {
+      "id": "ch-quant-182-es",
+      "uid": "c9fafa2ffe9f25a6",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "¿Qué tipos de cobertura del suelo componen el paisaje Kakataibo en Padre Abad?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
       "id": "ch-quant-183",
       "uid": "c9b87ce29bd646df",
       "set": "quantification",
@@ -20265,6 +22643,22 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-quant-185-es",
+      "uid": "43e96b9441fc512f",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "¿En qué zonas de Guatemala había café sembrado en 2020?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-quant-186",
       "uid": "ebd81da2acb9a6ba",
       "set": "quantification",
@@ -20300,6 +22694,22 @@
       "status": "ready",
       "behaviour": "Say social forestry boundaries are not available",
       "query": "How much social forestry area in Indonesia has been deforested?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-187-id",
+      "uid": "48020d6f2d456660",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Berapa luas areal perhutanan sosial di Indonesia yang sudah terdeforestasi?",
       "expected_fields": [
         "text"
       ],
@@ -20347,6 +22757,34 @@
       "status": "ready",
       "behaviour": "answer with data: per-department table",
       "query": "Give me tree cover loss and fire-driven loss for every department in Bolivia, 2001–2024, as a table.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-189-es",
+      "uid": "ab65fccea8e2d464",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Dame la pérdida de cobertura arbórea y la pérdida por incendios de cada departamento de Bolivia, 2001–2024, en una tabla.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -20554,6 +22992,37 @@
       ]
     },
     {
+      "id": "ch-quant-199-id",
+      "uid": "0fa2be578129f051",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Berapa hektare kehilangan tutupan pohon akibat kebakaran di Indonesia pada tahun 2015, dan bagaimana cara menentukan bahwa kehilangan itu \"akibat kebakaran\"?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
       "id": "ch-quant-200",
       "uid": "cd81b6b9e2690822",
       "set": "quantification",
@@ -20646,6 +23115,2974 @@
       "status": "ready",
       "behaviour": "Say what is and is not available; no fabricated biodiversity layers",
       "query": "Which datasets in Horizon could help me assess biodiversity risk?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-206",
+      "uid": "2c33c522aeeef233",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "In Madre de Dios, in the last year, 2024, how many deforestation alerts were there?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-quant-206-es",
+      "uid": "69502e289260bf15",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "En madre de dios en el ultimo año 2024, cuantas alertas de deforestación hubo?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-quant-207",
+      "uid": "9adfc42ced169947",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "what was the forest cover loss from 2010 to 2016 in Guatemala",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-207-es",
+      "uid": "8021f6836e720dfb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "cual fue la perdida de cobertura forestal del año 2010 al 2016 en gUATEMALA",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-208",
+      "uid": "4214aa3979fbe785",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Emissions absorption in the province of Cáceres, Spain",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-208-es",
+      "uid": "e770912c4cf464fd",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Absorción de emisiones en la provincia de Cáceres, España",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-209",
+      "uid": "6847284abfd4e0dc",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "forest gain in Costa Rica",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-quant-209-es",
+      "uid": "b8b530f6191ab85e",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "ganancia de bosque en Costa rica",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-quant-210",
+      "uid": "6280810bb0495582",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Give me only the total figure in hectares of primary forest lost in Cundinamarca since 2001, and the total associated emissions in MgCO2e. Generate text only, do not try to create charts.",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-210-es",
+      "uid": "d3b80c0945b99a2b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Dame únicamente la cifra total en hectáreas de bosque primario perdido en Cundinamarca desde 2001, y el total de emisiones MgCO2e asociadas. Genera solo texto, no intentes crear gráficas.",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-211",
+      "uid": "e34dc50a3aa51417",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "what is the average deforestation in Bolivia according to the data from 2010 to 2015?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-211-es",
+      "uid": "616ba9ef2c91da8c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "cual es el promedio de deforestacion en BOlivia según los datos de 2010 a 2015?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-212",
+      "uid": "48764b7e0086b632",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "I want to know the total carbon stock in Manu, Madre de Dios, Peru, for the year 2024.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-212-es",
+      "uid": "49fce15b8c5ad0c3",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Quiero saber cual es el stock total de carbono en Manu, Madre de Dios, Peru, para el año 2024.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-213",
+      "uid": "cdba885a010788c7",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "cover loss in the Araucarias biosphere reserve from 1993 to 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-213-es",
+      "uid": "dcd8427cff61de13",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "perdida de cobertura en la reserva de biosfera araucarias desde 1993 a 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-214",
+      "uid": "e82d36b5b52da4f8",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Percentage of cover deforested in the San Matías San Carlos Protection Forest (Pasco, Peru) during 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-214-es",
+      "uid": "b21163341610a8e1",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Porcentaje de cobertura deforestada en el Bosque de protección San Matias San Carlos (Pasco - Peru) durante el año 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-215",
+      "uid": "1be367f21319de5c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "show me the historical deforestation of Mérida, Yucatán",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-215-es",
+      "uid": "7ba7c07745c42e1c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "muestrame la deforestación historica de mérida yucatán",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-216",
+      "uid": "0ea30208963205a1",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Calculation of forest cover loss in Morona District, Loreto Region, from 2010 to 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-216-es",
+      "uid": "c1dea451dbc63ed9",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Cálculo de pérdida de cobertura forestal en el Distrito de Morona Región Loreto desde 2010 a 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-217",
+      "uid": "552e7d182c310395",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Do an analysis of the cantons with the most fires in Loja province, Ecuador",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-217-es",
+      "uid": "4e1797670490aca5",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Realiza un analisis de los cantones con más incendios de la provincia de Loja, Ecuador",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-218",
+      "uid": "8fdea7b15ad9ca8d",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "where in Ecuador is there the most forest",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-218-es",
+      "uid": "8bd6394104dfbd29",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "dónde está la mayor presencia de bosque en Ecuador",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-219",
+      "uid": "03a7aa4b67dea8b9",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "give me the deforestation in Guarayos province in 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-219-es",
+      "uid": "6e81aafae1347a5e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "dame la deforestacion en la provincia guarayos el 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-220",
+      "uid": "d6b2c2662ca74b7a",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "what is the state of the Tariquía forest and its surrounding area in southern Bolivia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-220-es",
+      "uid": "f8c0ec1d546674a3",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "cuál es el estado del bosque de tariquia y su zona circundante en el sur de bolivia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-221",
+      "uid": "56ac9b1b9c1bb5ce",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "which municipalities in the state of Campeche in Mexico have the greatest forest cover loss between 2000 and 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-221-es",
+      "uid": "7f66d2392e4f9646",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "cuáles son los municipios del estado de Campeche en México con mayor pérdida de cobertura forestal entre 2000 y 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-222",
+      "uid": "777945bcc677216b",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Where is the deforestation in Peru in the last 5 years",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-222-es",
+      "uid": "e7a5f7eb2653ef6f",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Dónde está la deforestación en Perú en los últimos 5 años",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-223",
+      "uid": "61becbf6ba7fd917",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "What condition are the pastures in, in Tierralta, Córdoba, Colombia",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-223-es",
+      "uid": "bb8ef562ce03c3de",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "En que estado se encuentran las pasturas en Tierralta, Cordoba, Colombia",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-224",
+      "uid": "8992e49f2cf1b608",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "show me the land uses in Valdepeñas, Ciudad Real province, Spain",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-224-es",
+      "uid": "9586a0f2295ba02c",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "muestrame los usos del suelo en Valdepeñas, provincia de Ciudad real, españa",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-225",
+      "uid": "eead762d108d8260",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "what is the area of mangroves in Mexico?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-225-es",
+      "uid": "92fe41a400b2978b",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "cual el area de manglares en mexico?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-226",
+      "uid": "9d753388b2f04401",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "Can you give me a map of the pastures in Spain",
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "ch-quant-226-es",
+      "uid": "7d975eb1f7c48bbc",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "Me puedes dar un mapa de los pastos en españa",
+      "expected_fields": [
+        "aoi_ids",
+        "dataset_id"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "ch-quant-227",
+      "uid": "d2ee94475b1fe69c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "I'm looking for a map and numbers on deforestation in La Moskitia in Honduras",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-227-es",
+      "uid": "044c78f6ef5faf9d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Busco un mapa y números sobre la deforestación en la Moskitia en Honduras",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-228",
+      "uid": "3cba61778e9a5173",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "What is the current area of mining in Bolívar state, Venezuela?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-228-es",
+      "uid": "a6c0569c70168310",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Cual es la superficie actual de minería en el estado Bolívar, Venezuela?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-229",
+      "uid": "2d9eda8a4a1d7ce7",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Give me a list of all the inputs and layers you use to run the analyses on this platform",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-229-es",
+      "uid": "8bd1b44822217ace",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Dame una lista de todos los insumos y capas que utilizas para realizar los analisis en esta plataforma",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-230",
+      "uid": "11fe73a70677e4e2",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "How correct is the information for Guatemala, given that there are oil palm areas that are counted as deforestation",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-230-es",
+      "uid": "46710815ac677178",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Que tan correcta es la información de Guatemala ya que hay áreas de palma africana que se contabiliza como deforestacion",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-231",
+      "uid": "3d7322bc6b65f1e6",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "hi, can you generate exportable layers as .shp files?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-231-es",
+      "uid": "2e453048e89cbae1",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "hola, puedes generar capas exportables en archivos .shp?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-232",
+      "uid": "2c45a16d8874ff65",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Do you have information about deforestation alerts?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-232-es",
+      "uid": "b1fb971d9bb29d0f",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Tienes información sobre alertas de deforestación?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-233",
+      "uid": "6eddad723de38ab0",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "do you have the pasture layer?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-233-es",
+      "uid": "541ca641ed78bf37",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "tiene la capa de pasturas?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-234",
+      "uid": "24c7845598ac6c13",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "How much baseline rice field area (lahan baku sawah) is there in Merauke district in 2024?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-234-id",
+      "uid": "57212e0d1bf9116b",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Berapa jumlah lahan baku sawah yang ada di Kabupaten Merauke pada tahun 2024?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-235",
+      "uid": "18ef57cd6b98b7fc",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "How many palm oil mills are there in Mukomuko district?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-235-id",
+      "uid": "b8574c7addd03c0b",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Di kabupaten mukomuko ada berapa pabrik kelapa sawit?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-236",
+      "uid": "cd739459ee7e440c",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "How much has rice field area increased in South Sumatra, Indonesia?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-236-id",
+      "uid": "9a36bd7631f5ccfc",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Berapa penamabahan lahan sawah di south sumatera indonesia",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-237",
+      "uid": "cc259623ff8dc415",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What is the total amount of deforestation in North Maluku from 2000 until now?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-237-id",
+      "uid": "4785bb6b8f28979e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Berapa jumlah total deforetasi di maluku utara dari tahun 2000 hingga saat ini",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-238",
+      "uid": "5ebad6f770dbb34c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "how much deforestation has there been in Indonesia in the last 5 years",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-238-id",
+      "uid": "c4be9bd23e4a65d4",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "berapa besar deforestasi yang terjadi di indonesia dalam 5 tahun terakhir",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-239",
+      "uid": "cf70159005c26890",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "How much carbon did Aceh province release from 2021 to 2024? What caused it?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "6",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-239-id",
+      "uid": "840711d31fa756dd",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Di Provinsi Aceh melepaskan karbon berapa dari tahun 2021 - 2024? Disebabkan oleh apa?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "6",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-240",
+      "uid": "587fff4e58db2c85",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "How much tree cover gain was there in Central Java province between 2000 and 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-quant-240-id",
+      "uid": "53c2e5879f5bf188",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "Berapa luas penambahan tutupan pohon di Provinsi Jawa Tengah antara tahun 2000 dan 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-quant-241",
+      "uid": "2ca1cbc53e72dea3",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "how many hectares of forest and land fires happened in Central Kalimantan",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-241-id",
+      "uid": "6455a065459f2bb2",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "berapa hektar karhutla yang terjadi di kalimantan tengah",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-242",
+      "uid": "eb9baf90d682c144",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Make an analysis of net carbon emissions in Poso district",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-242-id",
+      "uid": "21be196798829dfe",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Buatkan anlisis net karbon emisi di kabupaten poso",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-243",
+      "uid": "4dd3aa4940f306f6",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "I want to get forest cover loss data for the Gunung Mutis area from 2000 to 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-243-id",
+      "uid": "fe73ffc5d470502a",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Saya ingin dapatkan data kehilangan tutupan hutan wilayah Gunung Mutis dari tahun 2000 - 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-244",
+      "uid": "ed1ca582444e3969",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "degradation during 2020-2025 in the Ketapang area, West Kalimantan",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-244-id",
+      "uid": "49bc87163a35b9d7",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "degradasi selama 2020-2025 di wilayah ketapang, kalimantan barat",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-245",
+      "uid": "c4148f36efc500ed",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Land cover in Belitung, Indonesia in 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-245-id",
+      "uid": "5aa970e9c61d4ba7",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Tutupan lahan di Belitung Indonesia tahun 2024",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-246",
+      "uid": "1abecc14e96369dc",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "LULC change in Poso district over the last 10 years to 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-246-id",
+      "uid": "477e2232e7b8f3f4",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Perubahan LULC kabupaten poso 10 tahun terakhir sampai 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-247",
+      "uid": "3deac4ffda9dbef9",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "based on the Hansen data, I want to get the deforestation value for Beginci Darat village, Ketapang district, from 2020 to 2025",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-247-id",
+      "uid": "40ca72d3fab0596e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "berdasarkan data hansen, saya ingin mendapatkan nilai deforestasi di desa beginci darat kabupaten ketapang dari tahun 2020-2025",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-248",
+      "uid": "784b3c33378159b0",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "show the most successful peat restoration land in indonesia",
+      "expected_fields": [
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-248-id",
+      "uid": "3d6d7e98f98c0cf3",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "tunjukan lahan restorasi gambut tersukses di indonesia",
+      "expected_fields": [
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-249",
+      "uid": "3491167a88856ff3",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "show land cover data in Bitung city for 2020-2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-249-id",
+      "uid": "81721acd5756603a",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "tunjukan data tutupan lahan di kota Bitung tahun 2020-2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-250",
+      "uid": "faaf40cd80aeb23e",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "How big has the growth of urban/built-up area been in East Kalimantan, Indonesia in the last 5 years",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-250-id",
+      "uid": "d7522c436929a1e3",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Seberapa besar pertumbuhan kawasan perkotaan/terbangun di Kalimantan Timur, Indonesia dalam 5 tahun terakhir",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-251",
+      "uid": "041b0489b3b4729b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "deforestation in Batang Toru (Key Biodiversity Area)",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-251-id",
+      "uid": "36a21908a138bea2",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "deforestasi di Batang Toru (Key Biodiversity Area)",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-252",
+      "uid": "ee221a163798aba8",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Make a deforestation analysis for Bukit Soeharto for the last 5 years",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-252-id",
+      "uid": "f15f472073c29f07",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Buatkan analisis deforestasi di Bukit Soeharto 5 tahun terakhir",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-253",
+      "uid": "a7320c303c1c6c2d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Gunung Nyiut nature reserve land cover loss in 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-253-id",
+      "uid": "694559d2294f8d91",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "cagar alam gunung nyiut kehilangan tutupa lahan dalam tahun 2025",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-254",
+      "uid": "a63e186bb238c1cb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "how much tree cover loss was there from 2010 to 2025 in Girimulyo sub-district, Kulon Progo district?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-254-id",
+      "uid": "9c49ca3774ec9f19",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "tree cover loss 2010-2025 di kecamatan girimulyo, kabupaten kulon progo berapa?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-255",
+      "uid": "8450c664eb51cfdf",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "how large is the burned area in Natuna district, and per sub-district in Natuna?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-255-id",
+      "uid": "0403bd8166b6bd63",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "berapa luas terbakar di Kabupaten Natuna dan perkecamatan di Natuna?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-256",
+      "uid": "225bc4cb68cf4c81",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "what is the deforestation figure in Jambi Province?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-256-id",
+      "uid": "d4134866c4c3a71d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "berapa angka deforestasi di Provinsi Jambi?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-257",
+      "uid": "32216f076bad4f60",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "please give the deforestation rate in Aceh Tamiang district, and give the layer of forest estate designated by law in Indonesia",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-257-id",
+      "uid": "e75b5392d16b0401",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "tolong berikan laju deforestasi di kabupaten aceh tamiang, berikan layer kawasan hutan yang ditetapkan oleh undang-undang di indonesia",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-258",
+      "uid": "0281eb907e7738be",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Show the boundary polygon of the KARST ECOSYSTEM or karst GEOLOGY within the administrative area of Gunungkidul district, DIY",
+      "expected_fields": [
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-258-id",
+      "uid": "efee44d51cd7eacd",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Tampilkan poligon batas EKOSISTEM KARST atau GEOLOGI karst dalam wilayah administrasi Kabupaten Gunungkidul, DIY",
+      "expected_fields": [
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-259",
+      "uid": "c21d9f369378b4f0",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "how has the Jambo Aye watershed in Aceh lost forest cover over the years? does this watershed still count as a healthy and ideal watershed?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-259-id",
+      "uid": "c73d1d4746d82136",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "bagaimana DAS Jambo Aye di Aceh mengalami kehilangan tutupan hutan selama bertahun tahun? apakah DAS ini masih tergolong DAS yang sehat dan ideal?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-260",
+      "uid": "9c93db22d91a7fb0",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "how much deforestation happened in riau in 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-260-id",
+      "uid": "a5ff5c905d0112eb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "berapa deforestasi yang terjadi di riau tahun 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-261",
+      "uid": "47baa6290799fd0f",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "area of secondary forest in West Java",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-261-id",
+      "uid": "d56b04ec03b4fab9",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "luasan hutan sekunder di jawa barat",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-262",
+      "uid": "d90c0dd25449f313",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "I want to see forest cover loss data for mainland Timor, NTT",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-262-id",
+      "uid": "e1bf9625163116c9",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Saya ingin melihat data hilangnya tutupan hutan di daratan Timor, NTT",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-263",
+      "uid": "57abc8529ca0d631",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "where does the map data in this Global Nature Watch come from?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-263-id",
+      "uid": "1e9f82b68ded3f23",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "data peta di global nature watch ini berasal dari mana saja?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-264",
+      "uid": "cafb699bb7aa1c15",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "where do the village boundary data and the forest loss data come from?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-264-id",
+      "uid": "609e2698550e9ef4",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "sumber data batas desa dan data forest loss dari mana ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-265",
+      "uid": "d611ab716b593cec",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "does tree cover loss also count plantation forests too",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-265-id",
+      "uid": "383738c1dafa587f",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "apakah tree cover loss juga menghitung hutan tanaman juga",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-266",
+      "uid": "98c81d87d19b7cc8",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "what is the method for calculating carbon and the release of emissions",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-266-id",
+      "uid": "70773819fdf013a8",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "bagaimana metode menghitung karbon dan pelepasan emisi",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-267",
+      "uid": "a78dfdd9d318fe39",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "what is the calculation of this global land cover based on?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-267-id",
+      "uid": "21be935027f232d2",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "dasar perhitungan global land cover ini menggunakan apa ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-268",
+      "uid": "03092feb360e9831",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Can I add an area polygon here?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-268-id",
+      "uid": "2d7ffad55c95ce13",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Apakah bisa saya menambah polygon area disini?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-269",
+      "uid": "2ffa0a77cf2b4cff",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Why can't my geojson file be uploaded",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-269-id",
+      "uid": "a19bd6cf0e63aa16",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Kenapa file geojson saya tidak bisa di upload",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-270",
+      "uid": "ee6ed3421466b38d",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "what data can I get for Bengkulu province",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-270-id",
+      "uid": "cf63e3c727b2b0cb",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "data apa yang bisa diambil dari Provinsi Bengkulu",
       "expected_fields": [
         "text"
       ],
@@ -23621,6 +29058,34 @@
       "subtype": "change_over_period"
     },
     {
+      "id": "ch-trend-045-es",
+      "uid": "87e4ee53b30e75b7",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "¿Cómo se compara la extensión de pastizales naturales/seminaturales en Colombia en 2022 con la de 2010?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
       "id": "ch-trend-046",
       "uid": "0b329187e8a2eae2",
       "set": "trend",
@@ -23811,6 +29276,34 @@
         "11"
       ],
       "subtype": "monthly_trend"
+    },
+    {
+      "id": "ch-trend-052-id",
+      "uid": "64c595ba025e3278",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Bagaimana pola luas peringatan deforestasi dari bulan ke bulan di Indonesia, dari Januari sampai Desember 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ]
     },
     {
       "id": "ch-trend-053",
@@ -24236,6 +29729,36 @@
       "subtype": "change_over_period"
     },
     {
+      "id": "ch-trend-067-id",
+      "uid": "e1c36e5cfbaa5cfe",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Dengan menghitung semua jenis tutupan pohon di Indonesia, bagaimana kehilangan tutupan pohon akibat kebakaran pada tahun 2024 dibandingkan dengan tahun 2015?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
       "id": "ch-trend-068",
       "uid": "17e8090fc0614011",
       "set": "trend",
@@ -24382,6 +29905,34 @@
       ]
     },
     {
+      "id": "ch-trend-072-es",
+      "uid": "a8abaac8ef65e845",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "¿La pérdida de cobertura arbórea en Madre de Dios, Perú, ha venido aumentando o disminuyendo de 2015 a 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-trend-073",
       "uid": "e1b17cd3c31f4606",
       "set": "trend",
@@ -24418,6 +29969,36 @@
       "difficulty": "easy",
       "behaviour": "answer with data",
       "query": "What is the trend in Colombia's primary forest loss from 2016 to 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-074-es",
+      "uid": "f94eb6388f1cdee6",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "¿Cuál es la tendencia de la pérdida de bosque primario en Colombia de 2016 a 2023?",
       "expected_fields": [
         "aoi_ids",
         "context_layer",
@@ -24613,6 +30194,36 @@
       ]
     },
     {
+      "id": "ch-trend-080-es",
+      "uid": "8283b4eff41401bb",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "¿Ha disminuido la pérdida de cobertura arbórea por incendios en Bolivia desde la temporada de incendios de 2019?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
       "id": "ch-trend-081",
       "uid": "916b48b5d354b5e3",
       "set": "trend",
@@ -24744,6 +30355,32 @@
       ]
     },
     {
+      "id": "ch-trend-085-es",
+      "uid": "ddf2fa40519518ed",
+      "set": "trend",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "¿Está avanzando El Salvador en su compromiso de restauración 20x20? ¿Qué muestran los datos de ganancia de cobertura arbórea?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
       "id": "ch-trend-086",
       "uid": "d5a5fd7d37f819ab",
       "set": "trend",
@@ -24785,6 +30422,541 @@
       ],
       "intent": "trend",
       "dataset_ids": []
+    },
+    {
+      "id": "ch-trend-088",
+      "uid": "cdbb95693af977f6",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "how has tree cover loss changed year by year in Chiapas?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-088-es",
+      "uid": "68a068825445121a",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "cómo ha cambiado la pérdida de cobertura arbórea año con año en Chiapas?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-089",
+      "uid": "68fe3d129f8ef352",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Show me information about forest fires in Colombia over the last 10 years",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-trend-089-es",
+      "uid": "51c076800b70044c",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Muestrame información sobre incendios forestales en Colombia durante los últimos 10 años",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-trend-090",
+      "uid": "9aef75309a685a05",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "How did deforestation behave between 2022 and 2025 in the municipality of Acandí in the department of Chocó",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-090-es",
+      "uid": "14550d518c048cea",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Como se fue el comportamiento de la deforestacion entre el 2022 y 2025 en el municipio de acandi en el cepartamento del choco",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-091",
+      "uid": "5d638226e6f92f52",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Show the changes in deforestation over the last 10 years in the La Primavera Forest, in Guadalajara.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-091-es",
+      "uid": "2f307ce7a967bf21",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Muestra los cambios de deforestación en los últimos 10 años en el Bosque La Primavera, en Guadalajara.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-092",
+      "uid": "1e4970d1b5762aeb",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What has been the deforestation in Cerro Saroche National Park in Venezuela in the last 10 years",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-092-es",
+      "uid": "2454fce975b98388",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Cual ha sido la deforestación del Parque Nacional Cerro Saroche en Venezuela los ultimos 10 anos",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-093",
+      "uid": "38ba2b777c34ea0a",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "please give me the annual data on deforestation or tree cover loss in Farallones de Cali National Natural Park",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-093-es",
+      "uid": "2d1a149028be2a4a",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "por favro dame lso datos anuales de deforestacion o perdida de cobertura arborea en el PNN Farallones de Cali",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-094",
+      "uid": "f1ca20acfe65a642",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What does the change in forest cover in West Kalimantan from 2016 to 2026 look like? What caused it? And what is the impact?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-094-id",
+      "uid": "8a74a9d8331c61c8",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Seperti apa perubahan tutupan hutan di Kalimantan Barat dari tahun 2016 hingga 2026? Apa penyebabnya? Dan bagaimana dampaknya?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-095",
+      "uid": "94345d420450b6be",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "how much tree cover was lost on the island of Java from 2016 to 2025? write the trend insight per year",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-trend-095-id",
+      "uid": "7d1495e5a48c9f4d",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "berapa luas kehilangan tutupan pohon di pulau jawa dari 2016 sampai 2025? tuliskan insight tren per tahunnya",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-trend-096",
+      "uid": "4344318b32d8ee55",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "how has deforestation been in the Lake Toba area, North Sumatra, Indonesia from 2004 to 2024?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-trend-096-id",
+      "uid": "78a60bb4c1eb7c15",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "bagaimana deforestasi di kawasan danau toba, sumatera utara, Indonesia dari tahun 2004 hingga 2024 ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-trend-097",
+      "uid": "aed7311c91115d08",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "i'm interested to know about denpasar province, deforestation trend the last 10 years",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-097-id",
+      "uid": "5af9f69c925818ea",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "saya tertarik untuk mengetahui provinsi denpasar, deforestasi tren 10 tahun belakangan",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-098",
+      "uid": "8dfbc6a8c70b2ffe",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "What was the month-by-month pattern of deforestation alert area in Indonesia from January to December 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ],
+      "subtype": "monthly_trend"
     }
   ]
 }

@@ -1,0 +1,24 @@
+id: ch-quant-211
+uid: e34dc50a3aa51417
+status: ready
+set: quantification
+group: tcl
+query: what is the average deforestation in Bolivia according to the data from 2010 to 2015?
+expected:
+  aoi_ids: BOL
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2015-12-31'
+  figure: mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2010..2015 |
+    sum(area_ha) where tree_cover_loss_year in 2010..2015
+  start_date: '2010-01-01'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-211-es (es-n-009);
+    real es user prompt, trace trace 2026-01'
+  pair_id: es-n-009
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-009; ch-comp-148 (mean by year)

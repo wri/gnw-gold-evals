@@ -1,0 +1,24 @@
+id: ch-trend-095-id
+uid: 7d1495e5a48c9f4d
+status: ready
+set: trend
+group: tcl
+language: id
+twin: ch-trend-095
+query: berapa luas kehilangan tutupan pohon di pulau jawa dari 2016 sampai 2025? tuliskan
+  insight tren per tahunnya
+expected:
+  text: Covers all six provinces of Java and says so, or says which provinces it covered,
+    or asks which provinces are meant; does not present one province as Java.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-019); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-019
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Banten; Jakarta Raya; Jawa Barat; Jawa Tengah; Jawa Timur; Yogyakarta
+  precedent: ch-trend-079; ch-quant-003; ch-aoi-091
+  language_review: subagent review 2026-11-18; native speaker not yet

@@ -1,0 +1,24 @@
+id: ch-quant-262-id
+uid: e1bf9625163116c9
+status: ready
+set: quantification
+group: unavailable
+language: id
+twin: ch-quant-262
+query: Saya ingin melihat data hilangnya tutupan hutan di daratan Timor, NTT
+expected:
+  text: Either covers the Timor-island districts of NTT and says which, or asks which districts
+    are meant; does not present the whole of NTT (which also holds Flores, Sumba and other
+    islands) as mainland Timor.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-051); real id user prompt,
+    trace trace 2026-07'
+  pair_id: id-n-051
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: the Timor-island districts of Nusa Tenggara Timur
+  precedent: ch-quant-178; ch-quant-163
+  language_review: subagent review 2026-11-18; native speaker not yet

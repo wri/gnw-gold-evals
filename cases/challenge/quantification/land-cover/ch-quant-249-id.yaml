@@ -1,0 +1,26 @@
+id: ch-quant-249-id
+uid: 81721acd5756603a
+status: ready
+set: quantification
+group: land-cover
+language: id
+twin: ch-quant-249
+query: tunjukan data tutupan lahan di kota Bitung tahun 2020-2025
+expected:
+  aoi_ids: IDN.29.1
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  text: Reports land cover for Bitung from the land cover data and says the years it covers
+    (to 2024); does not claim data for 2025.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-028); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-028
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Bitung (kota, Sulawesi Utara)
+  precedent: ch-quant-064; ch-quant-182; id-n-025
+  language_review: subagent review 2026-11-18; native speaker not yet

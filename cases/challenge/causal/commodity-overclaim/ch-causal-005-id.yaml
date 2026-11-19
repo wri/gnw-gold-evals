@@ -1,0 +1,22 @@
+id: ch-causal-005-id
+uid: 6916f01fdcd36ce6
+status: ready
+set: causal
+group: commodity_overclaim
+language: id
+twin: ch-causal-005
+query: Apakah kelapa sawit yang menjadi penyebab kehilangan tutupan pohon di Riau, Indonesia?
+expected:
+  aoi_ids: IDN.24
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Reports the permanent agriculture share from the driver data, and does not attribute
+    the loss to palm oil specifically, since the data does not identify the commodity.
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Permanent agriculture', sum(area_ha)
+    where tree_cover_loss_driver != 'Unknown')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-causal-005 (id-t-011)'
+  pair_id: id-t-011
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

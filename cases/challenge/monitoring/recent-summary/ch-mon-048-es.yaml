@@ -1,0 +1,23 @@
+id: ch-mon-048-es
+uid: 4349f683f14b1834
+status: ready
+set: monitoring
+group: recent_summary
+language: es
+twin: ch-mon-048
+query: Resume qué cambió en Antioquia desde la última vez que revisé, hace dos semanas, en
+  unas pocas frases que pueda enviar a la autoridad ambiental.
+expected:
+  aoi_ids: COL.2
+  dataset_id: '11'
+  start_date: '{run-14d}'
+  end_date: '{run}'
+  date_tolerance_days: '2'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-14d}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-048 (es-t-004)'
+  pair_id: es-t-004
+  use_cases: UC1
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

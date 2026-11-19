@@ -4932,5 +4932,16 @@
       "synthetic": false
     }
   ],
-  "errata": []
+  "errata": [
+    {
+      "uid": "84219951f56b9748",
+      "date": "2026-11-19",
+      "reason": "A dataset choice that offers the SBTN natural lands map is a fair reply; the member did not accept it. Corrected copy: ch-comp-185."
+    },
+    {
+      "uid": "4f1d6f90058c88b6",
+      "date": "2026-11-19",
+      "reason": "The figure is the 2024 total; the question asks for the monthly pattern, and replies that give the pattern fail. Corrected copy: ch-trend-098."
+    }
+  ]
 }

@@ -1,0 +1,29 @@
+id: ch-trend-089
+uid: 68fe3d129f8ef352
+status: ready
+set: trend
+group: tcl-fires
+query: Show me information about forest fires in Colombia over the last 10 years
+expected:
+  aoi_ids: COL
+  data_pull: 'TRUE'
+  dataset_id: '10'
+  date_tolerance_days: '366'
+  end_date: '2025-12-31'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2016..2025
+    | sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2015..2025 | sum(tree_cover_loss_from_fires_area_ha)
+    where tree_cover_loss_year in 2017..2025 | max(tree_cover_loss_from_fires_area_ha) by
+    tree_cover_loss_year where tree_cover_loss_year in 2016..2025
+  start_date: '2016-01-01'
+  text: Presents the figures as tree cover loss from fires, not as a count of fires or as
+    total burned area.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-trend-089-es (es-n-005);
+    real es user prompt, trace trace 2025-11'
+  pair_id: es-n-005
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-trend-080; ch-quant-142; ch-quant-164; ch-comp-178

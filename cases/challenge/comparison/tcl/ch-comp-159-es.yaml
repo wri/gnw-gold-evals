@@ -1,0 +1,25 @@
+id: ch-comp-159-es
+uid: 87303e4f0eb02366
+status: ready
+set: comparison
+group: tcl
+language: es
+twin: ch-comp-159
+query: ¿Cómo se compara la pérdida de cobertura arbórea desde 2021 en Cusco y Madre de Dios?
+  Nuestra cartera de préstamos cubre los dos.
+expected:
+  aoi_ids: PER.8;PER.18
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'PER.18' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'PER.8' and tree_cover_loss_year in 2021..2025
+  figure_claim: '#1 > #2 :: Madre de Dios lost more tree cover than Cusco since 2021 || Cusco
+    lost more tree cover than Madre de Dios since 2021'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-159 (es-t-009)'
+  pair_id: es-t-009
+  use_cases: UC2
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

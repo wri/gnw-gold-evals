@@ -1,0 +1,30 @@
+id: ch-quant-210-es
+uid: d3b80c0945b99a2b
+status: ready
+set: quantification
+group: tcl
+language: es
+twin: ch-quant-210
+query: Dame únicamente la cifra total en hectáreas de bosque primario perdido en Cundinamarca
+  desde 2001, y el total de emisiones MgCO2e asociadas. Genera solo texto, no intentes crear
+  gráficas.
+expected:
+  aoi_ids: COL.15
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2025-12-31'
+  figure: sum(area_ha) where tree_cover_loss_year in 2001..2025 ; sum(carbon_emissions_MgCO2e)
+    where tree_cover_loss_year in 2001..2025
+  start_date: '2001-01-01'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-008); real es user prompt,
+    trace trace 2026-09'
+  pair_id: es-n-008
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-007; ch-quant-029; ch-quant-164; ch-trend-079
+  language_review: subagent review 2026-11-18; native speaker not yet

@@ -1,0 +1,26 @@
+id: ch-quant-246-id
+uid: 477e2232e7b8f3f4
+status: ready
+set: quantification
+group: land-cover
+language: id
+twin: ch-quant-246
+query: Perubahan LULC kabupaten poso 10 tahun terakhir sampai 2025
+expected:
+  aoi_ids: IDN.27.8
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  text: Reports land cover change for Poso from the land cover data and states the years it
+    covers; does not claim the data reach 2025 if they do not.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-025); real id user prompt,
+    trace trace 2026-08'
+  pair_id: id-n-025
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Poso (kabupaten, Sulawesi Tengah)
+  precedent: ch-quant-064; ch-comp-181
+  language_review: subagent review 2026-11-18; native speaker not yet

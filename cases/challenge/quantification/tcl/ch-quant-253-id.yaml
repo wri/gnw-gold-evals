@@ -1,0 +1,27 @@
+id: ch-quant-253-id
+uid: 694559d2294f8d91
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-253
+query: cagar alam gunung nyiut kehilangan tutupa lahan dalam tahun 2025
+expected:
+  aoi_ids: '62495'
+  dataset_id: '4'
+  start_date: '2025-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-035); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-035
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Gunung Nyiut Penrissen (Cagar Alam), Kalimantan Barat
+  precedent: ch-quant-177; ch-quant-151
+  language_review: subagent review 2026-11-18; native speaker not yet

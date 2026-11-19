@@ -1,0 +1,29 @@
+id: ch-quant-244-id
+uid: 49bc87163a35b9d7
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-244
+query: degradasi selama 2020-2025 di wilayah ketapang, kalimantan barat
+expected:
+  aoi_ids: IDN.12.4
+  dataset_id: '4'
+  start_date: '2020-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2020..2025
+  text: Says the figure is tree cover loss and that forest degradation is not measured as
+    such.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-023); real id user prompt,
+    trace trace 2026-02'
+  pair_id: id-n-023
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Ketapang (kabupaten, Kalimantan Barat)
+  precedent: ch-quant-160
+  language_review: subagent review 2026-11-18; native speaker not yet

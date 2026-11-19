@@ -1,0 +1,18 @@
+id: ch-port-016-id
+uid: 01526704a1beab56
+status: ready
+set: portfolio
+group: many-areas
+language: id
+twin: ch-port-016
+query: Konsesi kelapa sawit mana saja di Indonesia yang mengalami kebakaran pada tahun 2023?
+expected:
+  text: Does not name or count concessions it did not analyse; explains that Indonesia has
+    too many oil palm concessions to analyse at once and offers a smaller area (a province
+    or district) or a single concession.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-port-016 (id-t-007)'
+  pair_id: id-t-007
+  use_cases: UC2
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

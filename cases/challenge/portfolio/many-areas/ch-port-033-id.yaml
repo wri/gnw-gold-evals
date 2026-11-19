@@ -1,0 +1,24 @@
+id: ch-port-033-id
+uid: 8e4257c8af1c9eee
+status: ready
+set: portfolio
+group: many-areas
+language: id
+twin: ch-port-033
+query: desa kalteng yang terdampak deforestasi
+expected:
+  text: Understands "kalteng" as Kalimantan Tengah; does not invent village-level results;
+    either gives tree cover loss for the province or its districts and says the analysis does
+    not go down to village level, or explains why it cannot cover every village.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-048); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-048
+  benchmark_type: portfolio
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: villages of Kalimantan Tengah
+  precedent: ch-port-015; ch-refusal-039 (not a member)
+  language_review: subagent review 2026-11-18; native speaker not yet

@@ -1,0 +1,20 @@
+id: ch-quant-233
+uid: 6eddad723de38ab0
+status: ready
+set: quantification
+group: unavailable
+query: do you have the pasture layer?
+expected:
+  text: Names the closest data available for pasture (the cultivated grasslands class of the
+    land cover data, or natural and semi-natural grassland as a related option); does not
+    present natural grassland as pasture or invent a pasture layer.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-233-es (es-n-037);
+    real es user prompt, trace trace 2025-11'
+  pair_id: es-n-037
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-181; ch-quant-194; ch-quant-192

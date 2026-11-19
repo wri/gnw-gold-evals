@@ -1,0 +1,30 @@
+id: ch-trend-091-es
+uid: 2f307ce7a967bf21
+status: ready
+set: trend
+group: tcl
+language: es
+twin: ch-trend-091
+query: Muestra los cambios de deforestación en los últimos 10 años en el Bosque La Primavera,
+  en Guadalajara.
+expected:
+  aoi_ids: 306811|903010
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  date_tolerance_days: '366'
+  end_date: '2025-12-31'
+  figure: sum(area_ha) where tree_cover_loss_year in 2016..2025 | sum(area_ha) where tree_cover_loss_year
+    in 2015..2025 | sum(area_ha) where tree_cover_loss_year in 2017..2025 | max(area_ha) by
+    tree_cover_loss_year where tree_cover_loss_year in 2016..2025
+  start_date: '2016-01-01'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-014); real es user prompt,
+    trace trace 2026-02'
+  pair_id: es-n-014
+  benchmark_type: trend
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-trend-079; ch-quant-164
+  language_review: subagent review 2026-11-18; native speaker not yet

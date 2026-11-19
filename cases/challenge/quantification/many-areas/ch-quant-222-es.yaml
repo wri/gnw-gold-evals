@@ -1,0 +1,28 @@
+id: ch-quant-222-es
+uid: e7a5f7eb2653ef6f
+status: ready
+set: quantification
+group: many-areas
+language: es
+twin: ch-quant-222
+query: Dónde está la deforestación en Perú en los últimos 5 años
+expected:
+  aoi_ids: PER|PER.1_1;PER.2_1;PER.3_1;PER.4_1;PER.5_1;PER.6_1;PER.7_1;PER.8_1;PER.9_1;PER.10_1;PER.11_1;PER.12_1;PER.13_1;PER.14_1;PER.15_1;PER.16_1;PER.17_1;PER.18_1;PER.19_1;PER.20_1;PER.21_1;PER.22_1;PER.23_1;PER.24_1;PER.25_1;PER.26_1
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  date_tolerance_days: '366'
+  end_date: '2025-12-31'
+  start_date: '2021-01-01'
+  text: Either ranks Peru's regions by loss from pulled data, or gives the national figure
+    and offers a breakdown by region; does not name hotspots from general knowledge alone.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-022); real es user prompt,
+    trace trace 2026-03'
+  pair_id: es-n-022
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-188; ch-port-003; ch-quant-164
+  language_review: subagent review 2026-11-18; native speaker not yet

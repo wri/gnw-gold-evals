@@ -1,0 +1,30 @@
+id: ch-trend-090-es
+uid: 14550d518c048cea
+status: ready
+set: trend
+group: tcl
+language: es
+twin: ch-trend-090
+query: Como se fue el comportamiento de la deforestacion entre el 2022 y 2025 en el municipio
+  de acandi en el cepartamento del choco
+expected:
+  aoi_ids: COL.13.1
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2025-12-31'
+  figure: 'ref: sum(area_ha) where tree_cover_loss_year = 2022 ; ref: sum(area_ha) where tree_cover_loss_year
+    = 2025'
+  figure_claim: '#2 > #1 :: loss in 2025 was above 2022, so loss rose over the period || loss
+    in 2025 was below 2022, so loss fell over the period'
+  start_date: '2022-01-01'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-012); real es user prompt,
+    trace trace 2026-01'
+  pair_id: es-n-012
+  benchmark_type: trend
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-trend-072; ch-trend-001
+  language_review: subagent review 2026-11-18; native speaker not yet

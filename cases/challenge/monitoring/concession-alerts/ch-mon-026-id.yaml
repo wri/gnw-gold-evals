@@ -1,0 +1,17 @@
+id: ch-mon-026-id
+uid: 47e151cb04be3c09
+status: ready
+set: monitoring
+group: concession_alerts
+language: id
+twin: ch-mon-026
+query: Ada peringatan deforestasi di dalam konsesi kelapa sawit di Riau dalam sebulan terakhir?
+expected:
+  text: Either reports alerts inside Riau's oil palm concessions, or explains the concession
+    limit and offers a narrower area; never presents province-wide alerts as concession alerts.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-026 (id-t-006)'
+  pair_id: id-t-006
+  use_cases: UC2
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

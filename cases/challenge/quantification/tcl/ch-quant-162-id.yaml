@@ -1,0 +1,24 @@
+id: ch-quant-162-id
+uid: 1f7ecf319dfeb387
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-162
+query: Kehilangan hutan di sekitar Tesso Nilo itu terjadi di dalam batas taman nasional atau
+  di kawasan sekitarnya?
+expected:
+  aoi_ids: '317197'
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Gives tree cover loss inside Tesso Nilo National Park from the data; any statement
+    about the surrounding area comes from a second pulled area (for example the enclosing
+    district) or is declared not analysed; no narrative about the surroundings from general
+    knowledge.
+  figure: sum(area_ha) where aoi_id = '317197'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-162 (id-t-008)'
+  pair_id: id-t-008
+  use_cases: UC3
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

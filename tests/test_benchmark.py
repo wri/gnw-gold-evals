@@ -127,5 +127,11 @@ def test_committed_manifests_round_trip_unchanged():
         text = path.read_text(encoding="utf-8")
         bench = from_dict(json.loads(text))
         assert render(bench.raw) == text, path
-        assert not any(m.language or m.twin_uid for m in bench.members), path
-        assert bench.pairs_with == "", path
+        if not bench.pairs_with:
+            assert not any(m.language or m.twin_uid for m in bench.members), path
+            continue
+        # A languages companion: language and twin_uid exist only here, and its
+        # pairs_with must name a committed manifest for the twins to resolve against.
+        assert any(m.language for m in bench.members), path
+        assert all(m.twin_uid for m in bench.members if m.language), path
+        assert (REPO / "benchmarks" / f"{bench.pairs_with}.json").exists(), path

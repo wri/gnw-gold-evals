@@ -1,0 +1,25 @@
+id: ch-aoi-157-id
+uid: 5ac389f51e21077b
+status: ready
+set: aoi
+group: designations
+language: id
+twin: ch-aoi-157
+query: Fokus ke areal Taman Nasional Gunung Halimun Salak di Indonesia, berdasarkan batas
+  Kementerain Kehutana terbaru
+expected:
+  aoi_ids: '1496'
+  text: Does not claim its boundary is the latest Ministry of Forestry boundary; if it comments
+    on the boundary, it says where its boundary comes from.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-032); real id user prompt,
+    trace trace 2026-07'
+  pair_id: id-n-032
+  benchmark_type: spatial
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Gunung Halimun - Salak (Taman Nasional)
+  precedent: ch-aoi-138; ch-aoi-026
+  language_review: subagent review 2026-11-18; native speaker not yet

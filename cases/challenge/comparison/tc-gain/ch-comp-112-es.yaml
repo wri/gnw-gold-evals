@@ -1,0 +1,27 @@
+id: ch-comp-112-es
+uid: 93459cb0f3e810d7
+status: ready
+set: comparison
+group: tc-gain
+language: es
+twin: ch-comp-112
+query: ¿Qué país tuvo mayor ganancia acumulada de cobertura arbórea entre 2000 y 2020, la
+  República Democrática del Congo o Colombia?
+expected:
+  aoi_ids: COD;COL
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'COD' and tree_cover_gain_period in ('2000-2005', '2005-2010',
+    '2010-2015', '2015-2020') ; sum(area_ha) where aoi_id = 'COL' and tree_cover_gain_period
+    in ('2000-2005', '2005-2010', '2010-2015', '2015-2020')
+  figure_claim: '#1 > #2 :: The DRC had greater cumulative tree cover gain than Colombia over
+    2000 to 2020 || Colombia had greater cumulative tree cover gain than the DRC over 2000
+    to 2020'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-112 (es-t-027)'
+  pair_id: es-t-027
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

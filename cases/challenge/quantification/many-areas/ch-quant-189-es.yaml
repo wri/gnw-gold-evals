@@ -1,0 +1,39 @@
+id: ch-quant-189-es
+uid: ab65fccea8e2d464
+status: ready
+set: quantification
+group: many-areas
+language: es
+twin: ch-quant-189
+query: Dame la pérdida de cobertura arbórea y la pérdida por incendios de cada departamento
+  de Bolivia, 2001–2024, en una tabla.
+expected:
+  aoi_ids: BOL.1;BOL.2;BOL.3;BOL.4;BOL.5;BOL.6;BOL.7;BOL.8;BOL.9
+  dataset_id: 10;4
+  start_date: '2001-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BOL.1' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.1' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.2' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.2' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.3' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.3' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.4' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.4' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.5' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.5' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.6' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.6' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.7' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.7' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.8' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.8' and tree_cover_loss_year in 2001..2024 ; sum(area_ha) where aoi_id
+    = 'BOL.9' and tree_cover_loss_year in 2001..2024 ; sum(tree_cover_loss_from_fires_area_ha)
+    where aoi_id = 'BOL.9' and tree_cover_loss_year in 2001..2024
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-189 (es-t-043)'
+  pair_id: es-t-043
+  use_cases: UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

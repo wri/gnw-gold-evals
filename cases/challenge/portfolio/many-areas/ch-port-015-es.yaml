@@ -1,0 +1,18 @@
+id: ch-port-015-es
+uid: d6447f25599ccbd9
+status: ready
+set: portfolio
+group: many-areas
+language: es
+twin: ch-port-015
+query: Ordena todos los territorios indígenas del Perú según su pérdida de cobertura arbórea
+  en 2024.
+expected:
+  text: Does not invent a ranking or a total; explains that Peru has too many Indigenous territories
+    to analyse in one request and offers a few named territories or a smaller region.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-port-015 (es-t-011)'
+  pair_id: es-t-011
+  use_cases: UC2
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,24 @@
+id: ch-mon-056-id
+uid: 190079522ed4ebfc
+status: ready
+set: monitoring
+group: alert_context
+language: id
+twin: ch-mon-056
+query: Apakah tahun ini ada peringatan gangguan di kawasan mangrove Delta Mahakam?
+expected:
+  aoi_ids: 15913|IDN.34.6
+  dataset_id: '11'
+  start_date: '{current_year}-01-01'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Reports disturbance alerts in the Mahakam Delta this year and is clear whether the
+    figure covers mangroves specifically or the whole area.
+  figure: sum(area_ha) where alert_date in {current_year}-01-01..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-056 (id-t-002)'
+  pair_id: id-t-002
+  use_cases: UC1;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

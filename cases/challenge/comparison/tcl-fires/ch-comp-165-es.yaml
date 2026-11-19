@@ -1,0 +1,26 @@
+id: ch-comp-165-es
+uid: 49d70f492eb60018
+status: ready
+set: comparison
+group: tcl-fires
+language: es
+twin: ch-comp-165
+query: ¿Cuánta cobertura arbórea se perdió por incendios en Sinaloa en 2024, y fue más que
+  en 2023?
+expected:
+  aoi_ids: MEX.25
+  dataset_id: '10'
+  start_date: '2023-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'MEX.25' and tree_cover_loss_year
+    = 2024 ; sum(tree_cover_loss_from_fires_area_ha) where aoi_id = 'MEX.25' and tree_cover_loss_year
+    = 2023
+  figure_claim: '#1 > #2 :: fire-driven tree cover loss in Sinaloa was higher in 2024 than
+    in 2023 || fire-driven tree cover loss in Sinaloa was not higher in 2024 than in 2023'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-165 (es-t-014)'
+  pair_id: es-t-014
+  use_cases: UC3
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

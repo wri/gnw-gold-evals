@@ -1,0 +1,25 @@
+id: ch-quant-206
+uid: 2c33c522aeeef233
+status: ready
+set: quantification
+group: integrated-alerts
+query: In Madre de Dios, in the last year, 2024, how many deforestation alerts were there?
+expected:
+  aoi_ids: PER.18
+  data_pull: 'TRUE'
+  dataset_id: '11'
+  end_date: '2024-12-31'
+  figure: sum(area_ha) where alert_date in 2024-01-01..2024-12-31
+  start_date: '2024-01-01'
+  text: Gives the 2024 alert area in hectares and does not give a number of alerts that the
+    data do not contain.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-206-es (es-n-001);
+    real es user prompt, trace trace 2026-01'
+  pair_id: es-n-001
+  benchmark_type: quantification
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-080; ch-trend-072

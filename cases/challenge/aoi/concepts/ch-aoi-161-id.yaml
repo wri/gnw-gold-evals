@@ -1,0 +1,25 @@
+id: ch-aoi-161-id
+uid: ec9add03a0ca4754
+status: ready
+set: aoi
+group: concepts
+language: id
+twin: ch-aoi-161
+query: apakah kamu punya dataset Leuser Ecosystem? kalau punya, itu AOI nya dan apakah kamu
+  punya batas kawasan hutan?
+expected:
+  text: Says honestly whether it holds a Leuser Ecosystem boundary; does not offer Gunung
+    Leuser National Park or an unrelated area as the Leuser Ecosystem without saying they
+    differ; says the official forest estate (kawasan hutan) boundaries are not available.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-058); real id user prompt,
+    trace trace 2026-10'
+  pair_id: id-n-058
+  benchmark_type: scope
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Leuser Ecosystem (Kawasan Ekosistem Leuser), Aceh and Sumatera Utara
+  precedent: ch-aoi-116; ch-aoi-119
+  language_review: subagent review 2026-11-18; native speaker not yet

@@ -1,0 +1,24 @@
+id: ch-quant-247-id
+uid: 40ca72d3fab0596e
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-247
+query: berdasarkan data hansen, saya ingin mendapatkan nilai deforestasi di desa beginci darat
+  kabupaten ketapang dari tahun 2020-2025
+expected:
+  text: Declines to analyse tree cover loss at village (desa) level, and may offer Ketapang
+    district instead; never labels a district figure as Beginci Darat's.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-026); real id user prompt,
+    trace trace 2026-06'
+  pair_id: id-n-026
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Beginci Darat (desa), Hulu Sungai, Ketapang, Kalimantan Barat
+  precedent: ch-refusal-039 (not a member); ch-quant-163
+  language_review: subagent review 2026-11-18; native speaker not yet

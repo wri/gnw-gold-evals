@@ -1,0 +1,24 @@
+id: ch-quant-255
+uid: 8450c664eb51cfdf
+status: ready
+set: quantification
+group: tcl-fires
+query: how large is the burned area in Natuna district, and per sub-district in Natuna?
+expected:
+  aoi_ids: IDN.16.6
+  dataset_id: '10'
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha)
+  text: Says the figure is tree cover loss from fires, not total burned area; gives no per-kecamatan
+    figures it did not pull, and says if it cannot break the figure down by kecamatan.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-255-id (id-n-038);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-038
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Natuna (kabupaten, Kepulauan Riau)
+  precedent: ch-quant-142; ch-refusal-039 (not a member); ch-comp-178

@@ -1,0 +1,23 @@
+id: ch-quant-220
+uid: d6b2c2662ca74b7a
+status: ready
+set: quantification
+group: tcl
+query: what is the state of the Tariquía forest and its surrounding area in southern Bolivia?
+expected:
+  aoi_ids: 20041|14386
+  data_pull: 'TRUE'
+  dataset_id: 4;7
+  text: Describes the forest inside Tariquía from pulled data (tree cover or tree cover loss);
+    any statement about the surrounding area comes from a second pulled area or is declared
+    not analysed; no narrative about the surroundings from general knowledge.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-220-es (es-n-020);
+    real es user prompt, trace trace 2026-02'
+  pair_id: es-n-020
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-162; ch-quant-186

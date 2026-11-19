@@ -1,0 +1,26 @@
+id: ch-quant-165-es
+uid: 9c8ff2dc7ad20e29
+status: ready
+set: quantification
+group: tcl
+language: es
+twin: ch-quant-165
+query: ¿Puedo decir que la pérdida de cobertura arbórea de Bolivia en 2024 fue un récord?
+  ¿Cómo se compara con cada año desde 2001?
+expected:
+  aoi_ids: BOL
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  context_layer: no_selection
+  figure: 'sum(area_ha) where tree_cover_loss_year = 2024 ; ref: max(area_ha) by tree_cover_loss_year
+    where tree_cover_loss_year in 2001..2023'
+  figure_claim: '#1 > #2 :: 2024 was the record year for tree cover loss in Bolivia since
+    2001 || 2024 was not the record year for tree cover loss in Bolivia since 2001'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-165 (es-t-021)'
+  pair_id: es-t-021
+  use_cases: UC3;UC6
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

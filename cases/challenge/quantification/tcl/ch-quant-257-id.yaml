@@ -1,0 +1,29 @@
+id: ch-quant-257-id
+uid: e75b5392d16b0401
+status: ready
+set: quantification
+group: tcl
+language: id
+twin: ch-quant-257
+query: tolong berikan laju deforestasi di kabupaten aceh tamiang, berikan layer kawasan hutan
+  yang ditetapkan oleh undang-undang di indonesia
+expected:
+  aoi_ids: IDN.1.7
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) | mean(area_ha) by tree_cover_loss_year
+  text: Gives tree cover loss for Aceh Tamiang from the data and says the legally designated
+    forest estate (kawasan hutan) layer is not available; does not present tree cover, natural
+    lands or protected areas as the kawasan hutan.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-043); real id user prompt,
+    trace trace 2025-12'
+  pair_id: id-n-043
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Aceh Tamiang (kabupaten, Aceh)
+  precedent: ch-quant-160; ch-comp-148
+  language_review: subagent review 2026-11-18; native speaker not yet

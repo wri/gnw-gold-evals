@@ -1,0 +1,26 @@
+id: ch-comp-169-id
+uid: e0f1bfba1faa00cd
+status: ready
+set: comparison
+group: tcl
+language: id
+twin: ch-comp-169
+query: Berapa kehilangan hutan primer Indonesia pada tahun 2024 dibandingkan dengan rata-rata
+  tahun 2016–2020?
+expected:
+  aoi_ids: IDN
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2024-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'IDN' and tree_cover_loss_year = 2024 ; mean(area_ha)
+    by tree_cover_loss_year where aoi_id = 'IDN' and tree_cover_loss_year in 2016..2020
+  figure_claim: '#1 < #2 :: primary forest loss in 2024 was below the 2016 to 2020 annual
+    average || primary forest loss in 2024 was at or above the 2016 to 2020 annual average'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-169 (id-t-014)'
+  pair_id: id-t-014
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

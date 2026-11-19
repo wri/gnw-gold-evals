@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "8a1d077199906132",
-  "case_count": 1028,
+  "caseset_version": "25d5261e3ecbc8fd",
+  "case_count": 1287,
   "statuses": {
-    "ready": 993,
+    "ready": 1252,
     "todo": 35
   },
-  "active_count": 1028,
+  "active_count": 1287,
   "groups": [
     {
       "group": "acronyms",
@@ -19,26 +19,26 @@
     },
     {
       "group": "active_fire",
-      "cases": 2,
-      "active": 2,
+      "cases": 6,
+      "active": 6,
       "statuses": {
-        "ready": 2
+        "ready": 6
       }
     },
     {
       "group": "alert_cause",
-      "cases": 1,
-      "active": 1,
-      "statuses": {
-        "ready": 1
-      }
-    },
-    {
-      "group": "alert_context",
       "cases": 3,
       "active": 3,
       "statuses": {
         "ready": 3
+      }
+    },
+    {
+      "group": "alert_context",
+      "cases": 6,
+      "active": 6,
+      "statuses": {
+        "ready": 6
       }
     },
     {
@@ -99,10 +99,10 @@
     },
     {
       "group": "by_confidence",
-      "cases": 5,
-      "active": 5,
+      "cases": 6,
+      "active": 6,
       "statuses": {
-        "ready": 5
+        "ready": 6
       }
     },
     {
@@ -115,10 +115,10 @@
     },
     {
       "group": "commodity_overclaim",
-      "cases": 4,
-      "active": 4,
+      "cases": 6,
+      "active": 6,
       "statuses": {
-        "ready": 4
+        "ready": 6
       }
     },
     {
@@ -131,18 +131,18 @@
     },
     {
       "group": "concepts",
-      "cases": 16,
-      "active": 16,
+      "cases": 20,
+      "active": 20,
       "statuses": {
-        "ready": 16
+        "ready": 20
       }
     },
     {
       "group": "concession_alerts",
-      "cases": 2,
-      "active": 2,
+      "cases": 3,
+      "active": 3,
       "statuses": {
-        "ready": 2
+        "ready": 3
       }
     },
     {
@@ -179,10 +179,10 @@
     },
     {
       "group": "designations",
-      "cases": 22,
-      "active": 22,
+      "cases": 26,
+      "active": 26,
       "statuses": {
-        "ready": 22
+        "ready": 26
       }
     },
     {
@@ -211,10 +211,10 @@
     },
     {
       "group": "driver_vs_fire",
-      "cases": 2,
-      "active": 2,
+      "cases": 3,
+      "active": 3,
       "statuses": {
-        "ready": 2
+        "ready": 3
       }
     },
     {
@@ -236,10 +236,10 @@
     },
     {
       "group": "ghg-flux",
-      "cases": 45,
-      "active": 45,
+      "cases": 57,
+      "active": 57,
       "statuses": {
-        "ready": 44,
+        "ready": 56,
         "todo": 1
       }
     },
@@ -253,34 +253,34 @@
     },
     {
       "group": "grasslands",
-      "cases": 51,
-      "active": 51,
+      "cases": 56,
+      "active": 56,
       "statuses": {
-        "ready": 51
+        "ready": 56
       }
     },
     {
       "group": "integrated-alerts",
-      "cases": 52,
-      "active": 52,
+      "cases": 57,
+      "active": 57,
       "statuses": {
-        "ready": 52
+        "ready": 57
       }
     },
     {
       "group": "land-cover",
-      "cases": 41,
-      "active": 41,
+      "cases": 59,
+      "active": 59,
       "statuses": {
-        "ready": 41
+        "ready": 59
       }
     },
     {
       "group": "many-areas",
-      "cases": 12,
-      "active": 12,
+      "cases": 33,
+      "active": 33,
       "statuses": {
-        "ready": 12
+        "ready": 33
       }
     },
     {
@@ -293,26 +293,26 @@
     },
     {
       "group": "method",
-      "cases": 18,
-      "active": 18,
+      "cases": 45,
+      "active": 45,
       "statuses": {
-        "ready": 18
+        "ready": 45
       }
     },
     {
       "group": "monthly_recent",
-      "cases": 2,
-      "active": 2,
+      "cases": 3,
+      "active": 3,
       "statuses": {
-        "ready": 2
+        "ready": 3
       }
     },
     {
       "group": "multi",
-      "cases": 10,
-      "active": 10,
+      "cases": 14,
+      "active": 14,
       "statuses": {
-        "ready": 10
+        "ready": 14
       }
     },
     {
@@ -325,10 +325,10 @@
     },
     {
       "group": "natural-lands",
-      "cases": 40,
-      "active": 40,
+      "cases": 46,
+      "active": 46,
       "statuses": {
-        "ready": 39,
+        "ready": 45,
         "todo": 1
       }
     },
@@ -350,26 +350,26 @@
     },
     {
       "group": "premise_check",
-      "cases": 2,
-      "active": 2,
+      "cases": 3,
+      "active": 3,
       "statuses": {
-        "ready": 2
+        "ready": 3
       }
     },
     {
       "group": "recent_area",
-      "cases": 11,
-      "active": 11,
+      "cases": 12,
+      "active": 12,
       "statuses": {
-        "ready": 11
+        "ready": 12
       }
     },
     {
       "group": "recent_default",
-      "cases": 2,
-      "active": 2,
+      "cases": 7,
+      "active": 7,
       "statuses": {
-        "ready": 2
+        "ready": 7
       }
     },
     {
@@ -390,10 +390,10 @@
     },
     {
       "group": "recent_summary",
-      "cases": 1,
-      "active": 1,
+      "cases": 2,
+      "active": 2,
       "statuses": {
-        "ready": 1
+        "ready": 2
       }
     },
     {
@@ -446,60 +446,60 @@
     },
     {
       "group": "spike_attribution",
-      "cases": 3,
-      "active": 3,
+      "cases": 4,
+      "active": 4,
       "statuses": {
-        "ready": 3
+        "ready": 4
       }
     },
     {
       "group": "tc-gain",
-      "cases": 39,
-      "active": 39,
+      "cases": 45,
+      "active": 45,
       "statuses": {
-        "ready": 39
+        "ready": 45
       }
     },
     {
       "group": "tcl",
-      "cases": 138,
-      "active": 138,
+      "cases": 216,
+      "active": 216,
       "statuses": {
-        "ready": 135,
+        "ready": 213,
         "todo": 3
       }
     },
     {
       "group": "tcl-drivers",
-      "cases": 38,
-      "active": 38,
+      "cases": 40,
+      "active": 40,
       "statuses": {
-        "ready": 38
+        "ready": 40
       }
     },
     {
       "group": "tcl-fires",
-      "cases": 55,
-      "active": 55,
+      "cases": 68,
+      "active": 68,
       "statuses": {
-        "ready": 55
+        "ready": 68
       }
     },
     {
       "group": "tree-cover",
-      "cases": 38,
-      "active": 38,
+      "cases": 44,
+      "active": 44,
       "statuses": {
-        "ready": 37,
+        "ready": 43,
         "todo": 1
       }
     },
     {
       "group": "unavailable",
-      "cases": 9,
-      "active": 9,
+      "cases": 29,
+      "active": 29,
       "statuses": {
-        "ready": 9
+        "ready": 29
       }
     },
     {
@@ -512,10 +512,10 @@
     },
     {
       "group": "unsupported_action",
-      "cases": 5,
-      "active": 5,
+      "cases": 6,
+      "active": 6,
       "statuses": {
-        "ready": 5
+        "ready": 6
       }
     },
     {
@@ -569,16 +569,16 @@
     },
     {
       "group": "ytd",
-      "cases": 3,
-      "active": 3,
+      "cases": 6,
+      "active": 6,
       "statuses": {
-        "ready": 3
+        "ready": 6
       }
     }
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 835,
+      "dedicated": 1025,
       "shared_only": 0
     },
     "analysis": {
@@ -586,7 +586,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 271,
+      "dedicated": 440,
       "shared_only": 0
     },
     "output": {
@@ -594,40 +594,45 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 296,
+      "dedicated": 314,
       "shared_only": 0
     }
   },
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 721,
+      "cases": 901,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 622,
+      "cases": 804,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 525,
+      "cases": 699,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
+      "field": "text",
+      "cases": 438,
+      "switches_on": "expected_text_match"
+    },
+    {
       "field": "start_date",
-      "cases": 326,
+      "cases": 420,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "end_date",
-      "cases": 325,
+      "cases": 419,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
-      "field": "text",
-      "cases": 270,
-      "switches_on": "expected_text_match"
+      "field": "figure",
+      "cases": 318,
+      "switches_on": "figure_match (computed from the agent's own pulled table)"
     },
     {
       "field": "forbidden_tools",
@@ -636,22 +641,17 @@
     },
     {
       "field": "context_layer",
-      "cases": 183,
+      "cases": 207,
       "switches_on": "context_layer_match"
     },
     {
-      "field": "figure",
-      "cases": 172,
-      "switches_on": "figure_match (computed from the agent's own pulled table)"
-    },
-    {
       "field": "figure_claim",
-      "cases": 66,
+      "cases": 98,
       "switches_on": "figure_claim_match (the conclusion the pulled data supports)"
     },
     {
       "field": "date_tolerance_days",
-      "cases": 44,
+      "cases": 68,
       "switches_on": "date_extraction (days a window may fall short of a bound)"
     },
     {
@@ -661,12 +661,12 @@
     },
     {
       "field": "dataset_parameters",
-      "cases": 37,
+      "cases": 40,
       "switches_on": "dataset_parameter_match"
     },
     {
       "field": "accept_nudge_offering",
-      "cases": 20,
+      "cases": 36,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {
@@ -680,29 +680,29 @@
       "switches_on": "nudge_match"
     },
     {
+      "field": "accept_aoi_nudge_offering",
+      "cases": 6,
+      "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
+    },
+    {
       "field": "nudge_options",
       "cases": 6,
       "switches_on": "nudge_match"
     },
     {
-      "field": "accept_aoi_nudge_offering",
+      "field": "accept_blog_sources",
       "cases": 4,
-      "switches_on": "accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there)"
+      "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
     },
     {
-      "field": "accept_blog_sources",
-      "cases": 3,
-      "switches_on": "accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts"
+      "field": "accept_fixed_period",
+      "cases": 2,
+      "switches_on": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)"
     },
     {
       "field": "accept_dashboard",
       "cases": 1,
       "switches_on": "dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored)"
-    },
-    {
-      "field": "accept_fixed_period",
-      "cases": 1,
-      "switches_on": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)"
     },
     {
       "field": "answer",
@@ -764,8 +764,8 @@
         "dataset_id": "1",
         "dataset_name": "Global land cover",
         "missing_instructions": [],
-        "cases": 52,
-        "answer_graded": 3,
+        "cases": 72,
+        "answer_graded": 16,
         "parameters": [],
         "context_layers": []
       },
@@ -773,8 +773,8 @@
         "dataset_id": "2",
         "dataset_name": "Global natural/semi-natural grassland extent",
         "missing_instructions": [],
-        "cases": 56,
-        "answer_graded": 3,
+        "cases": 61,
+        "answer_graded": 4,
         "parameters": [],
         "context_layers": []
       },
@@ -782,8 +782,8 @@
         "dataset_id": "3",
         "dataset_name": "SBTN Natural Lands Map",
         "missing_instructions": [],
-        "cases": 50,
-        "answer_graded": 3,
+        "cases": 60,
+        "answer_graded": 8,
         "parameters": [],
         "context_layers": []
       },
@@ -791,18 +791,18 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 175,
-        "answer_graded": 26,
+        "cases": 261,
+        "answer_graded": 62,
         "parameters": [
           {
             "name": "canopy_cover",
-            "cases": 14
+            "cases": 15
           }
         ],
         "context_layers": [
           {
             "name": "primary_forest",
-            "cases": 28
+            "cases": 34
           },
           {
             "name": "intact_forest",
@@ -810,7 +810,7 @@
           },
           {
             "name": "natural_forest",
-            "cases": 3
+            "cases": 4
           }
         ]
       },
@@ -818,8 +818,8 @@
         "dataset_id": "5",
         "dataset_name": "Tree cover gain",
         "missing_instructions": [],
-        "cases": 42,
-        "answer_graded": 1,
+        "cases": 48,
+        "answer_graded": 4,
         "parameters": [],
         "context_layers": []
       },
@@ -827,8 +827,8 @@
         "dataset_id": "6",
         "dataset_name": "Forest greenhouse gas net flux",
         "missing_instructions": [],
-        "cases": 47,
-        "answer_graded": 2,
+        "cases": 60,
+        "answer_graded": 6,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -841,12 +841,12 @@
         "dataset_id": "7",
         "dataset_name": "Tree cover",
         "missing_instructions": [],
-        "cases": 48,
-        "answer_graded": 5,
+        "cases": 56,
+        "answer_graded": 13,
         "parameters": [
           {
             "name": "canopy_cover",
-            "cases": 10
+            "cases": 12
           }
         ],
         "context_layers": [
@@ -860,8 +860,8 @@
         "dataset_id": "8",
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
-        "cases": 63,
-        "answer_graded": 20,
+        "cases": 72,
+        "answer_graded": 26,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -883,8 +883,8 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 72,
-        "answer_graded": 7,
+        "cases": 90,
+        "answer_graded": 17,
         "parameters": [
           {
             "name": "canopy_cover",
@@ -906,13 +906,13 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 107,
-        "answer_graded": 20,
+        "cases": 129,
+        "answer_graded": 36,
         "parameters": [],
         "context_layers": [
           {
             "name": "natural_lands",
-            "cases": 2
+            "cases": 4
           }
         ]
       },

@@ -1,0 +1,23 @@
+id: ch-quant-227-es
+uid: 044c78f6ef5faf9d
+status: ready
+set: quantification
+group: tcl
+language: es
+twin: ch-quant-227
+query: Busco un mapa y números sobre la deforestación en la Moskitia en Honduras
+expected:
+  text: Either analyses a named area that stands for La Moskitia (for example Gracias a Dios
+    department) and says which area it used, or asks which area is meant; does not present
+    figures for another area as La Moskitia without saying so.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-028); real es user prompt,
+    trace trace 2025-11'
+  pair_id: es-n-028
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-178
+  language_review: subagent review 2026-11-18; native speaker not yet

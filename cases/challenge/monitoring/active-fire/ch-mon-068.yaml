@@ -1,0 +1,22 @@
+id: ch-mon-068
+uid: 5f52b0f551bf36e6
+status: ready
+set: monitoring
+group: active_fire
+query: forest fire points in east kalimantan over the last 30 years
+expected:
+  aoi_ids: IDN.34
+  text: Says that fire detections (hotspots) are not available for a 30-year period, or offers
+    tree cover loss from fires by year (from 2001) and says it is annual loss, not fire points;
+    does not present disturbance alerts or annual loss as fire points.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-mon-068-id (id-n-001);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-001
+  benchmark_type: monitoring
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kalimantan Timur (province)
+  precedent: ch-mon-042; ch-mon-053; id-n-006

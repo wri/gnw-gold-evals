@@ -1,0 +1,24 @@
+id: ch-comp-183-es
+uid: 8e5b3b504ae41161
+status: ready
+set: comparison
+group: method
+language: es
+twin: ch-comp-183
+query: ¿deforestación es lo mismo que perdida de cobertura arbolada?
+expected:
+  text: 'Explains that tree cover loss is not the same as deforestation: it counts any removal
+    of tree cover, natural or human-caused, temporary or permanent (fire, logging, plantation
+    harvest), while deforestation is the lasting, human-caused conversion of forest to another
+    land use.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-032); real es user prompt,
+    trace trace 2025-12'
+  pair_id: es-n-032
+  benchmark_type: comparison
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-179; ch-comp-178
+  language_review: subagent review 2026-11-18; native speaker not yet

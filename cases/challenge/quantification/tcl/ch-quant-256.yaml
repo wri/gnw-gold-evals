@@ -1,0 +1,23 @@
+id: ch-quant-256
+uid: 225bc4cb68cf4c81
+status: ready
+set: quantification
+group: tcl
+query: what is the deforestation figure in Jambi Province?
+expected:
+  aoi_ids: IDN.8
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Gives tree cover loss for Jambi from the data and states the years it covers; does
+    not present the loss as confirmed deforestation.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-256-id (id-n-040);
+    real id user prompt, trace trace 2026-02'
+  pair_id: id-n-040
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Jambi (province)
+  precedent: ch-quant-151; ch-quant-160

@@ -1,0 +1,21 @@
+id: ch-quant-134-es
+uid: 470edb665b0cb2ae
+status: ready
+set: quantification
+group: tcl-drivers
+language: es
+twin: ch-quant-134
+query: ¿Qué porcentaje de la pérdida total de cobertura arbórea del Perú desde 2001 se atribuye
+  a la agricultura en conjunto, sumando agricultura permanente y agricultura itinerante?
+expected:
+  aoi_ids: PER
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver in ('Permanent agriculture', 'Shifting
+    cultivation'), sum(area_ha) where tree_cover_loss_driver != 'Unknown')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-134 (es-t-017)'
+  pair_id: es-t-017
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

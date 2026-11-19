@@ -1,0 +1,22 @@
+id: ch-quant-177-es
+uid: 30cccf7ba82c06b5
+status: ready
+set: quantification
+group: tcl
+language: es
+twin: ch-quant-177
+query: ¿Cuál fue la pérdida de cobertura arbórea en Antioquia, Colombia, en 2023?
+expected:
+  aoi_ids: COL.2
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  context_layer: no_selection
+  figure: sum(area_ha) where tree_cover_loss_year = 2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-quant-177 (es-t-037)'
+  pair_id: es-t-037
+  use_cases: UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

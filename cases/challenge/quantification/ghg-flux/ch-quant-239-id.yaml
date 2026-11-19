@@ -1,0 +1,29 @@
+id: ch-quant-239-id
+uid: 840711d31fa756dd
+status: ready
+set: quantification
+group: ghg-flux
+language: id
+twin: ch-quant-239
+query: Di Provinsi Aceh melepaskan karbon berapa dari tahun 2021 - 2024? Disebabkan oleh apa?
+expected:
+  aoi_ids: IDN.1
+  dataset_id: 4;6;8
+  start_date: '2021-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(carbon_emissions_MgCO2e) where tree_cover_loss_year in 2021..2024
+  text: Any cause it gives comes from the driver data and is described as the dominant driver
+    class over the whole record, not as the proven cause of the 2021 to 2024 emissions.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-014); real id user prompt,
+    trace trace 2026-03'
+  pair_id: id-n-014
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Aceh (province)
+  precedent: ch-quant-029; ch-causal-025
+  language_review: subagent review 2026-11-18; native speaker not yet

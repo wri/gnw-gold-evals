@@ -1,0 +1,27 @@
+id: ch-trend-074-es
+uid: f94eb6388f1cdee6
+status: ready
+set: trend
+group: tcl
+language: es
+twin: ch-trend-074
+query: ¿Cuál es la tendencia de la pérdida de bosque primario en Colombia de 2016 a 2023?
+expected:
+  aoi_ids: COL
+  dataset_id: '4'
+  start_date: '2016-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where tree_cover_loss_year = 2016 ; ref: sum(area_ha) where tree_cover_loss_year
+    = 2023 ; sum(area_ha) where tree_cover_loss_year in 2016..2023 | max(area_ha) by tree_cover_loss_year
+    where tree_cover_loss_year in 2016..2023 | min(area_ha) by tree_cover_loss_year where
+    tree_cover_loss_year in 2016..2023'
+  figure_claim: '#2 < #1 :: primary forest loss in 2023 was below 2016 || primary forest loss
+    in 2023 was not below 2016'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-trend-074 (es-t-029)'
+  pair_id: es-t-029
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'TRUE'

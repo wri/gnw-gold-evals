@@ -1,0 +1,30 @@
+id: ch-mon-069-id
+uid: 29bfba1daecb90b7
+status: ready
+set: monitoring
+group: recent_default
+language: id
+twin: ch-mon-069
+query: tampilkan gangguan hutan terbaru di indonesia khususnya provinsi bengkulu
+expected:
+  aoi_ids: IDN.5|IDN;IDN.5
+  dataset_id: '11'
+  start_date: '{run-90d}'
+  end_date: '{run}'
+  date_tolerance_days: '62'
+  data_pull: 'TRUE'
+  text: States the time window the alerts it reports cover.
+  figure: sum(area_ha) where aoi_id = 'IDN.5' and alert_date in {run-30d}..{run} | sum(area_ha)
+    where aoi_id = 'IDN.5' and alert_date in {run-90d}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-002); real id user prompt,
+    trace trace 2026-09'
+  pair_id: id-n-002
+  benchmark_type: monitoring
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Bengkulu (province)
+  precedent: ch-mon-011
+  language_review: subagent review 2026-11-18; native speaker not yet

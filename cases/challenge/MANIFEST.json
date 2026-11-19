@@ -1,6 +1,6 @@
 {
-  "caseset_version": "8a1d077199906132",
-  "case_count": 1028,
+  "caseset_version": "25d5261e3ecbc8fd",
+  "case_count": 1287,
   "source": "challenge-map-v1.csv",
   "cases": [
     {
@@ -1082,6 +1082,90 @@
       "status": "ready"
     },
     {
+      "id": "ch-aoi-156",
+      "uid": "df5fc7c46fa709f4",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-156-id",
+      "uid": "0a547cd740e306e6",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-157",
+      "uid": "01a5549056b9b1b7",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-157-id",
+      "uid": "5ac389f51e21077b",
+      "set": "aoi",
+      "group": "designations",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-158",
+      "uid": "1ebdde9973fb3dc2",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-158-id",
+      "uid": "33ff4bf7d70737bc",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-159",
+      "uid": "2e4b32b992b27445",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-159-id",
+      "uid": "f89ae686981dd67d",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-160",
+      "uid": "b3a8f2a8aa166663",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-160-id",
+      "uid": "ff2227dbda0874a0",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-161",
+      "uid": "25ec1d0af0777247",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-161-id",
+      "uid": "ec9add03a0ca4754",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready"
+    },
+    {
       "id": "ch-causal-001",
       "uid": "e25dbe217b87e7ec",
       "set": "causal",
@@ -1091,6 +1175,13 @@
     {
       "id": "ch-causal-002",
       "uid": "2a77f12faf134f8e",
+      "set": "causal",
+      "group": "spike_attribution",
+      "status": "ready"
+    },
+    {
+      "id": "ch-causal-002-es",
+      "uid": "b07585b41e062fda",
       "set": "causal",
       "group": "spike_attribution",
       "status": "ready"
@@ -1112,6 +1203,13 @@
     {
       "id": "ch-causal-005",
       "uid": "b55b73817a71eb47",
+      "set": "causal",
+      "group": "commodity_overclaim",
+      "status": "ready"
+    },
+    {
+      "id": "ch-causal-005-id",
+      "uid": "6916f01fdcd36ce6",
       "set": "causal",
       "group": "commodity_overclaim",
       "status": "ready"
@@ -1166,6 +1264,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-causal-012-es",
+      "uid": "31ea84a6dcd8993d",
+      "set": "causal",
+      "group": "premise_check",
+      "status": "ready"
+    },
+    {
       "id": "ch-causal-013",
       "uid": "da94db99f8be9cc2",
       "set": "causal",
@@ -1182,6 +1287,13 @@
     {
       "id": "ch-causal-015",
       "uid": "db652b6d07e80e90",
+      "set": "causal",
+      "group": "driver_vs_fire",
+      "status": "ready"
+    },
+    {
+      "id": "ch-causal-015-es",
+      "uid": "c602f0bd9e0bd13b",
       "set": "causal",
       "group": "driver_vs_fire",
       "status": "ready"
@@ -1243,6 +1355,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-causal-023-es",
+      "uid": "409ebc0bc0e7ce84",
+      "set": "causal",
+      "group": "commodity_overclaim",
+      "status": "ready"
+    },
+    {
       "id": "ch-causal-024",
       "uid": "8f1284b3ed4e4fd4",
       "set": "causal",
@@ -1285,6 +1404,20 @@
       "status": "ready"
     },
     {
+      "id": "ch-causal-030",
+      "uid": "efa739810c9bd6ac",
+      "set": "causal",
+      "group": "alert_cause",
+      "status": "ready"
+    },
+    {
+      "id": "ch-causal-030-id",
+      "uid": "ddd770163f582ef7",
+      "set": "causal",
+      "group": "alert_cause",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-001",
       "uid": "2df7ba15d33ebb71",
       "set": "comparison",
@@ -1322,6 +1455,13 @@
     {
       "id": "ch-comp-006",
       "uid": "fcd5235c64258ab6",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-006-id",
+      "uid": "b7a18347112f9477",
       "set": "comparison",
       "group": "tcl",
       "status": "ready"
@@ -1586,6 +1726,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-043-id",
+      "uid": "d9bfd61b3060d2e9",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-044",
       "uid": "3ae9bda3b8200c4c",
       "set": "comparison",
@@ -1609,6 +1756,13 @@
     {
       "id": "ch-comp-047",
       "uid": "2118ea998b3d8ff9",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-047-es",
+      "uid": "d1a62a19dabeefdd",
       "set": "comparison",
       "group": "ghg-flux",
       "status": "ready"
@@ -1817,6 +1971,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-076-es",
+      "uid": "cdb4b2c07f7a8c9c",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-077",
       "uid": "8d6852df049d4819",
       "set": "comparison",
@@ -1915,6 +2076,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-090-id",
+      "uid": "b7a0e59e99f000af",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-091",
       "uid": "9b0f18582c57ec2e",
       "set": "comparison",
@@ -1931,6 +2099,13 @@
     {
       "id": "ch-comp-093",
       "uid": "78350dc4fa67df54",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-093-es",
+      "uid": "d11a4c05b2afcd78",
       "set": "comparison",
       "group": "natural-lands",
       "status": "ready"
@@ -2069,6 +2244,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-112-es",
+      "uid": "93459cb0f3e810d7",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-113",
       "uid": "9e1b10ef2ed4f5a8",
       "set": "comparison",
@@ -2155,6 +2337,13 @@
     {
       "id": "ch-comp-125",
       "uid": "cd7c818896855ce0",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-125-es",
+      "uid": "813888fa9f32e702",
       "set": "comparison",
       "group": "tcl-drivers",
       "status": "ready"
@@ -2342,6 +2531,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-151-id",
+      "uid": "9e85dc2b09dc445a",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-152",
       "uid": "2f8c4b89e9c45ff9",
       "set": "comparison",
@@ -2363,6 +2559,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-154-es",
+      "uid": "8596b613180c47ee",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-155",
       "uid": "b23a45a0b36f67d7",
       "set": "comparison",
@@ -2372,6 +2575,13 @@
     {
       "id": "ch-comp-156",
       "uid": "0efc8695e94edd8d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-156-es",
+      "uid": "7b555c910f200d5d",
       "set": "comparison",
       "group": "tcl",
       "status": "ready"
@@ -2398,8 +2608,22 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-159-es",
+      "uid": "87303e4f0eb02366",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-160",
       "uid": "2fab5352ebf26d94",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-160-es",
+      "uid": "737dce4c0b4f77f0",
       "set": "comparison",
       "group": "tcl-fires",
       "status": "ready"
@@ -2440,6 +2664,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-165-es",
+      "uid": "49d70f492eb60018",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-166",
       "uid": "9f92f470783342b1",
       "set": "comparison",
@@ -2463,6 +2694,13 @@
     {
       "id": "ch-comp-169",
       "uid": "b75c4b8446ddfb57",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-169-id",
+      "uid": "e0f1bfba1faa00cd",
       "set": "comparison",
       "group": "tcl",
       "status": "ready"
@@ -2503,6 +2741,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-174-es",
+      "uid": "113bc5f17c15cd1d",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-175",
       "uid": "98209fa396f952a6",
       "set": "comparison",
@@ -2517,8 +2762,22 @@
       "status": "ready"
     },
     {
+      "id": "ch-comp-176-es",
+      "uid": "9a4aa87eaf0902ef",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
       "id": "ch-comp-177",
       "uid": "699616c418b7c943",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-177-es",
+      "uid": "f8bf14de1deae442",
       "set": "comparison",
       "group": "tcl",
       "status": "ready"
@@ -2549,6 +2808,55 @@
       "uid": "8b3aba97d5af99b9",
       "set": "comparison",
       "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-182",
+      "uid": "05b4b6a5c04bfe73",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-182-es",
+      "uid": "6986d08a64cd37e7",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-183",
+      "uid": "369a3258a19182af",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-183-es",
+      "uid": "8e5b3b504ae41161",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-184",
+      "uid": "1af7ace1c38967ad",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-184-id",
+      "uid": "16601e626a87275d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-comp-185",
+      "uid": "bda039a34748a306",
+      "set": "comparison",
+      "group": "natural-lands",
       "status": "ready"
     },
     {
@@ -4008,6 +4316,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-mon-008-es",
+      "uid": "0ad840843238ae1d",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready"
+    },
+    {
       "id": "ch-mon-009",
       "uid": "7b766d2f5d8da999",
       "set": "monitoring",
@@ -4134,6 +4449,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-mon-026-id",
+      "uid": "47e151cb04be3c09",
+      "set": "monitoring",
+      "group": "concession_alerts",
+      "status": "ready"
+    },
+    {
       "id": "ch-mon-027",
       "uid": "0fb54475e69a2505",
       "set": "monitoring",
@@ -4162,6 +4484,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-mon-030-id",
+      "uid": "7c1bb0606833f0e0",
+      "set": "monitoring",
+      "group": "by_confidence",
+      "status": "ready"
+    },
+    {
       "id": "ch-mon-031",
       "uid": "4066fb04217ac32c",
       "set": "monitoring",
@@ -4183,6 +4512,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-mon-033-es",
+      "uid": "63bfbb12909f25f3",
+      "set": "monitoring",
+      "group": "recent_area",
+      "status": "ready"
+    },
+    {
       "id": "ch-mon-034",
       "uid": "d9c68e6300654701",
       "set": "monitoring",
@@ -4197,6 +4533,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-mon-035-es",
+      "uid": "74b55444a0966cef",
+      "set": "monitoring",
+      "group": "ytd",
+      "status": "ready"
+    },
+    {
       "id": "ch-mon-036",
       "uid": "39f09b721855c9df",
       "set": "monitoring",
@@ -4206,6 +4549,13 @@
     {
       "id": "ch-mon-037",
       "uid": "2564a3e75c83e555",
+      "set": "monitoring",
+      "group": "monthly_recent",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-037-es",
+      "uid": "8be7d0ed416876dc",
       "set": "monitoring",
       "group": "monthly_recent",
       "status": "ready"
@@ -4274,6 +4624,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-mon-046-es",
+      "uid": "3a84602ab399799d",
+      "set": "monitoring",
+      "group": "unsupported_action",
+      "status": "ready"
+    },
+    {
       "id": "ch-mon-047",
       "uid": "1c8088c4b55cdf28",
       "set": "monitoring",
@@ -4283,6 +4640,13 @@
     {
       "id": "ch-mon-048",
       "uid": "a6910b8c6de425c8",
+      "set": "monitoring",
+      "group": "recent_summary",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-048-es",
+      "uid": "4349f683f14b1834",
       "set": "monitoring",
       "group": "recent_summary",
       "status": "ready"
@@ -4339,6 +4703,13 @@
     {
       "id": "ch-mon-056",
       "uid": "29141b29ca439f6b",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-056-id",
+      "uid": "190079522ed4ebfc",
       "set": "monitoring",
       "group": "alert_context",
       "status": "ready"
@@ -4411,6 +4782,90 @@
       "uid": "67e7a9c812e06403",
       "set": "monitoring",
       "group": "alert_method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-067",
+      "uid": "ec0517d3abe971eb",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-067-es",
+      "uid": "7c991d19794cd693",
+      "set": "monitoring",
+      "group": "alert_context",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-068",
+      "uid": "5f52b0f551bf36e6",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-068-id",
+      "uid": "22f19a00c632fb5d",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-069",
+      "uid": "1645c4bd67c6189f",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-069-id",
+      "uid": "29bfba1daecb90b7",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-070",
+      "uid": "9d17f1570dc41e5d",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-070-id",
+      "uid": "7e3e59780d944caf",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-071",
+      "uid": "ecb2fc4ed7c18aa7",
+      "set": "monitoring",
+      "group": "ytd",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-071-id",
+      "uid": "57218e9ee8671372",
+      "set": "monitoring",
+      "group": "ytd",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-072",
+      "uid": "84b5b7bbff9cde6f",
+      "set": "monitoring",
+      "group": "active_fire",
+      "status": "ready"
+    },
+    {
+      "id": "ch-mon-072-id",
+      "uid": "3d5b59055874be7b",
+      "set": "monitoring",
+      "group": "active_fire",
       "status": "ready"
     },
     {
@@ -4519,8 +4974,22 @@
       "status": "ready"
     },
     {
+      "id": "ch-port-015-es",
+      "uid": "d6447f25599ccbd9",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
       "id": "ch-port-016",
       "uid": "cf43e9eec74533ae",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-016-id",
+      "uid": "01526704a1beab56",
       "set": "portfolio",
       "group": "many-areas",
       "status": "ready"
@@ -4603,6 +5072,90 @@
       "status": "ready"
     },
     {
+      "id": "ch-port-028",
+      "uid": "5ba55ff5c580fec4",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-028-id",
+      "uid": "d14628689d734152",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-029",
+      "uid": "dd1b03538112627c",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-029-id",
+      "uid": "b7770fed753acfbb",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-030",
+      "uid": "71f4c3b9a86e5b26",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-030-id",
+      "uid": "cb75510d0ea1b87c",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-031",
+      "uid": "7689872e3f307a3a",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-031-id",
+      "uid": "a68e7c8527d67c17",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-032",
+      "uid": "d605a33751e288df",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-032-id",
+      "uid": "bda9765dee8df948",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-033",
+      "uid": "1cee4d2ad6d348de",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-port-033-id",
+      "uid": "8e4257c8af1c9eee",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-001",
       "uid": "96b8474465f25c5b",
       "set": "quantification",
@@ -4680,6 +5233,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-011-id",
+      "uid": "e8a4cda04719d2df",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-012",
       "uid": "230fc8436909c0be",
       "set": "quantification",
@@ -4750,6 +5310,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-021-es",
+      "uid": "4b69d9d8028d74b4",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-022",
       "uid": "beaa731779f15389",
       "set": "quantification",
@@ -4806,6 +5373,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-029-id",
+      "uid": "b6e5f4a4c9d2107b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-030",
       "uid": "db92a96dd15e2b9e",
       "set": "quantification",
@@ -4815,6 +5389,13 @@
     {
       "id": "ch-quant-031",
       "uid": "64a62f11b6a2a680",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-031-id",
+      "uid": "5c99a7ab52108839",
       "set": "quantification",
       "group": "tcl",
       "status": "ready"
@@ -4983,6 +5564,13 @@
     {
       "id": "ch-quant-055",
       "uid": "b4160a574705ebce",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-055-es",
+      "uid": "75799b5bc3bde6e9",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready"
@@ -5184,6 +5772,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-083-id",
+      "uid": "3bc1fefc809cfe06",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-084",
       "uid": "90bfd898af6662d4",
       "set": "quantification",
@@ -5347,6 +5942,13 @@
     {
       "id": "ch-quant-107",
       "uid": "456f89d7df953066",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-107-id",
+      "uid": "6d39664c65505c6d",
       "set": "quantification",
       "group": "tree-cover",
       "status": "ready"
@@ -5541,6 +6143,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-134-es",
+      "uid": "470edb665b0cb2ae",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-135",
       "uid": "b927ae67e29aa58c",
       "set": "quantification",
@@ -5592,6 +6201,13 @@
     {
       "id": "ch-quant-142",
       "uid": "9bc5cd4748591013",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-142-es",
+      "uid": "481f8d22c5b5ce42",
       "set": "quantification",
       "group": "tcl-fires",
       "status": "ready"
@@ -5688,6 +6304,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-155-es",
+      "uid": "7b36150fd8b2f90f",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-156",
       "uid": "af7738be4ece24b9",
       "set": "quantification",
@@ -5737,6 +6360,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-162-id",
+      "uid": "1f7ecf319dfeb387",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-163",
       "uid": "0857eb275c074465",
       "set": "quantification",
@@ -5758,6 +6388,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-165-es",
+      "uid": "9c8ff2dc7ad20e29",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-166",
       "uid": "71036c0b96e83439",
       "set": "quantification",
@@ -5767,6 +6404,13 @@
     {
       "id": "ch-quant-167",
       "uid": "ee8e29242f63d7b4",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-167-es",
+      "uid": "c7962d2b5e4c3c76",
       "set": "quantification",
       "group": "ghg-flux",
       "status": "ready"
@@ -5786,8 +6430,22 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-169-es",
+      "uid": "aa1e58e473c2218b",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-170",
       "uid": "1abf501a7df3b2ff",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-170-es",
+      "uid": "fb79ce477c851e17",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -5835,8 +6493,22 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-176-es",
+      "uid": "da5f16878c4e5606",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-177",
       "uid": "50c496873b9dd91f",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-177-es",
+      "uid": "30cccf7ba82c06b5",
       "set": "quantification",
       "group": "tcl",
       "status": "ready"
@@ -5877,6 +6549,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-182-es",
+      "uid": "c9fafa2ffe9f25a6",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-183",
       "uid": "c9b87ce29bd646df",
       "set": "quantification",
@@ -5898,6 +6577,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-185-es",
+      "uid": "43e96b9441fc512f",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-186",
       "uid": "ebd81da2acb9a6ba",
       "set": "quantification",
@@ -5912,6 +6598,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-187-id",
+      "uid": "48020d6f2d456660",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-188",
       "uid": "1d736c80f0a28837",
       "set": "quantification",
@@ -5921,6 +6614,13 @@
     {
       "id": "ch-quant-189",
       "uid": "ddf490a6fde38112",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-189-es",
+      "uid": "ab65fccea8e2d464",
       "set": "quantification",
       "group": "many-areas",
       "status": "ready"
@@ -5996,6 +6696,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-quant-199-id",
+      "uid": "0fa2be578129f051",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
       "id": "ch-quant-200",
       "uid": "cd81b6b9e2690822",
       "set": "quantification",
@@ -6033,6 +6740,916 @@
     {
       "id": "ch-quant-205",
       "uid": "6e8dd39b0b006835",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-206",
+      "uid": "2c33c522aeeef233",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-206-es",
+      "uid": "69502e289260bf15",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-207",
+      "uid": "9adfc42ced169947",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-207-es",
+      "uid": "8021f6836e720dfb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-208",
+      "uid": "4214aa3979fbe785",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-208-es",
+      "uid": "e770912c4cf464fd",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-209",
+      "uid": "6847284abfd4e0dc",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-209-es",
+      "uid": "b8b530f6191ab85e",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-210",
+      "uid": "6280810bb0495582",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-210-es",
+      "uid": "d3b80c0945b99a2b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-211",
+      "uid": "e34dc50a3aa51417",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-211-es",
+      "uid": "616ba9ef2c91da8c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-212",
+      "uid": "48764b7e0086b632",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-212-es",
+      "uid": "49fce15b8c5ad0c3",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-213",
+      "uid": "cdba885a010788c7",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-213-es",
+      "uid": "dcd8427cff61de13",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-214",
+      "uid": "e82d36b5b52da4f8",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-214-es",
+      "uid": "b21163341610a8e1",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-215",
+      "uid": "1be367f21319de5c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-215-es",
+      "uid": "7ba7c07745c42e1c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-216",
+      "uid": "0ea30208963205a1",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-216-es",
+      "uid": "c1dea451dbc63ed9",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-217",
+      "uid": "552e7d182c310395",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-217-es",
+      "uid": "4e1797670490aca5",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-218",
+      "uid": "8fdea7b15ad9ca8d",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-218-es",
+      "uid": "8bd6394104dfbd29",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-219",
+      "uid": "03a7aa4b67dea8b9",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-219-es",
+      "uid": "6e81aafae1347a5e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-220",
+      "uid": "d6b2c2662ca74b7a",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-220-es",
+      "uid": "f8c0ec1d546674a3",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-221",
+      "uid": "56ac9b1b9c1bb5ce",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-221-es",
+      "uid": "7f66d2392e4f9646",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-222",
+      "uid": "777945bcc677216b",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-222-es",
+      "uid": "e7a5f7eb2653ef6f",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-223",
+      "uid": "61becbf6ba7fd917",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-223-es",
+      "uid": "bb8ef562ce03c3de",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-224",
+      "uid": "8992e49f2cf1b608",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-224-es",
+      "uid": "9586a0f2295ba02c",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-225",
+      "uid": "eead762d108d8260",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-225-es",
+      "uid": "92fe41a400b2978b",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-226",
+      "uid": "9d753388b2f04401",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-226-es",
+      "uid": "7d975eb1f7c48bbc",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-227",
+      "uid": "d2ee94475b1fe69c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-227-es",
+      "uid": "044c78f6ef5faf9d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-228",
+      "uid": "3cba61778e9a5173",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-228-es",
+      "uid": "a6c0569c70168310",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-229",
+      "uid": "2d9eda8a4a1d7ce7",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-229-es",
+      "uid": "8bd1b44822217ace",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-230",
+      "uid": "11fe73a70677e4e2",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-230-es",
+      "uid": "46710815ac677178",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-231",
+      "uid": "3d7322bc6b65f1e6",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-231-es",
+      "uid": "2e453048e89cbae1",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-232",
+      "uid": "2c45a16d8874ff65",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-232-es",
+      "uid": "b1fb971d9bb29d0f",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-233",
+      "uid": "6eddad723de38ab0",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-233-es",
+      "uid": "541ca641ed78bf37",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-234",
+      "uid": "24c7845598ac6c13",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-234-id",
+      "uid": "57212e0d1bf9116b",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-235",
+      "uid": "18ef57cd6b98b7fc",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-235-id",
+      "uid": "b8574c7addd03c0b",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-236",
+      "uid": "cd739459ee7e440c",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-236-id",
+      "uid": "9a36bd7631f5ccfc",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-237",
+      "uid": "cc259623ff8dc415",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-237-id",
+      "uid": "4785bb6b8f28979e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-238",
+      "uid": "5ebad6f770dbb34c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-238-id",
+      "uid": "c4be9bd23e4a65d4",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-239",
+      "uid": "cf70159005c26890",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-239-id",
+      "uid": "840711d31fa756dd",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-240",
+      "uid": "587fff4e58db2c85",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-240-id",
+      "uid": "53c2e5879f5bf188",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-241",
+      "uid": "2ca1cbc53e72dea3",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-241-id",
+      "uid": "6455a065459f2bb2",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-242",
+      "uid": "eb9baf90d682c144",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-242-id",
+      "uid": "21be196798829dfe",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-243",
+      "uid": "4dd3aa4940f306f6",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-243-id",
+      "uid": "fe73ffc5d470502a",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-244",
+      "uid": "ed1ca582444e3969",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-244-id",
+      "uid": "49bc87163a35b9d7",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-245",
+      "uid": "c4148f36efc500ed",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-245-id",
+      "uid": "5aa970e9c61d4ba7",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-246",
+      "uid": "1abecc14e96369dc",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-246-id",
+      "uid": "477e2232e7b8f3f4",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-247",
+      "uid": "3deac4ffda9dbef9",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-247-id",
+      "uid": "40ca72d3fab0596e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-248",
+      "uid": "784b3c33378159b0",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-248-id",
+      "uid": "3d6d7e98f98c0cf3",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-249",
+      "uid": "3491167a88856ff3",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-249-id",
+      "uid": "81721acd5756603a",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-250",
+      "uid": "faaf40cd80aeb23e",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-250-id",
+      "uid": "d7522c436929a1e3",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-251",
+      "uid": "041b0489b3b4729b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-251-id",
+      "uid": "36a21908a138bea2",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-252",
+      "uid": "ee221a163798aba8",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-252-id",
+      "uid": "f15f472073c29f07",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-253",
+      "uid": "a7320c303c1c6c2d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-253-id",
+      "uid": "694559d2294f8d91",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-254",
+      "uid": "a63e186bb238c1cb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-254-id",
+      "uid": "9c49ca3774ec9f19",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-255",
+      "uid": "8450c664eb51cfdf",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-255-id",
+      "uid": "0403bd8166b6bd63",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-256",
+      "uid": "225bc4cb68cf4c81",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-256-id",
+      "uid": "d4134866c4c3a71d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-257",
+      "uid": "32216f076bad4f60",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-257-id",
+      "uid": "e75b5392d16b0401",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-258",
+      "uid": "0281eb907e7738be",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-258-id",
+      "uid": "efee44d51cd7eacd",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-259",
+      "uid": "c21d9f369378b4f0",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-259-id",
+      "uid": "c73d1d4746d82136",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-260",
+      "uid": "9c93db22d91a7fb0",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-260-id",
+      "uid": "a5ff5c905d0112eb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-261",
+      "uid": "47baa6290799fd0f",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-261-id",
+      "uid": "d56b04ec03b4fab9",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-262",
+      "uid": "d90c0dd25449f313",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-262-id",
+      "uid": "e1bf9625163116c9",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-263",
+      "uid": "57abc8529ca0d631",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-263-id",
+      "uid": "1e9f82b68ded3f23",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-264",
+      "uid": "cafb699bb7aa1c15",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-264-id",
+      "uid": "609e2698550e9ef4",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-265",
+      "uid": "d611ab716b593cec",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-265-id",
+      "uid": "383738c1dafa587f",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-266",
+      "uid": "98c81d87d19b7cc8",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-266-id",
+      "uid": "70773819fdf013a8",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-267",
+      "uid": "a78dfdd9d318fe39",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-267-id",
+      "uid": "21be935027f232d2",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-268",
+      "uid": "03092feb360e9831",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-268-id",
+      "uid": "2d7ffad55c95ce13",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-269",
+      "uid": "2ffa0a77cf2b4cff",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-269-id",
+      "uid": "a19bd6cf0e63aa16",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-270",
+      "uid": "ee6ed3421466b38d",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-quant-270-id",
+      "uid": "cf63e3c727b2b0cb",
       "set": "quantification",
       "group": "method",
       "status": "ready"
@@ -6906,6 +8523,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-trend-045-es",
+      "uid": "87e4ee53b30e75b7",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready"
+    },
+    {
       "id": "ch-trend-046",
       "uid": "0b329187e8a2eae2",
       "set": "trend",
@@ -6950,6 +8574,13 @@
     {
       "id": "ch-trend-052",
       "uid": "4f1d6f90058c88b6",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-052-id",
+      "uid": "64c595ba025e3278",
       "set": "trend",
       "group": "integrated-alerts",
       "status": "ready"
@@ -7060,6 +8691,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-trend-067-id",
+      "uid": "e1c36e5cfbaa5cfe",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
       "id": "ch-trend-068",
       "uid": "17e8090fc0614011",
       "set": "trend",
@@ -7095,6 +8733,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-trend-072-es",
+      "uid": "a8abaac8ef65e845",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
       "id": "ch-trend-073",
       "uid": "e1b17cd3c31f4606",
       "set": "trend",
@@ -7104,6 +8749,13 @@
     {
       "id": "ch-trend-074",
       "uid": "7cf0a7b433aa9695",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-074-es",
+      "uid": "f94eb6388f1cdee6",
       "set": "trend",
       "group": "tcl",
       "status": "ready"
@@ -7151,6 +8803,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-trend-080-es",
+      "uid": "8283b4eff41401bb",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
       "id": "ch-trend-081",
       "uid": "916b48b5d354b5e3",
       "set": "trend",
@@ -7186,6 +8845,13 @@
       "status": "ready"
     },
     {
+      "id": "ch-trend-085-es",
+      "uid": "ddf2fa40519518ed",
+      "set": "trend",
+      "group": "tc-gain",
+      "status": "ready"
+    },
+    {
       "id": "ch-trend-086",
       "uid": "d5a5fd7d37f819ab",
       "set": "trend",
@@ -7197,6 +8863,153 @@
       "uid": "5eaa0f906eeaf0c2",
       "set": "trend",
       "group": "method",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-088",
+      "uid": "cdbb95693af977f6",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-088-es",
+      "uid": "68a068825445121a",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-089",
+      "uid": "68fe3d129f8ef352",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-089-es",
+      "uid": "51c076800b70044c",
+      "set": "trend",
+      "group": "tcl-fires",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-090",
+      "uid": "9aef75309a685a05",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-090-es",
+      "uid": "14550d518c048cea",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-091",
+      "uid": "5d638226e6f92f52",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-091-es",
+      "uid": "2f307ce7a967bf21",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-092",
+      "uid": "1e4970d1b5762aeb",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-092-es",
+      "uid": "2454fce975b98388",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-093",
+      "uid": "38ba2b777c34ea0a",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-093-es",
+      "uid": "2d1a149028be2a4a",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-094",
+      "uid": "f1ca20acfe65a642",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-094-id",
+      "uid": "8a74a9d8331c61c8",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-095",
+      "uid": "94345d420450b6be",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-095-id",
+      "uid": "7d1495e5a48c9f4d",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-096",
+      "uid": "4344318b32d8ee55",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-096-id",
+      "uid": "78a60bb4c1eb7c15",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-097",
+      "uid": "aed7311c91115d08",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-097-id",
+      "uid": "5af9f69c925818ea",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready"
+    },
+    {
+      "id": "ch-trend-098",
+      "uid": "8dfbc6a8c70b2ffe",
+      "set": "trend",
+      "group": "integrated-alerts",
       "status": "ready"
     }
   ]

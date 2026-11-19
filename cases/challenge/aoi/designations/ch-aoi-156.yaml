@@ -1,0 +1,22 @@
+id: ch-aoi-156
+uid: df5fc7c46fa709f4
+status: ready
+set: aoi
+group: designations
+query: please identify whether Sagea village, Halmahera, Indonesia is inside a Key Biodiversity
+  Area (KBA)
+expected:
+  text: Either checks Sagea against the Key Biodiversity Area boundaries it holds and says
+    whether it falls inside one, naming it, or says it cannot test that overlap; does not
+    answer from general knowledge as if from data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-aoi-156-id (id-n-030);
+    real id user prompt, trace trace 2026-09'
+  pair_id: id-n-030
+  benchmark_type: spatial
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Sagea (desa), Halmahera Tengah, Maluku Utara
+  precedent: ch-quant-163; ch-aoi-155

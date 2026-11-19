@@ -1,0 +1,28 @@
+id: ch-comp-090-id
+uid: b7a0e59e99f000af
+status: ready
+set: comparison
+group: natural-lands
+language: id
+twin: ch-comp-185
+query: Negara mana yang memiliki lahan alami lebih luas, Brasil atau Indonesia?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and natural_lands_class in ('Natural forests',
+    'Mangroves', 'Natural peat forests', 'Wetland natural forests', 'Natural short vegetation',
+    'Natural peat short vegetation', 'Wetland natural short vegetation', 'Natural water',
+    'Bare') ; sum(area_ha) where aoi_id = 'IDN' and natural_lands_class in ('Natural forests',
+    'Mangroves', 'Natural peat forests', 'Wetland natural forests', 'Natural short vegetation',
+    'Natural peat short vegetation', 'Wetland natural short vegetation', 'Natural water',
+    'Bare')
+  figure_claim: '#1 > #2 :: Brazil has more natural land than Indonesia || Indonesia has more
+    natural land than Brazil'
+  accept_nudge_offering: '3'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-comp-090 (id-t-020)'
+  pair_id: id-t-020
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-18; native speaker not yet
+  synthetic: 'FALSE'

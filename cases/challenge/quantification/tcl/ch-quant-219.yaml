@@ -1,0 +1,23 @@
+id: ch-quant-219
+uid: 03a7aa4b67dea8b9
+status: ready
+set: quantification
+group: tcl
+query: give me the deforestation in Guarayos province in 2024
+expected:
+  aoi_ids: BOL.8.7
+  data_pull: 'TRUE'
+  dataset_id: '4'
+  end_date: '2024-12-31'
+  figure: sum(area_ha) where tree_cover_loss_year = 2024
+  start_date: '2024-01-01'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-219-es (es-n-019);
+    real es user prompt, trace trace 2026-10'
+  pair_id: es-n-019
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-009; ch-quant-177

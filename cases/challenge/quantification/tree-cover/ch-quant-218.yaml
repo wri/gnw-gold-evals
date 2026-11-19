@@ -1,0 +1,23 @@
+id: ch-quant-218
+uid: 8fdea7b15ad9ca8d
+status: ready
+set: quantification
+group: tree-cover
+query: where in Ecuador is there the most forest
+expected:
+  data_pull: 'TRUE'
+  dataset_id: 7;3
+  text: Either ranks Ecuador's provinces by tree cover or natural forest from pulled data,
+    or gives the national figure and offers a breakdown by province; does not name a region
+    from general knowledge alone.
+  accept_nudge_offering: 7 | 3
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-218-es (es-n-018);
+    real es user prompt, trace trace 2025-11'
+  pair_id: es-n-018
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-188; ch-quant-175; ch-quant-180

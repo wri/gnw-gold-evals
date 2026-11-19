@@ -1,0 +1,29 @@
+id: ch-comp-182-es
+uid: 6986d08a64cd37e7
+status: ready
+set: comparison
+group: land-cover
+language: es
+twin: ch-comp-182
+query: Compara la cobertura de bosque nativo actual con la de los últimos 20 años en el departamento
+  de Rocha (Uruguay). En los sitios donde se transformó el bosque, indica cuál fue la actividad
+  o uso del suelo que lo generó.
+expected:
+  aoi_ids: URY.14
+  accept_nudge_offering: 4;8
+  data_pull: 'TRUE'
+  dataset_id: 1;4;8
+  text: Reports the change in forest or tree cover in Rocha from pulled data, and attributes
+    the conversion only from land cover change or drivers data, naming the class; does not
+    present a cause from general knowledge as data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-030); real es user prompt,
+    trace trace 2026-02'
+  pair_id: es-n-030
+  benchmark_type: comparison
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-176; ch-quant-064
+  language_review: subagent review 2026-11-18; native speaker not yet

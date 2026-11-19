@@ -1,0 +1,27 @@
+id: ch-port-028-id
+uid: d14628689d734152
+status: ready
+set: portfolio
+group: many-areas
+language: id
+twin: ch-port-028
+query: Munculkan angka deforestasi perprovinsi di Indonesia
+expected:
+  aoi_ids: IDN.6_1;IDN.35_1;IDN.16_1;IDN.24_1;IDN.29_1;IDN.32_1;IDN.10_1;IDN.11_1;IDN.19_1;IDN.33_1;IDN.23_1;IDN.9_1;IDN.1_1;IDN.20_1;IDN.21_1;IDN.17_1;IDN.2_1;IDN.31_1;IDN.5_1;IDN.13_1;IDN.34_1;IDN.18_1;IDN.26_1;IDN.28_1;IDN.3_1;IDN.7_1;IDN.25_1;IDN.30_1;IDN.22_1;IDN.27_1;IDN.8_1;IDN.4_1;IDN.12_1;IDN.14_1
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Gives tree cover loss for Indonesia's provinces from the data; does not invent figures
+    for provinces it did not analyse.
+  figure: max(area_ha) by aoi_id
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-012); real id user prompt,
+    trace trace 2026-03'
+  pair_id: id-n-012
+  benchmark_type: portfolio
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: all provinces of Indonesia
+  precedent: ch-port-017; ch-port-003
+  language_review: subagent review 2026-11-18; native speaker not yet

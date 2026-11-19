@@ -163,6 +163,250 @@ languages. `questions` still lists every member. The twins held here are a
 few questions, not the North Star: read that from the English version's
 page.
 
+## Adding a language
+
+The steps that added Spanish and Indonesian (18 and 19 November 2026), for
+the next language. Read [Languages companion](#languages-companion) first.
+The sheets, scripts and review notes of the first two languages are in the
+GNW workspace, `experiments/2026-11-18-multilingual-benchmark-questions/`.
+`<lang>` is the language code.
+
+### 1. Make the harness accept the language
+
+A new code needs a harness change, on its own branch, before any case is
+written. Today the harness accepts `es` and `id` only:
+
+| Where | What a new code needs |
+|---|---|
+| `src/goldset/canonical.py`, `LANGUAGES` | The code. The case check (`store.py`), the member check (`benchmark.py`), `gold run --language` and the order of the page's `languages` block all read this tuple. |
+| `schema/case.schema.json`, `language` | The code in the enum. `tests/test_schema.py` keeps the enum equal to `LANGUAGES` without `en`. |
+| `src/goldset/evaluators/figures.py` | How `figure_match` reads the reply's numbers: the usual decimal mark (`_USUAL_DECIMAL_MARK`, measured on Horizon's replies in the traces, not the textbook convention), scale words (`_LOCAL_SCALES`, required for every code), percent and km² words (`_LOCAL_NUMBER`, `_KM2_PHRASE`), units (`_LOCAL_UNITS`) and phrases that state a zero (`_LOCAL_ZERO_WORDS`). |
+| `src/goldset/evaluators/reply_language.py` | The language's function words in `FUNCTION_WORDS`, in `LANGUAGES` order (an assert checks it). French and Portuguese are decoys in `DECOY_WORDS` today. |
+| Tests and docs | Several tests use `fr` as the example of an unknown code. This README, `cases/challenge/README.md`, the evaluators README and `CLAUDE.md` name `es` and `id`. |
+
+The page schema needs no change: it does not describe the `languages` block.
+
+### 2. Choose the questions
+
+Write the questions as a sheet, `<lang>-pairs.csv`, before any case exists.
+
+1. Check that the language is a core language: more than 5% of external
+   users' turns over 12 months (AJ, 2026-11-18). For the year to 17
+   November 2026, French had 3.8% and Portuguese 1.2%. Below that, the owner
+   decides.
+2. Plan 80 pairs (about ±10 points on the language rate; they find a gap
+   to English of 15 points or more). Each use case gets the mean of its
+   share of the `2026` use-case tags and of the language's traffic (each
+   user counted once; trace task and topic labels mapped to UC1 to UC6),
+   and at least 6.
+3. Fill each use case with translated pairs first: active `2026` members
+   about places where the language is spoken, by their first use case.
+   Spanish took 43 of 50 such members, Indonesian 20 of 25. Leave out a
+   member whose test rests on English wording (an English designation,
+   "Borneo" for "Kalimantan"), a near copy and a member with no place.
+   Never move a member's area.
+4. Fill the rest with native pairs: prompts in the language from GNW Horizon
+   Traces, external users, no suggested prompts. Sample by user, not by
+   turn (one user wrote 243 of the 247 Venezuelan turns). Spanish took 37
+   prompts from 37 users, Indonesian 60 from 41.
+5. Keep a native prompt only when it names an area that can be found
+   (method and tool questions excepted), Horizon can answer or fairly
+   decline it, and it stands alone (a later turn can; say so in `notes`).
+   Leave out repeats of a `2026` member, imagery, answers to a clarifying
+   question and details that point to a person or an organisation. Use a
+   scripted (workshop) wording at most twice.
+6. Give each row a type, set and cohort that has a `2026` member.
+
+Columns: `pair_id` (`<lang>-t-NNN` translated, `<lang>-n-NNN` native),
+`kind`, `use_case`, `type`, `set`, `cohort`, `english_id` and `english_uid`
+(translated rows: the member), `english_query`, the question in a column
+named for the language (`spanish_query`), `source` (`trace YYYY-MM`),
+`notes`, and `expected_draft` and `unverified` (native rows, step 4).
+
+### 3. Translate and review
+
+1. A translated question keeps every area, date, period, threshold, dataset
+   word and measure of its member, and its ambiguity. "Deforestation" and
+   "tree cover loss" stay apart, as in the member.
+2. The English twin of a native prompt is a faithful, natural translation
+   that repairs nothing: it keeps the user's vagueness, abbreviations
+   ("kalteng") and words ("forest cover", not the dataset name). It never
+   copies a typo.
+3. In a native prompt, correct a misspelt place name (`es-n-024`), so both
+   sides ask about the same place. Keep other typos, case slips and missing
+   accents.
+4. A subagent that reads the language reviews all 80 rows against these
+   rules, the later turns, repeated wordings and personal details
+   (`<lang>-review.csv` and `.md`). Per row: `verdict` (`ok`, `fix`,
+   `drop`), `issue` (`natural`, `correct`, `twin`, `same-question`,
+   `typo-asymmetry`, `not-self-contained`, `other`), text for each side and
+   a note. It lists the rows a native speaker must read.
+5. The owner decides the flagged rows. The result is
+   `<lang>-pairs-reviewed.csv`, with the text before a fix in
+   `<language>_query_draft` and `english_query_draft`. A replaced row keeps
+   its `pair_id`; the old row goes to `<lang>-replaced-rows.csv`, the new
+   one to `<lang>-replacements.csv`.
+6. Native speakers verify later. Until then each case in the language
+   carries `notes.language_review: subagent review <date>; native speaker
+   not yet`. A note never changes the uid.
+
+### 4. Write and verify the expectations
+
+A translated pair takes its member's `expected` as it is. A native pair
+gets expectations in English, checked without an agent run.
+
+1. Write `expected_draft` as one line of YAML in the case vocabulary
+   (`aoi_ids`, `dataset_id`, `start_date`, `end_date`, `data_pull`,
+   `figure`, `text` and so on), after a similar `2026` member. `aoi_name`
+   and `aoi_source` are helper keys, not case fields. Write an unchecked id
+   as `UNVERIFIED (<name>, <level>)` and name its key in `unverified`.
+2. A subagent checks each draft against the `2026` members (precedents),
+   the catalogue snapshot `cases/zeno_catalog.json`, the GADM areas in a
+   local project-zeno database, a search of the production `/api/aois`
+   (WDPA, KBA and landmark ids) and the areas the traces resolved. It fills
+   `verify_verdict` (`verified`, `corrected`, `partial`),
+   `expected_verified`, `still_unverified`, `verify_changes`,
+   `verify_precedent` and `verify_evidence`. 59 of the 97 Spanish and
+   Indonesian drafts needed a correction.
+3. The owner settles what is still open. No `UNVERIFIED` value may remain.
+
+### 5. Create the cases and the companion
+
+`make_cases.py`, in the experiment's `pilot/` folder, wrote the cases from
+the reviewed sheets. **It is not a repo tool yet**: for a new language,
+change its sheet folder, language loop, query column map (`QCOL`) and the
+dates in its notes. Run it from the worktree root with `--dry-run` until it
+reports no problem, then once without: it writes every good row and only
+reports a bad one (an `UNVERIFIED` value, a member uid that is not
+`english_uid`, a set and cohort the store lacks), and a second run writes
+the native pairs again under new ids. It requires 80 rows per language.
+A translated row becomes `<member id>-<lang>` with the member's set,
+cohort and `expected`. A native row becomes two cases with one `expected`:
+the English twin at the next free id of its set (`ch-quant-206`) and the
+question as `<twin id>-<lang>` (`ch-quant-206-es`). Notes: `lineage`,
+`pair_id`, `use_cases`, `synthetic`, `language_review` (the language side
+only) and, for native pairs, `benchmark_type`, `verified`, `precedent` and
+`aoi_name`.
+
+Then run the commands below, without the first line. Run all of them after
+any later change to a pair: edit the English twin (never one side only),
+then copy it across with `twin_case.py`.
+
+```bash
+uv run python tools/twin_case.py --from <English id> --to <case id>
+uv run python tools/check.py --fix --cases-dir cases/challenge
+uv run python tools/coverage_doc.py --cases-dir cases/challenge
+uv run python tools/benchmark_languages.py \
+  --version 2026-languages --pairs-with 2026
+uv run python tools/check_benchmark.py
+uv run pytest -q
+```
+
+One companion holds every language. `benchmark_languages.py` takes every
+`ready` case with a `language` and has no option for one language, so a
+rebuild adds the new language to `2026-languages`. It keeps the draft's
+creation date, errata and `pairs_with`, and never rewrites a frozen
+manifest.
+
+### 6. Pilot, triage and fixes
+
+1. Pick 20 pairs per language over both kinds and every use case. On one
+   day, run the twins that are `2026` members first, then the pilot's
+   companion members (its questions and the twins the companion holds):
+   1 trial, production, default profile. Pilot runs are never committed.
+
+   ```bash
+   caffeinate -i uv run gold run --env prod --trials 1 \
+     --benchmark benchmarks/2026.json --id <member id> ... --build "<label>"
+   caffeinate -i uv run gold run --env prod --trials 1 \
+     --benchmark benchmarks/2026-languages.json --id <case id> ... \
+     --build "<label>"
+   ```
+
+2. Read every failed answer on both sides and class it **Agent** (the agent
+   was wrong), **Judge** (an AI reviewer misread a right reply) or **Case**
+   (the expectation is wrong or too strict). Record per pair each side's
+   cause and reason, a note and the case fix. The first pilot's 34 failed
+   answers were 23 Agent, 9 Case and 2 Judge.
+3. Fix a Case finding with a clear answer on both sides (step 5).
+4. Put every other point to the owner as a decision card: both prompts, the
+   failure, a suggestion and the options. Apply the decisions the same way.
+5. A `2026` member with a wrong expectation is never edited. Add an erratum
+   `{uid, date, reason}` to `benchmarks/2026.json` that names the corrected
+   copy: a new case at the next free id in the member's set and cohort,
+   with the member's notes (less `benchmark_id`) and a `lineage` note.
+   Point each language case's `twin` at the copy, copy across with
+   `twin_case.py`, rebuild the companion (it then holds the copy) and
+   regenerate `results/index.json`.
+
+### 7. Full run and page data
+
+Start only on the owner's word. The plan's reviewer calibration (a native
+speaker labels 40 replies per language) has not run; AJ waived it for the
+Spanish and Indonesian pilot and full run (2026-11-18 and 2026-11-19).
+
+1. On one day, run the twins that are `2026` members first, then the whole
+   companion: production, default profile, 3 trials on both.
+   `benchmark_page.py --base` refuses a base newer than the run, and a gap
+   in days puts agent changes inside the language gap (`max_days_apart`).
+
+   ```bash
+   uv run python - <<'EOF'  # prints the --id flags of the 2026 twins
+   import json
+   lang = json.load(open("benchmarks/2026-languages.json"))
+   en = json.load(open("benchmarks/2026.json"))
+   twins = {m["twin_uid"] for m in lang["members"] if m.get("language")}
+   voided = {e["uid"] for e in en["errata"]}
+   print(" ".join(f"--id {m['id']}" for m in en["members"]
+                  if m["uid"] in twins and m["uid"] not in voided))
+   EOF
+   caffeinate -i uv run gold run --env prod --trials 3 --workers 5 \
+     --benchmark benchmarks/2026.json <the --id flags> --build "<label>"
+   caffeinate -i uv run gold run --env prod --trials 3 --workers 5 \
+     --benchmark benchmarks/2026-languages.json --build "<label>"
+   ```
+
+2. Write the page on the machine that ran both runs (it reads their local
+   agent artifacts), with the twins run as its base:
+
+   ```bash
+   uv run python tools/benchmark_page.py \
+     results/benchmark/runs/<companion run>.json \
+     --base results/benchmark/runs/<twins run>.json
+   ```
+
+3. Commit only on the owner's word: the runs, the page and
+   `results/index.json` in one commit (`git add` the runs before
+   `tools/build_run_index.py`). The `languages` block stays internal until
+   the frontend parses it.
+
+### 8. Standing rules
+
+AJ's rules for every language (2026-11-18 and 2026-11-19):
+
+- Expectations stay in English; both sides of a pair hold the same ones.
+  Never edit one side only.
+- A reply in the wrong language is never a fail (`reply_language_match` is
+  info-only). Language rates sit beside the English headline, never in it.
+- An ambiguous number ("1.209") passes on its first reading. `language` is
+  part of the uid of a case in another language.
+- A "get the data" request owes no total: score the pull and a text check,
+  not a figure.
+- A dataset choice that offers the right dataset is a fair reply. An area
+  clarification on a question that names one area is not.
+- "Forest cover loss" with no forest type: the no-layer and the primary
+  forest readings both pass. "Deforestation" alone scores no forest filter.
+- Both readings of "last N years" pass (for 5 years: 2021 to 2025, or 2020
+  to 2024). A KBA and a protected area with the same name both pass.
+- A village or sub-district is an expected refusal. An island or another
+  place a user cannot select is a text-only row (as `ch-aoi-091`).
+- A row whose type or cohort has no `2026` member moves to the nearest that
+  has one. No imagery questions: no check scores imagery.
+- A frozen `2026` member gets an erratum and a corrected copy, which
+  becomes the new twin. It is never edited.
+- Run the `2026` twins on the day of the companion run, before it, under
+  `caffeinate -i` on a Mac. Commit run records only on the owner's word.
+
 ## Rules
 
 **Sampling** (`tools/benchmark_sample.py --version <v>`): ready cases only;

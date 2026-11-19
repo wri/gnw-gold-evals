@@ -1,0 +1,25 @@
+id: ch-quant-258-id
+uid: efee44d51cd7eacd
+status: ready
+set: quantification
+group: unavailable
+language: id
+twin: ch-quant-258
+query: Tampilkan poligon batas EKOSISTEM KARST atau GEOLOGI karst dalam wilayah administrasi
+  Kabupaten Gunungkidul, DIY
+expected:
+  dataset_id: no_selection
+  text: Explains that no karst ecosystem or geology layer is available; showing the Gunungkidul
+    boundary is fine; presenting another dataset as if it showed karst is not.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (id-n-044); real id user prompt,
+    trace trace 2026-07'
+  pair_id: id-n-044
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Gunung Kidul (kabupaten, Yogyakarta)
+  precedent: ch-dataset-193
+  language_review: subagent review 2026-11-18; native speaker not yet

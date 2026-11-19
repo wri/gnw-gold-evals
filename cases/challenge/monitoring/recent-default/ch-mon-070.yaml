@@ -1,0 +1,22 @@
+id: ch-mon-070
+uid: 9d17f1570dc41e5d
+status: ready
+set: monitoring
+group: recent_default
+query: near-real-time tree cover loss alerts North Sumatra, Aceh
+expected:
+  aoi_ids: IDN.32;IDN.1
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: Gives alert figures for both provinces and states the time window they cover.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-mon-070-id (id-n-003);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-003
+  benchmark_type: monitoring
+  use_cases: UC1
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Sumatera Utara; Aceh (provinces)
+  precedent: ch-mon-008; ch-mon-011

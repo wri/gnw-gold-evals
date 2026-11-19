@@ -1,0 +1,24 @@
+id: ch-quant-261
+uid: 47baa6290799fd0f
+status: ready
+set: quantification
+group: tree-cover
+query: area of secondary forest in West Java
+expected:
+  aoi_ids: IDN.9
+  dataset_id: 7;3
+  data_pull: 'TRUE'
+  text: Gives the closest available data (for example tree cover or natural forest) and explains
+    that secondary forest is not mapped as such.
+  accept_nudge_offering: 7 | 3
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-261-id (id-n-050);
+    real id user prompt, trace trace 2026-10'
+  pair_id: id-n-050
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Jawa Barat (province)
+  precedent: ch-quant-175

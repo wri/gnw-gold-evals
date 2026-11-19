@@ -1,0 +1,26 @@
+id: ch-quant-236
+uid: cd739459ee7e440c
+status: ready
+set: quantification
+group: land-cover
+query: How much has rice field area increased in South Sumatra, Indonesia?
+expected:
+  aoi_ids: IDN.31
+  dataset_id: '1'
+  accept_nudge_offering: '1'
+  data_pull: 'TRUE'
+  text: Reports the change in cropland area from the land cover data, states the years it
+    compares, and says the class is cropland in general, not rice fields only.
+  figure: sum(area_ha) where land_cover_class_end = 'Cropland' | change(sum(area_ha) where
+    land_cover_class_start = 'Cropland', sum(area_ha) where land_cover_class_end = 'Cropland')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-236-id (id-n-009);
+    real id user prompt, trace trace 2026-02'
+  pair_id: id-n-009
+  benchmark_type: quantification
+  use_cases: UC2
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Sumatera Selatan (province)
+  precedent: ch-quant-064; ch-quant-180
