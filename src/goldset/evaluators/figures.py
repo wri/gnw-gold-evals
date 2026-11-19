@@ -968,7 +968,7 @@ def evaluate_figures(
         # Normalised here as well as in ``stated_numbers``, for the zero-word
         # search: a decomposed accent would split a word there too.
         answer = unicodedata.normalize("NFC", answer)
-        # Horizon may answer a Spanish or Indonesian case in English, and an
+        # Horizon may answer a case in any other language in English, and an
         # English reply writes "1,209" for 1209 whatever the case language.
         usual_mark = "." if detect_language(answer)[0] == "en" else None
     stated = stated_numbers(answer, language, usual_mark=usual_mark)
