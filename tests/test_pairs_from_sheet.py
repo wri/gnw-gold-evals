@@ -161,6 +161,38 @@ def test_each_row_problem_is_reported(tmp_path, capsys, row, needle):
     assert needle in out
 
 
+def expected_row(body):
+    return native(expected_verified="{aoi_name: Maranhão, dataset_id: '4', "
+                                    "data_pull: TRUE, " + body + "}")
+
+
+@pytest.mark.parametrize(("body", "needle"), [
+    ("aoi_ids: [BRA.10, BRA.11]", "aoi_ids is a list"),
+    ("aoi_ids: BRA.10, start_date: {run-30d}", "start_date is a mapping"),
+])
+def test_a_list_or_mapping_value_is_a_row_problem(tmp_path, capsys, body, needle):
+    root = store(tmp_path)
+    assert run(root, sheet(tmp_path, expected_row(body))) == 1
+    out = capsys.readouterr().out
+    assert needle in out and "nothing written" in out
+    assert sorted(cases_in(root)) == [MEMBER.id, OTHER.id, REFUSAL.id]
+
+
+@pytest.mark.parametrize(("body", "key", "value"), [
+    # YAML 1.1 reads these as a bool and a float; the sheet holds the text.
+    ("aoi_ids: NO", "aoi_ids", "NO"),
+    ("aoi_ids: BRA.10, canopy: 0.10", "canopy", "0.10"),
+    ("aoi_ids: BRA.10, start_date: '{run-30d}'", "start_date", "{run-30d}"),
+    ("aoi_ids: BRA.10", "data_pull", "TRUE"),
+])
+def test_a_scalar_stays_the_text_the_sheet_holds(tmp_path, body, key, value):
+    root = store(tmp_path)
+    assert run(root, sheet(tmp_path, expected_row(body))) == 0
+    twin = next(c for c in cases_in(root).values() if c.language == "en"
+                and c.id not in (MEMBER.id, OTHER.id, REFUSAL.id))
+    assert twin.expected[key] == value
+
+
 def test_a_pair_id_twice_in_the_sheet_is_a_problem(tmp_path, capsys):
     root = store(tmp_path)
     assert run(root, sheet(tmp_path, native(), native(english_query="other"))) == 1

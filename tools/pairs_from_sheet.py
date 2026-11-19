@@ -162,13 +162,22 @@ def plan(rows: list[dict], language: str, column: str, day: str,
             bad("an expected value is still UNVERIFIED")
             continue
         try:
-            raw = yaml.safe_load(row["expected_verified"])
+            # BaseLoader keeps every scalar the text the sheet holds: safe_load
+            # would turn NO into False, 0.10 into 0.1 and TRUE into True.
+            raw = yaml.load(row["expected_verified"], Loader=yaml.BaseLoader)
         except yaml.YAMLError as error:
             bad(f"expected_verified is not YAML: {error}".splitlines()[0])
             continue
         raw = raw if isinstance(raw, dict) else {}
-        expected = {str(k): str(v).strip() for k, v in raw.items()
-                    if k not in HELPER_KEYS and str(v).strip()}
+        nested = [(k, v) for k, v in raw.items() if not isinstance(v, str)]
+        if nested:
+            key, value = nested[0]
+            kind = "a list" if isinstance(value, list) else "a mapping"
+            bad(f"expected_verified: {key} is {kind}, not one text value; "
+                "quote it ('...') if it is text")
+            continue
+        expected = {k: v.strip() for k, v in raw.items()
+                    if k not in HELPER_KEYS and v.strip()}
         if not expected:
             bad("expected_verified holds no expectation")
             continue
@@ -191,7 +200,7 @@ def plan(rows: list[dict], language: str, column: str, day: str,
             "use_cases": row["use_case"],
             "synthetic": "FALSE",
             "verified": VERIFIED.format(day=day),
-            "aoi_name": str(raw.get("aoi_name") or ""),
+            "aoi_name": raw.get("aoi_name", ""),
             "precedent": row.get("verify_precedent", ""),
         }
 
