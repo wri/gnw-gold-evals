@@ -377,6 +377,54 @@ def test_a_zero_figure_may_be_stated_in_local_words(pulled):
         assert result["figure_match_score"] == 0.0, answer
 
 
+def test_local_zero_phrases_need_the_measured_noun_at_once(pulled):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+
+    def score(sentence, language):
+        lead = "La cifra es de 120 ha. " if language == "es" else "Angkanya 120 ha. "
+        state, tables = _state(lead + sentence, empty_year)
+        pulled(tables)
+        result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+        return result["figure_match_score"]
+
+    # The negation or "without" belongs to another clause: no zero is stated.
+    for sentence, language in [
+        ("La pérdida fue de 120 ha, sin distinguir las pérdidas por causa.", "es"),
+        ("Estos datos no permiten distinguir las pérdidas por causa.", "es"),
+        ("La pérdida de cobertura arbórea no es deforestación.", "es"),
+        ("El conjunto de datos no proporciona alertas en tiempo real.", "es"),
+        ("No hubo reducción de las pérdidas respecto a 2020.", "es"),
+        ("No hubo reducción de pérdidas respecto a 2020.", "es"),
+        ("No hubo aumento de alertas respecto a 2020.", "es"),
+        ("No hubo cambio en las pérdidas respecto a 2020.", "es"),
+        ("sin considerar las pérdidas por incendios", "es"),
+        ("sin incluir las alertas de baja confianza", "es"),
+        ("sin distinguir pérdidas por causa", "es"),
+        ("tanpa membedakan kehilangan berdasarkan penyebab", "id"),
+        ("Data ini tidak dapat membedakan kehilangan berdasarkan penyebab.", "id"),
+        ("tidak termasuk peringatan berkepercayaan rendah", "id"),
+        ("Tidak ada penurunan kehilangan dibandingkan 2020", "id"),
+        ("Tidak ada peningkatan kehilangan dibandingkan 2020", "id"),
+        ("Tidak ada perubahan kehilangan dibandingkan 2020", "id"),
+    ]:
+        assert score(sentence, language) == 0.0, sentence
+    # A real zero statement still counts.
+    for sentence, language in [
+        ("No hubo pérdida de cobertura arbórea en 2021.", "es"),
+        ("No se detectaron alertas en este periodo.", "es"),
+        ("No se registró ninguna pérdida.", "es"),
+        ("No se detectó ninguna nueva alerta.", "es"),
+        ("Sin alertas en el periodo.", "es"),
+        ("Sin ninguna alerta en el periodo.", "es"),
+        ("No hay cambios en la cobertura.", "es"),
+        ("Tidak ada kehilangan tutupan pohon pada tahun 2021.", "id"),
+        ("Tidak ada peringatan yang terdeteksi.", "id"),
+        ("Tidak ditemukan adanya kehilangan tutupan pohon.", "id"),
+        ("Tanpa peringatan pada periode ini.", "id"),
+    ]:
+        assert score(sentence, language) == 1.0, sentence
+
+
 def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
     with pytest.raises(ValueError, match="language"):
         evaluate_figures({}, "", "fr")
