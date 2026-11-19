@@ -448,6 +448,9 @@ class Stated:
     text: str
     # The second reading of a number whose shape reads two ways ("1.209").
     other: Stated | None = None
+    # One group of a plain-space number ("345" of "12 345"): it can only
+    # abstain, never match as a first reading.
+    part: bool = False
 
 
 def stated_numbers(
@@ -581,23 +584,28 @@ _KM2_WORDS = re.compile(_KM2_PHRASE)
 _GROUP_SPACE = re.compile(r"[ \u00a0\u202f\u2009]")
 
 
-def _spaced_readings(raw: str) -> list[tuple[str, str, bool]]:
-    """(number, text, carries the reply's suffix) readings of a matched number.
+def _spaced_readings(raw: str) -> list[tuple[str, str, bool, bool]]:
+    """(number, text, carries the reply's suffix, is a part) readings of a
+    matched number.
 
     A no-break, narrow no-break or thin space only groups digits, so the
     number is read joined. A plain space may separate two figures in a list
-    ("5 200 ha" for "5" and "200 ha"), so the joined number and its parts
-    are all stated: either reading can match, and neither can hide the other.
+    ("5 200 ha" for "5" and "200 ha"): the joined number is the first
+    reading and its parts are second readings that can only abstain. A
+    group with a leading zero ("000" of "1 000") is never a number alone,
+    so it is no part at all.
     """
     pieces = _GROUP_SPACE.split(raw)
     joined = "".join(pieces)
     if len(pieces) == 1:
-        return [(raw, raw, True)]
+        return [(raw, raw, True, False)]
     if " " not in raw:
-        return [(joined, raw, True)]
+        return [(joined, raw, True, False)]
     last = len(pieces) - 1
-    return [(joined, raw, True)] + [
-        (piece, piece, index == last) for index, piece in enumerate(pieces)
+    return [(joined, raw, True, False)] + [
+        (piece, piece, index == last, True)
+        for index, piece in enumerate(pieces)
+        if not (len(piece) > 1 and piece.startswith("0"))
     ]
 
 
@@ -700,7 +708,7 @@ def _stated_numbers_local(
     english = language in _ENGLISH_MEANING and detect_language(answer)[0] == "en"
     found = []
     for m in matches:
-        for number, shown, carries in _spaced_readings(m[1]):
+        for number, shown, carries, part in _spaced_readings(m[1]):
             percent = m[2] if carries else None
             suffix = m[3] if carries else None
             word = _suffix_word(suffix)
@@ -725,7 +733,9 @@ def _stated_numbers_local(
             if readings[0] is None:
                 continue  # "1.23.4567": not a number this parser can read
 
-            first = _stated_as(readings[0], scale, percent, text)
+            first = replace(
+                _stated_as(readings[0], scale, percent, text), part=part
+            )
             if len(readings) > 1 and readings[1] is not None:
                 first = replace(
                     first, other=_stated_as(readings[1], scale, percent, text)
@@ -868,6 +878,8 @@ def _check_figure(
                 result.matched = m[0]
                 return result
             for number in stated:
+                if number.part:
+                    continue
                 difference = _close(number, value, as_share)
                 if difference is None:
                     continue
@@ -877,9 +889,11 @@ def _check_figure(
                 if result.closest is None or difference < result.closest[1]:
                     result.closest = (number.text, difference)
             for number in stated:
-                if number.other is None or result.unsure:
+                # A part of a spaced number is itself the second reading.
+                second = number if number.part else number.other
+                if second is None or result.unsure:
                     continue
-                difference = _close(number.other, value, as_share)
+                difference = _close(second, value, as_share)
                 if difference is not None and difference <= TOLERANCE:
                     result.unsure = number.text
     return result

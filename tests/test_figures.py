@@ -219,20 +219,29 @@ def test_reads_portuguese_replies():
     assert "2016" not in stated
 
 
+ANSWER_FR = (
+    "Au total, **12 480 hectares** ont été perdus (2,3 % de la couverture),"
+    " dont 1 234,5 ha en 2021. Les émissions atteignent **1,2 milliard de"
+    " tonnes** de CO2e, et **3,4 millions d'hectares** restent intacts."
+)
+
+
 def test_reads_french_replies():
     # Modelled on Horizon's French replies (traces, 2026): comma decimals,
     # thousands grouped by a space.
-    stated = _local(
-        "Au total, **12 480 hectares** ont été perdus (2,3 % de la couverture),"
-        " dont 1 234,5 ha en 2021. Les émissions atteignent **1,2 milliard de"
-        " tonnes** de CO2e, et **3,4 millions d'hectares** restent intacts.",
-        "fr",
-    )
+    stated = _local(ANSWER_FR, "fr")
     assert stated["12 480 hectares"].value == 12480
     assert stated["2,3%"].value == pytest.approx(2.3) and stated["2,3%"].percent
     assert stated["1 234,5 ha"].value == pytest.approx(1234.5)
     assert stated["1,2 milliard"].value == pytest.approx(1.2e9)
     assert stated["3,4 millions"].value == pytest.approx(3.4e6)
+    # The readings list, so extra split readings cannot hide: the parts of a
+    # spaced number are there, flagged as parts.
+    assert [(s.text, s.part) for s in stated_numbers(ANSWER_FR, "fr")] == [
+        ("12 480 hectares", False), ("12", True), ("480 hectares", True),
+        ("2,3%", False), ("1 234,5 ha", False), ("1", True), ("234,5 ha", True),
+        ("1,2 milliard", False), ("3,4 millions", False),
+    ]
 
 
 @pytest.mark.parametrize("space", ["\u00a0", "\u202f", "\u2009"])
@@ -738,9 +747,14 @@ def test_a_fixed_space_groups_thousands(space):
 
 
 def test_a_plain_space_keeps_the_joined_number_and_its_parts():
-    # "5 200 ha" may be one figure or a list, so neither reading hides the other.
-    values = {s.text: s.value for s in stated_numbers("unas 5 200 ha", "es")}
+    # "5 200 ha" may be one figure or a list. The joined number is the first
+    # reading; the parts are second readings that can only abstain.
+    stated = stated_numbers("unas 5 200 ha", "es")
+    values = {s.text: s.value for s in stated}
     assert values == {"5 200 ha": 5200, "5": 5, "200 ha": 200}
+    assert {s.text: s.part for s in stated} == {
+        "5 200 ha": False, "5": True, "200 ha": True,
+    }
     # The unit and percent belong to the last part and to the joined number.
     assert any(s.percent and s.value == 200 for s in stated_numbers("el 5 200 %", "es"))
 
@@ -804,3 +818,47 @@ def test_a_local_reply_keeps_the_case_languages_habit(pulled):
     # Indonesian writes the comma as decimal, so 1209 is only the second reading.
     result = evaluate_figures(state, "sum(area_ha)", "id")
     assert result["figure_match_score"] is None
+
+
+SPACED = [
+    ("En 2021, la perte de couverture arborée a atteint 1 000 ha dans la zone.", "fr"),
+    ("En 2021, la perte a atteint 12 345 ha.", "fr"),
+    ("En 2021, la pérdida de cobertura arbórea alcanzó 1 000 ha en la zona.", "es"),
+    ("En 2021, la pérdida alcanzó 12 345 ha.", "es"),
+]
+
+
+def test_a_zero_group_of_a_spaced_number_is_no_number():
+    # "1 000 ha" is 1000; the "000" is a group, never a zero of its own.
+    for answer, language in SPACED[::2]:
+        readings = [(s.text, s.value, s.part) for s in stated_numbers(answer, language)]
+        assert ("000 ha", 0, True) not in readings and not any(
+            s.value == 0 for s in stated_numbers(answer, language)
+        )
+        assert ("1 000 ha", 1000, False) in readings
+
+
+@pytest.mark.parametrize(
+    ("answer", "language", "expected", "score"),
+    [
+        # Missed: the reply states 1000, and the 1 is no 0.
+        (SPACED[0][0], "fr", 0, 0.0),
+        (SPACED[2][0], "es", 0, 0.0),
+        # Abstained (None): 345 is only a part of 12 345, a second reading.
+        (SPACED[1][0], "fr", 345, None),
+        (SPACED[3][0], "es", 345, None),
+        # The joined number is the first reading, so it scores.
+        ("La perte a atteint 1 000 ha.", "fr", 1000, 1.0),
+        ("La pérdida alcanzó 1 000 ha.", "es", 1000, 1.0),
+        ("La perte a atteint 12 345 ha.", "fr", 12345, 1.0),
+    ],
+)
+def test_a_spaced_number_scores_by_its_joined_reading(
+    pulled, answer, language, expected, score
+):
+    state, tables = _state(
+        answer, [{"aoi_id": "X", "tree_cover_loss_year": 2021, "area_ha": float(expected)}]
+    )
+    pulled(tables)
+    result = evaluate_figures(state, "sum(area_ha)", language)
+    assert result["figure_match_score"] == score, result["actual_figures"]
