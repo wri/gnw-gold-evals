@@ -526,6 +526,62 @@ def test_local_zero_phrases_need_the_measured_noun_at_once(pulled):
         assert score(sentence, language) == 1.0, sentence
 
 
+@pytest.mark.parametrize(("answer", "language"), [
+    ("Não houve perda de cobertura arbórea na área em 2021.", "pt"),
+    ("Não foram detectados alertas nesta área.", "pt"),
+    ("Nenhuma perda foi registrada no território.", "pt"),
+    ("Não foi registrada nenhuma perda no território.", "pt"),
+    ("Não há alertas para este período.", "pt"),
+    ("O território não apresentou alterações na cobertura.", "pt"),
+    ("Foram registrados zero hectares de perda.", "pt"),
+    ("No loss was recorded in the territory in 2021, and the area has kept its"
+     " tree cover.", "pt"),
+    ("Aucune perte de couverture arborée n'a été détectée en 2021.", "fr"),
+    ("Aucune alerte n'a été enregistrée dans cette zone.", "fr"),
+    ("Il n'y a eu aucun changement de couverture.", "fr"),
+    ("Pas de perte de forêt primaire entre 2020 et 2024.", "fr"),
+    ("Pas d'alertes dans cette zone depuis janvier.", "fr"),
+    ("Il n'y a pas eu de perte en 2021.", "fr"),
+    ("Zéro hectare de perte en 2021.", "fr"),
+    ("No loss was recorded in the territory.", "fr"),
+])
+def test_a_zero_figure_may_be_stated_in_portuguese_or_french(pulled, answer, language):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    state, tables = _state(answer, empty_year)
+    pulled(tables)
+    result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+    assert result["figure_match_score"] == 1.0
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    # "zero" before a target, not a loss ("desmatamento zero").
+    ("A meta do estado é o desmatamento zero até 2030; no entanto, os alertas"
+     " aumentaram em 2024.", "pt"),
+    ("Há um compromisso de zero desmatamento na região.", "pt"),
+    # Portuguese "no" is "in the": "no Tree cover loss" states no zero.
+    ("Os dados no Tree cover loss mostram uma tendência de alta.", "pt"),
+    ("Sem dados de perda para 2021.", "pt"),
+    ("Não há dados sobre perdas.", "pt"),
+    ("Sem dúvida a perda foi grande.", "pt"),
+    ("Houve níveis sem precedentes de perda.", "pt"),
+    ("Sem contar a perda de 2020.", "pt"),
+    ("Não foi possível calcular a perda.", "pt"),
+    ("L'objectif est zéro déforestation ; pourtant les alertes ont augmenté.", "fr"),
+    ("Aucune donnée de perte pour 2021.", "fr"),
+    ("Pas de données sur les pertes.", "fr"),
+    ("Sans doute la perte a été importante.", "fr"),
+    ("Des niveaux de perte sans précédent.", "fr"),
+    ("Sans compter la perte de 2020.", "fr"),
+    ("Aucun jeu de données ne couvre les alertes.", "fr"),
+])
+def test_a_zero_word_that_states_no_zero_figure_fails(pulled, answer, language):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    state, tables = _state(answer, empty_year)
+    pulled(tables)
+    result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+    assert result["figure_match_score"] == 0.0
+
+
 def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
     with pytest.raises(ValueError, match="language"):
         evaluate_figures({}, "", "de")

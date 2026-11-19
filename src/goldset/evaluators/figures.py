@@ -762,6 +762,8 @@ _ES_SKIP = (
     "embargo|contar|incluir|datos|informaci[óo]n|registros?"
     "|precedentes|importar|duda"
 )
+_PT_SKIP = "contar|incluir|dados|informaç(?:ão|ões)|registros?|precedentes|dúvida"
+_FR_SKIP = "compter|inclure|donn[ée]es?|informations?|jeux?|précédents?|doute"
 # The negation or "without" must take the measured noun at once, after at most
 # one quantifier: a gap of up to two words let "sin distinguir las pérdidas"
 # and "tanpa membedakan kehilangan" (an infinitive, then a noun of another
@@ -795,13 +797,49 @@ _LOCAL_ZERO_WORDS = {
         r"|perubahan(?! (?:kehilangan|peringatan|emisi|gangguan|deforestasi))))\b",
         re.I,
     ),
+    # As in Spanish: "zero" and "zéro" count only before a loss noun
+    # ("desmatamento zero", "zéro déforestation" name a target), and words
+    # that turn the phrase into "no data" or an idiom are excluded.
+    "pt": re.compile(
+        r"\b(?:zero (?:hectares?|ha)"
+        r"|zero (?:(?!"+_PT_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?"
+        r"|perturbaç(?:ão|ões))"
+        r"|(?:n[ãa]o (?:se )?(?:foi |foram |houve |há )?"
+        r"(?:registr|detect|observ|report|encontr|identific|verific)\w+"
+        r"|n[ãa]o h[áa]|n[ãa]o houve|n[ãa]o exist\w+|n[ãa]o apresent\w+"
+        r"|sem|nenhum|nenhuma)"
+        r" (?:(?!"+_PT_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
+        r"|perturbaç(?:ão|ões)|desmatamento))\b",
+        re.I,
+    ),
+    "fr": re.compile(
+        r"\b(?:z[ée]ro (?:hectares?|ha)"
+        r"|z[ée]ro (?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:pertes?|alertes?|changements?|gains?|perturbations?)"
+        r"|(?:aucune? |sans |pas (?:eu )?d(?:e |['’]))"
+        r"(?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
+        r"|déforestation))\b",
+        re.I,
+    ),
 }
+# In Portuguese "no" is "in the" ("no Tree cover loss") and "zero" names a
+# target ("desmatamento zero"), so the English cues misread a Portuguese
+# reply: one that reads as Portuguese is read with its own cues only.
+_OWN_ZERO_CUES_ONLY = frozenset({"pt"})
 
 
 def _zero_words(answer: str, language: str) -> re.Match[str] | None:
-    # A reply to a Spanish or Indonesian case may still be in English.
+    # A reply to a case in another language may still be in English.
     local = _LOCAL_ZERO_WORDS.get(language)
-    return _ZERO_WORDS.search(answer) or (local.search(answer) if local else None)
+    english = not (
+        language in _OWN_ZERO_CUES_ONLY and detect_language(answer)[0] == language
+    )
+    return (english and _ZERO_WORDS.search(answer)) or (
+        local.search(answer) if local else None
+    )
 
 
 def _check_figure(
