@@ -510,8 +510,10 @@ def stated_numbers(
 # that show a convention (traces to 2026-10-20): Spanish 657 dot-decimal to
 # 26 comma-decimal; Indonesian 135 comma-decimal to 12 dot-decimal. Counted
 # the same way (traces to 2026-11-19): Portuguese 69 comma-decimal to 7
-# dot-decimal; French 133 comma-decimal to 12 dot-decimal. French replies
-# group thousands with a space, and the dot-decimal ones are in English.
+# dot-decimal; French 133 comma-decimal to 12 dot-decimal. Every one of them
+# written in Portuguese or French uses the comma (in the local trace copy to
+# 2026-10-19 the dot-decimal ones are in English, bar one in Spanish), and
+# French groups thousands with a space.
 
 _USUAL_DECIMAL_MARK = {"es": ".", "id": ",", "pt": ",", "fr": ","}
 
