@@ -31,9 +31,10 @@ pull and a comparison split over two pulls, without summing two datasets
 into one figure. A figure that cannot be computed (no table, a column the
 table lacks) abstains rather than fails.
 
-Replies to Spanish and Indonesian cases are read with ``language`` set (see
-"local number formats" below). English cases take the original parser,
-unchanged, so the frozen English BENCHMARK scores as before.
+Replies to cases in another language (Spanish, Indonesian, Portuguese,
+French) are read with ``language`` set (see "local number formats" below).
+English cases take the original parser, unchanged, so the frozen English
+BENCHMARK scores as before.
 """
 
 from __future__ import annotations
@@ -486,10 +487,10 @@ def stated_numbers(
 
 # ------------------------------------------------- local number formats
 #
-# Indonesian and most Spanish-speaking countries write "1.209,32" where
-# English writes "1,209.32" (Mexico and Central America write it as English
-# does). Horizon's replies do not follow the case language reliably, so a
-# number is read in this order:
+# Indonesian, Brazilian Portuguese and most Spanish-speaking countries write
+# "1.209,32" where English writes "1,209.32" (Mexico and Central America
+# write it as English does); French writes "1 209,32". Horizon's replies do
+# not follow the case language reliably, so a number is read in this order:
 #
 # 1. By its own shape, when that is clear: "1.209,32", "12,5", "1.234.567".
 #    It has one reading.
@@ -507,12 +508,20 @@ def stated_numbers(
 #
 # The habit is measured, not assumed. Of Horizon's replies to external users
 # that show a convention (traces to 2026-10-20): Spanish 657 dot-decimal to
-# 26 comma-decimal; Indonesian 135 comma-decimal to 12 dot-decimal.
+# 26 comma-decimal; Indonesian 135 comma-decimal to 12 dot-decimal. Counted
+# the same way (traces to 2026-11-19): Portuguese 69 comma-decimal to 7
+# dot-decimal; French 133 comma-decimal to 12 dot-decimal. French replies
+# group thousands with a space, and the dot-decimal ones are in English.
 
-_USUAL_DECIMAL_MARK = {"es": ".", "id": ","}
+_USUAL_DECIMAL_MARK = {"es": ".", "id": ",", "pt": ",", "fr": ","}
 
-# "billón" is the long-scale billion, 10^12. "mil" is Spanish only: in an
-# Indonesian reply it is not a scale, and "ribu" is not one in a Spanish reply.
+# "billón" is the long-scale billion, 10^12. "mil" is a scale in Spanish and
+# Portuguese only: in an Indonesian or French reply it is not one, and "ribu"
+# is not one in a Spanish reply. Portuguese is Brazilian (AJ, 2026-11-19):
+# "bilhão" is 10^9, and the European "bilião" is no scale, so it can never
+# pass as 10^9; "mil milhões" is 10^9 in either country. In a French reply
+# "milliard" is 10^9 and "billion" has its French meaning, 10^12 (AJ,
+# 2026-11-19).
 _LOCAL_SCALES = {
     "es": {
         **_SCALES,
@@ -529,18 +538,37 @@ _LOCAL_SCALES = {
         "miliar": 1e9, "milyar": 1e9,
         "triliun": 1e12, "trilyun": 1e12,
     },
+    "pt": {
+        **_SCALES,
+        "mil": 1e3,
+        "milhão": 1e6, "milhao": 1e6, "milhões": 1e6, "milhoes": 1e6,
+        "mil milhões": 1e9, "mil milhoes": 1e9,
+        "bilhão": 1e9, "bilhao": 1e9, "bilhões": 1e9, "bilhoes": 1e9,
+        "trilhão": 1e12, "trilhao": 1e12, "trilhões": 1e12, "trilhoes": 1e12,
+    },
+    "fr": {
+        **_SCALES,
+        "mille": 1e3, "millier": 1e3, "milliers": 1e3,
+        "million": 1e6, "millions": 1e6,
+        "milliard": 1e9, "milliards": 1e9,
+        "billion": 1e12, "billions": 1e12,
+    },
 }
 _LOCAL_UNITS = (*_UNITS, "hectárea", "hectáreas", "hectarea", "hectareas",
                 "hektar", "hektare", "tonelada", "toneladas", "ton")
-_KM2_PHRASE = r"kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
+_KM2_PHRASE = (
+    r"kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
+    r"|quil[oóô]metros?\s+quadrados?|kilom[èe]tres?\s+carr[ée]s?"
+)
 # Space-grouped thousands: a head of one to three digits, then groups of
 # exactly three ("1 209", "12 345 678"). A head of four digits ("2024 120")
 # is no grouping.
 _SPACE_GROUPED = r"\d{1,3}(?:[ \u00a0\u202f\u2009]\d{3})+(?!\d)"
 _LOCAL_NUMBER = re.compile(
     r"(?<![\w.])(-?(?:" + _SPACE_GROUPED + r"|\d+)(?:[.,]\d+)*)"
-    r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen)?"
-    r"\s*(miles\s+de\s+millones|mil\s+millones|" + _KM2_PHRASE
+    r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen"
+    r"|por cento|porcento|pour cent|pourcent)?"
+    r"\s*(miles\s+de\s+millones|mil\s+millones|mil\s+milh[õo]es|" + _KM2_PHRASE
     + r"|[^\W\d_][^\W_]*)?",
     re.I,
 )

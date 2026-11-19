@@ -107,6 +107,14 @@ def test_load_raises_on_invalid_and_sha_is_stable(tmp_path):
         load_benchmark(bad)
 
 
+@pytest.mark.parametrize("language", ["es", "id", "pt", "fr"])
+def test_every_case_language_is_a_member_language(language):
+    bench = from_dict(manifest(members=[
+        member("u1"), member("u2", "ch-aoi-002", language=language, twin_uid="u1"),
+    ]))
+    assert bench.validate() == []
+
+
 def test_language_facets_load_and_are_written_only_when_set():
     spanish = member("u2", "ch-aoi-002", language="es", twin_uid="u1")
     bench = from_dict(manifest(members=[member(), spanish], pairs_with="2026"))

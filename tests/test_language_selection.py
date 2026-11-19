@@ -47,6 +47,24 @@ def test_language_picks_one_language_or_all(tmp_path):
     assert selection(cases_dir, language="all") == ["1-001", "1-002", "1-003"]
 
 
+def test_portuguese_and_french_are_run_languages(tmp_path, monkeypatch, capsys):
+    cases_dir = tmp_path / "cases" / "v2"
+    pair = (
+        Case(id="1-004", status="ready", group="direct", query="q um",
+             expected={"dataset_id": "4"}, language="pt", twin="1-001"),
+        Case(id="1-005", status="ready", group="direct", query="q un",
+             expected={"dataset_id": "4"}, language="fr", twin="1-001"),
+    )
+    for case in (ENGLISH, *pair):
+        write_case(cases_dir, case)
+    write_manifest(cases_dir, build_manifest([ENGLISH, *pair], source="test"))
+    for language, case_id in (("pt", "1-004"), ("fr", "1-005")):
+        assert selection(cases_dir, language=language) == [case_id]
+        assert run_main(monkeypatch, "--cases-dir", str(cases_dir), "--dry-run",
+                        "--language", language) == 0
+        assert "1 cases selected" in capsys.readouterr().out
+
+
 def run_main(monkeypatch, *argv):
     monkeypatch.setattr(sys, "argv", ["gold", "run", *argv])
     return cli.main()

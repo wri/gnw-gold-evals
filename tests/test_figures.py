@@ -197,6 +197,52 @@ def test_reads_spanish_replies_in_either_convention():
     assert local_form["393.170 hectáreas"].other.value == pytest.approx(393.17)
 
 
+def test_reads_portuguese_replies():
+    # Modelled on Horizon's Portuguese replies (traces, 2026): comma decimals,
+    # dot grouping.
+    stated = _local(
+        "Em 2024 foram detectados **138,03 hectares** de distúrbio; a perda"
+        " total foi de **1.234,5 ha** (cerca de 2,3%). O Brasil perdeu"
+        " **2,3 milhões de hectares** e emitiu **1,2 bilhão de toneladas**"
+        " de CO2e. Em **2016** a área era de **321.221 hectares**.",
+        "pt",
+    )
+    assert stated["138,03 hectares"].value == pytest.approx(138.03)
+    assert stated["1.234,5 ha"].value == pytest.approx(1234.5)
+    assert stated["1.234,5 ha"].other is None
+    assert stated["2,3%"].value == pytest.approx(2.3) and stated["2,3%"].percent
+    assert stated["2,3 milhões"].value == pytest.approx(2.3e6)
+    assert stated["1,2 bilhão"].value == pytest.approx(1.2e9)
+    # The reply's comma decimals make "321.221" 321,221 first.
+    assert stated["321.221 hectares"].value == 321221
+    assert stated["321.221 hectares"].other.value == pytest.approx(321.221)
+    assert "2016" not in stated
+
+
+def test_reads_french_replies():
+    # Modelled on Horizon's French replies (traces, 2026): comma decimals,
+    # thousands grouped by a space.
+    stated = _local(
+        "Au total, **12 480 hectares** ont été perdus (2,3 % de la couverture),"
+        " dont 1 234,5 ha en 2021. Les émissions atteignent **1,2 milliard de"
+        " tonnes** de CO2e, et **3,4 millions d'hectares** restent intacts.",
+        "fr",
+    )
+    assert stated["12 480 hectares"].value == 12480
+    assert stated["2,3%"].value == pytest.approx(2.3) and stated["2,3%"].percent
+    assert stated["1 234,5 ha"].value == pytest.approx(1234.5)
+    assert stated["1,2 milliard"].value == pytest.approx(1.2e9)
+    assert stated["3,4 millions"].value == pytest.approx(3.4e6)
+
+
+@pytest.mark.parametrize("space", ["\u00a0", "\u202f", "\u2009"])
+def test_a_fixed_space_groups_french_thousands(space):
+    # French typesetting groups with a narrow no-break space; it only groups.
+    (stated,) = stated_numbers(f"Au total, 1{space}234,5{space}ha.", "fr")
+    assert stated.value == pytest.approx(1234.5)
+    assert stated.other is None
+
+
 @pytest.mark.parametrize(
     ("answer", "language", "text", "value"),
     [
@@ -213,6 +259,20 @@ def test_reads_spanish_replies_in_either_convention():
         ("unos 25 kilómetros cuadrados", "es", "25 kilómetros cuadrados", 2500),
         ("seluas 25 kilometer persegi", "id", "25 kilometer persegi", 2500),
         ("1,2 millo\u0301n de hectáreas", "es", "1,2 millón", 1.2e6),
+        ("cerca de 3 mil hectares", "pt", "3 mil", 3e3),
+        ("1 milhão de hectares", "pt", "1 milhão", 1e6),
+        ("2,3 milhões de hectares", "pt", "2,3 milhões", 2.3e6),
+        ("4,5 bilhões de toneladas", "pt", "4,5 bilhões", 4.5e9),
+        ("2,5 mil milhões de toneladas", "pt", "2,5 mil milhões", 2.5e9),
+        ("1,2 trilhão de toneladas", "pt", "1,2 trilhão", 1.2e12),
+        ("cerca de 12,5 por cento", "pt", "12,5por cento", 12.5),
+        ("cerca de 25 quilômetros quadrados", "pt", "25 quilômetros quadrados", 2500),
+        ("cerca de 25 quilómetros quadrados", "pt", "25 quilómetros quadrados", 2500),
+        ("environ 3 mille hectares", "fr", "3 mille", 3e3),
+        ("2,3 millions d'hectares", "fr", "2,3 millions", 2.3e6),
+        ("1,2 milliard de tonnes", "fr", "1,2 milliard", 1.2e9),
+        ("environ 12,5 pour cent", "fr", "12,5pour cent", 12.5),
+        ("environ 25 kilomètres carrés", "fr", "25 kilomètres carrés", 2500),
     ],
 )
 def test_reads_local_scale_and_percent_words(answer, language, text, value):
@@ -299,6 +359,37 @@ def test_scale_words_belong_to_their_language():
     assert _local("450 rb hektar", "id")["450 rb"].value == 450e3
 
 
+def test_portuguese_scales_are_brazilian():
+    # AJ, 2026-11-19: Brazilian Portuguese. The European "bilião" (10^12 in
+    # Portugal) is no scale at all, so it can never pass as 10^9.
+    assert _local("1,2 bilhão de toneladas", "pt")["1,2 bilhão"].value == pytest.approx(1.2e9)
+    stated = _local("1,2 bilião de toneladas", "pt")
+    assert stated["1,2"].value == pytest.approx(1.2)
+    assert _local("2 billion t", "pt")["2 billion"].value == pytest.approx(2e9)
+
+
+def test_a_french_billion_is_ten_to_the_twelfth():
+    # AJ, 2026-11-19: in a French reply "billion" has its French meaning.
+    stated = _local("Les stocks atteignent 1,2 billion de tonnes de carbone.", "fr")
+    assert stated["1,2 billion"].value == pytest.approx(1.2e12)
+    assert _local("environ 2 billions de tonnes", "fr")["2 billions"].value == (
+        pytest.approx(2e12)
+    )
+
+
+def test_the_usual_portuguese_and_french_mark_is_the_comma():
+    # Nothing in these replies settles the mark, so Horizon's habit in the
+    # language gives the first reading (see _USUAL_DECIMAL_MARK).
+    for answer, language in (("Total de 64.435 hectares.", "pt"),
+                             ("Au total, 64,435 hectares.", "fr")):
+        (stated,) = stated_numbers(answer, language)
+        assert stated.other is not None
+        assert (stated.value, stated.other.value) == (
+            pytest.approx(64435 if language == "pt" else 64.435),
+            pytest.approx(64.435 if language == "pt" else 64435),
+        )
+
+
 def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
     figure = "sum(area_ha)"  # 1,050 over both areas
 
@@ -334,6 +425,16 @@ def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
     # Indonesian habit reads "64.435" as 64435.
     assert evaluate_figures(state, "sum(area_ha)", "id")["figure_match_score"] == 1.0
     assert score("Total: 2.345 hectáreas.", "es")["figure_match_score"] == 0.0
+    # Portuguese and French: the comma is the usual decimal mark.
+    assert score("Total de 1.050 hectares.", "pt")["figure_match_score"] == 1.0
+    assert score("Au total, 1 050 hectares.", "fr")["figure_match_score"] == 1.0
+    assert score("Total de 1,050 hectares.", "pt")["figure_match_score"] is None
+    assert score("Au total, 1,050 hectares.", "fr")["figure_match_score"] is None
+    # An English reply to either keeps the English habit.
+    english = "In total, the loss was 1,050 hectares in the area over the period."
+    for language in ("pt", "fr"):
+        assert score(english, language)["figure_match_score"] == 1.0
+    assert score("Au total, 2 345 hectares.", "fr")["figure_match_score"] == 0.0
 
 
 def test_a_zero_figure_may_be_stated_in_local_words(pulled):

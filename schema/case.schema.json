@@ -28,7 +28,7 @@
       "description": "Optional hierarchy level above group (CHALLENGE: 'aoi', ...). Adds one directory level (<set>/<group>/); organisational like group and status, never hashed into the uid."
     },
     "language": {
-      "enum": ["es", "id"],
+      "enum": ["es", "id", "pt", "fr"],
       "description": "The query's language when it is not English (an English case omits the field). It sets how figure_match reads the numbers in the reply, so it is part of the uid."
     },
     "twin": {

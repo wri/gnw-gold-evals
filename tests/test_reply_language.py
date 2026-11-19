@@ -22,6 +22,7 @@ from goldset.buckets import (  # noqa: E402
     row_verdict,
     summarize_buckets,
 )
+from goldset.canonical import LANGUAGES  # noqa: E402
 from goldset.cli import result_to_entry  # noqa: E402
 from goldset.eval_types import ExpectedData  # noqa: E402
 from goldset.eval_types import TestResult as Result  # noqa: E402
@@ -82,6 +83,43 @@ PORTUGUESE = (
     "maior parte dos alertas está no município de Altamira, e o ritmo é mais "
     "alto do que no mesmo período do ano passado."
 )
+# Modelled on Horizon's Portuguese and French replies (traces, 2026): the
+# dataset names stay in English, as Horizon writes them.
+PORTUGUESE_WITH_ENGLISH_NAMES = (
+    "Usei o conjunto de dados **Tree cover loss by dominant driver** e também "
+    "**Global all ecosystem alerts (DIST-ALERT)**. Em São Félix do Xingu a "
+    "perda foi de 1.234.567 ha entre 2015 e 2023, o que equivale a 0,45 Mha "
+    "por ano. A principal causa é *Permanent agriculture* (62%), seguida de "
+    "*Wildfire* (21%). Os dados vêm do Global Forest Watch: "
+    "https://www.globalforestwatch.org/map/country/BRA/ para mais detalhes."
+)
+FRENCH_WITH_ENGLISH_NAMES = (
+    "J'ai utilisé le jeu de données **Tree cover loss by dominant driver** et "
+    "**Integrated deforestation alerts**. Dans la région de l'Est, la perte a "
+    "atteint 12 480 ha en 2023. La cause principale est *Shifting "
+    "cultivation* (71 %), suivie de *Logging* (18 %). Les données proviennent "
+    "de Global Forest Watch : https://www.globalforestwatch.org/map/country/CMR/"
+)
+# English prose about places whose names carry Portuguese function words.
+ENGLISH_WITH_BRAZILIAN_PLACES = (
+    "In São Félix do Xingu, the loss was 45,000 ha in 2023. That is more than "
+    "in Mato Grosso do Sul or in Rio de Janeiro, and it has been rising since "
+    "2019 in the areas that are close to the BR-163 highway."
+)
+# Short replies (a clarifying question) carry few function words, and the
+# Romance languages share many of them.
+SHORT_SPANISH = (
+    "Encontré dos áreas con el nombre Santa María: una en Chubut y otra en "
+    "Catamarca. ¿Cuál de ellas quieres analizar?"
+)
+SHORT_PORTUGUESE = (
+    "Encontrei duas áreas com o nome Santa Maria: uma no Rio Grande do Sul e "
+    "outra no Pará. Qual delas você quer analisar?"
+)
+SHORT_FRENCH = (
+    "J'ai trouvé deux zones nommées Saint-Laurent : l'une au Québec et l'autre "
+    "en Guyane. Laquelle voulez-vous analyser ?"
+)
 MALAY = (
     "Berdasarkan data amaran, di negeri Sarawak terdapat kira-kira 8,250 "
     "hektar gangguan hutan antara Januari dan Jun 2026. Kebanyakan amaran "
@@ -119,10 +157,18 @@ def _state(text):
     (SPANISH_WITH_ENGLISH_NAMES, "es"),
     (INDONESIAN, "id"),
     (INDONESIAN_WITH_TABLE, "id"),
+    (PORTUGUESE, "pt"),
+    (PORTUGUESE_WITH_ENGLISH_NAMES, "pt"),
+    (FRENCH, "fr"),
+    (FRENCH_WITH_ENGLISH_NAMES, "fr"),
     (ENGLISH, "en"),
     (ENGLISH_WITH_SPANISH_PLACES, "en"),
+    (ENGLISH_WITH_BRAZILIAN_PLACES, "en"),
+    (SHORT_SPANISH, "es"),
+    (SHORT_PORTUGUESE, "pt"),
+    (SHORT_FRENCH, "fr"),
 ])
-def test_detects_the_three_languages(text, language):
+def test_detects_each_case_language(text, language):
     assert detect_language(text)[0] == language
 
 
@@ -171,18 +217,33 @@ def test_malay_reads_as_indonesian_the_nearest_language():
     assert detect_language(MALAY)[0] == "id"
 
 
-def test_a_french_or_portuguese_reply_scores_zero_against_every_language():
-    for text, language in ((FRENCH, "fr"), (PORTUGUESE, "pt")):
-        for case_language in ("en", "es", "id"):
-            result = evaluate_reply_language(_state(text), case_language)
-            assert result["reply_language_match_score"] == 0.0
-            assert result["actual_reply_language"] == language
+@pytest.mark.parametrize(("text", "language"), [
+    (ENGLISH, "en"), (SPANISH, "es"), (INDONESIAN, "id"), (PORTUGUESE, "pt"),
+    (FRENCH, "fr"), (SHORT_SPANISH, "es"), (SHORT_PORTUGUESE, "pt"),
+    (SHORT_FRENCH, "fr"),
+])
+def test_a_reply_scores_one_in_its_language_and_zero_in_every_other(text, language):
+    # Spanish, Portuguese and French share many function words: a reply in
+    # one of them must still score 0.0 for a case in another.
+    assert language in LANGUAGES
+    for case_language in LANGUAGES:
+        result = evaluate_reply_language(_state(text), case_language)
+        assert result["actual_reply_language"] == language
+        assert result["reply_language_match_score"] == (
+            1.0 if case_language == language else 0.0
+        ), case_language
+
+
+def test_an_italian_reply_scores_zero_against_every_language():
+    for case_language in LANGUAGES:
+        result = evaluate_reply_language(_state(ITALIAN), case_language)
+        assert result["reply_language_match_score"] == 0.0
+        assert result["actual_reply_language"] == "it"
 
 
 def test_a_decoy_is_never_a_case_language():
-    for language in ("fr", "pt"):
-        with pytest.raises(ValueError, match="language must be one of"):
-            evaluate_reply_language(_state(FRENCH), language)
+    with pytest.raises(ValueError, match="language must be one of"):
+        evaluate_reply_language(_state(ITALIAN), "it")
 
 
 def test_a_spanish_query_on_an_unlabelled_case_is_not_scored():
