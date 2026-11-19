@@ -1,0 +1,27 @@
+id: ch-quant-307
+uid: 528c2479a7d6d07d
+status: ready
+set: quantification
+group: many-areas
+query: What is the forest cover loss in the DRC from 2010 to 2015 by province
+expected:
+  aoi_ids: COD.1;COD.2;COD.3;COD.4;COD.5;COD.6;COD.7;COD.8;COD.9;COD.10;COD.11;COD.12;COD.13;COD.14;COD.15;COD.16;COD.17;COD.18;COD.19;COD.20;COD.21;COD.22;COD.23;COD.24;COD.25;COD.26
+  dataset_id: '4'
+  context_layer: no_selection | primary_forest
+  start_date: '2010-01-01'
+  end_date: '2015-12-31'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2010..2015
+  text: Gives forest loss for each of the DRC's provinces for 2010 to 2015 from the pulled
+    data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-307-fr (fr-n-025);
+    real fr user prompt, trace 2026-09'
+  pair_id: fr-n-025
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: the 26 provinces of the DRC
+  precedent: ch-mon-022; ch-quant-221; ch-port-018

@@ -1,0 +1,22 @@
+id: ch-port-034
+uid: e4c5d24f94175b5e
+status: ready
+set: portfolio
+group: many-areas
+query: wildcat mining in protected areas in the Brazilian Amazon
+expected:
+  text: Says it has no layer that maps garimpo itself; may report loss in the hard commodities
+    driver class (which includes mining) for named protected areas and say which ones; explains
+    that it cannot analyse every protected area in the Brazilian Amazon at once if it does
+    not; does not present the class as garimpo alone or invent figures for areas it did not
+    analyse.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-port-034-pt (pt-n-041);
+    real pt user prompt, trace 2026-09'
+  pair_id: pt-n-041
+  benchmark_type: portfolio
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-184; ch-mon-064; es-n-029 (ch-quant-228)

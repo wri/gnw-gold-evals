@@ -1,0 +1,25 @@
+id: ch-port-003-pt
+uid: 2530507a31f53e69
+status: ready
+set: portfolio
+group: many-areas
+language: pt
+twin: ch-port-003
+query: Faça um ranking de todos os estados brasileiros por conversão impulsionada pela soja
+  desde 2020.
+expected:
+  aoi_ids: BRA.1_1;BRA.2_1;BRA.3_1;BRA.4_1;BRA.5_1;BRA.6_1;BRA.7_1;BRA.8_1;BRA.9_1;BRA.10_1;BRA.11_1;BRA.12_1;BRA.13_1;BRA.14_1;BRA.15_1;BRA.16_1;BRA.17_1;BRA.18_1;BRA.19_1;BRA.20_1;BRA.21_1;BRA.22_1;BRA.23_1;BRA.24_1;BRA.25_1;BRA.26_1;BRA.27_1
+  dataset_id: 8;4
+  data_pull: 'TRUE'
+  text: Ranks Brazil's states by conversion using the closest available data (loss from permanent
+    agriculture in the drivers data, or natural forest loss since 2021) and says the data
+    cannot isolate soy; does not invent soy-specific figures.
+  accept_nudge_offering: '8'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_driver = 'Permanent agriculture' |
+    max(area_ha) by aoi_id where tree_cover_loss_year in 2021..2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-port-003 (pt-t-008)'
+  pair_id: pt-t-008
+  use_cases: UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

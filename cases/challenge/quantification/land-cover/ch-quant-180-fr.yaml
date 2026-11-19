@@ -1,0 +1,25 @@
+id: ch-quant-180-fr
+uid: 8a5a4bb4ff091063
+status: ready
+set: quantification
+group: land-cover
+language: fr
+twin: ch-quant-180
+query: Où, dans la région du Haut-Sassandra, y a-t-il des terres cultivées ou dégradées plutôt
+  que de la forêt naturelle, qui pourraient être restaurées ?
+expected:
+  aoi_ids: CIV.9.1
+  dataset_id: 1;3
+  data_pull: 'TRUE'
+  text: Uses land cover or natural lands data to give the cropland or non-natural land area
+    in Haut-Sassandra, as a regional total or a district breakdown, and notes that restoration
+    suitability needs local assessment.
+  accept_nudge_offering: 1 | 3
+  figure: sum(area_ha) where land_cover_class = 'Cropland' | sum(area_ha) where natural_lands_class
+    = 'Cropland'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-180 (fr-t-039)'
+  pair_id: fr-t-039
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

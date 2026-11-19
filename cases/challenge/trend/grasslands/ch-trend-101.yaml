@@ -1,0 +1,24 @@
+id: ch-trend-101
+uid: 444aefaf6bce05cc
+status: ready
+set: trend
+group: grasslands
+query: how natural grasslands are changing in Cameroon
+expected:
+  aoi_ids: CMR
+  dataset_id: '2'
+  data_pull: 'TRUE'
+  text: Describes how natural or semi-natural grassland extent in Cameroon changed over the
+    years it pulled, from the pulled data.
+  accept_nudge_offering: '2'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-trend-101-fr (fr-n-033);
+    real fr user prompt, trace 2026-03'
+  pair_id: fr-n-033
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Cameroon
+  precedent: ch-trend-045; ch-quant-183

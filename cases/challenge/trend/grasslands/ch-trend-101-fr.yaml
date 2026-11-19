@@ -1,0 +1,27 @@
+id: ch-trend-101-fr
+uid: b20492cd67da0bfc
+status: ready
+set: trend
+group: grasslands
+language: fr
+twin: ch-trend-101
+query: comment les prairies naturelles évoluent au Cameroun
+expected:
+  aoi_ids: CMR
+  dataset_id: '2'
+  data_pull: 'TRUE'
+  text: Describes how natural or semi-natural grassland extent in Cameroon changed over the
+    years it pulled, from the pulled data.
+  accept_nudge_offering: '2'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-033); real fr user prompt,
+    trace 2026-03'
+  pair_id: fr-n-033
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Cameroon
+  precedent: ch-trend-045; ch-quant-183
+  language_review: subagent review 2026-11-19; native speaker not yet

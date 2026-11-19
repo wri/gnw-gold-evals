@@ -1,0 +1,25 @@
+id: ch-quant-273
+uid: d6c52871471df0c8
+status: ready
+set: quantification
+group: tcl-drivers
+query: I would like to see historical data on deforestation from mining in the state of Mato
+  Grosso, in Brazil.
+expected:
+  aoi_ids: BRA.12
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Explains that the closest driver class to mining is hard commodities (mining and energy
+    infrastructure), shows that class for Mato Grosso from the pulled data and says the period
+    it covers (2001 to 2025 as one period); does not present the class as mining alone.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-273-pt (pt-n-015);
+    real pt user prompt, trace 2026-09'
+  pair_id: pt-n-015
+  benchmark_type: causal
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Mato Grosso state, Brazil
+  precedent: ch-causal-027; ch-quant-153 (BRA.12); id-n-020 (ch-quant-243)

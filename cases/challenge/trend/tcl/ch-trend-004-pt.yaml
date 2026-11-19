@@ -1,0 +1,23 @@
+id: ch-trend-004-pt
+uid: de2718cb38a30d81
+status: ready
+set: trend
+group: tcl
+language: pt
+twin: ch-trend-004
+query: Em que ano, entre 2011 e 2023, o Brasil teve a maior perda anual de cobertura arbórea
+  em todos os tipos de floresta?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2011-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: max(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2011..2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-trend-004 (pt-t-018)'
+  pair_id: pt-t-018
+  use_cases: UC3;UC4;UC5;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

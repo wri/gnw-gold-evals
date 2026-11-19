@@ -1,0 +1,22 @@
+id: ch-quant-009-pt
+uid: 7a82f91372427d41
+status: ready
+set: quantification
+group: tcl
+language: pt
+twin: ch-quant-009
+query: Quanto desmatamento ocorreu no Brasil em 2023?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: primary_forest | natural_forest
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-009 (pt-t-010)'
+  pair_id: pt-t-010
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

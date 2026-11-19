@@ -1,0 +1,22 @@
+id: ch-quant-080-pt
+uid: 07d5234cc134053f
+status: ready
+set: quantification
+group: integrated-alerts
+language: pt
+twin: ch-quant-080
+query: Quantos hectares de alertas de distúrbio foram sinalizados em todo o Brasil de 1º de
+  janeiro a 31 de dezembro de 2024?
+expected:
+  aoi_ids: BRA
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in 2024-01-01..2024-12-31
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-080 (pt-t-004)'
+  pair_id: pt-t-004
+  use_cases: UC1;UC3
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

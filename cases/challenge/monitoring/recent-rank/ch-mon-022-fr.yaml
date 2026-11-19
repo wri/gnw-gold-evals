@@ -1,0 +1,23 @@
+id: ch-mon-022-fr
+uid: f46f6b49fdc530d8
+status: ready
+set: monitoring
+group: recent_rank
+language: fr
+twin: ch-mon-022
+query: Quelle province de la RDC a eu la plus grande surface d'alertes de perturbation au
+  cours des 30 derniers jours ?
+expected:
+  aoi_ids: COD.1;COD.2;COD.3;COD.4;COD.5;COD.6;COD.7;COD.8;COD.9;COD.10;COD.11;COD.12;COD.13;COD.14;COD.15;COD.16;COD.17;COD.18;COD.19;COD.20;COD.21;COD.22;COD.23;COD.24;COD.25;COD.26
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by aoi_id where alert_date in {run-30d}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-022 (fr-t-002)'
+  pair_id: fr-t-002
+  use_cases: UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

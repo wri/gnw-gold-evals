@@ -1,0 +1,37 @@
+id: ch-quant-309-fr
+uid: e41d61e45a256caf
+status: ready
+set: quantification
+group: ghg-flux
+language: fr
+twin: ch-quant-309
+query: 'Quel est le volume estimé d’émissions de gaz à effet de serre (en tCO₂e/an) imputable
+  à la perte du couvert forestier d’origine anthropique dans le département de Boumba-et-Ngoko,
+  notamment dans les villages riverains du Parc national de Boumba-Bek ?
+
+  Et quelles sont les méthodologies (facteurs d’émission, données de biomasse, outils comme
+  Global Forest Watch ou inventaires nationaux) utilisées pour produire ces estimations ?'
+expected:
+  aoi_ids: CMR.3.1
+  dataset_id: 6;4
+  data_pull: 'TRUE'
+  figure: mean(carbon_emissions_MgCO2e) by tree_cover_loss_year | sum(carbon_emissions_MgCO2e)
+    | sum(carbon_gross_emissions_Mg_CO2e)
+  text: Gives greenhouse gas emissions from tree cover loss in Boumba-et-Ngoko from pulled
+    data and explains how they are estimated without contradicting the dataset's method (emissions
+    estimated from tree cover loss and forest carbon stocks); is clear whether the figure
+    covers all tree cover loss or human-caused loss only; gives no figure for the villages
+    near Boumba-Bek National Park that it did not pull.
+  accept_nudge_offering: 6 | 4
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-036); real fr user prompt,
+    trace 2026-04'
+  pair_id: fr-n-036
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Boumba-et-Ngoko (department, Est, Cameroon)
+  precedent: ch-quant-169; ch-quant-168; id-n-055 (ch-quant-266)
+  language_review: subagent review 2026-11-19; native speaker not yet

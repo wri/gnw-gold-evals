@@ -1,0 +1,22 @@
+id: ch-port-017-fr
+uid: edc025c09f6ad715
+status: ready
+set: portfolio
+group: many-areas
+language: fr
+twin: ch-port-017
+query: Montre-moi quels districts producteurs de cacao de Côte d'Ivoire ont eu le plus de
+  pertes, en les classant tous.
+expected:
+  aoi_ids: CIV.1_1;CIV.2_1;CIV.3_1;CIV.4_1;CIV.5_1;CIV.6_1;CIV.7_1;CIV.8_1;CIV.9_1;CIV.10_1;CIV.11_1;CIV.12_1;CIV.13_1;CIV.14_1
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Ranks Côte d'Ivoire's districts by tree cover loss from the data and says it cannot
+    restrict the ranking to cocoa-growing districts; does not invent a cocoa filter.
+  figure: max(area_ha) by aoi_id
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-port-017 (fr-t-024)'
+  pair_id: fr-t-024
+  use_cases: UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

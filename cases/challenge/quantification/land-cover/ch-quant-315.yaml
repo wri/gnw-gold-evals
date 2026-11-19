@@ -1,0 +1,24 @@
+id: ch-quant-315
+uid: 4045bfe6faedbfad
+status: ready
+set: quantification
+group: land-cover
+query: Land cover in Côte d'Ivoire
+expected:
+  aoi_ids: CIV
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class = 'Tree cover' | ratio(sum(area_ha) where land_cover_class
+    = 'Tree cover', sum(area_ha))
+  accept_nudge_offering: '1'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-315-fr (fr-n-043);
+    real fr user prompt, trace 2026-02'
+  pair_id: fr-n-043
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Côte d'Ivoire
+  precedent: ch-quant-182; id-n-024 (ch-quant-245); id-n-007 and id-n-009 (ch-quant-234, ch-quant-236)

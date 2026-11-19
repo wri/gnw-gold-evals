@@ -1,0 +1,24 @@
+id: ch-comp-055-fr
+uid: 2336550bb3324fa6
+status: ready
+set: comparison
+group: land-cover
+language: fr
+twin: ch-comp-055
+query: Entre le Brésil et la République démocratique du Congo, quel pays a la plus grande
+  surface de couvert arboré dans son occupation du sol ?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: 1;7
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and land_cover_class = 'Tree cover' | sum(area_ha)
+    where aoi_id = 'BRA' ; sum(area_ha) where aoi_id = 'COD' and land_cover_class = 'Tree
+    cover' | sum(area_ha) where aoi_id = 'COD'
+  figure_claim: '#1 > #2 :: Brazil has the larger area of tree cover than the DRC || The DRC
+    has the larger area of tree cover than Brazil'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-055 (fr-t-038)'
+  pair_id: fr-t-038
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

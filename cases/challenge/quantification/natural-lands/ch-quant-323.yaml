@@ -1,0 +1,26 @@
+id: ch-quant-323
+uid: 8cc55ad2dd906e60
+status: ready
+set: quantification
+group: natural-lands
+query: What proportion of Côte d'Ivoire is made up of natural land?
+expected:
+  aoi_ids: CIV
+  dataset_id: '3'
+  data_pull: 'TRUE'
+  figure: ratio(sum(area_ha) where natural_lands_class in ('Natural forests', 'Mangroves',
+    'Natural peat forests', 'Wetland natural forests', 'Natural short vegetation', 'Natural
+    peat short vegetation', 'Wetland natural short vegetation', 'Natural water', 'Bare'),
+    sum(area_ha))
+  accept_nudge_offering: '3'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-323-fr (fr-n-054);
+    real fr user prompt, trace 2026-04'
+  pair_id: fr-n-054
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Côte d'Ivoire
+  precedent: ch-quant-100; ch-comp-185

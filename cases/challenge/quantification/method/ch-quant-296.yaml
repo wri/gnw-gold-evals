@@ -1,0 +1,21 @@
+id: ch-quant-296
+uid: 534def9d78cf5733
+status: ready
+set: quantification
+group: method
+query: What is the data source for land cover and land use in Brazil?
+expected:
+  text: Names the source of its land cover data accurately (the University of Maryland GLAD
+    lab's global land cover and land use data, combined with Global Pasture Watch cultivated
+    grasslands; the second source and the years covered are optional detail) and does not
+    claim it uses a Brazilian national map such as MapBiomas.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-296-pt (pt-n-049);
+    real pt user prompt, trace 2026-07'
+  pair_id: pt-n-049
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-198; id-n-056 (ch-quant-267); ch-comp-179

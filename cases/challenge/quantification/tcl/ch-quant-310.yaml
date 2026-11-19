@@ -1,0 +1,25 @@
+id: ch-quant-310
+uid: c06c52cbc3bb575c
+status: ready
+set: quantification
+group: tcl
+query: forest loss Burkina in 2025?
+expected:
+  aoi_ids: BFA
+  dataset_id: '4'
+  context_layer: no_selection
+  start_date: '2025-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-310-fr (fr-n-072);
+    real fr user prompt, trace 2026-09'
+  pair_id: fr-n-072
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Burkina Faso
+  precedent: ch-quant-177; es-n-015 (ch-quant-215)

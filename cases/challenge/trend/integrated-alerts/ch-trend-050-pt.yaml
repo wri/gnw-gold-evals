@@ -1,0 +1,32 @@
+id: ch-trend-050-pt
+uid: c00cd5f8bf21b446
+status: ready
+set: trend
+group: integrated-alerts
+language: pt
+twin: ch-trend-050
+query: Os alertas de desmatamento no Brasil aumentaram ou diminuíram entre janeiro de 2024
+  e dezembro de 2024?
+expected:
+  aoi_ids: BRA
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where alert_date in 2024-01-01..2024-06-30 ; ref: sum(area_ha)
+    where alert_date in 2024-07-01..2024-12-31'
+  figure_claim: '#2 > #1 :: Over 2024 as a whole, Brazil''s alert area rose rather than fell:
+    July to December had more alert area than January to June. A rise to a peak in the second
+    half followed by a fall in the last months is consistent with this; only a reply saying
+    alerts decreased over 2024, or that the second half had less alert area than the first,
+    contradicts it. || Over 2024 as a whole, Brazil''s alert area fell rather than rose: July
+    to December had less alert area than January to June. A fall to a low in the second half
+    followed by a rise in the last months is consistent with this; only a reply saying alerts
+    increased over 2024, or that the second half had more alert area than the first, contradicts
+    it.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-trend-050 (pt-t-005)'
+  pair_id: pt-t-005
+  use_cases: UC1;UC3;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

@@ -1,0 +1,23 @@
+id: ch-comp-043-pt
+uid: 612cf05467968122
+status: ready
+set: comparison
+group: ghg-flux
+language: pt
+twin: ch-comp-043
+query: As florestas de qual país são uma fonte líquida maior de emissões de gases de efeito
+  estufa no total, as do Brasil ou as da Indonésia?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'BRA' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'IDN'
+  figure_claim: '#2 > #1 :: Indonesia''s forests are the larger net source of greenhouse gas
+    emissions || Brazil''s forests are the larger net source of greenhouse gas emissions'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-043 (pt-t-017)'
+  pair_id: pt-t-017
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

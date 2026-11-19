@@ -1,0 +1,27 @@
+id: ch-causal-003-pt
+uid: 4d8809a1744cd8d3
+status: ready
+set: causal
+group: spike_attribution
+language: pt
+twin: ch-causal-003
+query: Por que o Brasil perdeu tanta floresta primária em 2016?
+expected:
+  aoi_ids: BRA
+  dataset_id: '10'
+  start_date: '2016-01-01'
+  end_date: '2016-12-31'
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  text: Explains the 2016 loss from the data, including the role of fire, without inventing
+    causes the data does not show.
+  accept_blog_sources: global-tree-cover-loss-rose-51-percent-2016;2017-was-second-worst-year-record-tropical-tree-cover-loss;we-lost-football-pitch-primary-rainforest-every-6-seconds-2019;10-big-changes-forests-over-last-decade;world-lost-belgium-sized-area-primary-rainforests-last-year
+  figure: ratio(sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year = 2016,
+    sum(area_ha) where tree_cover_loss_year = 2016) | sum(tree_cover_loss_from_fires_area_ha)
+    where tree_cover_loss_year = 2016
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-003 (pt-t-013)'
+  pair_id: pt-t-013
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

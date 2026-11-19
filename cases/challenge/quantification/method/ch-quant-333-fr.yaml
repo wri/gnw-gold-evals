@@ -1,0 +1,23 @@
+id: ch-quant-333-fr
+uid: de1b4bf850966d57
+status: ready
+set: quantification
+group: method
+language: fr
+twin: ch-quant-333
+query: est ce que les aires protegees du cambodge dans votre base de donnees ont un nom ?
+expected:
+  text: 'Says yes: protected areas come with their names (from the World Database on Protected
+    Areas) and can be searched by name; does not invent names or say they have none.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-069); real fr user prompt,
+    trace 2026-10'
+  pair_id: fr-n-069
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: protected areas of Cambodia
+  precedent: ch-quant-198; ch-quant-192
+  language_review: subagent review 2026-11-19; native speaker not yet

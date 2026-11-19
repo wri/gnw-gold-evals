@@ -1,0 +1,21 @@
+id: ch-quant-157-pt
+uid: 19ee5abf3c73e0e2
+status: ready
+set: quantification
+group: natural-lands
+language: pt
+twin: ch-quant-157
+query: Quanta área natural existe no Rio Grande do Sul, Brasil?
+expected:
+  aoi_ids: BRA.21
+  dataset_id: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where natural_lands_class in ('Natural forests', 'Mangroves', 'Natural
+    peat forests', 'Wetland natural forests', 'Natural short vegetation', 'Natural peat short
+    vegetation', 'Wetland natural short vegetation', 'Natural water', 'Bare')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-157 (pt-t-040)'
+  pair_id: pt-t-040
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

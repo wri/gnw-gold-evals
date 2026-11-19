@@ -1,0 +1,20 @@
+id: ch-comp-189
+uid: 3cd13f7fccf1a102
+status: ready
+set: comparison
+group: method
+query: distinction between natural and exotic grassland
+expected:
+  text: Explains that the grassland dataset maps natural and semi-natural grassland only,
+    and that planted or exotic pasture appears instead as the cultivated grasslands class
+    of the land cover data; does not claim either dataset separates exotic species.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-comp-189-pt (pt-n-058);
+    real pt user prompt, trace 2026-10'
+  pair_id: pt-n-058
+  benchmark_type: comparison
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-181; es-n-037 (ch-quant-233)

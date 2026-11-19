@@ -1,0 +1,26 @@
+id: ch-quant-287
+uid: 07ed0a3c6abd2121
+status: ready
+set: quantification
+group: tcl
+query: Impact of deforestation of original forest in the Laklãnõ Xokleng indigenous land in
+  Santa Catarina
+expected:
+  aoi_ids: 555542506/BRA776
+  dataset_id: '4'
+  context_layer: primary_forest | natural_forest
+  data_pull: 'TRUE'
+  figure: sum(area_ha) | max(area_ha) by tree_cover_loss_year
+  text: Reports loss of primary or natural forest in the territory from pulled data and names
+    the filter; any impact it describes rests on those figures, not on general knowledge.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-287-pt (pt-n-038);
+    real pt user prompt, trace 2026-08'
+  pair_id: pt-n-038
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Ibirama-La Klãnõ Indigenous Territory (Laklãnõ Xokleng), Santa Catarina, Brazil
+  precedent: ch-quant-151; ch-comp-170; es-n-021 (ch-quant-221)

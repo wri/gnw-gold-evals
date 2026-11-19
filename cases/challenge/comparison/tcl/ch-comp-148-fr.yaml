@@ -1,0 +1,28 @@
+id: ch-comp-148-fr
+uid: a0d97784f5705f16
+status: ready
+set: comparison
+group: tcl
+language: fr
+twin: ch-comp-148
+query: La perte de couvert arboré du Gabon en 2016–2017 a-t-elle été supérieure à sa moyenne
+  annuelle de 2006–2015 ?
+expected:
+  aoi_ids: GAB
+  dataset_id: '4'
+  start_date: '2006-01-01'
+  end_date: '2017-12-31'
+  data_pull: 'TRUE'
+  figure: 'mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2006..2015
+    ; mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2016..2017 | sum(area_ha)
+    where tree_cover_loss_year = 2016 | sum(area_ha) where tree_cover_loss_year = 2017 ; ref:
+    mean(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2016..2017'
+  figure_claim: '#3 > #1 :: Gabon''s tree cover loss in 2016 to 2017 was higher than its 2006
+    to 2015 annual average || Gabon''s tree cover loss in 2016 to 2017 was not higher than
+    its 2006 to 2015 annual average'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-148 (fr-t-026)'
+  pair_id: fr-t-026
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

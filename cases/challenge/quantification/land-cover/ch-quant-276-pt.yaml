@@ -1,0 +1,29 @@
+id: ch-quant-276-pt
+uid: 86896daf9f4c56d0
+status: ready
+set: quantification
+group: land-cover
+language: pt
+twin: ch-quant-276
+query: Como é a ocupação do solo no municipio de sintra em Portugal? Quais são os principais
+  pontos positivos e a principais ameaças no municipio?
+expected:
+  aoi_ids: PRT.12.13
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class = 'Tree cover' | ratio(sum(area_ha) where land_cover_class
+    = 'Tree cover', sum(area_ha))
+  text: Gives Sintra's land cover from pulled data; any positive points or threats it names
+    rest on that data or are labelled as general context, not as findings of the analysis.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-022); real pt user prompt,
+    trace 2025-11'
+  pair_id: pt-n-022
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Sintra municipality, Lisboa, Portugal
+  precedent: ch-quant-182; es-n-024 (ch-quant-224)
+  language_review: subagent review 2026-11-19; native speaker not yet

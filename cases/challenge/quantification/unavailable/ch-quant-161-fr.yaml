@@ -1,0 +1,18 @@
+id: ch-quant-161-fr
+uid: 5735ff9ebfa48843
+status: ready
+set: quantification
+group: unavailable
+language: fr
+twin: ch-quant-161
+query: La zone autour du projet de minerai de fer de Lobé a-t-elle perdu de la forêt depuis
+  l'attribution du permis minier en 2012 ?
+expected:
+  text: Asks for the Lobé iron project's boundary (or an upload) rather than guessing an area,
+    or explains that it does not have the project's boundary.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-161 (fr-t-006)'
+  pair_id: fr-t-006
+  use_cases: UC3
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

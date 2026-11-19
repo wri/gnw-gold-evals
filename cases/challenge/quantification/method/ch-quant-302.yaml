@@ -1,0 +1,20 @@
+id: ch-quant-302
+uid: 3612ad182d472be6
+status: ready
+set: quantification
+group: method
+query: what is the definition of forest for the tree cover loss data?
+expected:
+  text: Explains that the data measure tree cover (vegetation taller than 5 metres above a
+    canopy density threshold), not forest as a land use, so plantations and other tree cover
+    count; does not give a legal or ecological forest definition as the data's.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-302-pt (pt-n-056);
+    real pt user prompt, trace 2026-10'
+  pair_id: pt-n-056
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-191; ch-quant-198; id-n-054 (ch-quant-265)

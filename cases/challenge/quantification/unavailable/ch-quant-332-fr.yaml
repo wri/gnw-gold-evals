@@ -1,0 +1,23 @@
+id: ch-quant-332-fr
+uid: 20e59ea975106336
+status: ready
+set: quantification
+group: unavailable
+language: fr
+twin: ch-quant-332
+query: tu n'as rien sur aucun écosystème maritime ?
+expected:
+  text: Says it has no marine or ocean ecosystem data, and may name the coastal data it has
+    (for example mangroves in the natural lands map, or wetlands in the land cover data);
+    does not invent marine layers.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-068); real fr user prompt,
+    trace 2026-04'
+  pair_id: fr-n-068
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-194; ch-quant-192
+  language_review: subagent review 2026-11-19; native speaker not yet

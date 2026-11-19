@@ -1,0 +1,25 @@
+id: ch-comp-162-fr
+uid: 699ba490130f4715
+status: ready
+set: comparison
+group: tcl
+language: fr
+twin: ch-comp-162
+query: Dans le cadre de la diligence raisonnée EUDR, y a-t-il eu des pertes de couvert arboré
+  après le 31 décembre 2020 dans les régions de la Nawa et du Cavally, en Côte d'Ivoire ?
+expected:
+  aoi_ids: CIV.2.2;CIV.8.1
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  text: Says there was tree cover loss in both regions after 2020 and notes that tree cover
+    loss is not itself EUDR deforestation (or reports loss within natural forest).
+  figure: sum(area_ha) where aoi_id = 'CIV.2.2' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'CIV.8.1' and tree_cover_loss_year in 2021..2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-162 (fr-t-023)'
+  pair_id: fr-t-023
+  use_cases: UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

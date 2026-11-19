@@ -1,0 +1,26 @@
+id: ch-trend-102-fr
+uid: 187e4832e6369c7d
+status: ready
+set: trend
+group: tcl
+language: fr
+twin: ch-trend-102
+query: je peux avoir l'état d'avancement de la déforestation de la forêt dans la zone de Kisangani
+  en RDC
+expected:
+  aoi_ids: COD.25.7
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by tree_cover_loss_year | min(area_ha) by tree_cover_loss_year | sum(area_ha)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-052); real fr user prompt,
+    trace 2025-11'
+  pair_id: fr-n-052
+  benchmark_type: trend
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kisangani (Tshopo, DRC)
+  precedent: es-n-004 (ch-trend-088); ch-trend-079
+  language_review: subagent review 2026-11-19; native speaker not yet

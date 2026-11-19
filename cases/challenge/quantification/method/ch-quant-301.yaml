@@ -1,0 +1,19 @@
+id: ch-quant-301
+uid: f5e79fe76d6a015f
+status: ready
+set: quantification
+group: method
+query: Does it work in Portuguese?
+expected:
+  text: 'Says yes: it takes questions and answers in Portuguese; does not say it works only
+    in English.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-301-pt (pt-n-055);
+    real pt user prompt, trace 2026-11'
+  pair_id: pt-n-055
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-205

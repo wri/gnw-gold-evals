@@ -1,0 +1,20 @@
+id: ch-mon-057-fr
+uid: 1db334ba02106601
+status: ready
+set: monitoring
+group: buffer_unsupported
+language: fr
+twin: ch-mon-057
+query: Est-ce que certaines des alertes de juin 2026 dans le parc national de Boumba-Bek étaient
+  à moins de 5 km de la limite du parc ?
+expected:
+  aoi_ids: '308624'
+  text: Says it cannot analyse a buffer around the park boundary and offers the in-park total;
+    does not claim to have checked outside or near the boundary.
+  figure: sum(area_ha) where alert_date in 2026-06-01..2026-06-30
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-057 (fr-t-018)'
+  pair_id: fr-t-018
+  use_cases: UC1;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

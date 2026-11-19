@@ -1,0 +1,26 @@
+id: ch-comp-002-fr
+uid: 618ae8000d77ea1b
+status: ready
+set: comparison
+group: tcl
+language: fr
+twin: ch-comp-002
+query: Compare la perte totale de couvert arboré, plantations comprises, en Indonésie et en
+  République démocratique du Congo de 2020 à 2023. Quel pays a perdu le plus ?
+expected:
+  aoi_ids: IDN;COD
+  dataset_id: '4'
+  start_date: '2020-01-01'
+  end_date: '2023-12-31'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'IDN' and tree_cover_loss_year in 2020..2023 ; sum(area_ha)
+    where aoi_id = 'COD' and tree_cover_loss_year in 2020..2023
+  figure_claim: '#2 > #1 :: The DRC lost more tree cover than Indonesia over 2020 to 2023
+    || Indonesia lost more tree cover than the DRC over 2020 to 2023'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-002 (fr-t-029)'
+  pair_id: fr-t-029
+  use_cases: UC3;UC4;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

@@ -1,0 +1,23 @@
+id: ch-quant-308
+uid: ab4a5508b708520d
+status: ready
+set: quantification
+group: tcl
+query: Yes, what are the deforestation data for Odzala-Kokoua National Park?
+expected:
+  aoi_ids: 643|7425|555555585|6085
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Gives tree cover loss data for Odzala-Kokoua National Park from the pulled data and
+    names the period they cover.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-308-fr (fr-n-032);
+    real fr user prompt, trace 2026-02'
+  pair_id: fr-n-032
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Odzala-Kokoua National Park (Republic of the Congo)
+  precedent: ch-comp-164; ch-trend-079; es-n-020

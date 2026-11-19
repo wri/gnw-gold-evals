@@ -1,0 +1,30 @@
+id: ch-comp-190
+uid: db399e7629377ee4
+status: ready
+set: comparison
+group: ghg-flux
+query: Comparative analysis of forest cover loss, of net GHG flux between the 2 provinces
+  (Kongo-Central and Kwango) neighboring Kinshasa the megacity from 2001 to 2025.
+expected:
+  aoi_ids: COD.11;COD.12
+  dataset_id: 6;4
+  start_date: '2001-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'COD.11' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'COD.12' ; sum(area_ha) where aoi_id = 'COD.11' and tree_cover_loss_year
+    in 2001..2025 ; sum(area_ha) where aoi_id = 'COD.12' and tree_cover_loss_year in 2001..2025
+  text: Compares forest cover loss and net greenhouse gas flux for Kongo-Central and Kwango
+    over 2001 to 2025 from pulled data, with the same period and measure for both; presents
+    any link to Kinshasa as context, not as a finding of the data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-comp-190-fr (fr-n-027);
+    real fr user prompt, trace 2026-03'
+  pair_id: fr-n-027
+  benchmark_type: comparison
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kongo-Central; Kwango (provinces, DRC)
+  precedent: ch-comp-164; ch-comp-150

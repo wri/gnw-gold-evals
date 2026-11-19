@@ -1,0 +1,30 @@
+id: ch-quant-327-fr
+uid: cac8b1c29645c504
+status: ready
+set: quantification
+group: tcl-drivers
+language: fr
+twin: ch-quant-327
+query: L'exploitation minière dans le département de l'Océan
+expected:
+  aoi_ids: CMR.10.3
+  figure: sum(area_ha) where tree_cover_loss_driver = 'Hard commodities' | ratio(sum(area_ha)
+    where tree_cover_loss_driver = 'Hard commodities', sum(area_ha) where tree_cover_loss_driver
+    != 'Unknown') | ratio(sum(area_ha) where tree_cover_loss_driver = 'Hard commodities',
+    sum(area_ha))
+  text: Either reports tree cover loss from the hard commodities driver class for Océan from
+    pulled data, naming that class as the closest one to mining (it also covers energy infrastructure),
+    or says the extent of mining is not mapped and offers related data; does not invent mines
+    or mining figures, and does not present all tree cover loss as mining.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-059); real fr user prompt,
+    trace 2025-12'
+  pair_id: fr-n-059
+  benchmark_type: causal
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Océan department (Sud, Cameroon)
+  precedent: ch-causal-027; es-n-029 (ch-quant-228); ch-quant-127
+  language_review: subagent review 2026-11-19; native speaker not yet

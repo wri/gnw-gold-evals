@@ -1,0 +1,20 @@
+id: ch-mon-049-fr
+uid: c3f9b72cb9397cdb
+status: ready
+set: monitoring
+group: alert_followup
+language: fr
+twin: ch-mon-049
+query: Quelles alertes de la Réserve de faune à okapis devrions-nous vérifier en premier ?
+expected:
+  aoi_ids: '37043'
+  dataset_id: '11'
+  data_pull: 'TRUE'
+  text: Suggests how to prioritise using the reserve's alert data (confidence, recency, size)
+    and does not name alert locations the data does not provide.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-049 (fr-t-016)'
+  pair_id: fr-t-016
+  use_cases: UC1
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

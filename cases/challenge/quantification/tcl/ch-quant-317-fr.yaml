@@ -1,0 +1,29 @@
+id: ch-quant-317-fr
+uid: 2c98ada4c0444175
+status: ready
+set: quantification
+group: tcl
+language: fr
+twin: ch-quant-317
+query: Quelle est la superficie des forêts primaires perdues dans le parc nationale de Boumba-Bek
+  entre 2020 et 2025?
+expected:
+  aoi_ids: 308624|6133
+  dataset_id: '4'
+  context_layer: primary_forest
+  start_date: '2020-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2020..2025
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-046); real fr user prompt,
+    trace 2026-07'
+  pair_id: fr-n-046
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Boumba-Bek National Park (Cameroon)
+  precedent: ch-mon-039; ch-comp-147; ch-quant-151
+  language_review: subagent review 2026-11-19; native speaker not yet

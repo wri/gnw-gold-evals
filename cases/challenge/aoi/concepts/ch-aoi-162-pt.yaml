@@ -1,0 +1,24 @@
+id: ch-aoi-162-pt
+uid: b2d36fc6a014c05a
+status: ready
+set: aoi
+group: concepts
+language: pt
+twin: ch-aoi-162
+query: cobertura florestal da Mata Atlântica
+expected:
+  text: Does not present Brazil as a whole, or an area merely named Mata Atlântica (such as
+    a park), as the Atlantic Forest biome; either explains that the biome is not a selectable
+    area and asks which states or areas to use, or analyses areas within the biome and says
+    which it used and that they only stand in for it.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-048); real pt user prompt,
+    trace 2026-02'
+  pair_id: pt-n-048
+  benchmark_type: scope
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-aoi-118; ch-aoi-091; id-n-049 (ch-aoi-160)
+  language_review: subagent review 2026-11-19; native speaker not yet

@@ -1,0 +1,21 @@
+id: ch-quant-092-pt
+uid: 2d4065d98901c515
+status: ready
+set: quantification
+group: natural-lands
+language: pt
+twin: ch-quant-092
+query: Quantos hectares de áreas naturais existem no Brasil?
+expected:
+  aoi_ids: BRA
+  dataset_id: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where natural_lands_class in ('Natural forests', 'Mangroves', 'Natural
+    peat forests', 'Wetland natural forests', 'Natural short vegetation', 'Natural peat short
+    vegetation', 'Wetland natural short vegetation', 'Natural water', 'Bare')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-092 (pt-t-033)'
+  pair_id: pt-t-033
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

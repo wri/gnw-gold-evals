@@ -1,0 +1,26 @@
+id: ch-quant-313
+uid: 07a3996d19aff682
+status: ready
+set: quantification
+group: tcl
+query: What is the percentage of cover lost in the Ziama reserve from 2000 to 2026
+expected:
+  aoi_ids: 29066|6375
+  dataset_id: '4'
+  start_date: '2001-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2001..2025
+  text: Gives the loss as a share and states the denominator it used (for example the reserve's
+    tree cover in 2000), and says the data cover 2001 to 2025, so 2026 is not included.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-313-fr (fr-n-041);
+    real fr user prompt, trace 2026-03'
+  pair_id: fr-n-041
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Massif du Ziama (classified forest, Guinea)
+  precedent: es-n-011 (ch-quant-213); es-n-013 (ch-quant-214)

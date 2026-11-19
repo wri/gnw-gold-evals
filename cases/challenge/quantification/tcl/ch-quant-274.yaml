@@ -1,0 +1,26 @@
+id: ch-quant-274
+uid: f383ccf538fc65e7
+status: ready
+set: quantification
+group: tcl
+query: thinking about the EUDR, what is the rate of deforestation and degradation in the forest
+  of Kelantan in Malaysia?
+expected:
+  aoi_ids: MYS.3
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  text: Gives tree cover loss for Kelantan from pulled data, says that forest degradation
+    is not measured as such, and does not present all tree cover loss as EUDR deforestation
+    without saying so (for the EUDR, natural forest loss after 2020 is the relevant reading).
+  accept_nudge_offering: '4'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-274-pt (pt-n-019);
+    real pt user prompt, trace 2026-09'
+  pair_id: pt-n-019
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kelantan state, Malaysia
+  precedent: ch-quant-197; id-n-023 (ch-quant-244); ch-trend-082

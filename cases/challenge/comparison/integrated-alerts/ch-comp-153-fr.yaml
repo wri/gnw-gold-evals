@@ -1,0 +1,26 @@
+id: ch-comp-153-fr
+uid: 59a7d347b38682ff
+status: ready
+set: comparison
+group: integrated-alerts
+language: fr
+twin: ch-comp-153
+query: Compare les alertes de perturbation cette année à Masoala et à Makira, deux des aires
+  protégées où nous patrouillons.
+expected:
+  aoi_ids: 303695;352249
+  dataset_id: '11'
+  start_date: '{current_year}-01-01'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = '303695' and alert_date in {current_year}-01-01..{run}
+    ; sum(area_ha) where aoi_id = '352249' and alert_date in {current_year}-01-01..{run}
+  figure_claim: '#1 > #2 :: Masoala recorded a larger alert area than Makira this year ||
+    Makira recorded a larger alert area than Masoala this year'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-153 (fr-t-022)'
+  pair_id: fr-t-022
+  use_cases: UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

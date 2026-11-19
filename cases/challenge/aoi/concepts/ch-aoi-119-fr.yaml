@@ -1,0 +1,17 @@
+id: ch-aoi-119-fr
+uid: f5bc4513f11825a7
+status: ready
+set: aoi
+group: concepts
+language: fr
+twin: ch-aoi-119
+query: Emmène-moi au bassin du Congo
+expected:
+  text: Explains that the Congo Basin is not a selectable area and asks the user to specify
+    countries instead; does not substitute a wrong area
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-aoi-119 (fr-t-027)'
+  pair_id: fr-t-027
+  use_cases: UC3;UC5;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

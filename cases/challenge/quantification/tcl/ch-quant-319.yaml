@@ -1,0 +1,22 @@
+id: ch-quant-319
+uid: 75a139f2cefcb2bb
+status: ready
+set: quantification
+group: tcl
+query: What is the state of deforestation in Kahuzi Biega National Park?
+expected:
+  aoi_ids: 1082|4328|6069
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  figure: sum(area_ha)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-319-fr (fr-n-048);
+    real fr user prompt, trace 2026-03'
+  pair_id: fr-n-048
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Kahuzi-Biega National Park (DRC)
+  precedent: ch-trend-079; es-n-015 (ch-quant-215)

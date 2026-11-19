@@ -1,0 +1,27 @@
+id: ch-comp-191-fr
+uid: f4c0c526d05be279
+status: ready
+set: comparison
+group: tcl
+language: fr
+twin: ch-comp-191
+query: perte du couvert forestier dans les region de l'ouest nord ouest et sud ouest cameroun
+expected:
+  aoi_ids: CMR.8;CMR.6;CMR.9
+  dataset_id: '4'
+  context_layer: no_selection | primary_forest
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'CMR.8' ; sum(area_ha) where aoi_id = 'CMR.6' ; sum(area_ha)
+    where aoi_id = 'CMR.9'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-031); real fr user prompt,
+    trace 2026-07'
+  pair_id: fr-n-031
+  benchmark_type: comparison
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Ouest; Nord-Ouest; Sud-Ouest (regions, Cameroon)
+  precedent: ch-comp-151; ch-quant-221; ch-port-017
+  language_review: subagent review 2026-11-19; native speaker not yet

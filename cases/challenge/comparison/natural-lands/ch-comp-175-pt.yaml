@@ -1,0 +1,24 @@
+id: ch-comp-175-pt
+uid: 9364d85662471cc2
+status: ready
+set: comparison
+group: natural-lands
+language: pt
+twin: ch-comp-175
+query: Quanta área natural versus área agrícola existe no Mato Grosso? Queremos direcionar
+  a expansão da soja para áreas já convertidas.
+expected:
+  aoi_ids: BRA.12
+  dataset_id: 3;1
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA.12' and natural_lands_class in ('Natural forests',
+    'Natural peat forests', 'Natural peat short vegetation', 'Natural short vegetation', 'Natural
+    water', 'Wetland natural forests', 'Wetland natural short vegetation', 'Bare') ; sum(area_ha)
+    where aoi_id = 'BRA.12' and natural_lands_class = 'Cropland' | sum(area_ha) where aoi_id
+    = 'BRA.12' and land_cover_class in ('Cropland', 'Cultivated grasslands')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-175 (pt-t-038)'
+  pair_id: pt-t-038
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'
