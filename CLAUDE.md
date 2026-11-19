@@ -85,6 +85,9 @@ a case store: read `benchmarks/README.md` first. Key rules:
   a chain of reruns); the index judges the combination canonical (`benchmarks/README.md`, "Rerunning revised
   members only").
 - After an erratum or a freeze, regenerate `results/index.json`.
+- To add a language to the languages companion (`2026-languages`), follow
+  "Adding a language" in `benchmarks/README.md`. A new language code needs a
+  harness change first, and the two sides of a pair are never edited apart.
 - An attempt that got no reply (`no_answer` on its trial: the stream sent
   nothing for 240 s, hit the wall clock, dropped or returned a 5xx) is a
   wrong attempt. An attempt the harness could not score keeps its trial
