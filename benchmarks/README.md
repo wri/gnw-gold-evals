@@ -56,7 +56,7 @@ write the same manifest contract.
 
 ## Languages companion
 
-The questions in Spanish and Indonesian sit in a companion manifest,
+The questions in other languages sit in a companion manifest,
 `benchmarks/<version>-languages.json`, beside the English version. The
 English manifest is never changed for them.
 
@@ -67,8 +67,9 @@ English manifest is never changed for them.
 - The companion's top-level `pairs_with` names the English version, for
   example `"pairs_with": "2026"`.
 - A member can carry two more optional facets, written only when set:
-  `language` (`es` or `id`; absent means English) and `twin_uid` (the uid of
-  its pair). A member with a `language` always has a `twin_uid`.
+  `language` (`es`, `id`, `pt` or `fr`; absent means English) and
+  `twin_uid` (the uid of its pair). A member with a `language` always has a
+  `twin_uid`.
 - The twin is either a member of the companion or a member of the
   `pairs_with` version. The companion names those English members by uid and
   does not hold them. It does hold the English twins that were written for a
@@ -129,12 +130,12 @@ base that holds only twins shows `questions: 0`, because its twins are no
 members of the companion; `twins_drawn` says it was used. The tool reads the
 `pairs_with` manifest from the same directory and stops if it is missing.
 
-`languages` is a list with one object per language of the manifest, `es`
-before `id`:
+`languages` is a list with one object per language of the manifest, in
+the order `es`, `id`, `pt`, `fr` (`goldset.canonical.LANGUAGES`):
 
 | Field | Meaning |
 |---|---|
-| `key` | `es` or `id`. |
+| `key` | `es`, `id`, `pt` or `fr`. |
 | `pairs` | Pairs measured: the question and its English twin both have a pass or fail verdict. Every figure below is over these pairs. |
 | `unpaired` | Questions whose twin has no result in the run or its bases, or whose twin an erratum voids (in the companion or the `pairs_with` version). Left out, never a fail. |
 | `unscored` | Pairs with an errored or uncovered side. Left out, as errors leave every rate. |

@@ -4,9 +4,9 @@
         --version 2026-languages --pairs-with 2026
 
 The companion holds the questions in other languages. Each is its own
-CHALLENGE case (``language: es`` or ``id``) paired with an English ``twin``
-that shares its expectations, so the pair's score gap measures the language
-alone. The English version is never changed: the companion names its
+CHALLENGE case (``language``: ``es``, ``id``, ``pt`` or ``fr``) paired with
+an English ``twin`` that shares its expectations, so the pair's score gap
+measures the language alone. The English version is never changed: the companion names its
 members by uid (``twin_uid``) and does not hold them.
 
 Members, from the ``ready`` cases of the store:
@@ -17,7 +17,7 @@ Members, from the ``ready`` cases of the store:
   groups, synthetic), so both halves of a pair sit in the same groups;
 - each English twin that is not a member of the ``--pairs-with`` version: a
   new English question written for the pair. It carries no ``twin_uid``,
-  because a Spanish and an Indonesian case can share one twin.
+  because questions in two languages can share one twin.
 
 A pair with a case that is not ``ready`` is left out and listed under
 ``sampling.excluded``, and so is a case in another language that names no
