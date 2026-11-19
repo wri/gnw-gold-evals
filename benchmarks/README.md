@@ -355,7 +355,8 @@ refuses:
 - a native row with an empty `english_query`, an `UNVERIFIED` value,
   an `expected_verified` that is not YAML or holds a list or a mapping, no
   expectation, a set and cohort the store lacks, a `type` that does not fit
-  the set, or a set with no single id prefix.
+  the set (the type it measures, or one an English case of the set and
+  cohort holds), or a set with no single id prefix.
 
 It does not require 80 rows. A translated row becomes `<member id>-<lang>`
 with the member's set, cohort and `expected`; the member is its `twin`. A

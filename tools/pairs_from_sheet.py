@@ -50,7 +50,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from benchmark_from_sheet import member_type  # noqa: E402
-from benchmark_languages import SET_TYPES  # noqa: E402
+from benchmark_languages import SET_TYPES, type_of  # noqa: E402
 
 from goldset.benchmark import USE_CASES  # noqa: E402
 from goldset.canonical import LANGUAGES  # noqa: E402
@@ -94,6 +94,13 @@ def plan(rows: list[dict], language: str, column: str, day: str,
         if case.notes.get("pair_id"):
             in_store[case.notes["pair_id"]].append(case.id)
     prefixes, highest = id_prefixes(store)
+    stored_types: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for case in store:
+        if case.language == "en" and case.notes.get("benchmark_type"):
+            try:
+                stored_types[(case.set, case.group)].add(type_of(case))
+            except (SystemExit, KeyError):
+                pass  # an odd stored case says nothing about which types fit
     repeats = Counter(row["pair_id"].strip() for row in rows)
     review = f"subagent review {day}; native speaker not yet"
     cases: list[Case] = []
@@ -189,11 +196,16 @@ def plan(rows: list[dict], language: str, column: str, day: str,
         except (SystemExit, KeyError):
             bad(f"type {row['type']!r} does not fit the set {set_}")
             continue
-        # The sets SET_TYPES lists each measure one type; refusal is not in it,
-        # as ``benchmark_languages.type_of`` also reads it from the note.
-        if SET_TYPES.get(set_, measured) != measured:
+        # A set's measured type fits, and so does any type an English case of
+        # the same set and cohort already holds (``ch-aoi-160`` is a refusal in
+        # the aoi set): the guide asks for a type, set and cohort that has a
+        # 2026 member. SET_TYPES lacks refusal, which ``type_of`` reads from
+        # the note.
+        if (SET_TYPES.get(set_, measured) != measured
+                and measured not in stored_types[(set_, cohort)]):
             bad(f"type {row['type']!r} does not fit the set {set_}, "
-                f"which measures {SET_TYPES[set_]!r}")
+                f"which measures {SET_TYPES[set_]!r}, and no English "
+                f"{set_}/{cohort} case has that type")
             continue
         if set_ not in prefixes:
             bad(f"no single id prefix among the numbered cases of the set {set_}")

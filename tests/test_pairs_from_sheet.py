@@ -205,6 +205,28 @@ def test_a_native_type_must_be_the_type_its_set_measures(tmp_path, capsys):
     assert "nothing written" in out
 
 
+def test_a_native_type_an_english_case_of_the_set_and_cohort_holds_fits(tmp_path):
+    # As ch-aoi-160, a refusal in the aoi set: the type is not the one the set measures.
+    root = store(tmp_path)
+    write_case(root, Case(id="ch-quant-003", status="ready", group="tcl",
+                          set="quantification", query="Why did Acre lose trees?",
+                          expected={"text": "Explains."},
+                          notes={"benchmark_type": "causal"}))
+    assert run(root, sheet(tmp_path, native(type="causal"))) == 0
+    assert any(c.language == "pt" and c.notes["benchmark_type"] == "causal"
+               for c in cases_in(root).values())
+
+
+def test_a_native_type_held_only_by_another_cohort_does_not_fit(tmp_path, capsys):
+    root = store(tmp_path)
+    write_case(root, Case(id="ch-quant-003", status="ready", group="other",
+                          set="quantification", query="Why did Acre lose trees?",
+                          expected={"text": "Explains."},
+                          notes={"benchmark_type": "causal"}))
+    assert run(root, sheet(tmp_path, native(type="causal"))) == 1
+    assert "does not fit the set quantification" in capsys.readouterr().out
+
+
 def nothing_written(root, capsys, row, needle, *extra):
     """Run one row over a store with ``extra`` cases; it must stop with
     ``needle`` and leave the store as it was."""
