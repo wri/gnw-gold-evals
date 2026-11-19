@@ -2782,7 +2782,7 @@
     },
     "2026-draft-5": {
       "path": "benchmarks/2026-draft-5.json",
-      "status": "draft",
+      "status": "retired",
       "frozen": null,
       "members": 269,
       "voided": 0,
@@ -2809,6 +2809,15 @@
       "canonical_runs": [
         "20260929T132417Z_prod"
       ]
+    },
+    "2026": {
+      "path": "benchmarks/2026.json",
+      "status": "frozen",
+      "frozen": "2026-11-18",
+      "members": 269,
+      "voided": 0,
+      "runs": [],
+      "canonical_runs": []
     }
   }
 }

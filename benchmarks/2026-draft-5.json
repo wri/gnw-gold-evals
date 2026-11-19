@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "version": "2026-draft-5",
-  "status": "draft",
+  "status": "retired",
   "created": "2026-10-27",
   "frozen": null,
   "source": {
@@ -4931,5 +4931,10 @@
       "synthetic": false
     }
   ],
-  "errata": []
+  "errata": [],
+  "retired": {
+    "date": "2026-11-18",
+    "reason": "frozen as 2026: the same 269 members, uid for uid",
+    "superseded_by": "2026"
+  }
 }
