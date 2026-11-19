@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "35da1f6a868095f8",
-  "case_count": 1528,
+  "caseset_version": "bc56e61f574b9f3e",
+  "case_count": 1530,
   "statuses": {
-    "ready": 1493,
+    "ready": 1495,
     "todo": 35
   },
-  "active_count": 1528,
+  "active_count": 1530,
   "groups": [
     {
       "group": "acronyms",
@@ -285,10 +285,10 @@
     },
     {
       "group": "many_areas",
-      "cases": 4,
-      "active": 4,
+      "cases": 5,
+      "active": 5,
       "statuses": {
-        "ready": 4
+        "ready": 5
       }
     },
     {
@@ -366,10 +366,10 @@
     },
     {
       "group": "recent_default",
-      "cases": 8,
-      "active": 8,
+      "cases": 9,
+      "active": 9,
       "statuses": {
-        "ready": 8
+        "ready": 9
       }
     },
     {
@@ -578,7 +578,7 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 1197,
+      "dedicated": 1192,
       "shared_only": 0
     },
     "analysis": {
@@ -586,7 +586,7 @@
       "shared_only": 0
     },
     "explanation": {
-      "dedicated": 611,
+      "dedicated": 617,
       "shared_only": 0
     },
     "output": {
@@ -594,44 +594,44 @@
       "shared_only": 0
     },
     "scope": {
-      "dedicated": 357,
+      "dedicated": 356,
       "shared_only": 0
     }
   },
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 1061,
+      "cases": 1056,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 969,
+      "cases": 964,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 861,
+      "cases": 856,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
       "field": "text",
-      "cases": 609,
+      "cases": 615,
       "switches_on": "expected_text_match"
     },
     {
       "field": "start_date",
-      "cases": 480,
-      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
-    },
-    {
-      "field": "end_date",
       "cases": 478,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
+      "field": "end_date",
+      "cases": 476,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
+    },
+    {
       "field": "figure",
-      "cases": 456,
+      "cases": 452,
       "switches_on": "figure_match (computed from the agent's own pulled table)"
     },
     {
@@ -656,7 +656,7 @@
     },
     {
       "field": "accept_nudge_offering",
-      "cases": 78,
+      "cases": 77,
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {
@@ -764,7 +764,7 @@
         "dataset_id": "1",
         "dataset_name": "Global land cover",
         "missing_instructions": [],
-        "cases": 93,
+        "cases": 91,
         "answer_graded": 31,
         "parameters": [],
         "context_layers": []
@@ -791,7 +791,7 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 337,
+        "cases": 335,
         "answer_graded": 109,
         "parameters": [
           {
@@ -906,8 +906,8 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 148,
-        "answer_graded": 44,
+        "cases": 147,
+        "answer_graded": 43,
         "parameters": [],
         "context_layers": [
           {

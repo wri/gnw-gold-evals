@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "35da1f6a868095f8",
-  "case_count": 1528,
+  "caseset_version": "bc56e61f574b9f3e",
+  "case_count": 1530,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -4584,6 +4584,23 @@
       "dataset_ids": [
         "11"
       ]
+    },
+    {
+      "id": "ch-causal-031",
+      "uid": "f17ab14a8af46592",
+      "set": "causal",
+      "group": "many_areas",
+      "status": "ready",
+      "behaviour": "Refuse: ranking districts is below the analysable level; offer the provinces by the hard commodities class",
+      "query": "Which districts of Madre de Dios have the most loss from mining?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": []
     },
     {
       "id": "ch-comp-001",
@@ -15822,30 +15839,19 @@
     },
     {
       "id": "ch-mon-008-es",
-      "uid": "0ad840843238ae1d",
+      "uid": "2448c6549d5cf49f",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
       "query": "Muéstrame las alertas recientes de incendio y de deforestación alrededor de Puerto Suárez, Bolivia",
       "expected_fields": [
-        "accept_nudge_offering",
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "accepted_nudge_match",
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "monitoring",
-      "dataset_ids": [
-        "11"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-mon-009",
@@ -18105,6 +18111,24 @@
       "dataset_ids": [
         "11"
       ]
+    },
+    {
+      "id": "ch-mon-074",
+      "uid": "d50cbd3438c371ae",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "refuse at municipality level; offer the parent province",
+      "query": "Show me recent fire and deforestation alerts around Puerto Suárez, Bolivia",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
     },
     {
       "id": "ch-port-001",
@@ -26086,57 +26110,35 @@
     },
     {
       "id": "ch-quant-216",
-      "uid": "0ea30208963205a1",
+      "uid": "3890f05493078101",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
       "query": "Calculation of forest cover loss in Morona District, Loreto Region, from 2010 to 2024",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "end_date",
-        "figure",
-        "start_date"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-216-es",
-      "uid": "c1dea451dbc63ed9",
+      "uid": "78b708d5d724ef90",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
       "query": "Cálculo de pérdida de cobertura forestal en el Distrito de Morona Región Loreto desde 2010 a 2024",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "end_date",
-        "figure",
-        "start_date"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-217",
@@ -26506,51 +26508,35 @@
     },
     {
       "id": "ch-quant-224",
-      "uid": "8992e49f2cf1b608",
+      "uid": "0c6cc5ba36935d01",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "show me the land uses in Valdepeñas, Ciudad Real province, Spain",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "figure"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "1"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-224-es",
-      "uid": "9586a0f2295ba02c",
+      "uid": "6cdb2e9b6acef5ae",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "muestrame los usos del suelo en Valdepeñas, provincia de Ciudad real, españa",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "figure"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "1"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-225",

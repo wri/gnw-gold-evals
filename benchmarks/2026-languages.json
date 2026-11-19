@@ -7,7 +7,7 @@
   "pairs_with": "2026",
   "source": {
     "cases_dir": "cases/challenge",
-    "caseset_version": "35da1f6a868095f8"
+    "caseset_version": "bc56e61f574b9f3e"
   },
   "sampling": {
     "tool": "tools/benchmark_languages.py",
@@ -1704,23 +1704,17 @@
       "twin_uid": "d1e9673efb1a8c40"
     },
     {
-      "uid": "0ad840843238ae1d",
+      "uid": "2448c6549d5cf49f",
       "id": "ch-mon-008-es",
       "type": "monitoring",
       "set": "monitoring",
       "cohort": "recent_default",
       "difficulty": "",
       "stages": [
-        "scope",
-        "retrieval",
         "explanation"
       ],
-      "use_cases": [
-        "UC1"
-      ],
-      "synthetic": true,
       "language": "es",
-      "twin_uid": "b2e97b229a637777"
+      "twin_uid": "d50cbd3438c371ae"
     },
     {
       "uid": "c7bfe468f9aa15a2",
@@ -2220,6 +2214,17 @@
       ],
       "language": "pt",
       "twin_uid": "903c58e3a814f7a2"
+    },
+    {
+      "uid": "d50cbd3438c371ae",
+      "id": "ch-mon-074",
+      "type": "monitoring",
+      "set": "monitoring",
+      "cohort": "recent_default",
+      "difficulty": "hard",
+      "stages": [
+        "explanation"
+      ]
     },
     {
       "uid": "2530507a31f53e69",
@@ -3545,28 +3550,28 @@
       "twin_uid": "1be367f21319de5c"
     },
     {
-      "uid": "0ea30208963205a1",
+      "uid": "3890f05493078101",
       "id": "ch-quant-216",
       "type": "quantification",
       "set": "quantification",
       "cohort": "tcl",
       "difficulty": "",
       "stages": [
-        "retrieval"
+        "explanation"
       ]
     },
     {
-      "uid": "c1dea451dbc63ed9",
+      "uid": "78b708d5d724ef90",
       "id": "ch-quant-216-es",
       "type": "quantification",
       "set": "quantification",
       "cohort": "tcl",
       "difficulty": "",
       "stages": [
-        "retrieval"
+        "explanation"
       ],
       "language": "es",
-      "twin_uid": "0ea30208963205a1"
+      "twin_uid": "3890f05493078101"
     },
     {
       "uid": "552e7d182c310395",
@@ -3751,28 +3756,28 @@
       "twin_uid": "61becbf6ba7fd917"
     },
     {
-      "uid": "8992e49f2cf1b608",
+      "uid": "0c6cc5ba36935d01",
       "id": "ch-quant-224",
       "type": "quantification",
       "set": "quantification",
       "cohort": "land-cover",
       "difficulty": "",
       "stages": [
-        "retrieval"
+        "explanation"
       ]
     },
     {
-      "uid": "9586a0f2295ba02c",
+      "uid": "6cdb2e9b6acef5ae",
       "id": "ch-quant-224-es",
       "type": "quantification",
       "set": "quantification",
       "cohort": "land-cover",
       "difficulty": "",
       "stages": [
-        "retrieval"
+        "explanation"
       ],
       "language": "es",
-      "twin_uid": "8992e49f2cf1b608"
+      "twin_uid": "0c6cc5ba36935d01"
     },
     {
       "uid": "eead762d108d8260",

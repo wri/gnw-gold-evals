@@ -1,19 +1,15 @@
 id: ch-mon-008-es
-uid: 0ad840843238ae1d
+uid: 2448c6549d5cf49f
 status: ready
 set: monitoring
 group: recent_default
 language: es
-twin: ch-mon-008
+twin: ch-mon-074
 query: Muéstrame las alertas recientes de incendio y de deforestación alrededor de Puerto
   Suárez, Bolivia
 expected:
-  aoi_ids: BOL.8.6.3
-  dataset_id: '11'
-  data_pull: 'TRUE'
-  text: States the window covered and does not present disturbance alerts as fire detections,
-    or annual fire loss as recent alerts.
-  accept_nudge_offering: '11'
+  text: Declines to pull alerts at municipality level for Puerto Suárez, and may offer the
+    parent province instead; never labels a province figure as Puerto Suárez's.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: translation of ch-mon-008 (es-t-006)'
   pair_id: es-t-006
