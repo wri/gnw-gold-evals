@@ -521,7 +521,8 @@ _USUAL_DECIMAL_MARK = {"es": ".", "id": ",", "pt": ",", "fr": ","}
 # "bilhão" is 10^9, and the European "bilião" is no scale, so it can never
 # pass as 10^9; "mil milhões" is 10^9 in either country. In a French reply
 # "milliard" is 10^9 and "billion" has its French meaning, 10^12 (AJ,
-# 2026-11-19).
+# 2026-11-19); a reply to a French case that reads as English is no French
+# reply, so there it keeps its English meaning (``_ENGLISH_MEANING``).
 _LOCAL_SCALES = {
     "es": {
         **_SCALES,
@@ -554,6 +555,8 @@ _LOCAL_SCALES = {
         "billion": 1e12, "billions": 1e12,
     },
 }
+# Scale words the case language and English spell alike but read apart.
+_ENGLISH_MEANING = {"fr": {"billion": 1e9, "billions": 1e9}}
 _LOCAL_UNITS = (*_UNITS, "hectárea", "hectáreas", "hectarea", "hectareas",
                 "hektar", "hektare", "tonelada", "toneladas", "ton")
 _KM2_PHRASE = (
@@ -644,10 +647,14 @@ def _stated_as(
     return Stated(reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text)
 
 
-def _word_scale(word: str, language: str) -> tuple[float, bool]:
+def _word_scale(
+    word: str, language: str, english: bool = False
+) -> tuple[float, bool]:
     """(scale, whether the word makes the number a measure) for the word
-    after a number."""
+    after a number; ``english`` when the reply reads as English."""
     scale = _LOCAL_SCALES[language].get(word, 1.0)
+    if english:
+        scale = _ENGLISH_MEANING.get(language, {}).get(word, scale)
     if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
         scale = 100.0  # km² to hectares
     return scale, scale != 1.0 or word in _LOCAL_UNITS
@@ -688,13 +695,14 @@ def _stated_numbers_local(
     """``stated_numbers`` for a non-English case; ``answer`` is NFC."""
     matches = list(_LOCAL_NUMBER.finditer(answer))
     reply_mark = _reply_decimal_mark(matches, language)
+    english = language in _ENGLISH_MEANING and detect_language(answer)[0] == "en"
     found = []
     for m in matches:
         for number, shown, carries in _spaced_readings(m[1]):
             percent = m[2] if carries else None
             suffix = m[3] if carries else None
             word = _suffix_word(suffix)
-            scale, measured = _word_scale(word, language)
+            scale, measured = _word_scale(word, language, english)
             plain = "." not in number and "," not in number
             if plain and not (percent or measured) and re.fullmatch(
                 r"(19|20)\d\d", number.lstrip("-")

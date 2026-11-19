@@ -377,6 +377,14 @@ def test_a_french_billion_is_ten_to_the_twelfth():
     )
 
 
+def test_an_english_reply_to_a_french_case_reads_billion_in_english():
+    # The French meaning belongs to a French reply. Horizon often answers a
+    # French question in English, where a billion is 10^9.
+    english = ("The forests in the region hold about 1.2 billion tonnes of carbon,"
+               " and the loss since 2001 has released a share of it.")
+    assert _local(english, "fr")["1.2 billion"].value == pytest.approx(1.2e9)
+
+
 def test_the_usual_portuguese_and_french_mark_is_the_comma():
     # Nothing in these replies settles the mark, so Horizon's habit in the
     # language gives the first reading (see _USUAL_DECIMAL_MARK).
