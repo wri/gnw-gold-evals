@@ -75,7 +75,7 @@ def test_errata_void_members():
     (manifest(members=[member(stages=["fetch"])]), "unknown stages"),
     (manifest(errata=[{"uid": "nope", "date": "d", "reason": "r"}]), "does not name a member"),
     (manifest(errata=[{"uid": "u1"}]), "date and a reason"),
-    (manifest(members=[member(language="fr", twin_uid="u2")]), "language 'fr'"),
+    (manifest(members=[member(language="de", twin_uid="u2")]), "language 'de'"),
     (manifest(members=[member(language="en", twin_uid="u2")]), "language 'en'"),
     (manifest(members=[member(language="es")]), "needs a twin_uid"),
     (manifest(members=[member(language="id", twin_uid="u1")]), "its own twin"),

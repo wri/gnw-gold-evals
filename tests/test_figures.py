@@ -143,7 +143,7 @@ def _local(answer, language):
 
 def test_an_unknown_language_fails_loudly():
     with pytest.raises(ValueError, match="language"):
-        stated_numbers("12 ha", "fr")
+        stated_numbers("12 ha", "de")
 
 
 def test_english_cases_keep_the_english_reading():
@@ -427,9 +427,9 @@ def test_local_zero_phrases_need_the_measured_noun_at_once(pulled):
 
 def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
     with pytest.raises(ValueError, match="language"):
-        evaluate_figures({}, "", "fr")
+        evaluate_figures({}, "", "de")
     with pytest.raises(ValueError, match="language"):
-        evaluate_figures({}, "sum(area_ha)", "fr")
+        evaluate_figures({}, "sum(area_ha)", "de")
 
 
 def test_figure_match_passes_rounding_and_fails_a_wrong_figure(pulled):
