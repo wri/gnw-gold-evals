@@ -788,6 +788,12 @@ _ES_SKIP = (
 )
 _PT_SKIP = "contar|incluir|dados|informaç(?:ão|ões)|registros?|precedentes|dúvida"
 _FR_SKIP = "compter|inclure|donn[ée]es?|informations?|jeux?|précédents?|doute"
+# French "changement" that goes on to name a measured noun is no zero (see below).
+_FR_CHANGE = (
+    r"changements?(?! (?:dans|des?|du|sur|en|d['’]) ?"
+    r"(?:(?:les|la|le|des|de la) |l['’])?"
+    r"(?:pertes?|alertes?|gains?|émissions|perturbations?|déforestation))"
+)
 # The negation or "without" must take the measured noun at once, after at most
 # one quantifier: a gap of up to two words let "sin distinguir las pérdidas"
 # and "tanpa membedakan kehilangan" (an infinitive, then a noun of another
@@ -829,19 +835,25 @@ _LOCAL_ZERO_WORDS = {
         r"|zero (?:(?!"+_PT_SKIP+r")[\w-]+ ){0,2}"
         r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?"
         r"|perturbaç(?:ão|ões))"
+        # "Não houve redução das perdas", "nenhuma redução das perdas" and
+        # "sem considerar as perdas" say nothing about a zero loss: these cues
+        # take the measured noun at once, after at most one quantifier and an
+        # "eventos de" / "hectares de" bridge, never a verb or another noun.
+        # "mudança" and "alteração" do not count when they go on to name a
+        # measured noun ("nenhuma mudança nas perdas": the loss itself is not
+        # said to be 0).
         r"|(?:n[ãa]o (?:se )?(?:foi |foram |houve |há )?"
         r"(?:registr|detect|observ|report|encontr|identific|verific)\w+"
-        r"|nenhum|nenhuma)"
-        r" (?:(?!"+_PT_SKIP+r")[\w-]+ ){0,2}"
-        r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
-        r"|perturbaç(?:ão|ões)|desmatamento|hectares?)"
-        # "Não houve redução das perdas" and "sem considerar as perdas" say
-        # nothing about a zero loss: these cues take the noun at once, after
-        # at most a quantifier, never a verb or another noun.
-        r"|(?:n[ãa]o (?:houve|h[áa]|ocorreu|ocorreram|exist\w+|apresent\w+)|sem)"
-        r" (?:nenhum[a]? |qualquer |novos? |novas? )?"
-        r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
-        r"|perturbaç(?:ão|ões)|desmatamento)"
+        r"|n[ãa]o (?:houve|h[áa]|ocorreu|ocorreram|exist\w+|apresent\w+)"
+        r"|sem|nenhum|nenhuma)"
+        r" (?:(?:nenhum[a]?s?|qualquer|novos?|novas?) )?"
+        r"(?:(?:eventos?|hectares?|ocorr[êe]ncias?) de )?"
+        r"(?:perdas?|alertas?|ganhos?|emissões|perturbaç(?:ão|ões)|desmatamento"
+        r"|hectares?"
+        r"|(?:mudanças?|alteraç(?:ão|ões))"
+        r"(?! (?:(?:em|de) (?:(?:as|os|a|o) )?|d[ao]s? |n[ao]s? )"
+        r"(?:perdas?|alertas?|ganhos?|emissões|perturbaç(?:ão|ões)"
+        r"|desmatamento)))"
         # "A perda foi nula"; a negation between noun and word ("não foi nula")
         # turns it round, so none may sit between them.
         r"|(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
@@ -853,9 +865,16 @@ _LOCAL_ZERO_WORDS = {
         r"\b(?:z[ée]ro (?:hectares?|ha)"
         r"|z[ée]ro (?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
         r"(?:pertes?|alertes?|changements?|gains?|perturbations?)"
-        r"|aucune? (?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
-        r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
-        r"|déforestation|hectares?)"
+        # "aucune" takes the measured noun at once, after at most one
+        # quantifier and a "hectares de" / "cas de" bridge: "aucune réduction
+        # des pertes" states a change, not a zero. "changement" does not count
+        # when it goes on to name a measured noun ("aucun changement dans les
+        # pertes": the loss itself is not said to be 0).
+        r"|aucune? (?:(?:nouvel(?:le)?s?|nouveaux?|aucune?) )?"
+        r"(?:(?:hectares?|[ée]v[ée]nements?|cas) d(?:e |['’]))?"
+        r"(?:pertes?|alertes?|gains?|émissions|perturbations?"
+        r"|déforestation|hectares?"
+        r"|"+_FR_CHANGE+r")"
         # "pas de" and "sans" state a zero only as an existence statement:
         # "ne permettent pas de distinguer", "n'est pas de la déforestation"
         # and "sans distinguer les pertes" do not, so the noun follows at
@@ -865,8 +884,8 @@ _LOCAL_ZERO_WORDS = {
         r"|identifi|signal)\w* (?:d(?:e |['’]))?"
         r"|sans )"
         r"(?:(?!"+_FR_SKIP+r"|les\b|des\b|la\b|du\b)[\wé-]+ )?"
-        r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
-        r"|déforestation)"
+        r"(?:pertes?|alertes?|gains?|émissions|perturbations?"
+        r"|déforestation|"+_FR_CHANGE+r")"
         # "La perte a été nulle"; a negation between noun and word ("n'est
         # pas nulle") turns it round, so none may sit between them.
         r"|(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
@@ -876,8 +895,8 @@ _LOCAL_ZERO_WORDS = {
         # existence statement; mid-sentence "pas de" is not.
         r"|(?:^|[.!?\n:;])[\s*_>•-]*pas d(?:e |['’])"
         r"(?:(?!"+_FR_SKIP+r"|les\b|des\b|la\b|du\b)[\wé-]+ )?"
-        r"(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
-        r"|déforestation)\b",
+        r"(?:pertes?|alertes?|gains?|émissions|perturbations?"
+        r"|déforestation|"+_FR_CHANGE+r")\b",
         re.I,
     ),
 }

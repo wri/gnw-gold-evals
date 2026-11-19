@@ -677,6 +677,56 @@ def test_the_new_zero_cues_keep_the_wrong_answers_wrong(pulled, answer, language
     assert _zero_score(pulled, answer, language) == 0.0, answer
 
 
+def test_portuguese_and_french_zero_phrases_need_the_measured_noun_at_once(pulled):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+
+    def score(sentence, language):
+        lead = "O valor é de 120 ha. " if language == "pt" else "Le chiffre est de 120 ha. "
+        state, tables = _state(lead + sentence, empty_year)
+        pulled(tables)
+        result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+        return result["figure_match_score"]
+
+    # The cue belongs to a change, not to the measured noun: no zero is stated.
+    for sentence, language in [
+        ("Nenhuma redução das perdas em relação a 2020.", "pt"),
+        ("Nenhuma redução de perdas em relação a 2020.", "pt"),
+        ("Não foi detectada redução das perdas em relação a 2020.", "pt"),
+        ("Não foram detectados aumentos das perdas em relação a 2020.", "pt"),
+        ("Nenhuma mudança nas perdas em relação a 2020.", "pt"),
+        ("Nenhuma alteração das perdas em relação a 2020.", "pt"),
+        ("Não houve mudança nas perdas em relação a 2020.", "pt"),
+        ("Aucune réduction des pertes par rapport à 2020.", "fr"),
+        ("Aucune réduction de pertes par rapport à 2020.", "fr"),
+        ("Aucune augmentation des alertes par rapport à 2020.", "fr"),
+        ("Aucun changement dans les pertes par rapport à 2020.", "fr"),
+        ("Il n'y a pas de changement des pertes par rapport à 2020.", "fr"),
+    ]:
+        assert score(sentence, language) == 0.0, sentence
+    # A real zero statement still counts.
+    for sentence, language in [
+        ("Não foi registrada perda.", "pt"),
+        ("Não foram detectados alertas.", "pt"),
+        ("Não foi registrada nenhuma perda.", "pt"),
+        ("Não foi detectada nenhuma nova perda.", "pt"),
+        ("Nenhuma perda.", "pt"),
+        ("Nenhum alerta.", "pt"),
+        ("Nenhum hectare.", "pt"),
+        ("Não foram detectados eventos de perda.", "pt"),
+        ("Não foram registrados hectares de perda.", "pt"),
+        ("Nenhuma mudança na cobertura.", "pt"),
+        ("Aucune perte.", "fr"),
+        ("Aucune alerte.", "fr"),
+        ("Aucun hectare.", "fr"),
+        ("Aucune nouvelle alerte.", "fr"),
+        ("Aucune perte de couvert arboré.", "fr"),
+        ("L'étude n'a enregistré aucune perte.", "fr"),
+        ("Aucun cas de perte.", "fr"),
+        ("Aucun changement de couverture.", "fr"),
+    ]:
+        assert score(sentence, language) == 1.0, sentence
+
+
 def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
     with pytest.raises(ValueError, match="language"):
         evaluate_figures({}, "", "de")
