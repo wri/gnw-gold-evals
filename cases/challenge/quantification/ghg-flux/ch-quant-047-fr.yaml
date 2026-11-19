@@ -1,0 +1,23 @@
+id: ch-quant-047-fr
+uid: b62ce25b952b9b2e
+status: ready
+set: quantification
+group: ghg-flux
+language: fr
+twin: ch-quant-047
+query: J'essaie de comprendre les forêts de la RDC - sur toute la période des données, est-ce
+  qu'elles absorbent vraiment plus de carbone qu'elles n'en rejettent, ou c'est l'inverse
+  ?
+expected:
+  aoi_ids: COD
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e)
+  figure_claim: '#1 < 0 :: DRC''s forests were a net carbon sink over 2001 to 2025 || DRC''s
+    forests were a net carbon source over 2001 to 2025'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-047 (fr-t-011)'
+  pair_id: fr-t-011
+  use_cases: UC3;UC4;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

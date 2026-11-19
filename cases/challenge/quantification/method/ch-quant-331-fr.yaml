@@ -1,0 +1,25 @@
+id: ch-quant-331-fr
+uid: ea47c23a07f36775
+status: ready
+set: quantification
+group: method
+language: fr
+twin: ch-quant-331
+query: Comment télécharger la carte global land cover ?
+expected:
+  text: Says plainly that it cannot produce a file of the land cover map here, and points
+    to where the data can be downloaded (for example from the dataset's providers, Land &
+    Carbon Lab or the University of Maryland GLAD lab, or from Global Forest Watch), without
+    inventing links or claiming to have produced a file; mentioning the CSV or image download
+    of an analysis chart is fine.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-065); real fr user prompt,
+    trace 2026-02'
+  pair_id: fr-n-065
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-mon-046; es-n-035 (ch-quant-231)
+  language_review: subagent review 2026-11-19; native speaker not yet

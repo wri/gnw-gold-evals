@@ -1,0 +1,26 @@
+id: ch-quant-321-fr
+uid: 88096cdd25f584d9
+status: ready
+set: quantification
+group: many-areas
+language: fr
+twin: ch-quant-321
+query: Je veux connaitre les municipalités les plus touchées par la déforestation dans la
+  département de La Paz en bolivie. Par ordre du plus déforesté au moins. avec la couche natural
+  forest loss.
+expected:
+  text: Says it cannot analyse the municipalities of La Paz (its analysis stops at provinces),
+    and may offer or give a ranking of the provinces of La Paz instead, named as provinces;
+    never presents province figures as municipal ones.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-050); real fr user prompt,
+    trace 2026-07'
+  pair_id: fr-n-050
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: municipalities of La Paz department (Bolivia)
+  precedent: id-n-037 (ch-quant-254); id-n-026 (ch-quant-247); ch-aoi-128
+  language_review: subagent review 2026-11-19; native speaker not yet

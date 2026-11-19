@@ -1,0 +1,25 @@
+id: ch-quant-312
+uid: cee5fdf7547e0296
+status: ready
+set: quantification
+group: tcl-fires
+query: What is the loss in ha and the number of fire points in Ankarafantsika
+expected:
+  aoi_ids: 1299|6548
+  dataset_id: 4;10
+  data_pull: 'TRUE'
+  figure: sum(area_ha)
+  text: Gives tree cover loss in hectares from pulled data and says that a count of fire points
+    (active-fire detections) is not available here; any fire figure it gives is tree cover
+    loss from fires, named as such, not a number of fire points.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-312-fr (fr-n-040);
+    real fr user prompt, trace 2026-03'
+  pair_id: fr-n-040
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Ankarafantsika National Park (Madagascar)
+  precedent: ch-causal-006; ch-mon-053; id-n-001 (ch-mon-068)

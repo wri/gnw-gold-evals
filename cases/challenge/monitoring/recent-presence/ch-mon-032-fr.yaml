@@ -1,0 +1,23 @@
+id: ch-mon-032-fr
+uid: e536a5acec879092
+status: ready
+set: monitoring
+group: recent_presence
+language: fr
+twin: ch-mon-032
+query: Y a-t-il eu de nouvelles alertes de déforestation dans la province de l'Équateur au
+  cours du dernier mois ?
+expected:
+  aoi_ids: COD.2
+  dataset_id: '11'
+  start_date: '{run-30d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in {run-30d}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-032 (fr-t-012)'
+  pair_id: fr-t-012
+  use_cases: UC1
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

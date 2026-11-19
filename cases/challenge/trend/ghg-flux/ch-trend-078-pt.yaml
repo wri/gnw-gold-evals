@@ -1,0 +1,28 @@
+id: ch-trend-078-pt
+uid: f930945aabcc7645
+status: ready
+set: trend
+group: ghg-flux
+language: pt
+twin: ch-trend-078
+query: Quanto mudaram as emissões provenientes da perda de cobertura arbórea no Brasil entre
+  2020 e 2024?
+expected:
+  aoi_ids: BRA
+  dataset_id: '4'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(carbon_emissions_MgCO2e) where tree_cover_loss_year = 2020 ; ref: sum(carbon_emissions_MgCO2e)
+    where tree_cover_loss_year = 2024 ; change(sum(carbon_emissions_MgCO2e) where tree_cover_loss_year
+    = 2020, sum(carbon_emissions_MgCO2e) where tree_cover_loss_year = 2024) | pct_change(sum(carbon_emissions_MgCO2e)
+    where tree_cover_loss_year = 2020, sum(carbon_emissions_MgCO2e) where tree_cover_loss_year
+    = 2024)'
+  figure_claim: '#2 > #1 :: emissions from tree cover loss rose between 2020 and 2024 || emissions
+    from tree cover loss fell between 2020 and 2024'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-trend-078 (pt-t-027)'
+  pair_id: pt-t-027
+  use_cases: UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,29 @@
+id: ch-quant-271-pt
+uid: df4cd73a4d7e954b
+status: ready
+set: quantification
+group: tcl
+language: pt
+twin: ch-quant-271
+query: ME explique melhor sobre o desmatamento no Departamento de Boquerón, no paraguai?
+expected:
+  aoi_ids: PRY.5
+  dataset_id: 4;8
+  data_pull: 'TRUE'
+  figure: sum(area_ha) | max(area_ha) by tree_cover_loss_year | max(area_ha) by tree_cover_loss_driver
+  text: Describes deforestation in Boquerón from pulled data (tree cover loss, or tree cover
+    loss by driver) and states the period its figures cover.
+  accept_nudge_offering: 4 | 8
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-008); real pt user prompt,
+    trace 2025-12'
+  pair_id: pt-n-008
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Boquerón department, Paraguay
+  precedent: ch-quant-160 (PRY.5); es-n-004 (ch-trend-088); es-n-031 (ch-trend-093); es-n-030
+    (ch-comp-182)
+  language_review: subagent review 2026-11-19; native speaker not yet

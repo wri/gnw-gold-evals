@@ -1,0 +1,23 @@
+id: ch-causal-008-fr
+uid: 76169d30c377fc3b
+status: ready
+set: causal
+group: commodity_overclaim
+language: fr
+twin: ch-causal-008
+query: Est-ce que la culture du cacao a causé de la déforestation en Côte d'Ivoire ?
+expected:
+  aoi_ids: CIV
+  dataset_id: 8;9
+  data_pull: 'TRUE'
+  text: Says the driver data class loss as permanent agriculture without naming cocoa; any
+    cocoa-specific figure is presented as the sLUC statistical estimate, not observed clearing.
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Permanent agriculture', sum(area_ha)
+    where tree_cover_loss_driver != 'Unknown') | sum(emissions_tCO2e) where crop_type = 'Cocoa'
+    and gas_type = 'CO2e' and year = 2024
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-008 (fr-t-003)'
+  pair_id: fr-t-003
+  use_cases: UC2;UC3;UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

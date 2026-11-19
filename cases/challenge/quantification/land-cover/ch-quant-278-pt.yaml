@@ -1,0 +1,24 @@
+id: ch-quant-278-pt
+uid: 4569218f5137d233
+status: ready
+set: quantification
+group: land-cover
+language: pt
+twin: ch-quant-278
+query: como esta a paisagem na bacia hidrografica do rio cuiabá em mato grosso?
+expected:
+  text: Either says it has no boundary for the Cuiabá River basin and asks for one (or an
+    upload) or offers named areas within it, or analyses named areas and says they only stand
+    in for the basin; does not present Cuiabá municipality, or the protected area at the Cuiabá
+    River headwaters, as the basin without saying so.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-024); real pt user prompt,
+    trace 2026-02'
+  pair_id: pt-n-024
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-178; id-n-046 (ch-quant-259); ch-aoi-091
+  language_review: subagent review 2026-11-19; native speaker not yet

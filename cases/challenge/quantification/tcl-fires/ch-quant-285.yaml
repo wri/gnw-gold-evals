@@ -1,0 +1,24 @@
+id: ch-quant-285
+uid: e8574340262af067
+status: ready
+set: quantification
+group: tcl-fires
+query: I want information on fires in Brazil
+expected:
+  aoi_ids: BRA
+  dataset_id: '10'
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) | max(tree_cover_loss_from_fires_area_ha)
+    by tree_cover_loss_year
+  text: Presents the figures as tree cover loss from fires and states the years they cover;
+    does not present them as fire counts or as total burned area.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-285-pt (pt-n-036);
+    real pt user prompt, trace 2026-08'
+  pair_id: pt-n-036
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: es-n-005 (ch-trend-089); id-n-017 (ch-quant-241); ch-quant-142

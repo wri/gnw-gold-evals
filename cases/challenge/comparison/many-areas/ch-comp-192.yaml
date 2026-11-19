@@ -1,0 +1,25 @@
+id: ch-comp-192
+uid: 9857865b302314a9
+status: ready
+set: comparison
+group: many-areas
+query: Which country in Africa had the most forest cover loss in 2025
+expected:
+  dataset_id: '4'
+  context_layer: no_selection | primary_forest
+  start_date: '2025-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  text: Names the African country with the most tree cover loss in 2025 from pulled data,
+    ranking African countries; does not rank or name countries outside Africa, and does not
+    name a country from general knowledge as if from data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-comp-192-fr (fr-n-038);
+    real fr user prompt, trace 2026-05'
+  pair_id: fr-n-038
+  benchmark_type: comparison
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-168

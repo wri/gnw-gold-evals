@@ -1,0 +1,24 @@
+id: ch-comp-055-pt
+uid: 4e3914f172b89df8
+status: ready
+set: comparison
+group: land-cover
+language: pt
+twin: ch-comp-055
+query: Entre o Brasil e a República Democrática do Congo, em qual deles a cobertura do solo
+  inclui uma área maior de cobertura arbórea?
+expected:
+  aoi_ids: BRA;COD
+  dataset_id: 1;7
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and land_cover_class = 'Tree cover' | sum(area_ha)
+    where aoi_id = 'BRA' ; sum(area_ha) where aoi_id = 'COD' and land_cover_class = 'Tree
+    cover' | sum(area_ha) where aoi_id = 'COD'
+  figure_claim: '#1 > #2 :: Brazil has the larger area of tree cover than the DRC || The DRC
+    has the larger area of tree cover than Brazil'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-055 (pt-t-037)'
+  pair_id: pt-t-037
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

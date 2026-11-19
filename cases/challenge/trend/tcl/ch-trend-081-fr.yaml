@@ -1,0 +1,21 @@
+id: ch-trend-081-fr
+uid: 4f4f48f282a80ca3
+status: ready
+set: trend
+group: tcl
+language: fr
+twin: ch-trend-081
+query: Est-ce que Madagascar est en bonne voie pour atteindre zéro perte de forêt dans les
+  aires protégées d'ici 2030 ?
+expected:
+  dataset_id: '4'
+  text: Describes the recent loss trend from the data, for Madagascar's protected areas or
+    nationally with that stated; does not answer from restoration pledges or project to 2030
+    without a clear caveat.
+  data_pull: 'TRUE'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-trend-081 (fr-t-034)'
+  pair_id: fr-t-034
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

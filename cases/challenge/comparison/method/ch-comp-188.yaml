@@ -1,0 +1,21 @@
+id: ch-comp-188
+uid: f3e1b6c95b18aec3
+status: ready
+set: comparison
+group: method
+query: explain in detail why tree cover loss is not deforestation
+expected:
+  text: 'Explains that tree cover loss is not the same as deforestation: it counts any removal
+    of tree cover, natural or human-caused, temporary or permanent (fire, logging, plantation
+    harvest), while deforestation is the lasting, human-caused conversion of forest to another
+    land use.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-comp-188-pt (pt-n-050);
+    real pt user prompt, trace 2025-11'
+  pair_id: pt-n-050
+  benchmark_type: comparison
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: es-n-032 (ch-comp-183); ch-comp-179; id-n-054 (ch-quant-265)

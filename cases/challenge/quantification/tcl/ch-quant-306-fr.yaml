@@ -1,0 +1,28 @@
+id: ch-quant-306-fr
+uid: 9790cefdda5dcb8e
+status: ready
+set: quantification
+group: tcl
+language: fr
+twin: ch-quant-306
+query: Quelle est la perte des forets de 2010 à 2015 dans la Province de la Tshopo
+expected:
+  aoi_ids: COD.25
+  dataset_id: '4'
+  context_layer: no_selection | primary_forest
+  start_date: '2010-01-01'
+  end_date: '2015-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year in 2010..2015
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-024); real fr user prompt,
+    trace 2026-09'
+  pair_id: fr-n-024
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Tshopo (province, DRC)
+  precedent: ch-quant-151; ch-quant-221; ch-quant-160
+  language_review: subagent review 2026-11-19; native speaker not yet

@@ -1,0 +1,26 @@
+id: ch-quant-305
+uid: 25027cf2ef04b808
+status: ready
+set: quantification
+group: tree-cover
+query: What is the forest area of the Democratic Republic of the Congo in 2000 and in 2010
+expected:
+  aoi_ids: COD
+  dataset_id: 7;4
+  data_pull: 'TRUE'
+  figure: sum(area_ha)
+  text: Gives the year 2000 tree cover of the DRC from the data and says the data hold no
+    2010 tree cover extent; if it derives a 2010 figure from the 2000 cover and the 2001 to
+    2010 loss, it labels it as a rough estimate that leaves out tree cover gain.
+  accept_nudge_offering: '7'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-305-fr (fr-n-023);
+    real fr user prompt, trace 2026-09'
+  pair_id: fr-n-023
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Democratic Republic of the Congo
+  precedent: ch-quant-103; ch-quant-110; ch-quant-175 (accept_nudge_offering)

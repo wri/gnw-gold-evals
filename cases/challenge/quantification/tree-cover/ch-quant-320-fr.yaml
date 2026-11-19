@@ -1,0 +1,28 @@
+id: ch-quant-320-fr
+uid: 8b6b482ba3a2a0a0
+status: ready
+set: quantification
+group: tree-cover
+language: fr
+twin: ch-quant-320
+query: quel est l'état de forêts dans la province de mai-ndombe en RDC
+expected:
+  aoi_ids: COD.16
+  dataset_id: 7;4;1;3;11
+  data_pull: 'TRUE'
+  text: Describes the forests of Mai-Ndombe from pulled data (tree cover, tree cover loss,
+    land cover, natural lands or recent disturbance alerts) and names the measure and the
+    year or period; presents no description from general knowledge as data.
+  accept_nudge_offering: 7 | 4 | 1 | 3 | 11
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-049); real fr user prompt,
+    trace 2026-02'
+  pair_id: fr-n-049
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Mai-Ndombe (province, DRC)
+  precedent: es-n-020 (ch-quant-220); es-n-018 (ch-quant-218)
+  language_review: subagent review 2026-11-19; native speaker not yet

@@ -1,0 +1,23 @@
+id: ch-quant-289-pt
+uid: 663839f6ef658033
+status: ready
+set: quantification
+group: unavailable
+language: pt
+twin: ch-quant-289
+query: Dados sobre produção de ouro na Amazônia brasileira.
+expected:
+  text: Says it has no data on gold production; may offer loss in the hard commodities driver
+    class (which includes mining) for named areas, named as such; does not give a gold production
+    figure as if from its data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-040); real pt user prompt,
+    trace 2026-08'
+  pair_id: pt-n-040
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: es-n-029 (ch-quant-228); ch-quant-192
+  language_review: subagent review 2026-11-19; native speaker not yet

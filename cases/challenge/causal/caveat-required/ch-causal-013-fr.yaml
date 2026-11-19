@@ -1,0 +1,21 @@
+id: ch-causal-013-fr
+uid: 22406408be4f5a50
+status: ready
+set: causal
+group: caveat_required
+language: fr
+twin: ch-causal-013
+query: L'exploitation forestière est-elle responsable de la perte de forêts au Gabon ?
+expected:
+  aoi_ids: GAB
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Caveats that selective logging is under-detected in satellite tree cover loss data.
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Logging', sum(area_ha) where
+    tree_cover_loss_driver != 'Unknown')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-013 (fr-t-005)'
+  pair_id: fr-t-005
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

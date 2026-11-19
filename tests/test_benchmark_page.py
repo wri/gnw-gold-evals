@@ -350,6 +350,17 @@ def test_languages_block_lists_each_language_of_the_manifest(tmp_path):
     assert list(page)[-1] == "languages"
 
 
+def test_language_blocks_follow_the_order_of_the_case_languages(tmp_path):
+    run, bench, cases, art, bases = languages_setup(tmp_path)
+    # The members' languages in reverse of the harness order.
+    codes = iter(["fr", "pt", "id", "es"])
+    members = [{**m, "language": next(codes)} if m.get("language") else m
+               for m in bench.raw["members"]]
+    page = bp.build_page(run, from_dict({**bench.raw, "members": members}),
+                         cases, art, bases)
+    assert [block["key"] for block in page["languages"]] == ["es", "id", "pt", "fr"]
+
+
 def test_a_twin_measured_nowhere_is_unpaired_and_never_a_fail(tmp_path):
     es = languages(tmp_path)["es"]
     assert (es["pairs"], es["unpaired"], es["unscored"]) == (2, 1, 0)

@@ -1,0 +1,39 @@
+id: ch-causal-031
+uid: f17ab14a8af46592
+status: ready
+set: causal
+group: many_areas
+query: Which districts of Madre de Dios have the most loss from mining?
+expected:
+  text: Declines to rank Madre de Dios's districts, which are below the level it can analyse,
+    and may offer the three provinces (Tambopata, Manu, Tahuamanu) by the hard commodities
+    driver class instead, named as the closest class to mining; never labels a province figure
+    as a district's.
+notes:
+  lineage: corrected copy of ch-causal-027 after the 2026-11-19 erratum (Madre de Dios districts
+    are GADM level 3; a refusal below level 2 is correct, AJ 2026-11-19)
+  behaviour: 'Refuse: ranking districts is below the analysable level; offer the provinces
+    by the hard commodities class'
+  expectations: 'draft 2026-10-23: Claude, from seeds/benchmark-v2026-bef-2026-10-22.csv;
+    revised 2026-10-24 from run evidence (see review); needs human review; draft-5 review
+    2026-10-27'
+  synthetic: 'TRUE'
+  capability_check: either/or judge until engineering confirms the capability (AJ, 2026-10-23)
+  benchmark_type: causal
+  use_cases: UC3;UC5
+  engagement: Returning user
+  aoi_type: Portfolio / many areas
+  capability: Confirm with engineering
+  grounding: Story analogue
+  user_story_refs: USY-001401 Caja Cusco; USY-001286 Mongabay Peru
+  refresh_risk: Low
+  review: '2026-10-24 (AJ): reworded; ranking every district with real data is within pick_aoi
+    takes up to 1,000 admin sub-units of one GADM parent, but only 50 protected areas, KBAs,
+    Indigenous lands or concessions (project-zeno main, src/agent/subagents/pick_aoi/tool.py
+    SUBREGION_LIMIT_ADMIN / SUBREGION_LIMIT); 2026-10-27 draft-5 review (AJ asked to apply
+    the review): redirect -> answer with data: the agent pulled district driver data on every
+    attempt and then quoted a blog figure; aoi_ids pinned to the 10 GADM 4.1 districts, dataset
+    8, pull required, text requires the ranking from the pulled data; figure added (top district''s
+    hard-commodities loss)'
+  verified: 'AOI ids: prod-api /api/aois 2026-10-27 (GADM 4.1 has 10 districts in Madre de
+    Dios; Huepetuhe is absent); the same 10 pick_aoi returned on every attempt'

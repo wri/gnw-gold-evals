@@ -1,0 +1,23 @@
+id: ch-quant-334-fr
+uid: af93b9e1787ba7b3
+status: ready
+set: quantification
+group: method
+language: fr
+twin: ch-quant-334
+query: puis je sélectionner une zone ?
+expected:
+  text: 'Says yes and gives at least one way that really works: name the place in the chat,
+    or, in the Areas panel, search for it, pick it from a boundary layer on the map, draw
+    an area or upload a file; describes no button, tool or control that does not exist.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-070); real fr user prompt,
+    trace 2026-07'
+  pair_id: fr-n-070
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: id-n-057 (ch-quant-268); ch-comp-177
+  language_review: subagent review 2026-11-19; native speaker not yet

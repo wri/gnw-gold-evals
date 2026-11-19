@@ -1,0 +1,20 @@
+id: ch-quant-286
+uid: 3f835994b036ce49
+status: ready
+set: quantification
+group: unavailable
+query: Show me the Legal Reserve areas in Brazil
+expected:
+  text: Says it has no Legal Reserve (Reserva Legal, CAR register) boundaries; may offer related
+    data such as natural lands or tree cover, named as such; does not present another layer
+    as Legal Reserve areas.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-286-pt (pt-n-037);
+    real pt user prompt, trace 2026-07'
+  pair_id: pt-n-037
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-187; es-n-037 (ch-quant-233)

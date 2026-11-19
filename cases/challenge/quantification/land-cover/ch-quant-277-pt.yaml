@@ -1,0 +1,24 @@
+id: ch-quant-277-pt
+uid: aafd62ed36b1c073
+status: ready
+set: quantification
+group: land-cover
+language: pt
+twin: ch-quant-277
+query: Quais as ares aptas para criação de novas uses no estado do Paraná, Brazil
+expected:
+  aoi_ids: BRA.16
+  text: Says it cannot judge which areas are suitable for new protected areas from its data;
+    may show natural lands, forest cover or existing protected areas in Paraná from pulled
+    data as inputs, named as such; does not present a list of suitable sites as a finding.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-023); real pt user prompt,
+    trace 2026-02'
+  pair_id: pt-n-023
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-180; ch-aoi-090 (BRA.16); es-n-023 (ch-quant-223)
+  language_review: subagent review 2026-11-19; native speaker not yet

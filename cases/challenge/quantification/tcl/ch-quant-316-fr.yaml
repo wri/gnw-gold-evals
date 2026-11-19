@@ -1,0 +1,26 @@
+id: ch-quant-316-fr
+uid: 691febc1ecea472d
+status: ready
+set: quantification
+group: tcl
+language: fr
+twin: ch-quant-316
+query: J'aurais besoin sur la presqu'île de Cap Bocage d'une analyse comparée de l'évolution
+  de l'activité minière et de l'évolution de la couverture forestière
+expected:
+  text: Either analyses a named area that holds the Cap Bocage peninsula (for example its
+    commune in New Caledonia) and says which, or asks which area is meant; for mining it uses
+    the hard commodities driver class named as such, or says mining activity is not measured;
+    does not present figures for another area as Cap Bocage.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-044); real fr user prompt,
+    trace 2025-09'
+  pair_id: fr-n-044
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Cap Bocage peninsula (New Caledonia)
+  precedent: es-n-028 (ch-quant-227); ch-aoi-091; ch-causal-027
+  language_review: subagent review 2026-11-19; native speaker not yet

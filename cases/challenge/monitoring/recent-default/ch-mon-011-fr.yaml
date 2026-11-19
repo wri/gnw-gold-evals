@@ -1,0 +1,25 @@
+id: ch-mon-011-fr
+uid: c7bfe468f9aa15a2
+status: ready
+set: monitoring
+group: recent_default
+language: fr
+twin: ch-mon-011
+query: Y a-t-il eu des alertes de perturbation récemment dans la région de la Nawa, en Côte
+  d'Ivoire ?
+expected:
+  aoi_ids: CIV.2.2
+  dataset_id: '11'
+  start_date: '{run-90d}'
+  end_date: '{run}'
+  date_tolerance_days: '62'
+  data_pull: 'TRUE'
+  text: States the time window the alerts it reports cover.
+  figure: sum(area_ha) where alert_date in {run-30d}..{run} | sum(area_ha) where alert_date
+    in {run-90d}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-011 (fr-t-014)'
+  pair_id: fr-t-014
+  use_cases: UC1
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,27 @@
+id: ch-quant-311
+uid: 7e9451f64ad84816
+status: ready
+set: quantification
+group: many-areas
+query: which area of Cameroon had the most tree cover loss in 2025?
+expected:
+  aoi_ids: CMR|CMR.1;CMR.2;CMR.3;CMR.4;CMR.5;CMR.6;CMR.7;CMR.8;CMR.9;CMR.10|CMR.1.1;CMR.1.2;CMR.1.3;CMR.1.4;CMR.1.5;CMR.2.1;CMR.2.2;CMR.2.3;CMR.2.4;CMR.2.5;CMR.2.6;CMR.2.7;CMR.2.8;CMR.2.9;CMR.2.10;CMR.3.1;CMR.3.2;CMR.3.3;CMR.3.4;CMR.4.1;CMR.4.2;CMR.4.3;CMR.4.4;CMR.4.5;CMR.4.6;CMR.5.1;CMR.5.2;CMR.5.3;CMR.5.4;CMR.6.1;CMR.6.2;CMR.6.3;CMR.6.4;CMR.6.5;CMR.6.6;CMR.6.7;CMR.7.1;CMR.7.2;CMR.7.3;CMR.7.4;CMR.8.1;CMR.8.2;CMR.8.3;CMR.8.4;CMR.8.5;CMR.8.6;CMR.8.7;CMR.8.8;CMR.9.1;CMR.9.2;CMR.9.3;CMR.9.4;CMR.9.5;CMR.9.6;CMR.10.1;CMR.10.2;CMR.10.3;CMR.10.4
+  dataset_id: '4'
+  start_date: '2025-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year = 2025
+  text: Either ranks Cameroon's regions (or departments) by 2025 tree cover loss from pulled
+    data, or gives the national figure and offers a breakdown by region; does not name zones
+    from general knowledge alone.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-311-fr (fr-n-039);
+    real fr user prompt, trace 2026-05'
+  pair_id: fr-n-039
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Cameroon, its 10 regions or its 58 departments
+  precedent: es-n-022 (ch-quant-222); ch-port-017; ch-quant-189

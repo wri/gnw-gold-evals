@@ -1,0 +1,21 @@
+id: ch-quant-068-pt
+uid: 859848bfd7390768
+status: ready
+set: quantification
+group: grasslands
+language: pt
+twin: ch-quant-068
+query: Qual era a extensão de pastagens naturais/seminaturais no Brasil em 2020, em hectares?
+expected:
+  aoi_ids: BRA
+  dataset_id: '2'
+  start_date: '2020-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where year = 2020
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-068 (pt-t-022)'
+  pair_id: pt-t-022
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

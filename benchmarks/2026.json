@@ -4942,6 +4942,21 @@
       "uid": "4f1d6f90058c88b6",
       "date": "2026-11-19",
       "reason": "The figure is the 2024 total; the question asks for the monthly pattern, and replies that give the pattern fail. Corrected copy: ch-trend-098."
+    },
+    {
+      "uid": "b2e97b229a637777",
+      "date": "2026-11-19",
+      "reason": "Puerto Suárez is a GADM level 3 area; the agent correctly refuses analysis below level 2, so a data pull cannot be expected. Corrected copy: ch-mon-074."
+    },
+    {
+      "uid": "633eb6ad958a67e0",
+      "date": "2026-11-19",
+      "reason": "The districts of Madre de Dios are GADM level 3 areas; the agent correctly refuses analysis below level 2, so a data pull cannot be expected. Corrected copy: ch-causal-031."
+    },
+    {
+      "uid": "d50067a5a601e831",
+      "date": "2026-11-19",
+      "reason": "A dataset choice that offers the drivers dataset is a fair reply; the member did not accept it. Corrected copy: ch-causal-032."
     }
   ]
 }

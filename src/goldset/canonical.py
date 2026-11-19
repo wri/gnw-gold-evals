@@ -28,7 +28,7 @@ from collections.abc import Iterable, Mapping
 
 UID_LENGTH = 16
 # The languages a case's query can be in. English is the default.
-LANGUAGES = ("en", "es", "id")
+LANGUAGES = ("en", "es", "id", "pt", "fr")
 
 
 def require_language(language: str) -> None:

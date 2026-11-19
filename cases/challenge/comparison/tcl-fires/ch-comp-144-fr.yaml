@@ -1,0 +1,26 @@
+id: ch-comp-144-fr
+uid: bb03af711b77d24d
+status: ready
+set: comparison
+group: tcl-fires
+language: fr
+twin: ch-comp-144
+query: Je me demande, pour la perte de couvert arboré due aux incendies en RDC (tous types
+  de forêts confondus), c'était pire entre 2014 et 2018, ou c'est entre 2019 et 2023 qu'on
+  a perdu le plus d'hectares à cause des feux ?
+expected:
+  aoi_ids: COD
+  dataset_id: '10'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2014..2018
+    ; sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2019..2023
+  figure_claim: '#2 > #1 :: The DRC lost more tree cover to fires in 2019 to 2023 than in
+    2014 to 2018 || The DRC lost more tree cover to fires in 2014 to 2018 than in 2019 to
+    2023'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-144 (fr-t-009)'
+  pair_id: fr-t-009
+  use_cases: UC3;UC5;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

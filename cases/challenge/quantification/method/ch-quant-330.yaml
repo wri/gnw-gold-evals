@@ -1,0 +1,22 @@
+id: ch-quant-330
+uid: f6a05addf000137b
+status: ready
+set: quantification
+group: method
+query: How do I download the data from my area of interest?
+expected:
+  text: 'Explains how to get the data for an area out of the app as it really works (for example:
+    run an analysis for the area, then use the chart''s Download menu for the data as CSV,
+    or Download Source files under Show working); it may also point to Global Forest Watch
+    or the data providers for raw map layers. Does not say the app has no way to export analysis
+    data, and names no button, panel, file or link that does not exist.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-330-fr (fr-n-064);
+    real fr user prompt, trace 2026-03'
+  pair_id: fr-n-064
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-177; ch-mon-046; id-n-057 (ch-quant-268)

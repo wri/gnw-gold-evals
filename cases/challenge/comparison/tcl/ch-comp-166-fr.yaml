@@ -1,0 +1,19 @@
+id: ch-comp-166-fr
+uid: 8c3cecf6b932800e
+status: ready
+set: comparison
+group: tcl
+language: fr
+twin: ch-comp-166
+query: Combien de couvert arboré les aires protégées de Madagascar ont-elles perdu en 2024
+  par rapport à 2023 ?
+expected:
+  text: Either compares 2024 and 2023 tree cover loss inside Madagascar's protected areas
+    as a group, or explains that it cannot total every protected area and offers the national
+    figure or a named protected area; does not invent a protected-area total.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-166 (fr-t-031)'
+  pair_id: fr-t-031
+  use_cases: UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

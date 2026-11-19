@@ -1,0 +1,24 @@
+id: ch-quant-291
+uid: c0080d77f9d1e955
+status: ready
+set: quantification
+group: tcl
+query: check the tree cover loss data and give me an assessment of the municipality of Querência,
+  in Mato Grosso, to see how much tree cover loss there was
+expected:
+  aoi_ids: BRA.12.104
+  dataset_id: '4'
+  context_layer: no_selection
+  data_pull: 'TRUE'
+  figure: sum(area_ha) | max(area_ha) by tree_cover_loss_year
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-291-pt (pt-n-043);
+    real pt user prompt, trace 2026-10'
+  pair_id: pt-n-043
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Querência municipality, Mato Grosso, Brazil
+  precedent: ch-quant-177; ch-quant-151; es-n-031 (ch-trend-093)

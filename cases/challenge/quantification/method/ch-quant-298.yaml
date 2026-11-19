@@ -1,0 +1,21 @@
+id: ch-quant-298
+uid: 9974bc40af362e30
+status: ready
+set: quantification
+group: method
+query: How is it determined whether vegetation is primary?
+expected:
+  text: Explains that primary forest is identified from a satellite-based map of mature humid
+    tropical forest that had not been cleared and regrown (University of Maryland; the 2001
+    baseline and the method details are optional), and does not claim the data identify primary
+    vegetation outside humid tropical forest.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-298-pt (pt-n-052);
+    real pt user prompt, trace 2026-09'
+  pair_id: pt-n-052
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-comp-179; ch-quant-199

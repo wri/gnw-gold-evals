@@ -1,15 +1,12 @@
 id: ch-quant-224
-uid: 8992e49f2cf1b608
+uid: 0c6cc5ba36935d01
 status: ready
 set: quantification
 group: land-cover
 query: show me the land uses in Valdepeñas, Ciudad Real province, Spain
 expected:
-  aoi_ids: ESP.4.2.1.20
-  data_pull: 'TRUE'
-  dataset_id: '1'
-  figure: sum(area_ha) where land_cover_class = 'Cropland' | ratio(sum(area_ha) where land_cover_class
-    = 'Cropland', sum(area_ha))
+  text: Declines to analyse land cover at municipality level, and may offer Ciudad Real province
+    instead; never labels a province figure as Valdepeñas's.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: English twin written for ch-quant-224-es (es-n-024);
     real es user prompt, trace trace 2026-02'
@@ -19,4 +16,8 @@ notes:
   synthetic: 'FALSE'
   verified: expectations checked 2026-11-18 against 2026 members, the catalog, local GADM
     and prod /api/aois; no agent run yet
+  aoi_name: Valdepeñas (municipality), Ciudad Real, Castilla-La Mancha
+  review: '2026-11-19 (AJ): a refusal at admin level 3 or lower is correct; expectation changed
+    from a data pull to an expected refusal; 19 Nov runs 20261119T080049Z_prod showed the
+    refusal on every attempt.'
   precedent: ch-quant-182; ch-quant-061

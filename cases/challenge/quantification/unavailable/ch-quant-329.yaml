@@ -1,0 +1,22 @@
+id: ch-quant-329
+uid: 6c921531e5827936
+status: ready
+set: quantification
+group: unavailable
+query: and is it possible to study peatlands in Sweden?
+expected:
+  text: 'Says what it can offer for peatlands in Sweden: the peat classes of the natural lands
+    map (natural peat forests and natural peat short vegetation, a 2020 baseline), described
+    as such; does not invent a dedicated peatland layer or data on peat condition, depth or
+    change.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-329-fr (fr-n-063);
+    real fr user prompt, trace 2026-02'
+  pair_id: fr-n-063
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Sweden
+  precedent: ch-quant-194; ch-quant-157

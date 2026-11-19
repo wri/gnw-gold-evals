@@ -1,0 +1,27 @@
+id: ch-comp-110-pt
+uid: a718fa6eeaa4003f
+status: ready
+set: comparison
+group: tc-gain
+language: pt
+twin: ch-comp-110
+query: Entre Brasil e Indonésia, qual país teve maior ganho acumulado de cobertura arbórea
+  de 2000 a 2020?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and tree_cover_gain_period in ('2000-2005', '2005-2010',
+    '2010-2015', '2015-2020') ; sum(area_ha) where aoi_id = 'IDN' and tree_cover_gain_period
+    in ('2000-2005', '2005-2010', '2010-2015', '2015-2020')
+  figure_claim: '#1 > #2 :: Brazil had greater cumulative tree cover gain than Indonesia over
+    2000 to 2020 || Indonesia had greater cumulative tree cover gain than Brazil over 2000
+    to 2020'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-110 (pt-t-028)'
+  pair_id: pt-t-028
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

@@ -1,0 +1,27 @@
+id: ch-causal-017-fr
+uid: b467ff7dd6d285e5
+status: ready
+set: causal
+group: driver_share
+language: fr
+twin: ch-causal-032
+query: Quelle part de la perte de couvert arboré de la RDC de 2015 à 2024 vient de l'agriculture
+  itinérante, et quelle part de l'agriculture permanente ?
+expected:
+  aoi_ids: COD
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Gives the shifting cultivation and permanent agriculture shares from the driver data
+    and states that they cover 2001 to 2025 as a whole.
+  accept_nudge_offering: '8'
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Shifting cultivation', sum(area_ha)
+    where tree_cover_loss_driver != 'Unknown') | sum(area_ha) where tree_cover_loss_driver
+    = 'Shifting cultivation' ; ratio(sum(area_ha) where tree_cover_loss_driver = 'Permanent
+    agriculture', sum(area_ha) where tree_cover_loss_driver != 'Unknown') | sum(area_ha) where
+    tree_cover_loss_driver = 'Permanent agriculture'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-017 (fr-t-030)'
+  pair_id: fr-t-030
+  use_cases: UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

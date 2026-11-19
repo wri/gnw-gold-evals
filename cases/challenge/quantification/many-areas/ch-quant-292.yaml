@@ -1,0 +1,27 @@
+id: ch-quant-292
+uid: 5545850e95aa1e21
+status: ready
+set: quantification
+group: many-areas
+query: which state of Brazil has the largest deforested area in the last 5 years?
+expected:
+  aoi_ids: BRA.1_1;BRA.2_1;BRA.3_1;BRA.4_1;BRA.5_1;BRA.6_1;BRA.7_1;BRA.8_1;BRA.9_1;BRA.10_1;BRA.11_1;BRA.12_1;BRA.13_1;BRA.14_1;BRA.15_1;BRA.16_1;BRA.17_1;BRA.18_1;BRA.19_1;BRA.20_1;BRA.21_1;BRA.22_1;BRA.23_1;BRA.24_1;BRA.25_1;BRA.26_1;BRA.27_1
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  date_tolerance_days: '366'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2021..2025 | max(area_ha) by
+    aoi_id where tree_cover_loss_year in 2020..2024
+  text: Names the state with the most tree cover loss in the period from pulled data for all
+    states, and says which years it used.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-292-pt (pt-n-044);
+    real pt user prompt, trace 2026-09'
+  pair_id: pt-n-044
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-port-003; es-n-022 (ch-quant-222); id-n-011 (ch-quant-238)

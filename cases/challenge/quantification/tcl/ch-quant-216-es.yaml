@@ -1,5 +1,5 @@
 id: ch-quant-216-es
-uid: c1dea451dbc63ed9
+uid: 78b708d5d724ef90
 status: ready
 set: quantification
 group: tcl
@@ -8,12 +8,8 @@ twin: ch-quant-216
 query: Cálculo de pérdida de cobertura forestal en el Distrito de Morona Región Loreto desde
   2010 a 2024
 expected:
-  aoi_ids: PER.17.1.7
-  data_pull: 'TRUE'
-  dataset_id: '4'
-  end_date: '2024-12-31'
-  figure: sum(area_ha) where tree_cover_loss_year in 2010..2024
-  start_date: '2010-01-01'
+  text: Declines to analyse tree cover loss at district level, and may offer Alto Amazonas
+    province instead; never labels a province figure as Morona's.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-016); real es user prompt,
     trace trace 2026-03'

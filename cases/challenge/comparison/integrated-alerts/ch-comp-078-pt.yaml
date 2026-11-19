@@ -1,0 +1,25 @@
+id: ch-comp-078-pt
+uid: 52fb77953c221e7d
+status: ready
+set: comparison
+group: integrated-alerts
+language: pt
+twin: ch-comp-078
+query: Entre Brasil e Indonésia, qual país teve mais área de alertas de distúrbio de janeiro
+  a dezembro de 2024?
+expected:
+  aoi_ids: BRA;IDN
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and alert_date in 2024-01-01..2024-12-31 ; sum(area_ha)
+    where aoi_id = 'IDN' and alert_date in 2024-01-01..2024-12-31
+  figure_claim: '#1 > #2 :: Brazil had more disturbance alert area than Indonesia in 2024
+    || Indonesia had more disturbance alert area than Brazil in 2024'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-078 (pt-t-003)'
+  pair_id: pt-t-003
+  use_cases: UC1;UC3
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

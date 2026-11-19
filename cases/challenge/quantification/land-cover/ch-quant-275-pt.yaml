@@ -1,0 +1,32 @@
+id: ch-quant-275-pt
+uid: a7216b4bb6ee11fe
+status: ready
+set: quantification
+group: land-cover
+language: pt
+twin: ch-quant-275
+query: Como é distribuída a Cobertura e USo do Solo no Brasil em 2019
+expected:
+  aoi_ids: BRA
+  dataset_id: 1;3
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class = 'Tree cover' | ratio(sum(area_ha) where land_cover_class
+    = 'Tree cover', sum(area_ha)) | sum(area_ha) where natural_lands_class in ('Natural forests',
+    'Natural peat forests', 'Wetland natural forests', 'Mangroves') | ratio(sum(area_ha) where
+    natural_lands_class in ('Natural forests', 'Natural peat forests', 'Wetland natural forests',
+    'Mangroves'), sum(area_ha))
+  text: 'Gives Brazil''s land cover breakdown from pulled data and says which year it is for
+    (no dataset maps 2019: land cover has 2015 and 2024 snapshots, natural lands is 2020);
+    does not present figures for another year as 2019.'
+  accept_nudge_offering: 1 | 3
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-020); real pt user prompt,
+    trace 2025-09'
+  pair_id: pt-n-020
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-182; ch-quant-061; ch-comp-176; ch-quant-180
+  language_review: subagent review 2026-11-19; native speaker not yet

@@ -1,0 +1,25 @@
+id: ch-quant-175-pt
+uid: c3f2c2842c97785d
+status: ready
+set: quantification
+group: tree-cover
+language: pt
+twin: ch-quant-175
+query: Quanta vegetação primária e secundária o Brasil tem, para o nosso relatório do marco
+  de biodiversidade?
+expected:
+  aoi_ids: BRA
+  dataset_id: 7;3
+  data_pull: 'TRUE'
+  text: Gives the closest available data (for example tree cover or natural lands) and explains
+    that primary versus secondary vegetation is not mapped as such.
+  accept_nudge_offering: 7 | 3
+  figure: sum(area_ha) where aoi_id = 'BRA' | sum(area_ha) where natural_lands_class in ('Natural
+    forests', 'Natural peat forests', 'Mangroves', 'Natural short vegetation', 'Natural peat
+    short vegetation')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-175 (pt-t-029)'
+  pair_id: pt-t-029
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

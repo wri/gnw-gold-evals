@@ -1,0 +1,27 @@
+id: ch-quant-272
+uid: e2b4015fd3e46d75
+status: ready
+set: quantification
+group: land-cover
+query: Show the changes in land use and land cover in the state of Pará in Brazil and their
+  relationship with CO2 emissions
+expected:
+  aoi_ids: BRA.14
+  dataset_id: 1;4;6;8
+  data_pull: 'TRUE'
+  text: Reports land use or land cover change in Pará from pulled data (land cover change
+    between 2015 and 2024, or tree cover loss by dominant driver) and forest CO2 emissions
+    from pulled data (forest carbon flux, or emissions from tree cover loss), and links the
+    two only through the pulled data, not from general knowledge.
+  accept_nudge_offering: 1;4 | 1;6 | 4;8 | 6;8
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-272-pt (pt-n-010);
+    real pt user prompt, trace 2026-02'
+  pair_id: pt-n-010
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Pará state, Brazil
+  precedent: es-n-030 (ch-comp-182); ch-trend-078; ch-quant-188 (BRA.14)

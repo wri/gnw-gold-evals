@@ -1,0 +1,26 @@
+id: ch-quant-171-pt
+uid: 229280439d270189
+status: ready
+set: quantification
+group: sluc
+language: pt
+twin: ch-quant-171
+query: Estamos montando um inventário corporativo de GEE. Quais são as emissões por mudança
+  de uso da terra por tonelada de soja proveniente do Mato Grosso?
+expected:
+  aoi_ids: BRA.12
+  dataset_id: '9'
+  data_pull: 'TRUE'
+  text: Gives the land-use change emission factor for soy for Mato Grosso and states its reporting
+    year, or Brazil's national value with a caveat that it is not specific to Mato Grosso.
+  figure: sum(emissions_factor_tCO2e_per_tonne_production) where crop_type = 'Soybean' and
+    gas_type = 'CO2e' and year = 2024 and aoi_id = 'BRA.12' | sum(emissions_factor_tCO2e_per_tonne_production)
+    where crop_type = 'Soybean' and gas_type = 'CO2e' and year = 2023 and aoi_id = 'BRA.12'
+    | sum(emissions_factor_tCO2e_per_tonne_production) where crop_type = 'Soybean' and gas_type
+    = 'CO2e' and year = 2024 and aoi_id = 'BRA'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-171 (pt-t-009)'
+  pair_id: pt-t-009
+  use_cases: UC2;UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

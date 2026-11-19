@@ -1,0 +1,22 @@
+id: ch-causal-026-fr
+uid: 7b5774e82af1b7f8
+status: ready
+set: causal
+group: driver_share
+language: fr
+twin: ch-causal-026
+query: Quelles zones de la ceinture cacaoyère de Côte d'Ivoire ont perdu du couvert arboré
+  à cause de l'agriculture permanente plutôt que de l'agriculture itinérante, pour que nous
+  puissions cibler la restauration ?
+expected:
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Uses the drivers data to separate loss from permanent agriculture and from shifting
+    cultivation at a scale the data support (for example by region within Côte d'Ivoire's
+    cocoa belt), and notes that the cocoa belt is not a defined boundary.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-026 (fr-t-037)'
+  pair_id: fr-t-037
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

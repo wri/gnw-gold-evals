@@ -1,0 +1,24 @@
+id: ch-quant-282
+uid: 5c75e70f2d0bc4d0
+status: ready
+set: quantification
+group: tcl
+query: Was there any deforestation in Santarém in Pará in 2024?
+expected:
+  aoi_ids: BRA.14.114
+  dataset_id: '4'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2024
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-282-pt (pt-n-033);
+    real pt user prompt, trace 2026-03'
+  pair_id: pt-n-033
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Santarém municipality, Pará, Brazil
+  precedent: ch-quant-177; es-n-019 (ch-quant-219)

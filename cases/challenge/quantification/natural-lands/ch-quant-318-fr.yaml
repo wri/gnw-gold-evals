@@ -1,0 +1,27 @@
+id: ch-quant-318-fr
+uid: cef37da243758d27
+status: ready
+set: quantification
+group: natural-lands
+language: fr
+twin: ch-quant-318
+query: quelle est la couverture de foret naturelle du cameroun
+expected:
+  aoi_ids: CMR
+  dataset_id: '3'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where natural_lands_class in ('Natural forests', 'Natural peat forests',
+    'Wetland natural forests', 'Mangroves')
+  accept_nudge_offering: '3'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-047); real fr user prompt,
+    trace 2026-03'
+  pair_id: fr-n-047
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Cameroon
+  precedent: ch-comp-176; ch-quant-157; ch-comp-185
+  language_review: subagent review 2026-11-19; native speaker not yet

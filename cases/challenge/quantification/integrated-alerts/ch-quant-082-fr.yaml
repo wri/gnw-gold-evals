@@ -1,0 +1,22 @@
+id: ch-quant-082-fr
+uid: 1e04c1cb0f0f7df6
+status: ready
+set: quantification
+group: integrated-alerts
+language: fr
+twin: ch-quant-082
+query: Combien d'hectares d'alertes de perturbation ont été signalés dans l'ensemble de la
+  République démocratique du Congo du 1er janvier au 30 juin 2024 ?
+expected:
+  aoi_ids: COD
+  dataset_id: '11'
+  start_date: '2024-01-01'
+  end_date: '2024-06-30'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where alert_date in 2024-01-01..2024-06-30
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-082 (fr-t-021)'
+  pair_id: fr-t-021
+  use_cases: UC1;UC3
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

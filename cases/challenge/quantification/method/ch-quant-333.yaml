@@ -1,0 +1,20 @@
+id: ch-quant-333
+uid: 83605957c08109be
+status: ready
+set: quantification
+group: method
+query: do the protected areas of Cambodia in your database have a name?
+expected:
+  text: 'Says yes: protected areas come with their names (from the World Database on Protected
+    Areas) and can be searched by name; does not invent names or say they have none.'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-333-fr (fr-n-069);
+    real fr user prompt, trace 2026-10'
+  pair_id: fr-n-069
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: protected areas of Cambodia
+  precedent: ch-quant-198; ch-quant-192

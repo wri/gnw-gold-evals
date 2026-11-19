@@ -1,0 +1,24 @@
+id: ch-quant-288
+uid: 5ac6df0ea95a8694
+status: ready
+set: quantification
+group: land-cover
+query: Give me a general overview of Confresa MT
+expected:
+  aoi_ids: BRA.12.35
+  data_pull: 'TRUE'
+  text: Gives an overview of Confresa from pulled data (for example land cover, tree cover
+    or tree cover loss) and says which datasets and years it used; does not describe the municipality
+    from general knowledge alone.
+  accept_nudge_offering: 1 | 4 | 3 | 7
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-288-pt (pt-n-039);
+    real pt user prompt, trace 2026-09'
+  pair_id: pt-n-039
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Confresa municipality, Mato Grosso, Brazil
+  precedent: ch-quant-182; ch-quant-061; es-n-018 (ch-quant-218)

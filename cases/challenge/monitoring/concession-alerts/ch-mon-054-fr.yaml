@@ -1,0 +1,26 @@
+id: ch-mon-054-fr
+uid: 2e3baebe1b403f48
+status: ready
+set: monitoring
+group: concession_alerts
+language: fr
+twin: ch-mon-054
+query: Y a-t-il des alertes à l'intérieur ou à proximité des concessions forestières autour
+  de Lomié ce mois-ci ?
+expected:
+  dataset_id: '11'
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Either reports this month's alerts in or near the logging concessions around Lomié,
+    or says it cannot use concession boundaries and offers alerts for the Lomié area instead;
+    does not invent concession names or alert figures, and does not present Lomié-wide alerts
+    as concession alerts.
+  figure: sum(area_ha) where alert_date in {month_start}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-054 (fr-t-017)'
+  pair_id: fr-t-017
+  use_cases: UC1;UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

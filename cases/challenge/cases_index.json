@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "25d5261e3ecbc8fd",
-  "case_count": 1287,
+  "caseset_version": "b787ce71f4eeeac8",
+  "case_count": 1531,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -1717,6 +1717,23 @@
       "subtype": "multi"
     },
     {
+      "id": "ch-aoi-090-pt",
+      "uid": "2d7d029ab2afa51f",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready",
+      "query": "Compare Pará e Paraná",
+      "expected_fields": [
+        "aoi_ids"
+      ],
+      "implied_checks": [
+        "aoi_id_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
+    },
+    {
       "id": "ch-aoi-091",
       "uid": "f1417ef4b03dc5e3",
       "set": "aoi",
@@ -2247,6 +2264,23 @@
       "difficulty": "hard",
       "behaviour": "clarify",
       "query": "Take me to the Congo Basin",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
+    },
+    {
+      "id": "ch-aoi-119-fr",
+      "uid": "f5bc4513f11825a7",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready",
+      "query": "Emmène-moi au bassin du Congo",
       "expected_fields": [
         "text"
       ],
@@ -3150,6 +3184,74 @@
       "subtype": "concepts"
     },
     {
+      "id": "ch-aoi-162",
+      "uid": "c37eb9366ff69f93",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready",
+      "query": "forest cover of the Atlantic Forest",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
+    },
+    {
+      "id": "ch-aoi-162-pt",
+      "uid": "b2d36fc6a014c05a",
+      "set": "aoi",
+      "group": "concepts",
+      "status": "ready",
+      "query": "cobertura florestal da Mata Atlântica",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "concepts"
+    },
+    {
+      "id": "ch-aoi-163",
+      "uid": "bdba907623d67a26",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready",
+      "query": "how many protected areas/nature reserves, and their names, on the island of Timor, Indonesian side",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
+    },
+    {
+      "id": "ch-aoi-163-fr",
+      "uid": "3b2189e046393ba4",
+      "set": "aoi",
+      "group": "multi",
+      "status": "ready",
+      "query": "combien d'aires protégées/réserves naturelles et leurs noms sur l'ile de timor côté indonésien",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "spatial",
+      "dataset_ids": [],
+      "subtype": "multi"
+    },
+    {
       "id": "ch-causal-001",
       "uid": "e25dbe217b87e7ec",
       "set": "causal",
@@ -3158,6 +3260,32 @@
       "difficulty": "hard",
       "behaviour": "answer with drivers data; caveat that drivers ≠ proof of cause",
       "query": "Why has tree cover loss been so high in Côte d'Ivoire's Cavally region?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-001-fr",
+      "uid": "a21868f708748e19",
+      "set": "causal",
+      "group": "why_subnational",
+      "status": "ready",
+      "query": "Pourquoi la perte de couvert arboré a-t-elle été si élevée dans la région du Cavally, en Côte d'Ivoire ?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -3246,6 +3374,39 @@
       "difficulty": "hard",
       "behaviour": "answer with data; fire share; no invented causes",
       "query": "Why did Brazil lose so much primary forest in 2016?",
+      "expected_fields": [
+        "accept_blog_sources",
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_blog_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-causal-003-pt",
+      "uid": "4d8809a1744cd8d3",
+      "set": "causal",
+      "group": "spike_attribution",
+      "status": "ready",
+      "query": "Por que o Brasil perdeu tanta floresta primária em 2016?",
       "expected_fields": [
         "accept_blog_sources",
         "aoi_ids",
@@ -3383,6 +3544,33 @@
       ]
     },
     {
+      "id": "ch-causal-006-fr",
+      "uid": "53c11db74289ecc8",
+      "set": "causal",
+      "group": "fire_share_pa",
+      "status": "ready",
+      "query": "Quelle part de la perte de couvert arboré dans le parc national de la Salonga entre 2015 et 2023 a été causée par le feu ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
       "id": "ch-causal-007",
       "uid": "c2f302cfd91911ff",
       "set": "causal",
@@ -3413,6 +3601,34 @@
       ]
     },
     {
+      "id": "ch-causal-007-pt",
+      "uid": "3d603fb959723504",
+      "set": "causal",
+      "group": "premise_check",
+      "status": "ready",
+      "query": "Por que o desmatamento está aumentando no Pará?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
+    },
+    {
       "id": "ch-causal-008",
       "uid": "ccaec31601123ec6",
       "set": "causal",
@@ -3421,6 +3637,33 @@
       "difficulty": "hard",
       "behaviour": "answer with drivers + sLUC cocoa data; caveat on attribution",
       "query": "Did cocoa farming cause deforestation in Côte d'Ivoire?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8",
+        "9"
+      ]
+    },
+    {
+      "id": "ch-causal-008-fr",
+      "uid": "76169d30c377fc3b",
+      "set": "causal",
+      "group": "commodity_overclaim",
+      "status": "ready",
+      "query": "Est-ce que la culture du cacao a causé de la déforestation en Côte d'Ivoire ?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -3530,6 +3773,34 @@
       ]
     },
     {
+      "id": "ch-causal-011-pt",
+      "uid": "826cfa4594702250",
+      "set": "causal",
+      "group": "commodity_overclaim",
+      "status": "ready",
+      "query": "É a soja ou o gado que está impulsionando a perda de cobertura arbórea no Mato Grosso desde 2015?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
       "id": "ch-causal-012",
       "uid": "ffd059ecf4779715",
       "set": "causal",
@@ -3604,6 +3875,32 @@
       "difficulty": "hard",
       "behaviour": "answer with drivers (logging category); caveat that selective logging is under-detected",
       "query": "Is logging responsible for forest loss in Gabon?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-013-fr",
+      "uid": "22406408be4f5a50",
+      "set": "causal",
+      "group": "caveat_required",
+      "status": "ready",
+      "query": "L'exploitation forestière est-elle responsable de la perte de forêts au Gabon ?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -3776,6 +4073,34 @@
       ]
     },
     {
+      "id": "ch-causal-017-fr",
+      "uid": "b467ff7dd6d285e5",
+      "set": "causal",
+      "group": "driver_share",
+      "status": "ready",
+      "query": "Quelle part de la perte de couvert arboré de la RDC de 2015 à 2024 vient de l'agriculture itinérante, et quelle part de l'agriculture permanente ?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
       "id": "ch-causal-018",
       "uid": "af3e3402bfbacc5c",
       "set": "causal",
@@ -3784,6 +4109,32 @@
       "difficulty": "hard",
       "behaviour": "answer with drivers data; cocoa caveat",
       "query": "What is driving tree cover loss around Taï National Park in Côte d'Ivoire?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-018-fr",
+      "uid": "ca1209b616f12360",
+      "set": "causal",
+      "group": "why_pa",
+      "status": "ready",
+      "query": "Qu'est-ce qui entraîne la perte de couvert arboré autour du parc national de Taï, en Côte d'Ivoire ?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -3873,6 +4224,22 @@
       "status": "ready",
       "behaviour": "Answer with available fire information, or explain fire attribution limits for recent alerts",
       "query": "Were any of last week's alerts in Maranhão caused by fire?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-causal-021-pt",
+      "uid": "96abcec0712633bf",
+      "set": "causal",
+      "group": "driver_vs_fire",
+      "status": "ready",
+      "query": "Algum dos alertas da semana passada no Maranhão foi causado por fogo?",
       "expected_fields": [
         "text"
       ],
@@ -4031,6 +4398,38 @@
       ]
     },
     {
+      "id": "ch-causal-025-fr",
+      "uid": "ee0ddb456e84891d",
+      "set": "causal",
+      "group": "why_country",
+      "status": "ready",
+      "query": "Combien de couvert arboré la RDC a-t-elle perdu en 2024, et qu'est-ce qui a causé cette perte ?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
+    },
+    {
       "id": "ch-causal-026",
       "uid": "11daa37eab20033c",
       "set": "causal",
@@ -4038,6 +4437,29 @@
       "status": "ready",
       "behaviour": "answer with drivers data at supported scale; caveat",
       "query": "Which areas of Côte d'Ivoire's cocoa belt lost tree cover to permanent agriculture rather than shifting cultivation, so we can target restoration?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-causal-026-fr",
+      "uid": "7b5774e82af1b7f8",
+      "set": "causal",
+      "group": "driver_share",
+      "status": "ready",
+      "query": "Quelles zones de la ceinture cacaoyère de Côte d'Ivoire ont perdu du couvert arboré à cause de l'agriculture permanente plutôt que de l'agriculture itinérante, pour que nous puissions cibler la restauration ?",
       "expected_fields": [
         "data_pull",
         "dataset_id",
@@ -4166,6 +4588,53 @@
       ]
     },
     {
+      "id": "ch-causal-031",
+      "uid": "f17ab14a8af46592",
+      "set": "causal",
+      "group": "many_areas",
+      "status": "ready",
+      "behaviour": "Refuse: ranking districts is below the analysable level; offer the provinces by the hard commodities class",
+      "query": "Which districts of Madre de Dios have the most loss from mining?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-causal-032",
+      "uid": "879fca00d71c21d0",
+      "set": "causal",
+      "group": "driver_share",
+      "status": "ready",
+      "difficulty": "medium",
+      "behaviour": "answer with data",
+      "query": "How much of the DRC's tree cover loss from 2015 to 2024 came from shifting cultivation versus permanent agriculture?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "causal",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
       "id": "ch-comp-001",
       "uid": "2df7ba15d33ebb71",
       "set": "comparison",
@@ -4226,6 +4695,36 @@
         "4"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-002-fr",
+      "uid": "618ae8000d77ea1b",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Compare la perte totale de couvert arboré, plantations comprises, en Indonésie et en République démocratique du Congo de 2020 à 2023. Quel pays a perdu le plus ?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-comp-003",
@@ -4312,6 +4811,33 @@
         "4"
       ],
       "subtype": "two_period"
+    },
+    {
+      "id": "ch-comp-005-pt",
+      "uid": "ae0eee35a3507f30",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "O Brasil perdeu mais cobertura arbórea, em todos os tipos de floresta, no período de 2011 a 2015 ou de 2016 a 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-comp-006",
@@ -5411,6 +5937,31 @@
       ]
     },
     {
+      "id": "ch-comp-043-pt",
+      "uid": "612cf05467968122",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "As florestas de qual país são uma fonte líquida maior de emissões de gases de efeito estufa no total, as do Brasil ou as da Indonésia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
       "id": "ch-comp-044",
       "uid": "3ae9bda3b8200c4c",
       "set": "comparison",
@@ -5737,6 +6288,58 @@
       "subtype": "two_country"
     },
     {
+      "id": "ch-comp-055-fr",
+      "uid": "2336550bb3324fa6",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Entre le Brésil et la République démocratique du Congo, quel pays a la plus grande surface de couvert arboré dans son occupation du sol ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-comp-055-pt",
+      "uid": "4e3914f172b89df8",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Entre o Brasil e a República Democrática do Congo, em qual deles a cobertura do solo inclui uma área maior de cobertura arbórea?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1",
+        "7"
+      ]
+    },
+    {
       "id": "ch-comp-056",
       "uid": "b878ff17828ab778",
       "set": "comparison",
@@ -6004,6 +6607,34 @@
         "2"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-066-pt",
+      "uid": "2d63b4b7cc813fc8",
+      "set": "comparison",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "Qual país tinha maior extensão de pastagens naturais/seminaturais em 2020, Brasil ou México?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2"
+      ]
     },
     {
       "id": "ch-comp-067",
@@ -6345,6 +6976,34 @@
         "11"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-078-pt",
+      "uid": "52fb77953c221e7d",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Entre Brasil e Indonésia, qual país teve mais área de alertas de distúrbio de janeiro a dezembro de 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ]
     },
     {
       "id": "ch-comp-079",
@@ -7226,6 +7885,34 @@
       "subtype": "two_country"
     },
     {
+      "id": "ch-comp-110-pt",
+      "uid": "a718fa6eeaa4003f",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "Entre Brasil e Indonésia, qual país teve maior ganho acumulado de cobertura arbórea de 2000 a 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
       "id": "ch-comp-111",
       "uid": "1acb3fc5f62ca777",
       "set": "comparison",
@@ -7288,6 +7975,34 @@
       "group": "tc-gain",
       "status": "ready",
       "query": "¿Qué país tuvo mayor ganancia acumulada de cobertura arbórea entre 2000 y 2020, la República Democrática del Congo o Colombia?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-comp-112-fr",
+      "uid": "bf9b6a0088173a63",
+      "set": "comparison",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "Quel pays a eu le plus grand gain cumulé de couvert arboré entre 2000 et 2020 : la République démocratique du Congo ou la Colombie ?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -7576,6 +8291,30 @@
         "8"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-122-pt",
+      "uid": "6e46cc0284274666",
+      "set": "comparison",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "Qual é o driver dominante da perda de cobertura arbórea no Brasil em comparação com a Indonésia desde 2001?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "8"
+      ]
     },
     {
       "id": "ch-comp-123",
@@ -8197,6 +8936,33 @@
       "subtype": "two_period"
     },
     {
+      "id": "ch-comp-144-fr",
+      "uid": "bb03af711b77d24d",
+      "set": "comparison",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Je me demande, pour la perte de couvert arboré due aux incendies en RDC (tous types de forêts confondus), c'était pire entre 2014 et 2018, ou c'est entre 2019 et 2023 qu'on a perdu le plus d'hectares à cause des feux ?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
       "id": "ch-comp-145",
       "uid": "e4d573d474e25907",
       "set": "comparison",
@@ -8293,6 +9059,34 @@
       "difficulty": "hard",
       "behaviour": "answer with data; annualise correctly",
       "query": "Was Gabon's tree cover loss in 2016–2017 higher than its 2006–2015 annual average?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-148-fr",
+      "uid": "a0d97784f5705f16",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "La perte de couvert arboré du Gabon en 2016–2017 a-t-elle été supérieure à sa moyenne annuelle de 2006–2015 ?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -8456,6 +9250,34 @@
       ]
     },
     {
+      "id": "ch-comp-152-pt",
+      "uid": "567e000ab9aec366",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "O desmatamento desde 2021 foi pior em Rondônia ou no Mato Grosso? Compramos carne bovina dos dois.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-comp-153",
       "uid": "452b568c1cc36921",
       "set": "comparison",
@@ -8463,6 +9285,35 @@
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Compare disturbance alerts this year in Masoala and Makira — two of the protected areas we patrol.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-comp-153-fr",
+      "uid": "59a7d347b38682ff",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Compare les alertes de perturbation cette année à Masoala et à Makira, deux des aires protégées où nous patrouillons.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -8643,6 +9494,37 @@
       "status": "ready",
       "behaviour": "answer with data (2–3 named areas: supported)",
       "query": "Which of Maranhão, Tocantins and Piauí had the most natural vegetation conversion since 2021?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "2",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-157-pt",
+      "uid": "d06f377f2f2df41b",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Entre Maranhão, Tocantins e Piauí, qual teve mais conversão de vegetação natural desde 2021?",
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
@@ -8876,6 +9758,35 @@
       ]
     },
     {
+      "id": "ch-comp-162-fr",
+      "uid": "699ba490130f4715",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Dans le cadre de la diligence raisonnée EUDR, y a-t-il eu des pertes de couvert arboré après le 31 décembre 2020 dans les régions de la Nawa et du Cavally, en Côte d'Ivoire ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-comp-163",
       "uid": "c8d7419b4a3d845b",
       "set": "comparison",
@@ -8905,6 +9816,34 @@
       ]
     },
     {
+      "id": "ch-comp-163-fr",
+      "uid": "8aaa8067320392a2",
+      "set": "comparison",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Compare les alertes de ce mois-ci dans les trois régions où nous patrouillons en Côte d'Ivoire : Cavally, Guémon et Tonkpi.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-comp-164",
       "uid": "1d015253c38e525b",
       "set": "comparison",
@@ -8912,6 +9851,33 @@
       "status": "ready",
       "behaviour": "Answer for two named areas",
       "query": "Compare net carbon flux in our two project landscapes, Odzala-Kokoua and Lopé national parks.",
+      "expected_fields": [
+        "accept_aoi_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-comp-164-fr",
+      "uid": "c355517ec265de15",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Compare le flux net de carbone dans nos deux paysages d'intervention, les parcs nationaux d'Odzala-Kokoua et de la Lopé.",
       "expected_fields": [
         "accept_aoi_nudge_offering",
         "aoi_ids",
@@ -8997,6 +9963,22 @@
       "status": "ready",
       "behaviour": "answer at country/PA-network level if supported; else redirect",
       "query": "How much tree cover did Madagascar's protected areas lose in 2024 compared with 2023?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-166-fr",
+      "uid": "8c3cecf6b932800e",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Combien de couvert arboré les aires protégées de Madagascar ont-elles perdu en 2024 par rapport à 2023 ?",
       "expected_fields": [
         "text"
       ],
@@ -9286,6 +10268,31 @@
       ]
     },
     {
+      "id": "ch-comp-174-pt",
+      "uid": "722ba8bab9280560",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Quais são os fluxos líquidos de GEE florestais do Peru, da Colômbia e do Brasil, para uma comparação de níveis de referência de emissões florestais?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
       "id": "ch-comp-175",
       "uid": "98209fa396f952a6",
       "set": "comparison",
@@ -9293,6 +10300,31 @@
       "status": "ready",
       "behaviour": "answer with data",
       "query": "How much natural land vs cropland is there in Mato Grosso? We want to steer new soy onto already-converted land.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-comp-175-pt",
+      "uid": "9364d85662471cc2",
+      "set": "comparison",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Quanta área natural versus área agrícola existe no Mato Grosso? Queremos direcionar a expansão da soja para áreas já convertidas.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -9475,6 +10507,22 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-comp-180-pt",
+      "uid": "f0435f99b9f65497",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "Por que os números do GFW para o Brasil são diferentes dos do PRODES?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-comp-181",
       "uid": "8b3aba97d5af99b9",
       "set": "comparison",
@@ -9482,6 +10530,22 @@
       "status": "ready",
       "behaviour": "Explain differences between datasets",
       "query": "How does the grassland data compare with the land cover data for measuring pasture in Brazil?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-181-pt",
+      "uid": "a750aa7ec26827fa",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "Como os dados de grassland se comparam com os dados de cobertura do solo para medir pastagem no Brasil?",
       "expected_fields": [
         "text"
       ],
@@ -9658,6 +10722,388 @@
         "3"
       ],
       "subtype": "two_country"
+    },
+    {
+      "id": "ch-comp-186",
+      "uid": "b68a29813de69d09",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Show me the differences in the vegetation, from 2024 to 2025, for the Algarve region, Portugal",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-186-pt",
+      "uid": "d3c06b3894557d5d",
+      "set": "comparison",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Mostra-me as diferenças entre a vegetação, de 2024 para 2025, para a região do Algarve, Portugal",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-187",
+      "uid": "114d3d272dcb17ec",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "In Brazil, the region called MATOPIBA covers the states of Maranhão, Tocantins, Piauí and Bahia; what are the risk levels of this territory with respect to deforestation and fires?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-187-pt",
+      "uid": "c89e6ca4f3a008dc",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "In Brazil de regian colled MATOPIBA envolve os estados do Maranhão, Tocantins, Piauí e Bahia, qual os níveis de riscos deste território em relação ao desmatamento e queimadas?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "10",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-188",
+      "uid": "f3e1b6c95b18aec3",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "explain in detail why tree cover loss is not deforestation",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-188-pt",
+      "uid": "002a0ebe76e96f5a",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "detalhe porque tree cover loss nao é desmatamento",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-189",
+      "uid": "3cd13f7fccf1a102",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "distinction between natural and exotic grassland",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-189-pt",
+      "uid": "b1ab2e93e56da80e",
+      "set": "comparison",
+      "group": "method",
+      "status": "ready",
+      "query": "diferenciação entre grassland natural e exótico",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-comp-190",
+      "uid": "db399e7629377ee4",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Comparative analysis of forest cover loss, of net GHG flux between the 2 provinces (Kongo-Central and Kwango) neighboring Kinshasa the megacity from 2001 to 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "id": "ch-comp-190-fr",
+      "uid": "ccaa85d365d8690f",
+      "set": "comparison",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Analyse comparative de perte de couvert forestier, de flux net de GES entre les 2 provinces (Kongo-Central et Kwango) voisines de Kinshasa la mégapole de 2001 à 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "id": "ch-comp-191",
+      "uid": "f71fe1c32040722d",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "forest cover loss in the West, Northwest and Southwest regions of Cameroon",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-191-fr",
+      "uid": "f4c0c526d05be279",
+      "set": "comparison",
+      "group": "tcl",
+      "status": "ready",
+      "query": "perte du couvert forestier dans les region de l'ouest nord ouest et sud ouest cameroun",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-192",
+      "uid": "9857865b302314a9",
+      "set": "comparison",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Which country in Africa had the most forest cover loss in 2025",
+      "expected_fields": [
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-192-fr",
+      "uid": "e33ef3dfaec116f0",
+      "set": "comparison",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Dans quel pays  d'afrique y'a til eu le plus de perte du couvert forestier en 2025",
+      "expected_fields": [
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-193",
+      "uid": "d1e9673efb1a8c40",
+      "set": "comparison",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Comparison of tree cover loss in Fizi territory with that of other territories in Sud-Kivu province from 2010 to 2024.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-comp-193-fr",
+      "uid": "032ba54efe8431db",
+      "set": "comparison",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Comparaison de la perte de couverture arborée du territoire de Fizi avec celle d'autres territoires de la province du Sud-Kivu de 2010 à 2024.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "comparison",
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-dataset-001",
@@ -14425,30 +15871,19 @@
     },
     {
       "id": "ch-mon-008-es",
-      "uid": "0ad840843238ae1d",
+      "uid": "2448c6549d5cf49f",
       "set": "monitoring",
       "group": "recent_default",
       "status": "ready",
       "query": "Muéstrame las alertas recientes de incendio y de deforestación alrededor de Puerto Suárez, Bolivia",
       "expected_fields": [
-        "accept_nudge_offering",
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
         "text"
       ],
       "implied_checks": [
-        "accepted_nudge_match",
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
         "expected_text_match"
       ],
       "intent": "monitoring",
-      "dataset_ids": [
-        "11"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-mon-009",
@@ -14513,6 +15948,36 @@
       "difficulty": "hard",
       "behaviour": "answer with data; state window used",
       "query": "Have there been any disturbance alerts in Côte d'Ivoire's Nawa region recently?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-011-fr",
+      "uid": "c7bfe468f9aa15a2",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "query": "Y a-t-il eu des alertes de perturbation récemment dans la région de la Nawa, en Côte d'Ivoire ?",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -14866,6 +16331,34 @@
       ]
     },
     {
+      "id": "ch-mon-022-fr",
+      "uid": "f46f6b49fdc530d8",
+      "set": "monitoring",
+      "group": "recent_rank",
+      "status": "ready",
+      "query": "Quelle province de la RDC a eu la plus grande surface d'alertes de perturbation au cours des 30 derniers jours ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-023",
       "uid": "d4a337871272b726",
       "set": "monitoring",
@@ -15154,6 +16647,34 @@
       ]
     },
     {
+      "id": "ch-mon-032-fr",
+      "uid": "e536a5acec879092",
+      "set": "monitoring",
+      "group": "recent_presence",
+      "status": "ready",
+      "query": "Y a-t-il eu de nouvelles alertes de déforestation dans la province de l'Équateur au cours du dernier mois ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-033",
       "uid": "57a970f4cbd99adf",
       "set": "monitoring",
@@ -15222,6 +16743,38 @@
       "status": "ready",
       "behaviour": "answer with data",
       "query": "Any fire-related disturbance alerts in Maranhão this week? Looking for escaped fires.",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-034-pt",
+      "uid": "329b565439110e4e",
+      "set": "monitoring",
+      "group": "recent_presence",
+      "status": "ready",
+      "query": "Algum alerta de distúrbio relacionado a fogo no Maranhão esta semana? Estou procurando incêndios que fugiram do controle.",
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
@@ -15424,6 +16977,64 @@
       ]
     },
     {
+      "id": "ch-mon-038-fr",
+      "uid": "d8ce5390a69bb7d9",
+      "set": "monitoring",
+      "group": "recent_vs_prior",
+      "status": "ready",
+      "query": "La surface des alertes en Ituri a-t-elle augmenté au cours des 30 derniers jours par rapport aux 30 jours précédents ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-038-pt",
+      "uid": "c9415fdc00599590",
+      "set": "monitoring",
+      "group": "recent_vs_prior",
+      "status": "ready",
+      "query": "A área de alertas em Ituri aumentou nos últimos 30 dias em comparação com os 30 dias anteriores?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-039",
       "uid": "5e8c1cee53474c50",
       "set": "monitoring",
@@ -15557,6 +17168,22 @@
       "status": "ready",
       "behaviour": "List or export coordinates and dates, or explain how to get them",
       "query": "Give me the coordinates and dates of the high-confidence alerts in Côte d'Ivoire's San-Pédro region from the last two weeks so my team can go verify them.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-045-fr",
+      "uid": "fba0d02fdf3dd90b",
+      "set": "monitoring",
+      "group": "alert_followup",
+      "status": "ready",
+      "query": "Donne-moi les coordonnées et les dates des alertes de haute confiance dans la région de San-Pédro, en Côte d'Ivoire, sur les deux dernières semaines, pour que mon équipe puisse aller les vérifier.",
       "expected_fields": [
         "text"
       ],
@@ -15701,6 +17328,31 @@
       ]
     },
     {
+      "id": "ch-mon-049-fr",
+      "uid": "c3f9b72cb9397cdb",
+      "set": "monitoring",
+      "group": "alert_followup",
+      "status": "ready",
+      "query": "Quelles alertes de la Réserve de faune à okapis devrions-nous vérifier en premier ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-mon-050",
       "uid": "7a8153ed53876674",
       "set": "monitoring",
@@ -15785,6 +17437,34 @@
       "status": "ready",
       "behaviour": "Say concession boundaries are not available; offer alerts for the named area",
       "query": "Are there alerts in or near the logging concessions around Lomié this month?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-054-fr",
+      "uid": "2e3baebe1b403f48",
+      "set": "monitoring",
+      "group": "concession_alerts",
+      "status": "ready",
+      "query": "Y a-t-il des alertes à l'intérieur ou à proximité des concessions forestières autour de Lomié ce mois-ci ?",
       "expected_fields": [
         "data_pull",
         "dataset_id",
@@ -15894,6 +17574,25 @@
       "status": "ready",
       "behaviour": "Answer with buffer analysis, or say buffers are not supported and offer the in-park total",
       "query": "Were any of the June 2026 alerts in Boumba Bek National Park within 5 km of the park boundary?",
+      "expected_fields": [
+        "aoi_ids",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-mon-057-fr",
+      "uid": "1db334ba02106601",
+      "set": "monitoring",
+      "group": "buffer_unsupported",
+      "status": "ready",
+      "query": "Est-ce que certaines des alertes de juin 2026 dans le parc national de Boumba-Bek étaient à moins de 5 km de la limite du parc ?",
       "expected_fields": [
         "aoi_ids",
         "figure",
@@ -16396,6 +18095,74 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-mon-073",
+      "uid": "63c46a025e127ed1",
+      "set": "monitoring",
+      "group": "many_areas",
+      "status": "ready",
+      "query": "I want to know the alerts for the following Brazilian municipalities: Manaus\nCareiro da Várzea\nCareiro\nManaquiri\nBeruri\nAutazes\nBorba\nManicoré\nTapauá\nCanutama\nHumaitá\nLábrea\nPorto Velho",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-073-pt",
+      "uid": "013598a5f212985b",
+      "set": "monitoring",
+      "group": "many_areas",
+      "status": "ready",
+      "query": "quero saber os alertas para os seguintes municípios brasileiros: Manaus\nCareiro da Várzea\nCareiro\nManaquiri\nBeruri\nAutazes\nBorba\nManicoré\nTapauá\nCanutama\nHumaitá\nLábrea\nPorto Velho",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-mon-074",
+      "uid": "d50cbd3438c371ae",
+      "set": "monitoring",
+      "group": "recent_default",
+      "status": "ready",
+      "difficulty": "hard",
+      "behaviour": "refuse at municipality level; offer the parent province",
+      "query": "Show me recent fire and deforestation alerts around Puerto Suárez, Bolivia",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "monitoring",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-port-001",
       "uid": "d79a9346a214cabf",
       "set": "portfolio",
@@ -16437,6 +18204,35 @@
       "status": "ready",
       "behaviour": "answer with the closest measure for the 27 states; say soy cannot be isolated",
       "query": "Rank every Brazilian state by soy-driven conversion since 2020.",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-port-003-pt",
+      "uid": "2530507a31f53e69",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Faça um ranking de todos os estados brasileiros por conversão impulsionada pela soja desde 2020.",
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
@@ -16720,6 +18516,32 @@
       "status": "ready",
       "behaviour": "answer with data for both countries' districts; say there is no cocoa filter",
       "query": "Show me which cocoa-growing districts in Côte d'Ivoire had the most loss — all of them, ranked.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-port-017-fr",
+      "uid": "edc025c09f6ad715",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Montre-moi quels districts producteurs de cacao de Côte d'Ivoire ont eu le plus de pertes, en les classant tous.",
       "expected_fields": [
         "aoi_ids",
         "data_pull",
@@ -17181,6 +19003,38 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-port-034",
+      "uid": "e4c5d24f94175b5e",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "wildcat mining in protected areas in the Brazilian Amazon",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-port-034-pt",
+      "uid": "2c52f25c984218d0",
+      "set": "portfolio",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "garimpo em areas protegidas na amazonia brasileira",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "portfolio",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-quant-001",
       "uid": "96b8474465f25c5b",
       "set": "quantification",
@@ -17209,6 +19063,35 @@
         "4"
       ],
       "subtype": "single_year"
+    },
+    {
+      "id": "ch-quant-001-pt",
+      "uid": "81123a9fb67052f1",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Quantos hectares de cobertura arbórea, incluindo plantações, o Brasil perdeu em 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-quant-002",
@@ -17449,6 +19332,35 @@
       "subtype": "deforestation_default"
     },
     {
+      "id": "ch-quant-009-pt",
+      "uid": "7a82f91372427d41",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Quanto desmatamento ocorreu no Brasil em 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-quant-010",
       "uid": "f43e1c047e9e97b0",
       "set": "quantification",
@@ -17477,6 +19389,35 @@
         "4"
       ],
       "subtype": "intact_forest"
+    },
+    {
+      "id": "ch-quant-010-fr",
+      "uid": "53e4ab71f05feeb5",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Combien de forêt intacte la République démocratique du Congo a-t-elle perdue en 2023 ?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
     },
     {
       "id": "ch-quant-011",
@@ -18653,6 +20594,31 @@
       "subtype": "net_sink_source"
     },
     {
+      "id": "ch-quant-047-fr",
+      "uid": "b62ce25b952b9b2e",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "J'essaie de comprendre les forêts de la RDC - sur toute la période des données, est-ce qu'elles absorbent vraiment plus de carbone qu'elles n'en rejettent, ou c'est l'inverse ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "figure_claim"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
       "id": "ch-quant-048",
       "uid": "acb8035b3cbf7003",
       "set": "quantification",
@@ -19101,6 +21067,30 @@
       "subtype": "change_area"
     },
     {
+      "id": "ch-quant-064-pt",
+      "uid": "4a59eb20ecc0c80c",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "No Brasil, quanta terra passou de cobertura arbórea para área agrícola?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
       "id": "ch-quant-065",
       "uid": "168ba3da3272f144",
       "set": "quantification",
@@ -19199,6 +21189,33 @@
         "2"
       ],
       "subtype": "single_year"
+    },
+    {
+      "id": "ch-quant-068-pt",
+      "uid": "859848bfd7390768",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "Qual era a extensão de pastagens naturais/seminaturais no Brasil em 2020, em hectares?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2"
+      ]
     },
     {
       "id": "ch-quant-069",
@@ -19527,6 +21544,33 @@
       "subtype": "disturbed_area"
     },
     {
+      "id": "ch-quant-080-pt",
+      "uid": "07d5234cc134053f",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Quantos hectares de alertas de distúrbio foram sinalizados em todo o Brasil de 1º de janeiro a 31 de dezembro de 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-quant-081",
       "uid": "885a19daf8c09c96",
       "set": "quantification",
@@ -19580,6 +21624,33 @@
         "11"
       ],
       "subtype": "disturbed_area"
+    },
+    {
+      "id": "ch-quant-082-fr",
+      "uid": "1e04c1cb0f0f7df6",
+      "set": "quantification",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Combien d'hectares d'alertes de perturbation ont été signalés dans l'ensemble de la République démocratique du Congo du 1er janvier au 30 juin 2024 ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "11"
+      ]
     },
     {
       "id": "ch-quant-083",
@@ -19878,6 +21949,30 @@
       "subtype": "natural_extent"
     },
     {
+      "id": "ch-quant-092-pt",
+      "uid": "2d4065d98901c515",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Quantos hectares de áreas naturais existem no Brasil?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
       "id": "ch-quant-093",
       "uid": "35b3e5f33afaa1ad",
       "set": "quantification",
@@ -20149,6 +22244,34 @@
       "subtype": "cover_area"
     },
     {
+      "id": "ch-quant-103-pt",
+      "uid": "fd5497a9e9af26fa",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "Quanta cobertura arbórea o Brasil tem?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ]
+    },
+    {
       "id": "ch-quant-104",
       "uid": "f42b8b45ccad676f",
       "set": "quantification",
@@ -20373,6 +22496,34 @@
       "subtype": "primary_forest_area"
     },
     {
+      "id": "ch-quant-110-fr",
+      "uid": "d4fab6c5405655ae",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "Combien d'hectares de forêt primaire la République démocratique du Congo compte-t-elle ?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ]
+    },
+    {
       "id": "ch-quant-111",
       "uid": "e33ec3acf4b5bad2",
       "set": "quantification",
@@ -20507,6 +22658,33 @@
       "subtype": "gain_total"
     },
     {
+      "id": "ch-quant-115-pt",
+      "uid": "33a62a92e6e8f0ac",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "Quantos hectares de ganho de cobertura arbórea o Brasil teve, no acumulado, de 2000 a 2020?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
       "id": "ch-quant-116",
       "uid": "732f82c2b5c9355c",
       "set": "quantification",
@@ -20587,6 +22765,33 @@
         "5"
       ],
       "subtype": "period_gain"
+    },
+    {
+      "id": "ch-quant-118-fr",
+      "uid": "f3705abc75fbaa47",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "Combien d'hectares de gain cumulé de couvert arboré la République démocratique du Congo a-t-elle enregistrés sur la période 2015-2020 ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
     },
     {
       "id": "ch-quant-119",
@@ -20828,6 +23033,30 @@
         "8"
       ],
       "subtype": "dominant_driver"
+    },
+    {
+      "id": "ch-quant-127-pt",
+      "uid": "76672df1ddc5ac82",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "Qual é o principal driver da perda de cobertura arbórea no Brasil desde 2001?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ]
     },
     {
       "id": "ch-quant-128",
@@ -21152,6 +23381,35 @@
         "10"
       ],
       "subtype": "single_year"
+    },
+    {
+      "id": "ch-quant-139-pt",
+      "uid": "f2cf54df1c7feef3",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "No Brasil, em 2020, quantos hectares de perda de cobertura arbórea (em todos os tipos de floresta) foram causados por incêndios, e como isso se compara com a perda de cobertura arbórea não causada por incêndios no mesmo ano?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
     },
     {
       "id": "ch-quant-140",
@@ -21744,6 +24002,30 @@
       ]
     },
     {
+      "id": "ch-quant-157-pt",
+      "uid": "19ee5abf3c73e0e2",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Quanta área natural existe no Rio Grande do Sul, Brasil?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
       "id": "ch-quant-158",
       "uid": "61ded8af5a8a4360",
       "set": "quantification",
@@ -21835,6 +24117,22 @@
       "status": "ready",
       "behaviour": "Clarify boundary or ask for upload; then answer with data",
       "query": "Has the area around the Lobé iron project lost forest since the mining permit was granted in 2012?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-161-fr",
+      "uid": "5735ff9ebfa48843",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "La zone autour du projet de minerai de fer de Lobé a-t-elle perdu de la forêt depuis l'attribution du permis minier en 2012 ?",
       "expected_fields": [
         "text"
       ],
@@ -22024,6 +24322,22 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-quant-166-fr",
+      "uid": "fcf2206630f01eab",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "À quel point je peux me fier au chiffre de perte de couvert arboré de la RDC pour 2024 ? Il y a une marge d'erreur ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-quant-167",
       "uid": "ee8e29242f63d7b4",
       "set": "quantification",
@@ -22082,6 +24396,32 @@
       "status": "ready",
       "behaviour": "answer with data",
       "query": "What are the gross emissions and removals from forests in Salonga National Park?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-168-fr",
+      "uid": "a7fad383de4fdcb2",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Quelles sont les émissions brutes et les absorptions des forêts du parc national de la Salonga ?",
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
@@ -22225,6 +24565,32 @@
       ]
     },
     {
+      "id": "ch-quant-171-pt",
+      "uid": "229280439d270189",
+      "set": "quantification",
+      "group": "sluc",
+      "status": "ready",
+      "query": "Estamos montando um inventário corporativo de GEE. Quais são as emissões por mudança de uso da terra por tonelada de soja proveniente do Mato Grosso?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "9"
+      ]
+    },
+    {
       "id": "ch-quant-172",
       "uid": "43b883c23fed3821",
       "set": "quantification",
@@ -22302,6 +24668,35 @@
       "status": "ready",
       "behaviour": "answer with closest data (tree cover / natural lands); explain secondary vegetation not separated",
       "query": "How much primary and secondary vegetation does Brazil have, for our biodiversity framework reporting?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-175-pt",
+      "uid": "c3f2c2842c97785d",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "Quanta vegetação primária e secundária o Brasil tem, para o nosso relatório do marco de biodiversidade?",
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
@@ -22509,6 +24904,35 @@
       ]
     },
     {
+      "id": "ch-quant-180-fr",
+      "uid": "8a5a4bb4ff091063",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Où, dans la région du Haut-Sassandra, y a-t-il des terres cultivées ou dégradées plutôt que de la forêt naturelle, qui pourraient être restaurées ?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
       "id": "ch-quant-181",
       "uid": "490b637a7d75d022",
       "set": "quantification",
@@ -22588,6 +25012,33 @@
       "status": "ready",
       "behaviour": "Answer with grassland / natural land extent",
       "query": "Is there still natural grassland in Mato Grosso that we should prioritize for protection?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "2",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-183-pt",
+      "uid": "162528536ec9c0c6",
+      "set": "quantification",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "Ainda existem pastagens naturais no Mato Grosso que deveríamos priorizar para proteção?",
       "expected_fields": [
         "accept_nudge_offering",
         "aoi_ids",
@@ -22727,6 +25178,35 @@
       "status": "ready",
       "behaviour": "Answer with flux for the state; explain if within-state hotspots are not supported",
       "query": "Which forests in Pará remove the most carbon? We want to prioritize protection to keep the carbon sink.",
+      "expected_fields": [
+        "accept_aoi_nudge_offering",
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-188-pt",
+      "uid": "c645245129fd15e8",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Quais florestas no Pará removem mais carbono? Queremos priorizar a proteção para manter o sumidouro de carbono.",
       "expected_fields": [
         "accept_aoi_nudge_offering",
         "accept_nudge_offering",
@@ -23047,6 +25527,22 @@
       "status": "ready",
       "behaviour": "decline or redirect: pasture carbon not in catalog",
       "query": "What is the carbon stored in pastures in Mato Grosso do Sul?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-201-pt",
+      "uid": "425498439aaca499",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Quanto carbono está armazenado nas pastagens do Mato Grosso do Sul?",
       "expected_fields": [
         "text"
       ],
@@ -23646,57 +26142,35 @@
     },
     {
       "id": "ch-quant-216",
-      "uid": "0ea30208963205a1",
+      "uid": "3890f05493078101",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
       "query": "Calculation of forest cover loss in Morona District, Loreto Region, from 2010 to 2024",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "end_date",
-        "figure",
-        "start_date"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-216-es",
-      "uid": "c1dea451dbc63ed9",
+      "uid": "78b708d5d724ef90",
       "set": "quantification",
       "group": "tcl",
       "status": "ready",
       "query": "Cálculo de pérdida de cobertura forestal en el Distrito de Morona Región Loreto desde 2010 a 2024",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "end_date",
-        "figure",
-        "start_date"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match",
-        "date_extraction"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "4"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-217",
@@ -24066,51 +26540,35 @@
     },
     {
       "id": "ch-quant-224",
-      "uid": "8992e49f2cf1b608",
+      "uid": "0c6cc5ba36935d01",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "show me the land uses in Valdepeñas, Ciudad Real province, Spain",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "figure"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "1"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-224-es",
-      "uid": "9586a0f2295ba02c",
+      "uid": "6cdb2e9b6acef5ae",
       "set": "quantification",
       "group": "land-cover",
       "status": "ready",
       "query": "muestrame los usos del suelo en Valdepeñas, provincia de Ciudad real, españa",
       "expected_fields": [
-        "aoi_ids",
-        "data_pull",
-        "dataset_id",
-        "figure"
+        "text"
       ],
       "implied_checks": [
-        "answered_without_data",
-        "aoi_id_match",
-        "data_pull_exists",
-        "dataset_id_match"
+        "expected_text_match"
       ],
       "intent": "quantification",
-      "dataset_ids": [
-        "1"
-      ]
+      "dataset_ids": []
     },
     {
       "id": "ch-quant-225",
@@ -26093,6 +28551,2966 @@
       "dataset_ids": []
     },
     {
+      "id": "ch-quant-271",
+      "uid": "11b6abb7b111e9ca",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Explain the deforestation in the Department of Boquerón, in Paraguay, in more detail?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-271-pt",
+      "uid": "df4cd73a4d7e954b",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "ME explique melhor sobre o desmatamento no Departamento de Boquerón, no paraguai?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-272",
+      "uid": "e2b4015fd3e46d75",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Show the changes in land use and land cover in the state of Pará in Brazil and their relationship with CO2 emissions",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "4",
+        "6",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-272-pt",
+      "uid": "a8d3bbd6c53283ad",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Mostre as mudanças do uso e cobertura do solo no estado do Pará no Brasil e essa relação com as emissões de CO2",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "4",
+        "6",
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-273",
+      "uid": "d6c52871471df0c8",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "I would like to see historical data on deforestation from mining in the state of Mato Grosso, in Brazil.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-273-pt",
+      "uid": "690dd772e255c22d",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "Gostaria de ver dados históricos de desmatamento por mineração no estado do Mato Grosso, no Brasil.",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-quant-274",
+      "uid": "f383ccf538fc65e7",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "thinking about the EUDR, what is the rate of deforestation and degradation in the forest of Kelantan in Malaysia?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-274-pt",
+      "uid": "6c99014b2f7e0f04",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "pensando na EUDR, qual a taxa de desmatamento e degradacao na floresta de kelantan na malasia?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-275",
+      "uid": "84e3562d2cfd79dd",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "How is land cover and land use distributed in Brazil in 2019",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-275-pt",
+      "uid": "a7216b4bb6ee11fe",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Como é distribuída a Cobertura e USo do Solo no Brasil em 2019",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-276",
+      "uid": "9880ac67ed7f2822",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "What is the land use like in the municipality of Sintra in Portugal? What are the main positives and the main threats in the municipality?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-276-pt",
+      "uid": "86896daf9f4c56d0",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Como é a ocupação do solo no municipio de sintra em Portugal? Quais são os principais pontos positivos e a principais ameaças no municipio?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-277",
+      "uid": "cb07a3b26c478db4",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Which areas are suitable for creating new conservation units in the state of Paraná, Brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-277-pt",
+      "uid": "aafd62ed36b1c073",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Quais as ares aptas para criação de novas uses no estado do Paraná, Brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-278",
+      "uid": "ef78efdf78534771",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "what is the landscape like in the Cuiabá River basin in Mato Grosso?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-278-pt",
+      "uid": "4569218f5137d233",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "como esta a paisagem na bacia hidrografica do rio cuiabá em mato grosso?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-279",
+      "uid": "4531dc3d3ad0dafb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Show the forest loss of the RESEX Maracanã",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-279-pt",
+      "uid": "ef8167fe5368be21",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Mostre a perda florestal  da RESEX MARACANÃ",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-280",
+      "uid": "4bd4103f1295a67b",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "is it possible to put together a map with the influence of mining in the municipality of Itapeva, state of São Paulo, country Brazil?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-280-pt",
+      "uid": "5d02bbcc14951456",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "é possível montar um mapa com a influencia da mineração no município de itapeva estado de são paulo país brasil?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-281",
+      "uid": "1b7cb744bdac2843",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "where is there illegal deforestation in Florianópolis",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-281-pt",
+      "uid": "4e81746df87fd3b7",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "onde tem desmatamento ilegal em Florianópolis",
+      "expected_fields": [
+        "aoi_ids",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-282",
+      "uid": "5c75e70f2d0bc4d0",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Was there any deforestation in Santarém in Pará in 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-282-pt",
+      "uid": "9fe4543c23ef3668",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Houve algum desmatamento em santarem no Pará em 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-283",
+      "uid": "7594b64ff1392d5b",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "show the infraction notices in Guaricana National Park",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-283-pt",
+      "uid": "47230c7787fae650",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "mostre os autos de infração no parque nacional guaricana",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-284",
+      "uid": "eb7ecbdba8eb5f6e",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "how much forest fire did we have in the Piracaia region over the last 5 years?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-284-pt",
+      "uid": "f9f7d37e9116f074",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "quanto de incendio florestal tivemos na região de piracaia ao longo dos últimos 5 anos?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-285",
+      "uid": "e8574340262af067",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "I want information on fires in Brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-285-pt",
+      "uid": "d4ec4ff4c4e236ef",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Quero informações de queimadas no Brasil",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-quant-286",
+      "uid": "3f835994b036ce49",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Show me the Legal Reserve areas in Brazil",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-286-pt",
+      "uid": "2f3174abdef938db",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Me mostre as areas de Reserva Legal no Brasil",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-287",
+      "uid": "07ed0a3c6abd2121",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Impact of deforestation of original forest in the Laklãnõ Xokleng indigenous land in Santa Catarina",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-287-pt",
+      "uid": "704eea9c8159892d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Impacto de desmatamento de mata originária na terra indigena Laklãnõ Xokleng em Santa Catarina",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-288",
+      "uid": "5ac6df0ea95a8694",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Give me a general overview of Confresa MT",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-288-pt",
+      "uid": "171c6beae17dc3eb",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Me traga um panorama geral de confresa MT",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-289",
+      "uid": "45b6df1587c33b94",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Data on gold production in the Brazilian Amazon.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-289-pt",
+      "uid": "663839f6ef658033",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Dados sobre produção de ouro na Amazônia brasileira.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-290",
+      "uid": "983a27110a442a3b",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "Show the areas of environmental recovery in the municipality of Mirante do Paranapanema, São Paulo, Brazil",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-quant-290-pt",
+      "uid": "f49e0638deacacd5",
+      "set": "quantification",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "Mostre as áreas de recuperação ambiental no município de Mirante do Paranapanema, São Paulo, Brasil",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-quant-291",
+      "uid": "c0080d77f9d1e955",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "check the tree cover loss data and give me an assessment of the municipality of Querência, in Mato Grosso, to see how much tree cover loss there was",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-291-pt",
+      "uid": "632abb25949398ed",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "verifique o dado de tree cover loss e me traga uma avaliação do município de Querência, no Mato Grosso, para verificar quanto teve de perda de cobertura arbórea",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-292",
+      "uid": "5545850e95aa1e21",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "which state of Brazil has the largest deforested area in the last 5 years?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-292-pt",
+      "uid": "7c37c5fe83fbb709",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "qual é o estado do brasil que possui maior área desmatada nos ultimos 5 anos?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "date_tolerance_days",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-293",
+      "uid": "25fd21f4143e136c",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "what is the forest cover of the state of Tocantins",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-293-pt",
+      "uid": "5c1f109f979609d7",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "qual é a coebrtura florstal do estado do tocantins",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-294",
+      "uid": "6abccf94c9b8fa45",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "show me the forest area of Palmas in Tocantins",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-294-pt",
+      "uid": "0320e026b585e5c1",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "me mostra a area florestal de palmas no tocantins",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-295",
+      "uid": "b6710c1563632e68",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "what is the area of primary forest in Tocantins?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-295-pt",
+      "uid": "a62e2a9f6db5ebbd",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "qual a área de floresta primária do tocantins  ?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-296",
+      "uid": "534def9d78cf5733",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "What is the data source for land cover and land use in Brazil?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-296-pt",
+      "uid": "d490cdec087676b8",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Qual a fonte de dados de cobertura e uso da terra no Brasil?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-297",
+      "uid": "8aae433b36043186",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "what other indicators can I ask about?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-297-pt",
+      "uid": "4798ef21233f31d6",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "quais outros indicadores posso perguntar?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-298",
+      "uid": "9974bc40af362e30",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "How is it determined whether vegetation is primary?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-298-pt",
+      "uid": "ad5e052c34295287",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "COMO É IDENTIFICADO SE UMA VEGETAÇÃO É PRIMÁRIA?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-299",
+      "uid": "4c6d158c562c17d7",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "what is the most recent year of the Glad Land Cover (UMD)?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-299-pt",
+      "uid": "f8902f0ad9554415",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "qual é o ano mais recente do Glad Land Cover (UMD)?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-300",
+      "uid": "134d09dbec4af170",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Are all the GFW catalogues already here?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-300-pt",
+      "uid": "ad54f01f070c369e",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "TOdos os catalogos do GFW já estão aqui?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-301",
+      "uid": "f5e79fe76d6a015f",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Does it work in Portuguese?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-301-pt",
+      "uid": "3a5a5fb0bcb3f7c7",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Funciona em português?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-302",
+      "uid": "3612ad182d472be6",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "what is the definition of forest for the tree cover loss data?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-302-pt",
+      "uid": "3d0ffeda4c7df7fc",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "qual a definição de floresta para o dado de tree cover loss?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-303",
+      "uid": "905dfbb256e43c86",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "I want to understand the data available in the municipality of Porto Seguro",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-303-pt",
+      "uid": "baf143360777da09",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Quero entender os dados disponiveis no municipio de porto seguro",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-304",
+      "uid": "a35281da8156d9a5",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What is the deforestation rate of Sierra Leone?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-304-fr",
+      "uid": "884dd718a69e6a8e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Quel est le taux de déforestation de la Sierra Leone ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-305",
+      "uid": "25027cf2ef04b808",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "What is the forest area of the Democratic Republic of the Congo in 2000 and in 2010",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-305-fr",
+      "uid": "3d9361bc088de8a7",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "Quelle est la superficie forestière de la République Démocratique du Congo en 2000 et en 2010",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-306",
+      "uid": "bb4240eb2733b444",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What is the forest loss from 2010 to 2015 in Tshopo Province",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-306-fr",
+      "uid": "9790cefdda5dcb8e",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Quelle est la perte des forets de 2010 à 2015 dans la Province de la Tshopo",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-307",
+      "uid": "528c2479a7d6d07d",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "What is the forest cover loss in the DRC from 2010 to 2015 by province",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-307-fr",
+      "uid": "7f02454d14575301",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Quelle est la perte du couvert forestier en RDC de 2010 à 2015 par Province",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-308",
+      "uid": "ab4a5508b708520d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Yes, what are the deforestation data for Odzala-Kokoua National Park?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-308-fr",
+      "uid": "07b0e48f7cf8f9f0",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Oui, quelles sont les données de déforestation dans le parc national d'odzala-Kokoua?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-309",
+      "uid": "db4866d2c1482ff5",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "What is the estimated volume of greenhouse gas emissions (in tCO₂e/year) attributable to forest cover loss of human origin in the department of Boumba-et-Ngoko, in particular in the villages bordering Boumba-Bek National Park?\nAnd what methodologies (emission factors, biomass data, tools such as Global Forest Watch or national inventories) are used to produce these estimates?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-309-fr",
+      "uid": "e41d61e45a256caf",
+      "set": "quantification",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Quel est le volume estimé d’émissions de gaz à effet de serre (en tCO₂e/an) imputable à la perte du couvert forestier d’origine anthropique dans le département de Boumba-et-Ngoko, notamment dans les villages riverains du Parc national de Boumba-Bek ?\nEt quelles sont les méthodologies (facteurs d’émission, données de biomasse, outils comme Global Forest Watch ou inventaires nationaux) utilisées pour produire ces estimations ?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "6"
+      ]
+    },
+    {
+      "id": "ch-quant-310",
+      "uid": "c06c52cbc3bb575c",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "forest loss Burkina in 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-310-fr",
+      "uid": "a7a938e0327c2eb5",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "perte de foret  burkina en 2025 ?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-311",
+      "uid": "7e9451f64ad84816",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "which area of Cameroon had the most tree cover loss in 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-311-fr",
+      "uid": "0c3299e7a937c4c0",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "dans quel zone du cameroun y'a t'il eu le plus de perte de couverture arboré en 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-312",
+      "uid": "cee5fdf7547e0296",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "What is the loss in ha and the number of fire points in Ankarafantsika",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-312-fr",
+      "uid": "6beb9e4784c64fb2",
+      "set": "quantification",
+      "group": "tcl-fires",
+      "status": "ready",
+      "query": "Quelle est la perte en Ha et le nombre des points des feux à Ankarafantsika",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "10",
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-313",
+      "uid": "07a3996d19aff682",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What is the percentage of cover lost in the Ziama reserve from 2000 to 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-313-fr",
+      "uid": "1523d4b6548e7d47",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Quel est la pourcentage de la couvert predu de la reserve de Ziama de 2000 en 2026",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-314",
+      "uid": "ee7c10643bb7b2f0",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "I want to know the state of deforestation in the Mbalmayo forest reserve",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-314-fr",
+      "uid": "da3bedb46398b762",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "je veux connaitre l'état de déforestation de la réserve forestière de Mbalmayo",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-315",
+      "uid": "4045bfe6faedbfad",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Land cover in Côte d'Ivoire",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-315-fr",
+      "uid": "b1a9b8682c5171aa",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "Occupation su sol en côte d'ivoire",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-quant-316",
+      "uid": "ccad85019d98e682",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "I would need a comparative analysis of the change in mining activity and the change in forest cover on the Cap Bocage peninsula",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-316-fr",
+      "uid": "691febc1ecea472d",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "J'aurais besoin sur la presqu'île de Cap Bocage d'une analyse comparée de l'évolution de l'activité minière et de l'évolution de la couverture forestière",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-317",
+      "uid": "6959819a1851e296",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What is the area of primary forest lost in Boumba-Bek National Park between 2020 and 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-317-fr",
+      "uid": "2c98ada4c0444175",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Quelle est la superficie des forêts primaires perdues dans le parc nationale de Boumba-Bek entre 2020 et 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-318",
+      "uid": "6990c939aca1afc0",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "what is the natural forest cover of Cameroon",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-318-fr",
+      "uid": "cef37da243758d27",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "quelle est la couverture de foret naturelle du cameroun",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-319",
+      "uid": "75a139f2cefcb2bb",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "What is the state of deforestation in Kahuzi Biega National Park?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-319-fr",
+      "uid": "df43db8323271bb7",
+      "set": "quantification",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Quel est l'état de déforestation du parc national de Kahuzi Biega?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-320",
+      "uid": "8ec4aa289bd19b12",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "what is the state of the forests in Mai-Ndombe province in the DRC",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "11",
+        "3",
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-320-fr",
+      "uid": "8b6b482ba3a2a0a0",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "quel est l'état de forêts dans la province de mai-ndombe en RDC",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "11",
+        "3",
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-321",
+      "uid": "056c3dd844c9f6d8",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "I want to know which municipalities are most affected by deforestation in the department of La Paz in Bolivia. In order from most deforested to least. With the natural forest loss layer.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-321-fr",
+      "uid": "88096cdd25f584d9",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Je veux connaitre les municipalités les plus touchées par la déforestation dans la département de La Paz en bolivie. Par ordre du plus déforesté au moins. avec la couche natural forest loss.",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-322",
+      "uid": "e17569a359b67c7e",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "I would like to know the vegetation cover of the arrondissement of Bokito in the department of Mbam Inoubou, Centre region in Cameroon",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-322-fr",
+      "uid": "5c809e75ffb5c950",
+      "set": "quantification",
+      "group": "land-cover",
+      "status": "ready",
+      "query": "J'aimerais connaitre la couverture végétale de l'arrondissement de Bokito dans le département du Mbam Inoubou, région du Centre au Cameroun",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-323",
+      "uid": "8cc55ad2dd906e60",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "What proportion of Côte d'Ivoire is made up of natural land?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-323-fr",
+      "uid": "a562f29defc3a61e",
+      "set": "quantification",
+      "group": "natural-lands",
+      "status": "ready",
+      "query": "Quelle proportion de la Côte d'Ivoire est constituée de terre naturelle?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "3"
+      ]
+    },
+    {
+      "id": "ch-quant-324",
+      "uid": "b9005a68b103a27d",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Show me the level of degradation since 2000 of the mangroves of the Wouri estuary in Cameroon",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-324-fr",
+      "uid": "5f48878b0fa90124",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "Montre moi le niveau de dégradation depuis 2000 des mangroves de l'estuaire du Wouri au Cameroun",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-325",
+      "uid": "e8f42e37668afc49",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Which provinces/regions of Gabon recorded the largest forest cover losses from 2020 to 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-325-fr",
+      "uid": "2e0f0f0c4ceee038",
+      "set": "quantification",
+      "group": "many-areas",
+      "status": "ready",
+      "query": "Quelles sont les provinces/Régions du Gabon enregistrant les plus grandes pertes de couvert forestier de 2020 à 2025 ?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-quant-326",
+      "uid": "df106e17403dcda7",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "What is the forest area in the Comoros?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-326-fr",
+      "uid": "b1bc725e3eebc7c2",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "Quelle est la surface en foret aux Comores  ?",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "1",
+        "3",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-327",
+      "uid": "579a954c4bfd11fe",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "Mining in the Océan department",
+      "expected_fields": [
+        "aoi_ids",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-327-fr",
+      "uid": "cac8b1c29645c504",
+      "set": "quantification",
+      "group": "tcl-drivers",
+      "status": "ready",
+      "query": "L'exploitation minière dans le département de l'Océan",
+      "expected_fields": [
+        "aoi_ids",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "aoi_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-328",
+      "uid": "101a2fa5a9860e4a",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "are there any virgin forests left around Yaoundé Cameroon",
+      "expected_fields": [
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-328-fr",
+      "uid": "95328fb8b5d79295",
+      "set": "quantification",
+      "group": "tree-cover",
+      "status": "ready",
+      "query": "est-ce qu'il reste des foret vierges autour de yaoundé cameroun",
+      "expected_fields": [
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": [
+        "4",
+        "7"
+      ]
+    },
+    {
+      "id": "ch-quant-329",
+      "uid": "6c921531e5827936",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "and is it possible to study peatlands in Sweden?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-329-fr",
+      "uid": "643f9355a3f02bad",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "et est-cepossible d'étudier les tourbières en Suede?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-330",
+      "uid": "f6a05addf000137b",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "How do I download the data from my area of interest?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-330-fr",
+      "uid": "348679409ba798c5",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Comment faire pour télécharger les données issues de ma zone d'intérêt?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-331",
+      "uid": "aea97f5e5dd18378",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "How do I download the global land cover map?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-331-fr",
+      "uid": "ea47c23a07f36775",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "Comment télécharger la carte global land cover ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-332",
+      "uid": "a556c263a806900e",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "you don't have anything on any marine ecosystem?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-332-fr",
+      "uid": "20e59ea975106336",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "tu n'as rien sur aucun écosystème maritime ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-333",
+      "uid": "83605957c08109be",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "do the protected areas of Cambodia in your database have a name?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-333-fr",
+      "uid": "de1b4bf850966d57",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "est ce que les aires protegees du cambodge dans votre base de donnees ont un nom ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-334",
+      "uid": "48165e2bf33ed7f2",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "can I select an area?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-334-fr",
+      "uid": "af93b9e1787ba7b3",
+      "set": "quantification",
+      "group": "method",
+      "status": "ready",
+      "query": "puis je sélectionner une zone ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-335",
+      "uid": "d14196e8c37b805f",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "can you calculate a distance?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
+      "id": "ch-quant-335-fr",
+      "uid": "44bad3f4145b298e",
+      "set": "quantification",
+      "group": "unavailable",
+      "status": "ready",
+      "query": "peux calculer une distance ?",
+      "expected_fields": [
+        "text"
+      ],
+      "implied_checks": [
+        "expected_text_match"
+      ],
+      "intent": "quantification",
+      "dataset_ids": []
+    },
+    {
       "id": "ch-refusal-001",
       "uid": "9b555b955273b485",
       "set": "refusal",
@@ -27895,6 +33313,35 @@
       "subtype": "peak_year"
     },
     {
+      "id": "ch-trend-004-pt",
+      "uid": "de2718cb38a30d81",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Em que ano, entre 2011 e 2023, o Brasil teve a maior perda anual de cobertura arbórea em todos os tipos de floresta?",
+      "expected_fields": [
+        "aoi_ids",
+        "context_layer",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "context_layer_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-trend-005",
       "uid": "42d0a2d5020fa5e6",
       "set": "trend",
@@ -29223,6 +34670,34 @@
       "subtype": "direction"
     },
     {
+      "id": "ch-trend-050-pt",
+      "uid": "c00cd5f8bf21b446",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Os alertas de desmatamento no Brasil aumentaram ou diminuíram entre janeiro de 2024 e dezembro de 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
       "id": "ch-trend-051",
       "uid": "f2fb98d0a0a55b6f",
       "set": "trend",
@@ -29333,6 +34808,34 @@
         "11"
       ],
       "subtype": "direction"
+    },
+    {
+      "id": "ch-trend-053-fr",
+      "uid": "76b9c4e573883d76",
+      "set": "trend",
+      "group": "integrated-alerts",
+      "status": "ready",
+      "query": "Je surveille un peu la RDC ces temps-ci, tu peux me dire si les alertes de déforestation y ont été en hausse ou en baisse du 1er mars au 31 août 2024 ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "11"
+      ]
     },
     {
       "id": "ch-trend-054",
@@ -30135,6 +35638,34 @@
       ]
     },
     {
+      "id": "ch-trend-078-pt",
+      "uid": "f930945aabcc7645",
+      "set": "trend",
+      "group": "ghg-flux",
+      "status": "ready",
+      "query": "Quanto mudaram as emissões provenientes da perda de cobertura arbórea no Brasil entre 2020 e 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
       "id": "ch-trend-079",
       "uid": "4aaf5144e03026ef",
       "set": "trend",
@@ -30231,6 +35762,29 @@
       "status": "ready",
       "behaviour": "answer with trend; must not project beyond data without caveat",
       "query": "Is Madagascar on track for zero forest loss in protected areas by 2030?",
+      "expected_fields": [
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-081-fr",
+      "uid": "4f4f48f282a80ca3",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Est-ce que Madagascar est en bonne voie pour atteindre zéro perte de forêt dans les aires protégées d'ici 2030 ?",
       "expected_fields": [
         "data_pull",
         "dataset_id",
@@ -30957,6 +36511,208 @@
         "11"
       ],
       "subtype": "monthly_trend"
+    },
+    {
+      "id": "ch-trend-099",
+      "uid": "9d3ffcbc0b270e79",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Hello, can you give me the history of deforestation in the Sava region in Madagascar",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-099-fr",
+      "uid": "41548d240cdd4395",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "Bonjour est ce que vous pouvez me donner l historique de déforestation dans la région sava à madagascar",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-100",
+      "uid": "d3e4894880755cac",
+      "set": "trend",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "which year shows the greatest gain in forest cover in Cameroon?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-trend-100-fr",
+      "uid": "e25048a0e80b0f20",
+      "set": "trend",
+      "group": "tc-gain",
+      "status": "ready",
+      "query": "quelle l'année présentant le plus grand gain de couverture forestière au Cameroun ?",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure",
+        "text"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "5"
+      ]
+    },
+    {
+      "id": "ch-trend-101",
+      "uid": "444aefaf6bce05cc",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "how natural grasslands are changing in Cameroon",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
+      "id": "ch-trend-101-fr",
+      "uid": "b20492cd67da0bfc",
+      "set": "trend",
+      "group": "grasslands",
+      "status": "ready",
+      "query": "comment les prairies naturelles évoluent au Cameroun",
+      "expected_fields": [
+        "accept_nudge_offering",
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "text"
+      ],
+      "implied_checks": [
+        "accepted_nudge_match",
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "expected_text_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "2"
+      ]
+    },
+    {
+      "id": "ch-trend-102",
+      "uid": "48a88ee9f73b0e10",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "can I have the progress of deforestation of the forest in the Kisangani area in the DRC",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-trend-102-fr",
+      "uid": "187e4832e6369c7d",
+      "set": "trend",
+      "group": "tcl",
+      "status": "ready",
+      "query": "je peux avoir l'état d'avancement de la déforestation de la forêt dans la zone de Kisangani en RDC",
+      "expected_fields": [
+        "aoi_ids",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "trend",
+      "dataset_ids": [
+        "4"
+      ]
     }
   ]
 }

@@ -75,7 +75,7 @@ def test_errata_void_members():
     (manifest(members=[member(stages=["fetch"])]), "unknown stages"),
     (manifest(errata=[{"uid": "nope", "date": "d", "reason": "r"}]), "does not name a member"),
     (manifest(errata=[{"uid": "u1"}]), "date and a reason"),
-    (manifest(members=[member(language="fr", twin_uid="u2")]), "language 'fr'"),
+    (manifest(members=[member(language="de", twin_uid="u2")]), "language 'de'"),
     (manifest(members=[member(language="en", twin_uid="u2")]), "language 'en'"),
     (manifest(members=[member(language="es")]), "needs a twin_uid"),
     (manifest(members=[member(language="id", twin_uid="u1")]), "its own twin"),
@@ -105,6 +105,14 @@ def test_load_raises_on_invalid_and_sha_is_stable(tmp_path):
     bad.write_text(json.dumps(manifest(status="frozen")))
     with pytest.raises(ValueError, match="frozen date"):
         load_benchmark(bad)
+
+
+@pytest.mark.parametrize("language", ["es", "id", "pt", "fr"])
+def test_every_case_language_is_a_member_language(language):
+    bench = from_dict(manifest(members=[
+        member("u1"), member("u2", "ch-aoi-002", language=language, twin_uid="u1"),
+    ]))
+    assert bench.validate() == []
 
 
 def test_language_facets_load_and_are_written_only_when_set():

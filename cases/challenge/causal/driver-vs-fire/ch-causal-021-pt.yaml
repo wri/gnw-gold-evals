@@ -1,0 +1,17 @@
+id: ch-causal-021-pt
+uid: 96abcec0712633bf
+status: ready
+set: causal
+group: driver_vs_fire
+language: pt
+twin: ch-causal-021
+query: Algum dos alertas da semana passada no Maranhão foi causado por fogo?
+expected:
+  text: Explains that alerts do not record their cause and that fire attribution exists only
+    in the annual tree cover loss data; does not claim any alert was fire-caused.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-021 (pt-t-002)'
+  pair_id: pt-t-002
+  use_cases: UC1;UC3
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'
