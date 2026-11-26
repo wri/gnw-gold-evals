@@ -501,7 +501,7 @@ wording is stored.
 | cohort | n | why CodeAct |
 |---|---|---|
 | derived | 4 | an average, a cumulative total or period means: the curated answer may not compute new figures |
-| timestep-form | 4 | a monthly or five-year step, a confidence filter, or one table with two measures |
+| timestep-form | 4 | a monthly or five-year step, a confidence filter, or a table with a derived column |
 | ranking | 4 | a ranking of sub-regions (the curated views take one area), or of drivers by emissions (the curated pie shows area only) |
 | off-catalogue | 4 | land cover transitions and sLUC emission factors have no agent view |
 
@@ -517,11 +517,13 @@ Scoring decisions and gaps:
 - `chart_series` has no period key, so the five-year chart of
   `ch-codeact-007` is not recomputed. Its `figure` passes on any one stated
   five-year total.
-- `ch-codeact-008` asks for one table of loss and emissions. The curated
-  route gives two bar charts, and `update_insight_display` cannot merge
-  them, so it expects CodeAct. AJ to confirm.
-- A request that only changes the chart type ("as a line chart") is not in
-  this set: `update_insight_display` can restyle a curated chart.
+- A request that only changes the form is not in this set. Curated charts
+  have a built-in table view, so a table of figures the curated chart
+  already has gives a curated chart (AJ, 2026-11-26). Likewise
+  `update_insight_display` can restyle a curated chart ("as a line chart").
+- `ch-codeact-008` asks for a table with a derived column (the percent
+  change from the year before), so it needs CodeAct. `chart_data_match`
+  checks its loss column only; no check recomputes the percent change.
 - `ch-codeact-006` asks for high and highest confidence alerts only. A chart
   that stacks all three confidences fails `chart_data_match`.
 - Alert and sLUC windows are fixed calendar periods, not run-relative

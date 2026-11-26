@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "6696078f1a75415c",
+  "caseset_version": "78127a72a3943071",
   "case_count": 1303,
   "cases": [
     {
@@ -4382,12 +4382,12 @@
     },
     {
       "id": "ch-codeact-008",
-      "uid": "35c78320a9fff9e3",
+      "uid": "c3d2615788ffd4b4",
       "set": "codeact",
       "group": "timestep-form",
       "status": "ready",
-      "behaviour": "answer with data; one table with a row per year and columns for loss and emissions",
-      "query": "Give me one table of Gabon's tree cover loss and the emissions from it for each year from 2015 to 2025.",
+      "behaviour": "answer with data; one table with a row per year, the loss and its percent change from the year before",
+      "query": "Give me a table of Gabon's tree cover loss for each year from 2015 to 2025, with the percent change from the year before.",
       "expected_fields": [
         "aoi_ids",
         "chart_route",
