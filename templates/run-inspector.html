@@ -172,7 +172,8 @@ const GROUPS = [
   ["retrieval", ["aoi_id_match","dataset_id_match","dataset_parameter_match",
     "context_layer_match","date_extraction","data_pull_exists","pull_source_match",
     "answered_without_data","state_delta"]],
-  ["analysis", ["chart_integrity","figure_match","answer_period_match"]],
+  ["analysis", ["chart_integrity","figure_match","answer_period_match",
+    "chart_route_match","chart_data_match"]],
   ["explanation", ["expected_text_match","web_fallback","accepted_blog_match","figure_claim_match"]],
   ["output", ["chart_produced","chart_well_formed","chart_type_match",
     "dashboard_aoi_match","dashboard_widgets_match","dashboard_widgets_valid"]],
@@ -195,6 +196,7 @@ const EXPECTED_FIELD = {
   accepted_blog_match:["accept_blog_sources"],
   figure_match:["figure"], figure_claim_match:["figure_claim"],
   answer_period_match:["start_date","end_date"],
+  chart_route_match:["chart_route"], chart_data_match:["chart_series"],
 };
 const GUARD_NOTE = {
   chart_produced:"implied by expected.answer", data_pull_exists:"implied by the expectations",
