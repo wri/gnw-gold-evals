@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "25d5261e3ecbc8fd",
-  "case_count": 1287,
+  "caseset_version": "6696078f1a75415c",
+  "case_count": 1303,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -4163,6 +4163,491 @@
       "intent": "causal",
       "dataset_ids": [
         "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-001",
+      "uid": "66ae70bf53b17620",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; give the mean of the annual losses",
+      "query": "What has Brazil's average yearly tree cover loss been since 2015?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-002",
+      "uid": "50e0ad57bc36bdc5",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; a running total by year",
+      "query": "Chart Côte d'Ivoire's cumulative tree cover loss from 2010 to 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-003",
+      "uid": "91841a82490dee30",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; compare the two period means; annual bars",
+      "query": "Has Peru lost more tree cover per year on average in 2021–2025 than in 2016–2020? Show the loss for each year.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "figure_claim",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-004",
+      "uid": "ade148736f6c41d1",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; give the mean of the annual fire losses",
+      "query": "How much tree cover has Bolivia lost to fires each year on average since 2015?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-codeact-005",
+      "uid": "1ee897e8684b9915",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; six monthly totals",
+      "query": "Show disturbance alert area in Équateur province, DRC, month by month from January to June 2026.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-006",
+      "uid": "f7097e797f3c7c20",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; monthly totals of high and highest confidence alerts only",
+      "query": "How many hectares of high and highest confidence alerts were there each month in Côte d'Ivoire's Cavally region from April to September 2026?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-007",
+      "uid": "bd52980d2bde7135",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; five totals, 2001-2005 to 2021-2025",
+      "query": "Show Brazil's tree cover loss from 2001 to 2025 as five-year totals.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-008",
+      "uid": "35c78320a9fff9e3",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; one table with a row per year and columns for loss and emissions",
+      "query": "Give me one table of Gabon's tree cover loss and the emissions from it for each year from 2015 to 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "chart_type",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "chart_type_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-009",
+      "uid": "ddb5e2d65d6ff914",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; top five provinces, ranked",
+      "query": "Which five provinces of the DRC had the most disturbance alert area in October 2026? Rank them.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-010",
+      "uid": "4f961e15869c8d9d",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; all 14 districts, ranked",
+      "query": "Rank Côte d'Ivoire's districts by tree cover loss since 2021.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-011",
+      "uid": "af26773dcb2d6726",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; top ten states, ranked",
+      "query": "Which 10 Brazilian states lost the most tree cover in 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-012",
+      "uid": "bf3107484e509361",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; drivers ranked by emissions, not by area",
+      "query": "Rank the drivers of tree cover loss in Brazil by the greenhouse gas emissions they caused from 2001 to 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "8"
+      ]
+    },
+    {
+      "id": "ch-codeact-013",
+      "uid": "3257c63e1ad2a46f",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; the tree cover to cropland transition",
+      "query": "How much tree cover in Brazil became cropland between 2015 and 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-codeact-014",
+      "uid": "98d5b43f6bdce1a6",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; tree cover in 2015 by its 2024 class",
+      "query": "What did the tree cover that Indonesia lost between 2015 and 2024 turn into? Break it down by land cover class.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-codeact-015",
+      "uid": "f16d0468f1656e77",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; the CO2e factor per tonne for each crop; coffee may be Arabica, Robusta or both",
+      "query": "Compare the 2024 deforestation emission factors for cocoa, coffee and oil palm grown in Indonesia in one chart.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "9"
+      ]
+    },
+    {
+      "id": "ch-codeact-016",
+      "uid": "23dfbd84fff416ec",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; one CO2e factor per year",
+      "query": "Chart the cocoa deforestation emission factor for Côte d'Ivoire for each year from 2020 to 2024.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "9"
       ]
     },
     {

@@ -1,0 +1,30 @@
+id: ch-codeact-016
+uid: 23dfbd84fff416ec
+status: ready
+set: codeact
+group: off-catalogue
+query: Chart the cocoa deforestation emission factor for Côte d'Ivoire for each year from
+  2020 to 2024.
+expected:
+  aoi_ids: CIV
+  dataset_id: '9'
+  start_date: '2020-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(emissions_factor_tCO2e_per_tonne_production) by year where crop_type =
+    'Cocoa' and gas_type = 'CO2e' and year in 2020..2024
+  figure: sum(emissions_factor_tCO2e_per_tonne_production) where crop_type = 'Cocoa' and gas_type
+    = 'CO2e' and year = 2024 | sum(emissions_factor_tCO2e_per_tonne_production) where crop_type
+    = 'Cocoa' and gas_type = 'CO2e' and year = 2020
+notes:
+  lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
+    15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; one CO2e factor per year
+  route_reason: sLUC emission factors have no agent view, so the gate fails and the code executor
+    runs
+  shape_source: paraphrased from sLUC emission factor charts for one crop (no user wording
+    stored)
+  verified: 'AOI ids: CIV is the area prod pick_aoi returned for ch-quant-036 in run 20261120T172336Z_prod'

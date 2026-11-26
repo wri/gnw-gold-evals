@@ -1,0 +1,30 @@
+id: ch-codeact-008
+uid: 35c78320a9fff9e3
+status: ready
+set: codeact
+group: timestep-form
+query: Give me one table of Gabon's tree cover loss and the emissions from it for each year
+  from 2015 to 2025.
+expected:
+  aoi_ids: GAB
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_type: table
+  chart_series: sum(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2015..2025
+    ; sum(carbon_emissions_MgCO2e) by tree_cover_loss_year where tree_cover_loss_year in 2015..2025
+notes:
+  lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
+    15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; one table with a row per year and columns for loss and emissions
+  route_reason: one table with two measures; the curated route gives two separate bar charts,
+    and update_insight_display cannot merge them
+  shape_source: paraphrased from users asking for year-by-year loss as a table, and tables
+    of loss with emissions (no user wording stored)
+  verified: 'AOI ids: GAB is the area prod pick_aoi returned for ch-causal-010 in run 20261120T172336Z_prod'
+  review_question: 'AJ: is a merged loss-and-emissions table a CodeAct question, or should
+    curated plus restyle pass?'

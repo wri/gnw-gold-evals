@@ -1,6 +1,6 @@
 {
-  "caseset_version": "25d5261e3ecbc8fd",
-  "case_count": 1287,
+  "caseset_version": "6696078f1a75415c",
+  "case_count": 1303,
   "source": "challenge-map-v1.csv",
   "cases": [
     {
@@ -1415,6 +1415,118 @@
       "uid": "ddd770163f582ef7",
       "set": "causal",
       "group": "alert_cause",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-001",
+      "uid": "66ae70bf53b17620",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-002",
+      "uid": "50e0ad57bc36bdc5",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-003",
+      "uid": "91841a82490dee30",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-004",
+      "uid": "ade148736f6c41d1",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-005",
+      "uid": "1ee897e8684b9915",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-006",
+      "uid": "f7097e797f3c7c20",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-007",
+      "uid": "bd52980d2bde7135",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-008",
+      "uid": "35c78320a9fff9e3",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-009",
+      "uid": "ddb5e2d65d6ff914",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-010",
+      "uid": "4f961e15869c8d9d",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-011",
+      "uid": "af26773dcb2d6726",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-012",
+      "uid": "bf3107484e509361",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-013",
+      "uid": "3257c63e1ad2a46f",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-014",
+      "uid": "98d5b43f6bdce1a6",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-015",
+      "uid": "f16d0468f1656e77",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready"
+    },
+    {
+      "id": "ch-codeact-016",
+      "uid": "23dfbd84fff416ec",
+      "set": "codeact",
+      "group": "off-catalogue",
       "status": "ready"
     },
     {

@@ -1,0 +1,26 @@
+id: ch-codeact-002
+uid: 50e0ad57bc36bdc5
+status: ready
+set: codeact
+group: derived
+query: Chart Côte d'Ivoire's cumulative tree cover loss from 2010 to 2025.
+expected:
+  aoi_ids: CIV
+  dataset_id: '4'
+  start_date: '2010-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2010..2025
+    cumulative
+  figure: sum(area_ha) where tree_cover_loss_year in 2010..2025
+notes:
+  lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
+    15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; a running total by year
+  route_reason: a cumulative total is a derived metric; the curated chart shows annual bars
+  shape_source: paraphrased from users asking for annual against cumulative figures (no user
+    wording stored)
+  verified: 'AOI ids: CIV is the area prod pick_aoi returned for ch-quant-036 in run 20261120T172336Z_prod'
