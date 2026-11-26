@@ -227,6 +227,25 @@ def test_top_five_passes_and_the_wrong_fifth_area_fails(score):
     assert "missing idn.5" in result["chart_data_match_reason"]
 
 
+def test_a_group_whose_value_is_zero_may_be_left_out(score):
+    # ch-codeact-025: the chart leaves out a department with no fire loss.
+    every = "sum(area_ha) by aoi_id"
+    table = [*AREAS, {"aoi_id": "IDN.8", "area_ha": 0.0}]
+    names = {**NAMES, "IDN.8": "Lampung"}
+    drawn = chart(_ranking(*PROVINCES), x="province")
+    assert score(every, [drawn], table, names=names)["chart_data_match_score"] == 1.0
+    # A group with a value is still required.
+    short = chart(_ranking(*list(PROVINCES)[1:]), x="province")
+    result = score(every, [short], table, names=names)
+    assert result["chart_data_match_score"] == 0.0
+    assert "missing idn.1" in result["chart_data_match_reason"]
+    assert "idn.8" not in result["chart_data_match_reason"].split("missing")[1]
+    # A chart that draws no group of an all-zero series is not that series.
+    zeros = [{"aoi_id": "IDN.8", "area_ha": 0.0}, {"aoi_id": "IDN.9", "area_ha": 0.0}]
+    elsewhere = chart([{"province": "Somewhere", "area_ha": 5.0}], x="province")
+    assert score(every, [elsewhere], zeros)["chart_data_match_score"] == 0.0
+
+
 def test_areas_match_by_id_name_or_name_with_an_admin_word(score):
     rows = [{"area": "IDN.1_1", "area_ha": 700.0}, {"area": "Jambi Province", "area_ha": 600.0},
             {"area": "aceh", "area_ha": 500.0}, {"area": "Bali", "area_ha": 400.0},

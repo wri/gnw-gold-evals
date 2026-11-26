@@ -42,8 +42,10 @@ area names are read in their usual forms (``_resolver``). A chart matches
 when every expected key is in it and every row whose key is a group of the
 series is within ``figures.TOLERANCE`` (or the rounding the chart states) of
 the expected value times one scale: a unit change (1, 1e-3, 1e3, 1e-6, 1e6)
-or a share of the total over all groups (100 / total, 1 / total). Rows whose
-key is no group ("Other", "Total") are ignored.
+or a share of the total over all groups (100 / total, 1 / total). A key the
+chart leaves out reads as 0, so a group whose value is 0 may be missing, as
+long as the chart draws some group of the series. Rows whose key is no group
+("Other", "Total") are ignored.
 """
 
 from __future__ import annotations
@@ -572,7 +574,19 @@ def _attempt(
     largest = max(abs(v) for v in expected.values.values()) * abs(scale)
     floor = view.precision if view.precision * 10 <= largest else 0.0
     attempt = _Attempt(view, label)
-    attempt.missing = [k for k in expected.values if k in expected.required and k not in shown]
+
+    def close(value: float, target: float) -> bool:
+        return abs(value - target) <= max(TOLERANCE * abs(target), floor)
+
+    # A group the chart leaves out reads as 0, so a group whose value is 0
+    # need not be drawn: a department with no fire loss (ch-codeact-025,
+    # BOL.7). The chart must still draw some group of the series.
+    drawn = any(k in shown for k in expected.values)
+    attempt.missing = [
+        k for k in expected.values
+        if k in expected.required and k not in shown
+        and not (drawn and close(0.0, expected.values[k] * scale))
+    ]
     tied_shown = sum(1 for k in expected.tied if k in shown)
     if tied_shown < expected.need:
         attempt.missing.append(f"{expected.need - tied_shown} of {sorted(expected.tied)}")
@@ -584,11 +598,10 @@ def _attempt(
             attempt.merged.append(group)
             continue
         target = expected.values[group] * scale
-        difference = abs(value - target)
-        if difference <= max(TOLERANCE * abs(target), floor):
+        if close(value, target):
             continue
         attempt.wrong.append(group)
-        error = difference / abs(target) if target else math.inf
+        error = abs(value - target) / abs(target) if target else math.inf
         attempt.worst = max(attempt.worst, error)
     return attempt
 
