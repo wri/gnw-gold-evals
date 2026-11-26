@@ -247,6 +247,9 @@ class ExpectedData(BaseModel):
     # "codeact" or "curated": the route the chart must come from
     # (evaluators/codeact_checks.py). Opt-in.
     expected_chart_route: str = ""
+    # The series a chart must draw, as formulas over the pulled table
+    # (evaluators/codeact_checks.py). Opt-in.
+    expected_chart_series: str = ""
     expected_scope: str = ""
     expected_class_values: str = ""
     test_id: str = ""

@@ -80,8 +80,10 @@ DEDICATED: dict[str, str] = {
     "figure_match": ANALYSIS,
     "answer_period_match": ANALYSIS,
     "figure_claim_match": EXPLANATION,
-    # CodeAct cases: the chart route (evaluators/codeact_checks.py)
+    # CodeAct cases: the chart route, and the chart's values recomputed from
+    # the agent's own pull (evaluators/codeact_checks.py)
     "chart_route_match": ANALYSIS,
+    "chart_data_match": ANALYSIS,
     # Multi-turn: scored by runner/multiturn.py, not by a registry evaluator.
     "state_delta": RETRIEVAL,
     # Run-time ground truth. Every way it scores 0.0 is a retrieval failure:
@@ -147,6 +149,7 @@ PULL_PATH_CHECKS: frozenset[str] = frozenset(
         "ground_truth_match",
         "ground_truth_answer",
         "chart_route_match",
+        "chart_data_match",
     }
 )
 ACCEPTED_NUDGE = "accepted_nudge_match"

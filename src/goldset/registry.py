@@ -36,7 +36,10 @@ from goldset.evaluators.analysis_checks import (
     evaluate_chart_integrity,
     evaluate_class_values,
 )
-from goldset.evaluators.codeact_checks import evaluate_chart_route
+from goldset.evaluators.codeact_checks import (
+    evaluate_chart_data,
+    evaluate_chart_route,
+)
 from goldset.evaluators.explanation_checks import evaluate_answer_traceability
 from goldset.evaluators.figures import (
     evaluate_answer_period,
@@ -322,13 +325,23 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
         ),
         presumes_pull=True,
     ),
-    # CodeAct cases (AJ, 2026-11-26): the chart route the attempt took.
+    # CodeAct cases (AJ, 2026-11-26): the chart route the attempt took, and
+    # the chart's values recomputed from the agent's own pulled table.
     EvaluatorSpec(
         name="chart_route",
         kind="deterministic",
         score_fields=("chart_route_match_score",),
         run=lambda state, expected, query, dashboard: evaluate_chart_route(
             state, expected.expected_chart_route
+        ),
+        presumes_pull=True,
+    ),
+    EvaluatorSpec(
+        name="chart_series",
+        kind="deterministic",
+        score_fields=("chart_data_match_score",),
+        run=lambda state, expected, query, dashboard: evaluate_chart_data(
+            state, expected.expected_chart_series
         ),
         presumes_pull=True,
     ),
