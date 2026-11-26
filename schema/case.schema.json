@@ -85,6 +85,12 @@
   "$defs": {
     "expectations": {
       "type": "object",
+      "properties": {
+        "chart_route": {
+          "enum": ["codeact", "curated"],
+          "description": "The route the chart must come from: codeact (the code executor ran) or curated (a deterministic chart). Scored by chart_route_match."
+        }
+      },
       "additionalProperties": { "type": "string", "minLength": 1 }
     },
     "fieldList": {

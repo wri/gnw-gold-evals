@@ -24,6 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
+from goldset.evaluators.codeact_checks import validate as validate_chart_fields
 from goldset.evaluators.figures import validate as validate_figures
 from goldset.store import (
     Case,
@@ -89,7 +90,7 @@ def main() -> int:
             for issue in validate_templates(text):
                 problems.append(f"{path}: {issue}")
         for expected in expecteds:
-            for issue in validate_figures(expected):
+            for issue in validate_figures(expected) + validate_chart_fields(expected):
                 problems.append(f"{path}: {issue}")
         if stored_uid != case.uid:
             if args.fix:

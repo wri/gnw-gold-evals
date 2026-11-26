@@ -244,6 +244,9 @@ class ExpectedData(BaseModel):
     ground_truth_values: list[float] = []  # fetched at run start, not from the case,
     ground_truth_unresolved: str = ""      # so deliberately unprefixed
     expected_chart_type: str = ""
+    # "codeact" or "curated": the route the chart must come from
+    # (evaluators/codeact_checks.py). Opt-in.
+    expected_chart_route: str = ""
     expected_scope: str = ""
     expected_class_values: str = ""
     test_id: str = ""
@@ -339,6 +342,15 @@ class ExpectedData(BaseModel):
         if v not in (None, "") and parsed is not True:
             raise ValueError(f"accept_dashboard must be TRUE, got {v!r}")
         return parsed
+
+    @field_validator("expected_chart_route", mode="before")
+    @classmethod
+    def parse_chart_route(cls, v: str | None) -> str:
+        """A known route or absent; anything else is a typo that would fail
+        every attempt."""
+        from goldset.evaluators.codeact_checks import require_route
+
+        return require_route(v) if v else ""
 
     @field_validator("expected_data_pull", mode="before")
     @classmethod
