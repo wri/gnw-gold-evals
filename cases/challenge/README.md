@@ -528,8 +528,7 @@ Scoring decisions and gaps:
   change from the year before), so it needs CodeAct. `chart_data_match`
   checks its loss column only; no check recomputes the percent change.
 - No case sets `chart_type: table`. Every chart has a table view, so bars
-  for a table request are fair (AJ, 2026-11-26). `ch-codeact-008` and
-  `ch-codeact-022` set it until the preliminary run `20261126T083427Z_prod`.
+  for a table request are fair (AJ, 2026-11-26).
 - `ch-codeact-006` asks for high and highest confidence alerts only. A chart
   that stacks all three confidences fails `chart_data_match`.
 - The agent can merge Cropland and Cultivated grasslands as "Agriculture".
