@@ -881,15 +881,17 @@ def llm_judge_answer_period(
     if expects_chart:
         fixed_period_rule += (
             "\n\n                THE USER ALSO ASKED FOR A CHART, shown beside the"
-            " response. The response may leave a monthly or yearly breakdown to"
-            " the chart and give only a total, the highlights or a summary in its"
-            " text; judge only the period of the figures it does give. A note on"
-            " how the data were built (for example emission factors based on"
-            " data from 2001 to 2020) does not change the period of the figures."
-            " Take the figures as the response labels them: whether data for the"
-            " period exist is not your concern. Do not fail a response for any"
-            " of these; still fail figures stated for a wider or narrower"
-            " period than asked."
+            " response, and the chart carries the breakdown. The response text"
+            " does not need to repeat it: a response that gives only the total"
+            " for the asked period, the highlights (such as a peak month or"
+            " year) or a summary passes, even when the user asked for figures"
+            " month by month or year by year. A note on how the data were built"
+            " (for example emission factors based on data from 2001 to 2020)"
+            " does not change the period of the figures. Take the figures as the"
+            " response labels them: whether data for the period exist is not"
+            " your concern. A missing breakdown, a method note or doubt about"
+            " the data is never a reason to fail; still fail figures stated for"
+            " a wider or narrower period than asked."
         )
 
     class PeriodVerdict(BaseModel):
