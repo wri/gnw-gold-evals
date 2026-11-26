@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "78127a72a3943071",
-  "case_count": 1303,
+  "caseset_version": "434c357ebe02c481",
+  "case_count": 1319,
   "statuses": {
-    "ready": 1268,
+    "ready": 1284,
     "todo": 35
   },
-  "active_count": 1303,
+  "active_count": 1319,
   "groups": [
     {
       "group": "acronyms",
@@ -179,10 +179,10 @@
     },
     {
       "group": "derived",
-      "cases": 4,
-      "active": 4,
+      "cases": 8,
+      "active": 8,
       "statuses": {
-        "ready": 4
+        "ready": 8
       }
     },
     {
@@ -350,10 +350,10 @@
     },
     {
       "group": "off-catalogue",
-      "cases": 4,
-      "active": 4,
+      "cases": 8,
+      "active": 8,
       "statuses": {
-        "ready": 4
+        "ready": 8
       }
     },
     {
@@ -374,10 +374,10 @@
     },
     {
       "group": "ranking",
-      "cases": 4,
-      "active": 4,
+      "cases": 8,
+      "active": 8,
       "statuses": {
-        "ready": 4
+        "ready": 8
       }
     },
     {
@@ -511,10 +511,10 @@
     },
     {
       "group": "timestep-form",
-      "cases": 4,
-      "active": 4,
+      "cases": 8,
+      "active": 8,
       "statuses": {
-        "ready": 4
+        "ready": 8
       }
     },
     {
@@ -610,11 +610,11 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 1041,
+      "dedicated": 1057,
       "shared_only": 0
     },
     "analysis": {
-      "dedicated": 16,
+      "dedicated": 32,
       "shared_only": 0
     },
     "explanation": {
@@ -622,7 +622,7 @@
       "shared_only": 0
     },
     "output": {
-      "dedicated": 1,
+      "dedicated": 2,
       "shared_only": 0
     },
     "scope": {
@@ -633,18 +633,28 @@
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 917,
+      "cases": 933,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 820,
+      "cases": 836,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 715,
+      "cases": 731,
       "switches_on": "data_pull_exists, answered_without_data"
+    },
+    {
+      "field": "start_date",
+      "cases": 446,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
+    },
+    {
+      "field": "end_date",
+      "cases": 445,
+      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "text",
@@ -652,18 +662,8 @@
       "switches_on": "expected_text_match"
     },
     {
-      "field": "start_date",
-      "cases": 433,
-      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
-    },
-    {
-      "field": "end_date",
-      "cases": 432,
-      "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
-    },
-    {
       "field": "figure",
-      "cases": 333,
+      "cases": 346,
       "switches_on": "figure_match (computed from the agent's own pulled table)"
     },
     {
@@ -703,18 +703,18 @@
     },
     {
       "field": "chart_route",
-      "cases": 16,
+      "cases": 32,
       "switches_on": "chart_route_match (codeact or curated; no chart fails)"
+    },
+    {
+      "field": "chart_series",
+      "cases": 24,
+      "switches_on": "chart_data_match (computed from the agent's own pulled table)"
     },
     {
       "field": "clarification",
       "cases": 15,
       "switches_on": "clarification_requested"
-    },
-    {
-      "field": "chart_series",
-      "cases": 12,
-      "switches_on": "chart_data_match (computed from the agent's own pulled table)"
     },
     {
       "field": "nudge_type",
@@ -742,14 +742,14 @@
       "switches_on": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)"
     },
     {
+      "field": "chart_type",
+      "cases": 2,
+      "switches_on": "chart_type_match"
+    },
+    {
       "field": "accept_dashboard",
       "cases": 1,
       "switches_on": "dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored)"
-    },
-    {
-      "field": "chart_type",
-      "cases": 1,
-      "switches_on": "chart_type_match"
     },
     {
       "field": "answer",
@@ -806,7 +806,7 @@
         "dataset_id": "1",
         "dataset_name": "Global land cover",
         "missing_instructions": [],
-        "cases": 74,
+        "cases": 76,
         "answer_graded": 16,
         "parameters": [],
         "context_layers": []
@@ -833,7 +833,7 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 268,
+        "cases": 273,
         "answer_graded": 62,
         "parameters": [
           {
@@ -869,7 +869,7 @@
         "dataset_id": "6",
         "dataset_name": "Forest greenhouse gas net flux",
         "missing_instructions": [],
-        "cases": 60,
+        "cases": 61,
         "answer_graded": 6,
         "parameters": [
           {
@@ -916,7 +916,7 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 45,
+        "cases": 47,
         "answer_graded": 10,
         "parameters": [],
         "context_layers": []
@@ -925,7 +925,7 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 91,
+        "cases": 92,
         "answer_graded": 17,
         "parameters": [
           {
@@ -948,7 +948,7 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 132,
+        "cases": 137,
         "answer_graded": 36,
         "parameters": [],
         "context_layers": [

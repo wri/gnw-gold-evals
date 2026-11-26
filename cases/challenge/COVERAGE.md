@@ -6,7 +6,7 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version 78127a72a3943071` · 1303 cases · ready 1268 · todo 35 · **1303 active** (everything but `not doing` runs by default)
+`caseset_version 434c357ebe02c481` · 1319 cases · ready 1284 · todo 35 · **1319 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-11-26_
 
@@ -35,7 +35,7 @@ _Last updated: 2026-11-26_
 | custom-area | 1 | 1 | todo 1 |
 | custom_area | 4 | 4 | todo 4 |
 | data-quality | 8 | 8 | ready 8 |
-| derived | 4 | 4 | ready 4 |
+| derived | 8 | 8 | ready 8 |
 | designations | 26 | 26 | ready 26 |
 | direct | 20 | 20 | ready 20 |
 | driver_check | 1 | 1 | ready 1 |
@@ -56,10 +56,10 @@ _Last updated: 2026-11-26_
 | multilingual | 40 | 40 | ready 40 |
 | natural-lands | 46 | 46 | ready 45, todo 1 |
 | no_aoi | 1 | 1 | ready 1 |
-| off-catalogue | 4 | 4 | ready 4 |
+| off-catalogue | 8 | 8 | ready 8 |
 | portfolio_rank | 1 | 1 | todo 1 |
 | premise_check | 3 | 3 | ready 3 |
-| ranking | 4 | 4 | ready 4 |
+| ranking | 8 | 8 | ready 8 |
 | recent_area | 12 | 12 | ready 12 |
 | recent_default | 7 | 7 | ready 7 |
 | recent_presence | 7 | 7 | ready 7 |
@@ -76,7 +76,7 @@ _Last updated: 2026-11-26_
 | tcl | 216 | 216 | ready 213, todo 3 |
 | tcl-drivers | 40 | 40 | ready 40 |
 | tcl-fires | 68 | 68 | ready 68 |
-| timestep-form | 4 | 4 | ready 4 |
+| timestep-form | 8 | 8 | ready 8 |
 | tree-cover | 44 | 44 | ready 43, todo 1 |
 | unavailable | 29 | 29 | ready 29 |
 | unmappable | 15 | 15 | ready 15 |
@@ -104,23 +104,23 @@ exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 1041 | 0 | 1041 | 80% |
-| analysis | 16 | 0 | 16 | 1% |
-| explanation | 440 | 0 | 440 | 34% |
-| output | 1 | 0 | 1 | 0% |
+| retrieval | 1057 | 0 | 1057 | 80% |
+| analysis | 32 | 0 | 32 | 2% |
+| explanation | 440 | 0 | 440 | 33% |
+| output | 2 | 0 | 2 | 0% |
 | scope | 314 | 0 | 314 | 24% |
 
 ## Expected-field census (active cases)
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 917 | dataset_id_match |
-| aoi_ids | 820 | aoi_id_match |
-| data_pull | 715 | data_pull_exists, answered_without_data |
+| dataset_id | 933 | dataset_id_match |
+| aoi_ids | 836 | aoi_id_match |
+| data_pull | 731 | data_pull_exists, answered_without_data |
+| start_date | 446 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| end_date | 445 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | text | 438 | expected_text_match |
-| start_date | 433 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| end_date | 432 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| figure | 333 | figure_match (computed from the agent's own pulled table) |
+| figure | 346 | figure_match (computed from the agent's own pulled table) |
 | forbidden_tools | 237 | forbidden_tools_absent |
 | context_layer | 207 | context_layer_match |
 | figure_claim | 99 | figure_claim_match (the conclusion the pulled data supports) |
@@ -128,16 +128,16 @@ exists.
 | scope | 42 | scope_match |
 | dataset_parameters | 40 | dataset_parameter_match |
 | accept_nudge_offering | 36 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
-| chart_route | 16 | chart_route_match (codeact or curated; no chart fails) |
+| chart_route | 32 | chart_route_match (codeact or curated; no chart fails) |
+| chart_series | 24 | chart_data_match (computed from the agent's own pulled table) |
 | clarification | 15 | clarification_requested |
-| chart_series | 12 | chart_data_match (computed from the agent's own pulled table) |
 | nudge_type | 12 | nudge_match |
 | accept_aoi_nudge_offering | 6 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
 | nudge_options | 6 | nudge_match |
 | accept_blog_sources | 4 | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
 | accept_fixed_period | 2 | answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes) |
+| chart_type | 2 | chart_type_match |
 | accept_dashboard | 1 | dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored) |
-| chart_type | 1 | chart_type_match |
 | answer | 0 ← unused | agent_answer, chart_produced, data_pull_exists, answered_without_data (+ charts_answer when a chart exists) |
 | aoi_source | 0 ← unused | no check of its own (dashboard_aoi_match also compares it) |
 | class_values | 0 ← unused | class_value_match (info-only) |
@@ -164,17 +164,17 @@ answer-graded column) exercise the other three.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 1 | Global land cover | 74 | 16 | — | — |
+| 1 | Global land cover | 76 | 16 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 61 | 4 | — | — |
 | 3 | SBTN Natural Lands Map | 60 | 8 | — | — |
-| 4 | Tree cover loss | 268 | 62 | canopy_cover ×15 | primary_forest ×34, intact_forest ×4, natural_forest ×4 |
+| 4 | Tree cover loss | 273 | 62 | canopy_cover ×15 | primary_forest ×34, intact_forest ×4, natural_forest ×4 |
 | 5 | Tree cover gain | 48 | 4 | — | — |
-| 6 | Forest greenhouse gas net flux | 60 | 6 | canopy_cover ×5 | — |
+| 6 | Forest greenhouse gas net flux | 61 | 6 | canopy_cover ×5 | — |
 | 7 | Tree cover | 56 | 13 | canopy_cover ×12 | primary_forest ×8 |
 | 8 | Tree cover loss by dominant driver | 73 | 26 | canopy_cover ×4 | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 45 | 10 | — | — |
-| 10 | Tree cover loss due to fires | 91 | 17 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
-| 11 | Integrated alerts | 132 | 36 | — | natural_lands ×4 |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 47 | 10 | — | — |
+| 10 | Tree cover loss due to fires | 92 | 17 | canopy_cover ×4 | primary_forest ×7, intact_forest ×3 |
+| 11 | Integrated alerts | 137 | 36 | — | natural_lands ×4 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn

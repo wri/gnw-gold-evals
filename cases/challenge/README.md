@@ -489,7 +489,7 @@ published.
 
 ## Batch 7: the `codeact` set
 
-16 prompts (`cases/challenge/codeact/<cohort>/`, ids `ch-codeact-001..016`)
+32 prompts (`cases/challenge/codeact/<cohort>/`, ids `ch-codeact-001..032`)
 that the curated charts cannot answer, so the agent must draw the chart with
 the code executor (CodeAct). Production shows a curated chart when one fits
 the pull and runs CodeAct only when none fits (project-zeno #910 and #924).
@@ -500,13 +500,13 @@ wording is stored.
 
 | cohort | n | why CodeAct |
 |---|---|---|
-| derived | 4 | an average, a cumulative total or period means: the curated answer may not compute new figures |
-| timestep-form | 4 | a monthly or five-year step, a confidence filter, or a table with a derived column |
-| ranking | 4 | a ranking of sub-regions (the curated views take one area), or of drivers by emissions (the curated pie shows area only) |
-| off-catalogue | 4 | land cover transitions and sLUC emission factors have no agent view |
+| derived | 8 | an average, a moving average, a cumulative total, period means or a share of a part of the period: the curated answer may not compute new figures |
+| timestep-form | 8 | a monthly, quarterly or five-year step, a confidence filter, shares of the total, or a table with a derived column |
+| ranking | 8 | a ranking of sub-regions (the curated views take one area), or of drivers by emissions (the curated pie shows area only) |
+| off-catalogue | 8 | land cover transitions and sLUC data have no agent view |
 
 Every case sets `chart_route: codeact`, scored by `chart_route_match`.
-Twelve also set `chart_series`, scored by `chart_data_match`, which
+Twenty-four also set `chart_series`, scored by `chart_data_match`, which
 recomputes the chart's values from the agent's own pull. A case sets
 `chart_series` only when the question fixes the chart's rows ("month by
 month", "rank them", "for each year"). Where it does not, a different chart
@@ -514,9 +514,12 @@ can be fair, so only the figures in the reply are scored.
 
 Scoring decisions and gaps:
 
-- `chart_series` has no period key, so the five-year chart of
-  `ch-codeact-007` is not recomputed. Its `figure` passes on any one stated
-  five-year total.
+- `chart_series` has no period or quarter key, so the five-year chart of
+  `ch-codeact-007` and the quarterly chart of `ch-codeact-021` are not
+  recomputed. Their `figure` passes on any one stated total.
+- No check recomputes a moving average (`ch-codeact-018`) or a percent
+  change column (`ch-codeact-008`); `chart_data_match` checks the annual
+  loss beside it.
 - A request that only changes the form is not in this set. Curated charts
   have a built-in table view, so a table of figures the curated chart
   already has gives a curated chart (AJ, 2026-11-26). Likewise

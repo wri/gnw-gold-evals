@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "78127a72a3943071",
-  "case_count": 1303,
+  "caseset_version": "434c357ebe02c481",
+  "case_count": 1319,
   "cases": [
     {
       "id": "ch-aoi-001",
@@ -4627,6 +4627,488 @@
       "status": "ready",
       "behaviour": "answer with data; one CO2e factor per year",
       "query": "Chart the cocoa deforestation emission factor for Côte d'Ivoire for each year from 2020 to 2024.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "9"
+      ]
+    },
+    {
+      "id": "ch-codeact-017",
+      "uid": "3c7130830d1200df",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; the two years' loss as a share of the 25-year total",
+      "query": "What share of Indonesia's tree cover loss from 2001 to 2025 happened in 2015 and 2016?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-018",
+      "uid": "be368432c5b865b2",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; annual loss plus a three-year moving average",
+      "query": "Show Gabon's yearly tree cover loss from 2001 to 2025 with a three-year moving average.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-019",
+      "uid": "c1e7b8a3c4894a5c",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; the 2024 loss against the 2015-2023 annual mean, in hectares or percent",
+      "query": "How much more tree cover did Bolivia lose in 2024 than its yearly average for 2015 to 2023?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-020",
+      "uid": "a8be016525e6ab28",
+      "set": "codeact",
+      "group": "derived",
+      "status": "ready",
+      "behaviour": "answer with data; a running total of alert area by month",
+      "query": "Chart the cumulative disturbance alert area in Équateur province, DRC, month by month through 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-021",
+      "uid": "ad646e76296d1e95",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; four quarterly totals",
+      "query": "Show disturbance alert area in Équateur province, DRC, for each quarter of 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-022",
+      "uid": "cfd25d4955537ab9",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; one row per month, a column each for high and highest confidence",
+      "query": "Give me a table of monthly alert area in Côte d'Ivoire's Cavally region from January to June 2026, with high and highest confidence in separate columns.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "chart_type",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "chart_type_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-023",
+      "uid": "e2b163ff322cb12d",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; twelve monthly totals",
+      "query": "Show the disturbance alert area in Riau, Indonesia, for each month of 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-024",
+      "uid": "299e1e3347b4e87f",
+      "set": "codeact",
+      "group": "timestep-form",
+      "status": "ready",
+      "behaviour": "answer with data; each year's share of the 2001-2025 total",
+      "query": "Show Peru's tree cover loss for each year from 2001 to 2025 as a percentage of the total for the whole period.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-025",
+      "uid": "b078ab301ba2e444",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; all nine departments ranked by fire loss",
+      "query": "Which Bolivian department lost the most tree cover to fires in 2024? Rank all nine.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "10"
+      ]
+    },
+    {
+      "id": "ch-codeact-026",
+      "uid": "18272c4834675618",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; all 26 provinces ranked",
+      "query": "Rank the DRC's provinces by tree cover loss in 2025.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "4"
+      ]
+    },
+    {
+      "id": "ch-codeact-027",
+      "uid": "f744a220dd12b88e",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; the five states with the largest positive net flux, ranked",
+      "query": "Which five Brazilian states were the largest net sources of forest greenhouse gas emissions from 2001 to 2025?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "6"
+      ]
+    },
+    {
+      "id": "ch-codeact-028",
+      "uid": "21af0456e0cfcfc4",
+      "set": "codeact",
+      "group": "ranking",
+      "status": "ready",
+      "behaviour": "answer with data; all 14 districts ranked by alert area",
+      "query": "Rank Côte d'Ivoire's districts by disturbance alert area in October 2026.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "11"
+      ]
+    },
+    {
+      "id": "ch-codeact-029",
+      "uid": "5aaeb39aeb5e0bef",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; the tree cover to cropland transition",
+      "query": "How much of Côte d'Ivoire's tree cover in 2015 had become cropland by 2024?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-codeact-030",
+      "uid": "2f94fdc5a318ec1d",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; new built-up area, broken down by its 2015 class",
+      "query": "How much land in Brazil became built-up between 2015 and 2024, and what was that land before?",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "figure"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "1"
+      ]
+    },
+    {
+      "id": "ch-codeact-031",
+      "uid": "1bb531aba1b9edef",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; total CO2e emissions per year for oil palm",
+      "query": "Show Indonesia's deforestation emissions from oil palm production for each year from 2020 to 2024.",
+      "expected_fields": [
+        "aoi_ids",
+        "chart_route",
+        "chart_series",
+        "data_pull",
+        "dataset_id",
+        "end_date",
+        "figure",
+        "start_date"
+      ],
+      "implied_checks": [
+        "answered_without_data",
+        "aoi_id_match",
+        "chart_route_match",
+        "data_pull_exists",
+        "dataset_id_match",
+        "date_extraction"
+      ],
+      "intent": "codeact",
+      "dataset_ids": [
+        "9"
+      ]
+    },
+    {
+      "id": "ch-codeact-032",
+      "uid": "08cf84957925224f",
+      "set": "codeact",
+      "group": "off-catalogue",
+      "status": "ready",
+      "behaviour": "answer with data; CO2, CH4 and N2O emissions for cocoa in 2024",
+      "query": "Break down the 2024 deforestation emissions from cocoa in Côte d'Ivoire by greenhouse gas.",
       "expected_fields": [
         "aoi_ids",
         "chart_route",

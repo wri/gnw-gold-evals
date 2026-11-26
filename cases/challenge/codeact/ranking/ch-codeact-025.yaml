@@ -1,0 +1,27 @@
+id: ch-codeact-025
+uid: b078ab301ba2e444
+status: ready
+set: codeact
+group: ranking
+query: Which Bolivian department lost the most tree cover to fires in 2024? Rank all nine.
+expected:
+  aoi_ids: BOL.1_1;BOL.2_1;BOL.3_1;BOL.4_1;BOL.5_1;BOL.6_1;BOL.7_1;BOL.8_1;BOL.9_1
+  dataset_id: '10'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(tree_cover_loss_from_fires_area_ha) by aoi_id where tree_cover_loss_year
+    = 2024
+  figure: max(tree_cover_loss_from_fires_area_ha) by aoi_id where tree_cover_loss_year = 2024
+notes:
+  lineage: CodeAct set 2026-11-26 (second batch); question shapes from production chart traces,
+    4 Sep to 15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; all nine departments ranked by fire loss
+  route_reason: a ranking of 9 areas; the curated fire views take one area
+  shape_source: paraphrased from users asking which sub-region was hit hardest by fire (no
+    user wording stored)
+  verified: 'AOI ids: BOL.1 to BOL.9, the 9 areas prod pick_aoi returned for ch-quant-189
+    in run 20261120T172336Z_prod'

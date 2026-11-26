@@ -1,0 +1,29 @@
+id: ch-codeact-022
+uid: cfd25d4955537ab9
+status: ready
+set: codeact
+group: timestep-form
+query: Give me a table of monthly alert area in Côte d'Ivoire's Cavally region from January
+  to June 2026, with high and highest confidence in separate columns.
+expected:
+  aoi_ids: CIV.8.1
+  dataset_id: '11'
+  start_date: '2026-01-01'
+  end_date: '2026-06-30'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_type: table
+  chart_series: sum(area_ha) by month(alert_date) where alert_confidence = 'high' and alert_date
+    in 2026-01-01..2026-06-30 ; sum(area_ha) by month(alert_date) where alert_confidence =
+    'highest' and alert_date in 2026-01-01..2026-06-30
+notes:
+  lineage: CodeAct set 2026-11-26 (second batch); question shapes from production chart traces,
+    4 Sep to 15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; one row per month, a column each for high and highest confidence
+  route_reason: a monthly time step; the curated alerts chart and its table view are daily
+  shape_source: paraphrased from users asking for high and highest confidence alerts kept
+    apart (no user wording stored)
+  verified: 'AOI ids: CIV.8.1 is the area prod pick_aoi returned for ch-causal-001 in run
+    20261120T172336Z_prod'
