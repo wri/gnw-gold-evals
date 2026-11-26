@@ -387,6 +387,7 @@ Analysis · gating (AJ, 2026-10-27) · judge · `figures.evaluate_answer_period`
 **Triage.**
 - It counts toward the score from its first run, by AJ's choice (2026-10-27), although judged checks normally start info-only.
 - **`accept_fixed_period`** (`YYYY-YYYY`, opt-in): the data only come as that one period, so a reply that gives its figures for it and says so passes, even in a methodology note (AJ, 2026-10-28, `ch-causal-015`, whose drivers data cover 2001 to 2025 as a whole). The general rule above did not move Haiku on that case, and rewording it for every case made three unrelated draft-5 verdicts stricter, so the rule is spelled out in the prompt only when a case sets the field; without it the prompt is unchanged. Any other format raises.
+- **A chart is expected** (opt-in: the case sets `chart_route` or `chart_series`): the prompt says the user also asked for a chart, so a reply may leave the monthly or yearly breakdown to it and give only a total or the highlights. A note on how the data were built (sLUC factors based on 2001 to 2020) does not change the period of the figures, and whether data for the period exist is not the reviewer's concern. In the codeact preliminary run (`20261126T083427Z_prod`, 2026-11-26) Haiku failed 8 attempts in 5 cases for these reasons. Like `accept_fixed_period` it is opt-in, because BENCHMARK `2026` is frozen and gates on this check; for any other case the prompt is unchanged, and a test pins that.
 
 ## `chart_route_match`
 

@@ -979,9 +979,13 @@ def evaluate_answer_period(
     end_date: str,
     tolerance_days: int = 0,
     fixed_period: str = "",
+    expects_chart: bool = False,
 ) -> dict[str, Any]:
     """answer_period_match: the reply's figures cover exactly the asked period,
-    or the case's ``accept_fixed_period`` when the data only come as that."""
+    or the case's ``accept_fixed_period`` when the data only come as that.
+
+    ``expects_chart`` (the case sets ``chart_route`` or ``chart_series``) tells
+    the reviewer the breakdown may be left to the chart."""
     from goldset.evaluators.llm_judges import llm_judge_answer_period
     from goldset.evaluators.utils import normalize_end_date, normalize_start_date
 
@@ -999,7 +1003,7 @@ def evaluate_answer_period(
         return result
     period = _period_text(start, end, tolerance_days)
     try:
-        judged = llm_judge_answer_period(query, period, answer, fixed)
+        judged = llm_judge_answer_period(query, period, answer, fixed, expects_chart)
     except Exception as error:
         result["answer_period_match_score_reason"] = f"JUDGE ERROR: {error}"
         result["judge_errors"] = ["answer_period_match"]

@@ -322,6 +322,7 @@ EVALUATORS: tuple[EvaluatorSpec, ...] = (
             expected.expected_end_date,
             expected.expected_date_tolerance_days,
             expected.expected_accept_fixed_period,
+            bool(expected.expected_chart_route or expected.expected_chart_series),
         ),
         presumes_pull=True,
     ),

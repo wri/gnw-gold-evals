@@ -509,7 +509,7 @@ def test_figure_claim_is_judged_on_the_true_sentence(pulled, monkeypatch):
 def test_answer_period_reads_the_period_and_maps_the_verdict(monkeypatch):
     seen = {}
 
-    def judge(query, period, answer, fixed_period=""):
+    def judge(query, period, answer, fixed_period="", expects_chart=False):
         seen["period"] = period
         seen["fixed_period"] = fixed_period
         return {"verdict": "fail", "reason": "it averaged 2001 to 2025"}
@@ -530,7 +530,7 @@ def test_answer_period_passes_a_fixed_period_to_the_judge(monkeypatch):
     # ch-causal-015: drivers data only come as 2001 to 2025 as a whole
     seen = {}
 
-    def judge(query, period, answer, fixed_period=""):
+    def judge(query, period, answer, fixed_period="", expects_chart=False):
         seen["fixed_period"] = fixed_period
         return {"verdict": "pass", "reason": "2001 to 2025, stated as the data's period"}
 
@@ -545,10 +545,55 @@ def test_answer_period_passes_a_fixed_period_to_the_judge(monkeypatch):
         evaluate_answer_period(state, "q", "2015-01-01", "2023-12-31", 0, "2001 to 2025")
 
 
+def test_answer_period_tells_the_judge_when_the_case_expects_a_chart(monkeypatch):
+    # ch-codeact-023: the reply gives the 2025 total and leaves the months to the chart.
+    seen = {}
+
+    def judge(query, period, answer, fixed_period="", expects_chart=False):
+        seen["expects_chart"] = expects_chart
+        return {"verdict": "pass", "reason": "the 2025 total"}
+
+    monkeypatch.setattr("goldset.evaluators.llm_judges.llm_judge_answer_period", judge)
+    state = {"messages": [SimpleNamespace(content="In 2025, 12,400 ha of alerts.")]}
+    evaluate_answer_period(state, "Each month of 2025?", "2025-01-01", "2025-12-31")
+    assert seen["expects_chart"] is False
+    evaluate_answer_period(state, "Each month of 2025?", "2025-01-01", "2025-12-31",
+                           expects_chart=True)
+    assert seen["expects_chart"] is True
+
+
+def test_the_chart_rule_is_in_the_prompt_only_when_the_case_expects_a_chart(monkeypatch):
+    # BENCHMARK 2026 is frozen and gates on this check: its prompt must not move.
+    from langchain_core.runnables import RunnableLambda
+
+    from goldset.evaluators import llm_judges
+
+    prompts = []
+
+    class Fake:
+        def with_structured_output(self, schema):
+            def answer(prompt_value):
+                prompts.append(prompt_value.to_string())
+                return schema(reason="r", verdict="pass")
+            return RunnableLambda(answer)
+
+    monkeypatch.setattr(llm_judges, "HAIKU", Fake())
+    for expects_chart in (False, True):
+        llm_judges.llm_judge_answer_period("q", "2025", "a", "", expects_chart)
+    plain, charted = prompts
+    assert "CHART" not in plain
+    assert "THE USER ALSO ASKED FOR A CHART" in charted
+    assert "based on data from 2001 to 2020" in charted
+    # The rule is the only difference.
+    start = charted.index("\n\n                THE USER")
+    end = charted.index("\n\n                ACTUAL AGENT RESPONSE")
+    assert charted[:start] + charted[end:] == plain
+
+
 def test_answer_period_not_applicable_scores_null(monkeypatch):
     monkeypatch.setattr(
         "goldset.evaluators.llm_judges.llm_judge_answer_period",
-        lambda q, p, a, f="": {"verdict": "not_applicable", "reason": "it declined"},
+        lambda q, p, a, f="", c=False: {"verdict": "not_applicable", "reason": "it declined"},
     )
     state = {"messages": [SimpleNamespace(content="I cannot answer that.")]}
     result = evaluate_answer_period(state, "q", "{run-14d}" and "2026-10-13", "2026-10-27", 3)

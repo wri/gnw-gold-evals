@@ -844,7 +844,11 @@ def llm_judge_claim(sentence: str, actual_answer: str) -> dict[str, int | str]:
 
 
 def llm_judge_answer_period(
-    query: str, period: str, actual_answer: str, fixed_period: str = ""
+    query: str,
+    period: str,
+    actual_answer: str,
+    fixed_period: str = "",
+    expects_chart: bool = False,
 ) -> dict[str, str]:
     """Whether the reply's figures are computed over exactly the asked period.
 
@@ -857,6 +861,13 @@ def llm_judge_answer_period(
     ch-causal-015, and rewording it for every case made other verdicts
     stricter, so the rule is spelled out only for the cases that opt in; with
     it empty the prompt is unchanged.
+
+    ``expects_chart`` is set for the cases that expect a chart (the codeact
+    set, 2026-11-26). In those, Haiku failed replies that left the monthly or
+    yearly breakdown to the chart, or that noted how the data were built
+    (sLUC factors "based on 2001 to 2020"). The rule is opt-in for the same
+    reason: BENCHMARK 2026 is frozen and gates on this check, so without it
+    the prompt is unchanged.
     """
     fixed_period_rule = (
         f"\n\n                THE DATA ONLY COME AS ONE FIXED PERIOD: {fixed_period}"
@@ -867,6 +878,19 @@ def llm_judge_answer_period(
         if fixed_period
         else ""
     )
+    if expects_chart:
+        fixed_period_rule += (
+            "\n\n                THE USER ALSO ASKED FOR A CHART, shown beside the"
+            " response. The response may leave a monthly or yearly breakdown to"
+            " the chart and give only a total, the highlights or a summary in its"
+            " text; judge only the period of the figures it does give. A note on"
+            " how the data were built (for example emission factors based on"
+            " data from 2001 to 2020) does not change the period of the figures."
+            " Take the figures as the response labels them: whether data for the"
+            " period exist is not your concern. Do not fail a response for any"
+            " of these; still fail figures stated for a wider or narrower"
+            " period than asked."
+        )
 
     class PeriodVerdict(BaseModel):
         reason: str
