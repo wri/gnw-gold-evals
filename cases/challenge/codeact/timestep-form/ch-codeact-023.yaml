@@ -1,5 +1,5 @@
 id: ch-codeact-023
-uid: e2b163ff322cb12d
+uid: dc8cb3f72b83352e
 status: ready
 set: codeact
 group: timestep-form
@@ -12,7 +12,9 @@ expected:
   data_pull: 'TRUE'
   chart_route: codeact
   chart_series: sum(area_ha) by month(alert_date) where alert_date in 2025-01-01..2025-12-31
-  figure: sum(area_ha) where alert_date in 2025-01-01..2025-12-31
+  figure: sum(area_ha) where alert_date in 2025-01-01..2025-12-31 | sum(area_ha) where alert_confidence
+    = 'high' and alert_date in 2025-01-01..2025-12-31 | sum(area_ha) where alert_confidence
+    = 'highest' and alert_date in 2025-01-01..2025-12-31
 notes:
   lineage: CodeAct set 2026-11-26 (second batch); question shapes from production chart traces,
     4 Sep to 15 Nov 2026
@@ -22,3 +24,5 @@ notes:
   route_reason: a monthly time step; the curated alerts chart is daily
   shape_source: paraphrased from users asking for monthly alert series (no user wording stored)
   verified: 'AOI ids: IDN.24 is the area prod pick_aoi returned for ch-causal-005 in run 20261120T172336Z_prod'
+  review: '2026-11-26: in the preliminary run 20261126T083427Z_prod a reply gave high and
+    highest confidence apart, not the total; either one passes figure_match'

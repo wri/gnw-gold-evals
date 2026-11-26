@@ -1,5 +1,5 @@
 id: ch-codeact-014
-uid: 98d5b43f6bdce1a6
+uid: 3ab1d17464d85022
 status: ready
 set: codeact
 group: off-catalogue
@@ -11,7 +11,9 @@ expected:
   data_pull: 'TRUE'
   chart_route: codeact
   chart_series: sum(area_ha) by land_cover_class_end where land_cover_class_start = 'Tree
-    cover' and land_cover_class_end != 'Tree cover'
+    cover' and land_cover_class_end != 'Tree cover' | sum(area_ha) by land_cover_class_end
+    where land_cover_class_start = 'Tree cover' and land_cover_class_end != 'Tree cover' and
+    land_cover_class_end != 'Cropland' and land_cover_class_end != 'Cultivated grasslands'
   figure: sum(area_ha) where land_cover_class_start = 'Tree cover' and land_cover_class_end
     != 'Tree cover' | max(area_ha) by land_cover_class_end where land_cover_class_start =
     'Tree cover' and land_cover_class_end != 'Tree cover'
@@ -26,3 +28,6 @@ notes:
   shape_source: paraphrased from users asking for the biggest land cover changes or transitions
     (no user wording stored)
   verified: 'AOI ids: IDN is the area prod pick_aoi returned for ch-quant-107 in run 20261120T172336Z_prod'
+  review: '2026-11-26: in the preliminary run 20261126T083427Z_prod the agent merged Cropland
+    and Cultivated grasslands as "Agriculture"; the second series leaves those two classes
+    out and checks the rest'

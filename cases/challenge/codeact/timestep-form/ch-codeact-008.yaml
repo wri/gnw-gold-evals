@@ -1,5 +1,5 @@
 id: ch-codeact-008
-uid: c3d2615788ffd4b4
+uid: 1f695e905cf4591c
 status: ready
 set: codeact
 group: timestep-form
@@ -12,7 +12,6 @@ expected:
   end_date: '2025-12-31'
   data_pull: 'TRUE'
   chart_route: codeact
-  chart_type: table
   chart_series: sum(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2015..2025
 notes:
   lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
@@ -30,4 +29,6 @@ notes:
     change column
   review: '2026-11-26 (AJ): tables are built into the curated charts, so a non-derived table
     gives a curated chart. The first draft (one table of loss and emissions per year) was
-    replaced by this derived table before any run'
+    replaced by this derived table before any run. chart_type: table was dropped after the
+    preliminary run 20261126T083427Z_prod, where the agent drew bars: every chart has a table
+    view'

@@ -527,8 +527,19 @@ Scoring decisions and gaps:
 - `ch-codeact-008` asks for a table with a derived column (the percent
   change from the year before), so it needs CodeAct. `chart_data_match`
   checks its loss column only; no check recomputes the percent change.
+- No case sets `chart_type: table`. Every chart has a table view, so bars
+  for a table request are fair (AJ, 2026-11-26). `ch-codeact-008` and
+  `ch-codeact-022` set it until the preliminary run `20261126T083427Z_prod`.
 - `ch-codeact-006` asks for high and highest confidence alerts only. A chart
   that stacks all three confidences fails `chart_data_match`.
+- The agent can merge Cropland and Cultivated grasslands as "Agriculture".
+  `ch-codeact-013` accepts cropland alone or the two together, as
+  `ch-quant-064` does. The series of `ch-codeact-014` and `ch-codeact-030`
+  have a second alternative without those two classes, which still checks
+  every other class.
+- `ch-codeact-020` and `ch-codeact-023` ask for all alerts, but a reply can
+  give high and highest confidence apart. Their `figure` passes on the
+  total or on either confidence alone.
 - Alert and sLUC windows are fixed calendar periods, not run-relative
   tokens, so expected series do not move between runs.
 - AOI ids are the areas prod `pick_aoi` returned for existing cases in run

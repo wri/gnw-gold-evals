@@ -1,5 +1,5 @@
 id: ch-codeact-022
-uid: cfd25d4955537ab9
+uid: 69370d84e7a295a5
 status: ready
 set: codeact
 group: timestep-form
@@ -12,7 +12,6 @@ expected:
   end_date: '2026-06-30'
   data_pull: 'TRUE'
   chart_route: codeact
-  chart_type: table
   chart_series: sum(area_ha) by month(alert_date) where alert_confidence = 'high' and alert_date
     in 2026-01-01..2026-06-30 ; sum(area_ha) by month(alert_date) where alert_confidence =
     'highest' and alert_date in 2026-01-01..2026-06-30
@@ -27,3 +26,5 @@ notes:
     apart (no user wording stored)
   verified: 'AOI ids: CIV.8.1 is the area prod pick_aoi returned for ch-causal-001 in run
     20261120T172336Z_prod'
+  review: '2026-11-26 (AJ): every chart has a table view, so chart_type: table was dropped
+    after the preliminary run 20261126T083427Z_prod, where the agent drew bars'

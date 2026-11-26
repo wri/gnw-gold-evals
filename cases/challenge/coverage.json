@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "434c357ebe02c481",
+  "caseset_version": "5d45437aae8fbc59",
   "case_count": 1319,
   "statuses": {
     "ready": 1284,
@@ -622,7 +622,7 @@
       "shared_only": 0
     },
     "output": {
-      "dedicated": 2,
+      "dedicated": 0,
       "shared_only": 0
     },
     "scope": {
@@ -742,11 +742,6 @@
       "switches_on": "answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes)"
     },
     {
-      "field": "chart_type",
-      "cases": 2,
-      "switches_on": "chart_type_match"
-    },
-    {
       "field": "accept_dashboard",
       "cases": 1,
       "switches_on": "dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored)"
@@ -760,6 +755,11 @@
       "field": "aoi_source",
       "cases": 0,
       "switches_on": "no check of its own (dashboard_aoi_match also compares it)"
+    },
+    {
+      "field": "chart_type",
+      "cases": 0,
+      "switches_on": "chart_type_match"
     },
     {
       "field": "class_values",
@@ -1191,6 +1191,7 @@
     "unused_expected_fields": [
       "answer",
       "aoi_source",
+      "chart_type",
       "class_values",
       "dashboard_created",
       "dashboard_widgets",

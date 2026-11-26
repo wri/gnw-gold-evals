@@ -6,7 +6,7 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version 434c357ebe02c481` · 1319 cases · ready 1284 · todo 35 · **1319 active** (everything but `not doing` runs by default)
+`caseset_version 5d45437aae8fbc59` · 1319 cases · ready 1284 · todo 35 · **1319 active** (everything but `not doing` runs by default)
 
 _Last updated: 2026-11-26_
 
@@ -107,7 +107,7 @@ exists.
 | retrieval | 1057 | 0 | 1057 | 80% |
 | analysis | 32 | 0 | 32 | 2% |
 | explanation | 440 | 0 | 440 | 33% |
-| output | 2 | 0 | 2 | 0% |
+| output | 0 | 0 | 0 | 0% |
 | scope | 314 | 0 | 314 | 24% |
 
 ## Expected-field census (active cases)
@@ -136,10 +136,10 @@ exists.
 | nudge_options | 6 | nudge_match |
 | accept_blog_sources | 4 | accepted_blog_match (blog path; pull-path checks and aoi_id_match n/a there); web_fallback ignores these posts |
 | accept_fixed_period | 2 | answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes) |
-| chart_type | 2 | chart_type_match |
 | accept_dashboard | 1 | dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored) |
 | answer | 0 ← unused | agent_answer, chart_produced, data_pull_exists, answered_without_data (+ charts_answer when a chart exists) |
 | aoi_source | 0 ← unused | no check of its own (dashboard_aoi_match also compares it) |
+| chart_type | 0 ← unused | chart_type_match |
 | class_values | 0 ← unused | class_value_match (info-only) |
 | dashboard_created | 0 ← unused | dashboard_created |
 | dashboard_widgets | 0 ← unused | dashboard_widgets_match (+ dashboard_widgets_valid when a dashboard exists) |
@@ -223,7 +223,7 @@ answer-graded column) exercise the other three.
 
 ## Known gaps
 
-- Expected fields no active case uses: answer, aoi_source, class_values, dashboard_created, dashboard_widgets, dataset_name, ground_truth, suggested_datasets.
+- Expected fields no active case uses: answer, aoi_source, chart_type, class_values, dashboard_created, dashboard_widgets, dataset_name, ground_truth, suggested_datasets.
   Their checks cannot fire until a case sets the field. Leave
   `suggested_datasets` unused: it is legacy (the agent now writes
   `nudge`), so author `nudge_type` / `nudge_options` instead.
