@@ -2823,7 +2823,7 @@
         },
         "canonical": false,
         "canonical_reasons": [
-          "204 active member(s) not in the run"
+          "203 active member(s) not in the run"
         ]
       },
       {
@@ -3207,6 +3207,191 @@
         "canonical": true,
         "canonical_reasons": [],
         "page": "results/benchmark/pages/20261119T155302Z_prod.json"
+      },
+      {
+        "run_id": "20261120T172336Z_prod",
+        "path": "results/benchmark/runs/20261120T172336Z_prod.json",
+        "started": "2026-11-20T17:23:36Z",
+        "environment": "prod",
+        "build": "prod 2026-11-20 (a6bb20c4) post-update",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "6327c14"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "caseset": "challenge",
+        "caseset_version": "25d5261e3ecbc8fd",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 991,
+              "evaluated": 1042
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 204
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 403,
+              "evaluated": 417
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 177
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 294,
+              "evaluated": 367
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 240
+          },
+          "output": {
+            "dedicated": {
+              "passed": 178,
+              "evaluated": 178
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 177
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 28,
+              "evaluated": 28
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 28
+          },
+          "rows_total": 267,
+          "verdicts": {
+            "pass": 216,
+            "fail": 51,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026.json",
+          "version": "2026",
+          "status": "frozen",
+          "manifest_sha": "fa1e8f952e6aeeb8",
+          "members": 267
+        },
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261120T172336Z_prod.json"
+      },
+      {
+        "run_id": "20261126T163354Z_prod",
+        "path": "results/benchmark/runs/20261126T163354Z_prod.json",
+        "started": "2026-11-26T16:33:54Z",
+        "environment": "prod",
+        "build": "prod 2026-11-26 (3dbe31e7) post-update",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "1fd9728"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "latency re-measure, same set and settings as the nov-2026 pin",
+        "caseset": "challenge",
+        "caseset_version": "25d5261e3ecbc8fd",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 1031,
+              "evaluated": 1078
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 204
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 421,
+              "evaluated": 434
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 186
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 318,
+              "evaluated": 377
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 250
+          },
+          "output": {
+            "dedicated": {
+              "passed": 186,
+              "evaluated": 186
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 186
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 17,
+              "evaluated": 17
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 17
+          },
+          "rows_total": 267,
+          "verdicts": {
+            "pass": 222,
+            "fail": 45,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026.json",
+          "version": "2026",
+          "status": "frozen",
+          "manifest_sha": "fa1e8f952e6aeeb8",
+          "members": 267
+        },
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261126T163354Z_prod.json"
       }
     ]
   },
@@ -3305,14 +3490,18 @@
       "path": "benchmarks/2026.json",
       "status": "frozen",
       "frozen": "2026-11-18",
-      "members": 264,
-      "voided": 5,
+      "members": 263,
+      "voided": 6,
       "runs": [
         "20261119T063036Z_prod",
-        "20261119T115511Z_prod"
+        "20261119T115511Z_prod",
+        "20261120T172336Z_prod",
+        "20261126T163354Z_prod"
       ],
       "canonical_runs": [
-        "20261119T115511Z_prod"
+        "20261119T115511Z_prod",
+        "20261120T172336Z_prod",
+        "20261126T163354Z_prod"
       ]
     }
   }

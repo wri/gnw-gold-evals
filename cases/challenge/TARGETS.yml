@@ -44,3 +44,9 @@ sets:
   # should-answer (P3), app-help. No targets until the first baseline.
   refusal:
     targets: {}
+  # codeact (added 2026-11-26): questions that the curated charts cannot
+  # answer, so the agent must use the code executor (CodeAct). Cohorts by
+  # question shape: derived, timestep-form, ranking, off-catalogue. No
+  # targets until the first baseline.
+  codeact:
+    targets: {}

@@ -101,6 +101,8 @@ ACTUALS_FOR_CHECK = {
     "suggested_datasets_match": ("actual_suggested_datasets",),
     "nudge_match": ("actual_nudge_type", "actual_nudge_options"),
     "chart_type_match": ("actual_chart_type",),
+    "chart_route_match": ("actual_chart_route",),
+    "chart_data_match": ("actual_chart_series",),
     "scope_match": ("actual_scope",),
     "forbidden_tools_absent": ("actual_forbidden_tools_called",),
     "accepted_nudge_match": ("actual_nudge_offered",),

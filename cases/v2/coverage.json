@@ -301,6 +301,16 @@
       "switches_on": "accepted_nudge_match (nudge path; pull-path checks n/a there)"
     },
     {
+      "field": "chart_route",
+      "cases": 0,
+      "switches_on": "chart_route_match (codeact or curated; no chart fails)"
+    },
+    {
+      "field": "chart_series",
+      "cases": 0,
+      "switches_on": "chart_data_match (computed from the agent's own pulled table)"
+    },
+    {
       "field": "data_pull",
       "cases": 0,
       "switches_on": "data_pull_exists, answered_without_data"
@@ -743,6 +753,8 @@
       "accept_dashboard",
       "accept_fixed_period",
       "accept_nudge_offering",
+      "chart_route",
+      "chart_series",
       "data_pull",
       "date_tolerance_days",
       "figure",

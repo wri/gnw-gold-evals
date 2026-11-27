@@ -37,6 +37,8 @@ EXPECTED_ORDER = (
     "figures",
     "figure_claim",
     "answer_period",
+    "chart_route",
+    "chart_series",
     "reply_language",
 )
 
@@ -48,7 +50,7 @@ def test_registry_order_matches_legacy_merge_order():
 def test_every_known_score_field_is_owned_exactly_once():
     # Pinned so that adding or removing a score field is a deliberate,
     # visible edit.
-    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 37
+    assert len(ALL_SCORE_FIELDS) == len(set(ALL_SCORE_FIELDS)) == 39
 
 
 def test_run_evaluations_with_no_expectations_scores_nothing():
@@ -82,3 +84,22 @@ def test_deterministic_scores_flow_through_registry():
     assert evaluations["aoi_id_match_score"] == 1.0
     assert evaluations["dataset_id_match_score"] == 1.0
     assert runner._calculate_overall_score(evaluations, expected) == 1.0
+
+
+def test_answer_period_expects_a_chart_when_the_case_sets_a_route_or_series(monkeypatch):
+    from types import SimpleNamespace
+
+    seen = []
+
+    def judge(query, period, answer, fixed_period="", expects_chart=False):
+        seen.append(expects_chart)
+        return {"verdict": "pass", "reason": "r"}
+
+    monkeypatch.setattr("goldset.evaluators.llm_judges.llm_judge_answer_period", judge)
+    spec = next(s for s in EVALUATORS if s.name == "answer_period")
+    state = {"messages": [SimpleNamespace(content="In 2025, 12 ha of alerts.")]}
+    dates = {"expected_start_date": "2025-01-01", "expected_end_date": "2025-12-31"}
+    for chart in ({}, {"expected_chart_route": "codeact"},
+                  {"expected_chart_series": "sum(area_ha) by month(alert_date)"}):
+        spec.run(state, ExpectedData(**dates, **chart), "q", None)
+    assert seen == [False, True, True]

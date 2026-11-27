@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "store": "challenge",
-  "caseset_version": "b787ce71f4eeeac8",
-  "case_count": 1531,
+  "caseset_version": "55a83d25661a0def",
+  "case_count": 1564,
   "statuses": {
-    "ready": 1496,
+    "ready": 1529,
     "todo": 35
   },
-  "active_count": 1531,
+  "active_count": 1564,
   "groups": [
     {
       "group": "acronyms",
@@ -178,6 +178,14 @@
       }
     },
     {
+      "group": "derived",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "ready": 8
+      }
+    },
+    {
       "group": "designations",
       "cases": 26,
       "active": 26,
@@ -341,6 +349,14 @@
       }
     },
     {
+      "group": "off-catalogue",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "ready": 8
+      }
+    },
+    {
       "group": "portfolio_rank",
       "cases": 1,
       "active": 1,
@@ -354,6 +370,14 @@
       "active": 4,
       "statuses": {
         "ready": 4
+      }
+    },
+    {
+      "group": "ranking",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "ready": 8
       }
     },
     {
@@ -438,10 +462,10 @@
     },
     {
       "group": "sources",
-      "cases": 15,
-      "active": 15,
+      "cases": 16,
+      "active": 16,
       "statuses": {
-        "ready": 15
+        "ready": 16
       }
     },
     {
@@ -483,6 +507,14 @@
       "active": 76,
       "statuses": {
         "ready": 76
+      }
+    },
+    {
+      "group": "timestep-form",
+      "cases": 8,
+      "active": 8,
+      "statuses": {
+        "ready": 8
       }
     },
     {
@@ -578,11 +610,11 @@
   ],
   "bucket_coverage": {
     "retrieval": {
-      "dedicated": 1193,
+      "dedicated": 1226,
       "shared_only": 0
     },
     "analysis": {
-      "dedicated": 0,
+      "dedicated": 32,
       "shared_only": 0
     },
     "explanation": {
@@ -601,17 +633,17 @@
   "expected_fields": [
     {
       "field": "dataset_id",
-      "cases": 1057,
+      "cases": 1089,
       "switches_on": "dataset_id_match"
     },
     {
       "field": "aoi_ids",
-      "cases": 965,
+      "cases": 998,
       "switches_on": "aoi_id_match"
     },
     {
       "field": "data_pull",
-      "cases": 857,
+      "cases": 889,
       "switches_on": "data_pull_exists, answered_without_data"
     },
     {
@@ -621,17 +653,17 @@
     },
     {
       "field": "start_date",
-      "cases": 478,
+      "cases": 504,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "end_date",
-      "cases": 476,
+      "cases": 502,
       "switches_on": "date_extraction (a pulled window containing the period passes), answer_period_match"
     },
     {
       "field": "figure",
-      "cases": 453,
+      "cases": 481,
       "switches_on": "figure_match (computed from the agent's own pulled table)"
     },
     {
@@ -646,7 +678,7 @@
     },
     {
       "field": "figure_claim",
-      "cases": 120,
+      "cases": 121,
       "switches_on": "figure_claim_match (the conclusion the pulled data supports)"
     },
     {
@@ -668,6 +700,16 @@
       "field": "dataset_parameters",
       "cases": 40,
       "switches_on": "dataset_parameter_match"
+    },
+    {
+      "field": "chart_route",
+      "cases": 32,
+      "switches_on": "chart_route_match (codeact or curated; no chart fails)"
+    },
+    {
+      "field": "chart_series",
+      "cases": 24,
+      "switches_on": "chart_data_match (computed from the agent's own pulled table)"
     },
     {
       "field": "clarification",
@@ -764,7 +806,7 @@
         "dataset_id": "1",
         "dataset_name": "Global land cover",
         "missing_instructions": [],
-        "cases": 91,
+        "cases": 95,
         "answer_graded": 31,
         "parameters": [],
         "context_layers": []
@@ -791,7 +833,7 @@
         "dataset_id": "4",
         "dataset_name": "Tree cover loss",
         "missing_instructions": [],
-        "cases": 335,
+        "cases": 347,
         "answer_graded": 109,
         "parameters": [
           {
@@ -827,7 +869,7 @@
         "dataset_id": "6",
         "dataset_name": "Forest greenhouse gas net flux",
         "missing_instructions": [],
-        "cases": 72,
+        "cases": 73,
         "answer_graded": 13,
         "parameters": [
           {
@@ -860,7 +902,7 @@
         "dataset_id": "8",
         "dataset_name": "Tree cover loss by dominant driver",
         "missing_instructions": [],
-        "cases": 91,
+        "cases": 92,
         "answer_graded": 43,
         "parameters": [
           {
@@ -874,7 +916,7 @@
         "dataset_id": "9",
         "dataset_name": "Deforestation (sLUC) Emission Factors by Agricultural Crop",
         "missing_instructions": [],
-        "cases": 45,
+        "cases": 49,
         "answer_graded": 12,
         "parameters": [],
         "context_layers": []
@@ -883,7 +925,7 @@
         "dataset_id": "10",
         "dataset_name": "Tree cover loss due to fires",
         "missing_instructions": [],
-        "cases": 102,
+        "cases": 104,
         "answer_graded": 26,
         "parameters": [
           {
@@ -906,7 +948,7 @@
         "dataset_id": "11",
         "dataset_name": "Integrated alerts",
         "missing_instructions": [],
-        "cases": 147,
+        "cases": 155,
         "answer_graded": 43,
         "parameters": [],
         "context_layers": [
@@ -1200,6 +1242,10 @@
         "targets": {}
       },
       "refusal": {
+        "overall": null,
+        "targets": {}
+      },
+      "codeact": {
         "overall": null,
         "targets": {}
       }

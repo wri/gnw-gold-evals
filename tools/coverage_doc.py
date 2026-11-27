@@ -84,6 +84,8 @@ FIELD_CHECKS = {
                           "when a dashboard exists)"),
     "class_values": "class_value_match (info-only)",
     "chart_type": "chart_type_match",
+    "chart_route": "chart_route_match (codeact or curated; no chart fails)",
+    "chart_series": "chart_data_match (computed from the agent's own pulled table)",
     "scope": "scope_match",
     "forbidden_tools": "forbidden_tools_absent",
     "accept_nudge_offering": "accepted_nudge_match (nudge path; pull-path checks n/a there)",

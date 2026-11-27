@@ -46,7 +46,7 @@ No LLM judge does arithmetic. The judge (by default `claude-haiku-4-5` at temper
 
 This is the canonical check-to-bucket map; other docs link here. Bucket tags come from `buckets.DEDICATED` and `buckets.SHARED`, and the info-only set from `buckets.INFO_ONLY`. The five buckets ask: **retrieval**, did the agent understand the question and fetch the data; **analysis**, are the numbers right; **explanation**, is the prose faithful to the data; **output**, are the charts and dashboards correct; **scope**, did it do the right amount of work. A shared check belongs to two buckets because its failure cannot be pinned on either, so bucket tables count dedicated and shared checks separately. A check with no bucket counts toward none.
 
-"Kind" says whether an LLM judge contributes: deterministic (code only), judge, or mixed (judge and code together). `tools/flakiness.py` holds every check from an evaluator whose `EvaluatorSpec.kind` is `llm_judge` or `mixed` to the judged stability limit (standard deviation at most 0.10 over 3 trials) and the rest to the deterministic limit (0.04). "Runs when" names keys of the case's `expected:` block. `;` means "any of these" in `dataset_id`, `scope`, `nudge_type` and `chart_type`, but "all of these" in `aoi_ids`; `nudge_options`, `dashboard_widgets`, `class_values` and `suggested_datasets` use it as a list separator with rules of their own (see each entry). In `aoi_ids`, `context_layer`, `accept_nudge_offering` and `figure`, `|` separates fair alternatives, any one of which passes. Which fields the active cases set is counted in [COVERAGE.md](../../../cases/v2/COVERAGE.md#expected-field-census-active-cases).
+"Kind" says whether an LLM judge contributes: deterministic (code only), judge, or mixed (judge and code together). `tools/flakiness.py` holds every check from an evaluator whose `EvaluatorSpec.kind` is `llm_judge` or `mixed` to the judged stability limit (standard deviation at most 0.10 over 3 trials) and the rest to the deterministic limit (0.04). "Runs when" names keys of the case's `expected:` block. `;` means "any of these" in `dataset_id`, `scope`, `nudge_type` and `chart_type`, but "all of these" in `aoi_ids` and `chart_series`; `nudge_options`, `dashboard_widgets`, `class_values` and `suggested_datasets` use it as a list separator with rules of their own (see each entry). In `aoi_ids`, `context_layer`, `accept_nudge_offering`, `figure` and `chart_series`, `|` separates fair alternatives, any one of which passes. Which fields the active cases set is counted in [COVERAGE.md](../../../cases/v2/COVERAGE.md#expected-field-census-active-cases).
 
 | Check | Bucket | Role | Kind | Evaluator | Runs when |
 |---|---|---|---|---|---|
@@ -69,6 +69,8 @@ This is the canonical check-to-bucket map; other docs link here. Bucket tags com
 | [`ground_truth_answer`](#ground_truth_answer) | analysis and explanation (shared) | info-only | mixed | `groundtruth_checks.evaluate_ground_truth` | `ground_truth`, with values fetched at run start, and a final message |
 | [`figure_match`](#figure_match) | analysis | gating | deterministic | `figures.evaluate_figures` | `figure` |
 | [`answer_period_match`](#answer_period_match) | analysis | gating (AJ, 2026-10-27) | judge | `figures.evaluate_answer_period` | `start_date`, `end_date` or both, and a final message |
+| [`chart_route_match`](#chart_route_match) | analysis | gating | deterministic | `codeact_checks.evaluate_chart_route` | `chart_route` |
+| [`chart_data_match`](#chart_data_match) | analysis | gating | deterministic | `codeact_checks.evaluate_chart_data` | `chart_series` |
 | [`expected_text_match`](#expected_text_match) | explanation | gating | judge | `llm_judges.llm_judge_expected_text` | `text`, and a final message |
 | [`web_fallback`](#web_fallback) | explanation | gating | deterministic | `guards.evaluate_guards` | a pull is expected, and a final message |
 | [`answer_traceability`](#answer_traceability) | explanation | info-only | deterministic | `explanation_checks.evaluate_answer_traceability` | any row with charts and a final message |
@@ -387,6 +389,50 @@ Analysis · gating (AJ, 2026-10-27) · judge · `figures.evaluate_answer_period`
 **Triage.**
 - It counts toward the score from its first run, by AJ's choice (2026-10-27), although judged checks normally start info-only.
 - **`accept_fixed_period`** (`YYYY-YYYY`, opt-in): the data only come as that one period, so a reply that gives its figures for it and says so passes, even in a methodology note (AJ, 2026-10-28, `ch-causal-015`, whose drivers data cover 2001 to 2025 as a whole). The general rule above did not move Haiku on that case, and rewording it for every case made three unrelated draft-5 verdicts stricter, so the rule is spelled out in the prompt only when a case sets the field; without it the prompt is unchanged. Any other format raises.
+- **A chart is expected** (opt-in: the case sets `chart_route` or `chart_series`): the prompt says the user also asked for a chart, so a reply may leave the monthly or yearly breakdown to it and give only a total or the highlights. A note on how the data were built (sLUC factors based on 2001 to 2020) does not change the period of the figures, and whether data for the period exist is not the reviewer's concern. Without the rule, Haiku failed codeact replies for these reasons (2026-11-26). Like `accept_fixed_period` it is opt-in, because BENCHMARK `2026` is frozen and gates on this check; for any other case the prompt is unchanged, and a test pins that.
+
+## `chart_route_match`
+
+Analysis · gating · deterministic · `codeact_checks.evaluate_chart_route` · runs when: `chart_route` is set
+
+**Measures.** Which route drew the chart. Production draws a curated (deterministic) chart when one fits the pull, and runs CodeAct (the code executor) only when none fits (project-zeno #910, #924). `chart_route` is `codeact` or `curated`. The route comes from the final agent state: `codeact` when `codeact_parts` is not empty and `charts_data` is not empty, `curated` when `charts_data` is not empty and `codeact_parts` is empty, `none` when `charts_data` is empty. Any other `chart_route` raises, and `tools/check.py` rejects it.
+
+**Scores.** `1.0` when the route is the expected one · `0.0` when it is another, including `none` (a route expectation implies a chart, as in `chart_type_match`) · `null` when `chart_route` is not set.
+
+**Evidence.** `reasons.chart_route_match`: the expected and actual routes, with the number of charts and code parts · `actuals.chart_route_match` (failing rows only): `actual_chart_route`.
+
+**Triage.**
+- A curated chart on a `codeact` case is a routing failure (AJ, 2026-11-17): a curated view fitted the pull, so the asked derived figure, time step, chart form or ranking was not drawn. Read `chart_data_match` beside it.
+- `codeact_parts` covers the whole turn, so a turn that ran code and then drew a curated chart reads as `codeact`. No such turn was seen in run `20261120T172336Z_prod`, where every curated chart had no code parts and an insight that starts "Standard", and no CodeAct chart did.
+
+**Why it is built this way.** AJ's decision (2026-11-26): the CodeAct CHALLENGE cases need a code check of the route, with no AI reviewer.
+
+## `chart_data_match`
+
+Analysis · gating · deterministic · `codeact_checks.evaluate_chart_data` · runs when: `chart_series` is set
+
+**Measures.** Whether a chart draws the asked series, recomputed from the data the agent itself pulled, as `figure_match` does for the reply. Wrong generated code that draws wrong bars fails it. The case names the series by formula (`chart_series`), never by value.
+
+**The formula.** `chart_series` holds series separated by `;` (all must match: a turn with two charts, such as loss and emissions), each with fair alternatives separated by `|`. A series is `AGG(EXPR) by KEY [where COND [and COND]...] [top N] [cumulative]`. AGG, EXPR and COND are as in [`figure_match`](#figure_match), but `by` means something else here: AGG runs within each group of KEY and gives one value per group (`{key: value}`), where in `figure` it sums per group and then aggregates across the groups. KEY is a column, `month(COL)` (the date column as `YYYY-MM`) or `year(COL)` (its year). `top N` keeps the N groups with the largest values; groups tied at the Nth place are fair alternatives. `cumulative` gives the running sum in key order. `top` and `cumulative` do not combine. Run tokens work in values. `tools/check.py` rejects a series that does not parse.
+
+**The data.** As in `figure_match`: each statistics entry's `source_url` is fetched, and the series is computed on each pulled table and on their union.
+
+**The charts.** Every chart in `charts_data`, tables included, is read every way it can be: each column as the key, each numeric column as the value, and the sum of `seriesFields` as the value (wide stacked bars, `{"month": "2026-05", "low": .., "high": .., "highest": ..}`; a missing field counts as 0). The rows of each value of a declared `groupField`, `stackField` or `colorField` are also read on their own (a long grouped bar with one row per year and area). Rows with the same key are summed (long format). Two different keys that read as one group (days read as a month) do not match.
+
+**Keys.** Both sides are folded: case, accents, en and em dashes and the minus sign (as `-`), spaces round a hyphen, and runs of spaces. A year reads the same as `2020`, `"2020"` or `2020.0`. A `month(...)` key reads `2026-06`, `2026-06-01`, `06/2026`, `Jun 2026`, `June 2026` and `2026 Jun` (English, Spanish and Indonesian month names) as `2026-06`. For `aoi_id`, a chart key matches an area by its id (a GADM `_1` suffix dropped, as in `aoi_id_match`) or by its name, from `statistics[*].aoi_id_to_name` and the selected areas' names (whole, or the part before the first comma), with or without a trailing admin word (region, province, district, department, state, municipality, county, prefecture). A name two areas share matches neither. There is no substring match, so "Pará" never matches "Paraná".
+
+**The match.** A chart matches a series when, for one key column, one value column and one scale, every expected key (after `top N`) is in the chart and every chart row whose key is a group of the series (not only the top N) is within 2% (`figures.TOLERANCE`) of the expected value times the scale. A value also passes within the rounding the chart states ("0.4" for 0.36), unless that rounding is coarser than a tenth of the largest value, so a chart of zeros never passes. The scale is 1, 1e-3, 1e3, 1e-6 or 1e6 (a unit change), or a share of the total over every group before `top N` (100 / total or 1 / total). A key the chart leaves out reads as 0, so a group whose value is 0 may be missing, as long as the chart draws some group of the series (a department with no fire loss, `ch-codeact-025`, 2026-11-26). Rows whose key is no group ("Other", "Total", "Average") are ignored.
+
+**Scores.** `1.0` when every computable series matches a chart · `0.0` when a computable series matches none, or when `charts_data` is empty (a series expectation implies a chart) · `null` with no `chart_series`, no readable pulled table, or no asked series computable from it (a column the table lacks, a `month` or `year` key that is not a date).
+
+**Evidence.** `reasons.chart_data_match`: per series, the chart that matched (title, key column, value column, scale), or the closest attempt with the keys it lacks and its worst relative error · `actuals.chart_data_match` (failing rows only): `actual_chart_series`, the same with the expected `{key: value}` (at most 30 keys).
+
+**Triage.**
+- The closest attempt is the one with the fewest missing keys, then the fewest wrong values. A closest attempt on the wrong key column usually means the chart draws another series: check the chart before the case.
+- It abstains rather than fails when the pull cannot give the series, so like `figure_match` it is not implied; a `null` on a pulled row means the case names a column the dataset lacks.
+- Only `month` and `year` derive a key. A chart by quarter or by fiscal period needs a column the table has.
+
+**Why it is built this way.** AJ's decision (2026-11-26): `figure_match` checks only the figures in the reply, so a whole monthly series was not expressible (`ch-mon-037`), and the chart's own values were never checked. The check is code only, with no AI reviewer.
 
 ## `expected_text_match`
 

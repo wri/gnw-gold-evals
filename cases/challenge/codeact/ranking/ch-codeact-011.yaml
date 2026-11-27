@@ -1,0 +1,25 @@
+id: ch-codeact-011
+uid: af26773dcb2d6726
+status: ready
+set: codeact
+group: ranking
+query: Which 10 Brazilian states lost the most tree cover in 2024?
+expected:
+  aoi_ids: BRA.1_1;BRA.2_1;BRA.3_1;BRA.4_1;BRA.5_1;BRA.6_1;BRA.7_1;BRA.8_1;BRA.9_1;BRA.10_1;BRA.11_1;BRA.12_1;BRA.13_1;BRA.14_1;BRA.15_1;BRA.16_1;BRA.17_1;BRA.18_1;BRA.19_1;BRA.20_1;BRA.21_1;BRA.22_1;BRA.23_1;BRA.24_1;BRA.25_1;BRA.26_1;BRA.27_1
+  dataset_id: '4'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(area_ha) by aoi_id where tree_cover_loss_year = 2024 top 10
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year = 2024
+notes:
+  lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
+    15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; top ten states, ranked
+  route_reason: a ranking of 27 areas; the curated tree cover loss views take one area
+  shape_source: paraphrased from users asking for a top-ten ranking of areas by loss (no user
+    wording stored)
+  verified: 'AOI ids: BRA.1 to BRA.27, as ch-port-003 (prod-api 2026-10-27)'

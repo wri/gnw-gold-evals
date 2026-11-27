@@ -8,7 +8,7 @@ Terms are defined in the [README glossary](../../README.md#glossary).
 
 `caseset_version 295e4a6f3b7f8f11` · 145 cases · done 96 · not doing 30 · ready 13 · todo 6 · **115 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-11-18_
+_Last updated: 2026-11-26_
 
 ## Groups
 
@@ -80,6 +80,8 @@ exists.
 | accept_dashboard | 0 ← unused | dashboard_created (a dashboard is allowed, not required: an unsolicited one is not scored) |
 | accept_fixed_period | 0 ← unused | answer_period_match (the data only come as this YYYY-YYYY period; a reply that says so passes) |
 | accept_nudge_offering | 0 ← unused | accepted_nudge_match (nudge path; pull-path checks n/a there) |
+| chart_route | 0 ← unused | chart_route_match (codeact or curated; no chart fails) |
+| chart_series | 0 ← unused | chart_data_match (computed from the agent's own pulled table) |
 | data_pull | 0 ← unused | data_pull_exists, answered_without_data |
 | date_tolerance_days | 0 ← unused | date_extraction (days a window may fall short of a bound) |
 | figure | 0 ← unused | figure_match (computed from the agent's own pulled table) |
@@ -164,7 +166,7 @@ answer-graded column) exercise the other three.
 
 ## Known gaps
 
-- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_dashboard, accept_fixed_period, accept_nudge_offering, data_pull, date_tolerance_days, figure, figure_claim, forbidden_tools, suggested_datasets.
+- Expected fields no active case uses: accept_aoi_nudge_offering, accept_blog_sources, accept_dashboard, accept_fixed_period, accept_nudge_offering, chart_route, chart_series, data_pull, date_tolerance_days, figure, figure_claim, forbidden_tools, suggested_datasets.
   Their checks cannot fire until a case sets the field. Leave
   `suggested_datasets` unused: it is legacy (the agent now writes
   `nudge`), so author `nudge_type` / `nudge_options` instead.

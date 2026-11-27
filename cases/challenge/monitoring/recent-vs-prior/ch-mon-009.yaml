@@ -1,12 +1,12 @@
 id: ch-mon-009
-uid: 7b766d2f5d8da999
+uid: 46103524d2b6ed49
 status: ready
 set: monitoring
 group: recent_vs_prior
 query: Are deforestation alerts in Gunung Leuser National Park higher this month than last
   month?
 expected:
-  aoi_ids: '1251'
+  aoi_ids: 1251/3030
   dataset_id: '11'
   data_pull: 'TRUE'
 notes:

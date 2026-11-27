@@ -1,0 +1,26 @@
+id: ch-codeact-028
+uid: 21af0456e0cfcfc4
+status: ready
+set: codeact
+group: ranking
+query: Rank Côte d'Ivoire's districts by disturbance alert area in October 2026.
+expected:
+  aoi_ids: CIV.1_1;CIV.2_1;CIV.3_1;CIV.4_1;CIV.5_1;CIV.6_1;CIV.7_1;CIV.8_1;CIV.9_1;CIV.10_1;CIV.11_1;CIV.12_1;CIV.13_1;CIV.14_1
+  dataset_id: '11'
+  start_date: '2026-10-01'
+  end_date: '2026-10-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(area_ha) by aoi_id where alert_date in 2026-10-01..2026-10-31
+  figure: max(area_ha) by aoi_id where alert_date in 2026-10-01..2026-10-31
+notes:
+  lineage: CodeAct set 2026-11-26 (second batch); question shapes from production chart traces,
+    4 Sep to 15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; all 14 districts ranked by alert area
+  route_reason: a ranking of 14 areas; the curated alerts view takes one area
+  shape_source: paraphrased from users asking which part of their area had the most alerts
+    (no user wording stored)
+  verified: 'AOI ids: CIV.1 to CIV.14, as ch-port-017 (prod-api 2026-10-27, and prod pick_aoi
+    in run 20261120T172336Z_prod)'
