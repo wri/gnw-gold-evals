@@ -1,6 +1,6 @@
 {
-  "caseset_version": "5d45437aae8fbc59",
-  "case_count": 1319,
+  "caseset_version": "348e3bb45e58e82a",
+  "case_count": 1320,
   "source": "challenge-map-v1.csv",
   "cases": [
     {
@@ -1163,6 +1163,13 @@
       "uid": "ec9add03a0ca4754",
       "set": "aoi",
       "group": "concepts",
+      "status": "ready"
+    },
+    {
+      "id": "ch-aoi-164",
+      "uid": "101bd2df01466031",
+      "set": "aoi",
+      "group": "sources",
       "status": "ready"
     },
     {
@@ -4548,7 +4555,7 @@
     },
     {
       "id": "ch-mon-009",
-      "uid": "7b766d2f5d8da999",
+      "uid": "46103524d2b6ed49",
       "set": "monitoring",
       "group": "recent_vs_prior",
       "status": "ready"

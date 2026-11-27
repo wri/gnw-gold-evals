@@ -2823,7 +2823,7 @@
         },
         "canonical": false,
         "canonical_reasons": [
-          "206 active member(s) not in the run"
+          "205 active member(s) not in the run"
         ]
       },
       {
@@ -3391,8 +3391,8 @@
       "path": "benchmarks/2026.json",
       "status": "frozen",
       "frozen": "2026-11-18",
-      "members": 267,
-      "voided": 2,
+      "members": 266,
+      "voided": 3,
       "runs": [
         "20261119T063036Z_prod",
         "20261119T115511Z_prod",

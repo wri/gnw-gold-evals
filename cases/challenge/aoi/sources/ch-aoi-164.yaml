@@ -1,0 +1,28 @@
+id: ch-aoi-164
+uid: 101bd2df01466031
+status: ready
+set: aoi
+group: sources
+query: Go to Gunung Leuser National Park
+expected:
+  aoi_ids: 1251/3030
+notes:
+  difficulty: hard
+  behaviour: select
+  lineage: corrected copy of ch-aoi-026 after the 2026-11-27 erratum (the UNESCO-MAB Biosphere
+    Reserve, WDPA 3030, is named "Gunung Leuser National Park" and covers the same park, so
+    selecting it is a fair reply, as the Salonga cases accept any Salonga record; PZB-1767).
+    Originally PZB-1234 live bug
+  verify_query: Gunung Leuser
+  verified: prod-api 2026-09-01 (1251); 3030 is the area the agent picked in the 2026-11-20
+    and 2026-11-26 prod runs, checked in WDPA v202407 on 2026-11-27
+  source_tab: challenge-aoi-v1
+  synthetic: 'FALSE'
+  user_story_refs: USY-001153 Sumatra parks (analogue)
+  refresh_risk: Low
+  benchmark_type: spatial
+  use_cases: UC1;UC3;UC5
+  engagement: First look
+  aoi_type: Protected area
+  capability: Supported
+  grounding: Verified Challenge case

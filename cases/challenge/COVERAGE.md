@@ -6,9 +6,9 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version 5d45437aae8fbc59` · 1319 cases · ready 1284 · todo 35 · **1319 active** (everything but `not doing` runs by default)
+`caseset_version 348e3bb45e58e82a` · 1320 cases · ready 1285 · todo 35 · **1320 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-11-26_
+_Last updated: 2026-11-27_
 
 ## Groups
 
@@ -70,7 +70,7 @@ _Last updated: 2026-11-26_
 | should-answer | 10 | 10 | ready 10 |
 | should-decline | 45 | 45 | ready 45 |
 | sluc | 36 | 36 | ready 36 |
-| sources | 15 | 15 | ready 15 |
+| sources | 16 | 16 | ready 16 |
 | spike_attribution | 4 | 4 | ready 4 |
 | tc-gain | 45 | 45 | ready 45 |
 | tcl | 216 | 216 | ready 213, todo 3 |
@@ -104,7 +104,7 @@ exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 1057 | 0 | 1057 | 80% |
+| retrieval | 1058 | 0 | 1058 | 80% |
 | analysis | 32 | 0 | 32 | 2% |
 | explanation | 440 | 0 | 440 | 33% |
 | output | 0 | 0 | 0 | 0% |
@@ -115,7 +115,7 @@ exists.
 | field | cases | switches on |
 |---|---|---|
 | dataset_id | 933 | dataset_id_match |
-| aoi_ids | 836 | aoi_id_match |
+| aoi_ids | 837 | aoi_id_match |
 | data_pull | 731 | data_pull_exists, answered_without_data |
 | start_date | 446 | date_extraction (a pulled window containing the period passes), answer_period_match |
 | end_date | 445 | date_extraction (a pulled window containing the period passes), answer_period_match |

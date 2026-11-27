@@ -4942,6 +4942,11 @@
       "uid": "4f1d6f90058c88b6",
       "date": "2026-11-19",
       "reason": "The figure is the 2024 total; the question asks for the monthly pattern, and replies that give the pattern fail. Corrected copy: ch-trend-098."
+    },
+    {
+      "uid": "49ebf23dfed7c5fb",
+      "date": "2026-11-27",
+      "reason": "The UNESCO-MAB Biosphere Reserve (WDPA 3030) is named \"Gunung Leuser National Park\" and covers the same park, so selecting it is a fair reply; the member accepted only the national park (1251). Corrected copy: ch-aoi-164."
     }
   ]
 }
