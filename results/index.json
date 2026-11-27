@@ -3113,6 +3113,102 @@
         "page": "results/benchmark/pages/20261119T115511Z_prod.json"
       },
       {
+        "run_id": "20261119T155302Z_prod",
+        "path": "results/benchmark/runs/20261119T155302Z_prod.json",
+        "started": "2026-11-19T15:53:02Z",
+        "environment": "prod",
+        "build": "prod 2026-11-19 post-update languages",
+        "ff": null,
+        "harness": {
+          "repo": "gnw-gold-evals",
+          "sha": "65c5ce7"
+        },
+        "judge_model": "claude-haiku-4-5",
+        "num_trials": 3,
+        "workers": 5,
+        "trial_timeout": 900.0,
+        "methodology_note": "full 2026-languages companion (320 language questions and the 182 English twins it holds), 3 trials, post-update agent; the other English twins are 2026 members measured in 20261119T115511Z_prod",
+        "caseset": "challenge",
+        "caseset_version": "b787ce71f4eeeac8",
+        "buckets": {
+          "retrieval": {
+            "dedicated": {
+              "passed": 1620,
+              "evaluated": 1769
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 358
+          },
+          "analysis": {
+            "dedicated": {
+              "passed": 666,
+              "evaluated": 696
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 327
+          },
+          "explanation": {
+            "dedicated": {
+              "passed": 487,
+              "evaluated": 656
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 449
+          },
+          "output": {
+            "dedicated": {
+              "passed": 327,
+              "evaluated": 327
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 327
+          },
+          "scope": {
+            "dedicated": {
+              "passed": 27,
+              "evaluated": 29
+            },
+            "shared": {
+              "passed": 0,
+              "evaluated": 0
+            },
+            "rows_covered": 29
+          },
+          "rows_total": 502,
+          "verdicts": {
+            "pass": 375,
+            "fail": 127,
+            "error": 0,
+            "uncovered": 0
+          }
+        },
+        "benchmark": {
+          "path": "benchmarks/2026-languages.json",
+          "version": "2026-languages",
+          "status": "draft",
+          "manifest_sha": "788ba4055becf57a",
+          "members": 502
+        },
+        "composed_with": [
+          "20261119T115511Z_prod"
+        ],
+        "canonical": true,
+        "canonical_reasons": [],
+        "page": "results/benchmark/pages/20261119T155302Z_prod.json"
+      },
+      {
         "run_id": "20261120T172336Z_prod",
         "path": "results/benchmark/runs/20261120T172336Z_prod.json",
         "started": "2026-11-20T17:23:36Z",
@@ -3383,9 +3479,12 @@
       "voided": 0,
       "runs": [
         "20261119T072356Z_prod",
-        "20261119T080049Z_prod"
+        "20261119T080049Z_prod",
+        "20261119T155302Z_prod"
       ],
-      "canonical_runs": []
+      "canonical_runs": [
+        "20261119T155302Z_prod"
+      ]
     },
     "2026": {
       "path": "benchmarks/2026.json",
