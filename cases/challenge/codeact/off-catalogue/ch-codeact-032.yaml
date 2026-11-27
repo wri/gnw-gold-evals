@@ -1,0 +1,28 @@
+id: ch-codeact-032
+uid: 08cf84957925224f
+status: ready
+set: codeact
+group: off-catalogue
+query: Break down the 2024 deforestation emissions from cocoa in Côte d'Ivoire by greenhouse
+  gas.
+expected:
+  aoi_ids: CIV
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(emissions_tCO2e) by gas_type where crop_type = 'Cocoa' and year = 2024
+    and gas_type != 'CO2e'
+  figure: sum(emissions_tCO2e) where crop_type = 'Cocoa' and gas_type = 'CO2e' and year =
+    2024 | sum(emissions_tCO2e) where crop_type = 'Cocoa' and gas_type = 'CO2' and year =
+    2024
+notes:
+  lineage: CodeAct set 2026-11-26 (second batch); question shapes from production chart traces,
+    4 Sep to 15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; CO2, CH4 and N2O emissions for cocoa in 2024
+  route_reason: sLUC data have no agent view, so the gate fails and the code executor runs
+  shape_source: paraphrased from users asking for sLUC figures by gas (no user wording stored)
+  verified: 'AOI ids: CIV is the area prod pick_aoi returned for ch-quant-036 in run 20261120T172336Z_prod'

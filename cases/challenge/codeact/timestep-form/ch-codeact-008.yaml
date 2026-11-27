@@ -1,0 +1,34 @@
+id: ch-codeact-008
+uid: 1f695e905cf4591c
+status: ready
+set: codeact
+group: timestep-form
+query: Give me a table of Gabon's tree cover loss for each year from 2015 to 2025, with the
+  percent change from the year before.
+expected:
+  aoi_ids: GAB
+  dataset_id: '4'
+  start_date: '2015-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(area_ha) by tree_cover_loss_year where tree_cover_loss_year in 2015..2025
+notes:
+  lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
+    15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; one table with a row per year, the loss and its percent change
+    from the year before
+  route_reason: a year-on-year percent change is a derived metric. A table of the curated
+    rows alone would come from the curated chart's built-in table view (AJ, 2026-11-26)
+  shape_source: paraphrased from users asking for year-by-year loss as a table (no user wording
+    stored)
+  verified: 'AOI ids: GAB is the area prod pick_aoi returned for ch-causal-010 in run 20261120T172336Z_prod'
+  scoring_gap: chart_data_match checks the loss column only; no check recomputes the percent
+    change column
+  review: '2026-11-26 (AJ): tables are built into the curated charts, so a non-derived table
+    gives a curated chart. The first draft (one table of loss and emissions per year) was
+    replaced by this derived table before any run. chart_type: table was dropped after the
+    preliminary run 20261126T083427Z_prod, where the agent drew bars: every chart has a table
+    view'

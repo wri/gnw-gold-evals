@@ -6,9 +6,9 @@ is stale (`--check`). Coverage counts use **gating** checks only;
 info-only checks are listed separately (they never enter a verdict).
 Terms are defined in the [README glossary](../../README.md#glossary).
 
-`caseset_version b787ce71f4eeeac8` · 1531 cases · ready 1496 · todo 35 · **1531 active** (everything but `not doing` runs by default)
+`caseset_version 55a83d25661a0def` · 1564 cases · ready 1529 · todo 35 · **1564 active** (everything but `not doing` runs by default)
 
-_Last updated: 2026-11-19_
+_Last updated: 2026-11-27_
 
 ## Groups
 
@@ -35,6 +35,7 @@ _Last updated: 2026-11-19_
 | custom-area | 1 | 1 | todo 1 |
 | custom_area | 4 | 4 | todo 4 |
 | data-quality | 8 | 8 | ready 8 |
+| derived | 8 | 8 | ready 8 |
 | designations | 26 | 26 | ready 26 |
 | direct | 20 | 20 | ready 20 |
 | driver_check | 1 | 1 | ready 1 |
@@ -55,8 +56,10 @@ _Last updated: 2026-11-19_
 | multilingual | 40 | 40 | ready 40 |
 | natural-lands | 54 | 54 | ready 53, todo 1 |
 | no_aoi | 1 | 1 | ready 1 |
+| off-catalogue | 8 | 8 | ready 8 |
 | portfolio_rank | 1 | 1 | todo 1 |
 | premise_check | 4 | 4 | ready 4 |
+| ranking | 8 | 8 | ready 8 |
 | recent_area | 12 | 12 | ready 12 |
 | recent_default | 9 | 9 | ready 9 |
 | recent_presence | 9 | 9 | ready 9 |
@@ -67,12 +70,13 @@ _Last updated: 2026-11-19_
 | should-answer | 10 | 10 | ready 10 |
 | should-decline | 45 | 45 | ready 45 |
 | sluc | 37 | 37 | ready 37 |
-| sources | 15 | 15 | ready 15 |
+| sources | 16 | 16 | ready 16 |
 | spike_attribution | 5 | 5 | ready 5 |
 | tc-gain | 53 | 53 | ready 53 |
 | tcl | 265 | 265 | ready 262, todo 3 |
 | tcl-drivers | 46 | 46 | ready 46 |
 | tcl-fires | 76 | 76 | ready 76 |
+| timestep-form | 8 | 8 | ready 8 |
 | tree-cover | 61 | 61 | ready 60, todo 1 |
 | unavailable | 49 | 49 | ready 49 |
 | unmappable | 15 | 15 | ready 15 |
@@ -100,8 +104,8 @@ exists.
 
 | bucket | via dedicated check | via shared only | total | of active |
 |---|---|---|---|---|
-| retrieval | 1193 | 0 | 1193 | 78% |
-| analysis | 0 | 0 | 0 | 0% |
+| retrieval | 1226 | 0 | 1226 | 78% |
+| analysis | 32 | 0 | 32 | 2% |
 | explanation | 618 | 0 | 618 | 40% |
 | output | 0 | 0 | 0 | 0% |
 | scope | 358 | 0 | 358 | 23% |
@@ -110,20 +114,22 @@ exists.
 
 | field | cases | switches on |
 |---|---|---|
-| dataset_id | 1057 | dataset_id_match |
-| aoi_ids | 965 | aoi_id_match |
-| data_pull | 857 | data_pull_exists, answered_without_data |
+| dataset_id | 1089 | dataset_id_match |
+| aoi_ids | 998 | aoi_id_match |
+| data_pull | 889 | data_pull_exists, answered_without_data |
 | text | 616 | expected_text_match |
-| start_date | 478 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| end_date | 476 | date_extraction (a pulled window containing the period passes), answer_period_match |
-| figure | 453 | figure_match (computed from the agent's own pulled table) |
+| start_date | 504 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| end_date | 502 | date_extraction (a pulled window containing the period passes), answer_period_match |
+| figure | 481 | figure_match (computed from the agent's own pulled table) |
 | context_layer | 240 | context_layer_match |
 | forbidden_tools | 237 | forbidden_tools_absent |
-| figure_claim | 120 | figure_claim_match (the conclusion the pulled data supports) |
+| figure_claim | 121 | figure_claim_match (the conclusion the pulled data supports) |
 | date_tolerance_days | 81 | date_extraction (days a window may fall short of a bound) |
 | accept_nudge_offering | 79 | accepted_nudge_match (nudge path; pull-path checks n/a there) |
 | scope | 42 | scope_match |
 | dataset_parameters | 40 | dataset_parameter_match |
+| chart_route | 32 | chart_route_match (codeact or curated; no chart fails) |
+| chart_series | 24 | chart_data_match (computed from the agent's own pulled table) |
 | clarification | 15 | clarification_requested |
 | nudge_type | 12 | nudge_match |
 | accept_aoi_nudge_offering | 8 | accepted_nudge_match (nudge path; pull-path checks and aoi_id_match n/a there) |
@@ -158,17 +164,17 @@ answer-graded column) exercise the other three.
 
 | id | dataset | cases | answer-graded | parameters covered | context layers covered |
 |---|---|---|---|---|---|
-| 1 | Global land cover | 91 | 31 | — | — |
+| 1 | Global land cover | 95 | 31 | — | — |
 | 2 | Global natural/semi-natural grassland extent | 67 | 7 | — | — |
 | 3 | SBTN Natural Lands Map | 80 | 20 | — | — |
-| 4 | Tree cover loss | 335 | 109 | canopy_cover ×15 | primary_forest ×38, intact_forest ×5, natural_forest ×4 |
+| 4 | Tree cover loss | 347 | 109 | canopy_cover ×15 | primary_forest ×38, intact_forest ×5, natural_forest ×4 |
 | 5 | Tree cover gain | 56 | 8 | — | — |
-| 6 | Forest greenhouse gas net flux | 72 | 13 | canopy_cover ×5 | — |
+| 6 | Forest greenhouse gas net flux | 73 | 13 | canopy_cover ×5 | — |
 | 7 | Tree cover | 75 | 30 | canopy_cover ×12 | primary_forest ×13 |
-| 8 | Tree cover loss by dominant driver | 91 | 43 | canopy_cover ×4 | — |
-| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 45 | 12 | — | — |
-| 10 | Tree cover loss due to fires | 102 | 26 | canopy_cover ×4 | primary_forest ×8, intact_forest ×3 |
-| 11 | Integrated alerts | 147 | 43 | — | natural_lands ×4 |
+| 8 | Tree cover loss by dominant driver | 92 | 43 | canopy_cover ×4 | — |
+| 9 | Deforestation (sLUC) Emission Factors by Agricultural Crop | 49 | 12 | — | — |
+| 10 | Tree cover loss due to fires | 104 | 26 | canopy_cover ×4 | primary_forest ×8, intact_forest ×3 |
+| 11 | Integrated alerts | 155 | 43 | — | natural_lands ×4 |
 | 12 | Land GHG Monitoring System (LGMS) | 0 ← gap | 0 | — | — |
 
 ## Multi-turn
