@@ -486,3 +486,61 @@ First use: a local `main` vs local branch pair to test a rewritten
 `capabilities` skill in project-zeno (same commit base, same stack, same
 `--trials`). Only the canonical series (prod, default profile, 3 trials) is
 published.
+
+## Batch 7: the `codeact` set
+
+32 prompts (`cases/challenge/codeact/<cohort>/`, ids `ch-codeact-001..032`)
+that the curated charts cannot answer, so the agent must draw the chart with
+the code executor (CodeAct). Production shows a curated chart when one fits
+the pull and runs CodeAct only when none fits (project-zeno #910 and #924).
+A curated chart on one of these questions is a routing failure (AJ,
+2026-11-17). Built 2026-11-26. Question shapes come from production chart
+traces (4 Sep to 15 Nov 2026); every prompt is paraphrased, and no user
+wording is stored.
+
+| cohort | n | why CodeAct |
+|---|---|---|
+| derived | 8 | an average, a moving average, a cumulative total, period means or a share of a part of the period: the curated answer may not compute new figures |
+| timestep-form | 8 | a monthly, quarterly or five-year step, a confidence filter, shares of the total, or a table with a derived column |
+| ranking | 8 | a ranking of sub-regions (the curated views take one area), or of drivers by emissions (the curated pie shows area only) |
+| off-catalogue | 8 | land cover transitions and sLUC data have no agent view |
+
+Every case sets `chart_route: codeact`, scored by `chart_route_match`.
+Twenty-four also set `chart_series`, scored by `chart_data_match`, which
+recomputes the chart's values from the agent's own pull. A case sets
+`chart_series` only when the question fixes the chart's rows ("month by
+month", "rank them", "for each year"). Where it does not, a different chart
+can be fair, so only the figures in the reply are scored.
+
+Scoring decisions and gaps:
+
+- `chart_series` has no period or quarter key, so the five-year chart of
+  `ch-codeact-007` and the quarterly chart of `ch-codeact-021` are not
+  recomputed. Their `figure` passes on any one stated total.
+- No check recomputes a moving average (`ch-codeact-018`) or a percent
+  change column (`ch-codeact-008`); `chart_data_match` checks the annual
+  loss beside it.
+- A request that only changes the form is not in this set. Curated charts
+  have a built-in table view, so a table of figures the curated chart
+  already has gives a curated chart (AJ, 2026-11-26). Likewise
+  `update_insight_display` can restyle a curated chart ("as a line chart").
+- `ch-codeact-008` asks for a table with a derived column (the percent
+  change from the year before), so it needs CodeAct. `chart_data_match`
+  checks its loss column only; no check recomputes the percent change.
+- No case sets `chart_type: table`. Every chart has a table view, so bars
+  for a table request are fair (AJ, 2026-11-26).
+- `ch-codeact-006` asks for high and highest confidence alerts only. A chart
+  that stacks all three confidences fails `chart_data_match`.
+- The agent can merge Cropland and Cultivated grasslands as "Agriculture".
+  `ch-codeact-013` accepts cropland alone or the two together, as
+  `ch-quant-064` does. The series of `ch-codeact-014` and `ch-codeact-030`
+  have a second alternative without those two classes, which still checks
+  every other class.
+- `ch-codeact-020` and `ch-codeact-023` ask for all alerts, but a reply can
+  give high and highest confidence apart. Their `figure` passes on the
+  total or on either confidence alone.
+- Alert and sLUC windows are fixed calendar periods, not run-relative
+  tokens, so expected series do not move between runs.
+- AOI ids are the areas prod `pick_aoi` returned for existing cases in run
+  `20261120T172336Z_prod`, or the verified lists of `ch-port-003` and
+  `ch-port-017` (`notes.verified` names the source).

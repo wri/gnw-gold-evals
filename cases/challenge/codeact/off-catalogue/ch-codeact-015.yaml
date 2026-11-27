@@ -1,0 +1,36 @@
+id: ch-codeact-015
+uid: f16d0468f1656e77
+status: ready
+set: codeact
+group: off-catalogue
+query: Compare the 2024 deforestation emission factors for cocoa, coffee and oil palm grown
+  in Indonesia in one chart.
+expected:
+  aoi_ids: IDN
+  dataset_id: '9'
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(emissions_factor_tCO2e_per_tonne_production) by crop_type where gas_type
+    = 'CO2e' and year = 2024 and crop_type in ('Cocoa', 'Arabica Coffee', 'Robusta Coffee',
+    'Oil Palm') | sum(emissions_factor_tCO2e_per_tonne_production) by crop_type where gas_type
+    = 'CO2e' and year = 2024 and crop_type in ('Cocoa', 'Arabica Coffee', 'Oil Palm') | sum(emissions_factor_tCO2e_per_tonne_production)
+    by crop_type where gas_type = 'CO2e' and year = 2024 and crop_type in ('Cocoa', 'Robusta
+    Coffee', 'Oil Palm')
+  figure: sum(emissions_factor_tCO2e_per_tonne_production) where crop_type = 'Cocoa' and gas_type
+    = 'CO2e' and year = 2024 ; sum(emissions_factor_tCO2e_per_tonne_production) where crop_type
+    = 'Oil Palm' and gas_type = 'CO2e' and year = 2024
+notes:
+  lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
+    15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; the CO2e factor per tonne for each crop; coffee may be Arabica,
+    Robusta or both
+  route_reason: sLUC emission factors have no agent view, so the gate fails and the code executor
+    runs
+  shape_source: paraphrased from tables of sLUC emission factors by crop (no user wording
+    stored)
+  verified: 'AOI ids: IDN is the area prod pick_aoi returned for ch-quant-107 in run 20261120T172336Z_prod;
+    crop names from the prod analytics table for IDN (2026-11-26)'

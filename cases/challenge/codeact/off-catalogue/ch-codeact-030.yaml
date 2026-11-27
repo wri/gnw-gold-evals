@@ -1,0 +1,34 @@
+id: ch-codeact-030
+uid: e7f28137db827a2c
+status: ready
+set: codeact
+group: off-catalogue
+query: How much land in Brazil became built-up between 2015 and 2024, and what was that land
+  before?
+expected:
+  aoi_ids: BRA
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(area_ha) by land_cover_class_start where land_cover_class_end = 'Built-up'
+    and land_cover_class_start != 'Built-up' | sum(area_ha) by land_cover_class_start where
+    land_cover_class_end = 'Built-up' and land_cover_class_start != 'Built-up' and land_cover_class_start
+    != 'Cropland' and land_cover_class_start != 'Cultivated grasslands'
+  figure: sum(area_ha) where land_cover_class_end = 'Built-up' and land_cover_class_start
+    != 'Built-up'
+notes:
+  lineage: CodeAct set 2026-11-26 (second batch); question shapes from production chart traces,
+    4 Sep to 15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; new built-up area, broken down by its 2015 class
+  route_reason: land cover transitions have no agent view; the composition pie cannot show
+    change
+  shape_source: paraphrased from users asking what agricultural or natural land became built-up
+    (no user wording stored)
+  verified: 'AOI ids: BRA is the area prod pick_aoi returned for ch-quant-068 in run 20261120T172336Z_prod;
+    class names from the prod land_cover_change table (2026-11-26)'
+  build_notes: land cover data are fixed at 2015 and 2024, so no dates are expected
+  review: '2026-11-26: in the preliminary run 20261126T083427Z_prod the agent merged Cropland
+    and Cultivated grasslands as "Agriculture"; the second series leaves those two classes
+    out and checks the rest'

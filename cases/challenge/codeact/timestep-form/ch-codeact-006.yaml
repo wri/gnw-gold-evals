@@ -1,0 +1,31 @@
+id: ch-codeact-006
+uid: f7097e797f3c7c20
+status: ready
+set: codeact
+group: timestep-form
+query: How many hectares of high and highest confidence alerts were there each month in Côte
+  d'Ivoire's Cavally region from April to September 2026?
+expected:
+  aoi_ids: CIV.8.1
+  dataset_id: '11'
+  start_date: '2026-04-01'
+  end_date: '2026-09-30'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(area_ha) by month(alert_date) where alert_confidence in ('high', 'highest')
+    and alert_date in 2026-04-01..2026-09-30
+  figure: sum(area_ha) where alert_confidence in ('high', 'highest') and alert_date in 2026-04-01..2026-09-30
+    | sum(area_ha) where alert_confidence in ('high', 'highest') and alert_date in 2026-09-01..2026-09-30
+    | sum(area_ha) where alert_confidence in ('high', 'highest') and alert_date in 2026-04-01..2026-04-30
+notes:
+  lineage: CodeAct set 2026-11-26; question shapes from production chart traces, 4 Sep to
+    15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; monthly totals of high and highest confidence alerts only
+  route_reason: a monthly time step and a confidence filter; the curated alerts chart is daily,
+    split by all three confidences
+  shape_source: paraphrased from users asking for high and highest confidence alerts only,
+    over a chosen window (no user wording stored)
+  verified: 'AOI ids: CIV.8.1 is the area prod pick_aoi returned for ch-causal-001 in run
+    20261120T172336Z_prod'

@@ -1,0 +1,25 @@
+id: ch-codeact-027
+uid: f744a220dd12b88e
+status: ready
+set: codeact
+group: ranking
+query: Which five Brazilian states were the largest net sources of forest greenhouse gas emissions
+  from 2001 to 2025?
+expected:
+  aoi_ids: BRA.1_1;BRA.2_1;BRA.3_1;BRA.4_1;BRA.5_1;BRA.6_1;BRA.7_1;BRA.8_1;BRA.9_1;BRA.10_1;BRA.11_1;BRA.12_1;BRA.13_1;BRA.14_1;BRA.15_1;BRA.16_1;BRA.17_1;BRA.18_1;BRA.19_1;BRA.20_1;BRA.21_1;BRA.22_1;BRA.23_1;BRA.24_1;BRA.25_1;BRA.26_1;BRA.27_1
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  chart_route: codeact
+  chart_series: sum(carbon_net_flux_Mg_CO2e) by aoi_id top 5
+  figure: max(carbon_net_flux_Mg_CO2e) by aoi_id
+notes:
+  lineage: CodeAct set 2026-11-26 (second batch); question shapes from production chart traces,
+    4 Sep to 15 Nov 2026
+  expectations: authored 2026-11-26 by Claude for AJ's CodeAct set; needs human review
+  synthetic: 'TRUE'
+  behaviour: answer with data; the five states with the largest positive net flux, ranked
+  route_reason: a ranking of 27 areas; the curated net flux view takes one area
+  shape_source: paraphrased from users asking where the net sinks and net sources were highest
+    (no user wording stored)
+  verified: 'AOI ids: BRA.1 to BRA.27, as ch-port-003 (prod-api 2026-10-27)'
+  build_notes: net flux data cover 2001 to 2025 as one period, so no dates are expected
