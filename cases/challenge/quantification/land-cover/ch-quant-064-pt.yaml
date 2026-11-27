@@ -1,0 +1,21 @@
+id: ch-quant-064-pt
+uid: 4a59eb20ecc0c80c
+status: ready
+set: quantification
+group: land-cover
+language: pt
+twin: ch-quant-064
+query: No Brasil, quanta terra passou de cobertura arbórea para área agrícola?
+expected:
+  aoi_ids: BRA
+  dataset_id: '1'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where land_cover_class_start = 'Tree cover' and land_cover_class_end
+    = 'Cropland' | sum(area_ha) where land_cover_class_start = 'Tree cover' and land_cover_class_end
+    in ('Cropland', 'Cultivated grasslands')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-064 (pt-t-039)'
+  pair_id: pt-t-039
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

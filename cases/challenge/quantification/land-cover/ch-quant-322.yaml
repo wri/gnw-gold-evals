@@ -1,0 +1,21 @@
+id: ch-quant-322
+uid: e17569a359b67c7e
+status: ready
+set: quantification
+group: land-cover
+query: I would like to know the vegetation cover of the arrondissement of Bokito in the department
+  of Mbam Inoubou, Centre region in Cameroon
+expected:
+  text: Declines to analyse land cover at arrondissement (sub-district) level and may offer
+    Mbam-et-Inoubou department instead; never labels a department figure as Bokito's.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-322-fr (fr-n-053);
+    real fr user prompt, trace 2026-06'
+  pair_id: fr-n-053
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Bokito arrondissement (Mbam-et-Inoubou, Centre, Cameroon)
+  precedent: id-n-026 (ch-quant-247); id-n-037 (ch-quant-254)

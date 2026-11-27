@@ -1,0 +1,20 @@
+id: ch-quant-335
+uid: d14196e8c37b805f
+status: ready
+set: quantification
+group: unavailable
+query: can you calculate a distance?
+expected:
+  text: Says plainly that it cannot measure the distance between places or areas (it has no
+    distance tool), and gives no distance it did not compute; it may offer what it can do
+    instead.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-335-fr (fr-n-071);
+    real fr user prompt, trace 2026-07'
+  pair_id: fr-n-071
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-mon-057; ch-quant-194

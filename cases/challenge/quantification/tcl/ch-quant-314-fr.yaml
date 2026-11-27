@@ -1,0 +1,25 @@
+id: ch-quant-314-fr
+uid: da3bedb46398b762
+status: ready
+set: quantification
+group: tcl
+language: fr
+twin: ch-quant-314
+query: je veux connaitre l'état de déforestation de la réserve forestière de Mbalmayo
+expected:
+  text: Either says it has no boundary for the Mbalmayo forest reserve and asks for one (for
+    example an upload), or offers a named area that holds it (for example Nyong-et-So'o department)
+    and says which area it used; does not present figures for Cameroon, the Mbalmayo commune
+    or another area as the forest reserve's.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-042); real fr user prompt,
+    trace 2026-03'
+  pair_id: fr-n-042
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Mbalmayo forest reserve (Cameroon)
+  precedent: ch-quant-178; es-n-028 (ch-quant-227); id-n-046 (ch-quant-259)
+  language_review: subagent review 2026-11-19; native speaker not yet

@@ -1,0 +1,23 @@
+id: ch-quant-324
+uid: b9005a68b103a27d
+status: ready
+set: quantification
+group: unavailable
+query: Show me the level of degradation since 2000 of the mangroves of the Wouri estuary in
+  Cameroon
+expected:
+  text: Says it cannot measure mangrove degradation since 2000 directly; may give tree cover
+    loss since 2001 for a named area that holds the Wouri estuary (for example Wouri department)
+    and the 2020 mangrove extent from the natural lands map, named as such; does not present
+    all tree cover loss as mangrove loss.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-324-fr (fr-n-056);
+    real fr user prompt, trace 2026-01'
+  pair_id: fr-n-056
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Wouri estuary (Littoral, Cameroon)
+  precedent: ch-mon-056; ch-quant-185

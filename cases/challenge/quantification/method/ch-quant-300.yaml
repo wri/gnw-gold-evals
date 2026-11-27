@@ -1,0 +1,20 @@
+id: ch-quant-300
+uid: 134d09dbec4af170
+status: ready
+set: quantification
+group: method
+query: Are all the GFW catalogues already here?
+expected:
+  text: Says that not every Global Forest Watch dataset is in Horizon, only a selection; it
+    may name datasets it really has (some come from other sources, such as Land & Carbon Lab);
+    does not invent layers or claim the whole GFW catalogue is here.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-300-pt (pt-n-054);
+    real pt user prompt, trace 2026-11'
+  pair_id: pt-n-054
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-205; es-n-033 (ch-quant-229)

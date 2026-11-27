@@ -1,0 +1,31 @@
+id: ch-comp-193-fr
+uid: 032ba54efe8431db
+status: ready
+set: comparison
+group: many-areas
+language: fr
+twin: ch-comp-193
+query: Comparaison de la perte de couverture arborée du territoire de Fizi avec celle d'autres
+  territoires de la province du Sud-Kivu de 2010 à 2024.
+expected:
+  aoi_ids: COD.22.1;COD.22.2;COD.22.3;COD.22.4;COD.22.5;COD.22.6;COD.22.7;COD.22.8;COD.22.9;COD.22.10;COD.22.11;COD.22.12;COD.22.13|COD.22.3;COD.22.4;COD.22.5;COD.22.6;COD.22.8;COD.22.9;COD.22.11;COD.22.13
+  dataset_id: '4'
+  start_date: '2010-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'COD.22.3' and tree_cover_loss_year in 2010..2024 ;
+    max(area_ha) by aoi_id where tree_cover_loss_year in 2010..2024
+  text: Compares Fizi's 2010 to 2024 tree cover loss with that of the other territories of
+    Sud-Kivu from the pulled data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-055); real fr user prompt,
+    trace 2026-04'
+  pair_id: fr-n-055
+  benchmark_type: comparison
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Fizi and the other territories of Sud-Kivu (DRC)
+  precedent: ch-comp-151; ch-port-017; es-n-017 (ch-quant-217)
+  language_review: subagent review 2026-11-19; native speaker not yet

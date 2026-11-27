@@ -1,0 +1,23 @@
+id: ch-comp-174-pt
+uid: 722ba8bab9280560
+status: ready
+set: comparison
+group: ghg-flux
+language: pt
+twin: ch-comp-174
+query: Quais são os fluxos líquidos de GEE florestais do Peru, da Colômbia e do Brasil, para
+  uma comparação de níveis de referência de emissões florestais?
+expected:
+  aoi_ids: PER;COL;BRA
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  figure: sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'PER' ; sum(carbon_net_flux_Mg_CO2e)
+    where aoi_id = 'COL' ; sum(carbon_net_flux_Mg_CO2e) where aoi_id = 'BRA'
+  figure_claim: '#3 < 0 :: Brazil''s forests are a net carbon sink over the period || Brazil''s
+    forests are a net carbon source over the period'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-174 (pt-t-030)'
+  pair_id: pt-t-030
+  use_cases: UC4;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

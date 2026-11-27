@@ -1,0 +1,22 @@
+id: ch-quant-281
+uid: 1b7cb744bdac2843
+status: ready
+set: quantification
+group: unavailable
+query: where is there illegal deforestation in Florianópolis
+expected:
+  aoi_ids: BRA.24.90
+  text: Says the data cannot tell legal from illegal clearing; may show where tree cover loss
+    or recent alerts occurred in Florianópolis from pulled data, named as such; does not call
+    any loss illegal.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-281-pt (pt-n-028);
+    real pt user prompt, trace 2026-02'
+  pair_id: pt-n-028
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Florianópolis municipality, Santa Catarina, Brazil
+  precedent: ch-quant-187; es-n-023 (ch-quant-223)

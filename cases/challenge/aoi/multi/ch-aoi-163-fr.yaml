@@ -1,0 +1,27 @@
+id: ch-aoi-163-fr
+uid: 3b2189e046393ba4
+status: ready
+set: aoi
+group: multi
+language: fr
+twin: ch-aoi-163
+query: combien d'aires protégées/réserves naturelles et leurs noms sur l'ile de timor côté
+  indonésien
+expected:
+  text: Either lists the protected areas it finds in the Indonesian part of Timor (the districts
+    of Kupang, Kota Kupang, Timor Tengah Selatan, Timor Tengah Utara and Belu, in Nusa Tenggara
+    Timur) and says how it searched, or asks which districts are meant; does not present protected
+    areas elsewhere in Nusa Tenggara Timur (Flores, Sumba or other islands) as Timor's, and
+    does not count or name protected areas from general knowledge as if from data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-051); real fr user prompt,
+    trace 2026-03'
+  pair_id: fr-n-051
+  benchmark_type: scope
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: protected areas of Indonesian Timor (Nusa Tenggara Timur)
+  precedent: ch-aoi-091; id-n-051 (ch-quant-262)
+  language_review: subagent review 2026-11-19; native speaker not yet

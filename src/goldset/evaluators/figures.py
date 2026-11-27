@@ -31,9 +31,10 @@ pull and a comparison split over two pulls, without summing two datasets
 into one figure. A figure that cannot be computed (no table, a column the
 table lacks) abstains rather than fails.
 
-Replies to Spanish and Indonesian cases are read with ``language`` set (see
-"local number formats" below). English cases take the original parser,
-unchanged, so the frozen English BENCHMARK scores as before.
+Replies to cases in another language (Spanish, Indonesian, Portuguese,
+French) are read with ``language`` set (see "local number formats" below).
+English cases take the original parser, unchanged, so the frozen English
+BENCHMARK scores as before.
 """
 
 from __future__ import annotations
@@ -447,6 +448,9 @@ class Stated:
     text: str
     # The second reading of a number whose shape reads two ways ("1.209").
     other: Stated | None = None
+    # One group of a plain-space number ("345" of "12 345"): it can only
+    # abstain, never match as a first reading.
+    part: bool = False
 
 
 def stated_numbers(
@@ -486,10 +490,10 @@ def stated_numbers(
 
 # ------------------------------------------------- local number formats
 #
-# Indonesian and most Spanish-speaking countries write "1.209,32" where
-# English writes "1,209.32" (Mexico and Central America write it as English
-# does). Horizon's replies do not follow the case language reliably, so a
-# number is read in this order:
+# Indonesian, Brazilian Portuguese and most Spanish-speaking countries write
+# "1.209,32" where English writes "1,209.32" (Mexico and Central America
+# write it as English does); French writes "1 209,32". Horizon's replies do
+# not follow the case language reliably, so a number is read in this order:
 #
 # 1. By its own shape, when that is clear: "1.209,32", "12,5", "1.234.567".
 #    It has one reading.
@@ -507,12 +511,23 @@ def stated_numbers(
 #
 # The habit is measured, not assumed. Of Horizon's replies to external users
 # that show a convention (traces to 2026-10-20): Spanish 657 dot-decimal to
-# 26 comma-decimal; Indonesian 135 comma-decimal to 12 dot-decimal.
+# 26 comma-decimal; Indonesian 135 comma-decimal to 12 dot-decimal. Counted
+# the same way (traces to 2026-11-19): Portuguese 69 comma-decimal to 7
+# dot-decimal; French 133 comma-decimal to 12 dot-decimal. Every one of them
+# written in Portuguese or French uses the comma (in the local trace copy to
+# 2026-10-19 the dot-decimal ones are in English, bar one in Spanish), and
+# French groups thousands with a space.
 
-_USUAL_DECIMAL_MARK = {"es": ".", "id": ","}
+_USUAL_DECIMAL_MARK = {"es": ".", "id": ",", "pt": ",", "fr": ","}
 
-# "billón" is the long-scale billion, 10^12. "mil" is Spanish only: in an
-# Indonesian reply it is not a scale, and "ribu" is not one in a Spanish reply.
+# "billón" is the long-scale billion, 10^12. "mil" is a scale in Spanish and
+# Portuguese only: in an Indonesian or French reply it is not one, and "ribu"
+# is not one in a Spanish reply. Portuguese is Brazilian (AJ, 2026-11-19):
+# "bilhão" is 10^9, and the European "bilião" is no scale, so it can never
+# pass as 10^9; "mil milhões" is 10^9 in either country. In a French reply
+# "milliard" is 10^9 and "billion" has its French meaning, 10^12 (AJ,
+# 2026-11-19); a reply to a French case that reads as English is no French
+# reply, so there it keeps its English meaning (``_ENGLISH_MEANING``).
 _LOCAL_SCALES = {
     "es": {
         **_SCALES,
@@ -529,18 +544,39 @@ _LOCAL_SCALES = {
         "miliar": 1e9, "milyar": 1e9,
         "triliun": 1e12, "trilyun": 1e12,
     },
+    "pt": {
+        **_SCALES,
+        "mil": 1e3,
+        "milhão": 1e6, "milhao": 1e6, "milhões": 1e6, "milhoes": 1e6,
+        "mil milhões": 1e9, "mil milhoes": 1e9,
+        "bilhão": 1e9, "bilhao": 1e9, "bilhões": 1e9, "bilhoes": 1e9,
+        "trilhão": 1e12, "trilhao": 1e12, "trilhões": 1e12, "trilhoes": 1e12,
+    },
+    "fr": {
+        **_SCALES,
+        "mille": 1e3, "millier": 1e3, "milliers": 1e3,
+        "million": 1e6, "millions": 1e6,
+        "milliard": 1e9, "milliards": 1e9,
+        "billion": 1e12, "billions": 1e12,
+    },
 }
+# Scale words the case language and English spell alike but read apart.
+_ENGLISH_MEANING = {"fr": {"billion": 1e9, "billions": 1e9}}
 _LOCAL_UNITS = (*_UNITS, "hectárea", "hectáreas", "hectarea", "hectareas",
                 "hektar", "hektare", "tonelada", "toneladas", "ton")
-_KM2_PHRASE = r"kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
+_KM2_PHRASE = (
+    r"kil[oó]metros?\s+cuadrados?|(?:kilometer|km)\s+persegi"
+    r"|quil[oóô]metros?\s+quadrados?|kilom[èe]tres?\s+carr[ée]s?"
+)
 # Space-grouped thousands: a head of one to three digits, then groups of
 # exactly three ("1 209", "12 345 678"). A head of four digits ("2024 120")
 # is no grouping.
 _SPACE_GROUPED = r"\d{1,3}(?:[ \u00a0\u202f\u2009]\d{3})+(?!\d)"
 _LOCAL_NUMBER = re.compile(
     r"(?<![\w.])(-?(?:" + _SPACE_GROUPED + r"|\d+)(?:[.,]\d+)*)"
-    r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen)?"
-    r"\s*(miles\s+de\s+millones|mil\s+millones|" + _KM2_PHRASE
+    r"\s*(%|percent|per cent|por ciento|por cien|porciento|persen"
+    r"|por cento|porcento|pour cent|pourcent)?"
+    r"\s*(miles\s+de\s+millones|mil\s+millones|mil\s+milh[õo]es|" + _KM2_PHRASE
     + r"|[^\W\d_][^\W_]*)?",
     re.I,
 )
@@ -548,23 +584,28 @@ _KM2_WORDS = re.compile(_KM2_PHRASE)
 _GROUP_SPACE = re.compile(r"[ \u00a0\u202f\u2009]")
 
 
-def _spaced_readings(raw: str) -> list[tuple[str, str, bool]]:
-    """(number, text, carries the reply's suffix) readings of a matched number.
+def _spaced_readings(raw: str) -> list[tuple[str, str, bool, bool]]:
+    """(number, text, carries the reply's suffix, is a part) readings of a
+    matched number.
 
     A no-break, narrow no-break or thin space only groups digits, so the
     number is read joined. A plain space may separate two figures in a list
-    ("5 200 ha" for "5" and "200 ha"), so the joined number and its parts
-    are all stated: either reading can match, and neither can hide the other.
+    ("5 200 ha" for "5" and "200 ha"): the joined number is the first
+    reading and its parts are second readings that can only abstain. A
+    group with a leading zero ("000" of "1 000") is never a number alone,
+    so it is no part at all.
     """
     pieces = _GROUP_SPACE.split(raw)
     joined = "".join(pieces)
     if len(pieces) == 1:
-        return [(raw, raw, True)]
+        return [(raw, raw, True, False)]
     if " " not in raw:
-        return [(joined, raw, True)]
+        return [(joined, raw, True, False)]
     last = len(pieces) - 1
-    return [(joined, raw, True)] + [
-        (piece, piece, index == last) for index, piece in enumerate(pieces)
+    return [(joined, raw, True, False)] + [
+        (piece, piece, index == last, True)
+        for index, piece in enumerate(pieces)
+        if not (len(piece) > 1 and piece.startswith("0"))
     ]
 
 
@@ -616,10 +657,14 @@ def _stated_as(
     return Stated(reading[0] * scale, 0.5 * reading[1] * scale, bool(percent), text)
 
 
-def _word_scale(word: str, language: str) -> tuple[float, bool]:
+def _word_scale(
+    word: str, language: str, english: bool = False
+) -> tuple[float, bool]:
     """(scale, whether the word makes the number a measure) for the word
-    after a number."""
+    after a number; ``english`` when the reply reads as English."""
     scale = _LOCAL_SCALES[language].get(word, 1.0)
+    if english:
+        scale = _ENGLISH_MEANING.get(language, {}).get(word, scale)
     if word.startswith(_KM2) or _KM2_WORDS.fullmatch(word):
         scale = 100.0  # km² to hectares
     return scale, scale != 1.0 or word in _LOCAL_UNITS
@@ -660,13 +705,18 @@ def _stated_numbers_local(
     """``stated_numbers`` for a non-English case; ``answer`` is NFC."""
     matches = list(_LOCAL_NUMBER.finditer(answer))
     reply_mark = _reply_decimal_mark(matches, language)
+    # The local meaning of a shared scale word belongs to a reply detected in
+    # the case language; a short or mixed reply gets the English one.
+    english = (
+        language in _ENGLISH_MEANING and detect_language(answer)[0] != language
+    )
     found = []
     for m in matches:
-        for number, shown, carries in _spaced_readings(m[1]):
+        for number, shown, carries, part in _spaced_readings(m[1]):
             percent = m[2] if carries else None
             suffix = m[3] if carries else None
             word = _suffix_word(suffix)
-            scale, measured = _word_scale(word, language)
+            scale, measured = _word_scale(word, language, english)
             plain = "." not in number and "," not in number
             if plain and not (percent or measured) and re.fullmatch(
                 r"(19|20)\d\d", number.lstrip("-")
@@ -687,7 +737,9 @@ def _stated_numbers_local(
             if readings[0] is None:
                 continue  # "1.23.4567": not a number this parser can read
 
-            first = _stated_as(readings[0], scale, percent, text)
+            first = replace(
+                _stated_as(readings[0], scale, percent, text), part=part
+            )
             if len(readings) > 1 and readings[1] is not None:
                 first = replace(
                     first, other=_stated_as(readings[1], scale, percent, text)
@@ -734,6 +786,14 @@ _ES_SKIP = (
     "embargo|contar|incluir|datos|informaci[óo]n|registros?"
     "|precedentes|importar|duda"
 )
+_PT_SKIP = "contar|incluir|dados|informaç(?:ão|ões)|registros?|precedentes|dúvida"
+_FR_SKIP = "compter|inclure|donn[ée]es?|informations?|jeux?|précédents?|doute"
+# French "changement" that goes on to name a measured noun is no zero (see below).
+_FR_CHANGE = (
+    r"changements?(?! (?:dans|des?|du|sur|en|d['’]) ?"
+    r"(?:(?:les|la|le|des|de la) |l['’])?"
+    r"(?:pertes?|alertes?|gains?|émissions|perturbations?|déforestation))"
+)
 # The negation or "without" must take the measured noun at once, after at most
 # one quantifier: a gap of up to two words let "sin distinguir las pérdidas"
 # and "tanpa membedakan kehilangan" (an infinitive, then a noun of another
@@ -767,13 +827,94 @@ _LOCAL_ZERO_WORDS = {
         r"|perubahan(?! (?:kehilangan|peringatan|emisi|gangguan|deforestasi))))\b",
         re.I,
     ),
+    # As in Spanish: "zero" and "zéro" count only before a loss noun
+    # ("desmatamento zero", "zéro déforestation" name a target), and words
+    # that turn the phrase into "no data" or an idiom are excluded.
+    "pt": re.compile(
+        r"\b(?:zero (?:hectares?|ha)"
+        r"|zero (?:(?!"+_PT_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?"
+        r"|perturbaç(?:ão|ões))"
+        # "Não houve redução das perdas", "nenhuma redução das perdas" and
+        # "sem considerar as perdas" say nothing about a zero loss: these cues
+        # take the measured noun at once, after at most one quantifier and an
+        # "eventos de" / "hectares de" bridge, never a verb or another noun.
+        # "mudança" and "alteração" do not count when they go on to name a
+        # measured noun ("nenhuma mudança nas perdas": the loss itself is not
+        # said to be 0).
+        r"|(?:n[ãa]o (?:se )?(?:foi |foram |houve |há )?"
+        r"(?:registr|detect|observ|report|encontr|identific|verific)\w+"
+        r"|n[ãa]o (?:houve|h[áa]|ocorreu|ocorreram|exist\w+|apresent\w+)"
+        r"|sem|nenhum|nenhuma)"
+        r" (?:(?:nenhum[a]?s?|qualquer|novos?|novas?) )?"
+        r"(?:(?:eventos?|hectares?|ocorr[êe]ncias?) de )?"
+        r"(?:perdas?|alertas?|ganhos?|emissões|perturbaç(?:ão|ões)|desmatamento"
+        r"|hectares?"
+        r"|(?:mudanças?|alteraç(?:ão|ões))"
+        r"(?! (?:(?:em|de) (?:(?:as|os|a|o) )?|d[ao]s? |n[ao]s? )"
+        r"(?:perdas?|alertas?|ganhos?|emissões|perturbaç(?:ão|ões)"
+        r"|desmatamento)))"
+        # "A perda foi nula"; a negation between noun and word ("não foi nula")
+        # turns it round, so none may sit between them.
+        r"|(?:perdas?|alertas?|mudanças?|alteraç(?:ão|ões)|ganhos?|emissões"
+        r"|perturbaç(?:ão|ões)|desmatamento)"
+        r" (?:(?!n[ãa]o\b|nunca\b)[\w-]+ ){0,6}nul[oa]s?)\b",
+        re.I,
+    ),
+    "fr": re.compile(
+        r"\b(?:z[ée]ro (?:hectares?|ha)"
+        r"|z[ée]ro (?:(?!"+_FR_SKIP+r")[\w-]+ ){0,2}"
+        r"(?:pertes?|alertes?|changements?|gains?|perturbations?)"
+        # "aucune" takes the measured noun at once, after at most one
+        # quantifier and a "hectares de" / "cas de" bridge: "aucune réduction
+        # des pertes" states a change, not a zero. "changement" does not count
+        # when it goes on to name a measured noun ("aucun changement dans les
+        # pertes": the loss itself is not said to be 0).
+        r"|aucune? (?:(?:nouvel(?:le)?s?|nouveaux?|aucune?) )?"
+        r"(?:(?:hectares?|[ée]v[ée]nements?|cas) d(?:e |['’]))?"
+        r"(?:pertes?|alertes?|gains?|émissions|perturbations?"
+        r"|déforestation|hectares?"
+        r"|"+_FR_CHANGE+r")"
+        # "pas de" and "sans" state a zero only as an existence statement:
+        # "ne permettent pas de distinguer", "n'est pas de la déforestation"
+        # and "sans distinguer les pertes" do not, so the noun follows at
+        # once (after one adjective at most).
+        r"|(?:n['’]y a (?:pas (?:eu )?|eu )d(?:e |['’])"
+        r"|n['’](?:a|ont) pas (?:été )?(?:détect|enregistr|observ|constat"
+        r"|identifi|signal)\w* (?:d(?:e |['’]))?"
+        r"|sans )"
+        r"(?:(?!"+_FR_SKIP+r"|les\b|des\b|la\b|du\b)[\wé-]+ )?"
+        r"(?:pertes?|alertes?|gains?|émissions|perturbations?"
+        r"|déforestation|"+_FR_CHANGE+r")"
+        # "La perte a été nulle"; a negation between noun and word ("n'est
+        # pas nulle") turns it round, so none may sit between them.
+        r"|(?:pertes?|alertes?|changements?|gains?|émissions|perturbations?"
+        r"|déforestation)"
+        r" (?:(?!pas\b|ne\b|n['’]|jamais\b)[\w’'-]+ ){0,6}nulles?)\b"
+        # A sentence that opens on "Pas de" (a bullet, a title) is the same
+        # existence statement; mid-sentence "pas de" is not.
+        r"|(?:^|[.!?\n:;])[\s*_>•-]*pas d(?:e |['’])"
+        r"(?:(?!"+_FR_SKIP+r"|les\b|des\b|la\b|du\b)[\wé-]+ )?"
+        r"(?:pertes?|alertes?|gains?|émissions|perturbations?"
+        r"|déforestation|"+_FR_CHANGE+r")\b",
+        re.I,
+    ),
 }
+# In Portuguese "no" is "in the" ("no Tree cover loss") and "zero" names a
+# target ("desmatamento zero"), so the English cues misread a Portuguese
+# reply: one that reads as Portuguese is read with its own cues only.
+_OWN_ZERO_CUES_ONLY = frozenset({"pt"})
 
 
 def _zero_words(answer: str, language: str) -> re.Match[str] | None:
-    # A reply to a Spanish or Indonesian case may still be in English.
+    # A reply to a case in another language may still be in English.
     local = _LOCAL_ZERO_WORDS.get(language)
-    return _ZERO_WORDS.search(answer) or (local.search(answer) if local else None)
+    english = not (
+        language in _OWN_ZERO_CUES_ONLY and detect_language(answer)[0] == language
+    )
+    return (english and _ZERO_WORDS.search(answer)) or (
+        local.search(answer) if local else None
+    )
 
 
 def _check_figure(
@@ -792,6 +933,8 @@ def _check_figure(
                 result.matched = m[0]
                 return result
             for number in stated:
+                if number.part:
+                    continue
                 difference = _close(number, value, as_share)
                 if difference is None:
                     continue
@@ -801,9 +944,11 @@ def _check_figure(
                 if result.closest is None or difference < result.closest[1]:
                     result.closest = (number.text, difference)
             for number in stated:
-                if number.other is None or result.unsure:
+                # A part of a spaced number is itself the second reading.
+                second = number if number.part else number.other
+                if second is None or result.unsure:
                     continue
-                difference = _close(number.other, value, as_share)
+                difference = _close(second, value, as_share)
                 if difference is not None and difference <= TOLERANCE:
                     result.unsure = number.text
     return result
@@ -842,7 +987,7 @@ def evaluate_figures(
         # Normalised here as well as in ``stated_numbers``, for the zero-word
         # search: a decomposed accent would split a word there too.
         answer = unicodedata.normalize("NFC", answer)
-        # Horizon may answer a Spanish or Indonesian case in English, and an
+        # Horizon may answer a case in any other language in English, and an
         # English reply writes "1,209" for 1209 whatever the case language.
         usual_mark = "." if detect_language(answer)[0] == "en" else None
     stated = stated_numbers(answer, language, usual_mark=usual_mark)

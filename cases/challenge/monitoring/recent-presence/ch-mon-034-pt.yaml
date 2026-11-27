@@ -1,0 +1,26 @@
+id: ch-mon-034-pt
+uid: 329b565439110e4e
+status: ready
+set: monitoring
+group: recent_presence
+language: pt
+twin: ch-mon-034
+query: Algum alerta de distúrbio relacionado a fogo no Maranhão esta semana? Estou procurando
+  incêndios que fugiram do controle.
+expected:
+  aoi_ids: BRA.10
+  dataset_id: '11'
+  start_date: '{run-7d}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  text: Reports disturbance alerts in Maranhão for the past week and is clear that the alerts
+    do not record which were caused by fire, rather than calling alerts fires without evidence.
+  accept_nudge_offering: '11'
+  figure: sum(area_ha) where alert_date in {run-7d}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-034 (pt-t-001)'
+  pair_id: pt-t-001
+  use_cases: UC1
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

@@ -1,0 +1,26 @@
+id: ch-quant-328-fr
+uid: 95328fb8b5d79295
+status: ready
+set: quantification
+group: tree-cover
+language: fr
+twin: ch-quant-328
+query: est-ce qu'il reste des foret vierges autour de yaoundé cameroun
+expected:
+  dataset_id: 7;4
+  context_layer: primary_forest
+  data_pull: 'TRUE'
+  text: Answers from pulled primary forest data for a named area around Yaoundé (for example
+    Mfoundi department or the Centre region) and says which area it used; does not describe
+    virgin forest around the city from general knowledge alone.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-061); real fr user prompt,
+    trace 2026-03'
+  pair_id: fr-n-061
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-110; ch-quant-162; es-n-018 (ch-quant-218)
+  language_review: subagent review 2026-11-19; native speaker not yet

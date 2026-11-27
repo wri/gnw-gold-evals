@@ -1,0 +1,27 @@
+id: ch-quant-325
+uid: e8f42e37668afc49
+status: ready
+set: quantification
+group: many-areas
+query: Which provinces/regions of Gabon recorded the largest forest cover losses from 2020
+  to 2025?
+expected:
+  aoi_ids: GAB.1;GAB.2;GAB.3;GAB.4;GAB.5;GAB.6;GAB.7;GAB.8;GAB.9
+  dataset_id: '4'
+  context_layer: no_selection | primary_forest
+  start_date: '2020-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by aoi_id where tree_cover_loss_year in 2020..2025
+  text: Ranks Gabon's provinces by 2020 to 2025 forest cover loss from the pulled data.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-325-fr (fr-n-057);
+    real fr user prompt, trace 2026-08'
+  pair_id: fr-n-057
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: the 9 provinces of Gabon
+  precedent: ch-quant-221; ch-mon-022; ch-port-017

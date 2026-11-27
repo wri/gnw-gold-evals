@@ -1,0 +1,23 @@
+id: ch-quant-283-pt
+uid: 47230c7787fae650
+status: ready
+set: quantification
+group: unavailable
+language: pt
+twin: ch-quant-283
+query: mostre os autos de infração no parque nacional guaricana
+expected:
+  text: Says it has no enforcement records (infraction notices or fines); may offer tree cover
+    loss or alerts for Guaricana National Park, named as such; does not present loss or alerts
+    as infractions.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-034); real pt user prompt,
+    trace 2026-03'
+  pair_id: pt-n-034
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-187; es-n-029 (ch-quant-228)
+  language_review: subagent review 2026-11-19; native speaker not yet

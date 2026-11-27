@@ -51,6 +51,15 @@ def test_copies_expected_to_the_other_language_and_rewrites_the_uid(tmp_path):
     assert twin_problems([case for case, _uid in by_id(root).values()]) == []
 
 
+@pytest.mark.parametrize("language", ["pt", "fr"])
+def test_any_case_language_pairs_the_same_way(tmp_path, language):
+    root = make_store(tmp_path, language=language)
+    differing, _old, _new = tc.twin_case(root, "en-1", "es-1")
+    assert differing == ["dataset_id", "figure"]
+    after, _stored = by_id(root)["es-1"]
+    assert (after.language, after.expected) == (language, by_id(root)["en-1"][0].expected)
+
+
 def test_copies_in_the_other_direction_too(tmp_path):
     root = make_store(tmp_path)
     tc.twin_case(root, "es-1", "en-1")

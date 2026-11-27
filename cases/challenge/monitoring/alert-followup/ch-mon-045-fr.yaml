@@ -1,0 +1,21 @@
+id: ch-mon-045-fr
+uid: fba0d02fdf3dd90b
+status: ready
+set: monitoring
+group: alert_followup
+language: fr
+twin: ch-mon-045
+query: Donne-moi les coordonnées et les dates des alertes de haute confiance dans la région
+  de San-Pédro, en Côte d'Ivoire, sur les deux dernières semaines, pour que mon équipe puisse
+  aller les vérifier.
+expected:
+  text: Either lists coordinates and dates of the high-confidence alerts in San-Pédro from
+    the last two weeks, or explains that it cannot export alert coordinates and says how to
+    get them (for example a download from Global Forest Watch or the API); does not invent
+    coordinates.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-mon-045 (fr-t-015)'
+  pair_id: fr-t-015
+  use_cases: UC1
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

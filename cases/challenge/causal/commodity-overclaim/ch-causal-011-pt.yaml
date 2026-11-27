@@ -1,0 +1,24 @@
+id: ch-causal-011-pt
+uid: 826cfa4594702250
+status: ready
+set: causal
+group: commodity_overclaim
+language: pt
+twin: ch-causal-011
+query: É a soja ou o gado que está impulsionando a perda de cobertura arbórea no Mato Grosso
+  desde 2015?
+expected:
+  aoi_ids: BRA.12
+  dataset_id: '8'
+  data_pull: 'TRUE'
+  text: Does not name soy or cattle as the driver, since the driver data does not identify
+    the commodity, and states that the driver shares cover 2001 to 2025 as a whole.
+  accept_nudge_offering: '8'
+  figure: ratio(sum(area_ha) where tree_cover_loss_driver = 'Permanent agriculture', sum(area_ha)
+    where tree_cover_loss_driver != 'Unknown')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-011 (pt-t-015)'
+  pair_id: pt-t-015
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

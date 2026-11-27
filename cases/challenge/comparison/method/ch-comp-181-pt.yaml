@@ -1,0 +1,19 @@
+id: ch-comp-181-pt
+uid: a750aa7ec26827fa
+status: ready
+set: comparison
+group: method
+language: pt
+twin: ch-comp-181
+query: Como os dados de grassland se comparam com os dados de cobertura do solo para medir
+  pastagem no Brasil?
+expected:
+  text: Says the grassland dataset covers natural and semi-natural grassland only and excludes
+    cultivated pasture, and that the land cover dataset's cultivated grasslands class (2015
+    and 2024 snapshots) is the pasture proxy; neither maps pasture directly.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-181 (pt-t-021)'
+  pair_id: pt-t-021
+  use_cases: UC4;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

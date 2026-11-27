@@ -1,0 +1,24 @@
+id: ch-causal-006-fr
+uid: 53c11db74289ecc8
+status: ready
+set: causal
+group: fire_share_pa
+language: fr
+twin: ch-causal-006
+query: Quelle part de la perte de couvert arboré dans le parc national de la Salonga entre
+  2015 et 2023 a été causée par le feu ?
+expected:
+  aoi_ids: 555697863/10906/6060
+  dataset_id: '10'
+  start_date: '2015-01-01'
+  end_date: '2023-12-31'
+  data_pull: 'TRUE'
+  figure: ratio(sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2015..2023,
+    sum(area_ha) where tree_cover_loss_year in 2015..2023) | sum(tree_cover_loss_from_fires_area_ha)
+    where tree_cover_loss_year in 2015..2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-006 (fr-t-007)'
+  pair_id: fr-t-007
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

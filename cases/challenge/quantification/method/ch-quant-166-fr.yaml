@@ -1,0 +1,19 @@
+id: ch-quant-166-fr
+uid: fcf2206630f01eab
+status: ready
+set: quantification
+group: method
+language: fr
+twin: ch-quant-166
+query: À quel point je peux me fier au chiffre de perte de couvert arboré de la RDC pour 2024
+  ? Il y a une marge d'erreur ?
+expected:
+  text: Says no per-country margin of error is published for the DRC's 2024 tree cover loss
+    figure; may cite the dataset's global accuracy assessment (Hansen et al.) labelled as
+    global; does not attach other datasets' accuracy figures to it or invent a DRC range.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-166 (fr-t-010)'
+  pair_id: fr-t-010
+  use_cases: UC3;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

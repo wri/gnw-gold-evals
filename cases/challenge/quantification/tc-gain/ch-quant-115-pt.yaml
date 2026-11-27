@@ -1,0 +1,23 @@
+id: ch-quant-115-pt
+uid: 33a62a92e6e8f0ac
+status: ready
+set: quantification
+group: tc-gain
+language: pt
+twin: ch-quant-115
+query: Quantos hectares de ganho de cobertura arbórea o Brasil teve, no acumulado, de 2000
+  a 2020?
+expected:
+  aoi_ids: BRA
+  dataset_id: '5'
+  start_date: '2000-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_gain_period in ('2000-2005', '2005-2010', '2010-2015',
+    '2015-2020')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-115 (pt-t-035)'
+  pair_id: pt-t-035
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

@@ -4944,6 +4944,21 @@
       "reason": "The figure is the 2024 total; the question asks for the monthly pattern, and replies that give the pattern fail. Corrected copy: ch-trend-098."
     },
     {
+      "uid": "b2e97b229a637777",
+      "date": "2026-11-19",
+      "reason": "Puerto Suárez is a GADM level 3 area; the agent correctly refuses analysis below level 2, so a data pull cannot be expected. Corrected copy: ch-mon-074."
+    },
+    {
+      "uid": "633eb6ad958a67e0",
+      "date": "2026-11-19",
+      "reason": "The districts of Madre de Dios are GADM level 3 areas; the agent correctly refuses analysis below level 2, so a data pull cannot be expected. Corrected copy: ch-causal-031."
+    },
+    {
+      "uid": "d50067a5a601e831",
+      "date": "2026-11-19",
+      "reason": "A dataset choice that offers the drivers dataset is a fair reply; the member did not accept it. Corrected copy: ch-causal-032."
+    },
+    {
       "uid": "49ebf23dfed7c5fb",
       "date": "2026-11-27",
       "reason": "The UNESCO-MAB Biosphere Reserve (WDPA 3030) is named \"Gunung Leuser National Park\" and covers the same park, so selecting it is a fair reply; the member accepted only the national park (1251). Corrected copy: ch-aoi-164."

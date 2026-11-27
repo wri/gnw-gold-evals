@@ -1,0 +1,22 @@
+id: ch-quant-118-fr
+uid: f3705abc75fbaa47
+status: ready
+set: quantification
+group: tc-gain
+language: fr
+twin: ch-quant-118
+query: Combien d'hectares de gain cumulé de couvert arboré la République démocratique du Congo
+  a-t-elle enregistrés sur la période 2015-2020 ?
+expected:
+  aoi_ids: COD
+  dataset_id: '5'
+  start_date: '2015-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_gain_period = '2015-2020'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-118 (fr-t-036)'
+  pair_id: fr-t-036
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

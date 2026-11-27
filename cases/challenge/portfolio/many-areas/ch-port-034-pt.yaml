@@ -1,0 +1,25 @@
+id: ch-port-034-pt
+uid: 2c52f25c984218d0
+status: ready
+set: portfolio
+group: many-areas
+language: pt
+twin: ch-port-034
+query: garimpo em areas protegidas na amazonia brasileira
+expected:
+  text: Says it has no layer that maps garimpo itself; may report loss in the hard commodities
+    driver class (which includes mining) for named protected areas and say which ones; explains
+    that it cannot analyse every protected area in the Brazilian Amazon at once if it does
+    not; does not present the class as garimpo alone or invent figures for areas it did not
+    analyse.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-041); real pt user prompt,
+    trace 2026-09'
+  pair_id: pt-n-041
+  benchmark_type: portfolio
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: ch-quant-184; ch-mon-064; es-n-029 (ch-quant-228)
+  language_review: subagent review 2026-11-19; native speaker not yet

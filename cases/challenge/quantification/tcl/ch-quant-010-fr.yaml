@@ -1,0 +1,23 @@
+id: ch-quant-010-fr
+uid: 53e4ab71f05feeb5
+status: ready
+set: quantification
+group: tcl
+language: fr
+twin: ch-quant-010
+query: Combien de forêt intacte la République démocratique du Congo a-t-elle perdue en 2023
+  ?
+expected:
+  aoi_ids: COD
+  dataset_id: '4'
+  start_date: '2023-01-01'
+  end_date: '2023-12-31'
+  context_layer: intact_forest
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_loss_year = 2023
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-010 (fr-t-008)'
+  pair_id: fr-t-008
+  use_cases: UC3;UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

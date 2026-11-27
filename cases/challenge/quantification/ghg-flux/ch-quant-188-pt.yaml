@@ -1,0 +1,25 @@
+id: ch-quant-188-pt
+uid: c645245129fd15e8
+status: ready
+set: quantification
+group: ghg-flux
+language: pt
+twin: ch-quant-188
+query: Quais florestas no Pará removem mais carbono? Queremos priorizar a proteção para manter
+  o sumidouro de carbono.
+expected:
+  aoi_ids: BRA.14
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  text: Gives the forest carbon flux (gross removals) for Pará from the data and either ranks
+    sub-areas (for example municipalities) from pulled data or gives the state total and offers
+    a breakdown; does not present a forest-type ranking it did not compute.
+  accept_aoi_nudge_offering: BRA.14
+  accept_nudge_offering: '6'
+  figure: sum(carbon_gross_removals_Mg_CO2e) where aoi_id = 'BRA.14'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-188 (pt-t-020)'
+  pair_id: pt-t-020
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

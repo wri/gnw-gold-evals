@@ -1,0 +1,21 @@
+id: ch-quant-168-fr
+uid: a7fad383de4fdcb2
+status: ready
+set: quantification
+group: ghg-flux
+language: fr
+twin: ch-quant-168
+query: Quelles sont les émissions brutes et les absorptions des forêts du parc national de
+  la Salonga ?
+expected:
+  aoi_ids: 555697863|10906|6060
+  dataset_id: '6'
+  data_pull: 'TRUE'
+  accept_nudge_offering: '6'
+  figure: sum(carbon_gross_emissions_Mg_CO2e) ; sum(carbon_gross_removals_Mg_CO2e)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-168 (fr-t-032)'
+  pair_id: fr-t-032
+  use_cases: UC4
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

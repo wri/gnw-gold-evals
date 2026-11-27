@@ -1,0 +1,25 @@
+id: ch-trend-053-fr
+uid: 76b9c4e573883d76
+status: ready
+set: trend
+group: integrated-alerts
+language: fr
+twin: ch-trend-053
+query: Je surveille un peu la RDC ces temps-ci, tu peux me dire si les alertes de déforestation
+  y ont été en hausse ou en baisse du 1er mars au 31 août 2024 ?
+expected:
+  aoi_ids: COD
+  dataset_id: '11'
+  start_date: '2024-03-01'
+  end_date: '2024-08-31'
+  data_pull: 'TRUE'
+  figure: 'ref: sum(area_ha) where alert_date in 2024-03-01..2024-05-31 ; ref: sum(area_ha)
+    where alert_date in 2024-06-01..2024-08-31'
+  figure_claim: '#2 > #1 :: alerts trended up over the period (June to August above March
+    to May) || alerts trended down over the period (June to August below March to May)'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-trend-053 (fr-t-020)'
+  pair_id: fr-t-020
+  use_cases: UC1;UC3;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

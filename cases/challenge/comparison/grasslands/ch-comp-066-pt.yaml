@@ -1,0 +1,25 @@
+id: ch-comp-066-pt
+uid: 2d63b4b7cc813fc8
+status: ready
+set: comparison
+group: grasslands
+language: pt
+twin: ch-comp-066
+query: Qual país tinha maior extensão de pastagens naturais/seminaturais em 2020, Brasil ou
+  México?
+expected:
+  aoi_ids: BRA;MEX
+  dataset_id: '2'
+  start_date: '2020-01-01'
+  end_date: '2020-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA' and year = 2020 ; sum(area_ha) where aoi_id =
+    'MEX' and year = 2020
+  figure_claim: '#1 > #2 :: Brazil had more natural/semi-natural grassland than Mexico in
+    2020 || Mexico had more natural/semi-natural grassland than Brazil in 2020'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-066 (pt-t-031)'
+  pair_id: pt-t-031
+  use_cases: UC4;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

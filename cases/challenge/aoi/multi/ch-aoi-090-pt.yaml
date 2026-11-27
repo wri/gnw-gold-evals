@@ -1,0 +1,16 @@
+id: ch-aoi-090-pt
+uid: 2d7d029ab2afa51f
+status: ready
+set: aoi
+group: multi
+language: pt
+twin: ch-aoi-090
+query: Compare Pará e Paraná
+expected:
+  aoi_ids: BRA.14;BRA.16
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-aoi-090 (pt-t-024)'
+  pair_id: pt-t-024
+  use_cases: UC2;UC3;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'FALSE'

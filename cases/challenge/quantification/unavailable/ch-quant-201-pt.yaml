@@ -1,0 +1,17 @@
+id: ch-quant-201-pt
+uid: 425498439aaca499
+status: ready
+set: quantification
+group: unavailable
+language: pt
+twin: ch-quant-201
+query: Quanto carbono está armazenado nas pastagens do Mato Grosso do Sul?
+expected:
+  text: Says data on carbon stored in pastures are not available, or redirects to related
+    data such as forest carbon flux; does not invent a figure for Mato Grosso do Sul.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-201 (pt-t-036)'
+  pair_id: pt-t-036
+  use_cases: UC4;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

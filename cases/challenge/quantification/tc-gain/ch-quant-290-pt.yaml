@@ -1,0 +1,29 @@
+id: ch-quant-290-pt
+uid: f49e0638deacacd5
+status: ready
+set: quantification
+group: tc-gain
+language: pt
+twin: ch-quant-290
+query: Mostre as áreas de recuperação ambiental no município de Mirante do Paranapanema, São
+  Paulo, Brasil
+expected:
+  aoi_ids: BRA.25.342
+  dataset_id: '5'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where tree_cover_gain_period in ('2000-2005', '2005-2010', '2010-2015',
+    '2015-2020') | sum(area_ha)
+  text: Presents tree cover gain (2000 to 2020) as the closest measure and does not present
+    it as confirmed restoration or recovery projects.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-042); real pt user prompt,
+    trace 2026-09'
+  pair_id: pt-n-042
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Mirante do Paranapanema municipality, São Paulo, Brazil
+  precedent: ch-trend-085; ch-quant-179; es-n-007 (ch-quant-209)
+  language_review: subagent review 2026-11-19; native speaker not yet

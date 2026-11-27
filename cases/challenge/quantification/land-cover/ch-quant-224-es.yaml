@@ -1,5 +1,5 @@
 id: ch-quant-224-es
-uid: 9586a0f2295ba02c
+uid: 6cdb2e9b6acef5ae
 status: ready
 set: quantification
 group: land-cover
@@ -7,11 +7,8 @@ language: es
 twin: ch-quant-224
 query: muestrame los usos del suelo en Valdepeñas, provincia de Ciudad real, españa
 expected:
-  aoi_ids: ESP.4.2.1.20
-  data_pull: 'TRUE'
-  dataset_id: '1'
-  figure: sum(area_ha) where land_cover_class = 'Cropland' | ratio(sum(area_ha) where land_cover_class
-    = 'Cropland', sum(area_ha))
+  text: Declines to analyse land cover at municipality level, and may offer Ciudad Real province
+    instead; never labels a province figure as Valdepeñas's.
 notes:
   lineage: 'multilingual BENCHMARK 2026-11-18: prompt as typed (es-n-024); real es user prompt,
     trace trace 2026-02'

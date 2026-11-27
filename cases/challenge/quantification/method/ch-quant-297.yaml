@@ -1,0 +1,20 @@
+id: ch-quant-297
+uid: 8aae433b36043186
+status: ready
+set: quantification
+group: method
+query: what other indicators can I ask about?
+expected:
+  text: Lists datasets Horizon really has (for example tree cover loss, loss by driver, loss
+    from fires, tree cover, tree cover gain, land cover, grasslands, natural lands, forest
+    carbon flux, integrated alerts) without inventing indicators.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-297-pt (pt-n-051);
+    real pt user prompt, trace 2025-12'
+  pair_id: pt-n-051
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: es-n-033 (ch-quant-229); ch-quant-205

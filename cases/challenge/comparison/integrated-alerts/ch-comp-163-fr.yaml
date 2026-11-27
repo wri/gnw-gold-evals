@@ -1,0 +1,27 @@
+id: ch-comp-163-fr
+uid: 8aaa8067320392a2
+status: ready
+set: comparison
+group: integrated-alerts
+language: fr
+twin: ch-comp-163
+query: 'Compare les alertes de ce mois-ci dans les trois régions où nous patrouillons en Côte
+  d''Ivoire : Cavally, Guémon et Tonkpi.'
+expected:
+  dataset_id: '11'
+  start_date: '{month_start}'
+  end_date: '{run}'
+  date_tolerance_days: '3'
+  data_pull: 'TRUE'
+  aoi_ids: CIV.8.1;CIV.8.2;CIV.8.3
+  figure: sum(area_ha) where aoi_id = 'CIV.8.1' and alert_date in {month_start}..{run} | count(area_ha)
+    where aoi_id = 'CIV.8.1' and alert_date in {month_start}..{run} ; sum(area_ha) where aoi_id
+    = 'CIV.8.2' and alert_date in {month_start}..{run} | count(area_ha) where aoi_id = 'CIV.8.2'
+    and alert_date in {month_start}..{run} ; sum(area_ha) where aoi_id = 'CIV.8.3' and alert_date
+    in {month_start}..{run} | count(area_ha) where aoi_id = 'CIV.8.3' and alert_date in {month_start}..{run}
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-163 (fr-t-019)'
+  pair_id: fr-t-019
+  use_cases: UC1;UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

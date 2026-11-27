@@ -137,7 +137,9 @@ def test_language_and_twin_are_validated():
         return Case(**{**base, **fields}).validate()
 
     assert problems(language="es", twin="b") == []
-    assert "language" in problems(language="fr")[0]
+    assert problems(language="pt", twin="b") == []
+    assert problems(language="fr", twin="b") == []
+    assert "language" in problems(language="de")[0]
     assert "names a twin" in problems(twin="b")[0]
     assert "its own twin" in problems(language="id", twin="a")[0]
     turns = ({"query": "q1"}, {"query": "q2"})

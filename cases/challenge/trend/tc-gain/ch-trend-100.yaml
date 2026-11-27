@@ -1,0 +1,24 @@
+id: ch-trend-100
+uid: d3e4894880755cac
+status: ready
+set: trend
+group: tc-gain
+query: which year shows the greatest gain in forest cover in Cameroon?
+expected:
+  aoi_ids: CMR
+  dataset_id: '5'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by tree_cover_gain_period
+  text: Says the tree cover gain data come in five-year periods from 2000 to 2020, not single
+    years, so it cannot name one year; may name the period with the most gain.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-trend-100-fr (fr-n-026);
+    real fr user prompt, trace 2026-05'
+  pair_id: fr-n-026
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Cameroon
+  precedent: ch-quant-179; ch-trend-085

@@ -1,0 +1,25 @@
+id: ch-comp-186
+uid: b68a29813de69d09
+status: ready
+set: comparison
+group: land-cover
+query: Show me the differences in the vegetation, from 2024 to 2025, for the Algarve region,
+  Portugal
+expected:
+  aoi_ids: PRT.9
+  text: Either reports vegetation change in the Algarve for 2024 to 2025 from data that cover
+    those years (2025 tree cover loss or disturbance alerts), named as such, or says its land
+    cover data stop at 2024 (2015 and 2024 snapshots), so it cannot compare 2024 with 2025
+    from them; does not present the 2015 to 2024 land cover change as change between 2024
+    and 2025.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-comp-186-pt (pt-n-014);
+    real pt user prompt, trace 2026-02'
+  pair_id: pt-n-014
+  benchmark_type: comparison
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Faro district (the Algarve), Portugal
+  precedent: ch-comp-176; es-n-011 (ch-quant-213); es-n-023 (ch-quant-223)

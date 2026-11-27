@@ -1,0 +1,18 @@
+id: ch-comp-180-pt
+uid: f0435f99b9f65497
+status: ready
+set: comparison
+group: method
+language: pt
+twin: ch-comp-180
+query: Por que os números do GFW para o Brasil são diferentes dos do PRODES?
+expected:
+  text: Explains the main definitional and method differences between GFW tree cover loss
+    and PRODES (for example tree cover loss versus clear-cut deforestation, PRODES's Amazon
+    scope and August–July year, minimum mapping unit) without claiming either is wrong.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-180 (pt-t-019)'
+  pair_id: pt-t-019
+  use_cases: UC3;UC4;UC6
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

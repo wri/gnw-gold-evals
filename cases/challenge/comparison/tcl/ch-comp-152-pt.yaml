@@ -1,0 +1,25 @@
+id: ch-comp-152-pt
+uid: 567e000ab9aec366
+status: ready
+set: comparison
+group: tcl
+language: pt
+twin: ch-comp-152
+query: O desmatamento desde 2021 foi pior em Rondônia ou no Mato Grosso? Compramos carne bovina
+  dos dois.
+expected:
+  aoi_ids: BRA.22;BRA.12
+  dataset_id: '4'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  data_pull: 'TRUE'
+  figure: sum(area_ha) where aoi_id = 'BRA.12' and tree_cover_loss_year in 2021..2025 ; sum(area_ha)
+    where aoi_id = 'BRA.22' and tree_cover_loss_year in 2021..2025
+  figure_claim: '#1 > #2 :: Mato Grosso lost more tree cover than Rondônia since 2021 || Rondônia
+    lost more tree cover than Mato Grosso since 2021'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-comp-152 (pt-t-007)'
+  pair_id: pt-t-007
+  use_cases: UC2
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

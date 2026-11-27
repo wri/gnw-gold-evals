@@ -1,0 +1,23 @@
+id: ch-quant-303-pt
+uid: baf143360777da09
+status: ready
+set: quantification
+group: method
+language: pt
+twin: ch-quant-303
+query: Quero entender os dados disponiveis no municipio de porto seguro
+expected:
+  text: Lists datasets Horizon really has that can be analysed for Porto Seguro without inventing
+    local layers or figures; it may analyse one of them for the municipality. Date ranges
+    of datasets and names of imagery sources in a capability list are not invented figures.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-057); real pt user prompt,
+    trace 2026-09'
+  pair_id: pt-n-057
+  benchmark_type: quantification
+  use_cases: UC6
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: id-n-060 (ch-quant-270); ch-quant-205
+  language_review: subagent review 2026-11-19; native speaker not yet

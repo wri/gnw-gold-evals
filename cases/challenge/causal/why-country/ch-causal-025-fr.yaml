@@ -1,0 +1,32 @@
+id: ch-causal-025-fr
+uid: ee0ddb456e84891d
+status: ready
+set: causal
+group: why_country
+language: fr
+twin: ch-causal-025
+query: Combien de couvert arboré la RDC a-t-elle perdu en 2024, et qu'est-ce qui a causé cette
+  perte ?
+expected:
+  aoi_ids: COD
+  dataset_id: 4;8
+  start_date: '2024-01-01'
+  end_date: '2024-12-31'
+  data_pull: 'TRUE'
+  text: Gives the DRC's 2024 tree cover loss and its main driver classes, labelling the driver
+    shares as 2001 to 2025, without attributing the loss to causes the data do not cover.
+  accept_nudge_offering: 4;8
+  figure: sum(area_ha) where tree_cover_loss_year = 2024 ; ratio(max(area_ha) by tree_cover_loss_driver
+    where tree_cover_loss_driver in ('Permanent agriculture', 'Hard commodities', 'Shifting
+    cultivation', 'Logging', 'Wildfire', 'Settlements and infrastructure', 'Other natural
+    disturbances'), sum(area_ha) where tree_cover_loss_driver in ('Permanent agriculture',
+    'Hard commodities', 'Shifting cultivation', 'Logging', 'Wildfire', 'Settlements and infrastructure',
+    'Other natural disturbances')) | max(area_ha) by tree_cover_loss_driver where tree_cover_loss_driver
+    in ('Permanent agriculture', 'Hard commodities', 'Shifting cultivation', 'Logging', 'Wildfire',
+    'Settlements and infrastructure', 'Other natural disturbances')
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-causal-025 (fr-t-028)'
+  pair_id: fr-t-028
+  use_cases: UC3;UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

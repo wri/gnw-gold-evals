@@ -56,7 +56,7 @@ write the same manifest contract.
 
 ## Languages companion
 
-The questions in Spanish and Indonesian sit in a companion manifest,
+The questions in other languages sit in a companion manifest,
 `benchmarks/<version>-languages.json`, beside the English version. The
 English manifest is never changed for them.
 
@@ -67,8 +67,9 @@ English manifest is never changed for them.
 - The companion's top-level `pairs_with` names the English version, for
   example `"pairs_with": "2026"`.
 - A member can carry two more optional facets, written only when set:
-  `language` (`es` or `id`; absent means English) and `twin_uid` (the uid of
-  its pair). A member with a `language` always has a `twin_uid`.
+  `language` (`es`, `id`, `pt` or `fr`; absent means English) and
+  `twin_uid` (the uid of its pair). A member with a `language` always has a
+  `twin_uid`.
 - The twin is either a member of the companion or a member of the
   `pairs_with` version. The companion names those English members by uid and
   does not hold them. It does hold the English twins that were written for a
@@ -129,12 +130,12 @@ base that holds only twins shows `questions: 0`, because its twins are no
 members of the companion; `twins_drawn` says it was used. The tool reads the
 `pairs_with` manifest from the same directory and stops if it is missing.
 
-`languages` is a list with one object per language of the manifest, `es`
-before `id`:
+`languages` is a list with one object per language of the manifest, in
+the order `es`, `id`, `pt`, `fr` (`goldset.canonical.LANGUAGES`):
 
 | Field | Meaning |
 |---|---|
-| `key` | `es` or `id`. |
+| `key` | `es`, `id`, `pt` or `fr`. |
 | `pairs` | Pairs measured: the question and its English twin both have a pass or fail verdict. Every figure below is over these pairs. |
 | `unpaired` | Questions whose twin has no result in the run or its bases, or whose twin an erratum voids (in the companion or the `pairs_with` version). Left out, never a fail. |
 | `unscored` | Pairs with an errored or uncovered side. Left out, as errors leave every rate. |
@@ -174,15 +175,64 @@ GNW workspace, `experiments/2026-11-18-multilingual-benchmark-questions/`.
 ### 1. Make the harness accept the language
 
 A new code needs a harness change, on its own branch, before any case is
-written. Today the harness accepts `es` and `id` only:
+written. Today the harness accepts `es`, `id`, `pt` and `fr`. Do these in
+order for `<lang>`:
 
-| Where | What a new code needs |
-|---|---|
-| `src/goldset/canonical.py`, `LANGUAGES` | The code. The case check (`store.py`), the member check (`benchmark.py`), `gold run --language` and the order of the page's `languages` block all read this tuple. |
-| `schema/case.schema.json`, `language` | The code in the enum. `tests/test_schema.py` keeps the enum equal to `LANGUAGES` without `en`. |
-| `src/goldset/evaluators/figures.py` | How `figure_match` reads the reply's numbers: the usual decimal mark (`_USUAL_DECIMAL_MARK`, measured on Horizon's replies in the traces, not the textbook convention), scale words (`_LOCAL_SCALES`, required for every code), percent and km² words (`_LOCAL_NUMBER`, `_KM2_PHRASE`), units (`_LOCAL_UNITS`) and phrases that state a zero (`_LOCAL_ZERO_WORDS`). |
-| `src/goldset/evaluators/reply_language.py` | The language's function words in `FUNCTION_WORDS`, in `LANGUAGES` order (an assert checks it). French and Portuguese are decoys in `DECOY_WORDS` today. |
-| Tests and docs | Several tests use `fr` as the example of an unknown code. This README, `cases/challenge/README.md`, the evaluators README and `CLAUDE.md` name `es` and `id`. |
+1. **The code.** Add it to `LANGUAGES` in `src/goldset/canonical.py`. The
+   case check (`store.py`), the member check (`benchmark.py`), `gold run
+   --language` and the order of the page's `languages` block all read this
+   tuple.
+2. **The schema.** Add it to the `language` enum in
+   `schema/case.schema.json`. `tests/test_schema.py` keeps the enum equal to
+   `LANGUAGES` without `en`.
+3. **The numbers.** In `src/goldset/evaluators/figures.py`, `figure_match`
+   needs these for the language:
+   - `_USUAL_DECIMAL_MARK`: the decimal mark Horizon's replies use in that
+     language, counted in the traces, not the textbook convention. Spanish
+     uses the dot. Indonesian, Portuguese and French use the comma. A
+     reply's own convention still comes first.
+   - `_LOCAL_SCALES`: the scale words, required for every code. Mind the
+     false friends. Portuguese is Brazilian: `bilhão` is 10^9, and the
+     European `bilião` is no scale. In French, `milliard` is 10^9 and
+     `billion` is 10^12. A French case whose reply reads as English keeps
+     the English meaning (`_ENGLISH_MEANING`). Add a word to
+     `_ENGLISH_MEANING` when the language spells a scale word like English
+     and reads it differently.
+   - `_LOCAL_NUMBER` (the percent words) and `_KM2_PHRASE` (the km² words).
+   - `_LOCAL_UNITS`: hectare, tonne and similar words not yet listed.
+   - `_LOCAL_ZERO_WORDS`: the phrases that state a zero ("no hubo pérdida",
+     "aucune perte", "zero hectares"). A cue may take a measured noun at
+     once, after one quantifier at most, and must not match a sentence that
+     states no zero ("sin distinguir las pérdidas", "sans compter la
+     perte"). Put the words that turn a phrase into "no data" or an idiom in
+     the language's skip list (`_ES_SKIP`, `_PT_SKIP`, `_FR_SKIP`). "Zero"
+     counts only before a loss noun: "desmatamento zero" names a target.
+   - `_OWN_ZERO_CUES_ONLY`: add the code when a common word of the language
+     is also an English cue and makes the English cues misread its replies
+     (Portuguese "no" means "in the").
+   - Space-grouped thousands ("12 345") are read for every language and need
+     no entry. Check that the usual mark does not clash with them.
+4. **The reply language.** In `src/goldset/evaluators/reply_language.py`,
+   add the language's function words to `FUNCTION_WORDS`, in the order of
+   `LANGUAGES` (an assert checks it). Languages that share many words keep
+   the shared ones in their lists, because the ratio ignores a word that
+   both lists hold. Drop a word that is also a unit or part of a common
+   place name ("ha", "do"). Check the lists against Horizon's replies in
+   that language and note the leads over the runner-up in the comment on
+   `MIN_RATIO`. A neighbour that reads as one of the case languages
+   (Italian, which reads as French) goes in `DECOY_WORDS`: it is counted
+   and never a case's language.
+5. **The tests.** Each of these lists the codes; add the new one:
+   `tests/test_benchmark.py`, `tests/test_store.py`,
+   `tests/test_benchmark_languages.py`, `tests/test_benchmark_page.py`,
+   `tests/test_language_selection.py`, `tests/test_twin_case.py`,
+   `tests/test_figures.py` (zero statements and numbers in the language,
+   and the phrases that must not pass) and `tests/test_reply_language.py`.
+   Some tests use one unsupported code as their example (`de` today). If
+   the new language is that code, pick another.
+6. **The docs.** Name the code in this README (the companion sections), the
+   `language` paragraph of `cases/challenge/README.md`, the evaluators
+   README and `CLAUDE.md`.
 
 The page schema needs no change: it does not describe the `languages` block.
 
@@ -272,21 +322,49 @@ gets expectations in English, checked without an agent run.
 
 ### 5. Create the cases and the companion
 
-`make_cases.py`, in the experiment's `pilot/` folder, wrote the cases from
-the reviewed sheets. **It is not a repo tool yet**: for a new language,
-change its sheet folder, language loop, query column map (`QCOL`) and the
-dates in its notes. Run it from the worktree root with `--dry-run` until it
-reports no problem, then once without: it writes every good row and only
-reports a bad one (an `UNVERIFIED` value, a member uid that is not
-`english_uid`, a set and cohort the store lacks), and a second run writes
-the native pairs again under new ids. It requires 80 rows per language.
-A translated row becomes `<member id>-<lang>` with the member's set,
-cohort and `expected`. A native row becomes two cases with one `expected`:
-the English twin at the next free id of its set (`ch-quant-206`) and the
-question as `<twin id>-<lang>` (`ch-quant-206-es`). Notes: `lineage`,
-`pair_id`, `use_cases`, `synthetic`, `language_review` (the language side
-only) and, for native pairs, `benchmark_type`, `verified`, `precedent` and
-`aoi_name`.
+Write the cases from the reviewed sheet with `tools/pairs_from_sheet.py`.
+Run it from the worktree root with `--dry-run` until it reports no problem,
+then once without:
+
+```bash
+uv run python tools/pairs_from_sheet.py --sheet <lang>-pairs-reviewed.csv \
+    --language <lang> --query-column <language>_query --date <YYYY-MM-DD> --dry-run
+```
+
+`--language` is one of the codes in `LANGUAGES`. `--query-column` names the
+column with the question in that language (`portuguese_query`). `--date` is
+the day the sheet was reviewed and checked: it goes into the `lineage`,
+`language_review` and `verified` notes. `--cases-dir` defaults to
+`cases/challenge`.
+
+The sheet needs these columns: `pair_id`, `kind`, `use_case`, `type`, `set`,
+`cohort`, `english_id`, `english_uid`, `english_query`, `source` and
+`expected_verified`, and the query column. Native rows may also have
+`verify_precedent`. The tool checks every row before it writes anything. If
+any row has a problem, it lists them all, writes nothing and exits 1. It
+refuses:
+
+- a `pair_id` that is empty, repeated in the sheet or already in the store
+  (this stops a second run over the same rows, which would write each
+  native pair again under new ids; to add rows later, pass a sheet with
+  only the new ones);
+- an empty question, or an unknown use case;
+- a `kind` that is neither `translated` nor `native`;
+- a translated row whose member is not in the store, no longer has the uid
+  `english_uid`, or is not a single-turn English case;
+- a native row with an empty `english_query`, an `UNVERIFIED` value,
+  an `expected_verified` that is not YAML or holds a list or a mapping, no
+  expectation, a set and cohort the store lacks, a `type` that does not fit
+  the set (the type it measures, or one an English case of the set and
+  cohort holds), or a set with no single id prefix.
+
+It does not require 80 rows. A translated row becomes `<member id>-<lang>`
+with the member's set, cohort and `expected`; the member is its `twin`. A
+native row becomes two cases with one `expected`: the English twin at the
+next free id of its set (`ch-quant-206`) and the question as `<twin
+id>-<lang>` (`ch-quant-206-pt`). Notes: `lineage`, `pair_id`, `use_cases`,
+`synthetic`, `language_review` (the language side only) and, for native
+pairs, `benchmark_type`, `verified`, `precedent` and `aoi_name`.
 
 Then run the commands below, without the first line. Run all of them after
 any later change to a pair: edit the English twin (never one side only),

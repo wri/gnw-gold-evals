@@ -1,0 +1,24 @@
+id: ch-quant-280-pt
+uid: 5d02bbcc14951456
+status: ready
+set: quantification
+group: unavailable
+language: pt
+twin: ch-quant-280
+query: é possível montar um mapa com a influencia da mineração no município de itapeva estado
+  de são paulo país brasil?
+expected:
+  text: Does not claim to have a map of mining activity or of its influence; may offer mining
+    concession boundaries, or loss in the hard commodities driver class (which includes mining)
+    for Itapeva, named as such; does not present another layer as a map of mining influence.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (pt-n-027); real pt user prompt,
+    trace 2026-02'
+  pair_id: pt-n-027
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  precedent: es-n-029 (ch-quant-228); ch-quant-192
+  language_review: subagent review 2026-11-19; native speaker not yet

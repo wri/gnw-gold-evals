@@ -21,6 +21,7 @@ from goldset.evaluators.figures import (
     stated_numbers,
     validate,
 )
+from goldset.evaluators.reply_language import detect_language
 
 TCL = [
     {"aoi_id": "PER.12", "tree_cover_loss_year": year, "area_ha": area}
@@ -143,7 +144,7 @@ def _local(answer, language):
 
 def test_an_unknown_language_fails_loudly():
     with pytest.raises(ValueError, match="language"):
-        stated_numbers("12 ha", "fr")
+        stated_numbers("12 ha", "de")
 
 
 def test_english_cases_keep_the_english_reading():
@@ -197,6 +198,61 @@ def test_reads_spanish_replies_in_either_convention():
     assert local_form["393.170 hectáreas"].other.value == pytest.approx(393.17)
 
 
+def test_reads_portuguese_replies():
+    # Modelled on Horizon's Portuguese replies (traces, 2026): comma decimals,
+    # dot grouping.
+    stated = _local(
+        "Em 2024 foram detectados **138,03 hectares** de distúrbio; a perda"
+        " total foi de **1.234,5 ha** (cerca de 2,3%). O Brasil perdeu"
+        " **2,3 milhões de hectares** e emitiu **1,2 bilhão de toneladas**"
+        " de CO2e. Em **2016** a área era de **321.221 hectares**.",
+        "pt",
+    )
+    assert stated["138,03 hectares"].value == pytest.approx(138.03)
+    assert stated["1.234,5 ha"].value == pytest.approx(1234.5)
+    assert stated["1.234,5 ha"].other is None
+    assert stated["2,3%"].value == pytest.approx(2.3) and stated["2,3%"].percent
+    assert stated["2,3 milhões"].value == pytest.approx(2.3e6)
+    assert stated["1,2 bilhão"].value == pytest.approx(1.2e9)
+    # The reply's comma decimals make "321.221" 321,221 first.
+    assert stated["321.221 hectares"].value == 321221
+    assert stated["321.221 hectares"].other.value == pytest.approx(321.221)
+    assert "2016" not in stated
+
+
+ANSWER_FR = (
+    "Au total, **12 480 hectares** ont été perdus (2,3 % de la couverture),"
+    " dont 1 234,5 ha en 2021. Les émissions atteignent **1,2 milliard de"
+    " tonnes** de CO2e, et **3,4 millions d'hectares** restent intacts."
+)
+
+
+def test_reads_french_replies():
+    # Modelled on Horizon's French replies (traces, 2026): comma decimals,
+    # thousands grouped by a space.
+    stated = _local(ANSWER_FR, "fr")
+    assert stated["12 480 hectares"].value == 12480
+    assert stated["2,3%"].value == pytest.approx(2.3) and stated["2,3%"].percent
+    assert stated["1 234,5 ha"].value == pytest.approx(1234.5)
+    assert stated["1,2 milliard"].value == pytest.approx(1.2e9)
+    assert stated["3,4 millions"].value == pytest.approx(3.4e6)
+    # The readings list, so extra split readings cannot hide: the parts of a
+    # spaced number are there, flagged as parts.
+    assert [(s.text, s.part) for s in stated_numbers(ANSWER_FR, "fr")] == [
+        ("12 480 hectares", False), ("12", True), ("480 hectares", True),
+        ("2,3%", False), ("1 234,5 ha", False), ("1", True), ("234,5 ha", True),
+        ("1,2 milliard", False), ("3,4 millions", False),
+    ]
+
+
+@pytest.mark.parametrize("space", ["\u00a0", "\u202f", "\u2009"])
+def test_a_fixed_space_groups_french_thousands(space):
+    # French typesetting groups with a narrow no-break space; it only groups.
+    (stated,) = stated_numbers(f"Au total, 1{space}234,5{space}ha.", "fr")
+    assert stated.value == pytest.approx(1234.5)
+    assert stated.other is None
+
+
 @pytest.mark.parametrize(
     ("answer", "language", "text", "value"),
     [
@@ -213,6 +269,20 @@ def test_reads_spanish_replies_in_either_convention():
         ("unos 25 kilómetros cuadrados", "es", "25 kilómetros cuadrados", 2500),
         ("seluas 25 kilometer persegi", "id", "25 kilometer persegi", 2500),
         ("1,2 millo\u0301n de hectáreas", "es", "1,2 millón", 1.2e6),
+        ("cerca de 3 mil hectares", "pt", "3 mil", 3e3),
+        ("1 milhão de hectares", "pt", "1 milhão", 1e6),
+        ("2,3 milhões de hectares", "pt", "2,3 milhões", 2.3e6),
+        ("4,5 bilhões de toneladas", "pt", "4,5 bilhões", 4.5e9),
+        ("2,5 mil milhões de toneladas", "pt", "2,5 mil milhões", 2.5e9),
+        ("1,2 trilhão de toneladas", "pt", "1,2 trilhão", 1.2e12),
+        ("cerca de 12,5 por cento", "pt", "12,5por cento", 12.5),
+        ("cerca de 25 quilômetros quadrados", "pt", "25 quilômetros quadrados", 2500),
+        ("cerca de 25 quilómetros quadrados", "pt", "25 quilómetros quadrados", 2500),
+        ("environ 3 mille hectares", "fr", "3 mille", 3e3),
+        ("2,3 millions d'hectares", "fr", "2,3 millions", 2.3e6),
+        ("1,2 milliard de tonnes", "fr", "1,2 milliard", 1.2e9),
+        ("environ 12,5 pour cent", "fr", "12,5pour cent", 12.5),
+        ("environ 25 kilomètres carrés", "fr", "25 kilomètres carrés", 2500),
     ],
 )
 def test_reads_local_scale_and_percent_words(answer, language, text, value):
@@ -299,6 +369,61 @@ def test_scale_words_belong_to_their_language():
     assert _local("450 rb hektar", "id")["450 rb"].value == 450e3
 
 
+def test_portuguese_scales_are_brazilian():
+    # AJ, 2026-11-19: Brazilian Portuguese. The European "bilião" (10^12 in
+    # Portugal) is no scale at all, so it can never pass as 10^9.
+    assert _local("1,2 bilhão de toneladas", "pt")["1,2 bilhão"].value == pytest.approx(1.2e9)
+    stated = _local("1,2 bilião de toneladas", "pt")
+    assert stated["1,2"].value == pytest.approx(1.2)
+    assert _local("2 billion t", "pt")["2 billion"].value == pytest.approx(2e9)
+
+
+def test_a_french_billion_is_ten_to_the_twelfth():
+    # AJ, 2026-11-19: in a French reply "billion" has its French meaning.
+    # Long enough to read as French: a short reply is undecided (below).
+    stated = _local(
+        "Les stocks de carbone de la région atteignent 1,2 billion de tonnes,"
+        " et c'est une part de la perte.",
+        "fr",
+    )
+    assert stated["1,2 billion"].value == pytest.approx(1.2e12)
+    stated = _local(
+        "Selon l'analyse, environ 2 billions de tonnes de carbone sont"
+        " stockées dans les forêts de la région.",
+        "fr",
+    )
+    assert stated["2 billions"].value == pytest.approx(2e12)
+
+
+def test_an_english_reply_to_a_french_case_reads_billion_in_english():
+    # The French meaning belongs to a French reply. Horizon often answers a
+    # French question in English, where a billion is 10^9.
+    english = ("The forests in the region hold about 1.2 billion tonnes of carbon,"
+               " and the loss since 2001 has released a share of it.")
+    assert _local(english, "fr")["1.2 billion"].value == pytest.approx(1.2e9)
+
+
+def test_an_undecided_reply_to_a_french_case_reads_billion_in_english():
+    # Too short or mixed to detect: only a reply that reads as French gets the
+    # French meaning.
+    answer = "Gabon's forests were a net sink: -1.57 billion tCO2e."
+    assert detect_language(answer)[0] != "fr"
+    assert _local(answer, "fr")["-1.57 billion"].value == pytest.approx(-1.57e9)
+
+
+def test_the_usual_portuguese_and_french_mark_is_the_comma():
+    # Nothing in these replies settles the mark, so Horizon's habit in the
+    # language gives the first reading (see _USUAL_DECIMAL_MARK).
+    for answer, language in (("Total de 64.435 hectares.", "pt"),
+                             ("Au total, 64,435 hectares.", "fr")):
+        (stated,) = stated_numbers(answer, language)
+        assert stated.other is not None
+        assert (stated.value, stated.other.value) == (
+            pytest.approx(64435 if language == "pt" else 64.435),
+            pytest.approx(64.435 if language == "pt" else 64435),
+        )
+
+
 def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
     figure = "sum(area_ha)"  # 1,050 over both areas
 
@@ -334,6 +459,16 @@ def test_figure_match_abstains_on_a_number_that_reads_two_ways(pulled):
     # Indonesian habit reads "64.435" as 64435.
     assert evaluate_figures(state, "sum(area_ha)", "id")["figure_match_score"] == 1.0
     assert score("Total: 2.345 hectáreas.", "es")["figure_match_score"] == 0.0
+    # Portuguese and French: the comma is the usual decimal mark.
+    assert score("Total de 1.050 hectares.", "pt")["figure_match_score"] == 1.0
+    assert score("Au total, 1 050 hectares.", "fr")["figure_match_score"] == 1.0
+    assert score("Total de 1,050 hectares.", "pt")["figure_match_score"] is None
+    assert score("Au total, 1,050 hectares.", "fr")["figure_match_score"] is None
+    # An English reply to either keeps the English habit.
+    english = "In total, the loss was 1,050 hectares in the area over the period."
+    for language in ("pt", "fr"):
+        assert score(english, language)["figure_match_score"] == 1.0
+    assert score("Au total, 2 345 hectares.", "fr")["figure_match_score"] == 0.0
 
 
 def test_a_zero_figure_may_be_stated_in_local_words(pulled):
@@ -425,11 +560,178 @@ def test_local_zero_phrases_need_the_measured_noun_at_once(pulled):
         assert score(sentence, language) == 1.0, sentence
 
 
+@pytest.mark.parametrize(("answer", "language"), [
+    ("Não houve perda de cobertura arbórea na área em 2021.", "pt"),
+    ("Não foram detectados alertas nesta área.", "pt"),
+    ("Nenhuma perda foi registrada no território.", "pt"),
+    ("Não foi registrada nenhuma perda no território.", "pt"),
+    ("Não há alertas para este período.", "pt"),
+    ("O território não apresentou alterações na cobertura.", "pt"),
+    ("Foram registrados zero hectares de perda.", "pt"),
+    ("No loss was recorded in the territory in 2021, and the area has kept its"
+     " tree cover.", "pt"),
+    ("Aucune perte de couverture arborée n'a été détectée en 2021.", "fr"),
+    ("Aucune alerte n'a été enregistrée dans cette zone.", "fr"),
+    ("Il n'y a eu aucun changement de couverture.", "fr"),
+    ("Pas de perte de forêt primaire entre 2020 et 2024.", "fr"),
+    ("Pas d'alertes dans cette zone depuis janvier.", "fr"),
+    ("Il n'y a pas eu de perte en 2021.", "fr"),
+    ("Zéro hectare de perte en 2021.", "fr"),
+    ("No loss was recorded in the territory.", "fr"),
+])
+def test_a_zero_figure_may_be_stated_in_portuguese_or_french(pulled, answer, language):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    state, tables = _state(answer, empty_year)
+    pulled(tables)
+    result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+    assert result["figure_match_score"] == 1.0
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    # "zero" before a target, not a loss ("desmatamento zero").
+    ("A meta do estado é o desmatamento zero até 2030; no entanto, os alertas"
+     " aumentaram em 2024.", "pt"),
+    ("Há um compromisso de zero desmatamento na região.", "pt"),
+    # Portuguese "no" is "in the": "no Tree cover loss" states no zero.
+    ("Os dados no Tree cover loss mostram uma tendência de alta.", "pt"),
+    ("Sem dados de perda para 2021.", "pt"),
+    ("Não há dados sobre perdas.", "pt"),
+    ("Sem dúvida a perda foi grande.", "pt"),
+    ("Houve níveis sem precedentes de perda.", "pt"),
+    ("Sem contar a perda de 2020.", "pt"),
+    ("Não foi possível calcular a perda.", "pt"),
+    ("L'objectif est zéro déforestation ; pourtant les alertes ont augmenté.", "fr"),
+    ("Aucune donnée de perte pour 2021.", "fr"),
+    ("Pas de données sur les pertes.", "fr"),
+    ("Sans doute la perte a été importante.", "fr"),
+    ("Des niveaux de perte sans précédent.", "fr"),
+    ("Sans compter la perte de 2020.", "fr"),
+    ("Aucun jeu de données ne couvre les alertes.", "fr"),
+])
+def test_a_zero_word_that_states_no_zero_figure_fails(pulled, answer, language):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    state, tables = _state(answer, empty_year)
+    pulled(tables)
+    result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+    assert result["figure_match_score"] == 0.0
+
+
+def _zero_score(pulled, answer, language):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+    state, tables = _state(answer, empty_year)
+    pulled(tables)
+    return evaluate_figures(state, "sum(area_ha)", language)["figure_match_score"]
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    # Each states 120 ha, so a zero is wrong; the negation is about something
+    # else (not a zero loss), and no article or infinitive may follow the cue.
+    ("La perte a atteint 120 ha. Attention : la perte de couverture arborée"
+     " n'est pas de la déforestation.", "fr"),
+    ("La perte a atteint 120 ha. Ces données ne permettent pas de distinguer"
+     " les pertes par cause.", "fr"),
+    ("La perte a atteint 120 ha. Le jeu de données ne fournit pas d'alertes"
+     " en temps réel.", "fr"),
+    ("La perte a atteint 120 ha, sans distinguer les pertes par cause.", "fr"),
+    ("A perda foi de 120 ha. Não houve redução das perdas em relação a 2020.", "pt"),
+    ("A perda foi de 120 ha, sem considerar as perdas por fogo.", "pt"),
+])
+def test_a_negation_about_something_else_states_no_zero(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 0.0, answer
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    ("Aucune perte de couvert arboré n'a été détectée en 2021.", "fr"),
+    ("Il n'y a pas eu d'alertes sur cette période.", "fr"),
+    ("Il n'y a pas de perte de couvert arboré.", "fr"),
+    ("L'analyse n'a pas détecté de perte en 2021.", "fr"),
+    ("Pas de perte de forêt primaire entre 2020 et 2024.", "fr"),
+    ("Résultat : **Pas d'alertes** dans cette zone.", "fr"),
+    ("La zone est restée sans perte de couvert arboré.", "fr"),
+    ("Não houve perda de cobertura arbórea em 2021.", "pt"),
+    ("Não houve nenhuma perda de cobertura arbórea em 2021.", "pt"),
+    ("Nenhum alerta foi registrado.", "pt"),
+    ("A área ficou sem perda de cobertura arbórea.", "pt"),
+])
+def test_an_existence_negation_still_states_a_zero(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 1.0, answer
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    ("La perte de couvert arboré a été nulle en 2021.", "fr"),
+    ("A perda de cobertura arbórea foi nula em 2021.", "pt"),
+    ("Aucun hectare n'a été perdu en 2021.", "fr"),
+    ("Nenhum hectare foi perdido em 2021.", "pt"),
+    ("Não ocorreu perda de cobertura arbórea em 2021.", "pt"),
+])
+def test_other_zero_phrasings_are_read(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 1.0, answer
+
+
+@pytest.mark.parametrize(("answer", "language"), [
+    ("La perte a atteint 120 ha. La déforestation n'est pas nulle.", "fr"),
+    ("A perda foi de 120 ha. A perda não foi nula.", "pt"),
+    ("A perda foi de 120 ha. Não ocorreu redução das perdas.", "pt"),
+])
+def test_the_new_zero_cues_keep_the_wrong_answers_wrong(pulled, answer, language):
+    assert _zero_score(pulled, answer, language) == 0.0, answer
+
+
+def test_portuguese_and_french_zero_phrases_need_the_measured_noun_at_once(pulled):
+    empty_year = [{"aoi_id": "BRA1507", "tree_cover_loss_year": 2021, "area_ha": 0.0}]
+
+    def score(sentence, language):
+        lead = "O valor é de 120 ha. " if language == "pt" else "Le chiffre est de 120 ha. "
+        state, tables = _state(lead + sentence, empty_year)
+        pulled(tables)
+        result = evaluate_figures(state, figure_text="sum(area_ha)", language=language)
+        return result["figure_match_score"]
+
+    # The cue belongs to a change, not to the measured noun: no zero is stated.
+    for sentence, language in [
+        ("Nenhuma redução das perdas em relação a 2020.", "pt"),
+        ("Nenhuma redução de perdas em relação a 2020.", "pt"),
+        ("Não foi detectada redução das perdas em relação a 2020.", "pt"),
+        ("Não foram detectados aumentos das perdas em relação a 2020.", "pt"),
+        ("Nenhuma mudança nas perdas em relação a 2020.", "pt"),
+        ("Nenhuma alteração das perdas em relação a 2020.", "pt"),
+        ("Não houve mudança nas perdas em relação a 2020.", "pt"),
+        ("Aucune réduction des pertes par rapport à 2020.", "fr"),
+        ("Aucune réduction de pertes par rapport à 2020.", "fr"),
+        ("Aucune augmentation des alertes par rapport à 2020.", "fr"),
+        ("Aucun changement dans les pertes par rapport à 2020.", "fr"),
+        ("Il n'y a pas de changement des pertes par rapport à 2020.", "fr"),
+    ]:
+        assert score(sentence, language) == 0.0, sentence
+    # A real zero statement still counts.
+    for sentence, language in [
+        ("Não foi registrada perda.", "pt"),
+        ("Não foram detectados alertas.", "pt"),
+        ("Não foi registrada nenhuma perda.", "pt"),
+        ("Não foi detectada nenhuma nova perda.", "pt"),
+        ("Nenhuma perda.", "pt"),
+        ("Nenhum alerta.", "pt"),
+        ("Nenhum hectare.", "pt"),
+        ("Não foram detectados eventos de perda.", "pt"),
+        ("Não foram registrados hectares de perda.", "pt"),
+        ("Nenhuma mudança na cobertura.", "pt"),
+        ("Aucune perte.", "fr"),
+        ("Aucune alerte.", "fr"),
+        ("Aucun hectare.", "fr"),
+        ("Aucune nouvelle alerte.", "fr"),
+        ("Aucune perte de couvert arboré.", "fr"),
+        ("L'étude n'a enregistré aucune perte.", "fr"),
+        ("Aucun cas de perte.", "fr"),
+        ("Aucun changement de couverture.", "fr"),
+    ]:
+        assert score(sentence, language) == 1.0, sentence
+
+
 def test_an_unknown_language_is_loud_even_when_nothing_is_scored():
     with pytest.raises(ValueError, match="language"):
-        evaluate_figures({}, "", "fr")
+        evaluate_figures({}, "", "de")
     with pytest.raises(ValueError, match="language"):
-        evaluate_figures({}, "sum(area_ha)", "fr")
+        evaluate_figures({}, "sum(area_ha)", "de")
 
 
 def test_figure_match_passes_rounding_and_fails_a_wrong_figure(pulled):
@@ -618,9 +920,14 @@ def test_a_fixed_space_groups_thousands(space):
 
 
 def test_a_plain_space_keeps_the_joined_number_and_its_parts():
-    # "5 200 ha" may be one figure or a list, so neither reading hides the other.
-    values = {s.text: s.value for s in stated_numbers("unas 5 200 ha", "es")}
+    # "5 200 ha" may be one figure or a list. The joined number is the first
+    # reading; the parts are second readings that can only abstain.
+    stated = stated_numbers("unas 5 200 ha", "es")
+    values = {s.text: s.value for s in stated}
     assert values == {"5 200 ha": 5200, "5": 5, "200 ha": 200}
+    assert {s.text: s.part for s in stated} == {
+        "5 200 ha": False, "5": True, "200 ha": True,
+    }
     # The unit and percent belong to the last part and to the joined number.
     assert any(s.percent and s.value == 200 for s in stated_numbers("el 5 200 %", "es"))
 
@@ -684,3 +991,47 @@ def test_a_local_reply_keeps_the_case_languages_habit(pulled):
     # Indonesian writes the comma as decimal, so 1209 is only the second reading.
     result = evaluate_figures(state, "sum(area_ha)", "id")
     assert result["figure_match_score"] is None
+
+
+SPACED = [
+    ("En 2021, la perte de couverture arborée a atteint 1 000 ha dans la zone.", "fr"),
+    ("En 2021, la perte a atteint 12 345 ha.", "fr"),
+    ("En 2021, la pérdida de cobertura arbórea alcanzó 1 000 ha en la zona.", "es"),
+    ("En 2021, la pérdida alcanzó 12 345 ha.", "es"),
+]
+
+
+def test_a_zero_group_of_a_spaced_number_is_no_number():
+    # "1 000 ha" is 1000; the "000" is a group, never a zero of its own.
+    for answer, language in SPACED[::2]:
+        readings = [(s.text, s.value, s.part) for s in stated_numbers(answer, language)]
+        assert ("000 ha", 0, True) not in readings and not any(
+            s.value == 0 for s in stated_numbers(answer, language)
+        )
+        assert ("1 000 ha", 1000, False) in readings
+
+
+@pytest.mark.parametrize(
+    ("answer", "language", "expected", "score"),
+    [
+        # Missed: the reply states 1000, and the 1 is no 0.
+        (SPACED[0][0], "fr", 0, 0.0),
+        (SPACED[2][0], "es", 0, 0.0),
+        # Abstained (None): 345 is only a part of 12 345, a second reading.
+        (SPACED[1][0], "fr", 345, None),
+        (SPACED[3][0], "es", 345, None),
+        # The joined number is the first reading, so it scores.
+        ("La perte a atteint 1 000 ha.", "fr", 1000, 1.0),
+        ("La pérdida alcanzó 1 000 ha.", "es", 1000, 1.0),
+        ("La perte a atteint 12 345 ha.", "fr", 12345, 1.0),
+    ],
+)
+def test_a_spaced_number_scores_by_its_joined_reading(
+    pulled, answer, language, expected, score
+):
+    state, tables = _state(
+        answer, [{"aoi_id": "X", "tree_cover_loss_year": 2021, "area_ha": float(expected)}]
+    )
+    pulled(tables)
+    result = evaluate_figures(state, "sum(area_ha)", language)
+    assert result["figure_match_score"] == score, result["actual_figures"]

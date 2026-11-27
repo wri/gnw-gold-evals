@@ -1,0 +1,25 @@
+id: ch-quant-304
+uid: a35281da8156d9a5
+status: ready
+set: quantification
+group: tcl
+query: What is the deforestation rate of Sierra Leone?
+expected:
+  aoi_ids: SLE
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  figure: mean(area_ha) by tree_cover_loss_year | sum(area_ha)
+  text: Gives a rate (for example the average annual loss in hectares per year, or the annual
+    loss as a share of tree cover) and states the period it covers; for a share, it also states
+    the denominator it used.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-304-fr (fr-n-019);
+    real fr user prompt, trace 2026-03'
+  pair_id: fr-n-019
+  benchmark_type: quantification
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Sierra Leone
+  precedent: es-n-009 (ch-quant-211); ch-comp-148 (mean by year); ch-quant-009

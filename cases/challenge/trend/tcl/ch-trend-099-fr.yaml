@@ -1,0 +1,26 @@
+id: ch-trend-099-fr
+uid: 41548d240cdd4395
+status: ready
+set: trend
+group: tcl
+language: fr
+twin: ch-trend-099
+query: Bonjour est ce que vous pouvez me donner l historique de déforestation dans la région
+  sava à madagascar
+expected:
+  aoi_ids: MDG.2.2
+  dataset_id: '4'
+  data_pull: 'TRUE'
+  figure: max(area_ha) by tree_cover_loss_year | min(area_ha) by tree_cover_loss_year | sum(area_ha)
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: prompt as typed (fr-n-021); real fr user prompt,
+    trace 2026-03'
+  pair_id: fr-n-021
+  benchmark_type: trend
+  use_cases: UC4
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Sava (region, Antsiranana, Madagascar)
+  precedent: es-n-004 (ch-trend-088); ch-trend-079
+  language_review: subagent review 2026-11-19; native speaker not yet

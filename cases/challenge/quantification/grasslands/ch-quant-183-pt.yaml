@@ -1,0 +1,21 @@
+id: ch-quant-183-pt
+uid: 162528536ec9c0c6
+status: ready
+set: quantification
+group: grasslands
+language: pt
+twin: ch-quant-183
+query: Ainda existem pastagens naturais no Mato Grosso que deveríamos priorizar para proteção?
+expected:
+  aoi_ids: BRA.12
+  dataset_id: 2;3
+  data_pull: 'TRUE'
+  accept_nudge_offering: '2'
+  figure: sum(area_ha) where year = 2022 | sum(area_ha) where natural_lands_class = 'Natural
+    short vegetation'
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: translation of ch-quant-183 (pt-t-041)'
+  pair_id: pt-t-041
+  use_cases: UC5
+  language_review: subagent review 2026-11-19; native speaker not yet
+  synthetic: 'TRUE'

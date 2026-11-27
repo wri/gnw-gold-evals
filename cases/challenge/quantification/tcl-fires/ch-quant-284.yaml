@@ -1,0 +1,28 @@
+id: ch-quant-284
+uid: eb7ecbdba8eb5f6e
+status: ready
+set: quantification
+group: tcl-fires
+query: how much forest fire did we have in the Piracaia region over the last 5 years?
+expected:
+  aoi_ids: BRA.25.435
+  dataset_id: '10'
+  start_date: '2021-01-01'
+  end_date: '2025-12-31'
+  date_tolerance_days: '366'
+  data_pull: 'TRUE'
+  figure: sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2021..2025
+    | sum(tree_cover_loss_from_fires_area_ha) where tree_cover_loss_year in 2020..2024
+  text: Presents the figures as tree cover loss from fires, not as a count of fires or as
+    total burned area.
+notes:
+  lineage: 'multilingual BENCHMARK 2026-11-19: English twin written for ch-quant-284-pt (pt-n-035);
+    real pt user prompt, trace 2026-04'
+  pair_id: pt-n-035
+  benchmark_type: quantification
+  use_cases: UC5
+  synthetic: 'FALSE'
+  verified: expectations checked 2026-11-19 against 2026 members, the catalog, local GADM
+    and prod /api/aois; no agent run yet
+  aoi_name: Piracaia municipality, São Paulo, Brazil
+  precedent: ch-quant-142; es-n-005 (ch-trend-089); id-n-011 (ch-quant-238)
